@@ -49,7 +49,7 @@ public interface ActivityServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
-	 * @param activity The {@link Activity activity to be uploaded</p>
+	 * @param activity The {@link Activity activity} to be uploaded</p>
 	 */
 	public void createManualActivity(Activity activity);
 	
