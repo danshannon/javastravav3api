@@ -35,5 +35,13 @@ public class SegmentLeaderboard {
 	public void setEntries(List<SegmentLeaderboardEntry> entries) {
 		this.entries = entries;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "SegmentLeaderboard [" + (this.entryCount != null ? "entryCount=" + this.entryCount + ", " : "")
+				+ (this.entries != null ? "entries=" + this.entries : "") + "]";
+	}
 	
 }

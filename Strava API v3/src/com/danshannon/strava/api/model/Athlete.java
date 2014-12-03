@@ -1,6 +1,6 @@
 package com.danshannon.strava.api.model;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.danshannon.strava.api.model.reference.FollowerState;
@@ -30,8 +30,8 @@ public class Athlete {
 	private FollowerState friend;
 	private FollowerState follower;
 	private Boolean premium;
-	private Calendar createdAt;
-	private Calendar updatedAt;
+	private Date createdAt;
+	private Date updatedAt;
 	private Boolean approveFollowers;
 	private Integer followerCount;
 	private Integer friendCount;
@@ -118,13 +118,13 @@ public class Athlete {
 	/**
 	 * @return the createdAt
 	 */
-	public Calendar getCreatedAt() {
+	public Date getCreatedAt() {
 		return this.createdAt;
 	}
 	/**
 	 * @return the updatedAt
 	 */
-	public Calendar getUpdatedAt() {
+	public Date getUpdatedAt() {
 		return this.updatedAt;
 	}
 	/**
@@ -268,13 +268,13 @@ public class Athlete {
 	/**
 	 * @param createdAt the createdAt to set
 	 */
-	public void setCreatedAt(Calendar createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 	/**
 	 * @param updatedAt the updatedAt to set
 	 */
-	public void setUpdatedAt(Calendar updatedAt) {
+	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	/**
@@ -354,6 +354,35 @@ public class Athlete {
 	 */
 	public void setState(String state) {
 		this.state = state;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Athlete [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.resourceState != null ? "resourceState=" + this.resourceState + ", " : "")
+				+ (this.firstName != null ? "firstName=" + this.firstName + ", " : "")
+				+ (this.lastName != null ? "lastName=" + this.lastName + ", " : "")
+				+ (this.profileMedium != null ? "profileMedium=" + this.profileMedium + ", " : "")
+				+ (this.profile != null ? "profile=" + this.profile + ", " : "")
+				+ (this.city != null ? "city=" + this.city + ", " : "") + (this.state != null ? "state=" + this.state + ", " : "")
+				+ (this.country != null ? "country=" + this.country + ", " : "")
+				+ (this.sex != null ? "sex=" + this.sex + ", " : "") + (this.friend != null ? "friend=" + this.friend + ", " : "")
+				+ (this.follower != null ? "follower=" + this.follower + ", " : "")
+				+ (this.premium != null ? "premium=" + this.premium + ", " : "")
+				+ (this.createdAt != null ? "createdAt=" + this.createdAt + ", " : "")
+				+ (this.updatedAt != null ? "updatedAt=" + this.updatedAt + ", " : "")
+				+ (this.approveFollowers != null ? "approveFollowers=" + this.approveFollowers + ", " : "")
+				+ (this.followerCount != null ? "followerCount=" + this.followerCount + ", " : "")
+				+ (this.friendCount != null ? "friendCount=" + this.friendCount + ", " : "")
+				+ (this.mutualFriendCount != null ? "mutualFriendCount=" + this.mutualFriendCount + ", " : "")
+				+ (this.dateFormatPreference != null ? "dateFormatPreference=" + this.dateFormatPreference + ", " : "")
+				+ (this.measurementPreference != null ? "measurementPreference=" + this.measurementPreference + ", " : "")
+				+ (this.email != null ? "email=" + this.email + ", " : "") + (this.ftp != null ? "ftp=" + this.ftp + ", " : "")
+				+ (this.clubs != null ? "clubs=" + this.clubs + ", " : "")
+				+ (this.bikes != null ? "bikes=" + this.bikes + ", " : "") + (this.shoes != null ? "shoes=" + this.shoes : "")
+				+ "]";
 	}
 	
 }

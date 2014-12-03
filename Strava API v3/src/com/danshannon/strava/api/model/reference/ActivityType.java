@@ -42,7 +42,7 @@ public enum ActivityType {
 	// For use as Jackson @JsonCreator
 	public static ActivityType create(String id) {
 		for (ActivityType type : ActivityType.values()) {
-			if (type.getId().equals(id)) {
+			if (type.getId() != null && type.getId().equals(id)) {
 				return type;
 			}
 		}

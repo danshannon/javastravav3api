@@ -44,4 +44,12 @@ public class ActivityZoneDistributionBucket {
 	public void setTime(Integer time) {
 		this.time = time;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ActivityZoneDistributionBucket [" + (this.max != null ? "max=" + this.max + ", " : "")
+				+ (this.min != null ? "min=" + this.min + ", " : "") + (this.time != null ? "time=" + this.time : "") + "]";
+	}
 }

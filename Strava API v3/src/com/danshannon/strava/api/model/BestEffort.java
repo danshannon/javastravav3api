@@ -1,6 +1,6 @@
 package com.danshannon.strava.api.model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import com.danshannon.strava.api.model.reference.ResourceState;
 
@@ -19,8 +19,8 @@ public class BestEffort {
 	private Integer prRank;
 	private Integer elapsedTime;
 	private Integer movingTime;
-	private Calendar startDate;
-	private Calendar startDateLocal;
+	private Date startDate;
+	private Date startDateLocal;
 	private Float distance;
 	/**
 	 * @return the id
@@ -85,13 +85,13 @@ public class BestEffort {
 	/**
 	 * @return the startDate
 	 */
-	public Calendar getStartDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 	/**
 	 * @return the startDateLocal
 	 */
-	public Calendar getStartDateLocal() {
+	public Date getStartDateLocal() {
 		return this.startDateLocal;
 	}
 	/**
@@ -163,13 +163,13 @@ public class BestEffort {
 	/**
 	 * @param startDate the startDate to set
 	 */
-	public void setStartDate(Calendar startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	/**
 	 * @param startDateLocal the startDateLocal to set
 	 */
-	public void setStartDateLocal(Calendar startDateLocal) {
+	public void setStartDateLocal(Date startDateLocal) {
 		this.startDateLocal = startDateLocal;
 	}
 	/**
@@ -177,6 +177,25 @@ public class BestEffort {
 	 */
 	public void setDistance(Float distance) {
 		this.distance = distance;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BestEffort [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.resourceState != null ? "resourceState=" + this.resourceState + ", " : "")
+				+ (this.name != null ? "name=" + this.name + ", " : "")
+				+ (this.segment != null ? "segment=" + this.segment + ", " : "")
+				+ (this.activity != null ? "activity=" + this.activity + ", " : "")
+				+ (this.athlete != null ? "athlete=" + this.athlete + ", " : "")
+				+ (this.komRank != null ? "komRank=" + this.komRank + ", " : "")
+				+ (this.prRank != null ? "prRank=" + this.prRank + ", " : "")
+				+ (this.elapsedTime != null ? "elapsedTime=" + this.elapsedTime + ", " : "")
+				+ (this.movingTime != null ? "movingTime=" + this.movingTime + ", " : "")
+				+ (this.startDate != null ? "startDate=" + this.startDate + ", " : "")
+				+ (this.startDateLocal != null ? "startDateLocal=" + this.startDateLocal + ", " : "")
+				+ (this.distance != null ? "distance=" + this.distance : "") + "]";
 	}
 	
 }

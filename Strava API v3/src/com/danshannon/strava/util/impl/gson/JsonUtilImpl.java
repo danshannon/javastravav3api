@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
 import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
 import com.danshannon.strava.api.auth.ref.AuthorisationScope;
+import com.danshannon.strava.api.model.MapPoint;
 import com.danshannon.strava.api.model.reference.ActivityType;
 import com.danshannon.strava.api.model.reference.ActivityZoneType;
 import com.danshannon.strava.api.model.reference.AgeGroup;
@@ -40,6 +41,7 @@ import com.danshannon.strava.util.impl.gson.serializer.FollowerStateSerializer;
 import com.danshannon.strava.util.impl.gson.serializer.FrameTypeSerializer;
 import com.danshannon.strava.util.impl.gson.serializer.GenderSerializer;
 import com.danshannon.strava.util.impl.gson.serializer.LeaderboardDateRangeSerializer;
+import com.danshannon.strava.util.impl.gson.serializer.MapPointSerializer;
 import com.danshannon.strava.util.impl.gson.serializer.MeasurementMethodSerializer;
 import com.danshannon.strava.util.impl.gson.serializer.PhotoTypeSerializer;
 import com.danshannon.strava.util.impl.gson.serializer.ResourceStateSerializer;
@@ -51,6 +53,7 @@ import com.danshannon.strava.util.impl.gson.serializer.StreamSeriesDownsamplingT
 import com.danshannon.strava.util.impl.gson.serializer.StreamTypeSerializer;
 import com.danshannon.strava.util.impl.gson.serializer.WeightClassSerializer;
 import com.danshannon.strava.util.impl.gson.serializer.WorkoutTypeSerializer;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -68,6 +71,7 @@ public class JsonUtilImpl implements JsonUtil {
 
 	public JsonUtilImpl() {
 		gsonBuilder = new GsonBuilder();
+		gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
 		gsonBuilder.registerTypeAdapter(AuthorisationApprovalPrompt.class, new AuthorisationApprovalPromptSerializer());
 		gsonBuilder.registerTypeAdapter(AuthorisationResponseType.class, new AuthorisationResponseTypeSerializer());
 		gsonBuilder.registerTypeAdapter(AuthorisationScope.class, new AuthorisationScopeSerializer());
@@ -80,6 +84,7 @@ public class JsonUtilImpl implements JsonUtil {
 		gsonBuilder.registerTypeAdapter(FrameType.class, new FrameTypeSerializer());
 		gsonBuilder.registerTypeAdapter(Gender.class, new GenderSerializer());
 		gsonBuilder.registerTypeAdapter(LeaderboardDateRange.class, new LeaderboardDateRangeSerializer());
+		gsonBuilder.registerTypeAdapter(MapPoint.class, new MapPointSerializer());
 		gsonBuilder.registerTypeAdapter(MeasurementMethod.class, new MeasurementMethodSerializer());
 		gsonBuilder.registerTypeAdapter(PhotoType.class, new PhotoTypeSerializer());
 		gsonBuilder.registerTypeAdapter(ResourceState.class, new ResourceStateSerializer());
@@ -118,5 +123,9 @@ public class JsonUtilImpl implements JsonUtil {
 	@Override
 	public <T> String serialise(T object) throws ServiceException {
 		return gson.toJson(object);
+	}
+	
+	public Gson getGson() {
+		return this.gson;
 	}
 }

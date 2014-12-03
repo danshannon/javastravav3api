@@ -139,5 +139,21 @@ public class SegmentExploreSegment {
 	public void setPoints(String points) {
 		this.points = points;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "SegmentExploreSegment [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.name != null ? "name=" + this.name + ", " : "")
+				+ (this.climbCategory != null ? "climbCategory=" + this.climbCategory + ", " : "")
+				+ (this.climbCategoryDesc != null ? "climbCategoryDesc=" + this.climbCategoryDesc + ", " : "")
+				+ (this.avgGrade != null ? "avgGrade=" + this.avgGrade + ", " : "")
+				+ (this.startLatlng != null ? "startLatlng=" + this.startLatlng + ", " : "")
+				+ (this.endLatlng != null ? "endLatlng=" + this.endLatlng + ", " : "")
+				+ (this.elevDifference != null ? "elevDifference=" + this.elevDifference + ", " : "")
+				+ (this.distance != null ? "distance=" + this.distance + ", " : "")
+				+ (this.points != null ? "points=" + this.points : "") + "]";
+	}
 	
 }

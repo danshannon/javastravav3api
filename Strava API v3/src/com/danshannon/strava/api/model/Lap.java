@@ -1,6 +1,6 @@
 package com.danshannon.strava.api.model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import com.danshannon.strava.api.model.reference.ResourceState;
 
@@ -18,8 +18,8 @@ public class Lap {
 	private Athlete athlete;
 	private Integer elapsedTime;
 	private Integer movingTime;
-	private Calendar startDate;
-	private Calendar startDateLocal;
+	private Date startDate;
+	private Date startDateLocal;
 	private Float distance;
 	private Integer startIndex; 
 	private Integer endIndex;
@@ -77,13 +77,13 @@ public class Lap {
 	/**
 	 * @return the startDate
 	 */
-	public Calendar getStartDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 	/**
 	 * @return the startDateLocal
 	 */
-	public Calendar getStartDateLocal() {
+	public Date getStartDateLocal() {
 		return this.startDateLocal;
 	}
 	/**
@@ -203,13 +203,13 @@ public class Lap {
 	/**
 	 * @param startDate the startDate to set
 	 */
-	public void setStartDate(Calendar startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	/**
 	 * @param startDateLocal the startDateLocal to set
 	 */
-	public void setStartDateLocal(Calendar startDateLocal) {
+	public void setStartDateLocal(Date startDateLocal) {
 		this.startDateLocal = startDateLocal;
 	}
 	/**

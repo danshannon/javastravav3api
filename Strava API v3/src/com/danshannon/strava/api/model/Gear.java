@@ -129,4 +129,19 @@ public class Gear {
 	public void setResourceState(ResourceState resourceState) {
 		this.resourceState = resourceState;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Gear [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.primary != null ? "primary=" + this.primary + ", " : "")
+				+ (this.name != null ? "name=" + this.name + ", " : "")
+				+ (this.distance != null ? "distance=" + this.distance + ", " : "")
+				+ (this.brandName != null ? "brandName=" + this.brandName + ", " : "")
+				+ (this.modelName != null ? "modelName=" + this.modelName + ", " : "")
+				+ (this.frameType != null ? "frameType=" + this.frameType + ", " : "")
+				+ (this.description != null ? "description=" + this.description + ", " : "")
+				+ (this.resourceState != null ? "resourceState=" + this.resourceState : "") + "]";
+	}
 }

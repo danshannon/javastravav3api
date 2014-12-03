@@ -1,5 +1,7 @@
 package com.danshannon.strava.api.model;
 
+import java.util.Arrays;
+
 import com.danshannon.strava.api.model.reference.ActivityZoneType;
 import com.danshannon.strava.api.model.reference.ResourceState;
 
@@ -111,6 +113,21 @@ public class ActivityZone {
 	 */
 	public void setMax(Integer max) {
 		this.max = max;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ActivityZone ["
+				+ (this.score != null ? "score=" + this.score + ", " : "")
+				+ (this.distributionBuckets != null ? "distributionBuckets=" + Arrays.toString(this.distributionBuckets) + ", "
+						: "") + (this.type != null ? "type=" + this.type + ", " : "")
+				+ (this.resourceState != null ? "resourceState=" + this.resourceState + ", " : "")
+				+ (this.sensorBased != null ? "sensorBased=" + this.sensorBased + ", " : "")
+				+ (this.points != null ? "points=" + this.points + ", " : "")
+				+ (this.customZones != null ? "customZones=" + this.customZones + ", " : "")
+				+ (this.max != null ? "max=" + this.max : "") + "]";
 	}
 	
 	

@@ -89,4 +89,15 @@ public class UploadResponse {
 	public void setActivityId(Integer activityId) {
 		this.activityId = activityId;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "UploadResponse [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.externalId != null ? "externalId=" + this.externalId + ", " : "")
+				+ (this.error != null ? "error=" + this.error + ", " : "")
+				+ (this.status != null ? "status=" + this.status + ", " : "")
+				+ (this.activityId != null ? "activityId=" + this.activityId : "") + "]";
+	}
 }

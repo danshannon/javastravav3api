@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
 
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.ActivityZone;
@@ -12,20 +13,34 @@ import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
 import com.danshannon.strava.api.service.ActivityServices;
+import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author Dan Shannon
  *
  */
 public class ActivityServicesImpl implements ActivityServices {
+	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	
 	private ActivityServicesImpl(ActivityServicesRetrofit restService) {
 		this.restService = restService;
 	}
 	
-	public static ActivityServices implementation(String token) {
-		ActivityServicesRetrofit restService = restServices.get(token);
+	/**
+	 * <p>Returns an implementation of {@link ActivityServices activity services}</p>
+	 * 
+	 * <p>Instances are cached so that if 2 requests are made for the same token, the same instance is returned</p>
+	 * 
+	 * @param token The Strava access token to be used in requests to the Strava API
+	 * @return An implementation of the activity services
+	 * @throws UnauthorizedException If the token used to create the service is invalid
+	 */
+	public static ActivityServices implementation(String token) throws UnauthorizedException {
+		ActivityServices restService = restServices.get(token);
 		if (restService == null) {
-			restService = new RestAdapter.Builder()
+			restService = new ActivityServicesImpl(new RestAdapter.Builder()
+				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
+				.setLogLevel(LOG_LEVEL)
 				.setEndpoint(ENDPOINT)
 				.setRequestInterceptor(new RequestInterceptor() {
 					@Override
@@ -33,14 +48,21 @@ public class ActivityServicesImpl implements ActivityServices {
 						request.addHeader("Authorization", "Bearer " + token);
 					}
 				})
+				.setErrorHandler(new RetrofitErrorHandler())
 				.build()
-				.create(ActivityServicesRetrofit.class);
+				.create(ActivityServicesRetrofit.class));
+
+			// Check that the token works (i.e. it is valid)
+			restService.listAuthenticatedAthleteActivities(null, null, 1, 1);
+
+			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
+			
 		}
 		return restService;
 	}
 	
-	private static HashMap<String,ActivityServicesRetrofit> restServices = new HashMap<String,ActivityServicesRetrofit>();
+	private static HashMap<String,ActivityServices> restServices = new HashMap<String,ActivityServices>();
 	
 	private ActivityServicesRetrofit restService;
 	
@@ -50,7 +72,11 @@ public class ActivityServicesImpl implements ActivityServices {
 	 */
 	@Override
 	public Activity getActivity(Integer id, Boolean includeAllEfforts) {
-		return restService.getActivity(id, includeAllEfforts);
+		try {
+			return restService.getActivity(id, includeAllEfforts);
+		} catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -80,10 +106,28 @@ public class ActivityServicesImpl implements ActivityServices {
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#listAuthenticatedAthleteActivities(java.lang.Integer,
 	 *      java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @throws UnauthorizedException 
 	 */
 	@Override
-	public Activity[] listAuthenticatedAthleteActivities(Integer before, Integer after, Integer page, Integer perPage) {
+	public Activity[] listAuthenticatedAthleteActivities(Integer before, Integer after, Integer page, Integer perPage) throws UnauthorizedException {
+		validatePagingArguments(page,perPage);
+		
 		return restService.listAuthenticatedAthleteActivities(before, after, page, perPage);
+	}
+
+	/**
+	 * <p>Throw an IllegalArgumentException if the page or perPage parameters are set but are invalid</p>
+	 * @param page
+	 * @param perPage
+	 */
+	private void validatePagingArguments(Integer page, Integer perPage) {
+		if (page != null && page < 1) {
+			throw new IllegalArgumentException("page argument may not be < 1");
+		}
+		if (perPage != null && perPage <1) {
+			throw new IllegalArgumentException("perPage argument may not be < 1");
+		}
+		
 	}
 
 	/**
@@ -91,6 +135,8 @@ public class ActivityServicesImpl implements ActivityServices {
 	 */
 	@Override
 	public Activity[] listFriendsActivities(Integer page, Integer perPage) {
+		validatePagingArguments(page,perPage);
+
 		return restService.listFriendsActivities(page, perPage);
 	}
 
@@ -116,6 +162,8 @@ public class ActivityServicesImpl implements ActivityServices {
 	 */
 	@Override
 	public Comment[] listActivityComments(Integer id, Boolean markdown, Integer page, Integer perPage) {
+		validatePagingArguments(page,perPage);
+
 		return restService.listActivityComments(id, markdown, page, perPage);
 	}
 
@@ -125,6 +173,8 @@ public class ActivityServicesImpl implements ActivityServices {
 	 */
 	@Override
 	public Athlete[] listActivityKudoers(Integer id, Integer page, Integer perPage) {
+		validatePagingArguments(page,perPage);
+
 		return restService.listActivityKudoers(id, page, perPage);
 	}
 

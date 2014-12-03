@@ -51,4 +51,13 @@ public class MapPoint {
 	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
 	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "MapPoint [" + (this.latitude != null ? "latitude=" + this.latitude + ", " : "")
+				+ (this.longitude != null ? "longitude=" + this.longitude : "") + "]";
+	}
 }

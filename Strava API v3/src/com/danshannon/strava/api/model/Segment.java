@@ -1,6 +1,6 @@
 package com.danshannon.strava.api.model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import com.danshannon.strava.api.model.reference.ClimbCategory;
 import com.danshannon.strava.api.model.reference.ResourceState;
@@ -30,8 +30,8 @@ public class Segment {
 	private String country;
 	private Boolean privateSegment; // is "private" in JSON API
 	private Boolean starred; // true if authenticated athlete has starred segment
-	private Calendar createdAt;
-	private Calendar updatedAt;
+	private Date createdAt;
+	private Date updatedAt;
 	private Float totalElevationGain;
 	private Map map;
 	private Integer effortCount;
@@ -216,13 +216,13 @@ public class Segment {
 	/**
 	 * @return the createdAt
 	 */
-	public Calendar getCreatedAt() {
+	public Date getCreatedAt() {
 		return this.createdAt;
 	}
 	/**
 	 * @return the updatedAt
 	 */
-	public Calendar getUpdatedAt() {
+	public Date getUpdatedAt() {
 		return this.updatedAt;
 	}
 	/**
@@ -294,13 +294,13 @@ public class Segment {
 	/**
 	 * @param createdAt the createdAt to set
 	 */
-	public void setCreatedAt(Calendar createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 	/**
 	 * @param updatedAt the updatedAt to set
 	 */
-	public void setUpdatedAt(Calendar updatedAt) {
+	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	/**
@@ -350,6 +350,37 @@ public class Segment {
 	 */
 	public void setAthletePrEffort(SegmentEffort athletePrEffort) {
 		this.athletePrEffort = athletePrEffort;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Segment [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.resourceState != null ? "resourceState=" + this.resourceState + ", " : "")
+				+ (this.name != null ? "name=" + this.name + ", " : "")
+				+ (this.activityType != null ? "activityType=" + this.activityType + ", " : "")
+				+ (this.distance != null ? "distance=" + this.distance + ", " : "")
+				+ (this.averageGrade != null ? "averageGrade=" + this.averageGrade + ", " : "")
+				+ (this.maximumGrade != null ? "maximumGrade=" + this.maximumGrade + ", " : "")
+				+ (this.elevationHigh != null ? "elevationHigh=" + this.elevationHigh + ", " : "")
+				+ (this.elevationLow != null ? "elevationLow=" + this.elevationLow + ", " : "")
+				+ (this.startLatlng != null ? "startLatlng=" + this.startLatlng + ", " : "")
+				+ (this.endLatlng != null ? "endLatlng=" + this.endLatlng + ", " : "")
+				+ (this.climbCategory != null ? "climbCategory=" + this.climbCategory + ", " : "")
+				+ (this.city != null ? "city=" + this.city + ", " : "") + (this.state != null ? "state=" + this.state + ", " : "")
+				+ (this.country != null ? "country=" + this.country + ", " : "")
+				+ (this.privateSegment != null ? "privateSegment=" + this.privateSegment + ", " : "")
+				+ (this.starred != null ? "starred=" + this.starred + ", " : "")
+				+ (this.createdAt != null ? "createdAt=" + this.createdAt + ", " : "")
+				+ (this.updatedAt != null ? "updatedAt=" + this.updatedAt + ", " : "")
+				+ (this.totalElevationGain != null ? "totalElevationGain=" + this.totalElevationGain + ", " : "")
+				+ (this.map != null ? "map=" + this.map + ", " : "")
+				+ (this.effortCount != null ? "effortCount=" + this.effortCount + ", " : "")
+				+ (this.athleteCount != null ? "athleteCount=" + this.athleteCount + ", " : "")
+				+ (this.hazardous != null ? "hazardous=" + this.hazardous + ", " : "")
+				+ (this.starCount != null ? "starCount=" + this.starCount + ", " : "")
+				+ (this.athletePrEffort != null ? "athletePrEffort=" + this.athletePrEffort : "") + "]";
 	}
 	
 }

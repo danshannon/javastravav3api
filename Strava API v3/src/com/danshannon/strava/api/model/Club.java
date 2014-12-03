@@ -183,4 +183,22 @@ public class Club {
 	public void setMemberCount(Integer memberCount) {
 		this.memberCount = memberCount;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Club [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.resourceState != null ? "resourceState=" + this.resourceState + ", " : "")
+				+ (this.name != null ? "name=" + this.name + ", " : "")
+				+ (this.profileMedium != null ? "profileMedium=" + this.profileMedium + ", " : "")
+				+ (this.profile != null ? "profile=" + this.profile + ", " : "")
+				+ (this.description != null ? "description=" + this.description + ", " : "")
+				+ (this.clubType != null ? "clubType=" + this.clubType + ", " : "")
+				+ (this.sportType != null ? "sportType=" + this.sportType + ", " : "")
+				+ (this.city != null ? "city=" + this.city + ", " : "") + (this.state != null ? "state=" + this.state + ", " : "")
+				+ (this.country != null ? "country=" + this.country + ", " : "")
+				+ (this.privateClub != null ? "privateClub=" + this.privateClub + ", " : "")
+				+ (this.memberCount != null ? "memberCount=" + this.memberCount : "") + "]";
+	}
 }

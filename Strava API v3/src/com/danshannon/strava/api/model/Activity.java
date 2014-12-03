@@ -1,6 +1,6 @@
 package com.danshannon.strava.api.model;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.danshannon.strava.api.model.reference.ActivityType;
@@ -26,8 +26,8 @@ public class Activity {
 	 * Note that this is kind of almost an enum, but it isn't???
 	 */
 	private ActivityType type;
-	private Calendar startDate;
-	private Calendar startDateLocal;
+	private Date startDate;
+	private Date startDateLocal;
 	private String timeZone;
 	private MapPoint startLatLng;
 	private MapPoint endLatLng;
@@ -59,10 +59,10 @@ public class Activity {
 	private Float weightedAverageWatts;
 	private Float kilojoules;
 	private Boolean deviceWatts;
-	private Integer averageHeartrate;
+	private Float averageHeartrate;
 	private Integer maxHeartrate;
 	private Float calories;
-	private Boolean truncated;
+	private Integer truncated;
 	private Boolean hasKudoed;
 	private List<SegmentEffort> segmentEfforts;
 	private List<Split> splitsMetric;
@@ -137,13 +137,13 @@ public class Activity {
 	/**
 	 * @return the startDate
 	 */
-	public Calendar getStartDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 	/**
 	 * @return the startDateLocal
 	 */
-	public Calendar getStartDateLocal() {
+	public Date getStartDateLocal() {
 		return this.startDateLocal;
 	}
 	/**
@@ -317,7 +317,7 @@ public class Activity {
 	/**
 	 * @return the averageHeartrate
 	 */
-	public Integer getAverageHeartrate() {
+	public Float getAverageHeartrate() {
 		return this.averageHeartrate;
 	}
 	/**
@@ -335,7 +335,7 @@ public class Activity {
 	/**
 	 * @return the truncated
 	 */
-	public Boolean getTruncated() {
+	public Integer getTruncated() {
 		return this.truncated;
 	}
 	/**
@@ -437,13 +437,13 @@ public class Activity {
 	/**
 	 * @param startDate the startDate to set
 	 */
-	public void setStartDate(Calendar startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	/**
 	 * @param startDateLocal the startDateLocal to set
 	 */
-	public void setStartDateLocal(Calendar startDateLocal) {
+	public void setStartDateLocal(Date startDateLocal) {
 		this.startDateLocal = startDateLocal;
 	}
 	/**
@@ -617,7 +617,7 @@ public class Activity {
 	/**
 	 * @param averageHeartrate the averageHeartrate to set
 	 */
-	public void setAverageHeartrate(Integer averageHeartrate) {
+	public void setAverageHeartrate(Float averageHeartrate) {
 		this.averageHeartrate = averageHeartrate;
 	}
 	/**
@@ -635,7 +635,7 @@ public class Activity {
 	/**
 	 * @param truncated the truncated to set
 	 */
-	public void setTruncated(Boolean truncated) {
+	public void setTruncated(Integer truncated) {
 		this.truncated = truncated;
 	}
 	/**
@@ -667,6 +667,62 @@ public class Activity {
 	 */
 	public void setBestEfforts(List<BestEffort> bestEfforts) {
 		this.bestEfforts = bestEfforts;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Activity [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.resourceState != null ? "resourceState=" + this.resourceState + ", " : "")
+				+ (this.externalId != null ? "externalId=" + this.externalId + ", " : "")
+				+ (this.athlete != null ? "athlete=" + this.athlete + ", " : "")
+				+ (this.name != null ? "name=" + this.name + ", " : "")
+				+ (this.description != null ? "description=" + this.description + ", " : "")
+				+ (this.distance != null ? "distance=" + this.distance + ", " : "")
+				+ (this.movingTime != null ? "movingTime=" + this.movingTime + ", " : "")
+				+ (this.elapsedTime != null ? "elapsedTime=" + this.elapsedTime + ", " : "")
+				+ (this.totalElevationGain != null ? "totalElevationGain=" + this.totalElevationGain + ", " : "")
+				+ (this.type != null ? "type=" + this.type + ", " : "")
+				+ (this.startDate != null ? "startDate=" + this.startDate + ", " : "")
+				+ (this.startDateLocal != null ? "startDateLocal=" + this.startDateLocal + ", " : "")
+				+ (this.timeZone != null ? "timeZone=" + this.timeZone + ", " : "")
+				+ (this.startLatLng != null ? "startLatLng=" + this.startLatLng + ", " : "")
+				+ (this.endLatLng != null ? "endLatLng=" + this.endLatLng + ", " : "")
+				+ (this.locationCity != null ? "locationCity=" + this.locationCity + ", " : "")
+				+ (this.locationState != null ? "locationState=" + this.locationState + ", " : "")
+				+ (this.locationCountry != null ? "locationCountry=" + this.locationCountry + ", " : "")
+				+ (this.achievementCount != null ? "achievementCount=" + this.achievementCount + ", " : "")
+				+ (this.kudosCount != null ? "kudosCount=" + this.kudosCount + ", " : "")
+				+ (this.commentCount != null ? "commentCount=" + this.commentCount + ", " : "")
+				+ (this.athleteCount != null ? "athleteCount=" + this.athleteCount + ", " : "")
+				+ (this.photoCount != null ? "photoCount=" + this.photoCount + ", " : "")
+				+ (this.map != null ? "map=" + this.map + ", " : "")
+				+ (this.trainer != null ? "trainer=" + this.trainer + ", " : "")
+				+ (this.commute != null ? "commute=" + this.commute + ", " : "")
+				+ (this.manual != null ? "manual=" + this.manual + ", " : "")
+				+ (this.privateActivity != null ? "privateActivity=" + this.privateActivity + ", " : "")
+				+ (this.flagged != null ? "flagged=" + this.flagged + ", " : "")
+				+ (this.workoutType != null ? "workoutType=" + this.workoutType + ", " : "")
+				+ (this.gearId != null ? "gearId=" + this.gearId + ", " : "")
+				+ (this.gear != null ? "gear=" + this.gear + ", " : "")
+				+ (this.averageSpeed != null ? "averageSpeed=" + this.averageSpeed + ", " : "")
+				+ (this.maxSpeed != null ? "maxSpeed=" + this.maxSpeed + ", " : "")
+				+ (this.averageCadence != null ? "averageCadence=" + this.averageCadence + ", " : "")
+				+ (this.averageTemp != null ? "averageTemp=" + this.averageTemp + ", " : "")
+				+ (this.averageWatts != null ? "averageWatts=" + this.averageWatts + ", " : "")
+				+ (this.weightedAverageWatts != null ? "weightedAverageWatts=" + this.weightedAverageWatts + ", " : "")
+				+ (this.kilojoules != null ? "kilojoules=" + this.kilojoules + ", " : "")
+				+ (this.deviceWatts != null ? "deviceWatts=" + this.deviceWatts + ", " : "")
+				+ (this.averageHeartrate != null ? "averageHeartrate=" + this.averageHeartrate + ", " : "")
+				+ (this.maxHeartrate != null ? "maxHeartrate=" + this.maxHeartrate + ", " : "")
+				+ (this.calories != null ? "calories=" + this.calories + ", " : "")
+				+ (this.truncated != null ? "truncated=" + this.truncated + ", " : "")
+				+ (this.hasKudoed != null ? "hasKudoed=" + this.hasKudoed + ", " : "")
+				+ (this.segmentEfforts != null ? "segmentEfforts=" + this.segmentEfforts + ", " : "")
+				+ (this.splitsMetric != null ? "splitsMetric=" + this.splitsMetric + ", " : "")
+				+ (this.splitsStandard != null ? "splitsStandard=" + this.splitsStandard + ", " : "")
+				+ (this.bestEfforts != null ? "bestEfforts=" + this.bestEfforts : "") + "]";
 	}
 	
 	

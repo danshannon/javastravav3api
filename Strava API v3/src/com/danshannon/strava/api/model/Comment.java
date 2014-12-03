@@ -1,6 +1,6 @@
 package com.danshannon.strava.api.model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import com.danshannon.strava.api.model.reference.ResourceState;
 
@@ -14,7 +14,7 @@ public class Comment {
 	private Integer activityId;
 	private String text;
 	private Athlete athlete;
-	private Calendar createdAt;
+	private Date createdAt;
 	/**
 	 * @return the id
 	 */
@@ -48,7 +48,7 @@ public class Comment {
 	/**
 	 * @return the createdAt
 	 */
-	public Calendar getCreatedAt() {
+	public Date getCreatedAt() {
 		return this.createdAt;
 	}
 	/**
@@ -84,7 +84,19 @@ public class Comment {
 	/**
 	 * @param createdAt the createdAt to set
 	 */
-	public void setCreatedAt(Calendar createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Comment [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.resourceState != null ? "resourceState=" + this.resourceState + ", " : "")
+				+ (this.activityId != null ? "activityId=" + this.activityId + ", " : "")
+				+ (this.text != null ? "text=" + this.text + ", " : "")
+				+ (this.athlete != null ? "athlete=" + this.athlete + ", " : "")
+				+ (this.createdAt != null ? "createdAt=" + this.createdAt : "") + "]";
 	}
 }

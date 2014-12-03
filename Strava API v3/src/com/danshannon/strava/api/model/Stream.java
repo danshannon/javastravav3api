@@ -76,6 +76,17 @@ public class Stream {
 	public void setResolution(StreamResolutionType resolution) {
 		this.resolution = resolution;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Stream [" + (this.type != null ? "type=" + this.type + ", " : "")
+				+ (this.data != null ? "data=" + this.data + ", " : "")
+				+ (this.seriesType != null ? "seriesType=" + this.seriesType + ", " : "")
+				+ (this.originalSize != null ? "originalSize=" + this.originalSize + ", " : "")
+				+ (this.resolution != null ? "resolution=" + this.resolution : "") + "]";
+	}
 	
 	
 }

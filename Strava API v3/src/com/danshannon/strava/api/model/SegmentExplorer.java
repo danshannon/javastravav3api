@@ -1,5 +1,7 @@
 package com.danshannon.strava.api.model;
 
+import java.util.Arrays;
+
 import com.danshannon.strava.api.service.SegmentServices;
 
 /**
@@ -25,6 +27,14 @@ public class SegmentExplorer {
 	 */
 	public void setSegments(SegmentExploreSegment[] segments) {
 		this.segments = segments;
+	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "SegmentExplorer [" + (this.segments != null ? "segments=" + Arrays.toString(this.segments) : "") + "]";
 	}
 	
 }

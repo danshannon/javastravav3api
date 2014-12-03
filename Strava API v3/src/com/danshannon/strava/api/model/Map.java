@@ -59,5 +59,15 @@ public class Map {
 	public void setResourceState(ResourceState resourceState) {
 		this.resourceState = resourceState;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Map [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.polyline != null ? "polyline=" + this.polyline + ", " : "")
+				+ (this.summaryPolyline != null ? "summaryPolyline=" + this.summaryPolyline + ", " : "")
+				+ (this.resourceState != null ? "resourceState=" + this.resourceState : "") + "]";
+	}
 	
 }

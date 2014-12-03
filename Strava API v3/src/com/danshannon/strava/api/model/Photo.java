@@ -1,6 +1,6 @@
 package com.danshannon.strava.api.model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import com.danshannon.strava.api.model.reference.PhotoType;
 import com.danshannon.strava.api.model.reference.ResourceState;
@@ -17,8 +17,8 @@ public class Photo {
 	private String uid;
 	private String caption;
 	private PhotoType type;
-	private Calendar uploadedAt;
-	private Calendar createdAt;
+	private Date uploadedAt;
+	private Date createdAt;
 	private MapPoint location;
 	/**
 	 * @return the id
@@ -65,13 +65,13 @@ public class Photo {
 	/**
 	 * @return the uploadedAt
 	 */
-	public Calendar getUploadedAt() {
+	public Date getUploadedAt() {
 		return this.uploadedAt;
 	}
 	/**
 	 * @return the createdAt
 	 */
-	public Calendar getCreatedAt() {
+	public Date getCreatedAt() {
 		return this.createdAt;
 	}
 	/**
@@ -125,13 +125,13 @@ public class Photo {
 	/**
 	 * @param uploadedAt the uploadedAt to set
 	 */
-	public void setUploadedAt(Calendar uploadedAt) {
+	public void setUploadedAt(Date uploadedAt) {
 		this.uploadedAt = uploadedAt;
 	}
 	/**
 	 * @param createdAt the createdAt to set
 	 */
-	public void setCreatedAt(Calendar createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 	/**
@@ -139,5 +139,20 @@ public class Photo {
 	 */
 	public void setLocation(MapPoint location) {
 		this.location = location;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Photo [" + (this.id != null ? "id=" + this.id + ", " : "")
+				+ (this.activityId != null ? "activityId=" + this.activityId + ", " : "")
+				+ (this.resourceState != null ? "resourceState=" + this.resourceState + ", " : "")
+				+ (this.ref != null ? "ref=" + this.ref + ", " : "") + (this.uid != null ? "uid=" + this.uid + ", " : "")
+				+ (this.caption != null ? "caption=" + this.caption + ", " : "")
+				+ (this.type != null ? "type=" + this.type + ", " : "")
+				+ (this.uploadedAt != null ? "uploadedAt=" + this.uploadedAt + ", " : "")
+				+ (this.createdAt != null ? "createdAt=" + this.createdAt + ", " : "")
+				+ (this.location != null ? "location=" + this.location : "") + "]";
 	}
 }

@@ -70,6 +70,17 @@ public class Split {
 	public void setSplit(Integer split) {
 		this.split = split;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Split [" + (this.distance != null ? "distance=" + this.distance + ", " : "")
+				+ (this.elapsedTime != null ? "elapsedTime=" + this.elapsedTime + ", " : "")
+				+ (this.elevationDifference != null ? "elevationDifference=" + this.elevationDifference + ", " : "")
+				+ (this.movingTime != null ? "movingTime=" + this.movingTime + ", " : "")
+				+ (this.split != null ? "split=" + this.split : "") + "]";
+	}
 	
 	
 }

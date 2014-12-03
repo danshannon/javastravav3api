@@ -6,6 +6,7 @@ import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
+import com.danshannon.strava.api.service.impl.retrofit.UnauthorizedException;
 
 /**
  * Activity related services
@@ -25,6 +26,8 @@ public interface ActivityServices {
 	 * <p>Note that effort ids may exceed the max value for 32-bit integers. A long integer type should be used.</p>
 	 * 
 	 * <p>Each segment effort will have a hidden attribute indicating if it is “important” or not.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the activity does not exist
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/activities/:id</p>
 	 * 
@@ -96,8 +99,9 @@ public interface ActivityServices {
 	 * @param page (Optional) Page to start at for pagination
 	 * @param perPage (Optional) Number of results per page (maximum 200)
 	 * @return Returns an array of {@link Activity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
+	 * @throws UnauthorizedException thrown if service returns a 401 Unauthorized status
 	 */
-	public Activity[] listAuthenticatedAthleteActivities(Integer before, Integer after, Integer page, Integer perPage);
+	public Activity[] listAuthenticatedAthleteActivities(Integer before, Integer after, Integer page, Integer perPage) throws UnauthorizedException;
 	
 	/**
 	 * <p>List the recent activities performed by those the current authenticated {@link Athlete} is following.</p>
