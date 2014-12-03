@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.danshannon.strava.api.model.Activity;
+import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Photo;
 import com.danshannon.strava.api.model.reference.ResourceState;
 import com.danshannon.strava.api.service.ActivityServices;
@@ -33,6 +34,7 @@ public class ActivityServicesImplTest {
 	private static Integer ACTIVITY_FOR_AUTHENTICATED_USER;
 	private static Integer ACTIVITY_FOR_UNAUTHENTICATED_USER;
 	private static Integer ACTIVITY_INVALID;
+	private static Integer ACTIVITY_WITH_COMMENTS;
 	private static final String PROPERTIES_FILE = "test-config.properties";
 
 	/**
@@ -46,6 +48,7 @@ public class ActivityServicesImplTest {
 		ACTIVITY_WITH_EFFORTS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithEfforts"));
 		ACTIVITY_WITH_PHOTOS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithPhotos"));
 		ACTIVITY_WITHOUT_PHOTOS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithoutPhotos"));
+		ACTIVITY_WITH_COMMENTS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithComments"));
 		ACTIVITY_FOR_AUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToAuthenticatedUser"));
 		ACTIVITY_FOR_UNAUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToUnauthenticatedUser"));
 		ACTIVITY_INVALID = new Integer(properties.getProperty("test.activityServicesImplTest.activityInvalid"));
@@ -345,7 +348,6 @@ public class ActivityServicesImplTest {
 
 	// Test criteria:
 	// 1. Valid activity
-	// 2. Invalid token
 	// 3. Token is valid but doesn't have write access
 	// 4. Non-existent activity
 	// 5. Activity that belongs to another athlete
@@ -370,6 +372,18 @@ public class ActivityServicesImplTest {
 	public void testListActivityComments() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testListActivityComments_hasCommentsWithMarkdown() throws UnauthorizedException {
+		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		Comment[] comments = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.TRUE, null, null);
+		
+		assertNotNull("Returned null list of comments when some were expected");
+		assertNotEquals("Returned empty list of comments when some were expected", 0, comments.length);
+		
+		// TODO ensure that the markdown is there!
+		fail("Not yet implemented markdown tests");
 	}
 
 	// Test criteria:
