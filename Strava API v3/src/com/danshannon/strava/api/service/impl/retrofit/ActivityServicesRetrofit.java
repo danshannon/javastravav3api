@@ -34,13 +34,13 @@ public interface ActivityServicesRetrofit {
 	public void createManualActivity(@Body Activity activity);
 	
 	@PUT("/activities/{id}")
-	public Activity updateActivity(@Path("id") Integer id, @Body Activity activity);
+	public Activity updateActivity(@Path("id") Integer id, @Body Activity activity) throws NotFoundException;
 	
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#deleteActivity(java.lang.Integer)
 	 */
 	@DELETE("/activities/{id}")
-	public void deleteActivity(@Path("id") Integer id);
+	public void deleteActivity(@Path("id") Integer id) throws NotFoundException;
 	
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer)
@@ -58,31 +58,31 @@ public interface ActivityServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityZones(java.lang.Integer)
 	 */
 	@GET("/activities/{id}/zones")
-	public ActivityZone[] listActivityZones(@Path("id") Integer id);
+	public ActivityZone[] listActivityZones(@Path("id") Integer id) throws NotFoundException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityLaps(java.lang.Integer)
 	 */
 	@GET("/activities/{id}/laps")
-	public Lap[] listActivityLaps(@Path("id") Integer id);
+	public Lap[] listActivityLaps(@Path("id") Integer id) throws NotFoundException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityComments(java.lang.Integer, java.lang.Boolean, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/activities/{id}/comments")
-	public Comment[] listActivityComments(@Path("id") Integer id, @Query("markdown") Boolean markdown, @Query("page") Integer page, @Query("per_page") Integer perPage);
+	public Comment[] listActivityComments(@Path("id") Integer id, @Query("markdown") Boolean markdown, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityKudoers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/activities/{id}/kudos")
-	public Athlete[] listActivityKudoers(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page")Integer perPage);
+	public Athlete[] listActivityKudoers(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page")Integer perPage) throws NotFoundException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityPhotos(java.lang.Integer)
 	 */
 	@GET("/activities/{id}/photos")
-	public Photo[] listActivityPhotos(@Path("id") Integer id);
+	public Photo[] listActivityPhotos(@Path("id") Integer id) throws NotFoundException;
 
 }
 

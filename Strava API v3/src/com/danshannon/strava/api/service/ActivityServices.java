@@ -6,6 +6,7 @@ import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
+import com.danshannon.strava.api.service.impl.retrofit.NotFoundException;
 import com.danshannon.strava.api.service.impl.retrofit.UnauthorizedException;
 
 /**
@@ -82,8 +83,9 @@ public interface ActivityServices {
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
 	 * @param id The id of the {@link Activity} to be deleted.
+	 * @throws NotFoundException If the {@link Activity} does not exist
 	 */
-	public void deleteActivity(Integer id);
+	public void deleteActivity(Integer id) throws NotFoundException;
 	
 	/**
 	 * <p>This endpoint returns a list of {@link Activity activities} for the authenticated {@link Athlete}.</p>
@@ -154,6 +156,10 @@ public interface ActivityServices {
 	 * <p>The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.</p>
 	 * 
 	 * <p>Pagination is supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the {@link Activity} does not exist</p>
+	 * 
+	 * <p>Returns an empty array if the {@link Activity} does not contain any {@link Photo Photos}</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/activities/:id/comments</p>
 	 * 

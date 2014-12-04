@@ -35,6 +35,7 @@ public class ActivityServicesImplTest {
 	private static Integer ACTIVITY_FOR_UNAUTHENTICATED_USER;
 	private static Integer ACTIVITY_INVALID;
 	private static Integer ACTIVITY_WITH_COMMENTS;
+	private static Integer ACTIVITY_WITHOUT_COMMENTS;
 	private static final String PROPERTIES_FILE = "test-config.properties";
 
 	/**
@@ -49,6 +50,7 @@ public class ActivityServicesImplTest {
 		ACTIVITY_WITH_PHOTOS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithPhotos"));
 		ACTIVITY_WITHOUT_PHOTOS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithoutPhotos"));
 		ACTIVITY_WITH_COMMENTS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithComments"));
+		ACTIVITY_WITHOUT_COMMENTS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithoutComments"));
 		ACTIVITY_FOR_AUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToAuthenticatedUser"));
 		ACTIVITY_FOR_UNAUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToUnauthenticatedUser"));
 		ACTIVITY_INVALID = new Integer(properties.getProperty("test.activityServicesImplTest.activityInvalid"));
@@ -277,7 +279,7 @@ public class ActivityServicesImplTest {
 	}
 	
 	/**
-	 * <p>Test paging for paging parameters that can't return values (i.e. are out of range - too high)</p>
+	 * <p>Test paging for paging parameters that can't return values (i.e. are out of range - too low)</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
 	 */
@@ -321,125 +323,256 @@ public class ActivityServicesImplTest {
 
 		assertNull("Photos returned for an invalid activity",photos);
 	}
+	
 	/**
 	 * List photos, with an activity that has no photos
 	 * @throws UnauthorizedException Thrown when security token is invalid
 	 */
 	@Test
-	public void testListActivityPhotos_noPhotos() throws UnauthorizedException {
+	public void testListActivityPhotos_hasNoPhotos() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
 		Photo[] photos = service.listActivityPhotos(ACTIVITY_WITHOUT_PHOTOS);
 
-		assertNull("Photos returned for an activity without photos",photos);
+		assertNotNull("Photos returned as null for a valid activity without photos",photos);
+		assertEquals("Photos were returned for an activity which has no photos",0,photos.length);
 	}
-
-	// Test criteria:
-	// 1. Valid activity
-	// 2. Invalid token - NO LONGER REQUIRED
-	// 3. Token is valid but doesn't have write access
-	// 4. Duplicate activity??
-	// 5. Activity with missing bits??
-	// 6. Activity with too many attributes??
+	
 	@Test
-	public void testCreateManualActivity() {
+	public void testCreateManualActivity_validActivity() {
 		// TODO Not yet implemented
 		fail("Not yet Implemented");
 	}
 
-	// Test criteria:
-	// 1. Valid activity
-	// 3. Token is valid but doesn't have write access
-	// 4. Non-existent activity
-	// 5. Activity that belongs to another athlete
-	// 6. Invalid activity id
 	@Test
-	public void testDeleteActivity() {
+	public void testCreateManualActivity_accessTokenDoesNotHaveWriteAccess() {
+		// TODO Not yet implemented
+		fail("Not yet Implemented");
+	}
+
+	@Test
+	public void testCreateManualActivity_duplicateActivity() {
+		// TODO Not yet implemented
+		fail("Not yet Implemented");
+	}
+
+	@Test
+	public void testCreateManualActivity_incompleteActivityDetails() {
+		// TODO Not yet implemented
+		fail("Not yet Implemented");
+	}
+
+	@Test
+	public void testCreateManualActivity_tooManyActivityAttributes() {
+		// TODO Not yet implemented
+		fail("Not yet Implemented");
+	}
+
+	@Test
+	public void testDeleteActivity_validActivity() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 
-	// Test criteria:
-	// 1. Has comments, with markdown
-	// 2. Has comments, without markdown
-	// 3. Has no comments
-	// 4. Invalid token
-	// 5. Page number
-	// 6. Page size
-	// 7. Page number and page size
-	// 8. Paging out of range
-	// 9. Invalid activity
 	@Test
-	public void testListActivityComments() {
+	public void testDeleteActivity_accessTokenDoesNotHaveWriteAccess() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testDeleteActivity_invalidActivity() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testDeleteActivity_unauthenticatedAthletesActivity() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListActivityComments_hasComments() throws UnauthorizedException {
+		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		Comment[] comments = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.TRUE, null, null);
+		
+		assertNotNull("Returned null list of comments (with markdown) when some were expected");
+		assertNotEquals("Returned empty list of comments when some were expected", 0, comments.length);
+		
+		Comment[] commentsWithoutMarkdown = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.FALSE, null, null);
+		
+		// Check that the lists are the same length!!
+		assertNotNull("Returned null list of comments (without markdown) when some were expected");
+		assertEquals("List of comments for activity " + ACTIVITY_WITH_COMMENTS + " is not same length with/without markdown!", comments.length, commentsWithoutMarkdown.length);
+		
+		// Check that at least one comment is different (i.e. because of the markdown)
+		boolean difference = false;
+		for (int i = 0 ; i < comments.length; i++) {
+			if (!comments[i].equals(commentsWithoutMarkdown[i])) {
+				difference = true;
+			}
+		}
+		if (!difference) {
+			fail("Comments without markdown are identical to comments with markdown, that's not right!");
+		}
+	}
+	
+	@Test
+	public void testListActivityComments_hasNoComments() throws UnauthorizedException {
+		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		Comment[] comments = service.listActivityComments(ACTIVITY_WITHOUT_COMMENTS, Boolean.TRUE, null, null);
+
+		assertNotNull("Returned null list of comments when an empty array was expected",comments);
+		assertEquals("Returned a non-empty list of comments when none were expected", 0, comments);
+	}
+	
+	@Test
+	public void testListActivityComments_pageNumber() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	public void testListActivityComments_hasCommentsWithMarkdown() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Comment[] comments = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.TRUE, null, null);
-		
-		assertNotNull("Returned null list of comments when some were expected");
-		assertNotEquals("Returned empty list of comments when some were expected", 0, comments.length);
-		
-		// TODO ensure that the markdown is there!
-		fail("Not yet implemented markdown tests");
+	public void testListActivityComments_pageSize() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
 	}
-
-	// Test criteria:
-	// 1. Has kudoers
-	// 2. Has no kudoers
-	// 3. Invalid token
-	// 4. Invalid (non-existent) activity
-	// 5. Page number
-	// 6. Page size
-	// 7. Page number and page size
-	// 8. Paging out of range
+	
 	@Test
-	public void testListActivityKudoers() {
+	public void testListActivityComments_pagingOutOfRangeHigh() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testListActivityComments_pagingOutOfRangeLow() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testListActivityComments_invalidActivity() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 
-	// Test criteria:
-	// 1. Has laps
-	// 2. Has no laps
-	// 3. Invalid token
-	// 4. Invalid (non-existent) activity
 	@Test
-	public void testListActivityLaps() {
+	public void testListActivityKudoers_hasKudoers() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testListActivityKudoers_hasNoKudoers() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 
-	// Test criteria:
-	// 1. Has zones
-	// 2. Has no zones
-	// 3. Invalid token
-	// 4. Invalid (non-existent) activity
 	@Test
-	public void testListActivityZones() {
+	public void testListActivityKudoers_invalidActivity() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 
-	// Test criteria:
-	// 1. Has friends
-	// 2. Has no friends
-	// 3. Invalid token
-	// 4. Page number
-	// 5. Page size
-	// 6. Page number and size
-	// 7. Paging out of range
 	@Test
-	public void testListFriendsActivities() {
+	public void testListActivityKudoers_pageNumber() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListActivityKudoers_pageSize() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	// Test criteria:	@Test
+	public void testListActivityKudoers_pageOutOfRangeHigh() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListActivityKudoers_pageOutOfRangeLow() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListActivityLaps_hasLaps() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListActivityLaps_hasNoLaps() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListActivityLaps_invalidActivity() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListActivityZones_hasZones() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListActivityZones_hasNoZones() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListActivityZones_invalidActivity() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListFriendsActivities_hasFriends() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testListFriendsActivities_hasNoFriends() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testListFriendsActivities_pageNumber() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testListFriendsActivities_pageSize() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testListFriendsActivities_pageOutOfRangeHigh() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testListFriendsActivities_pageOutOfRangeLow() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 	
 	// Test criteria:
 	// 1. Valid activity, valid update
-	// 2. Valid activity, attempt to update invalid elements of the activity
+	// 2. Valid activity, attempt to update invalid elements of the activity not catered for by the Strava API
 	// 3. Invalid token
 	// 4. Invalid (non-existent) activity
 	// 5. Invalid (belongs to another athlete) activity

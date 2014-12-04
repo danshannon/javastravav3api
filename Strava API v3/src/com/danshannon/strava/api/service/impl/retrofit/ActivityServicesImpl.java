@@ -92,14 +92,19 @@ public class ActivityServicesImpl implements ActivityServices {
 	 */
 	@Override
 	public Activity updateActivity(Activity activity) {
-		return restService.updateActivity(activity.getId(), activity);
+		try {
+			return restService.updateActivity(activity.getId(), activity);
+		} catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	/**
+	 * @throws NotFoundException 
 	 * @see com.danshannon.strava.api.service.ActivityServices#deleteActivity(java.lang.Integer)
 	 */
 	@Override
-	public void deleteActivity(Integer id) {
+	public void deleteActivity(Integer id) throws NotFoundException {
 		restService.deleteActivity(id);
 	}
 
@@ -145,7 +150,11 @@ public class ActivityServicesImpl implements ActivityServices {
 	 */
 	@Override
 	public ActivityZone[] listActivityZones(Integer id) {
-		return restService.listActivityZones(id);
+		try {
+			return restService.listActivityZones(id);
+		} catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -153,7 +162,11 @@ public class ActivityServicesImpl implements ActivityServices {
 	 */
 	@Override
 	public Lap[] listActivityLaps(Integer id) {
-		return restService.listActivityLaps(id);
+		try {
+			return restService.listActivityLaps(id);
+		} catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -164,7 +177,11 @@ public class ActivityServicesImpl implements ActivityServices {
 	public Comment[] listActivityComments(Integer id, Boolean markdown, Integer page, Integer perPage) {
 		validatePagingArguments(page,perPage);
 
-		return restService.listActivityComments(id, markdown, page, perPage);
+		try {
+			return restService.listActivityComments(id, markdown, page, perPage);
+		} catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -175,7 +192,11 @@ public class ActivityServicesImpl implements ActivityServices {
 	public Athlete[] listActivityKudoers(Integer id, Integer page, Integer perPage) {
 		validatePagingArguments(page,perPage);
 
-		return restService.listActivityKudoers(id, page, perPage);
+		try {
+			return restService.listActivityKudoers(id, page, perPage);
+		} catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -183,7 +204,19 @@ public class ActivityServicesImpl implements ActivityServices {
 	 */
 	@Override
 	public Photo[] listActivityPhotos(Integer id) {
-		return restService.listActivityPhotos(id);
+		try {
+			Photo[] photos = restService.listActivityPhotos(id);
+			
+			// This fixes an inconsistency with the listActivityComments API call on Strava, which returns an empty array, not null
+			if (photos == null) {
+				photos = new Photo[0];
+			}
+			
+			return photos;
+			
+		} catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 }
