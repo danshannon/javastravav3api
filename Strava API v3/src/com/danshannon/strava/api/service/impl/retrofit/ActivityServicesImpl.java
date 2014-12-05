@@ -83,8 +83,8 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#createManualActivity(com.danshannon.strava.api.model.Activity)
 	 */
 	@Override
-	public void createManualActivity(Activity activity) {
-		restService.createManualActivity(activity);
+	public Activity createManualActivity(Activity activity) {
+		return restService.createManualActivity(activity);
 	}
 
 	/**

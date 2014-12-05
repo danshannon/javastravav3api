@@ -31,7 +31,7 @@ public interface ActivityServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.ActivityServices#createManualActivity(com.danshannon.strava.api.model.Activity)
 	 */
 	@POST("/activities")
-	public void createManualActivity(@Body Activity activity);
+	public Activity createManualActivity(@Body Activity activity);
 	
 	@PUT("/activities/{id}")
 	public Activity updateActivity(@Path("id") Integer id, @Body Activity activity) throws NotFoundException;

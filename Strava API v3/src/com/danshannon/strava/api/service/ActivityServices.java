@@ -55,7 +55,7 @@ public interface ActivityServices {
 	 * 
 	 * @param activity The {@link Activity activity} to be uploaded</p>
 	 */
-	public void createManualActivity(Activity activity);
+	public Activity createManualActivity(Activity activity);
 	
 	/**
 	 * <p>Requires write permissions, as requested during the authorization process.</p>
