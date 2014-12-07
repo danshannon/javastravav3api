@@ -13,6 +13,7 @@ import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
 import com.danshannon.strava.api.service.ActivityServices;
+import com.danshannon.strava.api.service.Strava;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
@@ -43,7 +44,7 @@ public class ActivityServicesImpl implements ActivityServices {
 			restService = new ActivityServicesImpl(new RestAdapter.Builder()
 				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
 				.setLogLevel(LOG_LEVEL)
-				.setEndpoint(ENDPOINT)
+				.setEndpoint(Strava.ENDPOINT)
 				.setRequestInterceptor(new RequestInterceptor() {
 					@Override
 					public void intercept(RequestFacade request) {

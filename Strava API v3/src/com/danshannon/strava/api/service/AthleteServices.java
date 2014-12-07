@@ -2,6 +2,9 @@ package com.danshannon.strava.api.service;
 
 import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.SegmentEffort;
+import com.danshannon.strava.api.model.reference.Gender;
+import com.danshannon.strava.api.service.exception.NotFoundException;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
  * Athlete related services
@@ -24,6 +27,8 @@ public interface AthleteServices {
 	/**
 	 * <p>This request is used to retrieve information about any {@link Athlete athlete} on Strava.</p>
 	 * 
+	 * <p>Returns <code>null</code> if athlete does not exist</p>
+	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/athletes/:id</p>
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/athlete/"/>http://strava.github.io/api/v3/athlete/</a>
@@ -41,10 +46,13 @@ public interface AthleteServices {
 	 * <p>Only updates city, state, country, gender (sex) and weight.</p>
 	 * 
 	 * <p>URL PUT https://www.strava.com/api/v3/athlete</p>
+	 * 
+	 * @throws NotFoundException If the athlete does not exist (this is almost impossible, but just in case the athlete has somehow removed themselves from Strava altogether)
+	 * @throws UnauthorizedException If the security token in use does not have write access
 	 *
 	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
 	 */
-	public void updateAuthenticatedAthlete();
+	public void updateAuthenticatedAthlete(String city, String state, String country, Gender sex, Float weight) throws UnauthorizedException, NotFoundException;
 	
 	/**
 	 * <p>Returns an array of {@link SegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given athlete.</p>
@@ -52,6 +60,8 @@ public interface AthleteServices {
 	 * <p>Results are sorted by date, newest first.</p>
 	 * 
 	 * <p>Pagination is supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if athlete with the given id is not found.</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/athletes/:id/koms</p>
 	 * 
@@ -65,7 +75,7 @@ public interface AthleteServices {
 	public SegmentEffort[] listAthleteKOMs(Integer id, Integer page, Integer perPage);
 	
 	/**
-	 * <p>Friends are users the current {@link Athlete athlete} is following. The activities owned by these users will appear in the current athlete’s activity feed.</p>
+	 * <p>Friends are users the current {@link Athlete athlete} is following. The activities owned by these users will appear in the current athleteï¿½s activity feed.</p>
 	 * 
 	 * <p>This request is for the authenticated athlete's friends.</p>
 	 * 
@@ -82,11 +92,13 @@ public interface AthleteServices {
 	public Athlete[] listAuthenticatedAthleteFriends(Integer page, Integer perPage);
 	
 	/**
-	 * <p>Friends are users an {@link Athlete athlete} is following. The activities owned by these users will appear in the current athlete’s activity feed.</p>
+	 * <p>Friends are users an {@link Athlete athlete} is following. The activities owned by these users will appear in the current athleteï¿½s activity feed.</p>
 	 * 
 	 * <p>If the indicated athlete has blocked the authenticated athlete, the result will be an empty array.</p> 
 	 * 
 	 * <p>Pagination is supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if athlete with the given id is not found.</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/athletes/:id/friends</p>
 	 * 
@@ -103,6 +115,8 @@ public interface AthleteServices {
 	 * <p>Retrieve the {@link Athlete athletes} who both the authenticated athlete and the indicated athlete are following.</p>
 	 * 
 	 * <p>Pagination is supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if athlete with the given id is not found.</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/athletes/:id/both-following</p>
 	 * 

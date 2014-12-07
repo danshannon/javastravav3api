@@ -16,7 +16,9 @@ import com.danshannon.strava.api.model.reference.ResourceState;
  */
 public interface GearServices {
 	/**
-	 * <p>Retrieve details about a specific item of {@link Gear}. The requesting {@link Athlete} must own the {@link Gear}. At this time it is not possible to view just anyone’s gear type and usage.</p>
+	 * <p>Retrieve details about a specific item of {@link Gear}. The requesting {@link Athlete} must own the {@link Gear}. At this time it is not possible to view just anyone's gear type and usage.</p>
+	 * 
+	 * <p>Returns <code>null</code> if club with the given id does not exist</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/gear/:id</p>
 	 * 

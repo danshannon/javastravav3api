@@ -35,6 +35,9 @@ public interface ActivityServicesRetrofit {
 	@POST("/activities")
 	public Activity createManualActivity(@Body Activity activity) throws UnauthorizedException;
 	
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#updateActivity(com.danshannon.strava.api.model.Activity)
+	 */
 	@PUT("/activities/{id}")
 	public Activity updateActivity(@Path("id") Integer id, @Body Activity activity) throws NotFoundException, UnauthorizedException;
 	

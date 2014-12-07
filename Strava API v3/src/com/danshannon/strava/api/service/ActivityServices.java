@@ -17,8 +17,6 @@ import com.danshannon.strava.api.service.exception.UnauthorizedException;
  *
  */
 public interface ActivityServices {
-	public static final String ENDPOINT = "https://www.strava.com/api/v3";
-	
 	/**
 	 * <p>Activity details, including segment efforts, splits and best efforts, are only available to the owner of the activity.</p>
 	 * 

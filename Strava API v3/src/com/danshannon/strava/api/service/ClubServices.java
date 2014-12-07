@@ -23,6 +23,8 @@ public interface ClubServices {
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/clubs/:id</p>
 	 * 
+	 * <p>Returns <code>null</code> if club with the given id does not exist</p>
+	 * 
 	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-details>http://strava.github.io/api/v3/clubs/#get-details</a>
 	 * 
 	 * @param id The id of the {@link Club} to be retrieved
@@ -46,6 +48,8 @@ public interface ClubServices {
 	 * 
 	 * <p>Pagination is supported.</p>
 	 * 
+	 * <p>Returns <code>null</code> if club with the given id does not exist</p>
+	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/clubs/:id/members</p>
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-members">http://strava.github.io/api/v3/clubs/#get-members</a>
@@ -61,6 +65,8 @@ public interface ClubServices {
 	 * <p>Retrieve the recent {@link Activity activities} performed by member {@link Athlete athletes} of a specific {@link Club club}.</p>
 	 * 
 	 * <p>The authenticated athlete must be a member of the club.</p>
+	 * 
+	 * <p>Returns <code>null</code> if club with the given id does not exist</p>
 	 * 
 	 * <p>Pagination is supported. However, the results are limited to the last 200 total activities by club members.</p>
 	 * 
