@@ -6,8 +6,8 @@ import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
-import com.danshannon.strava.api.service.impl.retrofit.NotFoundException;
-import com.danshannon.strava.api.service.impl.retrofit.UnauthorizedException;
+import com.danshannon.strava.api.service.exception.NotFoundException;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
  * Activity related services
@@ -22,11 +22,11 @@ public interface ActivityServices {
 	/**
 	 * <p>Activity details, including segment efforts, splits and best efforts, are only available to the owner of the activity.</p>
 	 * 
-	 * <p>By default, only “important” efforts are included. “Importance” is based on a number of factors and its value may change over time. Factors considered include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated effort is “important” but not for the other.</p>
+	 * <p>By default, only ï¿½importantï¿½ efforts are included. ï¿½Importanceï¿½ is based on a number of factors and its value may change over time. Factors considered include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated effort is ï¿½importantï¿½ but not for the other.</p>
 	 * 
 	 * <p>Note that effort ids may exceed the max value for 32-bit integers. A long integer type should be used.</p>
 	 * 
-	 * <p>Each segment effort will have a hidden attribute indicating if it is “important” or not.</p>
+	 * <p>Each segment effort will have a hidden attribute indicating if it is ï¿½importantï¿½ or not.</p>
 	 * 
 	 * <p>Returns <code>null</code> if the activity does not exist
 	 * 
@@ -54,8 +54,9 @@ public interface ActivityServices {
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
 	 * @param activity The {@link Activity activity} to be uploaded</p>
+	 * @throws UnauthorizedException If user's security token does not grant write access to the activity
 	 */
-	public Activity createManualActivity(Activity activity);
+	public Activity createManualActivity(Activity activity) throws UnauthorizedException;
 	
 	/**
 	 * <p>Requires write permissions, as requested during the authorization process.</p>
@@ -68,8 +69,11 @@ public interface ActivityServices {
 	 * 
 	 * @param activity The {@link Activity} to be updated
 	 * @return Returns a detailed representation of the updated {@link Activity}.
+	 * 
+	 * @throws UnauthorizedException If the service's security token doesn't grant write access to this activity
+	 * @throws NotFoundException If the activity does not exist on Strava
 	 */
-	public Activity updateActivity(Activity activity);
+	public Activity updateActivity(Activity activity) throws UnauthorizedException, NotFoundException;
 	
 	/**
 	 * <p>Deletes the identified {@link Activity}</p>
@@ -83,9 +87,11 @@ public interface ActivityServices {
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
 	 * @param id The id of the {@link Activity} to be deleted.
-	 * @throws NotFoundException If the {@link Activity} does not exist
+	 * 
+	 * @throws UnauthorizedException If the service's security token doesn't grant write access to this activity
+	 * @throws NotFoundException If the {@link Activity} does not exist on Strava
 	 */
-	public void deleteActivity(Integer id) throws NotFoundException;
+	public void deleteActivity(Integer id) throws UnauthorizedException, NotFoundException;
 	
 	/**
 	 * <p>This endpoint returns a list of {@link Activity activities} for the authenticated {@link Athlete}.</p>
@@ -173,11 +179,11 @@ public interface ActivityServices {
 	public Comment[] listActivityComments(Integer id, Boolean markdown, Integer page, Integer perPage);
 	
 	/**
-	 * <p>A kudos is Strava’s version of a ‘Like’ or a ‘+1’. The number of kudos on an activity is returned with the activity summary.</p>
+	 * <p>A kudos is Stravaï¿½s version of a ï¿½Likeï¿½ or a ï¿½+1ï¿½. The number of kudos on an activity is returned with the activity summary.</p>
 	 * 
 	 * <p>Kudos posting can be enabled on a per application basis, email developers -at- strava.com for more information.</p>
 	 * 
-	 * <p>The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the athletes who’ve left kudos and can only be accessed by the owner of the activity.</p>
+	 * <p>The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the athletes whoï¿½ve left kudos and can only be accessed by the owner of the activity.</p>
 	 * 
 	 * <p>Pagination is supported.</p>
 	 * 

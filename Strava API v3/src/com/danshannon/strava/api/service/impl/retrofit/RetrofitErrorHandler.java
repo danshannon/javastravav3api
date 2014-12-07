@@ -1,5 +1,8 @@
 package com.danshannon.strava.api.service.impl.retrofit;
 
+import com.danshannon.strava.api.service.exception.NotFoundException;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
+
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

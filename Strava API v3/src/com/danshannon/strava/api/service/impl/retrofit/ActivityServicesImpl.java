@@ -13,6 +13,8 @@ import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
 import com.danshannon.strava.api.service.ActivityServices;
+import com.danshannon.strava.api.service.exception.NotFoundException;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
 
 /**
@@ -83,7 +85,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#createManualActivity(com.danshannon.strava.api.model.Activity)
 	 */
 	@Override
-	public Activity createManualActivity(Activity activity) {
+	public Activity createManualActivity(Activity activity) throws UnauthorizedException {
 		return restService.createManualActivity(activity);
 	}
 
@@ -91,20 +93,15 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#updateActivity(com.danshannon.strava.api.model.Activity)
 	 */
 	@Override
-	public Activity updateActivity(Activity activity) {
-		try {
+	public Activity updateActivity(Activity activity) throws NotFoundException, UnauthorizedException {
 			return restService.updateActivity(activity.getId(), activity);
-		} catch (NotFoundException e) {
-			return null;
-		}
 	}
 
 	/**
-	 * @throws NotFoundException 
 	 * @see com.danshannon.strava.api.service.ActivityServices#deleteActivity(java.lang.Integer)
 	 */
 	@Override
-	public void deleteActivity(Integer id) throws NotFoundException {
+	public void deleteActivity(Integer id) throws NotFoundException, UnauthorizedException {
 		restService.deleteActivity(id);
 	}
 

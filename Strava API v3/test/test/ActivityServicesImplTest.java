@@ -21,8 +21,9 @@ import com.danshannon.strava.api.model.Photo;
 import com.danshannon.strava.api.model.SegmentEffort;
 import com.danshannon.strava.api.model.reference.ResourceState;
 import com.danshannon.strava.api.service.ActivityServices;
+import com.danshannon.strava.api.service.exception.NotFoundException;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.api.service.impl.retrofit.ActivityServicesImpl;
-import com.danshannon.strava.api.service.impl.retrofit.UnauthorizedException;
 
 /**
  * <p>Unit tests for {@link ActivityServicesImpl}</p>
@@ -33,6 +34,7 @@ import com.danshannon.strava.api.service.impl.retrofit.UnauthorizedException;
 public class ActivityServicesImplTest {
 	private static String VALID_TOKEN; 
 	private static String INVALID_TOKEN;
+	private static String VALID_TOKEN_WITHOUT_WRITE_ACCESS;
 	private static Integer ACTIVITY_WITH_EFFORTS;
 	private static Integer ACTIVITY_WITH_PHOTOS;
 	private static Integer ACTIVITY_WITHOUT_PHOTOS;
@@ -60,6 +62,7 @@ public class ActivityServicesImplTest {
 		Properties properties = TestUtils.loadPropertiesFile(PROPERTIES_FILE);
 		VALID_TOKEN = properties.getProperty("test.activityServicesImplTest.validToken");
 		INVALID_TOKEN = properties.getProperty("test.activityServicesImplTest.invalidToken");
+		VALID_TOKEN_WITHOUT_WRITE_ACCESS = properties.getProperty("test.activityServicesImplTest.validTokenWithoutWriteAccess");
 		ACTIVITY_WITH_EFFORTS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithEfforts"));
 		ACTIVITY_WITH_PHOTOS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithPhotos"));
 		ACTIVITY_WITHOUT_PHOTOS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithoutPhotos"));
@@ -393,18 +396,33 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
 		Activity activity = service.createManualActivity(ACTIVITY_DEFAULT_FOR_CREATE);
 		// TODO Not yet implemented
-		//fail("Not yet Implemented");
+		fail("Not yet Implemented");
 	}
 
 	/**
 	 * <p>Attempt to create a valid manual {@link Activity} for the user associated with the security token, where the user has NOT granted write access via the OAuth process</p>
 	 * 
-	 * <p>Should fail to create the activity and throw an {@link UnauthorizedException}</p>
+	 * <p>Should fail to create the activity and throw an {@link UnauthorizedException}, which is trapped in the test because it it expected</p>
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testCreateManualActivity_accessTokenDoesNotHaveWriteAccess() {
-		// TODO Not yet implemented
-		fail("Not yet Implemented");
+	public void testCreateManualActivity_accessTokenDoesNotHaveWriteAccess() throws UnauthorizedException {
+		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN_WITHOUT_WRITE_ACCESS);
+		Activity activity = null;
+		try {
+			activity = service.createManualActivity(ACTIVITY_DEFAULT_FOR_CREATE);
+		} catch (UnauthorizedException e) {
+			// This is the expected behaviour - creation has failed because there's no write access
+			return;
+		}
+
+		// This is the unexpected behaviour - if we get here, then we've managed to create the activity! So delete it again (if possible)
+		try {
+			service.deleteActivity(activity.getId());
+		} catch (NotFoundException e) {
+			// Don't worry, there's not really any more we can do at this point
+		}
+		fail("Created a manual activity but should have failed and thrown an UnauthorizedException!");
 	}
 
 	/**

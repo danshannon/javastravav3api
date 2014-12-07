@@ -1,4 +1,4 @@
-package com.danshannon.strava.api.service.impl.retrofit;
+package com.danshannon.strava.api.service.exception;
 
 
 /**
