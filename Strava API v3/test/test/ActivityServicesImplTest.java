@@ -275,6 +275,8 @@ public class ActivityServicesImplTest {
 		assertNotNull("Authenticated athlete's activities returned as null when asking for a page of size 1",activities);
 		assertEquals("Wrong number of activities returned when asking for a page of size 1",1,activities.length);
 		
+		// TODO Test maximum page size (test at max, and at max+1)
+		fail("Not yet implemented");
 	}
 	
 	/**
@@ -592,6 +594,10 @@ public class ActivityServicesImplTest {
 		
 		assertNotNull("Asked for one comment in a page, got null",comments);
 		assertEquals("Asked for one comment in a page, got " + comments.length,1,comments.length);
+	
+		// TODO Test maximum page size (test at max, and at max+1)
+		fail("Not yet implemented");
+
 	}
 	
 	/**
@@ -729,6 +735,10 @@ public class ActivityServicesImplTest {
 		
 		assertNotNull("Asked for one kudoer in a page, got null",kudoers);
 		assertEquals("Asked for one comment in a page, got " + kudoers.length,1,kudoers.length);
+		
+		// TODO Test maximum page size (test at max, and at max+1)
+		fail("Not yet implemented");
+
 	}
 
 	/**
@@ -929,6 +939,10 @@ public class ActivityServicesImplTest {
 		
 		assertNotNull("Authenticated athlete's activities returned as null when asking for a page of size 1",activities);
 		assertEquals("Wrong number of activities returned when asking for a page of size 1",1,activities.length);
+		
+		// TODO Test maximum page size (test at max, and at max+1)
+		fail("Not yet implemented");
+
 	}
 	
 	/**

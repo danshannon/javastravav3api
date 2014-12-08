@@ -1,14 +1,11 @@
 package com.danshannon.strava.api.auth;
 
 import com.danshannon.strava.api.auth.model.TokenResponse;
-import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
-import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
-import com.danshannon.strava.api.auth.ref.AuthorisationScope;
 
 /**
  * <p>Authentication</p>
  * 
- * <p>Strava uses OAuth2 as an authentication protocol. It allows external applications to request authorisation to a user’s private data without requiring their Strava username and password. It allows users to grant and revoke API access on a per-application basis and keeps users’ authentication details safe.</p>
+ * <p>Strava uses OAuth2 as an authentication protocol. It allows external applications to request authorisation to a userï¿½s private data without requiring their Strava username and password. It allows users to grant and revoke API access on a per-application basis and keeps usersï¿½ authentication details safe.</p>
  * 
  * <p>All developers need to register their application before getting started. A registered application will be assigned a Client ID and Client SECRET. The SECRET should never be shared.</p>
  * 
@@ -26,15 +23,11 @@ import com.danshannon.strava.api.auth.ref.AuthorisationScope;
  *
  */
 public interface AuthorisationServices {
-	/**
-	 * <p>API endpoint for the Strava authorisation API</p>
-	 */
-	public static final String ENDPOINT = "https://www.strava.com";
 	
 	/**
-	 * <p>To request access on behalf of a user, redirect the user to Strava’s authorisation page,  https://www.strava.com/oauth/authorize (example). The page will prompt the user to authorize the app while providing basic information about what is being asked.</p>
+	 * <p>To request access on behalf of a user, redirect the user to Stravaï¿½s authorisation page,  https://www.strava.com/oauth/authorize (example). The page will prompt the user to authorize the app while providing basic information about what is being asked.</p>
 	 * 
-	 * <p>By default, applications can only view a user’s public data.</p>
+	 * <p>By default, applications can only view a userï¿½s public data.</p>
 	 * 
 	 * <p>The scope parameter can be used to request more access. It is recommended to only requested the minimum amount of access necessary.</p>
 	 * 
@@ -42,14 +35,15 @@ public interface AuthorisationServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/oauth/#get-authorize">http://strava.github.io/api/v3/oauth/#get-authorize</a>
 	 * 
-	 * @param clientId application’s ID, obtained during registration
+	 * @param clientId applicationï¿½s ID, obtained during registration
 	 * @param redirectURI URL to which the user will be redirected with the authorisation code, must be to the callback domain associated with the application, or its sub-domain (localhost and 127.0.0.1 are white-listed)
-	 * @param responseType must be ‘code’
-	 * @param approvalPrompt (Optional) ‘force’ or ‘auto’, use ‘force’ to always show the authorisation prompt even if the user has already authorized the current application, default is ‘auto’
-	 * @param scope (Optional) comma delimited string of ‘view_private’ and/or ‘write’, leave blank for read-only permissions.
+	 * @param responseType must be ï¿½codeï¿½
+	 * @param approvalPrompt (Optional) ï¿½forceï¿½ or ï¿½autoï¿½, use ï¿½forceï¿½ to always show the authorisation prompt even if the user has already authorized the current application, default is ï¿½autoï¿½
+	 * @param scope (Optional) comma delimited string of ï¿½view_privateï¿½ and/or ï¿½writeï¿½, leave blank for read-only permissions.
 	 * @param state (Optional)returned to your application, useful if the authentication is done from various points in an app
 	 */
-	public void requestAccess(Integer clientId, String redirectURI, AuthorisationResponseType responseType, AuthorisationApprovalPrompt approvalPrompt, AuthorisationScope[] scope, String state);
+	// TODO Decide whether we need this, it's actually going to take you to a web page...
+	// public void requestAccess(Integer clientId, String redirectURI, AuthorisationResponseType responseType, AuthorisationApprovalPrompt approvalPrompt, AuthorisationScope[] scope, String state);
 	
 	/**
 	 * <p>Strava will respond to the authorization request by redirecting the user/browser to the redirect_uri provided.</p>
@@ -62,7 +56,7 @@ public interface AuthorisationServices {
 	 * 
 	 * <p>If the user accepts the request to share access to their Strava data, Strava will redirect back to redirect_uri with the authorization code. The application must now exchange the temporary authorization code for an access token, using its client ID and client secret.</p>
 	 * 
-	 * <p>The application will now be able to make requests on the user’s behalf using the access_token query string parameter (GET) or POST/PUT body, or the Authorization header.</p>
+	 * <p>The application will now be able to make requests on the userï¿½s behalf using the access_token query string parameter (GET) or POST/PUT body, or the Authorization header.</p>
 	 * 
 	 * <p>Applications should check for a 401 Unauthorised response. Access for those tokens has been revoked by the user.</p>
 	 * 
@@ -70,17 +64,17 @@ public interface AuthorisationServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/oauth/#post-token">http://strava.github.io/api/v3/oauth/#post-token</a>
 	 * 
-	 * @param clientId application’s ID, obtained during registration
-	 * @param clientSecret application’s secret, obtained during registration
+	 * @param clientId applicationï¿½s ID, obtained during registration
+	 * @param clientSecret applicationï¿½s secret, obtained during registration
 	 * @param code authorisation code
 	 * @return Returns an access_token and a detailed representation of the current athlete.
 	 */
 	public TokenResponse tokenExchange(Integer clientId, String clientSecret, String code);
 	
 	/**
-	 * <p>Allows an application to revoke its access to an athlete’s data.</p>
+	 * <p>Allows an application to revoke its access to an athleteï¿½s data.</p>
 	 * 
-	 * <p>This will invalidate all access tokens associated with the ‘athlete,application’ pair used to create the token. The application will be removed from the Athlete Settings page on Strava.</p>
+	 * <p>This will invalidate all access tokens associated with the ï¿½athlete,applicationï¿½ pair used to create the token. The application will be removed from the Athlete Settings page on Strava.</p>
 	 * 
 	 * <p>All requests made using invalidated tokens will receive a 401 Unauthorised response.</p>
 	 * 
