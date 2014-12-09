@@ -8,7 +8,7 @@ public class Strava {
 	/**
 	 * <p>API endpoint for the Strava authorisation API</p>
 	 */
-	public static final String AUTH_ENDPOINT = "https://www.strava.com/oauth";
+	public static final String AUTH_ENDPOINT = "https://www.strava.com";
 
 	/**
 	 * <p>Throw an IllegalArgumentException if the page or perPage parameters are set but are invalid</p>

@@ -1,6 +1,9 @@
 package com.danshannon.strava.api.auth;
 
 import com.danshannon.strava.api.auth.model.TokenResponse;
+import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
+import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
+import com.danshannon.strava.api.auth.ref.AuthorisationScope;
 
 /**
  * <p>Authentication</p>
@@ -42,8 +45,7 @@ public interface AuthorisationServices {
 	 * @param scope (Optional) comma delimited string of �view_private� and/or �write�, leave blank for read-only permissions.
 	 * @param state (Optional)returned to your application, useful if the authentication is done from various points in an app
 	 */
-	// TODO Decide whether we need this, it's actually going to take you to a web page...
-	// public void requestAccess(Integer clientId, String redirectURI, AuthorisationResponseType responseType, AuthorisationApprovalPrompt approvalPrompt, AuthorisationScope[] scope, String state);
+	public void requestAccess(Integer clientId, String redirectURI, AuthorisationResponseType responseType, AuthorisationApprovalPrompt approvalPrompt, AuthorisationScope[] scope, String state);
 	
 	/**
 	 * <p>Strava will respond to the authorization request by redirecting the user/browser to the redirect_uri provided.</p>
@@ -86,4 +88,46 @@ public interface AuthorisationServices {
 	 * @return Responds with the access token submitted with the request.
 	 */
 	public TokenResponse deauthorise(String accessToken);
+	
+	/**
+	 * <p>Login to the Strava application</p>
+	 * 
+	 * <p>This method is provided FOR TESTING PURPOSES ONLY as it's not genuinely useful and you shouldn't be asking other people for their Strava password</p>
+	 * 
+	 * <p>URL POST https://www.strava.com/session</p>
+	 * 
+	 * TODO Session cookie?
+	 * 
+	 * @param email Email address associated with the user account
+	 * @param password Password associated with the user account
+	 * @return <code>true</code> if login is successful, <code>false</code> otherwise
+	 */
+	public boolean login(String email, String password);
+	
+	/**
+	 * <p>Indicate that the user has allowed the application to access their Strava data</p>
+	 * 
+	 * <p>This method is provided FOR TESTING PURPOSES ONLY</p>
+	 * 
+	 * TODO Session cookie??
+	 * 
+	 * @param clientId The application's ID, obtained during registration
+	 * @param redirectURI URI to which a redirect should be issued
+	 * @param responseType must be "code"
+	 * @return The code used by {@link #tokenExchange(Integer, String, String)} to get an access token
+	 */
+	public String acceptApplication(Integer clientId, String redirectURI, AuthorisationResponseType responseType);
+	
+	/**
+	 * <p>Indicate that the user has DENIED the application access to their Strava data</p>
+	 * 
+	 * <p>This method is provided FOR TESTING PURPOSES ONLY</p>
+	 * 
+	 * TODO Session cookie??
+	 * 
+	 * @param clientId The application's ID, obtained during registration
+	 * @param redirectURI URI to which a redirect should be issued
+	 * @param responseType must be "code"
+	 */
+	public void rejectApplication(Integer clientId, String redirectURI, AuthorisationResponseType responseType);
 }
