@@ -9,7 +9,7 @@ import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.reference.ActivityType;
 
 /**
- * @author dshannon
+ * @author Dan Shannon
  *
  */
 public class TestUtils {

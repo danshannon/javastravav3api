@@ -103,6 +103,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 */
 	@Override
 	public SegmentEffort[] listAthleteKOMs(Integer id, Integer page, Integer perPage) {
+		Strava.validatePagingArguments(page, perPage);
 		try {
 			return restService.listAthleteKOMs(id, page, perPage);
 		} catch (NotFoundException e) {
@@ -115,6 +116,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 */
 	@Override
 	public Athlete[] listAuthenticatedAthleteFriends(Integer page, Integer perPage) {
+		Strava.validatePagingArguments(page, perPage);
 		return restService.listAuthenticatedAthleteFriends(page, perPage);
 	}
 
@@ -123,6 +125,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 */
 	@Override
 	public Athlete[] listAthleteFriends(Integer id, Integer page, Integer perPage) {
+		Strava.validatePagingArguments(page, perPage);
 		try {
 			return restService.listAthleteFriends(id, page, perPage);
 		} catch (NotFoundException e) {
@@ -135,6 +138,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 */
 	@Override
 	public Athlete[] listAthletesBothFollowing(Integer id, Integer page, Integer perPage) {
+		Strava.validatePagingArguments(page, perPage);
 		try {
 			return restService.listAthletesBothFollowing(id, page, perPage);
 		} catch (NotFoundException e) {

@@ -95,6 +95,7 @@ public class ClubServicesImpl implements ClubServices {
 	 */
 	@Override
 	public Athlete[] listClubMembers(Integer id, Integer page, Integer perPage) {
+		Strava.validatePagingArguments(page, perPage);
 		try {
 			return restService.listClubMembers(id, page, perPage);
 		} catch (NotFoundException e) {
@@ -107,6 +108,7 @@ public class ClubServicesImpl implements ClubServices {
 	 */
 	@Override
 	public Activity[] listRecentClubActivities(Integer id, Integer page, Integer perPage) {
+		Strava.validatePagingArguments(page, perPage);
 		try {
 			return restService.listRecentClubActivities(id, page, perPage);
 		} catch (NotFoundException e) {
