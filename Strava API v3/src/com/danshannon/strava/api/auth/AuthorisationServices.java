@@ -1,5 +1,7 @@
 package com.danshannon.strava.api.auth;
 
+import java.io.IOException;
+
 import com.danshannon.strava.api.auth.model.TokenResponse;
 import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
 import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
@@ -38,14 +40,15 @@ public interface AuthorisationServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/oauth/#get-authorize">http://strava.github.io/api/v3/oauth/#get-authorize</a>
 	 * 
-	 * @param clientId application�s ID, obtained during registration
+	 * @param clientId application's ID, obtained during registration
 	 * @param redirectURI URL to which the user will be redirected with the authorisation code, must be to the callback domain associated with the application, or its sub-domain (localhost and 127.0.0.1 are white-listed)
-	 * @param responseType must be �code�
+	 * @param responseType must be "code"
 	 * @param approvalPrompt (Optional) �force� or �auto�, use �force� to always show the authorisation prompt even if the user has already authorized the current application, default is �auto�
 	 * @param scope (Optional) comma delimited string of �view_private� and/or �write�, leave blank for read-only permissions.
 	 * @param state (Optional)returned to your application, useful if the authentication is done from various points in an app
+	 * @throws IOException 
 	 */
-	public void requestAccess(Integer clientId, String redirectURI, AuthorisationResponseType responseType, AuthorisationApprovalPrompt approvalPrompt, AuthorisationScope[] scope, String state);
+	public void requestAccess(Integer clientId, String redirectURI, AuthorisationResponseType responseType, AuthorisationApprovalPrompt approvalPrompt, AuthorisationScope[] scope, String state) throws IOException;
 	
 	/**
 	 * <p>Strava will respond to the authorization request by redirecting the user/browser to the redirect_uri provided.</p>
@@ -100,16 +103,13 @@ public interface AuthorisationServices {
 	 * 
 	 * @param email Email address associated with the user account
 	 * @param password Password associated with the user account
-	 * @return <code>true</code> if login is successful, <code>false</code> otherwise
 	 */
-	public boolean login(String email, String password);
+	public void login(String email, String password);
 	
 	/**
 	 * <p>Indicate that the user has allowed the application to access their Strava data</p>
 	 * 
 	 * <p>This method is provided FOR TESTING PURPOSES ONLY</p>
-	 * 
-	 * TODO Session cookie??
 	 * 
 	 * @param clientId The application's ID, obtained during registration
 	 * @param redirectURI URI to which a redirect should be issued
@@ -122,8 +122,6 @@ public interface AuthorisationServices {
 	 * <p>Indicate that the user has DENIED the application access to their Strava data</p>
 	 * 
 	 * <p>This method is provided FOR TESTING PURPOSES ONLY</p>
-	 * 
-	 * TODO Session cookie??
 	 * 
 	 * @param clientId The application's ID, obtained during registration
 	 * @param redirectURI URI to which a redirect should be issued

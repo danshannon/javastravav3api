@@ -9,6 +9,7 @@ public class Strava {
 	 * <p>API endpoint for the Strava authorisation API</p>
 	 */
 	public static final String AUTH_ENDPOINT = "https://www.strava.com";
+	public static final String SESSION_COOKIE_NAME = "_strava3_session";
 
 	/**
 	 * <p>Throw an IllegalArgumentException if the page or perPage parameters are set but are invalid</p>

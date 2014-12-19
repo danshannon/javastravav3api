@@ -1,7 +1,9 @@
 package test;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import org.junit.BeforeClass;
@@ -42,11 +44,12 @@ public class AuthorisationServicesImplTest {
 	
 	/**
 	 * <p>Simulate the full (successful) login and authorisation OAuth process</p>
+	 * @throws IOException 
 	 */
 	@Test
-	public void fullLoginTest() {
+	public void fullLoginTest() throws IOException {
 		// Get a service implementation
-		AuthorisationServices service = AuthorisationServicesImpl.implementation();
+		AuthorisationServices service = new AuthorisationServicesImpl();
 		
 		// Log in
 		service.login(USERNAME, PASSWORD);
@@ -59,7 +62,7 @@ public class AuthorisationServicesImplTest {
 		
 		// Perform the token exchange
 		TokenResponse tokenResponse = service.tokenExchange(STRAVA_APPLICATION_ID, CLIENT_SECRET, code);
-		
+		assertNotNull("Token not successfully returned by Strava",tokenResponse);
 		
 		// TODO Not yet implemented
 		fail("Not yet implemented");
