@@ -21,6 +21,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
 import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
 import com.danshannon.strava.api.service.Strava;
 
@@ -123,11 +124,51 @@ public class TestHttpUtils {
 	 * @param clientId The application's ID, obtained during registration
 	 * @param redirectURI URI to which a redirect should be issued
 	 * @param responseType must be "code"
+	 * @param authenticityToken The hidden value of the authenticity token which must be returned with the form to Strava
 	 * @return The code used by {@link #tokenExchange(Integer, String, String)} to get an access token
 	 */
-	public String acceptApplication(Integer clientId, String redirectURI, AuthorisationResponseType responseType) {
-		// TODO Not yet implemented
-		return null;
+	public String acceptApplication(Integer clientId, String redirectURI, AuthorisationResponseType responseType, String authenticityToken) {
+		String location = null;
+		try {
+			HttpUriRequest post = RequestBuilder.post()
+					.setUri(new URI(Strava.AUTH_ENDPOINT + "/oauth/accept_application"))
+					.addParameter("client_id", clientId.toString())
+					.addParameter("redirect_uri", redirectURI)
+					.addParameter("response_type", responseType.toString())
+					.addParameter("authenticity_token", authenticityToken)
+					.build();
+			CloseableHttpResponse response2 = httpClient.execute(post);
+			try {
+				HttpEntity entity = response2.getEntity();
+				location = response2.getFirstHeader("Location").getValue();
+				System.out.println(post.getMethod() + " " + post.getURI() + " " + response2.getStatusLine());
+//				System.out.println(EntityUtils.toString(entity));
+				for (Header header : response2.getAllHeaders()) {
+					System.out.println(header);
+				}
+				for (Cookie cookie : cookieStore.getCookies()) {
+					System.out.println(cookie);
+				}
+				EntityUtils.consume(entity);
+
+			} finally {
+				response2.close();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("REDIRECT from accepting to " + location);
+		
+		// Get the code parameter from the redirect URI
+		String code = location.split("&code=")[1].split("&")[0];
+		System.out.println("CODE = " + code);
+		return code;
+
 	}
 	
 	/**
@@ -153,6 +194,29 @@ public class TestHttpUtils {
 		BasicNameValuePair[] params = null;
 		Document loginPage = get(Strava.AUTH_ENDPOINT + "/login", params);
 		Elements authTokens = loginPage.select("input[name=authenticity_token]");
+		for (Element element : authTokens) {
+			System.out.println("Element = " + element.toString());
+		}
+		return authTokens.first().attr("value");
+	}
+
+	/**
+	 * @param applicationId
+	 * @param code
+	 * @param redirectURI
+	 * @param authorisationApprovalPrompt
+	 * @return The authenticity token
+	 * @throws IOException 
+	 */
+	public String getAuthorisationPage(Integer applicationId, AuthorisationResponseType code, String redirectURI,
+			AuthorisationApprovalPrompt authorisationApprovalPrompt) throws IOException {
+		Document authPage = get(Strava.AUTH_ENDPOINT + "/oauth/authorize",
+				new BasicNameValuePair("client_id", applicationId.toString()),
+				new BasicNameValuePair("response_type", code.toString()),
+				new BasicNameValuePair("redirect_uri", redirectURI),
+				new BasicNameValuePair("approval_prompt", authorisationApprovalPrompt.toString())
+		);
+		Elements authTokens = authPage.select("input[name=authenticity_token]");
 		for (Element element : authTokens) {
 			System.out.println("Element = " + element.toString());
 		}

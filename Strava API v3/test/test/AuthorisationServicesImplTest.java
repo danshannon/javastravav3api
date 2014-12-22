@@ -66,21 +66,16 @@ public class AuthorisationServicesImplTest {
 		httpUtils.get(location, params);
 		
 		// Get the auth page
-		httpUtils.get(Strava.AUTH_ENDPOINT + "/oauth/authorize",
-				new BasicNameValuePair("client_id", STRAVA_APPLICATION_ID.toString()),
-				new BasicNameValuePair("response_type", AuthorisationResponseType.CODE.toString()),
-				new BasicNameValuePair("redirect_uri", "http://localhost"),
-				new BasicNameValuePair("approval_prompt", AuthorisationApprovalPrompt.FORCE.toString())
-		);
+		authenticityToken = httpUtils.getAuthorisationPage(STRAVA_APPLICATION_ID,AuthorisationResponseType.CODE,"http://localhost",AuthorisationApprovalPrompt.FORCE);
 		
 		// Post an approval to the request
-		String code = httpUtils.acceptApplication(STRAVA_APPLICATION_ID, "http://localhost", AuthorisationResponseType.CODE);
+		String code = httpUtils.acceptApplication(STRAVA_APPLICATION_ID, "http://localhost", AuthorisationResponseType.CODE, authenticityToken);
 		
 		// Perform the token exchange
 		TokenResponse tokenResponse = service.tokenExchange(STRAVA_APPLICATION_ID, CLIENT_SECRET, code);
 		assertNotNull("Token not successfully returned by Strava",tokenResponse);
-		
-		// TODO Not yet implemented
+
+		// TODO Use the token to get something useful that proves it's working
 		fail("Not yet implemented");
 	}
 }

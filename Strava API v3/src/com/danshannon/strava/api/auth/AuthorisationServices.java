@@ -43,8 +43,8 @@ public interface AuthorisationServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/oauth/#post-token">http://strava.github.io/api/v3/oauth/#post-token</a>
 	 * 
-	 * @param clientId application�s ID, obtained during registration
-	 * @param clientSecret application�s secret, obtained during registration
+	 * @param clientId application's ID, obtained during registration
+	 * @param clientSecret application's secret, obtained during registration
 	 * @param code authorisation code
 	 * @return Returns an access_token and a detailed representation of the current athlete.
 	 */
