@@ -1,11 +1,6 @@
 package com.danshannon.strava.api.auth;
 
-import java.io.IOException;
-
 import com.danshannon.strava.api.auth.model.TokenResponse;
-import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
-import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
-import com.danshannon.strava.api.auth.ref.AuthorisationScope;
 
 /**
  * <p>Authentication</p>
@@ -28,28 +23,7 @@ import com.danshannon.strava.api.auth.ref.AuthorisationScope;
  *
  */
 public interface AuthorisationServices {
-	
-	/**
-	 * <p>To request access on behalf of a user, redirect the user to Strava�s authorisation page,  https://www.strava.com/oauth/authorize (example). The page will prompt the user to authorize the app while providing basic information about what is being asked.</p>
-	 * 
-	 * <p>By default, applications can only view a user�s public data.</p>
-	 * 
-	 * <p>The scope parameter can be used to request more access. It is recommended to only requested the minimum amount of access necessary.</p>
-	 * 
-	 * <p>URL GET https://www.strava.com/oauth/authorize</p>
-	 * 
-	 * @see <a href="http://strava.github.io/api/v3/oauth/#get-authorize">http://strava.github.io/api/v3/oauth/#get-authorize</a>
-	 * 
-	 * @param clientId application's ID, obtained during registration
-	 * @param redirectURI URL to which the user will be redirected with the authorisation code, must be to the callback domain associated with the application, or its sub-domain (localhost and 127.0.0.1 are white-listed)
-	 * @param responseType must be "code"
-	 * @param approvalPrompt (Optional) �force� or �auto�, use �force� to always show the authorisation prompt even if the user has already authorized the current application, default is �auto�
-	 * @param scope (Optional) comma delimited string of �view_private� and/or �write�, leave blank for read-only permissions.
-	 * @param state (Optional)returned to your application, useful if the authentication is done from various points in an app
-	 * @throws IOException 
-	 */
-	public void requestAccess(Integer clientId, String redirectURI, AuthorisationResponseType responseType, AuthorisationApprovalPrompt approvalPrompt, AuthorisationScope[] scope, String state) throws IOException;
-	
+		
 	/**
 	 * <p>Strava will respond to the authorization request by redirecting the user/browser to the redirect_uri provided.</p>
 	 * 
@@ -92,40 +66,5 @@ public interface AuthorisationServices {
 	 */
 	public TokenResponse deauthorise(String accessToken);
 	
-	/**
-	 * <p>Login to the Strava application</p>
-	 * 
-	 * <p>This method is provided FOR TESTING PURPOSES ONLY as it's not genuinely useful and you shouldn't be asking other people for their Strava password</p>
-	 * 
-	 * <p>URL POST https://www.strava.com/session</p>
-	 * 
-	 * TODO Session cookie?
-	 * 
-	 * @param email Email address associated with the user account
-	 * @param password Password associated with the user account
-	 */
-	public void login(String email, String password);
 	
-	/**
-	 * <p>Indicate that the user has allowed the application to access their Strava data</p>
-	 * 
-	 * <p>This method is provided FOR TESTING PURPOSES ONLY</p>
-	 * 
-	 * @param clientId The application's ID, obtained during registration
-	 * @param redirectURI URI to which a redirect should be issued
-	 * @param responseType must be "code"
-	 * @return The code used by {@link #tokenExchange(Integer, String, String)} to get an access token
-	 */
-	public String acceptApplication(Integer clientId, String redirectURI, AuthorisationResponseType responseType);
-	
-	/**
-	 * <p>Indicate that the user has DENIED the application access to their Strava data</p>
-	 * 
-	 * <p>This method is provided FOR TESTING PURPOSES ONLY</p>
-	 * 
-	 * @param clientId The application's ID, obtained during registration
-	 * @param redirectURI URI to which a redirect should be issued
-	 * @param responseType must be "code"
-	 */
-	public void rejectApplication(Integer clientId, String redirectURI, AuthorisationResponseType responseType);
 }

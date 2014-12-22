@@ -1,11 +1,13 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,6 +16,7 @@ import com.danshannon.strava.api.auth.impl.retrofit.AuthorisationServicesImpl;
 import com.danshannon.strava.api.auth.model.TokenResponse;
 import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
 import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
+import com.danshannon.strava.api.service.Strava;
 
 public class AuthorisationServicesImplTest {
 	private static String VALID_TOKEN; 
@@ -50,15 +53,28 @@ public class AuthorisationServicesImplTest {
 	public void fullLoginTest() throws IOException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
+		TestHttpUtils httpUtils = new TestHttpUtils();
 		
-		// Log in
-		service.login(USERNAME, PASSWORD);
+		// Get the login page and find the authenticity token that Strava cunningly hides in there :)
+		String authenticityToken = httpUtils.getLoginAuthenticityToken();
+		assertNotNull("Strava login page didn't seem to hand out an authenticity_token",authenticityToken);
+		
+		// Log in - success should send a redirect to the dashboard
+		String location = httpUtils.login(USERNAME, PASSWORD, authenticityToken);
+		assertEquals("Login failed",location,Strava.AUTH_ENDPOINT + "/dashboard");
+		BasicNameValuePair[] params = null;
+		httpUtils.get(location, params);
 		
 		// Get the auth page
-		service.requestAccess(STRAVA_APPLICATION_ID, "http://localhost", AuthorisationResponseType.CODE, AuthorisationApprovalPrompt.FORCE, null, null);
+		httpUtils.get(Strava.AUTH_ENDPOINT + "/oauth/authorize",
+				new BasicNameValuePair("client_id", STRAVA_APPLICATION_ID.toString()),
+				new BasicNameValuePair("response_type", AuthorisationResponseType.CODE.toString()),
+				new BasicNameValuePair("redirect_uri", "http://localhost"),
+				new BasicNameValuePair("approval_prompt", AuthorisationApprovalPrompt.FORCE.toString())
+		);
 		
 		// Post an approval to the request
-		String code = service.acceptApplication(STRAVA_APPLICATION_ID, "http://localhost", AuthorisationResponseType.CODE);
+		String code = httpUtils.acceptApplication(STRAVA_APPLICATION_ID, "http://localhost", AuthorisationResponseType.CODE);
 		
 		// Perform the token exchange
 		TokenResponse tokenResponse = service.tokenExchange(STRAVA_APPLICATION_ID, CLIENT_SECRET, code);
