@@ -36,7 +36,7 @@ public class UploadServicesImpl implements UploadServices {
 	 * @return An implementation of the upload services
 	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static UploadServices implementation(String token) throws UnauthorizedException {
+	public static UploadServices implementation(final String token) throws UnauthorizedException {
 		UploadServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new UploadServicesImpl(new RestAdapter.Builder()

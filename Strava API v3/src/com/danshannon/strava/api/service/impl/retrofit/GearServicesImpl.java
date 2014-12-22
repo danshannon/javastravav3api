@@ -31,7 +31,7 @@ public class GearServicesImpl implements GearServices {
 	 * @return An implementation of the club services
 	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static GearServices implementation(String token) throws UnauthorizedException {
+	public static GearServices implementation(final String token) throws UnauthorizedException {
 		GearServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new GearServicesImpl(new RestAdapter.Builder()

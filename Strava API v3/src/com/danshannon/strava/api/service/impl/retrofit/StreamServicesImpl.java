@@ -37,7 +37,7 @@ public class StreamServicesImpl implements StreamServices {
 	 * @return An implementation of the stream services
 	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static StreamServices implementation(String token) throws UnauthorizedException {
+	public static StreamServices implementation(final String token) throws UnauthorizedException {
 		StreamServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new StreamServicesImpl(new RestAdapter.Builder()

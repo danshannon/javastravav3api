@@ -38,7 +38,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @return An implementation of the athlete services
 	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static AthleteServices implementation(String token) throws UnauthorizedException {
+	public static AthleteServices implementation(final String token) throws UnauthorizedException {
 		AthleteServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new AthleteServicesImpl(new RestAdapter.Builder()
