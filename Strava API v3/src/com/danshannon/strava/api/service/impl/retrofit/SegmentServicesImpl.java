@@ -48,7 +48,7 @@ public class SegmentServicesImpl implements SegmentServices {
 	 * @return An implementation of the club services
 	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static SegmentServices implementation(String token) throws UnauthorizedException {
+	public static SegmentServices implementation(final String token) throws UnauthorizedException {
 		SegmentServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new SegmentServicesImpl(new RestAdapter.Builder()

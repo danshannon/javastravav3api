@@ -38,7 +38,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @return An implementation of the activity services
 	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static ActivityServices implementation(String token) throws UnauthorizedException {
+	public static ActivityServices implementation(final String token) throws UnauthorizedException {
 		ActivityServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new ActivityServicesImpl(new RestAdapter.Builder()

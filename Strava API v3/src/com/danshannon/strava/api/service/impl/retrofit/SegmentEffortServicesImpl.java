@@ -35,7 +35,7 @@ public class SegmentEffortServicesImpl implements SegmentEffortServices {
 	 * @return An implementation of the segment effort services
 	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static SegmentEffortServices implementation(String token) throws UnauthorizedException {
+	public static SegmentEffortServices implementation(final String token) throws UnauthorizedException {
 		SegmentEffortServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new SegmentEffortServicesImpl(new RestAdapter.Builder()

@@ -38,7 +38,7 @@ public class ClubServicesImpl implements ClubServices {
 	 * @return An implementation of the club services
 	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static ClubServices implementation(String token) throws UnauthorizedException {
+	public static ClubServices implementation(final String token) throws UnauthorizedException {
 		ClubServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new ClubServicesImpl(new RestAdapter.Builder()
