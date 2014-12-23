@@ -19,4 +19,11 @@ public class UnauthorizedException extends Throwable {
 		super(cause);
 	}
 
+	/**
+	 * @param string
+	 */
+	public UnauthorizedException(String string) {
+		super(string);
+	}
+
 }

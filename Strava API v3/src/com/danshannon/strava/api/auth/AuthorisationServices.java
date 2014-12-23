@@ -35,7 +35,7 @@ public interface AuthorisationServices {
 	 * 
 	 * <p>If the user accepts the request to share access to their Strava data, Strava will redirect back to redirect_uri with the authorization code. The application must now exchange the temporary authorization code for an access token, using its client ID and client secret.</p>
 	 * 
-	 * <p>The application will now be able to make requests on the user�s behalf using the access_token query string parameter (GET) or POST/PUT body, or the Authorization header.</p>
+	 * <p>The application will now be able to make requests on the user's behalf using the access_token query string parameter (GET) or POST/PUT body, or the Authorization header.</p>
 	 * 
 	 * <p>Applications should check for a 401 Unauthorised response. Access for those tokens has been revoked by the user.</p>
 	 * 
@@ -53,7 +53,7 @@ public interface AuthorisationServices {
 	/**
 	 * <p>Allows an application to revoke its access to an athlete�s data.</p>
 	 * 
-	 * <p>This will invalidate all access tokens associated with the �athlete,application� pair used to create the token. The application will be removed from the Athlete Settings page on Strava.</p>
+	 * <p>This will invalidate all access tokens associated with the athlete, application pair used to create the token. The application will be removed from the Athlete Settings page on Strava.</p>
 	 * 
 	 * <p>All requests made using invalidated tokens will receive a 401 Unauthorised response.</p>
 	 * 

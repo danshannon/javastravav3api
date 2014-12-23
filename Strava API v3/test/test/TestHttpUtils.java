@@ -23,7 +23,9 @@ import org.jsoup.select.Elements;
 
 import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
 import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
+import com.danshannon.strava.api.auth.ref.AuthorisationScope;
 import com.danshannon.strava.api.service.Strava;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
  * @author dshannon
@@ -209,18 +211,65 @@ public class TestHttpUtils {
 	 * @throws IOException 
 	 */
 	public String getAuthorisationPage(Integer applicationId, AuthorisationResponseType code, String redirectURI,
-			AuthorisationApprovalPrompt authorisationApprovalPrompt) throws IOException {
+			AuthorisationApprovalPrompt authorisationApprovalPrompt,AuthorisationScope... scopes) throws IOException {
+		String scopeString = "";
+		for (AuthorisationScope scope : scopes) {
+			scopeString = scopeString + scope.toString() + ",";
+		}
 		Document authPage = get(Strava.AUTH_ENDPOINT + "/oauth/authorize",
 				new BasicNameValuePair("client_id", applicationId.toString()),
 				new BasicNameValuePair("response_type", code.toString()),
 				new BasicNameValuePair("redirect_uri", redirectURI),
-				new BasicNameValuePair("approval_prompt", authorisationApprovalPrompt.toString())
+				new BasicNameValuePair("approval_prompt", authorisationApprovalPrompt.toString()),
+				new BasicNameValuePair("scope", scopeString)
 		);
 		Elements authTokens = authPage.select("input[name=authenticity_token]");
 		for (Element element : authTokens) {
 			System.out.println("Element = " + element.toString());
 		}
 		return authTokens.first().attr("value");
+	}
+
+	/**
+	 * @param username
+	 * @param password
+	 * @throws IOException 
+	 */
+	public void loginToSession(String username, String password) throws IOException, UnauthorizedException {
+		// Get the login page and find the authenticity token that Strava cunningly hides in there :)
+		String authenticityToken = getLoginAuthenticityToken();
+		if (authenticityToken == null || authenticityToken.equals("")) {
+			throw new UnauthorizedException("Strava login page didn't seem to hand out an authenticity_token");
+		}
+		
+		// Log in - success should send a redirect to the dashboard
+		String location = login(username, password, authenticityToken);
+		if (!location.equals(Strava.AUTH_ENDPOINT + "/dashboard")) {
+			throw new UnauthorizedException("Login failed");
+		}
+		
+		// Get the page to which we were re-directed, just for the sake of completeness
+		BasicNameValuePair[] params = null;
+		get(location, params);
+	}
+
+	/**
+	 * @param stravaApplicationId
+	 * @param responseType
+	 * @param redirectURI
+	 * @param approvalPrompt
+	 * @param object
+	 * @return
+	 * @throws IOException 
+	 */
+	public String approveApplication(Integer stravaApplicationId, AuthorisationResponseType responseType, String redirectURI,
+			AuthorisationApprovalPrompt approvalPrompt, AuthorisationScope... scope) throws IOException {
+		// Get the auth page
+		String authenticityToken = getAuthorisationPage(stravaApplicationId,responseType,redirectURI,approvalPrompt,scope);
+		
+		// Post an approval to the request
+		String approvalCode = acceptApplication(stravaApplicationId, redirectURI, responseType, authenticityToken);
+		return approvalCode;
 	}
 
 }

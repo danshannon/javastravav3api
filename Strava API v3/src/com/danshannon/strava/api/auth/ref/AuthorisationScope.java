@@ -2,7 +2,7 @@ package com.danshannon.strava.api.auth.ref;
 
 
 /**
- * <p>‘view_private’ and/or ‘write’, leave blank for read-only permissions.</p>
+ * <p>view_private and/or write, leave blank for read-only permissions.</p>
  * 
  * @author Dan Shannon
  *
