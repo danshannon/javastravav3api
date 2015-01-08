@@ -5,9 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
-import java.util.Properties;
-
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.danshannon.strava.api.service.SegmentEffortServices;
@@ -21,24 +18,6 @@ import com.danshannon.strava.api.service.impl.retrofit.SegmentEffortServicesImpl
  *
  */
 public class SegmentEffortServicesImplTest {
-	private static String VALID_TOKEN; 
-	private static String INVALID_TOKEN;
-	private static String VALID_TOKEN_WITHOUT_WRITE_ACCESS;
-	private static final String PROPERTIES_FILE = "test-config.properties";
-
-	/**
-	 * <p>Loads the properties from the test configuration file</p>
-	 * 
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		Properties properties = TestUtils.loadPropertiesFile(PROPERTIES_FILE);
-		VALID_TOKEN = properties.getProperty("test.activityServicesImplTest.validToken");
-		INVALID_TOKEN = properties.getProperty("test.activityServicesImplTest.invalidToken");
-		VALID_TOKEN_WITHOUT_WRITE_ACCESS = properties.getProperty("test.activityServicesImplTest.validTokenWithoutWriteAccess");
-	}
-	
 	/**
 	 * <p>Test we get a {@link SegmentEffortServicesImpl service implementation} successfully with a valid token</p>
 	 * 
@@ -46,7 +25,7 @@ public class SegmentEffortServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_validToken() throws UnauthorizedException {
-		SegmentEffortServices service = SegmentEffortServicesImpl.implementation(VALID_TOKEN);
+		SegmentEffortServices service = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
 		assertNotNull("Got a NULL service for a valid token", service);
 	}
 	
@@ -57,7 +36,7 @@ public class SegmentEffortServicesImplTest {
 	public void testImplementation_invalidToken() {
 		SegmentEffortServices service = null;
 		try {
-			service = SegmentEffortServicesImpl.implementation(INVALID_TOKEN);
+			service = SegmentEffortServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour
 		}
@@ -78,8 +57,8 @@ public class SegmentEffortServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_implementationIsCached() throws UnauthorizedException {
-		SegmentEffortServices service = SegmentEffortServicesImpl.implementation(VALID_TOKEN);
-		SegmentEffortServices service2 = SegmentEffortServicesImpl.implementation(VALID_TOKEN);
+		SegmentEffortServices service = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
+		SegmentEffortServices service2 = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
 		assertEquals("Retrieved multiple service instances for the same token - should only be one",service,service2);
 	}
 	

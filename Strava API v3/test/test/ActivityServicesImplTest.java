@@ -7,12 +7,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.Date;
-import java.util.Properties;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.danshannon.strava.api.auth.ref.AuthorisationScope;
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.ActivityZone;
 import com.danshannon.strava.api.model.Athlete;
@@ -33,65 +30,7 @@ import com.danshannon.strava.api.service.impl.retrofit.ActivityServicesImpl;
  *
  */
 public class ActivityServicesImplTest {
-	private static TestHttpUtils HTTP_UTILS;
-	private static String USERNAME;
-	private static String PASSWORD;
-	private static Integer STRAVA_APPLICATION_ID;
-	private static String STRAVA_CLIENT_SECRET;
-	
-	private static String VALID_TOKEN; 
-	private static String INVALID_TOKEN;
-	private static String VALID_TOKEN_WITHOUT_WRITE_ACCESS;
-	private static Integer ACTIVITY_WITH_EFFORTS;
-	private static Integer ACTIVITY_WITH_PHOTOS;
-	private static Integer ACTIVITY_WITHOUT_PHOTOS;
-	private static Integer ACTIVITY_FOR_AUTHENTICATED_USER;
-	private static Integer ACTIVITY_FOR_UNAUTHENTICATED_USER;
-	private static Integer ACTIVITY_INVALID;
-	private static Integer ACTIVITY_WITH_COMMENTS;
-	private static Integer ACTIVITY_WITHOUT_COMMENTS;
-	private static Integer ACTIVITY_WITH_KUDOS;
-	private static Integer ACTIVITY_WITHOUT_KUDOS;
-	private static Integer ACTIVITY_WITH_LAPS;
-	private static Integer ACTIVITY_WITHOUT_LAPS;
-	private static Integer ACTIVITY_WITH_ZONES;
-	private static Integer ACTIVITY_WITHOUT_ZONES;
-	private static Activity ACTIVITY_DEFAULT_FOR_CREATE;
-	private static final String PROPERTIES_FILE = "test-config.properties";
 
-	/**
-	 * <p>Loads the properties from the test configuration file</p>
-	 * 
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		// TODO Encapsulate all the security crap inside the TestHttpUtils
-		HTTP_UTILS = new TestHttpUtils();
-		VALID_TOKEN = HTTP_UTILS.getStravaAccessToken(STRAVA_APPLICATION_ID, STRAVA_CLIENT_SECRET, USERNAME, PASSWORD, AuthorisationScope.VIEW_PRIVATE, AuthorisationScope.WRITE);
-		VALID_TOKEN_WITHOUT_WRITE_ACCESS = HTTP_UTILS.getStravaAccessToken(STRAVA_APPLICATION_ID, STRAVA_CLIENT_SECRET, USERNAME, PASSWORD);
-		
-		Properties properties = TestUtils.loadPropertiesFile(PROPERTIES_FILE);
-		VALID_TOKEN = properties.getProperty("test.activityServicesImplTest.validToken");
-		INVALID_TOKEN = properties.getProperty("test.activityServicesImplTest.invalidToken");
-		VALID_TOKEN_WITHOUT_WRITE_ACCESS = properties.getProperty("test.activityServicesImplTest.validTokenWithoutWriteAccess");
-		ACTIVITY_WITH_EFFORTS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithEfforts"));
-		ACTIVITY_WITH_PHOTOS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithPhotos"));
-		ACTIVITY_WITHOUT_PHOTOS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithoutPhotos"));
-		ACTIVITY_WITH_COMMENTS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithComments"));
-		ACTIVITY_WITHOUT_COMMENTS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithoutComments"));
-		ACTIVITY_WITH_KUDOS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithKudos"));
-		ACTIVITY_WITHOUT_KUDOS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithoutKudos"));
-		ACTIVITY_WITH_LAPS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithLaps"));
-		ACTIVITY_WITHOUT_LAPS = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithoutLaps"));
-		ACTIVITY_WITH_ZONES = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithZones"));
-		ACTIVITY_WITHOUT_ZONES = new Integer(properties.getProperty("test.activityServicesImplTest.activityWithoutZones"));
-		ACTIVITY_FOR_AUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToAuthenticatedUser"));
-		ACTIVITY_FOR_UNAUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToUnauthenticatedUser"));
-		ACTIVITY_INVALID = new Integer(properties.getProperty("test.activityServicesImplTest.activityInvalid"));
-		ACTIVITY_DEFAULT_FOR_CREATE = TestUtils.createDefaultActivityForCreation();
-	}
-	
 	/**
 	 * <p>Test we get a {@link ActivityServicesImpl service implementation} successfully with a valid token</p>
 	 * 
@@ -99,7 +38,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_validToken() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		assertNotNull("Got a NULL service for a valid token", service);
 	}
 	
@@ -110,7 +49,7 @@ public class ActivityServicesImplTest {
 	public void testImplementation_invalidToken() {
 		ActivityServices service = null;
 		try {
-			service = ActivityServicesImpl.implementation(INVALID_TOKEN);
+			service = ActivityServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour
 		}
@@ -131,8 +70,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_implementationIsCached() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		ActivityServices service2 = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		ActivityServices service2 = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		assertEquals("Retrieved multiple service instances for the same token - should only be one",service,service2);
 	}
 	
@@ -154,12 +93,12 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testGetActivity_knownActivityWithEfforts() throws UnauthorizedException  {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Activity activity = service.getActivity(ACTIVITY_WITH_EFFORTS, Boolean.TRUE);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_WITH_EFFORTS, Boolean.TRUE);
 
-		assertNotNull("Returned null Activity for known activity with id " + ACTIVITY_WITH_EFFORTS,activity);
-		assertNotNull("Activity " + ACTIVITY_WITH_EFFORTS + " was returned but segmentEfforts is null", activity.getSegmentEfforts());
-		assertNotEquals("Activity " + ACTIVITY_WITH_EFFORTS + " was returned but segmentEfforts is empty",0,activity.getSegmentEfforts().size());
+		assertNotNull("Returned null Activity for known activity with id " + TestUtils.ACTIVITY_WITH_EFFORTS,activity);
+		assertNotNull("Activity " + TestUtils.ACTIVITY_WITH_EFFORTS + " was returned but segmentEfforts is null", activity.getSegmentEfforts());
+		assertNotEquals("Activity " + TestUtils.ACTIVITY_WITH_EFFORTS + " was returned but segmentEfforts is empty",0,activity.getSegmentEfforts().size());
 	}
 	
 	/**
@@ -169,10 +108,10 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testGetActivity_knownActivityBelongsToAuthenticatedUser() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Activity activity = service.getActivity(ACTIVITY_FOR_AUTHENTICATED_USER, Boolean.FALSE);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, Boolean.FALSE);
 		
-		assertNotNull("Returned null Activity for known activity with id " + ACTIVITY_FOR_AUTHENTICATED_USER,activity);
+		assertNotNull("Returned null Activity for known activity with id " + TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER,activity);
 		assertEquals("Returned activity is not a detailed representation as expected - " + activity.getResourceState(),ResourceState.DETAILED,activity.getResourceState());
 	}
 
@@ -183,10 +122,10 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testGetActivity_knownActivityBelongsToUnauthenticatedUser() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Activity activity = service.getActivity(ACTIVITY_FOR_UNAUTHENTICATED_USER, Boolean.FALSE);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_UNAUTHENTICATED_USER, Boolean.FALSE);
 		
-		assertNotNull("Returned null Activity for known activity with id " + ACTIVITY_FOR_UNAUTHENTICATED_USER,activity);
+		assertNotNull("Returned null Activity for known activity with id " + TestUtils.ACTIVITY_FOR_UNAUTHENTICATED_USER,activity);
 		assertEquals("Returned activity is not a summary representation as expected - " + activity.getResourceState(), ResourceState.SUMMARY, activity.getResourceState());
 	}
 	/**
@@ -196,12 +135,12 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testGetActivity_knownActivityWithoutEfforts() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Activity activity = service.getActivity(ACTIVITY_WITH_EFFORTS, Boolean.FALSE);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_WITH_EFFORTS, Boolean.FALSE);
 
-		assertNotNull("Returned null Activity for known activity with id " + ACTIVITY_WITH_EFFORTS,activity);
+		assertNotNull("Returned null Activity for known activity with id " + TestUtils.ACTIVITY_WITH_EFFORTS,activity);
 		assertNotNull("Returned null segment efforts for known activity, when they were expected", activity.getSegmentEfforts());
-		assertEquals("Returned segment efforts despite asking not to for activity with id " + ACTIVITY_WITH_EFFORTS, 0, activity.getSegmentEfforts().size());
+		assertEquals("Returned segment efforts despite asking not to for activity with id " + TestUtils.ACTIVITY_WITH_EFFORTS, 0, activity.getSegmentEfforts().size());
 	}
 	
 	/**
@@ -213,10 +152,10 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testGetActivity_unknownActivity() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Activity activity = service.getActivity(ACTIVITY_INVALID, Boolean.FALSE);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_INVALID, Boolean.FALSE);
 		
-		assertNull("Got an activity for an invalid activity id " + ACTIVITY_INVALID,activity);
+		assertNull("Got an activity for an invalid activity id " + TestUtils.ACTIVITY_INVALID,activity);
 	}
 	
 	/**
@@ -226,7 +165,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListAuthenticatedAthleteActivities_default() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		Activity[] activities = service.listAuthenticatedAthleteActivities(null, null, null, null);
 		
 		assertNotNull("Authenticated athlete's activities returned as null",activities);
@@ -281,7 +220,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListAuthenticatedAthleteActivities_pageSize() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		Activity[] activities = service.listAuthenticatedAthleteActivities(null, null, null, 1);
 		
 		assertNotNull("Authenticated athlete's activities returned as null when asking for a page of size 1",activities);
@@ -300,7 +239,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListAuthenticatedAthleteActivities_pageNumberAndSize() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		Activity[] defaultActivities = service.listAuthenticatedAthleteActivities(null, null, null, 2);
 
 		assertEquals("Default page of activities should be of size 2",2,defaultActivities.length);
@@ -324,7 +263,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListAuthenticatedAthleteActivities_pagingOutOfRangeHigh() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		// Ask for the 200,000th activity by the athlete (this is probably safe!)
 		Activity[] activities = service.listAuthenticatedAthleteActivities(null, null, 1000, 200);
@@ -339,7 +278,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListAuthenticatedAthleteActivities_pagingOutOfRangeLow() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		
 		// Ask for the 0th activity by the athlete (this is probably safe!)
@@ -360,8 +299,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityPhotos_default() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Photo[] photos = service.listActivityPhotos(ACTIVITY_WITH_PHOTOS);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Photo[] photos = service.listActivityPhotos(TestUtils.ACTIVITY_WITH_PHOTOS);
 
 		assertNotNull("Null list of photos returned for activity",photos);
 		assertNotEquals("No photos returned although some were expected",0,photos.length);
@@ -376,8 +315,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityPhotos_invalidActivity() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Photo[] photos = service.listActivityPhotos(ACTIVITY_INVALID);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Photo[] photos = service.listActivityPhotos(TestUtils.ACTIVITY_INVALID);
 
 		assertNull("Photos returned for an invalid activity",photos);
 	}
@@ -391,8 +330,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityPhotos_hasNoPhotos() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Photo[] photos = service.listActivityPhotos(ACTIVITY_WITHOUT_PHOTOS);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Photo[] photos = service.listActivityPhotos(TestUtils.ACTIVITY_WITHOUT_PHOTOS);
 
 		assertNotNull("Photos returned as null for a valid activity without photos",photos);
 		assertEquals("Photos were returned for an activity which has no photos",0,photos.length);
@@ -404,13 +343,20 @@ public class ActivityServicesImplTest {
 	 * <p>Should successfully create the activity, and the activity should be retrievable immediately and identical to the one used to create</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException Thrown if the ride cannot be deleted once created
 	 */
 	@Test
-	public void testCreateManualActivity_validActivity() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Activity activity = service.createManualActivity(ACTIVITY_DEFAULT_FOR_CREATE);
-		// TODO Not yet implemented
-		fail("Not yet Implemented");
+	public void testCreateManualActivity_validActivity() throws UnauthorizedException, NotFoundException {
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = service.createManualActivity(TestUtils.ACTIVITY_DEFAULT_FOR_CREATE);
+		assertNotNull(activity);
+		
+		// Load it from Strava
+		Activity stravaActivity = service.getActivity(activity.getId(), Boolean.FALSE);
+		assertNotNull(stravaActivity);
+		
+		// And delete it
+		service.deleteActivity(activity.getId());
 	}
 
 	/**
@@ -421,10 +367,10 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testCreateManualActivity_accessTokenDoesNotHaveWriteAccess() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN_WITHOUT_WRITE_ACCESS);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 		Activity activity = null;
 		try {
-			activity = service.createManualActivity(ACTIVITY_DEFAULT_FOR_CREATE);
+			activity = service.createManualActivity(TestUtils.ACTIVITY_DEFAULT_FOR_CREATE);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour - creation has failed because there's no write access
 			return;
@@ -529,17 +475,17 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityComments_hasComments() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Comment[] comments = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.TRUE, null, null);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Comment[] comments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.TRUE, null, null);
 		
 		assertNotNull("Returned null list of comments (with markdown) when some were expected");
 		assertNotEquals("Returned empty list of comments when some were expected", 0, comments.length);
 		
-		Comment[] commentsWithoutMarkdown = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.FALSE, null, null);
+		Comment[] commentsWithoutMarkdown = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, null, null);
 		
 		// Check that the lists are the same length!!
 		assertNotNull("Returned null list of comments (without markdown) when some were expected");
-		assertEquals("List of comments for activity " + ACTIVITY_WITH_COMMENTS + " is not same length with/without markdown!", comments.length, commentsWithoutMarkdown.length);
+		assertEquals("List of comments for activity " + TestUtils.ACTIVITY_WITH_COMMENTS + " is not same length with/without markdown!", comments.length, commentsWithoutMarkdown.length);
 		
 		// Check that at least one comment is different (i.e. because of the markdown)
 		boolean difference = false;
@@ -562,8 +508,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityComments_hasNoComments() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Comment[] comments = service.listActivityComments(ACTIVITY_WITHOUT_COMMENTS, Boolean.TRUE, null, null);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Comment[] comments = service.listActivityComments(TestUtils.ACTIVITY_WITHOUT_COMMENTS, Boolean.TRUE, null, null);
 
 		assertNotNull("Returned null list of comments when an empty array was expected",comments);
 		assertEquals("Returned a non-empty list of comments when none were expected", 0, comments.length);
@@ -578,17 +524,17 @@ public class ActivityServicesImplTest {
 	 * @throws UnauthorizedException Thrown when security token is invalid
 	 */
 	public void testListActivityComments_pageNumberAndSize() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Comment[] defaultComments = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.FALSE, null, 2);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Comment[] defaultComments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, null, 2);
 		
 		assertEquals("Default page of comments should be of size 2",2,defaultComments.length);
 
-		Comment[] firstPageOfComments = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.FALSE, 1, 1);
+		Comment[] firstPageOfComments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, 1, 1);
 		
 		assertEquals("First page of comments should be of size 1",1,firstPageOfComments.length);
 		assertEquals("Different first page of comments to expected", defaultComments[0].getId(),firstPageOfComments[0].getId());
 
-		Comment[] secondPageOfComments = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.FALSE, 2, 1);
+		Comment[] secondPageOfComments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, 2, 1);
 
 		assertEquals("Second page of activities should be of size 1",1,firstPageOfComments.length);
 		assertEquals("Different second page of comments to expected", defaultComments[1].getId(),secondPageOfComments[0].getId());
@@ -601,8 +547,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityComments_pageSize() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Comment[] comments = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.FALSE, null, 1);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Comment[] comments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, null, 1);
 		
 		assertNotNull("Asked for one comment in a page, got null",comments);
 		assertEquals("Asked for one comment in a page, got " + comments.length,1,comments.length);
@@ -620,10 +566,10 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityComments_pagingOutOfRangeHigh() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		// Attempt to get the 200,000th comment, that's probably out of range!
-		Comment[] comments = service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.FALSE, 1000, 200);
+		Comment[] comments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, 1000, 200);
 		
 		assertNotNull("Comments should be returned as an empty array, got null",comments);
 		assertEquals("Asked for out of range comments, expected an empty array, got " + comments.length + " comments unexpectedly", 0, comments.length);
@@ -638,10 +584,10 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityComments_pagingOutOfRangeLow() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		try {
-			service.listActivityComments(ACTIVITY_WITH_COMMENTS, Boolean.FALSE, 0, 0);
+			service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, 0, 0);
 		} catch (IllegalArgumentException e) {
 			// Expected behaviour!
 			return;
@@ -658,9 +604,9 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityComments_invalidActivity() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
-		Comment[] comments = service.listActivityComments(ACTIVITY_WITHOUT_COMMENTS, Boolean.FALSE, null, null);
+		Comment[] comments = service.listActivityComments(TestUtils.ACTIVITY_WITHOUT_COMMENTS, Boolean.FALSE, null, null);
 		
 		assertNull("Expected null response when retrieving comments for an invalid activity",comments);
 	}
@@ -671,8 +617,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityKudoers_hasKudoers() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Athlete[] kudoers = service.listActivityKudoers(ACTIVITY_WITH_KUDOS, null, null);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Athlete[] kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, null, null);
 		
 		assertNotNull("Returned null kudos array for activity with kudos",kudoers);
 		assertNotEquals("Returned empty kudos array for activity with kudos",0,kudoers.length);
@@ -686,8 +632,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityKudoers_hasNoKudoers() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Athlete[] kudoers = service.listActivityKudoers(ACTIVITY_WITHOUT_KUDOS, null, null);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Athlete[] kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITHOUT_KUDOS, null, null);
 
 		assertNotNull("Returned null kudos array for activity without kudos",kudoers);
 		assertEquals("Did not return empty kudos array for activity with no kudos",0,kudoers.length);
@@ -702,8 +648,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityKudoers_invalidActivity() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Athlete[] kudoers = service.listActivityKudoers(ACTIVITY_INVALID, null, null);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Athlete[] kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_INVALID, null, null);
 
 		assertNull("Returned a non-null array of kudoers for an invalid activity",kudoers);
 	}
@@ -717,18 +663,18 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityKudoers_pageNumberAndSize() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 
-		Athlete[] defaultKudoers = service.listActivityKudoers(ACTIVITY_WITH_KUDOS, null, 2);
+		Athlete[] defaultKudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, null, 2);
 		
 		assertEquals("Default kudoers should be of length 2",2,defaultKudoers.length);
 		
-		Athlete[] firstPage = service.listActivityKudoers(ACTIVITY_WITH_KUDOS, 1, 1);
+		Athlete[] firstPage = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, 1, 1);
 		
 		assertEquals("Asking for page of size 1 should return an array of length 1",1,firstPage.length);
 		assertEquals("Page 1 of size 1 should contain the same athlete as the first athlete returned",defaultKudoers[0].getId(),firstPage[0].getId());
 		
-		Athlete[] secondPage = service.listActivityKudoers(ACTIVITY_WITH_KUDOS, 2, 1);
+		Athlete[] secondPage = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, 2, 1);
 		
 		assertEquals("Asking for page of size 1 should return an array of length 1",1,secondPage.length);
 		assertEquals("Page 2 of size 1 should contain the same athlete as the second athlete returned",defaultKudoers[1].getId(),secondPage[0].getId());
@@ -742,8 +688,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityKudoers_pageSize() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Athlete[] kudoers = service.listActivityKudoers(ACTIVITY_WITH_KUDOS, null, 1);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Athlete[] kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, null, 1);
 		
 		assertNotNull("Asked for one kudoer in a page, got null",kudoers);
 		assertEquals("Asked for one comment in a page, got " + kudoers.length,1,kudoers.length);
@@ -762,8 +708,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityKudoers_pagingOutOfRangeHigh() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Athlete[] kudoers = service.listActivityKudoers(ACTIVITY_WITH_KUDOS, 1000, 200);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Athlete[] kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, 1000, 200);
 	
 		assertNotNull("Kudoers should be returned as an empty array, got null",kudoers);
 		assertEquals("Asked for out of range kudos, expected an empty array, got " + kudoers.length + " kudoers unexpectedly", 0, kudoers.length);
@@ -778,10 +724,10 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityKudoers_pagingOutOfRangeLow() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		try {
-			service.listActivityKudoers(ACTIVITY_WITH_KUDOS, 0, 0);
+			service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, 0, 0);
 		} catch (IllegalArgumentException e) {
 			// Expected behaviour!
 			return;
@@ -797,8 +743,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityLaps_hasLaps() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Lap[] laps = service.listActivityLaps(ACTIVITY_WITH_LAPS);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Lap[] laps = service.listActivityLaps(TestUtils.ACTIVITY_WITH_LAPS);
 		
 		assertNotNull("Laps not returned for an activity which should have them",laps);
 		assertNotEquals("No laps returned for an activity which should have them",0,laps.length);
@@ -813,8 +759,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityLaps_hasNoLaps() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Lap[] laps = service.listActivityLaps(ACTIVITY_WITHOUT_LAPS);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Lap[] laps = service.listActivityLaps(TestUtils.ACTIVITY_WITHOUT_LAPS);
 		
 		assertNotNull("Laps not returned for an activity which should have them",laps);
 		assertNotEquals("No laps returned for an activity which should have them",0,laps.length);
@@ -829,8 +775,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityLaps_invalidActivity() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		Lap[] laps = service.listActivityLaps(ACTIVITY_INVALID);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Lap[] laps = service.listActivityLaps(TestUtils.ACTIVITY_INVALID);
 		
 		assertNull("Laps returned for an invalid activity",laps);
 	}
@@ -842,8 +788,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityZones_hasZones() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		ActivityZone[] zones = service.listActivityZones(ACTIVITY_WITH_ZONES);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		ActivityZone[] zones = service.listActivityZones(TestUtils.ACTIVITY_WITH_ZONES);
 		
 		assertNotNull("Returned null activity zones for an activity with zones",zones);
 		assertNotEquals("Returned an empty array of activity zones for an activity with zones",0,zones.length);
@@ -858,8 +804,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityZones_hasNoZones() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		ActivityZone[] zones = service.listActivityZones(ACTIVITY_WITHOUT_ZONES);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		ActivityZone[] zones = service.listActivityZones(TestUtils.ACTIVITY_WITHOUT_ZONES);
 		
 		assertNotNull("Returned null activity zones for an activity without zones (should return an empty array)",zones);
 		assertEquals("Returned an non-empty array of activity zones for an activity without zones",0,zones.length);
@@ -874,8 +820,8 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListActivityZones_invalidActivity() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
-		ActivityZone[] zones = service.listActivityZones(ACTIVITY_INVALID);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		ActivityZone[] zones = service.listActivityZones(TestUtils.ACTIVITY_INVALID);
 		
 		assertNull("Returned non-null activity zones for an activity which doesn't exist",zones);
 	}
@@ -889,7 +835,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListFriendsActivities_hasFriends() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		Activity[] activities = service.listFriendsActivities(null, null);
 		
 		assertNotNull("Returned null array for latest friends' activities",activities);
@@ -922,7 +868,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListFriendsActivities_pageNumberAndSize() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		Activity[] defaultActivities = service.listFriendsActivities(null, 2);
 
 		assertEquals("Default page of activities should be of size 2",2,defaultActivities.length);
@@ -946,7 +892,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListFriendsActivities_pageSize() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		Activity[] activities = service.listFriendsActivities(null, 1);
 		
 		assertNotNull("Authenticated athlete's activities returned as null when asking for a page of size 1",activities);
@@ -964,7 +910,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListFriendsActivities_pagingOutOfRangeHigh() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		// Ask for the 2,000,000th activity by the athlete's friends (this is probably safe!)
 		Activity[] activities = service.listFriendsActivities(10000, 200);
@@ -979,7 +925,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testListFriendsActivities_pagingOutOfRangeLow() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(VALID_TOKEN);		
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());		
 		
 		// Ask for the 0th activity by the athlete (this is probably safe!)
 		try {
