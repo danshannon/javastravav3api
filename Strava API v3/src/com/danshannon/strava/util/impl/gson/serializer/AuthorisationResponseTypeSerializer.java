@@ -17,12 +17,26 @@ import com.google.gson.JsonSerializer;
 public class AuthorisationResponseTypeSerializer implements JsonSerializer<AuthorisationResponseType>, JsonDeserializer<AuthorisationResponseType>{
 
 	/**
+	 * Required by GSON serialiser
+	 * @param id The String value of the id
+	 * @return An instance of {@link AuthorisationResponseType} corresponding to the id, or {@link #UNKNOWN} if no such instance is available.
+	 */
+	public static AuthorisationResponseType create(String id) {
+		for (AuthorisationResponseType type : AuthorisationResponseType.values()) {
+			if (type.getId().equals(id)) {
+				return type;
+			}
+		}
+		return AuthorisationResponseType.UNKNOWN;
+	}
+	
+	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
 	public AuthorisationResponseType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return AuthorisationResponseType.create(json.getAsString());
+		return create(json.getAsString());
 	}
 
 	/**
@@ -30,7 +44,7 @@ public class AuthorisationResponseTypeSerializer implements JsonSerializer<Autho
 	 */
 	@Override
 	public JsonElement serialize(AuthorisationResponseType authorisationResponseType, Type type, JsonSerializationContext context) {
-		return context.serialize(authorisationResponseType.getValue());
+		return context.serialize(authorisationResponseType.getId());
 	}
 
 }

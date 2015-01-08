@@ -21,6 +21,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.danshannon.strava.api.auth.AuthorisationServices;
+import com.danshannon.strava.api.auth.impl.retrofit.AuthorisationServicesImpl;
+import com.danshannon.strava.api.auth.model.TokenResponse;
 import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
 import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
 import com.danshannon.strava.api.auth.ref.AuthorisationScope;
@@ -42,7 +45,7 @@ public class TestHttpUtils {
 		this.httpClient = HttpClients.custom().setDefaultCookieStore(this.cookieStore).build();
 	}
 
-	public Document get(String uri, NameValuePair... parameters) throws IOException {
+	public Document httpGet(String uri, NameValuePair... parameters) throws IOException {
 		HttpUriRequest get = null;
 		Document page = null;
 		if (parameters == null) {
@@ -194,7 +197,7 @@ public class TestHttpUtils {
 	 */
 	public String getLoginAuthenticityToken() throws IOException {
 		BasicNameValuePair[] params = null;
-		Document loginPage = get(Strava.AUTH_ENDPOINT + "/login", params);
+		Document loginPage = httpGet(Strava.AUTH_ENDPOINT + "/login", params);
 		Elements authTokens = loginPage.select("input[name=authenticity_token]");
 		for (Element element : authTokens) {
 			System.out.println("Element = " + element.toString());
@@ -216,7 +219,7 @@ public class TestHttpUtils {
 		for (AuthorisationScope scope : scopes) {
 			scopeString = scopeString + scope.toString() + ",";
 		}
-		Document authPage = get(Strava.AUTH_ENDPOINT + "/oauth/authorize",
+		Document authPage = httpGet(Strava.AUTH_ENDPOINT + "/oauth/authorize",
 				new BasicNameValuePair("client_id", applicationId.toString()),
 				new BasicNameValuePair("response_type", code.toString()),
 				new BasicNameValuePair("redirect_uri", redirectURI),
@@ -250,7 +253,7 @@ public class TestHttpUtils {
 		
 		// Get the page to which we were re-directed, just for the sake of completeness
 		BasicNameValuePair[] params = null;
-		get(location, params);
+		httpGet(location, params);
 	}
 
 	/**
@@ -270,6 +273,32 @@ public class TestHttpUtils {
 		// Post an approval to the request
 		String approvalCode = acceptApplication(stravaApplicationId, redirectURI, responseType, authenticityToken);
 		return approvalCode;
+	}
+	
+	/**
+	 * <p>This utility method will log in to Strava with the provided credentials and return a valid token which has the provided scopes</p>
+	 * 
+	 * @param stravaApplicationId
+	 * @param clientSecret
+	 * @param username
+	 * @param password
+	 * @param scopes
+	 * @return
+	 * @throws IOException 
+	 */
+	public String getStravaAccessToken(Integer stravaApplicationId, String clientSecret, String username, String password, AuthorisationScope... scopes) throws IOException {
+		AuthorisationServices service = new AuthorisationServicesImpl();
+		
+		// Login
+		String authenticityToken = getLoginAuthenticityToken();
+		login(username, password, authenticityToken);
+		
+		// Approve (force it to ensure we get a new token)
+		String approvalCode = approveApplication(stravaApplicationId, AuthorisationResponseType.CODE, "http://localhost", AuthorisationApprovalPrompt.FORCE, scopes);
+		
+		// Perform the token exchange
+		TokenResponse tokenResponse = service.tokenExchange(stravaApplicationId, clientSecret, approvalCode);
+		return tokenResponse.getAccessToken();
 	}
 
 }

@@ -7,7 +7,7 @@ import retrofit.http.POST;
 import com.danshannon.strava.api.auth.model.TokenResponse;
 
 /**
- * <p>To get an instance, use {@link AuthorisationServicesRetrofit#REST_SERVICE}</p>
+ * <p>Retrofit implementation of the Strava REST interface for authorisation</p>
  * 
  * @author Dan Shannon
  *

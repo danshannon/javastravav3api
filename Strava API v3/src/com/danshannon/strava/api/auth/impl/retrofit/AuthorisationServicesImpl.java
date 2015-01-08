@@ -17,6 +17,9 @@ public class AuthorisationServicesImpl implements AuthorisationServices {
 	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
 	private AuthorisationServicesRetrofit restService;
 	
+	/**
+	 * <p>Default constructor creates a {@link RestAdapter} which is the actual implementation of the REST interface</p>
+	 */
 	public AuthorisationServicesImpl() {
 		this.restService = new RestAdapter.Builder()
 		.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))

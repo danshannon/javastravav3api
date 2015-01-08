@@ -12,6 +12,7 @@ import java.util.Properties;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.danshannon.strava.api.auth.ref.AuthorisationScope;
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.ActivityZone;
 import com.danshannon.strava.api.model.Athlete;
@@ -32,6 +33,12 @@ import com.danshannon.strava.api.service.impl.retrofit.ActivityServicesImpl;
  *
  */
 public class ActivityServicesImplTest {
+	private static TestHttpUtils HTTP_UTILS;
+	private static String USERNAME;
+	private static String PASSWORD;
+	private static Integer STRAVA_APPLICATION_ID;
+	private static String STRAVA_CLIENT_SECRET;
+	
 	private static String VALID_TOKEN; 
 	private static String INVALID_TOKEN;
 	private static String VALID_TOKEN_WITHOUT_WRITE_ACCESS;
@@ -59,6 +66,11 @@ public class ActivityServicesImplTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		// TODO Encapsulate all the security crap inside the TestHttpUtils
+		HTTP_UTILS = new TestHttpUtils();
+		VALID_TOKEN = HTTP_UTILS.getStravaAccessToken(STRAVA_APPLICATION_ID, STRAVA_CLIENT_SECRET, USERNAME, PASSWORD, AuthorisationScope.VIEW_PRIVATE, AuthorisationScope.WRITE);
+		VALID_TOKEN_WITHOUT_WRITE_ACCESS = HTTP_UTILS.getStravaAccessToken(STRAVA_APPLICATION_ID, STRAVA_CLIENT_SECRET, USERNAME, PASSWORD);
+		
 		Properties properties = TestUtils.loadPropertiesFile(PROPERTIES_FILE);
 		VALID_TOKEN = properties.getProperty("test.activityServicesImplTest.validToken");
 		INVALID_TOKEN = properties.getProperty("test.activityServicesImplTest.invalidToken");

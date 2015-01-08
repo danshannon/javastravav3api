@@ -28,19 +28,6 @@ public enum AuthorisationScope {
 		return this.id;
 	}
 	
-	public String getValue() {
-		return this.id;
-	}
-	
-	public static AuthorisationScope create(String id) {
-		for (AuthorisationScope scope : AuthorisationScope.values()) {
-			if (scope.getId().equals(id)) {
-				return scope;
-			}
-		}
-		return UNKNOWN;
-	}
-
 	/**
 	 * @return the description
 	 */
