@@ -38,8 +38,6 @@ public class SegmentServicesImpl implements SegmentServices {
 	}
 	
 	/**
-	 * TODO Should move all of this into a single big StravaAPIRetrofit interface, so that there's only one instance of one big service per token???
-	 * 
 	 * <p>Returns an implementation of {@link SegmentServices gear services}</p>
 	 * 
 	 * <p>Instances are cached so that if 2 requests are made for the same token, the same instance is returned</p>

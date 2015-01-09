@@ -202,48 +202,4 @@ public class AuthorisationServicesImplTest {
 		assertNull("Token unexpectedly returned by Strava",tokenResponse);
 	}
 
-	/**
-	 * <p>Test deauthorisation of a valid token</p>
-	 * 
-	 * <p>Should succeed; token should no longer be able to be used for access</p>
-	 */
-	@Test
-	public void testDeauthorise_validToken() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
-	}
-	
-	/**
-	 * <p>Test deauthorisation of an invalid (i.e. non-existent) token</p>
-	 * 
-	 * <p>Should fail</p>
-	 */
-	@Test
-	public void testDeauthorise_invalidToken() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
-	}
-	
-	/**
-	 * <p>Test behaviour when a token is deauthorised TWICE</p>
-	 * 
-	 * <p>Should fail the second time</p>
-	 */
-	@Test
-	public void testDeauthorise_deauthorisedToken() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
-	}
-	
-	/**
-	 * <p>Test behaviour when attempting to deauthorise another account's token</p>
-	 * 
-	 * <p>Should fail to deauthorise!</p>
-	 */
-	@Test
-	public void testDeauthorise_otherUsersToken() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
-	}
-
 }

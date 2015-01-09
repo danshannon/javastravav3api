@@ -74,7 +74,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#getAuthenticatedAthlete()
 	 */
 	@Override
-	public Athlete getAuthenticatedAthlete() {
+	public Athlete getAuthenticatedAthlete() throws UnauthorizedException {
 		return restService.getAuthenticatedAthlete();
 	}
 

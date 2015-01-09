@@ -24,7 +24,7 @@ public interface AthleteServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.AthleteServices#getAuthenticatedAthlete()
 	 */
 	@GET("/athlete")
-	public Athlete getAuthenticatedAthlete();
+	public Athlete getAuthenticatedAthlete() throws UnauthorizedException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.AthleteServices#getAthlete(java.lang.Integer)

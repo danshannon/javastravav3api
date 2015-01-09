@@ -5,9 +5,12 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
 
+import com.danshannon.strava.api.auth.TokenServices;
+import com.danshannon.strava.api.auth.impl.retrofit.TokenServicesImpl;
 import com.danshannon.strava.api.auth.ref.AuthorisationScope;
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.reference.ActivityType;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
  * @author Dan Shannon
@@ -106,5 +109,12 @@ public class TestUtils {
 	
 	public static String getValidTokenWithoutWriteAccess() {
 		return HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD);
+	}
+	
+	public static String getRevokedToken() throws UnauthorizedException {
+		String token = getValidToken();
+		TokenServices service = TokenServicesImpl.implementation(token);
+		service.deauthorise(token);
+		return token;
 	}
 }

@@ -49,22 +49,4 @@ public interface AuthorisationServices {
 	 * @return Returns an access_token and a detailed representation of the current athlete.
 	 */
 	public TokenResponse tokenExchange(Integer clientId, String clientSecret, String code);
-	
-	/**
-	 * <p>Allows an application to revoke its access to an athlete�s data.</p>
-	 * 
-	 * <p>This will invalidate all access tokens associated with the athlete, application pair used to create the token. The application will be removed from the Athlete Settings page on Strava.</p>
-	 * 
-	 * <p>All requests made using invalidated tokens will receive a 401 Unauthorised response.</p>
-	 * 
-	 * <p>URL POST https://www.strava.com/oauth/deauthorize</p>
-	 * 
-	 * @see <a href = "http://strava.github.io/api/v3/oauth/#deauthorize">http://strava.github.io/api/v3/oauth/#deauthorize</a>
-	 * 
-	 * @param accessToken The access token for which the application is revoking its access.
-	 * @return Responds with the access token submitted with the request.
-	 */
-	public TokenResponse deauthorise(String accessToken);
-	
-	
 }

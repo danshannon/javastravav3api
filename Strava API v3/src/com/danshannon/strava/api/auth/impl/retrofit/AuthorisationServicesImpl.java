@@ -15,6 +15,7 @@ import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
  */
 public class AuthorisationServicesImpl implements AuthorisationServices {
 	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+
 	private AuthorisationServicesRetrofit restService;
 	
 	/**
@@ -39,12 +40,4 @@ public class AuthorisationServicesImpl implements AuthorisationServices {
 		return restService.tokenExchange(clientId, clientSecret, code);
 	}
 
-	/**
-	 * @see com.danshannon.strava.api.auth.AuthorisationServices#deauthorise(java.lang.String)
-	 */
-	@Override
-	public TokenResponse deauthorise(String accessToken) {
-		return restService.deauthorise(accessToken);
-	}
-	
 }

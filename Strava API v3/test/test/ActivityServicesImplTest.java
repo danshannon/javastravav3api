@@ -10,6 +10,9 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import com.danshannon.strava.api.auth.TokenServices;
+import com.danshannon.strava.api.auth.impl.retrofit.AuthorisationServicesImpl;
+import com.danshannon.strava.api.auth.impl.retrofit.TokenServicesImpl;
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.ActivityZone;
 import com.danshannon.strava.api.model.Athlete;
@@ -58,11 +61,22 @@ public class ActivityServicesImplTest {
 
 	/**
 	 * <p>Test that we don't get a {@link ActivityServicesImpl service implementation} if the token has been revoked by the user</p>
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testImplementation_revokedToken() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+	public void testImplementation_revokedToken() throws UnauthorizedException {
+		// 1. Get a token
+		String token = TestUtils.getValidToken();
+		
+		// 2. Revoke it using an authorisation service implementation derived from the valid token
+		TokenServices authService = TokenServicesImpl.implementation(token);
+		authService.deauthorise(token);
+		
+		// 3. Attempt to get an implementation using the now invalidated token
+		ActivityServices activityServices = ActivityServicesImpl.implementation(token);
+		
+		// 4. Assert it's null
+		assertNull("Got an implementation of ActivityServices despite having revoked the token's access", activityServices);
 	}
 	
 	/**
@@ -389,11 +403,19 @@ public class ActivityServicesImplTest {
 	 * <p>Attempt to create a duplicate manual {@link Activity} for the user</p>
 	 * 
 	 * TODO Determine correct behaviour based on what the API actually does in this circumstance
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testCreateManualActivity_duplicateActivity() {
-		// TODO Not yet implemented
-		fail("Not yet Implemented");
+	public void testCreateManualActivity_duplicateActivity() throws UnauthorizedException {
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		
+		// Create the activity
+		Activity activity = service.createManualActivity(TestUtils.ACTIVITY_DEFAULT_FOR_CREATE);
+		assertNotNull(activity);
+		
+		// Do it again
+		Activity activity2 = service.createManualActivity(TestUtils.ACTIVITY_DEFAULT_FOR_CREATE);
+		assertNotNull(activity2);
 	}
 
 	/**

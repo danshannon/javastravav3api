@@ -22,7 +22,7 @@ public interface AthleteServices {
 	 * @see <a href="http://strava.github.io/api/v3/athlete/"/>http://strava.github.io/api/v3/athlete/</a>
 	 * @return Returns a detailed representation of the {@link Athlete athlete} 
 	 */
-	public Athlete getAuthenticatedAthlete();
+	public Athlete getAuthenticatedAthlete() throws UnauthorizedException;
 	
 	/**
 	 * <p>This request is used to retrieve information about any {@link Athlete athlete} on Strava.</p>
