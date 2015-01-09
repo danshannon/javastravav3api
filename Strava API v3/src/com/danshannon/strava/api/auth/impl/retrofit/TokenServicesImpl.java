@@ -70,6 +70,10 @@ public class TokenServicesImpl implements TokenServices {
 	 */
 	@Override
 	public TokenResponse deauthorise(String accessToken) throws UnauthorizedException {
+		// Remove the token / service instance from the cached list as it's no longer any use
+		restServices.remove(accessToken);
+		
+		// Deauthorise
 		return restService.deauthorise(accessToken);
 	}
 	

@@ -8,10 +8,11 @@ import static org.junit.Assert.fail;
 
 import java.util.Date;
 
+import org.jfairy.Fairy;
+import org.jfairy.producer.text.TextProducer;
 import org.junit.Test;
 
 import com.danshannon.strava.api.auth.TokenServices;
-import com.danshannon.strava.api.auth.impl.retrofit.AuthorisationServicesImpl;
 import com.danshannon.strava.api.auth.impl.retrofit.TokenServicesImpl;
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.ActivityZone;
@@ -20,8 +21,10 @@ import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
 import com.danshannon.strava.api.model.SegmentEffort;
+import com.danshannon.strava.api.model.reference.ActivityType;
 import com.danshannon.strava.api.model.reference.ResourceState;
 import com.danshannon.strava.api.service.ActivityServices;
+import com.danshannon.strava.api.service.exception.BadRequestException;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.api.service.impl.retrofit.ActivityServicesImpl;
@@ -96,8 +99,13 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_differentImplementationIsNotCached() throws UnauthorizedException {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		String token = TestUtils.getValidToken();
+		@SuppressWarnings("unused")
+		ActivityServices service = ActivityServicesImpl.implementation(token);
+		String token2 = TestUtils.getValidTokenWithoutWriteAccess();
+		@SuppressWarnings("unused")
+		ActivityServices service2 = ActivityServicesImpl.implementation(token2);
+		assertNotEquals("Different tokens returned the same service implementation",token,token2);
 	}
 	
 	/**
@@ -358,9 +366,10 @@ public class ActivityServicesImplTest {
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
 	 * @throws NotFoundException Thrown if the ride cannot be deleted once created
+	 * @throws BadRequestException Thrown if the ride cannot be created
 	 */
 	@Test
-	public void testCreateManualActivity_validActivity() throws UnauthorizedException, NotFoundException {
+	public void testCreateManualActivity_validActivity() throws UnauthorizedException, NotFoundException, BadRequestException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		Activity activity = service.createManualActivity(TestUtils.ACTIVITY_DEFAULT_FOR_CREATE);
 		assertNotNull(activity);
@@ -378,9 +387,10 @@ public class ActivityServicesImplTest {
 	 * 
 	 * <p>Should fail to create the activity and throw an {@link UnauthorizedException}, which is trapped in the test because it it expected</p>
 	 * @throws UnauthorizedException 
+	 * @throws BadRequestException 
 	 */
 	@Test
-	public void testCreateManualActivity_accessTokenDoesNotHaveWriteAccess() throws UnauthorizedException {
+	public void testCreateManualActivity_accessTokenDoesNotHaveWriteAccess() throws UnauthorizedException, BadRequestException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 		Activity activity = null;
 		try {
@@ -400,46 +410,66 @@ public class ActivityServicesImplTest {
 	}
 
 	/**
-	 * <p>Attempt to create a duplicate manual {@link Activity} for the user</p>
-	 * 
-	 * TODO Determine correct behaviour based on what the API actually does in this circumstance
-	 * @throws UnauthorizedException 
-	 */
-	@Test
-	public void testCreateManualActivity_duplicateActivity() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		
-		// Create the activity
-		Activity activity = service.createManualActivity(TestUtils.ACTIVITY_DEFAULT_FOR_CREATE);
-		assertNotNull(activity);
-		
-		// Do it again
-		Activity activity2 = service.createManualActivity(TestUtils.ACTIVITY_DEFAULT_FOR_CREATE);
-		assertNotNull(activity2);
-	}
-
-	/**
 	 * <p>Attempt to create an incomplete manual {@link Activity} for the user where not all required attributes are set</p>
 	 * 
 	 * <p>Should fail to create the activity in each case where a required attribute is missing</p>
 	 * 
-	 * TODO Determine list of required attributes, create a test for each one</p>
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testCreateManualActivity_incompleteActivityDetails() {
-		// TODO Not yet implemented
-		fail("Not yet Implemented");
-	}
+	public void testCreateManualActivity_incompleteActivityDetails() throws UnauthorizedException {
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		
+		// Name is required
+		Activity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		Activity stravaResponse = null;
+		activity.setName(null);
+		try {
+			stravaResponse = service.createManualActivity(activity);
+		} catch (BadRequestException e) {
+			// Expected behaviour
+		}
+		assertNull("Created an activity with no name in error",stravaResponse);
+		
+		// Type is required
+		activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		activity.setType(null);
+		try {
+			stravaResponse = service.createManualActivity(activity);
+		} catch (BadRequestException e) {
+			// Expected behaviour
+		}
+		assertNull("Created an activity with no type in error",stravaResponse);
 
-	/**
-	 * <p>Attempt to create an {@link Activity} which cannot be successfully stored because it has attributes set which cannot be saved via the Strava API</p>
-	 * 
-	 * <p>Should fail to create the activity</p>
-	 */
-	@Test
-	public void testCreateManualActivity_tooManyActivityAttributes() {
-		// TODO Not yet implemented
-		fail("Not yet Implemented");
+		// Type must be one of the specified values
+		activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		activity.setType(ActivityType.UNKNOWN);
+		try {
+			stravaResponse = service.createManualActivity(activity);
+		} catch (BadRequestException e) {
+			// Expected behaviour
+		}
+		assertNull("Created an activity with unknown type in error",stravaResponse);
+
+		// Start date is required
+		activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		activity.setStartDateLocal(null);
+		try {
+			stravaResponse = service.createManualActivity(activity);
+		} catch (BadRequestException e) {
+			// Expected behaviour
+		}
+		assertNull("Created an activity with no start date in error",stravaResponse);
+
+		// Elapsed time is required
+		activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		activity.setElapsedTime(null);
+		try {
+			stravaResponse = service.createManualActivity(activity);
+		} catch (BadRequestException e) {
+			// Expected behaviour
+		}
+		assertNull("Created an activity with no elapsed time in error",stravaResponse);		
 	}
 
 	/**
@@ -448,50 +478,72 @@ public class ActivityServicesImplTest {
 	 * <p>In order to avoid deleting genuine data, this test creates the activity first, checks that it has been successfully written (i.e. that it can be read back from the API) and then deletes it again</p>
 	 * 
 	 * <p>Should successfully delete the activity; it should no longer be able to be retrieved via the API</p>
+	 * @throws UnauthorizedException 
+	 * @throws BadRequestException 
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testDeleteActivity_validActivity() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+	public void testDeleteActivity_validActivity() throws UnauthorizedException, BadRequestException, NotFoundException {
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		Activity stravaResponse = service.createManualActivity(activity);
+		activity = service.getActivity(stravaResponse.getId(), Boolean.FALSE);
+		assertNotNull(activity);
+		service.deleteActivity(activity.getId());
+		
 	}
 
 	/**
 	 * <p>Attempt to create an {@link Activity} for the user, using a token which has not been granted write access through the OAuth process</p>
 	 * 
 	 * <p>Should fail to create the activity and throw an {@link UnauthorizedException}</p>
+	 * @throws UnauthorizedException 
+	 * @throws BadRequestException 
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testDeleteActivity_accessTokenDoesNotHaveWriteAccess() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+	public void testDeleteActivity_accessTokenDoesNotHaveWriteAccess() throws UnauthorizedException, BadRequestException, NotFoundException {
+		// Create the activity using a service which DOES have write access
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		Activity stravaResponse = service.createManualActivity(activity);
+		activity = service.getActivity(stravaResponse.getId(), Boolean.FALSE);
+		assertNotNull(activity);
+		
+		// Now get a token without write access and attempt to delete
+		service = ActivityServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
+		try {
+			service.deleteActivity(activity.getId());
+			fail("Succeeded in deleting an activity despite not having write access");
+		} catch (UnauthorizedException e) {
+			// Expected behaviour
+		}
+		
+		// Delete the activity using a token with write access
+		service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		service.deleteActivity(activity.getId());
 	}
 
 	/**
 	 * <p>Attempt to delete an {@link Activity} which does not exist</p>
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testDeleteActivity_invalidActivity() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * <p>Attempt to delete an {@link Activity} which does not belong to the currently authenticated user</p>
-	 * 
-	 * <p>Should fail to delete the activity, which should still be able to be read via the API</p>
-	 */
-	@Test
-	public void testDeleteActivity_unauthenticatedAthletesActivity() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+	public void testDeleteActivity_invalidActivity() throws UnauthorizedException {
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		try {
+			@SuppressWarnings("unused")
+			Activity stravaResponse = service.deleteActivity(1);
+			fail("deleted an activity that doesn't exist");
+		} catch (NotFoundException e) {
+			// Expected behaviour
+		}
 	}
 
 	/**
 	 * <p>List {@link Comment comments} for a valid activity</p>
 	 * 
 	 * <p>Expectation is that at least one of the comments contains Markdown; this is tested by checking that at least one comment is different</p>
-	 * 
-	 * TODO Check handling of Markdown in comments properly!!
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
 	 */
@@ -715,10 +767,6 @@ public class ActivityServicesImplTest {
 		
 		assertNotNull("Asked for one kudoer in a page, got null",kudoers);
 		assertEquals("Asked for one comment in a page, got " + kudoers.length,1,kudoers.length);
-		
-		// TODO Test maximum page size (test at max, and at max+1)
-		fail("Not yet implemented");
-
 	}
 
 	/**
@@ -919,10 +967,6 @@ public class ActivityServicesImplTest {
 		
 		assertNotNull("Authenticated athlete's activities returned as null when asking for a page of size 1",activities);
 		assertEquals("Wrong number of activities returned when asking for a page of size 1",1,activities.length);
-		
-		// TODO Test maximum page size (test at max, and at max+1)
-		fail("Not yet implemented");
-
 	}
 	
 	/**
@@ -961,12 +1005,51 @@ public class ActivityServicesImplTest {
 	}
 	
 	// Test cases: allowed to update the following attributes:
-	// 1.
-	
+	// 1. name
+	// 2. type
+	// 3. private
+	// 4. commute
+	// 5. trainer
+	// 6. gear_id (also allows special case of 'none' which should remove the gear)
+	// 7. description
 	@Test
-	public void testUpdateActivity_validUpdate() {
+	public void testUpdateActivity_validUpdate() throws UnauthorizedException, BadRequestException, NotFoundException {
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		Fairy fairy = Fairy.create();
+		TextProducer text = fairy.textProducer();
+		
+		// Create the activity on Strava
+		activity = service.createManualActivity(activity);
+
+		// Change the name
+		String name = text.sentence();
+		activity.setName(name);
+		Activity stravaResponse = service.updateActivity(activity);
+		
+		// Check that the name is now set
+		assertEquals("Name not updated correctly",name,stravaResponse.getName());
+		
+		// Change the type
+		activity.setType(ActivityType.ALPINE_SKI);
+		stravaResponse = service.updateActivity(activity);
+		
+		// TODO There's a Strava bug here - the activity DOES get updated but Strava returns the old value via the API
+		
+		// Check that the type is now set
+		assertEquals("Type not updated correctly",activity.getType(),stravaResponse.getType());
+
+		// Change the type to something illegal
+		activity.setType(ActivityType.UNKNOWN);
+		stravaResponse = service.updateActivity(activity);
+		
+		// What happened?
+		fail("Type is now " + activity.getType());
+		
 		// TODO Not yet implemented
 		fail("Not yet implemented");
+		
+		
 	}
 
 	@Test

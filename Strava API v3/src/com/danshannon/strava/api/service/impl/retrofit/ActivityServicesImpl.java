@@ -14,6 +14,7 @@ import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
 import com.danshannon.strava.api.service.ActivityServices;
 import com.danshannon.strava.api.service.Strava;
+import com.danshannon.strava.api.service.exception.BadRequestException;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
@@ -86,7 +87,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#createManualActivity(com.danshannon.strava.api.model.Activity)
 	 */
 	@Override
-	public Activity createManualActivity(Activity activity) throws UnauthorizedException {
+	public Activity createManualActivity(Activity activity) throws UnauthorizedException, BadRequestException {
 		return restService.createManualActivity(activity);
 	}
 
@@ -102,8 +103,8 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#deleteActivity(java.lang.Integer)
 	 */
 	@Override
-	public void deleteActivity(Integer id) throws NotFoundException, UnauthorizedException {
-		restService.deleteActivity(id);
+	public Activity deleteActivity(Integer id) throws NotFoundException, UnauthorizedException {
+		return restService.deleteActivity(id);
 	}
 
 	/**

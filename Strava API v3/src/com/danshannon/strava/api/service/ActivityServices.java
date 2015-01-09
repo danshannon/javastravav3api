@@ -6,6 +6,7 @@ import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
+import com.danshannon.strava.api.service.exception.BadRequestException;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
@@ -20,11 +21,11 @@ public interface ActivityServices {
 	/**
 	 * <p>Activity details, including segment efforts, splits and best efforts, are only available to the owner of the activity.</p>
 	 * 
-	 * <p>By default, only �important� efforts are included. �Importance� is based on a number of factors and its value may change over time. Factors considered include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated effort is �important� but not for the other.</p>
+	 * <p>By default, only "important" efforts are included. "Importance" is based on a number of factors and its value may change over time. Factors considered include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated effort is "important" but not for the other.</p>
 	 * 
 	 * <p>Note that effort ids may exceed the max value for 32-bit integers. A long integer type should be used.</p>
 	 * 
-	 * <p>Each segment effort will have a hidden attribute indicating if it is �important� or not.</p>
+	 * <p>Each segment effort will have a hidden attribute indicating if it is "important" or not.</p>
 	 * 
 	 * <p>Returns <code>null</code> if the activity does not exist
 	 * 
@@ -43,7 +44,9 @@ public interface ActivityServices {
 	 * 
 	 * <p>Requires write permissions, as requested during the authorization process.</p>
 	 * 
-	 * <p>Only updates name, activity type, startDateLocal, elapsedTime, description and distance</p>
+	 * <p>Only updates name, activity type, startDateLocal, elapsedTime, description and distance.</p>
+	 * 
+	 * <p>If any other activity attributes are passed to the API, they are ignored when creating the activity.</p>
 	 * 
 	 * <p>If successful, returns a 201 status code along with a detailed representation of the created activity.</p>
 	 * 
@@ -53,8 +56,9 @@ public interface ActivityServices {
 	 * 
 	 * @param activity The {@link Activity activity} to be uploaded</p>
 	 * @throws UnauthorizedException If user's security token does not grant write access to the activity
+	 * @throws BadRequestException If activity doesn't include all required fields
 	 */
-	public Activity createManualActivity(Activity activity) throws UnauthorizedException;
+	public Activity createManualActivity(Activity activity) throws UnauthorizedException, BadRequestException;
 	
 	/**
 	 * <p>Requires write permissions, as requested during the authorization process.</p>
@@ -88,8 +92,9 @@ public interface ActivityServices {
 	 * 
 	 * @throws UnauthorizedException If the service's security token doesn't grant write access to this activity
 	 * @throws NotFoundException If the {@link Activity} does not exist on Strava
+	 * @return Should return <code>null</code>
 	 */
-	public void deleteActivity(Integer id) throws UnauthorizedException, NotFoundException;
+	public Activity deleteActivity(Integer id) throws UnauthorizedException, NotFoundException;
 	
 	/**
 	 * <p>This endpoint returns a list of {@link Activity activities} for the authenticated {@link Athlete}.</p>

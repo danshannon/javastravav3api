@@ -14,6 +14,7 @@ import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
+import com.danshannon.strava.api.service.exception.BadRequestException;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
@@ -33,7 +34,7 @@ public interface ActivityServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.ActivityServices#createManualActivity(com.danshannon.strava.api.model.Activity)
 	 */
 	@POST("/activities")
-	public Activity createManualActivity(@Body Activity activity) throws UnauthorizedException;
+	public Activity createManualActivity(@Body Activity activity) throws UnauthorizedException, BadRequestException;
 	
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#updateActivity(com.danshannon.strava.api.model.Activity)
@@ -45,7 +46,7 @@ public interface ActivityServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.ActivityServices#deleteActivity(java.lang.Integer)
 	 */
 	@DELETE("/activities/{id}")
-	public void deleteActivity(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
+	public Activity deleteActivity(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
 	
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer)

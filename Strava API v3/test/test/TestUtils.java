@@ -75,7 +75,7 @@ public class TestUtils {
 		ACTIVITY_FOR_AUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToAuthenticatedUser"));
 		ACTIVITY_FOR_UNAUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToUnauthenticatedUser"));
 		ACTIVITY_INVALID = new Integer(properties.getProperty("test.activityServicesImplTest.activityInvalid"));
-		ACTIVITY_DEFAULT_FOR_CREATE = TestUtils.createDefaultActivityForCreation();
+		ACTIVITY_DEFAULT_FOR_CREATE = createDefaultActivityForCreation();
 	}
 
 	/**

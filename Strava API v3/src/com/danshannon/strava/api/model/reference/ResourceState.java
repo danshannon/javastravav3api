@@ -28,7 +28,7 @@ public enum ResourceState {
 	public static ResourceState create(Integer id) {
 		ResourceState[] states = ResourceState.values();
 		for (ResourceState state : states) {
-			if (state.getValue().equals(id)) {
+			if (state.getValue() != null && state.getValue().equals(id)) {
 				return state;
 			}
 		}
