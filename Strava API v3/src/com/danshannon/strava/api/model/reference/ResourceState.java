@@ -6,6 +6,7 @@ package com.danshannon.strava.api.model.reference;
  *
  */
 public enum ResourceState {
+	UPDATING(-1,"updating"),
 	META(1,"meta"),
 	SUMMARY(2,"summary"),
 	DETAILED(3,"detailed"),

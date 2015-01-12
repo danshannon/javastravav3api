@@ -626,10 +626,6 @@ public class ActivityServicesImplTest {
 		
 		assertNotNull("Asked for one comment in a page, got null",comments);
 		assertEquals("Asked for one comment in a page, got " + comments.length,1,comments.length);
-	
-		// TODO Test maximum page size (test at max, and at max+1)
-		fail("Not yet implemented");
-
 	}
 	
 	/**
@@ -1016,36 +1012,87 @@ public class ActivityServicesImplTest {
 	public void testUpdateActivity_validUpdate() throws UnauthorizedException, BadRequestException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		Activity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		activity.setType(ActivityType.ALPINE_SKI);
 		Fairy fairy = Fairy.create();
 		TextProducer text = fairy.textProducer();
 		
 		// Create the activity on Strava
-		activity = service.createManualActivity(activity);
-
+		Activity stravaResponse = service.createManualActivity(activity);
+		
 		// Change the name
 		String name = text.sentence();
 		activity.setName(name);
-		Activity stravaResponse = service.updateActivity(activity);
-		
-		// Check that the name is now set
-		assertEquals("Name not updated correctly",name,stravaResponse.getName());
+		activity.setId(stravaResponse.getId());
 		
 		// Change the type
-		activity.setType(ActivityType.ALPINE_SKI);
-		stravaResponse = service.updateActivity(activity);
+		activity.setType(ActivityType.RIDE);
 		
-		// TODO There's a Strava bug here - the activity DOES get updated but Strava returns the old value via the API
+		// Change the privacy flag
+		activity.setPrivate(Boolean.TRUE);
 		
-		// Check that the type is now set
-		assertEquals("Type not updated correctly",activity.getType(),stravaResponse.getType());
+		// Change the commute flag
+		activity.setCommute(Boolean.TRUE);
+		
+		// Change the trainer flag
+		activity.setTrainer(Boolean.TRUE);
+		
+		// Change the gear id
+		activity.setGearId("4691");
+		
+//		// Change the gear id to 'none'
+//		activity.setGearId("none");
+//		stravaResponse = service.updateActivity(activity);
+//		
+//		// Check that the gear id is gone
+//		assertNull("Gear not removed from activity",stravaResponse.getGearId());
+		
+		// Change the description
+		String description = text.paragraph();
+		activity.setDescription(description);
 
-		// Change the type to something illegal
-		activity.setType(ActivityType.UNKNOWN);
+		// Update the activity
 		stravaResponse = service.updateActivity(activity);
 		
-		// What happened?
-		fail("Type is now " + activity.getType());
+		// Get the activity again
+		boolean loop = true;
+		while (loop) {
+			stravaResponse = service.getActivity(stravaResponse.getId(), Boolean.FALSE);
+			if (stravaResponse.getResourceState() == ResourceState.UPDATING) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// Ignore
+				}				
+			} else {
+				loop = false;
+			}
+		}
 		
+	// Check that the name is now set
+		assertEquals("Name not updated correctly",name,stravaResponse.getName());
+
+		// Check that the type is now set
+		assertEquals("Type not updated correctly",ActivityType.RIDE,stravaResponse.getType());
+
+		// Check that the privacy flag is now set
+		assertEquals("Private ride flag not updated correctly",Boolean.TRUE,stravaResponse.getPrivate());
+		
+		// Check that the commute flag is now set
+		assertEquals("Commute flag not updated correctly",Boolean.TRUE,stravaResponse.getCommute());
+		
+		// Check that the trainer flag is now set
+		assertEquals("Trainer flag not updated correctly",Boolean.TRUE,stravaResponse.getTrainer());
+		
+		// Check that the gear id is set right
+		assertEquals("Gear not set correctly","4691",stravaResponse.getGearId());
+		
+		// Check the description has changed
+		assertEquals("Description not updated correctly",description,stravaResponse.getDescription());
+		
+		
+		// Delete the activity at the end
+		service.deleteActivity(activity.getId());
+
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 		

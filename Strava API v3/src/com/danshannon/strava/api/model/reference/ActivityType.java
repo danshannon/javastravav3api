@@ -7,7 +7,7 @@ package com.danshannon.strava.api.model.reference;
  */
 public enum ActivityType {
 	//possible values: ride, run, swim, workout, hike, walk, nordicski, alpineski, backcountryski, iceskate, inlineskate, kitesurf, rollerski, windsurf, workout, snowboard, snowshoe
-	//Type detected from file overrides, uses athlete’s default type if not specified
+	//Type detected from file overrides, uses athleteï¿½s default type if not specified
 	RIDE("ride","Ride"),
 	RUN("run","Run"),
 	SWIM("swim","Swim"),
@@ -42,7 +42,7 @@ public enum ActivityType {
 	// For use as Jackson @JsonCreator
 	public static ActivityType create(String id) {
 		for (ActivityType type : ActivityType.values()) {
-			if (type.getId() != null && type.getId().equals(id)) {
+			if (type.getId() != null && type.getId().toLowerCase().equals(id.toLowerCase())) {
 				return type;
 			}
 		}

@@ -6,6 +6,7 @@ import java.util.List;
 import com.danshannon.strava.api.model.reference.ActivityType;
 import com.danshannon.strava.api.model.reference.ResourceState;
 import com.danshannon.strava.api.model.reference.WorkoutType;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * @author Dan Shannon
@@ -46,6 +47,7 @@ public class Activity {
 	/**
 	 * NB Is "private" in the API
 	 */
+	@SerializedName("private")
 	private Boolean privateActivity;
 	private Boolean flagged;
 	private WorkoutType workoutType;
@@ -239,7 +241,7 @@ public class Activity {
 	/**
 	 * @return the privateActivity
 	 */
-	public Boolean getPrivateActivity() {
+	public Boolean getPrivate() {
 		return this.privateActivity;
 	}
 	/**
@@ -539,7 +541,7 @@ public class Activity {
 	/**
 	 * @param privateActivity the privateActivity to set
 	 */
-	public void setPrivateActivity(Boolean privateActivity) {
+	public void setPrivate(Boolean privateActivity) {
 		this.privateActivity = privateActivity;
 	}
 	/**
