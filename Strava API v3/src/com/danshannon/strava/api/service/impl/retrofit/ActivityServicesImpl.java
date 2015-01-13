@@ -12,6 +12,7 @@ import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Comment;
 import com.danshannon.strava.api.model.Lap;
 import com.danshannon.strava.api.model.Photo;
+import com.danshannon.strava.api.model.reference.ResourceState;
 import com.danshannon.strava.api.service.ActivityServices;
 import com.danshannon.strava.api.service.Strava;
 import com.danshannon.strava.api.service.exception.BadRequestException;
@@ -77,7 +78,21 @@ public class ActivityServicesImpl implements ActivityServices {
 	@Override
 	public Activity getActivity(Integer id, Boolean includeAllEfforts) {
 		try {
-			return restService.getActivity(id, includeAllEfforts);
+			boolean loop = true;
+			Activity stravaResponse = null;
+			while (loop) {
+				stravaResponse = restService.getActivity(id, includeAllEfforts);
+				if (stravaResponse.getResourceState() == ResourceState.UPDATING) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// Ignore
+					}				
+				} else {
+					loop = false;
+				}
+			}
+			return stravaResponse;
 		} catch (NotFoundException e) {
 			return null;
 		}
