@@ -1107,15 +1107,32 @@ public class ActivityServicesImplTest {
 	}
 
 	@Test
-	public void testUpdateActivity_invalidActivity() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+	public void testUpdateActivity_invalidActivity() throws UnauthorizedException {
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		activity.setId(TestUtils.ACTIVITY_INVALID);
+		
+		try {
+			service.updateActivity(activity);
+		} catch (NotFoundException e) {
+			// Expected behaviour
+			return;
+		}
+		fail("Updated an activity which doesn't exist?");
 	}
 
 	@Test
-	public void testUpdateActivity_unauthenticatedAthletesActivity() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+	public void testUpdateActivity_unauthenticatedAthletesActivity() throws NotFoundException, UnauthorizedException {
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_UNAUTHENTICATED_USER, Boolean.FALSE);
+		
+		try {
+			service.updateActivity(activity);
+		} catch (UnauthorizedException e) {
+			// Expected behaviour
+			return;
+		}
+		fail("Updated an activity which belongs to someone else??");
 	}
 
 	/**
