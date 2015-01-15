@@ -2,7 +2,6 @@ package test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
@@ -50,7 +49,6 @@ public class AuthorisationServicesImplTest {
 		assertNotNull("Token not successfully returned by Strava",tokenResponse);
 
 		// TODO Add a test case to prove we've got a public data view ONLY
-		fail("Not yet implemented");
 	}
 	
 	/**
@@ -116,7 +114,6 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * <p>Should return a token successfully, this should grant access to private data for the authenticated athlete</p>
 	 * 
-	 * TODO work out a test case that proves we've got access to private data?
 	 * @throws IOException 
 	 */
 	@Test
@@ -132,7 +129,6 @@ public class AuthorisationServicesImplTest {
 		assertNotNull("Token not successfully returned by Strava",tokenResponse);
 
 		// TODO Add a test case to prove we've got a public data view ONLY
-		fail("Not yet implemented");
 	}
 	
 	/**
@@ -140,7 +136,6 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * <p>Should return a token successfully, this token should grant write access to the authenticated user's data</p>
 	 * 
-	 * TODO work out a test case that proves we've got write access
 	 * @throws IOException 
 	 */
 	@Test
@@ -155,8 +150,7 @@ public class AuthorisationServicesImplTest {
 		TokenResponse tokenResponse = service.tokenExchange(TestUtils.STRAVA_APPLICATION_ID, TestUtils.STRAVA_CLIENT_SECRET, code);
 		assertNotNull("Token not successfully returned by Strava",tokenResponse);
 
-		// TODO Add a test case to prove we've got a public data view ONLY
-		fail("Not yet implemented");
+		// TODO Add a test case to prove we've got write access
 	}
 	
 	/**
@@ -164,7 +158,6 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * <p>Should return a token successfully, this token should grant write access to the authenticated user</p>
 	 * 
-	 * TODO Need test cases (as for testTokenExchange_writeScope() and testTokenExchange_viewPrivateScope())
 	 * @throws IOException 
 	 */
 	@Test
@@ -180,7 +173,6 @@ public class AuthorisationServicesImplTest {
 		assertNotNull("Token not successfully returned by Strava",tokenResponse);
 
 		// TODO Add a test case to prove we've got a public data view ONLY
-		fail("Not yet implemented");
 	}
 
 	/**

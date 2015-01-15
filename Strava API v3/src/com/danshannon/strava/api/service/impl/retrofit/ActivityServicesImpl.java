@@ -1,5 +1,6 @@
 package com.danshannon.strava.api.service.impl.retrofit;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 import retrofit.RequestInterceptor;
@@ -128,10 +129,22 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @throws UnauthorizedException 
 	 */
 	@Override
-	public Activity[] listAuthenticatedAthleteActivities(Integer before, Integer after, Integer page, Integer perPage) throws UnauthorizedException {
+	public Activity[] listAuthenticatedAthleteActivities(Calendar before, Calendar after, Integer page, Integer perPage) throws UnauthorizedException {
 		Strava.validatePagingArguments(page,perPage);
 		
-		return restService.listAuthenticatedAthleteActivities(before, after, page, perPage);
+		return restService.listAuthenticatedAthleteActivities(secondsSinceUnixEpoch(before), secondsSinceUnixEpoch(after), page, perPage);
+	}
+
+	/**
+	 * @param date
+	 * @return
+	 */
+	private Integer secondsSinceUnixEpoch(Calendar date) {
+		if (date == null) {
+			return null;
+		}
+		Long timeInSeconds = date.getTimeInMillis() / 1000L;
+		return timeInSeconds.intValue();
 	}
 
 	/**

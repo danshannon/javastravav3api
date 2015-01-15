@@ -1,5 +1,7 @@
 package com.danshannon.strava.api.service;
 
+import java.util.Calendar;
+
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.ActivityZone;
 import com.danshannon.strava.api.model.Athlete;
@@ -34,7 +36,7 @@ public interface ActivityServices {
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
 	 * @param id The id of the {@link Activity activity} to be returned
-	 * @param includeAllEfforts (Optional) Used to include all segment efforts in the result
+	 * @param includeAllEfforts (Optional) Used to include all segment efforts in the result (if omitted or <code>false</code> then only "important" efforts are returned).
 	 * @return Returns a detailed representation if the {@link Activity activity} is owned by the requesting athlete. Returns a summary representation for all other requests.
 	 */
 	public Activity getActivity(Integer id, Boolean includeAllEfforts);
@@ -105,14 +107,14 @@ public interface ActivityServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
-	 * @param before (Optional) seconds since UNIX epoch, result will start with activities whose start_date is before this value
-	 * @param after (Optional) seconds since UNIX epoch, result will start with activities whose start_date is after this value, sorted oldest first
+	 * @param before (Optional) result will start with activities whose start_date is before this value
+	 * @param after (Optional) result will start with activities whose start_date is after this value, sorted oldest first
 	 * @param page (Optional) Page to start at for pagination
 	 * @param perPage (Optional) Number of results per page (maximum 200)
 	 * @return Returns an array of {@link Activity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
 	 * @throws UnauthorizedException thrown if service returns a 401 Unauthorized status
 	 */
-	public Activity[] listAuthenticatedAthleteActivities(Integer before, Integer after, Integer page, Integer perPage) throws UnauthorizedException;
+	public Activity[] listAuthenticatedAthleteActivities(Calendar before, Calendar after, Integer page, Integer perPage) throws UnauthorizedException;
 	
 	/**
 	 * <p>List the recent activities performed by those the current authenticated {@link Athlete} is following.</p>
