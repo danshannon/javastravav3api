@@ -35,7 +35,7 @@ public class Strava {
 	 * @return
 	 */
 	public static <T> List<T> ignoreLastN(List<T> list, int ignoreLastN) {
-		return list.subList(list.size() - ignoreLastN, list.size() - 1);
+		return list.subList(0, list.size() - ignoreLastN - 1);
 	}
 	
 	/**
