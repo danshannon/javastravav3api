@@ -1,7 +1,10 @@
 package com.danshannon.strava.api.service.impl.retrofit;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -19,6 +22,7 @@ import com.danshannon.strava.api.service.Strava;
 import com.danshannon.strava.api.service.exception.BadRequestException;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
+import com.danshannon.strava.util.Paging;
 import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
 
 /**
@@ -57,9 +61,6 @@ public class ActivityServicesImpl implements ActivityServices {
 				.setErrorHandler(new RetrofitErrorHandler())
 				.build()
 				.create(ActivityServicesRetrofit.class));
-
-			// Check that the token works (i.e. it is valid)
-			restService.listAuthenticatedAthleteActivities(null, null, 1, 1);
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
@@ -127,12 +128,41 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#listAuthenticatedAthleteActivities(java.lang.Integer,
 	 *      java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 * @throws UnauthorizedException 
+	 * @throws BadRequestException 
 	 */
 	@Override
-	public Activity[] listAuthenticatedAthleteActivities(Calendar before, Calendar after, Integer page, Integer perPage) throws UnauthorizedException {
-		Strava.validatePagingArguments(page,perPage);
+	public List<Activity> listAuthenticatedAthleteActivities(Calendar before, Calendar after, Paging pagingInstruction) throws UnauthorizedException {
+		Strava.validatePagingArguments(pagingInstruction);
+		Integer secondsBefore = secondsSinceUnixEpoch(before);
+		Integer secondsAfter = secondsSinceUnixEpoch(after);
 		
-		return restService.listAuthenticatedAthleteActivities(secondsSinceUnixEpoch(before), secondsSinceUnixEpoch(after), page, perPage);
+		List<Activity> activities = new ArrayList<Activity>();
+		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+			List<Activity> activityPage = Arrays.asList(restService.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, paging.getPage(), paging.getPageSize()));
+			activityPage = Strava.ignoreLastN(activityPage, paging.getIgnoreLastN());
+			activities.addAll(activityPage);
+		}
+		activities = Strava.ignoreLastN(activities, pagingInstruction.getIgnoreLastN());
+		return activities;
+		
+//		Integer currentPage = (page == null ? 1 : page);
+//		Integer currentPerPage = (perPage == null ? DEFAULT_ACTIVITIES_PER_PAGE : Math.min(MAX_PAGING_SIZE, perPage));
+//		Integer firstActivity = (currentPage - 1) * (perPage == null ? DEFAULT_ACTIVITIES_PER_PAGE : perPage) + 1;
+//		Integer lastActivity = firstActivity + (perPage == null ? DEFAULT_ACTIVITIES_PER_PAGE : perPage) - 1;
+//		
+//		List<Activity> activities = new ArrayList<Activity>();
+//		int thisPage = 0;
+//		for (int i = firstActivity; i <= lastActivity; i = i + currentPerPage) {
+//			thisPage++;
+//			List<Activity> activityPage = Arrays.asList(restService.listAuthenticatedAthleteActivities(secondsSinceUnixEpoch(before), secondsSinceUnixEpoch(after), thisPage, currentPerPage));
+//			if (i + currentPerPage <= lastActivity) {
+//				activities.addAll(activityPage);
+//			} else {
+//				for (int j = i; j <= lastActivity; j++) {
+//					activities.add(activityPage.get(j - i));
+//				}
+//			}
+//		}
 	}
 
 	/**
@@ -151,19 +181,19 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#listFriendsActivities(java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public Activity[] listFriendsActivities(Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page,perPage);
+	public List<Activity> listFriendsActivities(Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 
-		return restService.listFriendsActivities(page, perPage);
+		return Arrays.asList(restService.listFriendsActivities(pagingInstruction.getPage(), pagingInstruction.getPageSize()));
 	}
 
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityZones(java.lang.Integer)
 	 */
 	@Override
-	public ActivityZone[] listActivityZones(Integer id) {
+	public List<ActivityZone> listActivityZones(Integer id) {
 		try {
-			return restService.listActivityZones(id);
+			return Arrays.asList(restService.listActivityZones(id));
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -173,9 +203,9 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityLaps(java.lang.Integer)
 	 */
 	@Override
-	public Lap[] listActivityLaps(Integer id) {
+	public List<Lap> listActivityLaps(Integer id) {
 		try {
-			return restService.listActivityLaps(id);
+			return Arrays.asList(restService.listActivityLaps(id));
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -186,11 +216,11 @@ public class ActivityServicesImpl implements ActivityServices {
 	 *      java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public Comment[] listActivityComments(Integer id, Boolean markdown, Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page,perPage);
+	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 
 		try {
-			return restService.listActivityComments(id, markdown, page, perPage);
+			return Arrays.asList(restService.listActivityComments(id, markdown, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -201,11 +231,11 @@ public class ActivityServicesImpl implements ActivityServices {
 	 *      java.lang.Integer)
 	 */
 	@Override
-	public Athlete[] listActivityKudoers(Integer id, Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page,perPage);
+	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 
 		try {
-			return restService.listActivityKudoers(id, page, perPage);
+			return Arrays.asList(restService.listActivityKudoers(id, pagingInstruction.getPage(),pagingInstruction.getPageSize()));
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -215,7 +245,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityPhotos(java.lang.Integer)
 	 */
 	@Override
-	public Photo[] listActivityPhotos(Integer id) {
+	public List<Photo> listActivityPhotos(Integer id) {
 		try {
 			Photo[] photos = restService.listActivityPhotos(id);
 			
@@ -224,7 +254,7 @@ public class ActivityServicesImpl implements ActivityServices {
 				photos = new Photo[0];
 			}
 			
-			return photos;
+			return Arrays.asList(photos);
 			
 		} catch (NotFoundException e) {
 			return null;

@@ -1,6 +1,7 @@
 package com.danshannon.strava.api.service;
 
 import java.util.Calendar;
+import java.util.List;
 
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.ActivityZone;
@@ -11,6 +12,7 @@ import com.danshannon.strava.api.model.Photo;
 import com.danshannon.strava.api.service.exception.BadRequestException;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
+import com.danshannon.strava.util.Paging;
 
 /**
  * Activity related services
@@ -109,12 +111,11 @@ public interface ActivityServices {
 	 * 
 	 * @param before (Optional) result will start with activities whose start_date is before this value
 	 * @param after (Optional) result will start with activities whose start_date is after this value, sorted oldest first
-	 * @param page (Optional) Page to start at for pagination
-	 * @param perPage (Optional) Number of results per page (maximum 200)
+	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Activity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
 	 * @throws UnauthorizedException thrown if service returns a 401 Unauthorized status
 	 */
-	public Activity[] listAuthenticatedAthleteActivities(Calendar before, Calendar after, Integer page, Integer perPage) throws UnauthorizedException;
+	public List<Activity> listAuthenticatedAthleteActivities(Calendar before, Calendar after, Paging pagingInstruction) throws UnauthorizedException;
 	
 	/**
 	 * <p>List the recent activities performed by those the current authenticated {@link Athlete} is following.</p>
@@ -125,11 +126,10 @@ public interface ActivityServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
-	 * @param page (Optional) Page to start at for pagination
-	 * @param perPage (Optional) Number of results per page (maximum 200)
+	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of activity summary representations sorted newest first by start_date.
 	 */
-	public Activity[] listFriendsActivities(Integer page, Integer perPage);
+	public List<Activity> listFriendsActivities(Paging pagingInstruction);
 	
 	/**
 	 * <p>Heartrate and power zones are set by the {@link Athlete athlete}. This endpoint returns the time (seconds) in each zone for the {@link Activity activity}.</p>
@@ -145,7 +145,7 @@ public interface ActivityServices {
 	 * @param id The id of the {@link Activity activity} for which zones should be returned
 	 * @return Returns an array of {@link ActivityZone activity zones} for the {@link Activity} identified
 	 */
-	public ActivityZone[] listActivityZones(Integer id);
+	public List<ActivityZone> listActivityZones(Integer id);
 	
 	/**
 	 * <p>This resource will return all laps for an activity. Laps are triggered by athletes using their respective devices, such as Garmin watches.</p>
@@ -157,7 +157,7 @@ public interface ActivityServices {
 	 * @param id The id of the {@link Activity} for which laps should be returned
 	 * @return Returns an array of {@link Lap lap} effort summaries
 	 */
-	public Lap[] listActivityLaps(Integer id);
+	public List<Lap> listActivityLaps(Integer id);
 	
 	/**
 	 * <p>Comments on an activity can be viewed by any user. However, only internal applications are allowed to create or delete them.</p>
@@ -178,13 +178,13 @@ public interface ActivityServices {
 	 * 
 	 * @param id The id of the {@link Activity} for which {@link Comment comments} should be returned
 	 * @param markdown (Optional) Include markdown in comments (default is <code>false</code> - i.e. filter out
-	 * @param page (Optional) Page to start at for pagination
-	 * @param perPage (Optional) Number of results per page (maximum 200)
+	 * @param pagingInstruction (Optional) The page to be returned
+	 * @return List of comments
 	 */
-	public Comment[] listActivityComments(Integer id, Boolean markdown, Integer page, Integer perPage);
+	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstructions);
 	
 	/**
-	 * <p>A kudos is Strava�s version of a �Like� or a �+1�. The number of kudos on an activity is returned with the activity summary.</p>
+	 * <p>A kudos is Strava's version of a 'like' or '+1'. The number of kudos on an activity is returned with the activity summary.</p>
 	 * 
 	 * <p>Kudos posting can be enabled on a per application basis, email developers -at- strava.com for more information.</p>
 	 * 
@@ -195,11 +195,10 @@ public interface ActivityServices {
 	 * @see <a href="http://strava.github.io/api/v3/kudos/">http://strava.github.io/api/v3/kudos/</a>
 	 * 
 	 * @param id The id of the {@link Activity} for which kudoers are to be listed
-	 * @param page (Optional) Page to start at for pagination
-	 * @param perPage (Optional) Number of results per page (maximum 200)
+	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Athlete athlete} summary objects.
 	 */
-	public Athlete[] listActivityKudoers(Integer id, Integer page, Integer perPage);
+	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction);
 	
 	/**
 	 * <p>Photos are external objects associated with an activity. Currently, the only external photo source is Instagram.</p>
@@ -215,5 +214,5 @@ public interface ActivityServices {
 	 * @param id The id of the {@link Activity} for which photos are to be listed
 	 * @return Returns an array of {@link Photo photo} objects.
 	 */
-	public Photo[] listActivityPhotos(Integer id);
+	public List<Photo> listActivityPhotos(Integer id);
 }

@@ -1,9 +1,12 @@
 package com.danshannon.strava.api.service;
 
+import java.util.List;
+
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Club;
 import com.danshannon.strava.api.model.reference.ResourceState;
+import com.danshannon.strava.util.Paging;
 
 /**
  * <p>{@link Club} related services</p>
@@ -41,7 +44,7 @@ public interface ClubServices {
 	 * 
 	 * @return Returns a {@link Club club} summary {@link ResourceState representation}.
 	 */
-	public Club[] listAuthenticatedAthleteClubs();
+	public List<Club> listAuthenticatedAthleteClubs();
 	
 	/**
 	 * <p>Retrieve summary information about member {@link Athlete athletes} of a specific {@link Club club}.</p>
@@ -55,11 +58,10 @@ public interface ClubServices {
 	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-members">http://strava.github.io/api/v3/clubs/#get-members</a>
 	 * 
 	 * @param id The id of the {@link Club} whose member {@link Athlete athletes} should be returned
-	 * @param page (Optional) Page to start at for pagination
-	 * @param perPage (Optional) Number of results per page (max 200)
+	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Athlete athlete} summary {@link ResourceState representations}.
 	 */
-	public Athlete[] listClubMembers(Integer id, Integer page, Integer perPage);
+	public List<Athlete> listClubMembers(Integer id, Paging pagingInstruction);
 	
 	/**
 	 * <p>Retrieve the recent {@link Activity activities} performed by member {@link Athlete athletes} of a specific {@link Club club}.</p>
@@ -77,5 +79,5 @@ public interface ClubServices {
 	 * @param perPage (Optional) Number of results per page (max 200)
 	 * @return Returns an array of {@link Activity activity} summary {@link ResourceState representations}.
 	 */
-	public Activity[] listRecentClubActivities(Integer id, Integer page, Integer perPage);
+	public List<Activity> listRecentClubActivities(Integer id, Paging pagingInstruction);
 }

@@ -3,8 +3,10 @@
  */
 package com.danshannon.strava.api.service.impl.retrofit;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -24,6 +26,7 @@ import com.danshannon.strava.api.service.SegmentServices;
 import com.danshannon.strava.api.service.Strava;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
+import com.danshannon.strava.util.Paging;
 import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
 
 /**
@@ -63,9 +66,6 @@ public class SegmentServicesImpl implements SegmentServices {
 				.build()
 				.create(SegmentServicesRetrofit.class));
 
-			// Check that the token works (i.e. it is valid)
-			// TODO restService.listAuthenticatedAthleteClubs();
-
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
 			
@@ -93,19 +93,19 @@ public class SegmentServicesImpl implements SegmentServices {
 	 * @see com.danshannon.strava.api.service.SegmentServices#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public Segment[] listAuthenticatedAthleteStarredSegments(Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page, perPage);
-		return restService.listAuthenticatedAthleteStarredSegments(page, perPage);
+	public List<Segment> listAuthenticatedAthleteStarredSegments(Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
+		return Arrays.asList(restService.listAuthenticatedAthleteStarredSegments(pagingInstruction.getPage(),pagingInstruction.getPageSize()));
 	}
 
 	/**
 	 * @see com.danshannon.strava.api.service.SegmentServices#listStarredSegments(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public Segment[] listStarredSegments(Integer id, Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page, perPage);
+	public List<Segment> listStarredSegments(Integer id, Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 		try {
-			return restService.listStarredSegments(id, page, perPage);
+			return Arrays.asList(restService.listStarredSegments(id, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -115,11 +115,11 @@ public class SegmentServicesImpl implements SegmentServices {
 	 * @see com.danshannon.strava.api.service.SegmentServices#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.util.Calendar, java.util.Calendar, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public SegmentEffort[] listSegmentEfforts(Integer id, Integer athleteId, Calendar startDateLocal,
-			Calendar endDateLocal, Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page, perPage);
+	public List<SegmentEffort> listSegmentEfforts(Integer id, Integer athleteId, Calendar startDateLocal,
+			Calendar endDateLocal, Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 		try {
-			return restService.listSegmentEfforts(id, athleteId, startDateLocal, endDateLocal, page, perPage);
+			return Arrays.asList(restService.listSegmentEfforts(id, athleteId, startDateLocal, endDateLocal, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -130,11 +130,10 @@ public class SegmentServicesImpl implements SegmentServices {
 	 */
 	@Override
 	public SegmentLeaderboard getSegmentLeaderboard(Integer id, Gender gender, AgeGroup ageGroup,
-			WeightClass weightClass, Boolean following, Integer clubId, LeaderboardDateRange dateRange, Integer page,
-			Integer perPage) {
-		Strava.validatePagingArguments(page, perPage);
+			WeightClass weightClass, Boolean following, Integer clubId, LeaderboardDateRange dateRange, Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 		try {
-			return restService.getSegmentLeaderboard(id, gender, ageGroup, weightClass, following, clubId, dateRange, page, perPage);
+			return restService.getSegmentLeaderboard(id, gender, ageGroup, weightClass, following, clubId, dateRange, pagingInstruction.getPage(), pagingInstruction.getPageSize());
 		} catch (NotFoundException e) {
 			return null;
 		}

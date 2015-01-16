@@ -1,6 +1,8 @@
 package com.danshannon.strava.api.service.impl.retrofit;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -54,9 +56,6 @@ public class StreamServicesImpl implements StreamServices {
 				.build()
 				.create(StreamServicesRetrofit.class));
 
-			// Check that the token works (i.e. it is valid)
-			// TODO restService.listAuthenticatedAthleteClubs();
-
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
 			
@@ -72,27 +71,27 @@ public class StreamServicesImpl implements StreamServices {
 	 * @see com.danshannon.strava.api.service.StreamServices#getActivityStreams(java.lang.String, com.danshannon.strava.api.model.reference.StreamType[], com.danshannon.strava.api.model.reference.StreamResolutionType, com.danshannon.strava.api.model.reference.StreamSeriesDownsamplingType)
 	 */
 	@Override
-	public Stream[] getActivityStreams(String id, StreamType[] types, StreamResolutionType resolution,
+	public List<Stream> getActivityStreams(String id, StreamType[] types, StreamResolutionType resolution,
 			StreamSeriesDownsamplingType seriesType) {
-		return restService.getActivityStreams(id, types, resolution, seriesType);
+		return Arrays.asList(restService.getActivityStreams(id, types, resolution, seriesType));
 	}
 
 	/**
 	 * @see com.danshannon.strava.api.service.StreamServices#getEffortStreams(java.lang.String, com.danshannon.strava.api.model.reference.StreamType[], com.danshannon.strava.api.model.reference.StreamResolutionType, com.danshannon.strava.api.model.reference.StreamSeriesDownsamplingType)
 	 */
 	@Override
-	public Stream[] getEffortStreams(String id, StreamType[] types, StreamResolutionType resolution,
+	public List<Stream> getEffortStreams(String id, StreamType[] types, StreamResolutionType resolution,
 			StreamSeriesDownsamplingType seriesType) {
-		return restService.getEffortStreams(id, types, resolution, seriesType);
+		return Arrays.asList(restService.getEffortStreams(id, types, resolution, seriesType));
 	}
 
 	/**
 	 * @see com.danshannon.strava.api.service.StreamServices#getSegmentStreams(java.lang.String, com.danshannon.strava.api.model.reference.StreamType[], com.danshannon.strava.api.model.reference.StreamResolutionType, com.danshannon.strava.api.model.reference.StreamSeriesDownsamplingType)
 	 */
 	@Override
-	public Stream[] getSegmentStreams(String id, StreamType[] types, StreamResolutionType resolution,
+	public List<Stream> getSegmentStreams(String id, StreamType[] types, StreamResolutionType resolution,
 			StreamSeriesDownsamplingType seriesType) {
-		return restService.getSegmentStreams(id, types, resolution, seriesType);
+		return Arrays.asList(restService.getSegmentStreams(id, types, resolution, seriesType));
 	}
 
 }

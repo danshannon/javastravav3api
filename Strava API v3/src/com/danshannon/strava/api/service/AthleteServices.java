@@ -1,10 +1,13 @@
 package com.danshannon.strava.api.service;
 
+import java.util.List;
+
 import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.SegmentEffort;
 import com.danshannon.strava.api.model.reference.Gender;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
+import com.danshannon.strava.util.Paging;
 
 /**
  * Athlete related services
@@ -68,11 +71,10 @@ public interface AthleteServices {
 	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
 	 * 
 	 * @param id The id of the {@link Athlete athlete} whose KOM's are to be returned
-	 * @param page (Optional) Page to start at for pagination
-	 * @param perPage (Optional) Number of results per page (max 200)
+	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link SegmentEffort segment effort} summary representations
 	 */
-	public SegmentEffort[] listAthleteKOMs(Integer id, Integer page, Integer perPage);
+	public List<SegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction);
 	
 	/**
 	 * <p>Friends are users the current {@link Athlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
@@ -85,11 +87,10 @@ public interface AthleteServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
 	 * 
-	 * @param page (Optional) Page to start at for pagination
-	 * @param perPage (Optional) Number of results per page (max 200)
+	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Athlete athlete} summary representations.
 	 */
-	public Athlete[] listAuthenticatedAthleteFriends(Integer page, Integer perPage);
+	public List<Athlete> listAuthenticatedAthleteFriends(Paging pagingInstruction);
 	
 	/**
 	 * <p>Friends are users an {@link Athlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
@@ -105,11 +106,10 @@ public interface AthleteServices {
 	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
 	 * 
 	 * @param id The id of the {@link Athlete athlete} whose friends are to be listed
-	 * @param page (Optional) Page to start at for pagination
-	 * @param perPage (Optional) Number of results per page (max 200)
+	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return List of {@link Athlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
 	 */
-	public Athlete[] listAthleteFriends(Integer id, Integer page, Integer perPage);
+	public List<Athlete> listAthleteFriends(Integer id, Paging pagingInstruction);
 	
 	/**
 	 * <p>Retrieve the {@link Athlete athletes} who both the authenticated athlete and the indicated athlete are following.</p>
@@ -123,9 +123,8 @@ public interface AthleteServices {
 	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
 	 * 
 	 * @param id The id of the {@link Athlete athlete} for whom the list of mutual friends is to be generated
-	 * @param page (Optional) Page to start at for pagination
-	 * @param perPage (Optional) Number of results per page (max 200)
+	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Athlete athlete} summary representations.
 	 */
-	public Athlete[] listAthletesBothFollowing(Integer id, Integer page, Integer perPage);
+	public List<Athlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction);
 }

@@ -3,7 +3,9 @@
  */
 package com.danshannon.strava.api.service.impl.retrofit;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -16,6 +18,7 @@ import com.danshannon.strava.api.service.ClubServices;
 import com.danshannon.strava.api.service.Strava;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
+import com.danshannon.strava.util.Paging;
 import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
 
 /**
@@ -86,18 +89,18 @@ public class ClubServicesImpl implements ClubServices {
 	 * @see com.danshannon.strava.api.service.ClubServices#listAuthenticatedAthleteClubs()
 	 */
 	@Override
-	public Club[] listAuthenticatedAthleteClubs() {
-		return restService.listAuthenticatedAthleteClubs();
+	public List<Club> listAuthenticatedAthleteClubs() {
+		return Arrays.asList(restService.listAuthenticatedAthleteClubs());
 	}
 
 	/**
 	 * @see com.danshannon.strava.api.service.ClubServices#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public Athlete[] listClubMembers(Integer id, Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page, perPage);
+	public List<Athlete> listClubMembers(Integer id, Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 		try {
-			return restService.listClubMembers(id, page, perPage);
+			return Arrays.asList(restService.listClubMembers(id, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -107,10 +110,10 @@ public class ClubServicesImpl implements ClubServices {
 	 * @see com.danshannon.strava.api.service.ClubServices#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public Activity[] listRecentClubActivities(Integer id, Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page, perPage);
+	public List<Activity> listRecentClubActivities(Integer id, Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 		try {
-			return restService.listRecentClubActivities(id, page, perPage);
+			return Arrays.asList(restService.listRecentClubActivities(id, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
 		} catch (NotFoundException e) {
 			return null;
 		}

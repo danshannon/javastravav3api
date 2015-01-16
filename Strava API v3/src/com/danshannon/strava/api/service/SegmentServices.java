@@ -1,6 +1,7 @@
 package com.danshannon.strava.api.service;
 
 import java.util.Calendar;
+import java.util.List;
 
 import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Club;
@@ -16,11 +17,12 @@ import com.danshannon.strava.api.model.reference.LeaderboardDateRange;
 import com.danshannon.strava.api.model.reference.ResourceState;
 import com.danshannon.strava.api.model.reference.SegmentExplorerActivityType;
 import com.danshannon.strava.api.model.reference.WeightClass;
+import com.danshannon.strava.util.Paging;
 
 /**
  * <p>{@link Segment Segments} are specific sections of road.</p>
  * 
- * <p>{@link Athlete Athletes’} {@link SegmentEffort efforts} are compared on these segments and {@link SegmentLeaderboard leaderboards} are created.</p>
+ * <p>{@link Athlete Athletesï¿½} {@link SegmentEffort efforts} are compared on these segments and {@link SegmentLeaderboard leaderboards} are created.</p>
  * 
  * @author Dan Shannon
  *
@@ -51,7 +53,7 @@ public interface SegmentServices {
 	 * @param perPage (Optional) Number of results per page (max 200)
 	 * @return Returns a {@link ResourceState#SUMMARY summary representation} of the {@link Segment segments} starred by the authenticated {@link Athlete}.
 	 */
-	public Segment[] listAuthenticatedAthleteStarredSegments(Integer page, Integer perPage);
+	public List<Segment> listAuthenticatedAthleteStarredSegments(Paging pagingInstruction);
 	
 	/**
 	 * <p>Returns a {@link ResourceState#SUMMARY summary representation} of the {@link Segment segments} starred by the identified {@link Athlete athlete}.</p>
@@ -67,7 +69,7 @@ public interface SegmentServices {
 	 * @param perPage (Optional) Number of results per page (max 200)
 	 * @return Returns a {@link ResourceState#SUMMARY summary representation} of the {@link Segment segments} starred by the identified {@link Athlete}.
 	 */
-	public Segment[] listStarredSegments(Integer id, Integer page, Integer perPage);
+	public List<Segment> listStarredSegments(Integer id, Paging pagingInstruction);
 	
 	/**
 	 * <p>Retrieve an array of {@link SegmentEffort segment efforts}, for a given {@link Segment}, filtered by {@link Athlete} and/or a date range.</p>
@@ -90,7 +92,7 @@ public interface SegmentServices {
 	 * @param perPage (Optional) Number of results per page (max 200)
 	 * @return Returns an array of {@link SegmentEffort segment effort} summary {@link ResourceState representations} sorted by start_date_local ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public SegmentEffort[] listSegmentEfforts(Integer id, Integer athleteId, Calendar startDateLocal, Calendar endDateLocal, Integer page, Integer perPage);
+	public List<SegmentEffort> listSegmentEfforts(Integer id, Integer athleteId, Calendar startDateLocal, Calendar endDateLocal, Paging pagingInstruction);
 	
 	/**
 	 * <p>{@link SegmentLeaderboard Leaderboards} represent the ranking of {@link Athlete athletes} on specific {@link Segment segments}.</p>
@@ -114,7 +116,7 @@ public interface SegmentServices {
 	 * @param perPage (Optional) Number of results per page (max 200)
 	 * @return Returns an array of up to 10, by default, {@link SegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be considered 64-bit integers and effort_count is deprecated, use entry_count instead.
 	 */
-	public SegmentLeaderboard getSegmentLeaderboard(Integer id, Gender gender, AgeGroup ageGroup, WeightClass weightClass, Boolean following, Integer clubId, LeaderboardDateRange dateRange, Integer page, Integer perPage);
+	public SegmentLeaderboard getSegmentLeaderboard(Integer id, Gender gender, AgeGroup ageGroup, WeightClass weightClass, Boolean following, Integer clubId, LeaderboardDateRange dateRange, Paging pagingInstruction);
 	
 	/**
 	 * <p>This endpoint can be used to find popular segments within a given area (defined by the southwest and northeast corners of the area).</p>
@@ -124,7 +126,7 @@ public interface SegmentServices {
 	 * @see http://strava.github.io/api/v3/segments/#explore
 	 * @param southwestCorner The southwest corner of the area to be explored
 	 * @param northwestCorner The northeast corner of the area to be explored 
-	 * @param activityType (Optional) ‘running’ or ‘riding’, default is riding
+	 * @param activityType (Optional) ï¿½runningï¿½ or ï¿½ridingï¿½, default is riding
 	 * @param minCat (Optional) Minimum climb category filter
 	 * @param maxCat (Optional) Maximum climb category filter
 	 * @return Returns an array of up to 10 segment objects

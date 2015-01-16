@@ -1,5 +1,8 @@
 package com.danshannon.strava.api.service;
 
+import java.util.List;
+
+import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.Segment;
 import com.danshannon.strava.api.model.SegmentEffort;
 import com.danshannon.strava.api.model.Stream;
@@ -23,7 +26,7 @@ public interface StreamServices {
 	 * 
 	 * <p>Privacy Zones</p>
 	 * 
-	 * <p>Stream requests made using a public access_token will be cropped with the user’s privacy zones, regardless if the requesting athlete owns the requested activity. To fetch the complete stream data use an access_token with view_private permissions.</p>
+	 * <p>Stream requests made using a public access_token will be cropped with the userï¿½s privacy zones, regardless if the requesting athlete owns the requested activity. To fetch the complete stream data use an access_token with view_private permissions.</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/activities/:id/streams/:types</p>
 	 * 
@@ -32,10 +35,10 @@ public interface StreamServices {
 	 * @param id The id of the activity for which streams are to be retrieved
 	 * @param types List of types, if the activity does not have that stream it will not be included in the response
 	 * @param resolution (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
-	 * @param seriesType (Optional) relevant only if using resolution. Either ‘time’ or ‘distance’, default is ‘distance’, used to index the streams if the stream is being reduced
+	 * @param seriesType (Optional) relevant only if using resolution. Either ï¿½timeï¿½ or ï¿½distanceï¿½, default is ï¿½distanceï¿½, used to index the streams if the stream is being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public Stream[] getActivityStreams(String id, StreamType[] types, StreamResolutionType resolution, StreamSeriesDownsamplingType seriesType);
+	public List<Stream> getActivityStreams(String id, StreamType[] types, StreamResolutionType resolution, StreamSeriesDownsamplingType seriesType);
 	
 	/**
 	 * <p>A {@link SegmentEffort segment effort} represents an attempt on a {@link Segment segment}. This resource returns a subset of the {@link Activity activity} streams that correspond to that effort.</p>
@@ -51,10 +54,10 @@ public interface StreamServices {
 	 * @param id The id of the segment effort for which streams are to be retrieved
 	 * @param types List of types, if the effort does not have that stream it will not be included in the response
 	 * @param resolution (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
-	 * @param seriesType (Optional) relevant only if using resolution. Either ‘time’ or ‘distance’, default is ‘distance’, used to index the streams if the stream is being reduced
+	 * @param seriesType (Optional) relevant only if using resolution. Either ï¿½timeï¿½ or ï¿½distanceï¿½, default is ï¿½distanceï¿½, used to index the streams if the stream is being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public Stream[] getEffortStreams(String id, StreamType[] types, StreamResolutionType resolution, StreamSeriesDownsamplingType seriesType);
+	public List<Stream> getEffortStreams(String id, StreamType[] types, StreamResolutionType resolution, StreamSeriesDownsamplingType seriesType);
 	
 	/**
 	 * <p>Retrieve detailed geographical information streams about a specific {@link Segment}.</p>
@@ -68,10 +71,10 @@ public interface StreamServices {
 	 * @param id The id of the segment for which streams are to be retrieved
 	 * @param types List of types, if the segment does not have that stream it will not be included in the response
 	 * @param resolution (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
-	 * @param seriesType (Optional) relevant only if using resolution. Either ‘time’ or ‘distance’, default is ‘distance’, used to index the streams if the stream is being reduced
+	 * @param seriesType (Optional) relevant only if using resolution. Either ï¿½timeï¿½ or ï¿½distanceï¿½, default is ï¿½distanceï¿½, used to index the streams if the stream is being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public Stream[] getSegmentStreams(String id, StreamType[] types, StreamResolutionType resolution, StreamSeriesDownsamplingType seriesType);
+	public List<Stream> getSegmentStreams(String id, StreamType[] types, StreamResolutionType resolution, StreamSeriesDownsamplingType seriesType);
 	
 	
 }

@@ -3,7 +3,9 @@
  */
 package com.danshannon.strava.api.service.impl.retrofit;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -16,6 +18,7 @@ import com.danshannon.strava.api.service.AthleteServices;
 import com.danshannon.strava.api.service.Strava;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
+import com.danshannon.strava.util.Paging;
 import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
 
 /**
@@ -102,10 +105,10 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public SegmentEffort[] listAthleteKOMs(Integer id, Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page, perPage);
+	public List<SegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 		try {
-			return restService.listAthleteKOMs(id, page, perPage);
+			return Arrays.asList(restService.listAthleteKOMs(id, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -115,19 +118,19 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public Athlete[] listAuthenticatedAthleteFriends(Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page, perPage);
-		return restService.listAuthenticatedAthleteFriends(page, perPage);
+	public List<Athlete> listAuthenticatedAthleteFriends(Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
+		return Arrays.asList(restService.listAuthenticatedAthleteFriends(pagingInstruction.getPage(), pagingInstruction.getPageSize()));
 	}
 
 	/**
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAthleteFriends(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public Athlete[] listAthleteFriends(Integer id, Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page, perPage);
+	public List<Athlete> listAthleteFriends(Integer id, Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 		try {
-			return restService.listAthleteFriends(id, page, perPage);
+			return Arrays.asList(restService.listAthleteFriends(id, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -137,10 +140,10 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public Athlete[] listAthletesBothFollowing(Integer id, Integer page, Integer perPage) {
-		Strava.validatePagingArguments(page, perPage);
+	public List<Athlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction) {
+		Strava.validatePagingArguments(pagingInstruction);
 		try {
-			return restService.listAthletesBothFollowing(id, page, perPage);
+			return Arrays.asList(restService.listAthletesBothFollowing(id, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
 		} catch (NotFoundException e) {
 			return null;
 		}
