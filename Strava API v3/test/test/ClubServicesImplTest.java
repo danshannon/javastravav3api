@@ -100,7 +100,7 @@ public class ClubServicesImplTest {
 	// 5. Paging - out of range high
 	// 6. Paging - out of range low
 	@Test
-	public void testListClubMembers(Integer id, Integer page, Integer perPage) {
+	public void testListClubMembers() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");		
 	}
@@ -115,7 +115,7 @@ public class ClubServicesImplTest {
 	// 5. Paging - out of range high
 	// 6. Paging - out of range low
 	@Test
-	public void testListRecentClubActivities(Integer id, Integer page, Integer perPage) {
+	public void testListRecentClubActivities() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");		
 	}

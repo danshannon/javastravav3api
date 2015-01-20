@@ -19,16 +19,20 @@ public class Paging {
 	 */
 	private int ignoreLastN;
 	
+	private int ignoreFirstN;
+	
 	public Paging(int page, int pageSize) {
 		this.page = page;
 		this.pageSize = pageSize;
 		this.ignoreLastN = 0;
+		this.ignoreFirstN = 0;
 	}
 	
-	public Paging(int page, int pageSize, int ignoreLastN) {
+	public Paging(int page, int pageSize, int ignoreFirstN, int ignoreLastN) {
 		this.page = page;
 		this.pageSize = pageSize;
-		this.ignoreLastN = ignoreLastN;		
+		this.ignoreLastN = ignoreLastN;
+		this.ignoreFirstN = ignoreFirstN;
 	}
 
 	/**
@@ -71,6 +75,29 @@ public class Paging {
 	 */
 	public void setIgnoreLastN(int ignoreLastN) {
 		this.ignoreLastN = ignoreLastN;
+	}
+
+	/**
+	 * @return the ignoreFirstN
+	 */
+	public int getIgnoreFirstN() {
+		return this.ignoreFirstN;
+	}
+
+	/**
+	 * @param ignoreFirstN the ignoreFirstN to set
+	 */
+	public void setIgnoreFirstN(int ignoreFirstN) {
+		this.ignoreFirstN = ignoreFirstN;
+	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Paging [page=" + this.page + ", pageSize=" + this.pageSize + ", ignoreLastN=" + this.ignoreLastN
+				+ ", ignoreFirstN=" + this.ignoreFirstN + "]";
 	}
 	
 	

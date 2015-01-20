@@ -36,7 +36,7 @@ public interface AthleteServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.AthleteServices#updateAuthenticatedAthlete()
 	 */
 	@PUT("/athlete")
-	public void updateAuthenticatedAthlete(@Query("city") String city, @Query("state") String state, @Query("country") String country, @Query("sex") Gender sex, @Query("weight") Float weight) throws UnauthorizedException, NotFoundException;
+	public Athlete updateAuthenticatedAthlete(@Query("city") String city, @Query("state") String state, @Query("country") String country, @Query("sex") Gender sex, @Query("weight") Float weight) throws UnauthorizedException, NotFoundException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)

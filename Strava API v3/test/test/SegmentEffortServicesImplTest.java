@@ -79,7 +79,7 @@ public class SegmentEffortServicesImplTest {
 	// 3. Private effort which does belong to the current athlete (is returned)
 	// 4. Private effort which doesn't belong to the current athlete (is not returned)
 	@Test
-	public void testGetSegmentEffort(Integer id) {
+	public void testGetSegmentEffort() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");		
 	}

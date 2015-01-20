@@ -49,13 +49,14 @@ public interface AthleteServices {
 	 * <p>Only updates city, state, country, gender (sex) and weight.</p>
 	 * 
 	 * <p>URL PUT https://www.strava.com/api/v3/athlete</p>
+	 *
+	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
 	 * 
 	 * @throws NotFoundException If the athlete does not exist (this is almost impossible, but just in case the athlete has somehow removed themselves from Strava altogether)
 	 * @throws UnauthorizedException If the security token in use does not have write access
-	 *
-	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
+	 * @return Detailed representation of the updated athlete
 	 */
-	public void updateAuthenticatedAthlete(String city, String state, String country, Gender sex, Float weight) throws UnauthorizedException, NotFoundException;
+	public Athlete updateAuthenticatedAthlete(String city, String state, String country, Gender sex, Float weight) throws UnauthorizedException, NotFoundException;
 	
 	/**
 	 * <p>Returns an array of {@link SegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given athlete.</p>
@@ -73,8 +74,9 @@ public interface AthleteServices {
 	 * @param id The id of the {@link Athlete athlete} whose KOM's are to be returned
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link SegmentEffort segment effort} summary representations
+	 * @throws NotFoundException 
 	 */
-	public List<SegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction);
+	public List<SegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction) throws NotFoundException;
 	
 	/**
 	 * <p>Friends are users the current {@link Athlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
@@ -108,8 +110,9 @@ public interface AthleteServices {
 	 * @param id The id of the {@link Athlete athlete} whose friends are to be listed
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return List of {@link Athlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
+	 * @throws NotFoundException 
 	 */
-	public List<Athlete> listAthleteFriends(Integer id, Paging pagingInstruction);
+	public List<Athlete> listAthleteFriends(Integer id, Paging pagingInstruction) throws NotFoundException;
 	
 	/**
 	 * <p>Retrieve the {@link Athlete athletes} who both the authenticated athlete and the indicated athlete are following.</p>
@@ -125,6 +128,7 @@ public interface AthleteServices {
 	 * @param id The id of the {@link Athlete athlete} for whom the list of mutual friends is to be generated
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Athlete athlete} summary representations.
+	 * @throws NotFoundException 
 	 */
-	public List<Athlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction);
+	public List<Athlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction) throws NotFoundException;
 }

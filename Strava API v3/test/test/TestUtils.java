@@ -43,10 +43,15 @@ public class TestUtils {
 	public static Integer ACTIVITY_WITH_ZONES;
 	public static Integer ACTIVITY_WITHOUT_ZONES;
 	public static Activity ACTIVITY_DEFAULT_FOR_CREATE;
+	
+	public static Integer ATHLETE_AUTHENTICATED_ID;
+	public static Integer ATHLETE_VALID_ID;
+	public static Integer ATHLETE_INVALID_ID;
+	
 	private static final String PROPERTIES_FILE = "test-config.properties";
+	private static Properties properties;
 	
 	static {
-		Properties properties;
 		try {
 			properties = loadPropertiesFile(PROPERTIES_FILE);
 		} catch (IOException e) {
@@ -76,6 +81,10 @@ public class TestUtils {
 		ACTIVITY_FOR_UNAUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToUnauthenticatedUser"));
 		ACTIVITY_INVALID = new Integer(properties.getProperty("test.activityServicesImplTest.activityInvalid"));
 		ACTIVITY_DEFAULT_FOR_CREATE = createDefaultActivityForCreation();
+		
+		ATHLETE_AUTHENTICATED_ID = integerProperty("test.athleteServicesImplTest.authenticatedAthleteId");
+		ATHLETE_VALID_ID = integerProperty("test.athleteServicesImplTest.athleteId");
+		ATHLETE_INVALID_ID = integerProperty("test.athleteServicesImplTest.athleteInvalidId");
 	}
 
 	/**
@@ -90,6 +99,14 @@ public class TestUtils {
 		activity.setDescription("Created by Strava API v3 Java");
 		activity.setDistance(1000.1F);
 		return activity;
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	private static Integer integerProperty(String key) {
+		return new Integer(properties.getProperty(key));
 	}
 
 	/**

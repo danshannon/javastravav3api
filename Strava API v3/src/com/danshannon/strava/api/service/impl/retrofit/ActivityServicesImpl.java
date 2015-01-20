@@ -30,7 +30,7 @@ import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
  *
  */
 public class ActivityServicesImpl implements ActivityServices {
-	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
 	
 	private ActivityServicesImpl(ActivityServicesRetrofit restService) {
 		this.restService = restService;
@@ -140,29 +140,15 @@ public class ActivityServicesImpl implements ActivityServices {
 		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
 			List<Activity> activityPage = Arrays.asList(restService.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, paging.getPage(), paging.getPageSize()));
 			activityPage = Strava.ignoreLastN(activityPage, paging.getIgnoreLastN());
+			activityPage = Strava.ignoreFirstN(activityPage, paging.getIgnoreFirstN());
 			activities.addAll(activityPage);
 		}
-		activities = Strava.ignoreLastN(activities, pagingInstruction.getIgnoreLastN());
+		if (pagingInstruction != null) {
+			activities = Strava.ignoreFirstN(activities,pagingInstruction.getIgnoreFirstN());
+			activities = Strava.ignoreLastN(activities, pagingInstruction.getIgnoreLastN());
+		}
 		return activities;
 		
-//		Integer currentPage = (page == null ? 1 : page);
-//		Integer currentPerPage = (perPage == null ? DEFAULT_ACTIVITIES_PER_PAGE : Math.min(MAX_PAGING_SIZE, perPage));
-//		Integer firstActivity = (currentPage - 1) * (perPage == null ? DEFAULT_ACTIVITIES_PER_PAGE : perPage) + 1;
-//		Integer lastActivity = firstActivity + (perPage == null ? DEFAULT_ACTIVITIES_PER_PAGE : perPage) - 1;
-//		
-//		List<Activity> activities = new ArrayList<Activity>();
-//		int thisPage = 0;
-//		for (int i = firstActivity; i <= lastActivity; i = i + currentPerPage) {
-//			thisPage++;
-//			List<Activity> activityPage = Arrays.asList(restService.listAuthenticatedAthleteActivities(secondsSinceUnixEpoch(before), secondsSinceUnixEpoch(after), thisPage, currentPerPage));
-//			if (i + currentPerPage <= lastActivity) {
-//				activities.addAll(activityPage);
-//			} else {
-//				for (int j = i; j <= lastActivity; j++) {
-//					activities.add(activityPage.get(j - i));
-//				}
-//			}
-//		}
 	}
 
 	/**
@@ -183,8 +169,19 @@ public class ActivityServicesImpl implements ActivityServices {
 	@Override
 	public List<Activity> listFriendsActivities(Paging pagingInstruction) {
 		Strava.validatePagingArguments(pagingInstruction);
-
-		return Arrays.asList(restService.listFriendsActivities(pagingInstruction.getPage(), pagingInstruction.getPageSize()));
+		
+		List<Activity> activities = new ArrayList<Activity>();
+		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+			List<Activity> activityPage = Arrays.asList(restService.listFriendsActivities(paging.getPage(), paging.getPageSize()));
+			activityPage = Strava.ignoreLastN(activityPage, paging.getIgnoreLastN());
+			activityPage = Strava.ignoreFirstN(activityPage, paging.getIgnoreFirstN());
+			activities.addAll(activityPage);
+		}
+		if (pagingInstruction != null) {
+			activities = Strava.ignoreFirstN(activities,pagingInstruction.getIgnoreFirstN());
+			activities = Strava.ignoreLastN(activities, pagingInstruction.getIgnoreLastN());
+		}
+		return activities;
 	}
 
 	/**
@@ -216,14 +213,22 @@ public class ActivityServicesImpl implements ActivityServices {
 	 *      java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstruction) {
+	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstruction) throws NotFoundException {
 		Strava.validatePagingArguments(pagingInstruction);
-
-		try {
-			return Arrays.asList(restService.listActivityComments(id, markdown, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
-		} catch (NotFoundException e) {
-			return null;
+		
+		List<Comment> comments = new ArrayList<Comment>();
+		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+			List<Comment> commentPage = Arrays.asList(restService.listActivityComments(id, markdown, paging.getPage(), paging.getPageSize()));
+			commentPage = Strava.ignoreLastN(commentPage, paging.getIgnoreLastN());
+			commentPage = Strava.ignoreFirstN(commentPage, paging.getIgnoreFirstN());
+			comments.addAll(commentPage);
 		}
+		if (pagingInstruction != null) {
+			comments = Strava.ignoreFirstN(comments,pagingInstruction.getIgnoreFirstN());
+			comments = Strava.ignoreLastN(comments, pagingInstruction.getIgnoreLastN());
+		}
+		return comments;
+
 	}
 
 	/**
@@ -231,14 +236,21 @@ public class ActivityServicesImpl implements ActivityServices {
 	 *      java.lang.Integer)
 	 */
 	@Override
-	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction) {
+	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction) throws NotFoundException {
 		Strava.validatePagingArguments(pagingInstruction);
 
-		try {
-			return Arrays.asList(restService.listActivityKudoers(id, pagingInstruction.getPage(),pagingInstruction.getPageSize()));
-		} catch (NotFoundException e) {
-			return null;
+		List<Athlete> athletes = new ArrayList<Athlete>();
+		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+			List<Athlete> athletePage = Arrays.asList(restService.listActivityKudoers(id, paging.getPage(), paging.getPageSize()));
+			athletePage = Strava.ignoreLastN(athletePage, paging.getIgnoreLastN());
+			athletePage = Strava.ignoreFirstN(athletePage, paging.getIgnoreFirstN());
+			athletes.addAll(athletePage);
 		}
+		if (pagingInstruction != null) {
+			athletes = Strava.ignoreFirstN(athletes,pagingInstruction.getIgnoreFirstN());
+			athletes = Strava.ignoreLastN(athletes, pagingInstruction.getIgnoreLastN());
+		}
+		return athletes;
 	}
 
 	/**

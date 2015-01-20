@@ -587,9 +587,10 @@ public class ActivityServicesImplTest {
 	 * <p>Expectation is that at least one of the comments contains Markdown; this is tested by checking that at least one comment is different</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityComments_hasComments() throws UnauthorizedException {
+	public void testListActivityComments_hasComments() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Comment> comments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.TRUE, null);
 		
@@ -620,9 +621,10 @@ public class ActivityServicesImplTest {
 	 * <p>Should return an empty array of comments</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityComments_hasNoComments() throws UnauthorizedException {
+	public void testListActivityComments_hasNoComments() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Comment> comments = service.listActivityComments(TestUtils.ACTIVITY_WITHOUT_COMMENTS, Boolean.TRUE, null);
 
@@ -638,7 +640,7 @@ public class ActivityServicesImplTest {
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
 	 */
-	public void testListActivityComments_pageNumberAndSize() throws UnauthorizedException {
+	public void testListActivityComments_pageNumberAndSize() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Comment> defaultComments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, new Paging(1, 2));
 		
@@ -659,9 +661,10 @@ public class ActivityServicesImplTest {
 	 * <p>Test page size parameter handling behaves as expected when listing {@link Comment comments} for an existing {@link Activity}</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityComments_pageSize() throws UnauthorizedException {
+	public void testListActivityComments_pageSize() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Comment> comments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, new Paging(1, 1));
 		
@@ -674,9 +677,10 @@ public class ActivityServicesImplTest {
 	 * 
 	 * <p>Should return an empty array of {@link Comment comments}</p>
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityComments_pagingOutOfRangeHigh() throws UnauthorizedException {
+	public void testListActivityComments_pagingOutOfRangeHigh() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		// Attempt to get the 200,000th comment, that's probably out of range!
@@ -692,9 +696,10 @@ public class ActivityServicesImplTest {
 	 * <p>Should throw an {@link IllegalArgumentException} (which will be trapped and ignored by this test)</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityComments_pagingOutOfRangeLow() throws UnauthorizedException {
+	public void testListActivityComments_pagingOutOfRangeLow() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		try {
@@ -712,9 +717,10 @@ public class ActivityServicesImplTest {
 	 * 
 	 * <p>Should return <code>null</code></p>
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityComments_invalidActivity() throws UnauthorizedException {
+	public void testListActivityComments_invalidActivity() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		List<Comment> comments = service.listActivityComments(TestUtils.ACTIVITY_INVALID, Boolean.FALSE, null);
@@ -725,9 +731,10 @@ public class ActivityServicesImplTest {
 	/**
 	 * <p>List {@link Athlete athletes} giving kudos for an {@link Activity} which has >0 kudos</p>
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityKudoers_hasKudoers() throws UnauthorizedException {
+	public void testListActivityKudoers_hasKudoers() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, null);
 		
@@ -740,9 +747,10 @@ public class ActivityServicesImplTest {
 	 * 
 	 * <p>Should return an empty array of {@link Athlete athletes}</p>
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityKudoers_hasNoKudoers() throws UnauthorizedException {
+	public void testListActivityKudoers_hasNoKudoers() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITHOUT_KUDOS, null);
 
@@ -756,9 +764,10 @@ public class ActivityServicesImplTest {
 	 * <p>Should return <code>null</code></p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityKudoers_invalidActivity() throws UnauthorizedException {
+	public void testListActivityKudoers_invalidActivity() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_INVALID, null);
 
@@ -771,9 +780,10 @@ public class ActivityServicesImplTest {
 	 * <p>To test this we get 2 kudos from the service (using the default page with a page size of 2), then ask for the first page only with size 1 and check that it's the same as the first one in the previous list</p> 
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityKudoers_pageNumberAndSize() throws UnauthorizedException {
+	public void testListActivityKudoers_pageNumberAndSize() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 
 		List<Athlete> defaultKudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, new Paging(1, 2));
@@ -795,10 +805,11 @@ public class ActivityServicesImplTest {
 	 * <p>Test page size parameter handling behaves as expected when listing {@link Athlete athletes} giving kudos for an existing {@link Activity}</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 * 
 	 */
 	@Test
-	public void testListActivityKudoers_pageSize() throws UnauthorizedException {
+	public void testListActivityKudoers_pageSize() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, new Paging(1, 1));
 		
@@ -812,9 +823,10 @@ public class ActivityServicesImplTest {
 	 * <p>Should return an empty array</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityKudoers_pagingOutOfRangeHigh() throws UnauthorizedException {
+	public void testListActivityKudoers_pagingOutOfRangeHigh() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, new Paging(1000, 200));
 	
@@ -828,9 +840,10 @@ public class ActivityServicesImplTest {
 	 * <p>Should throw an {@link IllegalArgumentException} (which will be trapped and ignored by this test)</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityKudoers_pagingOutOfRangeLow() throws UnauthorizedException {
+	public void testListActivityKudoers_pagingOutOfRangeLow() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		try {

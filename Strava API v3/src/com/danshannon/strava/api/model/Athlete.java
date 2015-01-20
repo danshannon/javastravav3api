@@ -43,6 +43,7 @@ public class Athlete {
 	private List<Club> clubs;
 	private List<Gear> bikes;
 	private List<Gear> shoes;
+	private Float weight;
 	/**
 	 * @return the id
 	 */
@@ -383,6 +384,18 @@ public class Athlete {
 				+ (this.clubs != null ? "clubs=" + this.clubs + ", " : "")
 				+ (this.bikes != null ? "bikes=" + this.bikes + ", " : "") + (this.shoes != null ? "shoes=" + this.shoes : "")
 				+ "]";
+	}
+	/**
+	 * @return the weight
+	 */
+	public Float getWeight() {
+		return this.weight;
+	}
+	/**
+	 * @param weight the weight to set
+	 */
+	public void setWeight(Float weight) {
+		this.weight = weight;
 	}
 	
 }

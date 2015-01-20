@@ -180,8 +180,9 @@ public interface ActivityServices {
 	 * @param markdown (Optional) Include markdown in comments (default is <code>false</code> - i.e. filter out
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return List of comments
+	 * @throws NotFoundException 
 	 */
-	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstructions);
+	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstructions) throws NotFoundException;
 	
 	/**
 	 * <p>A kudos is Strava's version of a 'like' or '+1'. The number of kudos on an activity is returned with the activity summary.</p>
@@ -197,8 +198,9 @@ public interface ActivityServices {
 	 * @param id The id of the {@link Activity} for which kudoers are to be listed
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Athlete athlete} summary objects.
+	 * @throws NotFoundException 
 	 */
-	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction);
+	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction) throws NotFoundException;
 	
 	/**
 	 * <p>Photos are external objects associated with an activity. Currently, the only external photo source is Instagram.</p>
