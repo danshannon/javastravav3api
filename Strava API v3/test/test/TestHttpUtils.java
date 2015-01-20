@@ -28,6 +28,7 @@ import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
 import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
 import com.danshannon.strava.api.auth.ref.AuthorisationScope;
 import com.danshannon.strava.api.service.Strava;
+import com.danshannon.strava.api.service.exception.BadRequestException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
@@ -291,8 +292,9 @@ public class TestHttpUtils {
 	 * @param password
 	 * @param scopes
 	 * @return
+	 * @throws BadRequestException 
 	 */
-	public String getStravaAccessToken(String username, String password, AuthorisationScope... scopes) {
+	public String getStravaAccessToken(String username, String password, AuthorisationScope... scopes) throws BadRequestException {
 		AuthorisationServices service = new AuthorisationServicesImpl();
 		
 		// Login

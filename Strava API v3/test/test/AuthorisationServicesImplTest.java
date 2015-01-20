@@ -12,6 +12,7 @@ import com.danshannon.strava.api.auth.AuthorisationServices;
 import com.danshannon.strava.api.auth.impl.retrofit.AuthorisationServicesImpl;
 import com.danshannon.strava.api.auth.model.TokenResponse;
 import com.danshannon.strava.api.auth.ref.AuthorisationScope;
+import com.danshannon.strava.api.service.exception.BadRequestException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 public class AuthorisationServicesImplTest {
@@ -35,9 +36,10 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * <p>Should return a token successfully which can be used to get athlete public data</p>
 	 * @throws IOException 
+	 * @throws BadRequestException 
 	 */
 	@Test 
-	public void testTokenExchange_noScope() throws IOException {
+	public void testTokenExchange_noScope() throws IOException, BadRequestException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -66,7 +68,13 @@ public class AuthorisationServicesImplTest {
 		String code = HTTP_UTILITIES.approveApplication();
 
 		// Perform the token exchange
-		TokenResponse tokenResponse = service.tokenExchange(0, TestUtils.STRAVA_CLIENT_SECRET, code);
+		TokenResponse tokenResponse;
+		try {
+			tokenResponse = service.tokenExchange(0, TestUtils.STRAVA_CLIENT_SECRET, code);
+		} catch (BadRequestException e) {
+			// Expected behaviour
+			return;
+		}
 		assertNull("Token unexpectedly returned by Strava",tokenResponse);
 	}
 	
@@ -85,7 +93,13 @@ public class AuthorisationServicesImplTest {
 		String code = HTTP_UTILITIES.approveApplication();
 
 		// Perform the token exchange
-		TokenResponse tokenResponse = service.tokenExchange(TestUtils.STRAVA_APPLICATION_ID, "", code);
+		TokenResponse tokenResponse;
+		try {
+			tokenResponse = service.tokenExchange(TestUtils.STRAVA_APPLICATION_ID, "", code);
+		} catch (BadRequestException e) {
+			// Expected behaviour
+			return;
+		}
 		assertNull("Token unexpectedly returned by Strava",tokenResponse);
 	}
 	
@@ -105,7 +119,13 @@ public class AuthorisationServicesImplTest {
 		String code = HTTP_UTILITIES.approveApplication();
 
 		// Perform the token exchange
-		TokenResponse tokenResponse = service.tokenExchange(TestUtils.STRAVA_APPLICATION_ID, TestUtils.STRAVA_CLIENT_SECRET, "oops wrong code!");
+		TokenResponse tokenResponse = null;
+		try {
+			tokenResponse = service.tokenExchange(TestUtils.STRAVA_APPLICATION_ID, TestUtils.STRAVA_CLIENT_SECRET, "oops wrong code!");
+		} catch (BadRequestException e) {
+			// Expected behaviour
+			return;
+		}
 		assertNull("Token unexpectedly returned by Strava",tokenResponse);
 	}
 	
@@ -115,9 +135,10 @@ public class AuthorisationServicesImplTest {
 	 * <p>Should return a token successfully, this should grant access to private data for the authenticated athlete</p>
 	 * 
 	 * @throws IOException 
+	 * @throws BadRequestException 
 	 */
 	@Test
-	public void testTokenExchange_viewPrivateScope() throws IOException {
+	public void testTokenExchange_viewPrivateScope() throws IOException, BadRequestException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -137,9 +158,10 @@ public class AuthorisationServicesImplTest {
 	 * <p>Should return a token successfully, this token should grant write access to the authenticated user's data</p>
 	 * 
 	 * @throws IOException 
+	 * @throws BadRequestException 
 	 */
 	@Test
-	public void testTokenExchange_writeScope() throws IOException {
+	public void testTokenExchange_writeScope() throws IOException, BadRequestException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -159,9 +181,10 @@ public class AuthorisationServicesImplTest {
 	 * <p>Should return a token successfully, this token should grant write access to the authenticated user</p>
 	 * 
 	 * @throws IOException 
+	 * @throws BadRequestException 
 	 */
 	@Test
-	public void testTokenExchange_writeAndViewPrivateScope() throws IOException {
+	public void testTokenExchange_writeAndViewPrivateScope() throws IOException, BadRequestException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -190,7 +213,13 @@ public class AuthorisationServicesImplTest {
 		String code = HTTP_UTILITIES.approveApplication(AuthorisationScope.UNKNOWN);
 
 		// Perform the token exchange
-		TokenResponse tokenResponse = service.tokenExchange(TestUtils.STRAVA_APPLICATION_ID, TestUtils.STRAVA_CLIENT_SECRET, code);
+		TokenResponse tokenResponse = null;
+		try {
+			tokenResponse = service.tokenExchange(TestUtils.STRAVA_APPLICATION_ID, TestUtils.STRAVA_CLIENT_SECRET, code);
+		} catch (BadRequestException e) {
+			// Expected behaviour
+			return;
+		}
 		assertNull("Token unexpectedly returned by Strava",tokenResponse);
 	}
 

@@ -10,6 +10,7 @@ import com.danshannon.strava.api.auth.impl.retrofit.TokenServicesImpl;
 import com.danshannon.strava.api.auth.ref.AuthorisationScope;
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.reference.ActivityType;
+import com.danshannon.strava.api.service.exception.BadRequestException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
@@ -121,11 +122,19 @@ public class TestUtils {
 	}
 	
 	public static String getValidToken() {
-		return HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD, AuthorisationScope.VIEW_PRIVATE, AuthorisationScope.WRITE);
+		try {
+			return HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD, AuthorisationScope.VIEW_PRIVATE, AuthorisationScope.WRITE);
+		} catch (BadRequestException e) {
+			return null;
+		}
 	}
 	
 	public static String getValidTokenWithoutWriteAccess() {
-		return HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD);
+		try {
+			return HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD);
+		} catch (BadRequestException e) {
+			return null;
+		}
 	}
 	
 	public static String getRevokedToken() throws UnauthorizedException {

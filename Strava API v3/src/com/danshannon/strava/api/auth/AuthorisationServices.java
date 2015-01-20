@@ -1,6 +1,7 @@
 package com.danshannon.strava.api.auth;
 
 import com.danshannon.strava.api.auth.model.TokenResponse;
+import com.danshannon.strava.api.service.exception.BadRequestException;
 
 /**
  * <p>Authentication</p>
@@ -47,6 +48,7 @@ public interface AuthorisationServices {
 	 * @param clientSecret application's secret, obtained during registration
 	 * @param code authorisation code
 	 * @return Returns an access_token and a detailed representation of the current athlete.
+	 * @throws BadRequestException 
 	 */
-	public TokenResponse tokenExchange(Integer clientId, String clientSecret, String code);
+	public TokenResponse tokenExchange(Integer clientId, String clientSecret, String code) throws BadRequestException;
 }
