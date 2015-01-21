@@ -30,7 +30,7 @@ import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
  *
  */
 public class ActivityServicesImpl implements ActivityServices {
-	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
+	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
 	
 	private ActivityServicesImpl(ActivityServicesRetrofit restService) {
 		this.restService = restService;
@@ -61,7 +61,10 @@ public class ActivityServicesImpl implements ActivityServices {
 				.setErrorHandler(new RetrofitErrorHandler())
 				.build()
 				.create(ActivityServicesRetrofit.class));
-
+			
+			// Check that the token is valid
+			restService.listAuthenticatedAthleteActivities(null, null, null);
+			
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
 			

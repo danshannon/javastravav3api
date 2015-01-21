@@ -5,16 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
-import java.util.Calendar;
-
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.MapPoint;
-import com.danshannon.strava.api.model.reference.AgeGroup;
-import com.danshannon.strava.api.model.reference.Gender;
-import com.danshannon.strava.api.model.reference.LeaderboardDateRange;
-import com.danshannon.strava.api.model.reference.SegmentExplorerActivityType;
-import com.danshannon.strava.api.model.reference.WeightClass;
 import com.danshannon.strava.api.service.SegmentServices;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.api.service.impl.retrofit.SegmentServicesImpl;
@@ -82,35 +74,31 @@ public class SegmentServicesImplTest {
 	}
 
 	@Test
-	public void testGetSegment(Integer id) {
+	public void testGetSegment() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testListAuthenticatedAthleteStarredSegments(Integer page, Integer perPage) {
+	public void testListAuthenticatedAthleteStarredSegments() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	public void testListSegmentEfforts(Integer id, Integer athleteId, Calendar startDateLocal,
-			Calendar endDateLocal, Integer page, Integer perPage) {
+	public void testListSegmentEfforts() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testGetSegmentLeaderboard(Integer id, Gender gender, AgeGroup ageGroup,
-			WeightClass weightClass, Boolean following, Integer clubId, LeaderboardDateRange dateRange, Integer page,
-			Integer perPage) {
+	public void testGetSegmentLeaderboard() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testSegmentExplore(MapPoint southwestCorner, MapPoint northwestCorner,
-			SegmentExplorerActivityType activityType, Integer minCat, Integer maxCat) {
+	public void testSegmentExplore() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}

@@ -48,6 +48,12 @@ public class TestUtils {
 	public static Integer ATHLETE_AUTHENTICATED_ID;
 	public static Integer ATHLETE_VALID_ID;
 	public static Integer ATHLETE_INVALID_ID;
+	public static Integer ATHLETE_WITHOUT_KOMS;
+	
+	public static Integer CLUB_VALID_ID;
+	public static Integer CLUB_INVALID_ID;
+	public static Integer CLUB_PRIVATE_MEMBER_ID;
+	public static Integer CLUB_PRIVATE_NON_MEMBER_ID;
 	
 	private static final String PROPERTIES_FILE = "test-config.properties";
 	private static Properties properties;
@@ -86,6 +92,12 @@ public class TestUtils {
 		ATHLETE_AUTHENTICATED_ID = integerProperty("test.athleteServicesImplTest.authenticatedAthleteId");
 		ATHLETE_VALID_ID = integerProperty("test.athleteServicesImplTest.athleteId");
 		ATHLETE_INVALID_ID = integerProperty("test.athleteServicesImplTest.athleteInvalidId");
+		ATHLETE_WITHOUT_KOMS = integerProperty("test.athleteServicesImplTest.athleteWithoutKOMs");
+		
+		CLUB_VALID_ID = integerProperty("test.clubServicesImplTest.clubId");
+		CLUB_INVALID_ID = integerProperty("test.clubServicesImplTest.clubInvalidId");
+		CLUB_PRIVATE_MEMBER_ID = integerProperty("test.clubServicesImplTest.clubPrivateMemberId");
+		CLUB_PRIVATE_NON_MEMBER_ID = integerProperty("test.clubServicesImplTest.clubPrivateNonMemberId");
 	}
 
 	/**
@@ -124,7 +136,7 @@ public class TestUtils {
 	public static String getValidToken() {
 		try {
 			return HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD, AuthorisationScope.VIEW_PRIVATE, AuthorisationScope.WRITE);
-		} catch (BadRequestException e) {
+		} catch (BadRequestException | UnauthorizedException e) {
 			return null;
 		}
 	}
@@ -132,7 +144,7 @@ public class TestUtils {
 	public static String getValidTokenWithoutWriteAccess() {
 		try {
 			return HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD);
-		} catch (BadRequestException e) {
+		} catch (BadRequestException | UnauthorizedException e) {
 			return null;
 		}
 	}

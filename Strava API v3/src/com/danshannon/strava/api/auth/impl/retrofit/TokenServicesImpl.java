@@ -74,7 +74,8 @@ public class TokenServicesImpl implements TokenServices {
 		restServices.remove(accessToken);
 		
 		// Deauthorise
-		return restService.deauthorise(accessToken);
+		TokenResponse response = restService.deauthorise(accessToken);
+		return response;
 	}
 	
 }

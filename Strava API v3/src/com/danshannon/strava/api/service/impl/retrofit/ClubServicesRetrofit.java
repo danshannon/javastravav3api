@@ -11,6 +11,7 @@ import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Club;
 import com.danshannon.strava.api.service.exception.NotFoundException;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
  * @author Dan Shannon
@@ -28,7 +29,7 @@ public interface ClubServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.ClubServices#listAuthenticatedAthleteClubs()
 	 */
 	@GET("/athlete/clubs")
-	public Club[] listAuthenticatedAthleteClubs();
+	public Club[] listAuthenticatedAthleteClubs() throws UnauthorizedException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.ClubServices#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)

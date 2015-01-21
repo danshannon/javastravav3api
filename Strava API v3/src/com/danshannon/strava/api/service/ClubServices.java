@@ -6,6 +6,8 @@ import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Club;
 import com.danshannon.strava.api.model.reference.ResourceState;
+import com.danshannon.strava.api.service.exception.NotFoundException;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.util.Paging;
 
 /**
@@ -33,7 +35,7 @@ public interface ClubServices {
 	 * @param id The id of the {@link Club} to be retrieved
 	 * @return Returns a detailed club representation.
 	 */
-	public Club getClub(Integer id);
+	public Club getClub(Integer id) throws NotFoundException;
 	
 	/**
 	 * <p>Fetch an array of {@link Club clubs} that the currently authenticated {@link Athlete athlete} is a member of.</p>
@@ -44,7 +46,7 @@ public interface ClubServices {
 	 * 
 	 * @return Returns a {@link Club club} summary {@link ResourceState representation}.
 	 */
-	public List<Club> listAuthenticatedAthleteClubs();
+	public List<Club> listAuthenticatedAthleteClubs() throws UnauthorizedException;
 	
 	/**
 	 * <p>Retrieve summary information about member {@link Athlete athletes} of a specific {@link Club club}.</p>

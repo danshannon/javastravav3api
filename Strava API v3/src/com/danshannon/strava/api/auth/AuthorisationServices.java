@@ -2,6 +2,7 @@ package com.danshannon.strava.api.auth;
 
 import com.danshannon.strava.api.auth.model.TokenResponse;
 import com.danshannon.strava.api.service.exception.BadRequestException;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
  * <p>Authentication</p>
@@ -49,6 +50,7 @@ public interface AuthorisationServices {
 	 * @param code authorisation code
 	 * @return Returns an access_token and a detailed representation of the current athlete.
 	 * @throws BadRequestException 
+	 * @throws UnauthorizedException If client secret is invalid
 	 */
-	public TokenResponse tokenExchange(Integer clientId, String clientSecret, String code) throws BadRequestException;
+	public TokenResponse tokenExchange(Integer clientId, String clientSecret, String code) throws BadRequestException, UnauthorizedException;
 }

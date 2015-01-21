@@ -28,7 +28,15 @@ public class Strava {
 		validatePagingArguments(inputPaging);
 		List<Paging> stravaPaging = new ArrayList<Paging>();
 		if (inputPaging == null) {
+			stravaPaging.add(new Paging(1,DEFAULT_PAGE_SIZE));
 			return stravaPaging;
+		}
+		
+		if (inputPaging.getPage() == 0) {
+			inputPaging.setPage(1);
+		}
+		if (inputPaging.getPageSize() == 0) {
+			inputPaging.setPageSize(DEFAULT_PAGE_SIZE);
 		}
 		
 		// If it's already valid for Strava purposes, just use that

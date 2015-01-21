@@ -77,7 +77,7 @@ public class ClubServicesImpl implements ClubServices {
 	 * @see com.danshannon.strava.api.service.ClubServices#getClub(java.lang.Integer)
 	 */
 	@Override
-	public Club getClub(Integer id) {
+	public Club getClub(Integer id) throws NotFoundException {
 		try {
 			return restService.getClub(id);
 		} catch (NotFoundException e) {
@@ -89,7 +89,7 @@ public class ClubServicesImpl implements ClubServices {
 	 * @see com.danshannon.strava.api.service.ClubServices#listAuthenticatedAthleteClubs()
 	 */
 	@Override
-	public List<Club> listAuthenticatedAthleteClubs() {
+	public List<Club> listAuthenticatedAthleteClubs() throws UnauthorizedException {
 		return Arrays.asList(restService.listAuthenticatedAthleteClubs());
 	}
 

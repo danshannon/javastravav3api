@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -18,7 +16,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.danshannon.strava.api.auth.AuthorisationServices;
@@ -61,10 +58,6 @@ public class TestHttpUtils {
 		}
 		CloseableHttpResponse response = this.httpClient.execute(get);
 		try {
-			System.out.println(get.getURI() + " " + response);
-			for (Cookie cookie : cookieStore.getCookies()) {
-				System.out.println(cookie);
-			}
 			HttpEntity entity = response.getEntity();
 			page = Jsoup.parse(EntityUtils.toString(entity));
 			
@@ -102,14 +95,6 @@ public class TestHttpUtils {
 			try {
 				HttpEntity entity = response2.getEntity();
 				location = response2.getFirstHeader("Location").getValue();
-				System.out.println(login.getMethod() + " " + login.getURI() + " " + response2.getStatusLine());
-				System.out.println(EntityUtils.toString(entity));
-				for (Header header : response2.getAllHeaders()) {
-					System.out.println(header);
-				}
-				for (Cookie cookie : cookieStore.getCookies()) {
-					System.out.println(cookie);
-				}
 				EntityUtils.consume(entity);
 
 			} finally {
@@ -153,14 +138,6 @@ public class TestHttpUtils {
 			try {
 				HttpEntity entity = response2.getEntity();
 				location = response2.getFirstHeader("Location").getValue();
-				System.out.println(post.getMethod() + " " + post.getURI() + " " + response2.getStatusLine());
-				System.out.println(EntityUtils.toString(entity));
-				for (Header header : response2.getAllHeaders()) {
-					System.out.println(header);
-				}
-				for (Cookie cookie : cookieStore.getCookies()) {
-					System.out.println(cookie);
-				}
 				EntityUtils.consume(entity);
 
 			} finally {
@@ -174,12 +151,13 @@ public class TestHttpUtils {
 			e.printStackTrace();
 		}
 		
-		System.out.println("REDIRECT from accepting to " + location);
-		
 		// Get the code parameter from the redirect URI
-		String code = location.split("&code=")[1].split("&")[0];
-		System.out.println("CODE = " + code);
-		return code;
+		if (location.indexOf("&code=") != -1) {
+			String code = location.split("&code=")[1].split("&")[0];
+			return code;
+		} else {
+			return null;
+		}
 
 	}
 	
@@ -211,9 +189,6 @@ public class TestHttpUtils {
 			throw new RuntimeException(e);
 		}
 		Elements authTokens = loginPage.select("input[name=authenticity_token]");
-		for (Element element : authTokens) {
-			System.out.println("Element = " + element.toString());
-		}
 		return authTokens.first().attr("value");
 	}
 
@@ -236,13 +211,12 @@ public class TestHttpUtils {
 					new BasicNameValuePair("approval_prompt", AuthorisationApprovalPrompt.FORCE.toString()),
 					new BasicNameValuePair("scope", scopeString)
 			);
-			System.out.println("AUTH PAGE" + authPage);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 		Elements authTokens = authPage.select("input[name=authenticity_token]");
-		for (Element element : authTokens) {
-			System.out.println("Element = " + element.toString());
+		if (authTokens == null || authTokens.first() == null) {
+			return null;
 		}
 		return authTokens.first().attr("value");
 	}
@@ -293,8 +267,9 @@ public class TestHttpUtils {
 	 * @param scopes
 	 * @return
 	 * @throws BadRequestException 
+	 * @throws UnauthorizedException If client secret is invalid
 	 */
-	public String getStravaAccessToken(String username, String password, AuthorisationScope... scopes) throws BadRequestException {
+	public String getStravaAccessToken(String username, String password, AuthorisationScope... scopes) throws BadRequestException, UnauthorizedException {
 		AuthorisationServices service = new AuthorisationServicesImpl();
 		
 		// Login

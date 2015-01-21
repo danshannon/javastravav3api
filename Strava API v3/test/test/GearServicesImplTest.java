@@ -78,7 +78,7 @@ public class GearServicesImplTest {
 	// 2. Invalid gear
 	// 3. Gear which doesn't belong to the current athlete
 	@Test
-	public void testGetGear(Integer id) {
+	public void testGetGear() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");		
 	}

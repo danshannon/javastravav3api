@@ -198,7 +198,7 @@ public interface ActivityServices {
 	 * @param id The id of the {@link Activity} for which kudoers are to be listed
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Athlete athlete} summary objects.
-	 * @throws NotFoundException 
+	 * @throws NotFoundException If the activity doesn't exist
 	 */
 	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction) throws NotFoundException;
 	

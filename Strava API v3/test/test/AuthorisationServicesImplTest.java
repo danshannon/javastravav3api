@@ -37,9 +37,10 @@ public class AuthorisationServicesImplTest {
 	 * <p>Should return a token successfully which can be used to get athlete public data</p>
 	 * @throws IOException 
 	 * @throws BadRequestException 
+	 * @throws UnauthorizedException 
 	 */
 	@Test 
-	public void testTokenExchange_noScope() throws IOException, BadRequestException {
+	public void testTokenExchange_noScope() throws IOException, BadRequestException, UnauthorizedException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -58,9 +59,10 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * <p>Should fail to get a token at all</p>
 	 * @throws IOException 
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testTokenExchange_invalidClientId() throws IOException {
+	public void testTokenExchange_invalidClientId() throws IOException, UnauthorizedException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -83,9 +85,10 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * <p>Should fail to get a token at all</p>
 	 * @throws IOException 
+	 * @throws BadRequestException 
 	 */
 	@Test
-	public void testTokenExchange_invalidClientSecret() throws IOException {
+	public void testTokenExchange_invalidClientSecret() throws IOException, BadRequestException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -96,7 +99,7 @@ public class AuthorisationServicesImplTest {
 		TokenResponse tokenResponse;
 		try {
 			tokenResponse = service.tokenExchange(TestUtils.STRAVA_APPLICATION_ID, "", code);
-		} catch (BadRequestException e) {
+		} catch (UnauthorizedException e) {
 			// Expected behaviour
 			return;
 		}
@@ -108,9 +111,10 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * <p>Should fail to get a token at all</p>
 	 * @throws IOException 
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testTokenExchange_invalidCode() throws IOException {
+	public void testTokenExchange_invalidCode() throws IOException, UnauthorizedException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -136,9 +140,10 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * @throws IOException 
 	 * @throws BadRequestException 
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testTokenExchange_viewPrivateScope() throws IOException, BadRequestException {
+	public void testTokenExchange_viewPrivateScope() throws IOException, BadRequestException, UnauthorizedException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -159,9 +164,10 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * @throws IOException 
 	 * @throws BadRequestException 
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testTokenExchange_writeScope() throws IOException, BadRequestException {
+	public void testTokenExchange_writeScope() throws IOException, BadRequestException, UnauthorizedException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -182,9 +188,10 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * @throws IOException 
 	 * @throws BadRequestException 
+	 * @throws UnauthorizedException If client secret is invalid
 	 */
 	@Test
-	public void testTokenExchange_writeAndViewPrivateScope() throws IOException, BadRequestException {
+	public void testTokenExchange_writeAndViewPrivateScope() throws IOException, BadRequestException, UnauthorizedException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 
@@ -203,9 +210,10 @@ public class AuthorisationServicesImplTest {
 	 * 
 	 * <p>Should not return a token successfully</p>
 	 * @throws IOException 
+	 * @throws UnauthorizedException If client secret is invalid
 	 */
 	@Test
-	public void testTokenExchange_invalidScope() throws IOException {
+	public void testTokenExchange_invalidScope() throws IOException, UnauthorizedException {
 		// Get a service implementation
 		AuthorisationServices service = new AuthorisationServicesImpl();
 

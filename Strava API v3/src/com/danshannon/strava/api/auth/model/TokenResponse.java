@@ -47,4 +47,13 @@ public class TokenResponse {
 	public void setTokenType(String tokenType) {
 		this.tokenType = tokenType;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "TokenResponse [" + (this.accessToken != null ? "accessToken=" + this.accessToken + ", " : "")
+				+ (this.tokenType != null ? "tokenType=" + this.tokenType + ", " : "")
+				+ (this.athlete != null ? "athlete=" + this.athlete : "") + "]";
+	}
 }

@@ -344,9 +344,9 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		
-		// Ask for the 0th activity by the athlete (this is probably safe!)
+		// Ask for the -1th activity by the athlete (this is probably safe!)
 		try {
-			service.listAuthenticatedAthleteActivities(null, null, new Paging(0, 0));
+			service.listAuthenticatedAthleteActivities(null, null, new Paging(-1, -1));
 		} catch (IllegalArgumentException e) {
 			// Expected behaviour
 			return;
@@ -703,7 +703,7 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		try {
-			service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, new Paging(0, 0));
+			service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, new Paging(-1, -1));
 		} catch (IllegalArgumentException e) {
 			// Expected behaviour!
 			return;
@@ -720,10 +720,16 @@ public class ActivityServicesImplTest {
 	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityComments_invalidActivity() throws UnauthorizedException, NotFoundException {
+	public void testListActivityComments_invalidActivity() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
-		List<Comment> comments = service.listActivityComments(TestUtils.ACTIVITY_INVALID, Boolean.FALSE, null);
+		List<Comment> comments;
+		try {
+			comments = service.listActivityComments(TestUtils.ACTIVITY_INVALID, Boolean.FALSE, null);
+		} catch (NotFoundException e) {
+			// Expected behaviour
+			return;
+		}
 		
 		assertNull("Expected null response when retrieving comments for an invalid activity",comments);
 	}
@@ -767,9 +773,15 @@ public class ActivityServicesImplTest {
 	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityKudoers_invalidActivity() throws UnauthorizedException, NotFoundException {
+	public void testListActivityKudoers_invalidActivity() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_INVALID, null);
+		List<Athlete> kudoers;
+		try {
+			kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_INVALID, null);
+		} catch (NotFoundException e) {
+			// Expected behaviour
+			return;
+		}
 
 		assertNull("Returned a non-null array of kudoers for an invalid activity",kudoers);
 	}
@@ -847,7 +859,7 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		try {
-			service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, new Paging(0, 0));
+			service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, new Paging(-1,-1));
 		} catch (IllegalArgumentException e) {
 			// Expected behaviour!
 			return;
@@ -1043,9 +1055,9 @@ public class ActivityServicesImplTest {
 	public void testListFriendsActivities_pagingOutOfRangeLow() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());		
 		
-		// Ask for the 0th activity by the athlete (this is probably safe!)
+		// Ask for the -1th activity by the athlete (this is probably safe!)
 		try {
-			service.listFriendsActivities(new Paging(0, 0));
+			service.listFriendsActivities(new Paging(-1, -1));
 		} catch (IllegalArgumentException e) {
 			// Expected behaviour
 			return;

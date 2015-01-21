@@ -7,6 +7,7 @@ import com.danshannon.strava.api.auth.AuthorisationServices;
 import com.danshannon.strava.api.auth.model.TokenResponse;
 import com.danshannon.strava.api.service.Strava;
 import com.danshannon.strava.api.service.exception.BadRequestException;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.api.service.impl.retrofit.RetrofitErrorHandler;
 import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
 
@@ -37,7 +38,7 @@ public class AuthorisationServicesImpl implements AuthorisationServices {
 	 *      java.lang.String)
 	 */
 	@Override
-	public TokenResponse tokenExchange(Integer clientId, String clientSecret, String code) throws BadRequestException {
+	public TokenResponse tokenExchange(Integer clientId, String clientSecret, String code) throws BadRequestException, UnauthorizedException {
 		return restService.tokenExchange(clientId, clientSecret, code);
 	}
 

@@ -1,13 +1,18 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.util.List;
+
 import org.junit.Test;
 
+import com.danshannon.strava.api.model.Club;
 import com.danshannon.strava.api.service.ClubServices;
+import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.api.service.impl.retrofit.ClubServicesImpl;
 
@@ -48,8 +53,14 @@ public class ClubServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_revokedToken() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		try {
+			@SuppressWarnings("unused")
+			ClubServices service = ClubServicesImpl.implementation(TestUtils.getRevokedToken());
+		} catch (UnauthorizedException e) {
+			// Expected behaviour
+			return;
+		}
+		fail("Got a service implementation despite using a revoked token");
 	}
 	
 	/**
@@ -69,8 +80,9 @@ public class ClubServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_differentImplementationIsNotCached() throws UnauthorizedException {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		ClubServices service = ClubServicesImpl.implementation(TestUtils.getValidToken());
+		ClubServices service2 = ClubServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
+		assertFalse(service == service2);
 	}
 	
 	// Test cases
@@ -79,18 +91,40 @@ public class ClubServicesImplTest {
 	// 3. Private club of which current authenticated athlete is a member
 	// 4. Private club of which current authenticated athlete is NOT a member
 	@Test
-	public void testGetClub(Integer id) {
-		// TODO Not yet implemented
-		fail("Not yet implemented");		
+	public void testGetClub_validClub() throws UnauthorizedException, NotFoundException {
+		ClubServices service = ClubServicesImpl.implementation(TestUtils.getValidToken());
+		Club club = service.getClub(TestUtils.CLUB_VALID_ID);
+		assertNotNull(club);
+		assertEquals(TestUtils.CLUB_VALID_ID,club.getId());
+	}
+	
+	public void testGetClub_invalidClub() throws UnauthorizedException {
+		ClubServices service = ClubServicesImpl.implementation(TestUtils.getValidToken());
+		try {
+			Club club = service.getClub(TestUtils.CLUB_VALID_ID);
+		} catch (NotFoundException e) {
+			// Expected behaviour
+			return;
+		}
+		fail("Got club result despite club being invalid");
+	}
+	
+	public void testGetClub_privateClubIsMember() {
+		// TODO Not yet implemented		
+	}
+	
+	public void testGetClub_privateClubIsNotMember() {
+		// TODO Not yet implemented		
 	}
 	
 	// Test cases
 	// 1. Athlete has clubs
-	// 2. Athlete has no clubs
 	@Test
-	public void testListAuthenticatedAthleteClubs() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");		
+	public void testListAuthenticatedAthleteClubs() throws UnauthorizedException {
+		ClubServices service = ClubServicesImpl.implementation(TestUtils.getValidToken());
+		List<Club> clubs = service.listAuthenticatedAthleteClubs();
+		assertNotNull(clubs);
+		assertFalse(clubs.size() == 0);
 	}
 
 	// Test cases
