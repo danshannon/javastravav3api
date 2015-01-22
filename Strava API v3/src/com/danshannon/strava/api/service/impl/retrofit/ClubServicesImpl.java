@@ -3,6 +3,7 @@
  */
 package com.danshannon.strava.api.service.impl.retrofit;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -97,26 +98,76 @@ public class ClubServicesImpl implements ClubServices {
 	 * @see com.danshannon.strava.api.service.ClubServices#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<Athlete> listClubMembers(Integer id, Paging pagingInstruction) {
+	public List<Athlete> listClubMembers(Integer id, Paging pagingInstruction) throws NotFoundException, UnauthorizedException {
 		Strava.validatePagingArguments(pagingInstruction);
-		try {
-			return Arrays.asList(restService.listClubMembers(id, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
-		} catch (NotFoundException e) {
-			return null;
+		
+		List<Athlete> members = new ArrayList<Athlete>();
+		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+			List<Athlete> memberPage = Arrays.asList(restService.listClubMembers(id, paging.getPage(), paging.getPageSize()));
+			memberPage = Strava.ignoreLastN(memberPage, paging.getIgnoreLastN());
+			memberPage = Strava.ignoreFirstN(memberPage, paging.getIgnoreFirstN());
+			members.addAll(memberPage);
 		}
+		if (pagingInstruction != null) {
+			members = Strava.ignoreFirstN(members, pagingInstruction.getIgnoreFirstN());
+			members = Strava.ignoreLastN(members, pagingInstruction.getIgnoreLastN());
+		}
+		return members;
 	}
 
 	/**
 	 * @see com.danshannon.strava.api.service.ClubServices#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<Activity> listRecentClubActivities(Integer id, Paging pagingInstruction) {
+	public List<Activity> listRecentClubActivities(Integer id, Paging pagingInstruction) throws NotFoundException, UnauthorizedException {
 		Strava.validatePagingArguments(pagingInstruction);
-		try {
-			return Arrays.asList(restService.listRecentClubActivities(id, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
-		} catch (NotFoundException e) {
-			return null;
+
+		List<Activity> activities = new ArrayList<Activity>();
+		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+			List<Activity> activityPage = Arrays.asList(restService.listRecentClubActivities(id, paging.getPage(), paging.getPageSize()));
+			activityPage = Strava.ignoreLastN(activityPage, paging.getIgnoreLastN());
+			activityPage = Strava.ignoreFirstN(activityPage, paging.getIgnoreFirstN());
+			activities.addAll(activityPage);
 		}
+		if (pagingInstruction != null) {
+			activities = Strava.ignoreFirstN(activities, pagingInstruction.getIgnoreFirstN());
+			activities = Strava.ignoreLastN(activities, pagingInstruction.getIgnoreLastN());
+		}
+		return activities;
+
+
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ClubServices#joinClub(java.lang.Integer)
+	 */
+	@Override
+	public void joinClub(Integer id) throws NotFoundException, UnauthorizedException {
+		restService.leave(id);		
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ClubServices#leaveClub(java.lang.Integer)
+	 */
+	@Override
+	public void leaveClub(Integer id) throws NotFoundException, UnauthorizedException {
+		restService.leave(id);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ClubServices#listClubMembers(java.lang.Integer)
+	 */
+	@Override
+	public List<Athlete> listClubMembers(Integer id) throws NotFoundException, UnauthorizedException {
+		return listClubMembers(id, null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ClubServices#listRecentClubActivities(java.lang.Integer)
+	 */
+	@Override
+	public List<Activity> listRecentClubActivities(Integer id) throws NotFoundException, UnauthorizedException {
+		return listRecentClubActivities(id, null);
 	}
 
 }

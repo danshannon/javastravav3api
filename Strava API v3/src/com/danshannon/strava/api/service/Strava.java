@@ -89,14 +89,28 @@ public class Strava {
 	 * @return
 	 */
 	public static <T> List<T> ignoreLastN(List<T> list, int ignoreLastN) {
+		if (list == null) {
+			return null;
+		}
 		if (ignoreLastN == 0) {
+			return list;
+		}
+		if (ignoreLastN >= list.size()) {
+			list.removeAll(list);
 			return list;
 		}
 		return list.subList(0, list.size() - ignoreLastN);
 	}
 	
 	public static <T> List<T> ignoreFirstN(List<T> list, int ignoreFirstN) {
+		if (list == null) {
+			return null;
+		}
 		if (ignoreFirstN == 0) { 
+			return list;
+		}
+		if (ignoreFirstN >= list.size()) {
+			list.removeAll(list);
 			return list;
 		}
 		return list.subList(ignoreFirstN - 1, list.size() - 1);

@@ -52,6 +52,7 @@ public class TestUtils {
 	
 	public static Integer CLUB_VALID_ID;
 	public static Integer CLUB_INVALID_ID;
+	public static Integer CLUB_PUBLIC_NON_MEMBER_ID;
 	public static Integer CLUB_PRIVATE_MEMBER_ID;
 	public static Integer CLUB_PRIVATE_NON_MEMBER_ID;
 	
@@ -98,6 +99,7 @@ public class TestUtils {
 		CLUB_INVALID_ID = integerProperty("test.clubServicesImplTest.clubInvalidId");
 		CLUB_PRIVATE_MEMBER_ID = integerProperty("test.clubServicesImplTest.clubPrivateMemberId");
 		CLUB_PRIVATE_NON_MEMBER_ID = integerProperty("test.clubServicesImplTest.clubPrivateNonMemberId");
+		CLUB_PUBLIC_NON_MEMBER_ID = integerProperty("test.clubServicesImplTest.clubNonMemberId");
 	}
 
 	/**

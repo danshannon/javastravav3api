@@ -192,7 +192,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testListAuthenticatedAthleteActivities_default() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		List<Activity> activities = service.listAuthenticatedAthleteActivities(null, null, null);
+		List<Activity> activities = service.listAuthenticatedAthleteActivities();
 		
 		assertNotNull("Authenticated athlete's activities returned as null",activities);
 		assertNotEquals("No activities returned for the authenticated athlete",0,activities.size());
@@ -208,7 +208,7 @@ public class ActivityServicesImplTest {
 		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		calendar.set(2015,Calendar.JANUARY,1);
 		
-		List<Activity> activities = service.listAuthenticatedAthleteActivities(calendar, null, null);
+		List<Activity> activities = service.listAuthenticatedAthleteActivities(calendar, null);
 		for (Activity activity : activities) {
 			assertTrue(activity.getStartDate().before(calendar.getTime()));
 		}
@@ -225,7 +225,7 @@ public class ActivityServicesImplTest {
 		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		calendar.set(2015,Calendar.JANUARY,1);
 		
-		List<Activity> activities = service.listAuthenticatedAthleteActivities(null, calendar, null);
+		List<Activity> activities = service.listAuthenticatedAthleteActivities(null, calendar);
 		for (Activity activity : activities) {
 			assertTrue(activity.getStartDate().after(calendar.getTime()));
 		}
@@ -243,7 +243,7 @@ public class ActivityServicesImplTest {
 		Calendar after = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		after.set(2014,Calendar.JANUARY,1);
 		
-		List<Activity> activities = service.listAuthenticatedAthleteActivities(before, after, null);
+		List<Activity> activities = service.listAuthenticatedAthleteActivities(before, after);
 		for (Activity activity : activities) {
 			assertTrue(activity.getStartDate().before(before.getTime()));
 			assertTrue(activity.getStartDate().after(after.getTime()));
@@ -263,7 +263,7 @@ public class ActivityServicesImplTest {
 		Calendar after = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		after.set(2015,Calendar.JANUARY,1);
 		
-		List<Activity> activities = service.listAuthenticatedAthleteActivities(before, after, null);
+		List<Activity> activities = service.listAuthenticatedAthleteActivities(before, after);
 		assertNotNull("Returned null collection of activities", activities);
 		for (Activity activity : activities) {
 			assertTrue(activity.getStartDate().before(before.getTime()));
@@ -280,7 +280,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testListAuthenticatedAthleteActivities_pageSize() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		List<Activity> activities = service.listAuthenticatedAthleteActivities(null, null, new Paging(1, 1));
+		List<Activity> activities = service.listAuthenticatedAthleteActivities(new Paging(1, 1));
 		
 		assertNotNull("Authenticated athlete's activities returned as null when asking for a page of size 1",activities);
 		assertEquals("Wrong number of activities returned when asking for a page of size 1",1,activities.size());
@@ -289,7 +289,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testListAuthenticatedAthleteActivities_pageSizeTooLarge() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		List<Activity> activities = service.listAuthenticatedAthleteActivities(null, null, new Paging(2, 201));
+		List<Activity> activities = service.listAuthenticatedAthleteActivities(new Paging(2, 201));
 		assertNotNull("Returned null list of activities",activities);
 		assertEquals(201,activities.size());
 	}
@@ -303,16 +303,16 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testListAuthenticatedAthleteActivities_pageNumberAndSize() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		List<Activity> defaultActivities = service.listAuthenticatedAthleteActivities(null, null, new Paging(1, 2));
+		List<Activity> defaultActivities = service.listAuthenticatedAthleteActivities(new Paging(1, 2));
 
 		assertEquals("Default page of activities should be of size 2",2,defaultActivities.size());
 
-		List<Activity> firstPageOfActivities = service.listAuthenticatedAthleteActivities(null, null, new Paging(1, 1));
+		List<Activity> firstPageOfActivities = service.listAuthenticatedAthleteActivities(new Paging(1, 1));
 		
 		assertEquals("First page of activities should be of size 1",1,firstPageOfActivities.size());
 		assertEquals("Different first page of activities to expected", defaultActivities.get(0).getId(),firstPageOfActivities.get(0).getId());
 
-		List<Activity> secondPageOfActivities = service.listAuthenticatedAthleteActivities(null, null, new Paging(2, 1));
+		List<Activity> secondPageOfActivities = service.listAuthenticatedAthleteActivities(new Paging(2, 1));
 		
 		assertEquals("Second page of activities should be of size 1",1,firstPageOfActivities.size());
 		assertEquals("Different second page of activities to expected", defaultActivities.get(1).getId(),secondPageOfActivities.get(0).getId());
@@ -329,7 +329,7 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		// Ask for the 200,000th activity by the athlete (this is probably safe!)
-		List<Activity> activities = service.listAuthenticatedAthleteActivities(null, null, new Paging(1000, 200));
+		List<Activity> activities = service.listAuthenticatedAthleteActivities(new Paging(1000, 200));
 		
 		assertEquals("Unexpected return of activities for paging out of range (high)",0,activities.size());
 	}
@@ -346,7 +346,7 @@ public class ActivityServicesImplTest {
 		
 		// Ask for the -1th activity by the athlete (this is probably safe!)
 		try {
-			service.listAuthenticatedAthleteActivities(null, null, new Paging(-1, -1));
+			service.listAuthenticatedAthleteActivities(new Paging(-1, -1));
 		} catch (IllegalArgumentException e) {
 			// Expected behaviour
 			return;
@@ -592,12 +592,12 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testListActivityComments_hasComments() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		List<Comment> comments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.TRUE, null);
+		List<Comment> comments = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.TRUE);
 		
 		assertNotNull("Returned null list of comments (with markdown) when some were expected");
 		assertNotEquals("Returned empty list of comments when some were expected", 0, comments.size());
 		
-		List<Comment> commentsWithoutMarkdown = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE, null);
+		List<Comment> commentsWithoutMarkdown = service.listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, Boolean.FALSE);
 		
 		// Check that the lists are the same length!!
 		assertNotNull("Returned null list of comments (without markdown) when some were expected");
@@ -626,7 +626,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testListActivityComments_hasNoComments() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		List<Comment> comments = service.listActivityComments(TestUtils.ACTIVITY_WITHOUT_COMMENTS, Boolean.TRUE, null);
+		List<Comment> comments = service.listActivityComments(TestUtils.ACTIVITY_WITHOUT_COMMENTS, Boolean.TRUE);
 
 		assertNotNull("Returned null list of comments when an empty array was expected",comments);
 		assertEquals("Returned a non-empty list of comments when none were expected", 0, comments.size());
@@ -725,7 +725,7 @@ public class ActivityServicesImplTest {
 		
 		List<Comment> comments;
 		try {
-			comments = service.listActivityComments(TestUtils.ACTIVITY_INVALID, Boolean.FALSE, null);
+			comments = service.listActivityComments(TestUtils.ACTIVITY_INVALID, Boolean.FALSE);
 		} catch (NotFoundException e) {
 			// Expected behaviour
 			return;
@@ -742,7 +742,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testListActivityKudoers_hasKudoers() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, null);
+		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS);
 		
 		assertNotNull("Returned null kudos array for activity with kudos",kudoers);
 		assertNotEquals("Returned empty kudos array for activity with kudos",0,kudoers.size());
@@ -758,7 +758,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testListActivityKudoers_hasNoKudoers() throws UnauthorizedException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITHOUT_KUDOS, null);
+		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITHOUT_KUDOS);
 
 		assertNotNull("Returned null kudos array for activity without kudos",kudoers);
 		assertEquals("Did not return empty kudos array for activity with no kudos",0,kudoers.size());
@@ -777,7 +777,7 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Athlete> kudoers;
 		try {
-			kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_INVALID, null);
+			kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_INVALID);
 		} catch (NotFoundException e) {
 			// Expected behaviour
 			return;
@@ -988,7 +988,6 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testListFriendsActivities_hasNoFriends() {
 		// TODO Not yet implemented
-		fail("Not yet implemented");
 	}
 	
 	/**

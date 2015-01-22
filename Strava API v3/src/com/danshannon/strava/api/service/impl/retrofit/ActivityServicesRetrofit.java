@@ -89,6 +89,12 @@ public interface ActivityServicesRetrofit {
 	 */
 	@GET("/activities/{id}/photos")
 	public Photo[] listActivityPhotos(@Path("id") Integer id) throws NotFoundException;
+	
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#listRelatedActivities(java.lang.Integer, com.danshannon.strava.util.Paging)
+	 */
+	@GET("/activities/{id}/related")
+	public Activity[] listRelatedActivities(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
 
 }
 

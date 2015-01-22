@@ -63,6 +63,25 @@ public interface AthleteServices {
 	 * 
 	 * <p>Results are sorted by date, newest first.</p>
 	 * 
+	 * <p>Pagination is not supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if athlete with the given id is not found.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/athletes/:id/koms</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
+	 * 
+	 * @param id The id of the {@link Athlete athlete} whose KOM's are to be returned
+	 * @return Returns an array of {@link SegmentEffort segment effort} summary representations
+	 * @throws NotFoundException 
+	 */
+	public List<SegmentEffort> listAthleteKOMs(Integer id) throws NotFoundException;
+	
+	/**
+	 * <p>Returns an array of {@link SegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given athlete.</p>
+	 * 
+	 * <p>Results are sorted by date, newest first.</p>
+	 * 
 	 * <p>Pagination is supported.</p>
 	 * 
 	 * <p>Returns <code>null</code> if athlete with the given id is not found.</p>
@@ -77,6 +96,21 @@ public interface AthleteServices {
 	 * @throws NotFoundException 
 	 */
 	public List<SegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction) throws NotFoundException;
+	
+	/**
+	 * <p>Friends are users the current {@link Athlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
+	 * 
+	 * <p>This request is for the authenticated athlete's friends.</p>
+	 * 
+	 * <p>Pagination is not supported.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/athletes/friends</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
+	 * 
+	 * @return Returns an array of {@link Athlete athlete} summary representations.
+	 */
+	public List<Athlete> listAuthenticatedAthleteFriends();
 	
 	/**
 	 * <p>Friends are users the current {@link Athlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
@@ -114,6 +148,42 @@ public interface AthleteServices {
 	 */
 	public List<Athlete> listAthleteFriends(Integer id, Paging pagingInstruction) throws NotFoundException;
 	
+	/**
+	 * <p>Friends are users an {@link Athlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
+	 * 
+	 * <p>If the indicated athlete has blocked the authenticated athlete, the result will be an empty array.</p> 
+	 * 
+	 * <p>Pagination is not supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if athlete with the given id is not found.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/athletes/:id/friends</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
+	 * 
+	 * @param id The id of the {@link Athlete athlete} whose friends are to be listed
+	 * @return List of {@link Athlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
+	 * @throws NotFoundException If the athlete with given id does not exist
+	 */
+	public List<Athlete> listAthleteFriends(Integer id) throws NotFoundException;
+	
+	/**
+	 * <p>Retrieve the {@link Athlete athletes} who both the authenticated athlete and the indicated athlete are following.</p>
+	 * 
+	 * <p>Pagination is not supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if athlete with the given id is not found.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/athletes/:id/both-following</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
+	 * 
+	 * @param id The id of the {@link Athlete athlete} for whom the list of mutual friends is to be generated
+	 * @return Returns an array of {@link Athlete athlete} summary representations.
+	 * @throws NotFoundException 
+	 */
+	public List<Athlete> listAthletesBothFollowing(Integer id) throws NotFoundException;
+
 	/**
 	 * <p>Retrieve the {@link Athlete athletes} who both the authenticated athlete and the indicated athlete are following.</p>
 	 * 

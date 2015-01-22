@@ -276,4 +276,82 @@ public class ActivityServicesImpl implements ActivityServices {
 		}
 	}
 
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityComments(java.lang.Integer, java.lang.Boolean)
+	 */
+	@Override
+	public List<Comment> listActivityComments(Integer id, Boolean markdown) throws NotFoundException {
+		return listActivityComments(id, markdown, null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityKudoers(java.lang.Integer)
+	 */
+	@Override
+	public List<Athlete> listActivityKudoers(Integer id) throws NotFoundException {
+		return listActivityKudoers(id, null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#listAuthenticatedAthleteActivities(java.util.Calendar, java.util.Calendar)
+	 */
+	@Override
+	public List<Activity> listAuthenticatedAthleteActivities(Calendar before, Calendar after) throws UnauthorizedException {
+		return listAuthenticatedAthleteActivities(before, after, null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#listFriendsActivities()
+	 */
+	@Override
+	public List<Activity> listFriendsActivities() {
+		return listFriendsActivities(null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#listAuthenticatedAthleteActivities()
+	 */
+	@Override
+	public List<Activity> listAuthenticatedAthleteActivities() throws UnauthorizedException {
+		return listAuthenticatedAthleteActivities(null, null, null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#listAuthenticatedAthleteActivities(com.danshannon.strava.util.Paging)
+	 */
+	@Override
+	public List<Activity> listAuthenticatedAthleteActivities(Paging pagingInstruction) throws UnauthorizedException {
+		return listAuthenticatedAthleteActivities(null, null, pagingInstruction);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#listRelatedActivities(java.lang.Integer)
+	 */
+	@Override
+	public List<Activity> listRelatedActivities(Integer id) throws NotFoundException {
+		return listRelatedActivities(id, null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#listRelatedActivities(java.lang.Integer, com.danshannon.strava.util.Paging)
+	 */
+	@Override
+	public List<Activity> listRelatedActivities(Integer id, Paging pagingInstruction) throws NotFoundException {
+		Strava.validatePagingArguments(pagingInstruction);
+		
+		List<Activity> activities = new ArrayList<Activity>();
+		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+			List<Activity> activityPage = Arrays.asList(restService.listRelatedActivities(id, paging.getPage(), paging.getPageSize()));
+			activityPage = Strava.ignoreLastN(activityPage, paging.getIgnoreLastN());
+			activityPage = Strava.ignoreFirstN(activityPage, paging.getIgnoreFirstN());
+			activities.addAll(activityPage);
+		}
+		if (pagingInstruction != null) {
+			activities = Strava.ignoreFirstN(activities,pagingInstruction.getIgnoreFirstN());
+			activities = Strava.ignoreLastN(activities, pagingInstruction.getIgnoreLastN());
+		}
+		return activities;
+		
+	}
+
 }

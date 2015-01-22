@@ -103,6 +103,45 @@ public interface ActivityServices {
 	/**
 	 * <p>This endpoint returns a list of {@link Activity activities} for the authenticated {@link Athlete}.</p>
 	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/athlete/activities</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
+	 * 
+	 * @return Returns an array of {@link Activity} summary representations sorted newest first by default.
+	 * @throws UnauthorizedException thrown if service returns a 401 Unauthorized status
+	 */
+	public List<Activity> listAuthenticatedAthleteActivities() throws UnauthorizedException;
+	
+	/**
+	 * <p>This endpoint returns a list of {@link Activity activities} for the authenticated {@link Athlete}.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/athlete/activities</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
+	 * 
+	 * @param pagingInstruction (Optional) The page to be returned
+	 * @return Returns an array of {@link Activity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
+	 * @throws UnauthorizedException thrown if service returns a 401 Unauthorized status
+	 */
+	public List<Activity> listAuthenticatedAthleteActivities(Paging pagingInstruction) throws UnauthorizedException;
+	
+	/**
+	 * <p>This endpoint returns a list of {@link Activity activities} for the authenticated {@link Athlete}.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/athlete/activities</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
+	 * 
+	 * @param before (Optional) result will start with activities whose start_date is before this value
+	 * @param after (Optional) result will start with activities whose start_date is after this value, sorted oldest first
+	 * @return Returns an array of {@link Activity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
+	 * @throws UnauthorizedException thrown if service returns a 401 Unauthorized status
+	 */
+	public List<Activity> listAuthenticatedAthleteActivities(Calendar before, Calendar after) throws UnauthorizedException;
+	
+	/**
+	 * <p>This endpoint returns a list of {@link Activity activities} for the authenticated {@link Athlete}.</p>
+	 * 
 	 * <p>Should be used with before, after or page/per_page. Using a combination will result in an error or unexpected results.</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/athlete/activities</p>
@@ -130,6 +169,19 @@ public interface ActivityServices {
 	 * @return Returns an array of activity summary representations sorted newest first by start_date.
 	 */
 	public List<Activity> listFriendsActivities(Paging pagingInstruction);
+	
+	/**
+	 * <p>List the recent activities performed by those the current authenticated {@link Athlete} is following.</p>
+	 * 
+	 * <p>Pagination is not supported.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/activities/following</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
+	 * 
+	 * @return Returns an array of activity summary representations sorted newest first by start_date.
+	 */
+	public List<Activity> listFriendsActivities();
 	
 	/**
 	 * <p>Heartrate and power zones are set by the {@link Athlete athlete}. This endpoint returns the time (seconds) in each zone for the {@link Activity activity}.</p>
@@ -166,23 +218,62 @@ public interface ActivityServices {
 	 * 
 	 * <p>The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.</p>
 	 * 
-	 * <p>Pagination is supported.</p>
+	 * <p>Pagination is not supported.</p>
 	 * 
 	 * <p>Returns <code>null</code> if the {@link Activity} does not exist</p>
 	 * 
-	 * <p>Returns an empty array if the {@link Activity} does not contain any {@link Photo Photos}</p>
+	 * <p>Returns an empty array if the {@link Activity} does not contain any {@link Comment comments}</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/activities/:id/comments</p>
 	 * 
-	 * @see <a herf="http://strava.github.io/api/v3/comments/">http://strava.github.io/api/v3/comments/</a>
+	 * @see <a href="http://strava.github.io/api/v3/comments/">http://strava.github.io/api/v3/comments/</a>
+	 * 
+	 * @param id The id of the {@link Activity} for which {@link Comment comments} should be returned
+	 * @param markdown (Optional) Include markdown in comments (default is <code>false</code> - i.e. filter out
+	 * @return List of comments
+	 * @throws NotFoundException If the activity does not exist
+	 */
+	public List<Comment> listActivityComments(Integer id, Boolean markdown) throws NotFoundException;
+	
+	/**
+	 * <p>Comments on an activity can be viewed by any user. However, only internal applications are allowed to create or delete them.</p>
+	 * 
+	 * <p>Comment posting can be enabled on a per application basis, email developers -at- strava.com for more information.</p>
+	 * 
+	 * <p>The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.</p>
+	 * 
+	 * <p>Pagination is supported.</p>
+	 * 
+	 * <p>Returns an empty array if the {@link Activity} does not contain any {@link Comment comments}</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/activities/:id/comments</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/comments/">http://strava.github.io/api/v3/comments/</a>
 	 * 
 	 * @param id The id of the {@link Activity} for which {@link Comment comments} should be returned
 	 * @param markdown (Optional) Include markdown in comments (default is <code>false</code> - i.e. filter out
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return List of comments
-	 * @throws NotFoundException 
+	 * @throws NotFoundException If the activity does not exist
 	 */
 	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstructions) throws NotFoundException;
+	
+	/**
+	 * <p>A kudos is Strava's version of a 'like' or '+1'. The number of kudos on an activity is returned with the activity summary.</p>
+	 * 
+	 * <p>Kudos posting can be enabled on a per application basis, email developers -at- strava.com for more information.</p>
+	 * 
+	 * <p>The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the athletes who�ve left kudos and can only be accessed by the owner of the activity.</p>
+	 * 
+	 * <p>Pagination is not supported.</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/kudos/">http://strava.github.io/api/v3/kudos/</a>
+	 * 
+	 * @param id The id of the {@link Activity} for which kudoers are to be listed
+	 * @return Returns an array of {@link Athlete athlete} summary objects.
+	 * @throws NotFoundException If the activity doesn't exist
+	 */
+	public List<Athlete> listActivityKudoers(Integer id) throws NotFoundException;
 	
 	/**
 	 * <p>A kudos is Strava's version of a 'like' or '+1'. The number of kudos on an activity is returned with the activity summary.</p>
@@ -217,4 +308,27 @@ public interface ActivityServices {
 	 * @return Returns an array of {@link Photo photo} objects.
 	 */
 	public List<Photo> listActivityPhotos(Integer id);
+	
+	/**
+	 * <p>Returns the activities that were matched as “with this group”. The number equals activity.athlete_count-1.</p>
+	 * 
+	 * <p>Pagination is not supported.</p>
+	 * 
+	 * @param id Activity id for which related activities should be listed
+	 * @return List of related activities (not including the main activity)
+	 * @throws NotFoundException If base activity doesn't exist.
+	 */
+	public List<Activity> listRelatedActivities(Integer id) throws NotFoundException;
+	
+	/**
+	 * <p>Returns the activities that were matched as “with this group”. The number equals activity.athlete_count-1.</p>
+	 * 
+	 * <p>Pagination is supported.</p>
+	 * 
+	 * @param id Activity id for which related activities should be listed
+	 * @param pagingInstruction Paging instructions
+	 * @return List of related activities (not including the main activity)
+	 * @throws NotFoundException If base activity doesn't exist.
+	 */
+	public List<Activity> listRelatedActivities(Integer id, Paging pagingInstruction) throws NotFoundException;
 }

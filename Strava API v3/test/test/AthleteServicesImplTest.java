@@ -146,7 +146,7 @@ public class AthleteServicesImplTest {
 	@Test
 	public void testListAthleteKOMs_withKOM() throws UnauthorizedException, NotFoundException {
 		AthleteServices service = getService();
-		List<SegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID, null);
+		List<SegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID);
 		assertNotNull(koms);
 		assertFalse(koms.size() == 0);
 	}
@@ -155,7 +155,7 @@ public class AthleteServicesImplTest {
 	@Test
 	public void testListAthleteKOMs_withoutKOM() throws NotFoundException, UnauthorizedException {
 		AthleteServices service = getService();
-		List<SegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_WITHOUT_KOMS, null);
+		List<SegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_WITHOUT_KOMS);
 		assertNotNull(koms);
 		assertTrue(koms.size() == 0);
 	}
@@ -166,7 +166,7 @@ public class AthleteServicesImplTest {
 		AthleteServices service = getService();
 		List<SegmentEffort> koms = null;
 		try {
-			koms = service.listAthleteKOMs(TestUtils.ATHLETE_INVALID_ID, null);
+			koms = service.listAthleteKOMs(TestUtils.ATHLETE_INVALID_ID);
 		} catch (NotFoundException e) {
 			// Expected behaviour
 		}
@@ -218,7 +218,7 @@ public class AthleteServicesImplTest {
 	@Test
 	public void testListAuthenticatedAthleteFriends_friends() throws UnauthorizedException {
 		AthleteServices service = getService();
-		List<Athlete> friends = service.listAuthenticatedAthleteFriends(null);
+		List<Athlete> friends = service.listAuthenticatedAthleteFriends();
 		assertNotNull(friends);
 		assertFalse(friends.isEmpty());
 	}
@@ -268,7 +268,7 @@ public class AthleteServicesImplTest {
 	@Test
 	public void testListAthleteFriends_validAthlete() throws UnauthorizedException, NotFoundException {
 		AthleteServices service = getService();
-		List<Athlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID, null);
+		List<Athlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID);
 		assertNotNull(friends);
 		assertFalse(friends.size() == 0);		
 	}
@@ -281,7 +281,7 @@ public class AthleteServicesImplTest {
 		@SuppressWarnings("unused")
 		List<Athlete> friends;
 		try {
-			friends = service.listAthleteFriends(TestUtils.ATHLETE_INVALID_ID, null);
+			friends = service.listAthleteFriends(TestUtils.ATHLETE_INVALID_ID);
 		} catch (NotFoundException e) {
 			// Expected behaviour
 			return;
@@ -339,7 +339,7 @@ public class AthleteServicesImplTest {
 	@Test
 	public void testListAthletesBothFollowing_validAthlete() throws NotFoundException, UnauthorizedException {
 		AthleteServices service = getService();
-		List<Athlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID, null);
+		List<Athlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID);
 		assertNotNull(friends);
 		assertFalse(friends.size() == 0);
 	}
@@ -350,7 +350,7 @@ public class AthleteServicesImplTest {
 		AthleteServices service = getService();
 		try {
 			@SuppressWarnings("unused")
-			List<Athlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_INVALID_ID, null);
+			List<Athlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_INVALID_ID);
 		} catch (NotFoundException e) {
 			// Expected behaviour
 			return;

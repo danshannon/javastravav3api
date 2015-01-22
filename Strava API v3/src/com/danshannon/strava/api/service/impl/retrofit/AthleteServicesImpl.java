@@ -189,4 +189,36 @@ public class AthleteServicesImpl implements AthleteServices {
 
 	}
 
+	/**
+	 * @see com.danshannon.strava.api.service.AthleteServices#listAthleteKOMs(java.lang.Integer)
+	 */
+	@Override
+	public List<SegmentEffort> listAthleteKOMs(Integer id) throws NotFoundException {
+		return listAthleteKOMs(id, null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.AthleteServices#listAuthenticatedAthleteFriends()
+	 */
+	@Override
+	public List<Athlete> listAuthenticatedAthleteFriends() {
+		return listAuthenticatedAthleteFriends(null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.AthleteServices#listAthleteFriends(java.lang.Integer)
+	 */
+	@Override
+	public List<Athlete> listAthleteFriends(Integer id) throws NotFoundException {
+		return listAthleteFriends(id, null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.AthleteServices#listAthletesBothFollowing(java.lang.Integer)
+	 */
+	@Override
+	public List<Athlete> listAthletesBothFollowing(Integer id) throws NotFoundException {
+		return listAthletesBothFollowing(id, null);
+	}
+
 }

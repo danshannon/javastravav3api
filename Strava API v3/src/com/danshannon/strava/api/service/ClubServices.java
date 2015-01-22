@@ -51,6 +51,24 @@ public interface ClubServices {
 	/**
 	 * <p>Retrieve summary information about member {@link Athlete athletes} of a specific {@link Club club}.</p>
 	 * 
+	 * <p>Pagination is not supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if club with the given id does not exist</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/clubs/:id/members</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-members">http://strava.github.io/api/v3/clubs/#get-members</a>
+	 * 
+	 * @param id The id of the {@link Club} whose member {@link Athlete athletes} should be returned
+	 * @return Returns an array of {@link Athlete athlete} summary {@link ResourceState representations}.
+	 * @throws NotFoundException If club does not exist
+	 * @throws UnauthorizedException If club is private
+	 */
+	public List<Athlete> listClubMembers(Integer id) throws NotFoundException, UnauthorizedException;
+	
+	/**
+	 * <p>Retrieve summary information about member {@link Athlete athletes} of a specific {@link Club club}.</p>
+	 * 
 	 * <p>Pagination is supported.</p>
 	 * 
 	 * <p>Returns <code>null</code> if club with the given id does not exist</p>
@@ -62,8 +80,30 @@ public interface ClubServices {
 	 * @param id The id of the {@link Club} whose member {@link Athlete athletes} should be returned
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Athlete athlete} summary {@link ResourceState representations}.
+	 * @throws NotFoundException If club does not exist
+	 * @throws UnauthorizedException If club is private
 	 */
-	public List<Athlete> listClubMembers(Integer id, Paging pagingInstruction);
+	public List<Athlete> listClubMembers(Integer id, Paging pagingInstruction) throws NotFoundException, UnauthorizedException;
+	
+	/**
+	 * <p>Retrieve the recent {@link Activity activities} performed by member {@link Athlete athletes} of a specific {@link Club club}.</p>
+	 * 
+	 * <p>The authenticated athlete must be a member of the club.</p>
+	 * 
+	 * <p>Returns <code>null</code> if club with the given id does not exist</p>
+	 * 
+	 * <p>Pagination is NOT supported.</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-activities">http://strava.github.io/api/v3/clubs/#get-activities</a>
+	 * 
+	 * @param id The id of the {@link Club} for which recent {@link Activity activities} are to be returned.
+	 * @param page (Optional) Page to start at for pagination
+	 * @param perPage (Optional) Number of results per page (max 200)
+	 * @return Returns an array of {@link Activity activity} summary {@link ResourceState representations}.
+	 * @throws NotFoundException If club does not exist
+	 * @throws UnauthorizedException If club is private
+	 */
+	public List<Activity> listRecentClubActivities(Integer id) throws NotFoundException, UnauthorizedException;
 	
 	/**
 	 * <p>Retrieve the recent {@link Activity activities} performed by member {@link Athlete athletes} of a specific {@link Club club}.</p>
@@ -80,6 +120,26 @@ public interface ClubServices {
 	 * @param page (Optional) Page to start at for pagination
 	 * @param perPage (Optional) Number of results per page (max 200)
 	 * @return Returns an array of {@link Activity activity} summary {@link ResourceState representations}.
+	 * @throws NotFoundException If club does not exist
+	 * @throws UnauthorizedException If club is private
 	 */
-	public List<Activity> listRecentClubActivities(Integer id, Paging pagingInstruction);
+	public List<Activity> listRecentClubActivities(Integer id, Paging pagingInstruction) throws NotFoundException, UnauthorizedException;
+	
+	/**
+	 * <p>Join a club on behalf of the authenticated user. An access token with write permissions is required.</p>
+	 * 
+	 * @param id ID of the {@link Club} to join
+	 * @throws NotFoundException If the club does not exist
+	 * @throws UnauthorizedException If the user does not have a token with write permission
+	 */
+	public void joinClub(Integer id) throws NotFoundException, UnauthorizedException;
+	
+	/**
+	 * <p>Leave a club on behalf of the authenticated user. An access token with write permissions is required.</p>
+	 * 
+	 * @param id ID of the club to join
+	 * @throws NotFoundException If the club does not exist
+	 * @throws UnauthorizedException If the user does not have a token with write permission
+	 */
+	public void leaveClub(Integer id) throws NotFoundException, UnauthorizedException;
 }
