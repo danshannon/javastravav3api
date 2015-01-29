@@ -17,6 +17,7 @@ import com.danshannon.strava.api.model.reference.LeaderboardDateRange;
 import com.danshannon.strava.api.model.reference.ResourceState;
 import com.danshannon.strava.api.model.reference.SegmentExplorerActivityType;
 import com.danshannon.strava.api.model.reference.WeightClass;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.util.Paging;
 
 /**
@@ -37,8 +38,9 @@ public interface SegmentServices {
 	 * 
 	 * @param id The id of the {@link Segment} to be retrieved
 	 * @return Returns a {@link ResourceState#DETAILED detailed representation} of the {@link Segment}.
+	 * @throws UnauthorizedException If authorisation fails
 	 */
-	public Segment getSegment(Integer id);
+	public Segment getSegment(Integer id) throws UnauthorizedException;
 	
 	/**
 	 * <p>Returns a {@link ResourceState#SUMMARY summary representation} of the {@link Segment segments} starred by the authenticated {@link Athlete athlete}.</p>
@@ -56,9 +58,24 @@ public interface SegmentServices {
 	public List<Segment> listAuthenticatedAthleteStarredSegments(Paging pagingInstruction);
 	
 	/**
+	 * <p>Returns a {@link ResourceState#SUMMARY summary representation} of the {@link Segment segments} starred by the authenticated {@link Athlete athlete}.</p>
+	 * 
+	 * <p>Pagination is NOT supported.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/segments/starred</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/segments/#starred">http://strava.github.io/api/v3/segments/#starred</a> 
+	 * 
+	 * @return Returns a {@link ResourceState#SUMMARY summary representation} of the {@link Segment segments} starred by the authenticated {@link Athlete}.
+	 */
+	public List<Segment> listAuthenticatedAthleteStarredSegments();
+	
+	/**
 	 * <p>Returns a {@link ResourceState#SUMMARY summary representation} of the {@link Segment segments} starred by the identified {@link Athlete athlete}.</p>
 	 * 
 	 * <p>Pagination is supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the athlete with the given id does not exist.</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/segments/starred</p>
 	 * 
@@ -70,6 +87,22 @@ public interface SegmentServices {
 	 * @return Returns a {@link ResourceState#SUMMARY summary representation} of the {@link Segment segments} starred by the identified {@link Athlete}.
 	 */
 	public List<Segment> listStarredSegments(Integer id, Paging pagingInstruction);
+	
+	/**
+	 * <p>Returns a {@link ResourceState#SUMMARY summary representation} of the {@link Segment segments} starred by the identified {@link Athlete athlete}.</p>
+	 * 
+	 * <p>Pagination is NOT supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the athlete with the given id does not exist.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/segments/starred</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/segments/#starred">http://strava.github.io/api/v3/segments/#starred</a> 
+	 * 
+	 * @param id Identifier of the {@link Athlete} for which starred {@link Segment segments} are to be returned
+	 * @return Returns a {@link ResourceState#SUMMARY summary representation} of the {@link Segment segments} starred by the identified {@link Athlete}.
+	 */
+	public List<Segment> listStarredSegments(Integer id);
 	
 	/**
 	 * <p>Retrieve an array of {@link SegmentEffort segment efforts}, for a given {@link Segment}, filtered by {@link Athlete} and/or a date range.</p>

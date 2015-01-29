@@ -1,12 +1,15 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import com.danshannon.strava.api.model.Gear;
 import com.danshannon.strava.api.service.GearServices;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.api.service.impl.retrofit.GearServicesImpl;
@@ -18,6 +21,13 @@ import com.danshannon.strava.api.service.impl.retrofit.GearServicesImpl;
  *
  */
 public class GearServicesImplTest {
+	private GearServices gearService;
+	
+	@Before
+	public void setUp() throws UnauthorizedException {
+		this.gearService = getGearService();
+	}
+	
 	/**
 	 * <p>Test we get a {@link GearServicesImpl service implementation} successfully with a valid token</p>
 	 * 
@@ -31,25 +41,37 @@ public class GearServicesImplTest {
 	
 	/**
 	 * <p>Test that we don't get a {@link GearServicesImpl service implementation} if the token isn't valid</p>
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testImplementation_invalidToken() {
+	public void testImplementation_invalidToken() throws UnauthorizedException {
 		GearServices service = null;
+		service = GearServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		try {
-			service = GearServicesImpl.implementation(TestUtils.INVALID_TOKEN);
+			service.getGear(TestUtils.GEAR_VALID_ID);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour
+			return;
 		}
-		assertNull("Got a service for an invalid token!",service);
+		fail("Have access despite having an invalid token!");
 	}
 
 	/**
 	 * <p>Test that we don't get a {@link GearServicesImpl service implementation} if the token has been revoked by the user</p>
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testImplementation_revokedToken() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+	public void testImplementation_revokedToken() throws UnauthorizedException {
+		String token = getRevokedToken();
+		GearServices service = GearServicesImpl.implementation(token);
+		
+		try {
+			service.getGear(TestUtils.GEAR_VALID_ID);
+		} catch (UnauthorizedException e) {
+			// This is the expected behaviour
+			return;
+		}
+		fail("Have access despite having an invalid token!");
 	}
 	
 	/**
@@ -69,8 +91,9 @@ public class GearServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_differentImplementationIsNotCached() throws UnauthorizedException {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		GearServices service = getGearService();
+		GearServices service2 = getGearServiceWithoutWriteAccess();
+		assertFalse(service == service2);
 	}
 	
 	// Test cases
@@ -78,8 +101,44 @@ public class GearServicesImplTest {
 	// 2. Invalid gear
 	// 3. Gear which doesn't belong to the current athlete
 	@Test
-	public void testGetGear() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");		
+	public void testGetGear_validGear() throws UnauthorizedException {
+		GearServices service = getGearService();
+		Gear gear = service.getGear(TestUtils.GEAR_VALID_ID);
+		
+		assertNotNull(gear);
+		assertEquals("Retrieved the wrong gear id",TestUtils.GEAR_VALID_ID,gear.getId());
+	}
+	
+	@Test
+	public void testGetGear_invalidGear() throws UnauthorizedException {
+		GearServices service = getGearService();
+		Gear gear = service.getGear(TestUtils.GEAR_INVALID_ID);
+		
+		assertNull(gear);
+	}
+	
+	@Test
+	public void testGetGear_otherAthlete() throws UnauthorizedException {
+		GearServices service = getGearService();
+		Gear gear = service.getGear(TestUtils.GEAR_OTHER_ATHLETE_ID);
+		
+		assertNull(gear);
+	}
+	
+	private GearServices getGearService() throws UnauthorizedException {
+		if (this.gearService == null) {
+			this.gearService = GearServicesImpl.implementation(TestUtils.getValidToken());
+		}
+		return this.gearService;
+	}
+	
+	private String getRevokedToken() throws UnauthorizedException {
+		this.gearService = null;
+		return TestUtils.getRevokedToken();
+	}
+	
+	private GearServices getGearServiceWithoutWriteAccess() throws UnauthorizedException {
+		this.gearService = null;
+		return GearServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 	}
 }

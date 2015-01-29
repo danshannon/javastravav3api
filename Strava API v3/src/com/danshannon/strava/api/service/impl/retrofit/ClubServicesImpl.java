@@ -15,6 +15,7 @@ import retrofit.converter.GsonConverter;
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Club;
+import com.danshannon.strava.api.model.ClubMembershipResponse;
 import com.danshannon.strava.api.service.ClubServices;
 import com.danshannon.strava.api.service.Strava;
 import com.danshannon.strava.api.service.exception.NotFoundException;
@@ -42,7 +43,7 @@ public class ClubServicesImpl implements ClubServices {
 	 * @return An implementation of the club services
 	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static ClubServices implementation(final String token) throws UnauthorizedException {
+	public static ClubServices implementation(final String token) {
 		ClubServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new ClubServicesImpl(new RestAdapter.Builder()
@@ -58,9 +59,6 @@ public class ClubServicesImpl implements ClubServices {
 				.setErrorHandler(new RetrofitErrorHandler())
 				.build()
 				.create(ClubServicesRetrofit.class));
-
-			// Check that the token works (i.e. it is valid)
-			restService.listAuthenticatedAthleteClubs();
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
@@ -78,7 +76,7 @@ public class ClubServicesImpl implements ClubServices {
 	 * @see com.danshannon.strava.api.service.ClubServices#getClub(java.lang.Integer)
 	 */
 	@Override
-	public Club getClub(Integer id) throws NotFoundException {
+	public Club getClub(Integer id) throws UnauthorizedException {
 		try {
 			return restService.getClub(id);
 		} catch (NotFoundException e) {
@@ -98,19 +96,23 @@ public class ClubServicesImpl implements ClubServices {
 	 * @see com.danshannon.strava.api.service.ClubServices#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<Athlete> listClubMembers(Integer id, Paging pagingInstruction) throws NotFoundException, UnauthorizedException {
+	public List<Athlete> listClubMembers(Integer id, Paging pagingInstruction) throws UnauthorizedException {
 		Strava.validatePagingArguments(pagingInstruction);
 		
 		List<Athlete> members = new ArrayList<Athlete>();
-		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-			List<Athlete> memberPage = Arrays.asList(restService.listClubMembers(id, paging.getPage(), paging.getPageSize()));
-			memberPage = Strava.ignoreLastN(memberPage, paging.getIgnoreLastN());
-			memberPage = Strava.ignoreFirstN(memberPage, paging.getIgnoreFirstN());
-			members.addAll(memberPage);
-		}
-		if (pagingInstruction != null) {
-			members = Strava.ignoreFirstN(members, pagingInstruction.getIgnoreFirstN());
-			members = Strava.ignoreLastN(members, pagingInstruction.getIgnoreLastN());
+		try {
+			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+				List<Athlete> memberPage = Arrays.asList(restService.listClubMembers(id, paging.getPage(), paging.getPageSize()));
+				memberPage = Strava.ignoreLastN(memberPage, paging.getIgnoreLastN());
+				memberPage = Strava.ignoreFirstN(memberPage, paging.getIgnoreFirstN());
+				members.addAll(memberPage);
+			}
+			if (pagingInstruction != null) {
+				members = Strava.ignoreFirstN(members, pagingInstruction.getIgnoreFirstN());
+				members = Strava.ignoreLastN(members, pagingInstruction.getIgnoreLastN());
+			}
+		} catch (NotFoundException e) {
+			return null;
 		}
 		return members;
 	}
@@ -119,10 +121,11 @@ public class ClubServicesImpl implements ClubServices {
 	 * @see com.danshannon.strava.api.service.ClubServices#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<Activity> listRecentClubActivities(Integer id, Paging pagingInstruction) throws NotFoundException, UnauthorizedException {
+	public List<Activity> listRecentClubActivities(Integer id, Paging pagingInstruction) throws UnauthorizedException {
 		Strava.validatePagingArguments(pagingInstruction);
 
 		List<Activity> activities = new ArrayList<Activity>();
+		try {
 		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
 			List<Activity> activityPage = Arrays.asList(restService.listRecentClubActivities(id, paging.getPage(), paging.getPageSize()));
 			activityPage = Strava.ignoreLastN(activityPage, paging.getIgnoreLastN());
@@ -133,6 +136,13 @@ public class ClubServicesImpl implements ClubServices {
 			activities = Strava.ignoreFirstN(activities, pagingInstruction.getIgnoreFirstN());
 			activities = Strava.ignoreLastN(activities, pagingInstruction.getIgnoreLastN());
 		}
+		} catch (NotFoundException e) {
+			// Club doesn't exist
+			return null;
+		} catch (UnauthorizedException e1) {
+			// Not a member
+			return new ArrayList<Activity>();
+		}
 		return activities;
 
 
@@ -142,23 +152,23 @@ public class ClubServicesImpl implements ClubServices {
 	 * @see com.danshannon.strava.api.service.ClubServices#joinClub(java.lang.Integer)
 	 */
 	@Override
-	public void joinClub(Integer id) throws NotFoundException, UnauthorizedException {
-		restService.leave(id);		
+	public ClubMembershipResponse joinClub(Integer id) throws NotFoundException, UnauthorizedException {
+		return restService.join(id);		
 	}
 
 	/**
 	 * @see com.danshannon.strava.api.service.ClubServices#leaveClub(java.lang.Integer)
 	 */
 	@Override
-	public void leaveClub(Integer id) throws NotFoundException, UnauthorizedException {
-		restService.leave(id);
+	public ClubMembershipResponse leaveClub(Integer id) throws NotFoundException, UnauthorizedException {
+		return restService.leave(id);
 	}
 
 	/**
 	 * @see com.danshannon.strava.api.service.ClubServices#listClubMembers(java.lang.Integer)
 	 */
 	@Override
-	public List<Athlete> listClubMembers(Integer id) throws NotFoundException, UnauthorizedException {
+	public List<Athlete> listClubMembers(Integer id) throws UnauthorizedException {
 		return listClubMembers(id, null);
 	}
 
@@ -166,7 +176,7 @@ public class ClubServicesImpl implements ClubServices {
 	 * @see com.danshannon.strava.api.service.ClubServices#listRecentClubActivities(java.lang.Integer)
 	 */
 	@Override
-	public List<Activity> listRecentClubActivities(Integer id) throws NotFoundException, UnauthorizedException {
+	public List<Activity> listRecentClubActivities(Integer id) throws UnauthorizedException {
 		return listRecentClubActivities(id, null);
 	}
 

@@ -1,9 +1,11 @@
 package com.danshannon.strava.api.service;
 
+import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.SegmentEffort;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
- * <p>A {@link SegmentEffort segment effort} represents an {@link Athlete athlete’s} attempt at a {@link Segment segment}.</p>
+ * <p>A {@link SegmentEffort segment effort} represents an {@link Athlete athleteï¿½s} attempt at a {@link Segment segment}.</p>
  * 
  * <p>It can also be thought of as a portion of a ride that covers a segment.</p>
  * 
@@ -22,6 +24,7 @@ public interface SegmentEffortServices {
 	 * 
 	 * @param id The id of the segment to be retrieved
 	 * @return Returns a detailed segment effort representation.
+	 * @throws UnauthorizedException
 	 */
-	public SegmentEffort getSegmentEffort(Integer id);
+	public SegmentEffort getSegmentEffort(Long id) throws UnauthorizedException;
 }

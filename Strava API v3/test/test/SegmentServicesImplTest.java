@@ -1,8 +1,8 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -34,22 +34,30 @@ public class SegmentServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_invalidToken() {
-		SegmentServices service = null;
+		SegmentServices service = SegmentServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		try {
-			service = SegmentServicesImpl.implementation(TestUtils.INVALID_TOKEN);
+			service.getSegment(TestUtils.SEGMENT_VALID_ID);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour
+			return;
 		}
-		assertNull("Got a service for an invalid token!",service);
+		fail("Got a working service for an invalid token!");
 	}
 
 	/**
 	 * <p>Test that we don't get a {@link SegmentServicesImpl service implementation} if the token has been revoked by the user</p>
+	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testImplementation_revokedToken() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+	public void testImplementation_revokedToken() throws UnauthorizedException {
+		SegmentServices service = SegmentServicesImpl.implementation(TestUtils.getRevokedToken());
+		try {
+			service.getSegment(TestUtils.SEGMENT_VALID_ID);
+		} catch (UnauthorizedException e) {
+			// This is the expected behaviour
+			return;
+		}
+		fail("Got a working service for a revoked token!");
 	}
 	
 	/**
@@ -69,8 +77,9 @@ public class SegmentServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_differentImplementationIsNotCached() throws UnauthorizedException {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		SegmentServices service = SegmentServicesImpl.implementation(TestUtils.getValidToken());
+		SegmentServices service2 = SegmentServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
+		assertFalse(service == service2);
 	}
 
 	@Test

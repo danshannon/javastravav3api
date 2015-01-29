@@ -11,7 +11,6 @@ import com.danshannon.strava.api.model.UploadResponse;
 import com.danshannon.strava.api.model.reference.ActivityType;
 import com.danshannon.strava.api.service.Strava;
 import com.danshannon.strava.api.service.UploadServices;
-import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
 
 /**
@@ -34,9 +33,8 @@ public class UploadServicesImpl implements UploadServices {
 	 * 
 	 * @param token The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the upload services
-	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static UploadServices implementation(final String token) throws UnauthorizedException {
+	public static UploadServices implementation(final String token) {
 		UploadServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new UploadServicesImpl(new RestAdapter.Builder()
@@ -52,9 +50,6 @@ public class UploadServicesImpl implements UploadServices {
 				.setErrorHandler(new RetrofitErrorHandler())
 				.build()
 				.create(UploadServicesRetrofit.class));
-
-			// Check that the token works (i.e. it is valid)
-			// TODO restService.listAuthenticatedAthleteClubs();
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);

@@ -11,6 +11,7 @@ import retrofit.http.Query;
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Club;
+import com.danshannon.strava.api.model.ClubMembershipResponse;
 import com.danshannon.strava.api.service.exception.NotFoundException;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
@@ -24,7 +25,7 @@ public interface ClubServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.ClubServices#getClub(java.lang.Integer)
 	 */
 	@GET("/clubs/{id}")
-	public Club getClub(@Path("id") Integer id) throws NotFoundException;
+	public Club getClub(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.ClubServices#listAuthenticatedAthleteClubs()
@@ -48,11 +49,11 @@ public interface ClubServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.ClubServices#joinClub(java.lang.Integer)
 	 */
 	@POST("/clubs/{id}/join")
-	public void join(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;		
+	public ClubMembershipResponse join(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;		
 	
 	/**
 	 * @see com.danshannon.strava.api.service.ClubServices#leaveClub(java.lang.Integer)
 	 */
 	@POST("/clubs/{id}/leave")
-	public void leave(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
+	public ClubMembershipResponse leave(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
 }

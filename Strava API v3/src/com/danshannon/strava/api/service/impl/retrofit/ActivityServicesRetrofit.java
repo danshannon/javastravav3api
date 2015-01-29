@@ -28,7 +28,7 @@ public interface ActivityServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
 	@GET("/activities/{id}")
-	public Activity getActivity(@Path("id") Integer id, @Query("include_all_efforts") Boolean includeAllEfforts) throws NotFoundException;
+	public Activity getActivity(@Path("id") Integer id, @Query("include_all_efforts") Boolean includeAllEfforts) throws NotFoundException, UnauthorizedException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.ActivityServices#createManualActivity(com.danshannon.strava.api.model.Activity)

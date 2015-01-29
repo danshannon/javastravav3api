@@ -40,9 +40,8 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * 
 	 * @param token The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the athlete services
-	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static AthleteServices implementation(final String token) throws UnauthorizedException {
+	public static AthleteServices implementation(final String token) {
 		AthleteServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new AthleteServicesImpl(new RestAdapter.Builder()
@@ -58,9 +57,6 @@ public class AthleteServicesImpl implements AthleteServices {
 				.setErrorHandler(new RetrofitErrorHandler())
 				.build()
 				.create(AthleteServicesRetrofit.class));
-
-			// Check that the token works (i.e. it is valid)
-			restService.getAuthenticatedAthlete();
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
@@ -86,7 +82,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#getAthlete(java.lang.Integer)
 	 */
 	@Override
-	public Athlete getAthlete(Integer id) {
+	public Athlete getAthlete(Integer id) throws UnauthorizedException {
 		try {
 			return restService.getAthlete(id);
 		} catch (NotFoundException e) {
@@ -106,19 +102,23 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<SegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction) throws NotFoundException {
+	public List<SegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction) {
 		Strava.validatePagingArguments(pagingInstruction);
 
 		List<SegmentEffort> koms = new ArrayList<SegmentEffort>();
-		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-			List<SegmentEffort> komPage = Arrays.asList(restService.listAthleteKOMs(id, paging.getPage(), paging.getPageSize()));
-			komPage = Strava.ignoreLastN(komPage, paging.getIgnoreLastN());
-			komPage = Strava.ignoreFirstN(komPage, paging.getIgnoreFirstN());
-			koms.addAll(komPage);
-		}
-		if (pagingInstruction != null) {
-			koms = Strava.ignoreFirstN(koms,pagingInstruction.getIgnoreFirstN());
-			koms = Strava.ignoreLastN(koms, pagingInstruction.getIgnoreLastN());
+		try {
+			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+				List<SegmentEffort> komPage = Arrays.asList(restService.listAthleteKOMs(id, paging.getPage(), paging.getPageSize()));
+				komPage = Strava.ignoreLastN(komPage, paging.getIgnoreLastN());
+				komPage = Strava.ignoreFirstN(komPage, paging.getIgnoreFirstN());
+				koms.addAll(komPage);
+			}
+			if (pagingInstruction != null) {
+				koms = Strava.ignoreFirstN(koms,pagingInstruction.getIgnoreFirstN());
+				koms = Strava.ignoreLastN(koms, pagingInstruction.getIgnoreLastN());
+			}
+		} catch (NotFoundException e) {
+			return null;
 		}
 		return koms;
 
@@ -149,19 +149,24 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAthleteFriends(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<Athlete> listAthleteFriends(Integer id, Paging pagingInstruction) throws NotFoundException {
+	public List<Athlete> listAthleteFriends(Integer id, Paging pagingInstruction) {
 		Strava.validatePagingArguments(pagingInstruction);
 		
 		List<Athlete> friends = new ArrayList<Athlete>();
-		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-			List<Athlete> friendPage = Arrays.asList(restService.listAthleteFriends(id, paging.getPage(), paging.getPageSize()));
-			friendPage = Strava.ignoreLastN(friendPage, paging.getIgnoreLastN());
-			friendPage = Strava.ignoreFirstN(friendPage, paging.getIgnoreFirstN());
-			friends.addAll(friendPage);
-		}
-		if (pagingInstruction != null) {
-			friends = Strava.ignoreFirstN(friends,pagingInstruction.getIgnoreFirstN());
-			friends = Strava.ignoreLastN(friends, pagingInstruction.getIgnoreLastN());
+		try {
+			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+				List<Athlete> friendPage = Arrays.asList(restService.listAthleteFriends(id, paging.getPage(), paging.getPageSize()));
+				friendPage = Strava.ignoreLastN(friendPage, paging.getIgnoreLastN());
+				friendPage = Strava.ignoreFirstN(friendPage, paging.getIgnoreFirstN());
+				friends.addAll(friendPage);
+			}
+			if (pagingInstruction != null) {
+				friends = Strava.ignoreFirstN(friends,pagingInstruction.getIgnoreFirstN());
+				friends = Strava.ignoreLastN(friends, pagingInstruction.getIgnoreLastN());
+			}
+		} catch (NotFoundException e) {
+			// Athlete with the given id does not exist
+			return null;
 		}
 		return friends;
 
@@ -171,19 +176,24 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<Athlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction) throws NotFoundException {
+	public List<Athlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction) {
 		Strava.validatePagingArguments(pagingInstruction);
 
 		List<Athlete> friends = new ArrayList<Athlete>();
-		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-			List<Athlete> friendPage = Arrays.asList(restService.listAthletesBothFollowing(id, paging.getPage(), paging.getPageSize()));
-			friendPage = Strava.ignoreLastN(friendPage, paging.getIgnoreLastN());
-			friendPage = Strava.ignoreFirstN(friendPage, paging.getIgnoreFirstN());
-			friends.addAll(friendPage);
-		}
-		if (pagingInstruction != null) {
-			friends = Strava.ignoreFirstN(friends,pagingInstruction.getIgnoreFirstN());
-			friends = Strava.ignoreLastN(friends, pagingInstruction.getIgnoreLastN());
+		try {
+			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+				List<Athlete> friendPage = Arrays.asList(restService.listAthletesBothFollowing(id, paging.getPage(), paging.getPageSize()));
+				friendPage = Strava.ignoreLastN(friendPage, paging.getIgnoreLastN());
+				friendPage = Strava.ignoreFirstN(friendPage, paging.getIgnoreFirstN());
+				friends.addAll(friendPage);
+			}
+			if (pagingInstruction != null) {
+				friends = Strava.ignoreFirstN(friends,pagingInstruction.getIgnoreFirstN());
+				friends = Strava.ignoreLastN(friends, pagingInstruction.getIgnoreLastN());
+			}
+		} catch (NotFoundException e) {
+			// Athlete with the given id doesn't exist
+			return null;
 		}
 		return friends;
 
@@ -193,7 +203,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAthleteKOMs(java.lang.Integer)
 	 */
 	@Override
-	public List<SegmentEffort> listAthleteKOMs(Integer id) throws NotFoundException {
+	public List<SegmentEffort> listAthleteKOMs(Integer id) {
 		return listAthleteKOMs(id, null);
 	}
 
@@ -209,7 +219,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAthleteFriends(java.lang.Integer)
 	 */
 	@Override
-	public List<Athlete> listAthleteFriends(Integer id) throws NotFoundException {
+	public List<Athlete> listAthleteFriends(Integer id) {
 		return listAthleteFriends(id, null);
 	}
 
@@ -217,7 +227,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see com.danshannon.strava.api.service.AthleteServices#listAthletesBothFollowing(java.lang.Integer)
 	 */
 	@Override
-	public List<Athlete> listAthletesBothFollowing(Integer id) throws NotFoundException {
+	public List<Athlete> listAthletesBothFollowing(Integer id) {
 		return listAthletesBothFollowing(id, null);
 	}
 

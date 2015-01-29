@@ -38,10 +38,9 @@ public class AthleteServicesImplTest {
 	
 	@Test
 	public void testImplementation_invalidToken() {
-		@SuppressWarnings("unused")
-		AthleteServices services;
+		AthleteServices services = AthleteServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		try {
-			services = AthleteServicesImpl.implementation(TestUtils.INVALID_TOKEN);
+			services.getAuthenticatedAthlete();
 		} catch (UnauthorizedException e) {
 			// Expected behaviour
 			return;
@@ -50,10 +49,10 @@ public class AthleteServicesImplTest {
 	}
 	
 	@Test
-	public void testImplementation_revokedToken() {
-		try {
-			@SuppressWarnings("unused")
+	public void testImplementation_revokedToken() throws UnauthorizedException {
 			AthleteServices services = AthleteServicesImpl.implementation(TestUtils.getRevokedToken());
+		try {
+			services.getAuthenticatedAthlete();
 		} catch (UnauthorizedException e) {
 			// Expected behaviour
 			return;
@@ -144,7 +143,7 @@ public class AthleteServicesImplTest {
 	// Test cases
 	// 1. Valid athlete with some KOM's
 	@Test
-	public void testListAthleteKOMs_withKOM() throws UnauthorizedException, NotFoundException {
+	public void testListAthleteKOMs_withKOM() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<SegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID);
 		assertNotNull(koms);
@@ -153,7 +152,7 @@ public class AthleteServicesImplTest {
 
 	// 2. Valid athlete with no KOM's
 	@Test
-	public void testListAthleteKOMs_withoutKOM() throws NotFoundException, UnauthorizedException {
+	public void testListAthleteKOMs_withoutKOM() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<SegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_WITHOUT_KOMS);
 		assertNotNull(koms);
@@ -165,17 +164,14 @@ public class AthleteServicesImplTest {
 	public void testListAthleteKOMs_invalidAthlete() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<SegmentEffort> koms = null;
-		try {
-			koms = service.listAthleteKOMs(TestUtils.ATHLETE_INVALID_ID);
-		} catch (NotFoundException e) {
-			// Expected behaviour
-		}
+		koms = service.listAthleteKOMs(TestUtils.ATHLETE_INVALID_ID);
+
 		assertNull(koms);
 	}
 
 	// 3. Paging - size only 
 	@Test
-	public void testListAthleteKOMs_pageSize() throws NotFoundException, UnauthorizedException {
+	public void testListAthleteKOMs_pageSize() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<SegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,1));
 		assertEquals(1,koms.size());
@@ -183,7 +179,7 @@ public class AthleteServicesImplTest {
 
 	// 4. Paging - size and page
 	@Test
-	public void testListAthleteKOMs_pageSizeAndNumber() throws NotFoundException, UnauthorizedException {
+	public void testListAthleteKOMs_pageSizeAndNumber() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<SegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(2,1));
 		Long effortId = koms.get(0).getId();
@@ -195,7 +191,7 @@ public class AthleteServicesImplTest {
 
 	// 5. Paging - out of range high
 	@Test
-	public void testListAthleteKOMs_pagingOutOfRangeHigh() throws UnauthorizedException, NotFoundException {
+	public void testListAthleteKOMs_pagingOutOfRangeHigh() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<SegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1000,200));
 		assertEquals(0,koms.size());
@@ -203,7 +199,7 @@ public class AthleteServicesImplTest {
 
 	// 6. Paging - out of range low
 	@Test
-	public void testListAthleteKOMs_pagingOutOfRangeLow() throws NotFoundException, UnauthorizedException {
+	public void testListAthleteKOMs_pagingOutOfRangeLow() throws UnauthorizedException {
 		AthleteServices service = getService();
 		try {
 			@SuppressWarnings("unused")
@@ -266,7 +262,7 @@ public class AthleteServicesImplTest {
 	}
 
 	@Test
-	public void testListAthleteFriends_validAthlete() throws UnauthorizedException, NotFoundException {
+	public void testListAthleteFriends_validAthlete() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<Athlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID);
 		assertNotNull(friends);
@@ -278,20 +274,15 @@ public class AthleteServicesImplTest {
 	@Test
 	public void testListAthleteFriends_invalidAthlete() throws UnauthorizedException {
 		AthleteServices service = getService();
-		@SuppressWarnings("unused")
 		List<Athlete> friends;
-		try {
-			friends = service.listAthleteFriends(TestUtils.ATHLETE_INVALID_ID);
-		} catch (NotFoundException e) {
-			// Expected behaviour
-			return;
-		}
-		fail("Listed friends despite paging instructions being illegal");
+		friends = service.listAthleteFriends(TestUtils.ATHLETE_INVALID_ID);
+		
+		assertNull("Listed friends despite athlete id being invalid",friends);
 
 	}
 
 	// 4. Paging - size only (including test for max page size)
-	public void testListAthleteFriends_pageSize() throws UnauthorizedException, NotFoundException {
+	public void testListAthleteFriends_pageSize() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<Athlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID, new Paging(1,1));
 		assertNotNull(friends);
@@ -300,7 +291,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 5. Paging - size and page
-	public void testListAthleteFriends_pageNumberAndSize() throws UnauthorizedException, NotFoundException {
+	public void testListAthleteFriends_pageNumberAndSize() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<Athlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID, new Paging(2,1));
 		assertNotNull(friends);
@@ -314,7 +305,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 6. Paging - out of range high
-	public void testListAthleteFriends_pagingOutOfRangeHigh() throws UnauthorizedException, NotFoundException {
+	public void testListAthleteFriends_pagingOutOfRangeHigh() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<Athlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID, new Paging(1000,200));
 		assertNotNull(friends);
@@ -322,7 +313,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 7. Paging - out of range low
-	public void testListAthleteFriends_pagingOutOfRangeLow() throws UnauthorizedException, NotFoundException {
+	public void testListAthleteFriends_pagingOutOfRangeLow() throws UnauthorizedException {
 		AthleteServices service = getService();
 		try {
 			@SuppressWarnings("unused")
@@ -337,7 +328,7 @@ public class AthleteServicesImplTest {
 	// Test cases
 	// 1. Valid athlete - at least 1 common friend
 	@Test
-	public void testListAthletesBothFollowing_validAthlete() throws NotFoundException, UnauthorizedException {
+	public void testListAthletesBothFollowing_validAthlete() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<Athlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID);
 		assertNotNull(friends);
@@ -348,19 +339,13 @@ public class AthleteServicesImplTest {
 	@Test
 	public void testListAthletesBothFollowing_invalidAthlete() throws UnauthorizedException {
 		AthleteServices service = getService();
-		try {
-			@SuppressWarnings("unused")
-			List<Athlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_INVALID_ID);
-		} catch (NotFoundException e) {
-			// Expected behaviour
-			return;
-		}
-		fail("Returned common friends for an invalid athlete");
+		List<Athlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_INVALID_ID);
+		assertNull("Returned list of athletes being followed by invalid athlete",friends);
 	}
 
 	// 4. Paging - size only (including test for max page size)
 	@Test
-	public void testListAthletesBothFollowing_pageSize() throws UnauthorizedException, NotFoundException {
+	public void testListAthletesBothFollowing_pageSize() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<Athlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID, new Paging(1,1));
 		assertNotNull(friends);
@@ -370,7 +355,7 @@ public class AthleteServicesImplTest {
 
 	// 5. Paging - size and page
 	@Test
-	public void testListAthletesBothFollowing_pageSizeAndNumber() throws NotFoundException, UnauthorizedException {
+	public void testListAthletesBothFollowing_pageSizeAndNumber() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<Athlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID, new Paging(2,1));
 		assertNotNull(friends);
@@ -385,7 +370,7 @@ public class AthleteServicesImplTest {
 
 	// 6. Paging - out of range high
 	@Test
-	public void testListAthletesBothFollowing_pagingOutOfRangeHigh() throws UnauthorizedException, NotFoundException {
+	public void testListAthletesBothFollowing_pagingOutOfRangeHigh() throws UnauthorizedException {
 		AthleteServices service = getService();
 		List<Athlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID, new Paging(1000,200));
 		assertNotNull(friends);
@@ -394,7 +379,7 @@ public class AthleteServicesImplTest {
 
 	// 7. Paging - out of range low
 	@Test
-	public void testListAthletesBothFollowing_pagingOutOfRangeLow() throws UnauthorizedException, NotFoundException {
+	public void testListAthletesBothFollowing_pagingOutOfRangeLow() throws UnauthorizedException {
 		AthleteServices service = getService();
 		@SuppressWarnings("unused")
 		List<Athlete> friends;

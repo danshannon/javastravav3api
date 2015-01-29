@@ -38,10 +38,31 @@ public interface ActivityServices {
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
 	 * @param id The id of the {@link Activity activity} to be returned
-	 * @param includeAllEfforts (Optional) Used to include all segment efforts in the result (if omitted or <code>false</code> then only "important" efforts are returned).
 	 * @return Returns a detailed representation if the {@link Activity activity} is owned by the requesting athlete. Returns a summary representation for all other requests.
 	 */
-	public Activity getActivity(Integer id, Boolean includeAllEfforts);
+	public Activity getActivity(Integer id) throws UnauthorizedException;
+	
+	/**
+	 * <p>Activity details, including segment efforts, splits and best efforts, are only available to the owner of the activity.</p>
+	 * 
+	 * <p>By default, only "important" efforts are included. "Importance" is based on a number of factors and its value may change over time. Factors considered include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated effort is "important" but not for the other.</p>
+	 * 
+	 * <p>Note that effort ids may exceed the max value for 32-bit integers. A long integer type should be used.</p>
+	 * 
+	 * <p>Each segment effort will have a hidden attribute indicating if it is "important" or not.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the activity does not exist
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/activities/:id</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
+	 * 
+	 * @param id The id of the {@link Activity activity} to be returned
+	 * @param includeAllEfforts (Optional) Used to include all segment efforts in the result (if omitted or <code>false</code> then only "important" efforts are returned).
+	 * @return Returns a detailed representation if the {@link Activity activity} is owned by the requesting athlete. Returns a summary representation for all other requests.
+	 * @throws UnauthorizedException 
+	 */
+	public Activity getActivity(Integer id, Boolean includeAllEfforts) throws UnauthorizedException;
 	
 	/**
 	 * <p>This API endpoint is for creating manually entered {@link Activity activities}. To upload a FIT, TCX or GPX file see the Upload Documentation.</p>
@@ -231,9 +252,8 @@ public interface ActivityServices {
 	 * @param id The id of the {@link Activity} for which {@link Comment comments} should be returned
 	 * @param markdown (Optional) Include markdown in comments (default is <code>false</code> - i.e. filter out
 	 * @return List of comments
-	 * @throws NotFoundException If the activity does not exist
 	 */
-	public List<Comment> listActivityComments(Integer id, Boolean markdown) throws NotFoundException;
+	public List<Comment> listActivityComments(Integer id, Boolean markdown);
 	
 	/**
 	 * <p>Comments on an activity can be viewed by any user. However, only internal applications are allowed to create or delete them.</p>
@@ -243,6 +263,8 @@ public interface ActivityServices {
 	 * <p>The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.</p>
 	 * 
 	 * <p>Pagination is supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the {@link Activity} does not exist</p>
 	 * 
 	 * <p>Returns an empty array if the {@link Activity} does not contain any {@link Comment comments}</p>
 	 * 
@@ -254,9 +276,8 @@ public interface ActivityServices {
 	 * @param markdown (Optional) Include markdown in comments (default is <code>false</code> - i.e. filter out
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return List of comments
-	 * @throws NotFoundException If the activity does not exist
 	 */
-	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstructions) throws NotFoundException;
+	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstructions);
 	
 	/**
 	 * <p>A kudos is Strava's version of a 'like' or '+1'. The number of kudos on an activity is returned with the activity summary.</p>
@@ -264,6 +285,8 @@ public interface ActivityServices {
 	 * <p>Kudos posting can be enabled on a per application basis, email developers -at- strava.com for more information.</p>
 	 * 
 	 * <p>The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the athletes who�ve left kudos and can only be accessed by the owner of the activity.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the {@link Activity} does not exist</p>
 	 * 
 	 * <p>Pagination is not supported.</p>
 	 * 
@@ -271,9 +294,8 @@ public interface ActivityServices {
 	 * 
 	 * @param id The id of the {@link Activity} for which kudoers are to be listed
 	 * @return Returns an array of {@link Athlete athlete} summary objects.
-	 * @throws NotFoundException If the activity doesn't exist
 	 */
-	public List<Athlete> listActivityKudoers(Integer id) throws NotFoundException;
+	public List<Athlete> listActivityKudoers(Integer id) ;
 	
 	/**
 	 * <p>A kudos is Strava's version of a 'like' or '+1'. The number of kudos on an activity is returned with the activity summary.</p>
@@ -281,6 +303,8 @@ public interface ActivityServices {
 	 * <p>Kudos posting can be enabled on a per application basis, email developers -at- strava.com for more information.</p>
 	 * 
 	 * <p>The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the athletes who�ve left kudos and can only be accessed by the owner of the activity.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the {@link Activity} does not exist</p>
 	 * 
 	 * <p>Pagination is supported.</p>
 	 * 
@@ -289,9 +313,8 @@ public interface ActivityServices {
 	 * @param id The id of the {@link Activity} for which kudoers are to be listed
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Athlete athlete} summary objects.
-	 * @throws NotFoundException If the activity doesn't exist
 	 */
-	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction) throws NotFoundException;
+	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction);
 	
 	/**
 	 * <p>Photos are external objects associated with an activity. Currently, the only external photo source is Instagram.</p>
@@ -299,6 +322,8 @@ public interface ActivityServices {
 	 * <p>Note that Instagram does not provide taken_at information.</p>
 	 * 
 	 * <p>The number of photos is included in the activity summary and detail responses. Use this endpoint to retrieve a list of photos associated with this activity. This endpoint can only be accessed by the owner of the activity.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the {@link Activity} does not exist</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/activities/:id/photos</p>
 	 * 
@@ -312,23 +337,25 @@ public interface ActivityServices {
 	/**
 	 * <p>Returns the activities that were matched as “with this group”. The number equals activity.athlete_count-1.</p>
 	 * 
+	 * <p>Returns <code>null</code> if the {@link Activity} does not exist</p>
+	 * 
 	 * <p>Pagination is not supported.</p>
 	 * 
 	 * @param id Activity id for which related activities should be listed
 	 * @return List of related activities (not including the main activity)
-	 * @throws NotFoundException If base activity doesn't exist.
 	 */
-	public List<Activity> listRelatedActivities(Integer id) throws NotFoundException;
+	public List<Activity> listRelatedActivities(Integer id);
 	
 	/**
 	 * <p>Returns the activities that were matched as “with this group”. The number equals activity.athlete_count-1.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the {@link Activity} does not exist</p>
 	 * 
 	 * <p>Pagination is supported.</p>
 	 * 
 	 * @param id Activity id for which related activities should be listed
 	 * @param pagingInstruction Paging instructions
 	 * @return List of related activities (not including the main activity)
-	 * @throws NotFoundException If base activity doesn't exist.
 	 */
-	public List<Activity> listRelatedActivities(Integer id, Paging pagingInstruction) throws NotFoundException;
+	public List<Activity> listRelatedActivities(Integer id, Paging pagingInstruction);
 }

@@ -58,13 +58,14 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_invalidToken() {
-		ActivityServices service = null;
+		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		try {
-			service = ActivityServicesImpl.implementation(TestUtils.INVALID_TOKEN);
+			service.getActivity(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour
+			return;
 		}
-		assertNull("Got a service for an invalid token!",service);
+		fail("Got a service for an invalid token!");
 	}
 
 	/**
@@ -83,8 +84,16 @@ public class ActivityServicesImplTest {
 		// 3. Attempt to get an implementation using the now invalidated token
 		ActivityServices activityServices = ActivityServicesImpl.implementation(token);
 		
-		// 4. Assert it's null
-		assertNull("Got an implementation of ActivityServices despite having revoked the token's access", activityServices);
+		// 4. Check that it can't be used
+		try {
+			activityServices.getActivity(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
+		} catch (UnauthorizedException e) {
+			// Expected behaviour
+			return;
+		}
+		
+		// 5. If we get here, then the service is working despite the token being revoked
+		fail("Got a usable service implementation using a revoked token");
 	}
 	
 	/**
@@ -136,7 +145,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testGetActivity_knownActivityBelongsToAuthenticatedUser() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, Boolean.FALSE);
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
 		
 		assertNotNull("Returned null Activity for known activity with id " + TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER,activity);
 		assertEquals("Returned activity is not a detailed representation as expected - " + activity.getResourceState(),ResourceState.DETAILED,activity.getResourceState());
@@ -150,7 +159,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testGetActivity_knownActivityBelongsToUnauthenticatedUser() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_UNAUTHENTICATED_USER, Boolean.FALSE);
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_UNAUTHENTICATED_USER);
 		
 		assertNotNull("Returned null Activity for known activity with id " + TestUtils.ACTIVITY_FOR_UNAUTHENTICATED_USER,activity);
 		assertEquals("Returned activity is not a summary representation as expected - " + activity.getResourceState(), ResourceState.SUMMARY, activity.getResourceState());
@@ -163,7 +172,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testGetActivity_knownActivityWithoutEfforts() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		Activity activity = service.getActivity(TestUtils.ACTIVITY_WITH_EFFORTS, Boolean.TRUE);
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_WITH_EFFORTS, Boolean.FALSE);
 
 		assertNotNull("Returned null Activity for known activity with id " + TestUtils.ACTIVITY_WITH_EFFORTS,activity);
 		assertNotNull("Returned null segment efforts for known activity, when they were expected", activity.getSegmentEfforts());
@@ -179,7 +188,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testGetActivity_unknownActivity() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		Activity activity = service.getActivity(TestUtils.ACTIVITY_INVALID, Boolean.FALSE);
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_INVALID);
 		
 		assertNull("Got an activity for an invalid activity id " + TestUtils.ACTIVITY_INVALID,activity);
 	}
@@ -416,7 +425,7 @@ public class ActivityServicesImplTest {
 		assertNotNull(activity);
 		
 		// Load it from Strava
-		Activity stravaActivity = service.getActivity(activity.getId(), Boolean.FALSE);
+		Activity stravaActivity = service.getActivity(activity.getId());
 		assertNotNull(stravaActivity);
 		
 		// And delete it
@@ -528,7 +537,7 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		Activity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
 		Activity stravaResponse = service.createManualActivity(activity);
-		activity = service.getActivity(stravaResponse.getId(), Boolean.FALSE);
+		activity = service.getActivity(stravaResponse.getId());
 		assertNotNull(activity);
 		service.deleteActivity(activity.getId());
 		
@@ -548,7 +557,7 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		Activity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
 		Activity stravaResponse = service.createManualActivity(activity);
-		activity = service.getActivity(stravaResponse.getId(), Boolean.FALSE);
+		activity = service.getActivity(stravaResponse.getId());
 		assertNotNull(activity);
 		
 		// Now get a token without write access and attempt to delete
@@ -724,12 +733,7 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		List<Comment> comments;
-		try {
-			comments = service.listActivityComments(TestUtils.ACTIVITY_INVALID, Boolean.FALSE);
-		} catch (NotFoundException e) {
-			// Expected behaviour
-			return;
-		}
+		comments = service.listActivityComments(TestUtils.ACTIVITY_INVALID, Boolean.FALSE);
 		
 		assertNull("Expected null response when retrieving comments for an invalid activity",comments);
 	}
@@ -776,12 +780,7 @@ public class ActivityServicesImplTest {
 	public void testListActivityKudoers_invalidActivity() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Athlete> kudoers;
-		try {
-			kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_INVALID);
-		} catch (NotFoundException e) {
-			// Expected behaviour
-			return;
-		}
+		kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_INVALID);
 
 		assertNull("Returned a non-null array of kudoers for an invalid activity",kudoers);
 	}
@@ -792,10 +791,9 @@ public class ActivityServicesImplTest {
 	 * <p>To test this we get 2 kudos from the service (using the default page with a page size of 2), then ask for the first page only with size 1 and check that it's the same as the first one in the previous list</p> 
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
-	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityKudoers_pageNumberAndSize() throws UnauthorizedException, NotFoundException {
+	public void testListActivityKudoers_pageNumberAndSize() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 
 		List<Athlete> defaultKudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, new Paging(1, 2));
@@ -817,11 +815,10 @@ public class ActivityServicesImplTest {
 	 * <p>Test page size parameter handling behaves as expected when listing {@link Athlete athletes} giving kudos for an existing {@link Activity}</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
-	 * @throws NotFoundException 
 	 * 
 	 */
 	@Test
-	public void testListActivityKudoers_pageSize() throws UnauthorizedException, NotFoundException {
+	public void testListActivityKudoers_pageSize() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, new Paging(1, 1));
 		
@@ -835,10 +832,9 @@ public class ActivityServicesImplTest {
 	 * <p>Should return an empty array</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
-	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityKudoers_pagingOutOfRangeHigh() throws UnauthorizedException, NotFoundException {
+	public void testListActivityKudoers_pagingOutOfRangeHigh() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		List<Athlete> kudoers = service.listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS, new Paging(1000, 200));
 	
@@ -852,10 +848,9 @@ public class ActivityServicesImplTest {
 	 * <p>Should throw an {@link IllegalArgumentException} (which will be trapped and ignored by this test)</p>
 	 * 
 	 * @throws UnauthorizedException Thrown when security token is invalid
-	 * @throws NotFoundException 
 	 */
 	@Test
-	public void testListActivityKudoers_pagingOutOfRangeLow() throws UnauthorizedException, NotFoundException {
+	public void testListActivityKudoers_pagingOutOfRangeLow() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		try {
@@ -985,11 +980,6 @@ public class ActivityServicesImplTest {
 		}
 	}
 	
-	@Test
-	public void testListFriendsActivities_hasNoFriends() {
-		// TODO Not yet implemented
-	}
-	
 	/**
 	 * <p>Test paging (page number and page size).</p>
 	 * 
@@ -1110,7 +1100,7 @@ public class ActivityServicesImplTest {
 		activity.setTrainer(Boolean.TRUE);
 		
 		// Change the gear id
-		activity.setGearId("4691");
+		activity.setGearId(TestUtils.GEAR_VALID_ID);
 		
 		// Change the description
 		String description = text.paragraph();
@@ -1120,7 +1110,7 @@ public class ActivityServicesImplTest {
 		stravaResponse = service.updateActivity(activity);
 		
 		// Get the activity again
-		stravaResponse = service.getActivity(stravaResponse.getId(), Boolean.FALSE);
+		stravaResponse = service.getActivity(stravaResponse.getId());
 		
 		// Check that the name is now set
 		assertEquals("Name not updated correctly",name,stravaResponse.getName());
@@ -1140,7 +1130,7 @@ public class ActivityServicesImplTest {
 		
 		// Check that the gear id is set right
 		// TODO There seems to be a Strava bug here
-		// assertEquals("Gear not set correctly","4691",stravaResponse.getGearId());
+		// assertEquals("Gear not set correctly",TestUtils.GEAR_VALID_ID,stravaResponse.getGearId());
 		
 		// Check the description has changed
 		assertEquals("Description not updated correctly",description,stravaResponse.getDescription());
@@ -1189,7 +1179,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testUpdateActivity_unauthenticatedAthletesActivity() throws NotFoundException, UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_UNAUTHENTICATED_USER, Boolean.FALSE);
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_UNAUTHENTICATED_USER);
 		
 		try {
 			service.updateActivity(activity);
@@ -1211,7 +1201,7 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 		Fairy fairy = Fairy.create();
 		TextProducer text = fairy.textProducer();
-		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, Boolean.FALSE);
+		Activity activity = service.getActivity(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
 		activity.setDescription(text.paragraph(1));
 		
 		try {
@@ -1221,6 +1211,10 @@ public class ActivityServicesImplTest {
 			return;
 		}
 		fail("Successfully updated an activity despite not having write access");
+	}
+	
+	private ActivityServices getActivityService() throws UnauthorizedException {
+		return ActivityServicesImpl.implementation(TestUtils.getValidToken());
 	}
 
 }

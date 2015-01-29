@@ -20,6 +20,7 @@ import com.danshannon.strava.api.model.reference.LeaderboardDateRange;
 import com.danshannon.strava.api.model.reference.SegmentExplorerActivityType;
 import com.danshannon.strava.api.model.reference.WeightClass;
 import com.danshannon.strava.api.service.exception.NotFoundException;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
  * @author Dan Shannon
@@ -31,7 +32,7 @@ public interface SegmentServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.SegmentServices#getSegment(java.lang.Integer)
 	 */
 	@GET("/segments/{id}")
-	public Segment getSegment(@Path("id") Integer id) throws NotFoundException;
+	public Segment getSegment(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.SegmentServices#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)

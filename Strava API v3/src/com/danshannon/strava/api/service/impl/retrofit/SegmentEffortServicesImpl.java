@@ -33,9 +33,8 @@ public class SegmentEffortServicesImpl implements SegmentEffortServices {
 	 * 
 	 * @param token The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the segment effort services
-	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static SegmentEffortServices implementation(final String token) throws UnauthorizedException {
+	public static SegmentEffortServices implementation(final String token) {
 		SegmentEffortServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new SegmentEffortServicesImpl(new RestAdapter.Builder()
@@ -52,9 +51,6 @@ public class SegmentEffortServicesImpl implements SegmentEffortServices {
 				.build()
 				.create(SegmentEffortServicesRetrofit.class));
 
-			// Check that the token works (i.e. it is valid)
-			// TODO restService.listAuthenticatedAthleteClubs();
-
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
 			
@@ -70,7 +66,7 @@ public class SegmentEffortServicesImpl implements SegmentEffortServices {
 	 * @see com.danshannon.strava.api.service.SegmentEffortServices#getSegmentEffort(java.lang.Integer)
 	 */
 	@Override
-	public SegmentEffort getSegmentEffort(Integer id) {
+	public SegmentEffort getSegmentEffort(Long id) throws UnauthorizedException {
 		try {
 			return restService.getSegmentEffort(id);
 		} catch (NotFoundException e) {

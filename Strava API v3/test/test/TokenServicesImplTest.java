@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import org.junit.BeforeClass;
@@ -42,14 +41,16 @@ public class TokenServicesImplTest {
 		
 		// 2. Attempt to use the token to get a service implementation
 		AthleteServices athleteServices = null;
+		athleteServices = AthleteServicesImpl.implementation(token);
 		try {
-			athleteServices = AthleteServicesImpl.implementation(token);
+			athleteServices.getAuthenticatedAthlete();
 		} catch (UnauthorizedException e) {
 			// This is expected behaviour
+			return;
 		}
 		
 		// 3. We should NOT get a service implementation
-		assertNull("Got a service implementation despite successfully deauthorising the token",athleteServices);
+		fail("Got a usable service implementation despite successfully deauthorising the token");
 	}
 	
 	/**

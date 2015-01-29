@@ -38,8 +38,9 @@ public interface AthleteServices {
 	 * 
 	 * @param id The id of the {@link Athlete athlete} to be returned
 	 * @return Returns a summary representation of the {@link Athlete athlete} even if the indicated athlete matches the authenticated athlete.
+	 * @throws UnauthorizedException 
 	 */
-	public Athlete getAthlete(Integer id);
+	public Athlete getAthlete(Integer id) throws UnauthorizedException;
 	
 	/**
 	 * <p>Updates the personal details of the currently authenticated {@link Athlete athlete}.</p>
@@ -73,9 +74,8 @@ public interface AthleteServices {
 	 * 
 	 * @param id The id of the {@link Athlete athlete} whose KOM's are to be returned
 	 * @return Returns an array of {@link SegmentEffort segment effort} summary representations
-	 * @throws NotFoundException 
 	 */
-	public List<SegmentEffort> listAthleteKOMs(Integer id) throws NotFoundException;
+	public List<SegmentEffort> listAthleteKOMs(Integer id);
 	
 	/**
 	 * <p>Returns an array of {@link SegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given athlete.</p>
@@ -93,9 +93,8 @@ public interface AthleteServices {
 	 * @param id The id of the {@link Athlete athlete} whose KOM's are to be returned
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link SegmentEffort segment effort} summary representations
-	 * @throws NotFoundException 
 	 */
-	public List<SegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction) throws NotFoundException;
+	public List<SegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction);
 	
 	/**
 	 * <p>Friends are users the current {@link Athlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
@@ -144,9 +143,8 @@ public interface AthleteServices {
 	 * @param id The id of the {@link Athlete athlete} whose friends are to be listed
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return List of {@link Athlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
-	 * @throws NotFoundException 
 	 */
-	public List<Athlete> listAthleteFriends(Integer id, Paging pagingInstruction) throws NotFoundException;
+	public List<Athlete> listAthleteFriends(Integer id, Paging pagingInstruction);
 	
 	/**
 	 * <p>Friends are users an {@link Athlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
@@ -163,9 +161,8 @@ public interface AthleteServices {
 	 * 
 	 * @param id The id of the {@link Athlete athlete} whose friends are to be listed
 	 * @return List of {@link Athlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
-	 * @throws NotFoundException If the athlete with given id does not exist
 	 */
-	public List<Athlete> listAthleteFriends(Integer id) throws NotFoundException;
+	public List<Athlete> listAthleteFriends(Integer id);
 	
 	/**
 	 * <p>Retrieve the {@link Athlete athletes} who both the authenticated athlete and the indicated athlete are following.</p>
@@ -180,9 +177,8 @@ public interface AthleteServices {
 	 * 
 	 * @param id The id of the {@link Athlete athlete} for whom the list of mutual friends is to be generated
 	 * @return Returns an array of {@link Athlete athlete} summary representations.
-	 * @throws NotFoundException 
 	 */
-	public List<Athlete> listAthletesBothFollowing(Integer id) throws NotFoundException;
+	public List<Athlete> listAthletesBothFollowing(Integer id);
 
 	/**
 	 * <p>Retrieve the {@link Athlete athletes} who both the authenticated athlete and the indicated athlete are following.</p>
@@ -198,7 +194,6 @@ public interface AthleteServices {
 	 * @param id The id of the {@link Athlete athlete} for whom the list of mutual friends is to be generated
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link Athlete athlete} summary representations.
-	 * @throws NotFoundException 
 	 */
-	public List<Athlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction) throws NotFoundException;
+	public List<Athlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction);
 }

@@ -14,7 +14,6 @@ import com.danshannon.strava.api.model.reference.StreamSeriesDownsamplingType;
 import com.danshannon.strava.api.model.reference.StreamType;
 import com.danshannon.strava.api.service.Strava;
 import com.danshannon.strava.api.service.StreamServices;
-import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
 
 /**
@@ -37,9 +36,8 @@ public class StreamServicesImpl implements StreamServices {
 	 * 
 	 * @param token The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the stream services
-	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static StreamServices implementation(final String token) throws UnauthorizedException {
+	public static StreamServices implementation(final String token) {
 		StreamServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new StreamServicesImpl(new RestAdapter.Builder()

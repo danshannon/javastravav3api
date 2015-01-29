@@ -1,8 +1,10 @@
 package com.danshannon.strava.api.service;
 
 import com.danshannon.strava.api.model.Activity;
+import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.Gear;
 import com.danshannon.strava.api.model.reference.ResourceState;
+import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
  * <p>{@link Gear} related services.</p>
@@ -26,6 +28,7 @@ public interface GearServices {
 	 * 
 	 * @param id The id of the {@link Gear} to be retrieved.
 	 * @return Returns a detailed {@link Gear} representation.
+	 * @throws UnauthorizedException If service token is invalid 
 	 */
-	public Gear getGear(String id);
+	public Gear getGear(String id) throws UnauthorizedException;
 }

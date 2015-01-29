@@ -1,12 +1,14 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.danshannon.strava.api.model.SegmentEffort;
 import com.danshannon.strava.api.service.SegmentEffortServices;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.api.service.impl.retrofit.SegmentEffortServicesImpl;
@@ -18,6 +20,8 @@ import com.danshannon.strava.api.service.impl.retrofit.SegmentEffortServicesImpl
  *
  */
 public class SegmentEffortServicesImplTest {
+	private SegmentEffortServices segmentEffortService;
+	
 	/**
 	 * <p>Test we get a {@link SegmentEffortServicesImpl service implementation} successfully with a valid token</p>
 	 * 
@@ -35,21 +39,29 @@ public class SegmentEffortServicesImplTest {
 	@Test
 	public void testImplementation_invalidToken() {
 		SegmentEffortServices service = null;
+		service = SegmentEffortServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		try {
-			service = SegmentEffortServicesImpl.implementation(TestUtils.INVALID_TOKEN);
+			service.getSegmentEffort(TestUtils.SEGMENT_EFFORT_VALID_ID);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour
+			return;
 		}
-		assertNull("Got a service for an invalid token!",service);
+		fail("Got a working service for an invalid token!");
 	}
 
 	/**
 	 * <p>Test that we don't get a {@link SegmentEffortServicesImpl service implementation} if the token has been revoked by the user</p>
 	 */
 	@Test
-	public void testImplementation_revokedToken() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+	public void testImplementation_revokedToken() throws UnauthorizedException {
+		SegmentEffortServices service = SegmentEffortServicesImpl.implementation(getRevokedToken());
+		try {
+			service.getSegmentEffort(TestUtils.SEGMENT_EFFORT_VALID_ID);
+		} catch (UnauthorizedException e) {
+			// Expected behaviour
+			return;
+		}
+		fail("Revoked a token, but it's still useful");
 	}
 	
 	/**
@@ -69,8 +81,9 @@ public class SegmentEffortServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_differentImplementationIsNotCached() throws UnauthorizedException {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		SegmentEffortServices service = getService();
+		SegmentEffortServices service2 = getServiceWithoutWriteAccess();
+		assertFalse(service == service2);
 	}
 	
 	// Test cases
@@ -79,8 +92,48 @@ public class SegmentEffortServicesImplTest {
 	// 3. Private effort which does belong to the current athlete (is returned)
 	// 4. Private effort which doesn't belong to the current athlete (is not returned)
 	@Test
-	public void testGetSegmentEffort() {
+	public void testGetSegmentEffort_valid() throws UnauthorizedException {
+		SegmentEffortServices service = getService();
+		Long id = TestUtils.SEGMENT_EFFORT_VALID_ID;
+		SegmentEffort effort = service.getSegmentEffort(id);
+		assertNotNull(effort);
+		assertEquals(id,effort.getId());
+	}
+
+	@Test
+	public void testGetSegmentEffort_invalid() throws UnauthorizedException {
+		SegmentEffortServices service = getService();
+		Long id = TestUtils.SEGMENT_EFFORT_INVALID_ID;
+		SegmentEffort effort = service.getSegmentEffort(id);
+		assertNull(effort);
+	}
+
+	@Test
+	public void testGetSegmentEffort_private() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");		
+	}
+
+	@Test
+	public void testGetSegmentEffort_privateOtherAthlete() {
+		// TODO Not yet implemented
+		fail("Not yet implemented");		
+	}
+	
+	private SegmentEffortServices getService() throws UnauthorizedException {
+		if (this.segmentEffortService == null) {
+			this.segmentEffortService = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
+		}
+		return this.segmentEffortService;
+	}
+	
+	private String getRevokedToken() throws UnauthorizedException {
+		this.segmentEffortService = null;
+		return TestUtils.getRevokedToken();
+	}
+	
+	private SegmentEffortServices getServiceWithoutWriteAccess() throws UnauthorizedException {
+		this.segmentEffortService = null;
+		return SegmentEffortServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 	}
 }

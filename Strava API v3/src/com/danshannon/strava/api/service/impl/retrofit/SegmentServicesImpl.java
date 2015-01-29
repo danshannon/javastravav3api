@@ -47,9 +47,8 @@ public class SegmentServicesImpl implements SegmentServices {
 	 * 
 	 * @param token The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the club services
-	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static SegmentServices implementation(final String token) throws UnauthorizedException {
+	public static SegmentServices implementation(final String token) {
 		SegmentServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new SegmentServicesImpl(new RestAdapter.Builder()
@@ -81,7 +80,7 @@ public class SegmentServicesImpl implements SegmentServices {
 	 * @see com.danshannon.strava.api.service.SegmentServices#getSegment(java.lang.Integer)
 	 */
 	@Override
-	public Segment getSegment(Integer id) {
+	public Segment getSegment(Integer id) throws UnauthorizedException {
 		try {
 			return restService.getSegment(id);
 		} catch (NotFoundException e) {
@@ -146,6 +145,22 @@ public class SegmentServicesImpl implements SegmentServices {
 	public SegmentExplorer segmentExplore(MapPoint southwestCorner, MapPoint northwestCorner,
 			SegmentExplorerActivityType activityType, Integer minCat, Integer maxCat) {
 		return restService.segmentExplore(southwestCorner, northwestCorner, activityType, minCat, maxCat);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.SegmentServices#listAuthenticatedAthleteStarredSegments()
+	 */
+	@Override
+	public List<Segment> listAuthenticatedAthleteStarredSegments() {
+		return listAuthenticatedAthleteStarredSegments(null);
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.SegmentServices#listStarredSegments(java.lang.Integer)
+	 */
+	@Override
+	public List<Segment> listStarredSegments(Integer id) {
+		return listStarredSegments(id, null);
 	}
 
 }

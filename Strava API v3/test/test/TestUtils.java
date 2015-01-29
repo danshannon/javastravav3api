@@ -49,12 +49,23 @@ public class TestUtils {
 	public static Integer ATHLETE_VALID_ID;
 	public static Integer ATHLETE_INVALID_ID;
 	public static Integer ATHLETE_WITHOUT_KOMS;
+	public static Integer ATHLETE_WITHOUT_FRIENDS;
 	
 	public static Integer CLUB_VALID_ID;
 	public static Integer CLUB_INVALID_ID;
 	public static Integer CLUB_PUBLIC_NON_MEMBER_ID;
 	public static Integer CLUB_PRIVATE_MEMBER_ID;
 	public static Integer CLUB_PRIVATE_NON_MEMBER_ID;
+	
+	public static String GEAR_VALID_ID;
+	public static String GEAR_INVALID_ID;
+	public static String GEAR_OTHER_ATHLETE_ID;
+	
+	public static Long SEGMENT_EFFORT_VALID_ID;
+	public static Long SEGMENT_EFFORT_INVALID_ID;
+	
+	public static Integer SEGMENT_VALID_ID;
+	public static Integer SEGMENT_INVALID_ID;
 	
 	private static final String PROPERTIES_FILE = "test-config.properties";
 	private static Properties properties;
@@ -94,12 +105,23 @@ public class TestUtils {
 		ATHLETE_VALID_ID = integerProperty("test.athleteServicesImplTest.athleteId");
 		ATHLETE_INVALID_ID = integerProperty("test.athleteServicesImplTest.athleteInvalidId");
 		ATHLETE_WITHOUT_KOMS = integerProperty("test.athleteServicesImplTest.athleteWithoutKOMs");
+		ATHLETE_WITHOUT_FRIENDS = integerProperty("test.athleteServicesImplTest.athleteWithoutFriends");
 		
 		CLUB_VALID_ID = integerProperty("test.clubServicesImplTest.clubId");
 		CLUB_INVALID_ID = integerProperty("test.clubServicesImplTest.clubInvalidId");
 		CLUB_PRIVATE_MEMBER_ID = integerProperty("test.clubServicesImplTest.clubPrivateMemberId");
 		CLUB_PRIVATE_NON_MEMBER_ID = integerProperty("test.clubServicesImplTest.clubPrivateNonMemberId");
 		CLUB_PUBLIC_NON_MEMBER_ID = integerProperty("test.clubServicesImplTest.clubNonMemberId");
+		
+		GEAR_VALID_ID = properties.getProperty("test.gearServicesImplTest.gearId");
+		GEAR_INVALID_ID = properties.getProperty("test.gearServicesImplTest.gearInvalidId");
+		GEAR_OTHER_ATHLETE_ID = properties.getProperty("test.gearServicesImplTest.gearOtherAthleteId");
+		
+		SEGMENT_EFFORT_INVALID_ID = longProperty("test.segmentEffortServicesImplTest.segmentEffortInvalidId");
+		SEGMENT_EFFORT_VALID_ID = longProperty("test.segmentEffortServicesImplTest.segmentEffortId");
+		
+		SEGMENT_VALID_ID = integerProperty("test.segmentServicesImplTest.segmentId");
+		SEGMENT_INVALID_ID = integerProperty("test.segmentServicesImplTest.segmentInvalidId");
 	}
 
 	/**
@@ -122,6 +144,10 @@ public class TestUtils {
 	 */
 	private static Integer integerProperty(String key) {
 		return new Integer(properties.getProperty(key));
+	}
+	
+	private static Long longProperty(String key) {
+		return new Long(properties.getProperty(key));
 	}
 
 	/**

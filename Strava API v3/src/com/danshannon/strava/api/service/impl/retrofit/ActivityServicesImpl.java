@@ -43,9 +43,8 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * 
 	 * @param token The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the activity services
-	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static ActivityServices implementation(final String token) throws UnauthorizedException {
+	public static ActivityServices implementation(final String token) {
 		ActivityServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new ActivityServicesImpl(new RestAdapter.Builder()
@@ -61,9 +60,6 @@ public class ActivityServicesImpl implements ActivityServices {
 				.setErrorHandler(new RetrofitErrorHandler())
 				.build()
 				.create(ActivityServicesRetrofit.class));
-			
-			// Check that the token is valid
-			restService.listAuthenticatedAthleteActivities(null, null, null);
 			
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
@@ -81,7 +77,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
 	@Override
-	public Activity getActivity(Integer id, Boolean includeAllEfforts) {
+	public Activity getActivity(Integer id, Boolean includeAllEfforts) throws UnauthorizedException {
 		try {
 			boolean loop = true;
 			Activity stravaResponse = null;
@@ -216,19 +212,23 @@ public class ActivityServicesImpl implements ActivityServices {
 	 *      java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstruction) throws NotFoundException {
+	public List<Comment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstruction) {
 		Strava.validatePagingArguments(pagingInstruction);
 		
 		List<Comment> comments = new ArrayList<Comment>();
-		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-			List<Comment> commentPage = Arrays.asList(restService.listActivityComments(id, markdown, paging.getPage(), paging.getPageSize()));
-			commentPage = Strava.ignoreLastN(commentPage, paging.getIgnoreLastN());
-			commentPage = Strava.ignoreFirstN(commentPage, paging.getIgnoreFirstN());
-			comments.addAll(commentPage);
-		}
-		if (pagingInstruction != null) {
-			comments = Strava.ignoreFirstN(comments,pagingInstruction.getIgnoreFirstN());
-			comments = Strava.ignoreLastN(comments, pagingInstruction.getIgnoreLastN());
+		try {
+			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+				List<Comment> commentPage = Arrays.asList(restService.listActivityComments(id, markdown, paging.getPage(), paging.getPageSize()));
+				commentPage = Strava.ignoreLastN(commentPage, paging.getIgnoreLastN());
+				commentPage = Strava.ignoreFirstN(commentPage, paging.getIgnoreFirstN());
+				comments.addAll(commentPage);
+			}
+			if (pagingInstruction != null) {
+				comments = Strava.ignoreFirstN(comments,pagingInstruction.getIgnoreFirstN());
+				comments = Strava.ignoreLastN(comments, pagingInstruction.getIgnoreLastN());
+			}
+		} catch (NotFoundException e) {
+			return null;
 		}
 		return comments;
 
@@ -239,19 +239,23 @@ public class ActivityServicesImpl implements ActivityServices {
 	 *      java.lang.Integer)
 	 */
 	@Override
-	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction) throws NotFoundException {
+	public List<Athlete> listActivityKudoers(Integer id, Paging pagingInstruction) {
 		Strava.validatePagingArguments(pagingInstruction);
 
 		List<Athlete> athletes = new ArrayList<Athlete>();
-		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-			List<Athlete> athletePage = Arrays.asList(restService.listActivityKudoers(id, paging.getPage(), paging.getPageSize()));
-			athletePage = Strava.ignoreLastN(athletePage, paging.getIgnoreLastN());
-			athletePage = Strava.ignoreFirstN(athletePage, paging.getIgnoreFirstN());
-			athletes.addAll(athletePage);
-		}
-		if (pagingInstruction != null) {
-			athletes = Strava.ignoreFirstN(athletes,pagingInstruction.getIgnoreFirstN());
-			athletes = Strava.ignoreLastN(athletes, pagingInstruction.getIgnoreLastN());
+		try {
+			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+				List<Athlete> athletePage = Arrays.asList(restService.listActivityKudoers(id, paging.getPage(), paging.getPageSize()));
+				athletePage = Strava.ignoreLastN(athletePage, paging.getIgnoreLastN());
+				athletePage = Strava.ignoreFirstN(athletePage, paging.getIgnoreFirstN());
+				athletes.addAll(athletePage);
+			}
+			if (pagingInstruction != null) {
+				athletes = Strava.ignoreFirstN(athletes,pagingInstruction.getIgnoreFirstN());
+				athletes = Strava.ignoreLastN(athletes, pagingInstruction.getIgnoreLastN());
+			}
+		} catch (NotFoundException e) {
+			return null;
 		}
 		return athletes;
 	}
@@ -280,7 +284,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityComments(java.lang.Integer, java.lang.Boolean)
 	 */
 	@Override
-	public List<Comment> listActivityComments(Integer id, Boolean markdown) throws NotFoundException {
+	public List<Comment> listActivityComments(Integer id, Boolean markdown) {
 		return listActivityComments(id, markdown, null);
 	}
 
@@ -288,7 +292,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#listActivityKudoers(java.lang.Integer)
 	 */
 	@Override
-	public List<Athlete> listActivityKudoers(Integer id) throws NotFoundException {
+	public List<Athlete> listActivityKudoers(Integer id) {
 		return listActivityKudoers(id, null);
 	}
 
@@ -328,7 +332,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#listRelatedActivities(java.lang.Integer)
 	 */
 	@Override
-	public List<Activity> listRelatedActivities(Integer id) throws NotFoundException {
+	public List<Activity> listRelatedActivities(Integer id) {
 		return listRelatedActivities(id, null);
 	}
 
@@ -336,22 +340,34 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see com.danshannon.strava.api.service.ActivityServices#listRelatedActivities(java.lang.Integer, com.danshannon.strava.util.Paging)
 	 */
 	@Override
-	public List<Activity> listRelatedActivities(Integer id, Paging pagingInstruction) throws NotFoundException {
+	public List<Activity> listRelatedActivities(Integer id, Paging pagingInstruction) {
 		Strava.validatePagingArguments(pagingInstruction);
 		
 		List<Activity> activities = new ArrayList<Activity>();
-		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-			List<Activity> activityPage = Arrays.asList(restService.listRelatedActivities(id, paging.getPage(), paging.getPageSize()));
-			activityPage = Strava.ignoreLastN(activityPage, paging.getIgnoreLastN());
-			activityPage = Strava.ignoreFirstN(activityPage, paging.getIgnoreFirstN());
-			activities.addAll(activityPage);
-		}
-		if (pagingInstruction != null) {
-			activities = Strava.ignoreFirstN(activities,pagingInstruction.getIgnoreFirstN());
-			activities = Strava.ignoreLastN(activities, pagingInstruction.getIgnoreLastN());
+		try {
+			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+				List<Activity> activityPage = Arrays.asList(restService.listRelatedActivities(id, paging.getPage(), paging.getPageSize()));
+				activityPage = Strava.ignoreLastN(activityPage, paging.getIgnoreLastN());
+				activityPage = Strava.ignoreFirstN(activityPage, paging.getIgnoreFirstN());
+				activities.addAll(activityPage);
+			}
+			if (pagingInstruction != null) {
+				activities = Strava.ignoreFirstN(activities,pagingInstruction.getIgnoreFirstN());
+				activities = Strava.ignoreLastN(activities, pagingInstruction.getIgnoreLastN());
+			}
+		} catch (NotFoundException e) {
+			return null;
 		}
 		return activities;
 		
+	}
+
+	/**
+	 * @see com.danshannon.strava.api.service.ActivityServices#getActivity(java.lang.Integer)
+	 */
+	@Override
+	public Activity getActivity(Integer id) throws UnauthorizedException  {
+		return getActivity(id, Boolean.FALSE);
 	}
 
 }

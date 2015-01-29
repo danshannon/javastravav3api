@@ -30,7 +30,7 @@ public interface AthleteServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.AthleteServices#getAthlete(java.lang.Integer)
 	 */
 	@GET("/athletes/{id}")
-	public Athlete getAthlete(@Path("id") Integer id) throws NotFoundException;
+	public Athlete getAthlete(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.AthleteServices#updateAuthenticatedAthlete()

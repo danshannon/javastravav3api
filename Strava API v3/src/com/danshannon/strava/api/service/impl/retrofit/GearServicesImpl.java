@@ -31,7 +31,7 @@ public class GearServicesImpl implements GearServices {
 	 * @return An implementation of the club services
 	 * @throws UnauthorizedException If the token used to create the service is invalid
 	 */
-	public static GearServices implementation(final String token) throws UnauthorizedException {
+	public static GearServices implementation(final String token) {
 		GearServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new GearServicesImpl(new RestAdapter.Builder()
@@ -48,9 +48,6 @@ public class GearServicesImpl implements GearServices {
 				.build()
 				.create(GearServicesRetrofit.class));
 
-			// Check that the token works (i.e. it is valid)
-			// TODO restService.listAuthenticatedAthleteClubs();
-
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
 			
@@ -64,7 +61,7 @@ public class GearServicesImpl implements GearServices {
 	
 
 	@Override
-	public Gear getGear(String id) {
+	public Gear getGear(String id) throws UnauthorizedException {
 		try {
 			return restService.getGear(id);
 		} catch (NotFoundException e) {
