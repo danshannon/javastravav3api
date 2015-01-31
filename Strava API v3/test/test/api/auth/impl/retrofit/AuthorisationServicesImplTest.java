@@ -1,4 +1,4 @@
-package test;
+package test.api.auth.impl.retrofit;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -7,6 +7,9 @@ import java.io.IOException;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import test.TestHttpUtils;
+import test.TestUtils;
 
 import com.danshannon.strava.api.auth.AuthorisationServices;
 import com.danshannon.strava.api.auth.impl.retrofit.AuthorisationServicesImpl;

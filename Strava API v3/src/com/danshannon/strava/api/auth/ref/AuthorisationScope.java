@@ -10,7 +10,7 @@ package com.danshannon.strava.api.auth.ref;
 public enum AuthorisationScope {
 	VIEW_PRIVATE("view_private","Allow viewing of private data"),
 	WRITE("write","Allow creation of data"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	
@@ -42,4 +42,14 @@ public enum AuthorisationScope {
 	public String toString() {
 		return this.id;
 	}
+
+	public static AuthorisationScope create(String id) {
+		for (AuthorisationScope scope : AuthorisationScope.values()) {
+			if (scope.getId().equals(id)) {
+				return scope;
+			}
+		}
+		return AuthorisationScope.UNKNOWN;
+	}
+
 }

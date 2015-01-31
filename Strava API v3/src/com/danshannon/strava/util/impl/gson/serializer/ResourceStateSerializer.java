@@ -22,6 +22,7 @@ public class ResourceStateSerializer implements JsonSerializer<ResourceState>, J
 	@Override
 	public ResourceState deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return ResourceState.create(json.getAsInt());
 	}
 
@@ -30,6 +31,7 @@ public class ResourceStateSerializer implements JsonSerializer<ResourceState>, J
 	 */
 	@Override
 	public JsonElement serialize(ResourceState resourceState, Type type, JsonSerializationContext context) {
+		if (resourceState == null) { return null; }
 		return context.serialize(resourceState.getValue());
 	}
 

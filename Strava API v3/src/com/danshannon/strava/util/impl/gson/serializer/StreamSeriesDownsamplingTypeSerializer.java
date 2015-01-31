@@ -22,7 +22,7 @@ public class StreamSeriesDownsamplingTypeSerializer implements JsonSerializer<St
 	@Override
 	public StreamSeriesDownsamplingType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return StreamSeriesDownsamplingType.create(json.getAsString());
+		return (json == null ? null : StreamSeriesDownsamplingType.create(json.getAsString()));
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class StreamSeriesDownsamplingTypeSerializer implements JsonSerializer<St
 	 */
 	@Override
 	public JsonElement serialize(StreamSeriesDownsamplingType downsamplingType, Type type, JsonSerializationContext context) {
-		return context.serialize(downsamplingType.getValue());
+		return (downsamplingType == null ?  null : context.serialize(downsamplingType.getValue()));
 	}
 
 }

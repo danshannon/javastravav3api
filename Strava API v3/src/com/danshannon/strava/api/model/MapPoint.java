@@ -1,13 +1,21 @@
 package com.danshannon.strava.api.model;
 
+import lombok.Data;
+
 
 /**
  * @author dshannon
  *
  */
+@Data
 public class MapPoint {
 	private Float latitude;
 	private Float longitude;
+	
+	public MapPoint() {
+		// Required
+		super();
+	}
 	
 	public MapPoint(Float latitude, Float longitude) {
 		this.latitude = latitude;
@@ -24,40 +32,4 @@ public class MapPoint {
 		return new MapPoint(latlng[0],latlng[1]);
 	}
 
-	/**
-	 * @return the latitude
-	 */
-	public Float getLatitude() {
-		return this.latitude;
-	}
-
-	/**
-	 * @return the longitude
-	 */
-	public Float getLongitude() {
-		return this.longitude;
-	}
-
-	/**
-	 * @param latitude the latitude to set
-	 */
-	public void setLatitude(Float latitude) {
-		this.latitude = latitude;
-	}
-
-	/**
-	 * @param longitude the longitude to set
-	 */
-	public void setLongitude(Float longitude) {
-		this.longitude = longitude;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "MapPoint [" + (this.latitude != null ? "latitude=" + this.latitude + ", " : "")
-				+ (this.longitude != null ? "longitude=" + this.longitude : "") + "]";
-	}
 }

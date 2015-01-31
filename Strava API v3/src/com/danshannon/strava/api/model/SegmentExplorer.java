@@ -1,6 +1,8 @@
 package com.danshannon.strava.api.model;
 
-import java.util.Arrays;
+import java.util.List;
+
+import lombok.Data;
 
 import com.danshannon.strava.api.service.SegmentServices;
 
@@ -12,29 +14,12 @@ import com.danshannon.strava.api.service.SegmentServices;
  * @author Dan Shannon
  *
  */
+@Data
 public class SegmentExplorer {
-	private SegmentExploreSegment[] segments;
-
-	/**
-	 * @return the segments
-	 */
-	public SegmentExploreSegment[] getSegments() {
-		return this.segments;
-	}
-
-	/**
-	 * @param segments the segments to set
-	 */
-	public void setSegments(SegmentExploreSegment[] segments) {
-		this.segments = segments;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "SegmentExplorer [" + (this.segments != null ? "segments=" + Arrays.toString(this.segments) : "") + "]";
+	public SegmentExplorer() {
+		// Required
+		super();
 	}
 	
+	private List<SegmentExplorerSegment> segments;
 }

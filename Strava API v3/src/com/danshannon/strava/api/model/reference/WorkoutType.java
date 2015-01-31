@@ -10,7 +10,7 @@ public enum WorkoutType {
 	RACE(1,"Race"),
 	LONG_RUN(2,"Long run"),
 	INTERVALS(3,"Intervals"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN(-1,"Unknown");
 	
 	private Integer id;
 	private String description;

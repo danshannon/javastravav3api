@@ -16,20 +16,12 @@ import com.google.gson.JsonSerializer;
  */
 public class AuthorisationApprovalPromptSerializer implements JsonSerializer<AuthorisationApprovalPrompt>, JsonDeserializer<AuthorisationApprovalPrompt> {
 
-	public static AuthorisationApprovalPrompt create(String id) {
-		for (AuthorisationApprovalPrompt prompt : AuthorisationApprovalPrompt.values()) {
-			if (prompt.getId().equals(id)) {
-				return prompt;
-			}
-		}
-		return AuthorisationApprovalPrompt.UNKNOWN;
-	}
-	
 	/**
 	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
 	@Override
 	public JsonElement serialize(AuthorisationApprovalPrompt prompt, Type type, JsonSerializationContext context) {
+		if (prompt == null) { return null; }
 		return context.serialize(prompt.getId());
 	}
 
@@ -39,7 +31,8 @@ public class AuthorisationApprovalPromptSerializer implements JsonSerializer<Aut
 	@Override
 	public AuthorisationApprovalPrompt deserialize(JsonElement element, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return create(element.getAsString());
+		if (element == null) { return null; }
+		return AuthorisationApprovalPrompt.create(element.getAsString());
 	}
 
 }

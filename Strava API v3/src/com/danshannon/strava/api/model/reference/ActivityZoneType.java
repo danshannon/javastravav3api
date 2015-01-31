@@ -8,7 +8,7 @@ package com.danshannon.strava.api.model.reference;
 public enum ActivityZoneType {
 	HEARTRATE("heartrate","Heartrate"),
 	POWER("power","Power"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;

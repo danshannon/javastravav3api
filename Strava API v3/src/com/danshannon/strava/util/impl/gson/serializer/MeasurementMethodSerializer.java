@@ -22,6 +22,7 @@ public class MeasurementMethodSerializer implements JsonSerializer<MeasurementMe
 	@Override
 	public MeasurementMethod deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return MeasurementMethod.create(json.getAsString());
 	}
 
@@ -30,6 +31,7 @@ public class MeasurementMethodSerializer implements JsonSerializer<MeasurementMe
 	 */
 	@Override
 	public JsonElement serialize(MeasurementMethod method, Type type, JsonSerializationContext context) {
+		if (method == null) { return null; }
 		return context.serialize(method.getValue());
 	}
 

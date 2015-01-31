@@ -10,7 +10,7 @@ public enum FrameType {
 	CROSS(2,"Cross"),
 	ROAD(3,"Road Bike"),
 	TIME_TRIAL(4,"Time Trial"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN(-1,"Unknown");
 	
 	private Integer id;
 	private String description;

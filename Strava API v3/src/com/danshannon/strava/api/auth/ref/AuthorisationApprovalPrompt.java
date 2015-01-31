@@ -14,7 +14,7 @@ package com.danshannon.strava.api.auth.ref;
 public enum AuthorisationApprovalPrompt {
 	FORCE("force"),
 	AUTO("auto"),
-	UNKNOWN(null);
+	UNKNOWN("UNKNOWN");
 	
 	private String id;
 	
@@ -36,4 +36,14 @@ public enum AuthorisationApprovalPrompt {
 	public String toString() {
 		return this.id;
 	}
+	
+	public static AuthorisationApprovalPrompt create(String id) {
+		for (AuthorisationApprovalPrompt prompt : AuthorisationApprovalPrompt.values()) {
+			if (prompt.getId().equals(id)) {
+				return prompt;
+			}
+		}
+		return AuthorisationApprovalPrompt.UNKNOWN;
+	}
+	
 }

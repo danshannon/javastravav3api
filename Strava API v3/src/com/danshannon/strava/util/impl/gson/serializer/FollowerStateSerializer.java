@@ -22,6 +22,7 @@ public class FollowerStateSerializer implements JsonSerializer<FollowerState>, J
 	@Override
 	public FollowerState deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return FollowerState.create(json.getAsString());
 	}
 
@@ -30,6 +31,7 @@ public class FollowerStateSerializer implements JsonSerializer<FollowerState>, J
 	 */
 	@Override
 	public JsonElement serialize(FollowerState followerState, Type type, JsonSerializationContext context) {
+		if (followerState == null) { return null; }
 		return context.serialize(followerState.getValue());
 	}
 

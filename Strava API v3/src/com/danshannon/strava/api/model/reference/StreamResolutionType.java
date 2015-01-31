@@ -9,7 +9,7 @@ public enum StreamResolutionType {
 	LOW("low","low"),
 	MEDIUM("medium","medium"),
 	HIGH("high","high"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;

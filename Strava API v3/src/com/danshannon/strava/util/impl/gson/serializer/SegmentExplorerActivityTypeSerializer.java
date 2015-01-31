@@ -22,7 +22,7 @@ public class SegmentExplorerActivityTypeSerializer implements JsonSerializer<Seg
 	@Override
 	public SegmentExplorerActivityType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return SegmentExplorerActivityType.create(json.getAsString());
+		return (json == null ? null : SegmentExplorerActivityType.create(json.getAsString()));
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class SegmentExplorerActivityTypeSerializer implements JsonSerializer<Seg
 	 */
 	@Override
 	public JsonElement serialize(SegmentExplorerActivityType segmentExplorerActivityType, Type type, JsonSerializationContext context) {
-		return context.serialize(segmentExplorerActivityType.getValue());
+		return (segmentExplorerActivityType == null ? null : context.serialize(segmentExplorerActivityType.getValue()));
 	}
 
 }

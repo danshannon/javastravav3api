@@ -22,6 +22,7 @@ public class GenderSerializer implements JsonSerializer<Gender>, JsonDeserialize
 	@Override
 	public Gender deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return Gender.create(json.getAsString());
 	}
 
@@ -30,6 +31,7 @@ public class GenderSerializer implements JsonSerializer<Gender>, JsonDeserialize
 	 */
 	@Override
 	public JsonElement serialize(Gender gender, Type type, JsonSerializationContext context) {
+		if (gender == null) { return null; }
 		return context.serialize(gender.getValue());
 	}
 

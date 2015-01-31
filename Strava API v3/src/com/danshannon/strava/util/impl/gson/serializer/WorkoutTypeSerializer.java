@@ -22,7 +22,7 @@ public class WorkoutTypeSerializer implements JsonSerializer<WorkoutType>, JsonD
 	@Override
 	public WorkoutType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return WorkoutType.create(json.getAsInt());
+		return (json == null ? null : WorkoutType.create(json.getAsInt()));
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class WorkoutTypeSerializer implements JsonSerializer<WorkoutType>, JsonD
 	 */
 	@Override
 	public JsonElement serialize(WorkoutType workoutType, Type type, JsonSerializationContext context) {
-		return context.serialize(workoutType.getValue());
+		return (workoutType == null ? null : context.serialize(workoutType.getValue()));
 	}
 
 }

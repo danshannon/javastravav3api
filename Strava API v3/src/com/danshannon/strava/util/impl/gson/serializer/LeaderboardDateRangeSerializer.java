@@ -22,6 +22,7 @@ public class LeaderboardDateRangeSerializer implements JsonSerializer<Leaderboar
 	@Override
 	public LeaderboardDateRange deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return LeaderboardDateRange.create(json.getAsString());
 	}
 
@@ -30,6 +31,7 @@ public class LeaderboardDateRangeSerializer implements JsonSerializer<Leaderboar
 	 */
 	@Override
 	public JsonElement serialize(LeaderboardDateRange dateRange, Type type, JsonSerializationContext context) {
+		if (dateRange == null) { return null; }
 		return context.serialize(dateRange.getValue());
 	}
 

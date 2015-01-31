@@ -1,9 +1,12 @@
-package test;
+package test.api.auth.impl.retrofit;
 
 import static org.junit.Assert.fail;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import test.TestHttpUtils;
+import test.TestUtils;
 
 import com.danshannon.strava.api.auth.TokenServices;
 import com.danshannon.strava.api.auth.impl.retrofit.TokenServicesImpl;

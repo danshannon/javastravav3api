@@ -22,6 +22,7 @@ public class ActivityZoneTypeSerializer implements JsonSerializer<ActivityZoneTy
 	@Override
 	public ActivityZoneType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return ActivityZoneType.create(json.getAsString());
 	}
 
@@ -30,6 +31,7 @@ public class ActivityZoneTypeSerializer implements JsonSerializer<ActivityZoneTy
 	 */
 	@Override
 	public JsonElement serialize(ActivityZoneType activityZoneType, Type type, JsonSerializationContext context) {
+		if (activityZoneType == null) { return null; }
 		return context.serialize(activityZoneType.getValue());
 	}
 

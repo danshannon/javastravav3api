@@ -22,6 +22,7 @@ public class AgeGroupSerializer implements JsonSerializer<AgeGroup>, JsonDeseria
 	@Override
 	public AgeGroup deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return AgeGroup.create(json.getAsString());
 	}
 
@@ -30,6 +31,7 @@ public class AgeGroupSerializer implements JsonSerializer<AgeGroup>, JsonDeseria
 	 */
 	@Override
 	public JsonElement serialize(AgeGroup ageGroup, Type type, JsonSerializationContext context) {
+		if (ageGroup == null) { return null; }
 		return context.serialize(ageGroup.getValue());
 	}
 

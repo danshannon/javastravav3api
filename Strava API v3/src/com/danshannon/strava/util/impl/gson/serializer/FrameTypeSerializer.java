@@ -22,6 +22,7 @@ public class FrameTypeSerializer implements JsonSerializer<FrameType>, JsonDeser
 	@Override
 	public FrameType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return FrameType.create(json.getAsInt());
 	}
 
@@ -30,6 +31,7 @@ public class FrameTypeSerializer implements JsonSerializer<FrameType>, JsonDeser
 	 */
 	@Override
 	public JsonElement serialize(FrameType frameType, Type type, JsonSerializationContext context) {
+		if (frameType == null) { return null; }
 		return context.serialize(frameType.getValue());
 	}
 

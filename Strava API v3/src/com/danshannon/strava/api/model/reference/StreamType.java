@@ -17,7 +17,7 @@ public enum StreamType {
 	TEMPERATURE("temp","Temperature"),
 	MOVING("moving","Moving?"),
 	GRADE("grade_smooth","Grade % (smoothed)"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;

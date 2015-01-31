@@ -1,4 +1,4 @@
-package test;
+package test.api.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

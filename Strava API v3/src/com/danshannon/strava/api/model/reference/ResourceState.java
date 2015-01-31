@@ -10,7 +10,7 @@ public enum ResourceState {
 	META(1,"meta"),
 	SUMMARY(2,"summary"),
 	DETAILED(3,"detailed"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN(-2,"Unknown");
 	
 	private Integer id;
 	private String description;

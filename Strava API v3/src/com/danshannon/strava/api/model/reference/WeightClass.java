@@ -24,7 +24,7 @@ public enum WeightClass {
 	KG75_84("75_84","75-84kg",MeasurementMethod.METRIC),
 	KG85_94("85_94","85-94kg",MeasurementMethod.METRIC),
 	KG95PLUS("95_plus","95kg and over",MeasurementMethod.METRIC),
-	UNKNOWN(null,"Unkown",MeasurementMethod.UNKNOWN);
+	UNKNOWN("UNKNOWN","Unkown",MeasurementMethod.UNKNOWN);
 	
 	private String id;
 	private String description;

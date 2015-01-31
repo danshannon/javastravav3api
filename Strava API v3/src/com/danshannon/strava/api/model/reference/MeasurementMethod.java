@@ -8,7 +8,7 @@ package com.danshannon.strava.api.model.reference;
 public enum MeasurementMethod {
 	IMPERIAL("feet","Imperial"),
 	METRIC("meters","Metric"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;

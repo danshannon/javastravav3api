@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
 
+import test.api.service.impl.retrofit.ActivityServicesImplTest;
+
 import com.danshannon.strava.api.auth.TokenServices;
 import com.danshannon.strava.api.auth.impl.retrofit.TokenServicesImpl;
 import com.danshannon.strava.api.auth.ref.AuthorisationScope;

@@ -1,4 +1,4 @@
-package test;
+package test.api.service.impl.retrofit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,6 +11,8 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import test.TestUtils;
 
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.Athlete;

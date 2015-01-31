@@ -1,12 +1,16 @@
-package test;
+package test.api.service.impl.retrofit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import test.TestUtils;
+
+import com.danshannon.strava.api.model.Segment;
 import com.danshannon.strava.api.service.SegmentServices;
 import com.danshannon.strava.api.service.exception.UnauthorizedException;
 import com.danshannon.strava.api.service.impl.retrofit.SegmentServicesImpl;
@@ -82,15 +86,26 @@ public class SegmentServicesImplTest {
 		assertFalse(service == service2);
 	}
 
+	// Test cases:
+	// 1. Valid segment
+	// 2. Invalid segment
+	// 3. 
 	@Test
-	public void testGetSegment() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+	public void testGetSegment_validSegment() throws UnauthorizedException {
+		SegmentServices service = getService();
+		Segment segment = service.getSegment(TestUtils.SEGMENT_VALID_ID);
+		assertNotNull(segment);
+	}
+
+	@Test
+	public void testGetSegment_invalidSegment() throws UnauthorizedException {
+		SegmentServices service = getService();
+		Segment segment = service.getSegment(TestUtils.SEGMENT_INVALID_ID);
+		assertNull(segment);
 	}
 
 	@Test
 	public void testListAuthenticatedAthleteStarredSegments() {
-		// TODO Not yet implemented
 		fail("Not yet implemented");
 	}
 	
@@ -110,6 +125,10 @@ public class SegmentServicesImplTest {
 	public void testSegmentExplore() {
 		// TODO Not yet implemented
 		fail("Not yet implemented");
+	}
+	
+	private SegmentServices getService() {
+		return SegmentServicesImpl.implementation(TestUtils.getValidToken());
 	}
 
 }

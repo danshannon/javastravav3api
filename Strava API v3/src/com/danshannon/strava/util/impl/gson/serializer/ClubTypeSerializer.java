@@ -22,6 +22,7 @@ public class ClubTypeSerializer implements JsonSerializer<ClubType>, JsonDeseria
 	@Override
 	public ClubType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return ClubType.create(json.getAsString());
 	}
 
@@ -30,6 +31,7 @@ public class ClubTypeSerializer implements JsonSerializer<ClubType>, JsonDeseria
 	 */
 	@Override
 	public JsonElement serialize(ClubType clubType, Type type, JsonSerializationContext context) {
+		if (clubType == null) { return null; }
 		return context.serialize(clubType.getValue());
 	}
 

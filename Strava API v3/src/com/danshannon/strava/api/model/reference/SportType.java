@@ -11,7 +11,7 @@ public enum SportType {
 	RUNNING("running","Running"),
 	TRIATHLON("triathlon","Triathlon"),
 	OTHER("other","Other"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;

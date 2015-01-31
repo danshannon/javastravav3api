@@ -8,7 +8,7 @@ package com.danshannon.strava.api.model.reference;
 public enum SegmentActivityType {
 	RIDE("Ride","Ride"),
 	RUN("Run","Run"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;

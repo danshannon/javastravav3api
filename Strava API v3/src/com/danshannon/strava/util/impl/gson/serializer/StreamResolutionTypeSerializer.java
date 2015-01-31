@@ -22,7 +22,7 @@ public class StreamResolutionTypeSerializer implements JsonSerializer<StreamReso
 	@Override
 	public StreamResolutionType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return StreamResolutionType.create(json.getAsString());
+		return (json == null ? null : StreamResolutionType.create(json.getAsString()));
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class StreamResolutionTypeSerializer implements JsonSerializer<StreamReso
 	 */
 	@Override
 	public JsonElement serialize(StreamResolutionType resolutionType, Type type, JsonSerializationContext context) {
-		return context.serialize(resolutionType.getValue());
+		return (resolutionType == null ? null : context.serialize(resolutionType.getValue()));
 	}
 
 }

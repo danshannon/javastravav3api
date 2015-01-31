@@ -10,7 +10,7 @@ public enum LeaderboardDateRange {
 	THIS_MONTH("this_month","This month"),
 	THIS_WEEK("this_week","This week"),
 	TODAY("today","Today"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;

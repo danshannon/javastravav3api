@@ -1,4 +1,4 @@
-package test;
+package test.api.service.impl.retrofit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -16,8 +16,8 @@ import org.jfairy.Fairy;
 import org.jfairy.producer.text.TextProducer;
 import org.junit.Test;
 
-import com.danshannon.strava.api.auth.TokenServices;
-import com.danshannon.strava.api.auth.impl.retrofit.TokenServicesImpl;
+import test.TestUtils;
+
 import com.danshannon.strava.api.model.Activity;
 import com.danshannon.strava.api.model.ActivityZone;
 import com.danshannon.strava.api.model.Athlete;
@@ -49,7 +49,7 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_validToken() throws UnauthorizedException {
-		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
+		ActivityServices service = getActivityService();
 		assertNotNull("Got a NULL service for a valid token", service);
 	}
 	
@@ -74,17 +74,10 @@ public class ActivityServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_revokedToken() throws UnauthorizedException {
-		// 1. Get a token
-		String token = TestUtils.getValidToken();
+		// Attempt to get an implementation using the now invalidated token
+		ActivityServices activityServices = ActivityServicesImpl.implementation(TestUtils.getRevokedToken());
 		
-		// 2. Revoke it using an authorisation service implementation derived from the valid token
-		TokenServices authService = TokenServicesImpl.implementation(token);
-		authService.deauthorise(token);
-		
-		// 3. Attempt to get an implementation using the now invalidated token
-		ActivityServices activityServices = ActivityServicesImpl.implementation(token);
-		
-		// 4. Check that it can't be used
+		// Check that it can't be used
 		try {
 			activityServices.getActivity(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
 		} catch (UnauthorizedException e) {
@@ -92,7 +85,7 @@ public class ActivityServicesImplTest {
 			return;
 		}
 		
-		// 5. If we get here, then the service is working despite the token being revoked
+		// If we get here, then the service is working despite the token being revoked
 		fail("Got a usable service implementation using a revoked token");
 	}
 	
@@ -1091,7 +1084,7 @@ public class ActivityServicesImplTest {
 		activity.setType(ActivityType.RIDE);
 		
 		// Change the privacy flag
-		activity.setPrivate(Boolean.TRUE);
+		activity.setPrivateActivity(Boolean.TRUE);
 		
 		// Change the commute flag
 		activity.setCommute(Boolean.TRUE);
@@ -1119,7 +1112,7 @@ public class ActivityServicesImplTest {
 		assertEquals("Type not updated correctly",ActivityType.RIDE,stravaResponse.getType());
 
 		// Check that the privacy flag is now set
-		assertEquals("Private ride flag not updated correctly",Boolean.TRUE,stravaResponse.getPrivate());
+		assertEquals("Private ride flag not updated correctly",Boolean.TRUE,stravaResponse.getPrivateActivity());
 		
 		// Check that the commute flag is now set
 		// TODO There seems to be a Strava bug here

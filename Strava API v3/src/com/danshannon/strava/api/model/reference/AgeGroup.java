@@ -15,7 +15,7 @@ public enum AgeGroup {
 	AGE45_54("45_54","45 to 54"),
 	AGE55_64("55_64","55 to 64"),
 	AGE65_PLUS("65_plus","65 and over"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;
@@ -34,7 +34,7 @@ public enum AgeGroup {
 	public static AgeGroup create(String id) {
 		AgeGroup[] ageGroups = AgeGroup.values();
 		for (AgeGroup ageGroup : ageGroups) {
-			if (ageGroup.getId().equals(id)) {
+			if (ageGroup.getId() != null && ageGroup.getId().equals(id)) {
 				return ageGroup;
 			}
 		}

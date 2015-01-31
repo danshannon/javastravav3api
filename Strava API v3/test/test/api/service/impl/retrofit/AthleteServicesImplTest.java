@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test;
+package test.api.service.impl.retrofit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -13,6 +13,8 @@ import static org.junit.Assert.fail;
 import java.util.List;
 
 import org.junit.Test;
+
+import test.TestUtils;
 
 import com.danshannon.strava.api.model.Athlete;
 import com.danshannon.strava.api.model.SegmentEffort;

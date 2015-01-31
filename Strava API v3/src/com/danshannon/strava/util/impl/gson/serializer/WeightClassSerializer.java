@@ -22,7 +22,7 @@ public class WeightClassSerializer implements JsonSerializer<WeightClass>, JsonD
 	@Override
 	public WeightClass deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return WeightClass.create(json.getAsString());
+		return (json == null ? null : WeightClass.create(json.getAsString()));
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class WeightClassSerializer implements JsonSerializer<WeightClass>, JsonD
 	 */
 	@Override
 	public JsonElement serialize(WeightClass weightClass, Type type, JsonSerializationContext context) {
-		return context.serialize(weightClass.getValue());
+		return (weightClass == null ? null : context.serialize(weightClass.getValue()));
 	}
 
 }

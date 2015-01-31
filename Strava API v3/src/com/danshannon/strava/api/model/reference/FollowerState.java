@@ -9,7 +9,7 @@ public enum FollowerState {
 	PENDING("pending","Pending"),
 	ACCEPTED("accepted","Accepted"),
 	BLOCKED("blocked","Blocked"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;

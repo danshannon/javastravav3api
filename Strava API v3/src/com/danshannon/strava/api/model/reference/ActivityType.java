@@ -24,7 +24,7 @@ public enum ActivityType {
 	WINDSURF("windsurf","Windsurfing"),
 	SNOWBOARD("snowboard","Snowboarding"),
 	SNOWSHOE("snowshoe","Snowshoeing"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;

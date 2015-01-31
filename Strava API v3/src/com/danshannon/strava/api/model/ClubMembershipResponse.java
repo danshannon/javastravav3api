@@ -1,5 +1,7 @@
 package com.danshannon.strava.api.model;
 
+import lombok.Data;
+
 import com.danshannon.strava.api.service.ClubServices;
 
 /**
@@ -10,31 +12,13 @@ import com.danshannon.strava.api.service.ClubServices;
  * @author Dan Shannon
  *
  */
+@Data
 public class ClubMembershipResponse {
+	public ClubMembershipResponse() {
+		// Required
+		super();
+	}
+	
 	private Boolean success;
 	private Boolean active;
-	/**
-	 * @return the success
-	 */
-	public Boolean getSuccess() {
-		return this.success;
-	}
-	/**
-	 * @return the active
-	 */
-	public Boolean getActive() {
-		return this.active;
-	}
-	/**
-	 * @param success the success to set
-	 */
-	public void setSuccess(Boolean success) {
-		this.success = success;
-	}
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
 }

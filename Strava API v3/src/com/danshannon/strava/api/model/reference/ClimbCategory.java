@@ -11,7 +11,7 @@ public enum ClimbCategory {
 	CATEGORY2(2,"Cat 2"),
 	CATEGORY3(3,"Cat 3"),
 	CATEGORY4(4,"Cat 4"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN(-1,"Unknown");
 	
 	private Integer id;
 	private String description;

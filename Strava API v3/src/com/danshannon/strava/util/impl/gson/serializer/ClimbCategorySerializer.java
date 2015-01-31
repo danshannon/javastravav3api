@@ -22,6 +22,7 @@ public class ClimbCategorySerializer implements JsonSerializer<ClimbCategory>, J
 	@Override
 	public ClimbCategory deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return ClimbCategory.create(json.getAsInt());
 	}
 
@@ -30,6 +31,7 @@ public class ClimbCategorySerializer implements JsonSerializer<ClimbCategory>, J
 	 */
 	@Override
 	public JsonElement serialize(ClimbCategory climbCategory, Type type, JsonSerializationContext context) {
+		if (climbCategory == null) { return null; }
 		return context.serialize(climbCategory.getValue());
 	}
 

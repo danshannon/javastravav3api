@@ -22,7 +22,7 @@ public class StreamTypeSerializer implements JsonSerializer<StreamType>, JsonDes
 	@Override
 	public StreamType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return StreamType.create(json.getAsString());
+		return (json == null ? null : StreamType.create(json.getAsString()));
 	}
 
 	/**
@@ -30,7 +30,6 @@ public class StreamTypeSerializer implements JsonSerializer<StreamType>, JsonDes
 	 */
 	@Override
 	public JsonElement serialize(StreamType streamType, Type type, JsonSerializationContext context) {
-		return context.serialize(streamType.getValue());
-	}
+		return (streamType == null ? null : context.serialize(streamType.getValue()));	}
 
 }

@@ -16,22 +16,14 @@ import com.google.gson.JsonSerializer;
  */
 public class AuthorisationScopeSerializer implements JsonSerializer<AuthorisationScope>, JsonDeserializer<AuthorisationScope>{
 
-	public static AuthorisationScope create(String id) {
-		for (AuthorisationScope scope : AuthorisationScope.values()) {
-			if (scope.getId().equals(id)) {
-				return scope;
-			}
-		}
-		return AuthorisationScope.UNKNOWN;
-	}
-
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
 	public AuthorisationScope deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return create(json.getAsString());
+		if (json == null) { return null; }
+		return AuthorisationScope.create(json.getAsString());
 	}
 
 	/**
@@ -39,6 +31,7 @@ public class AuthorisationScopeSerializer implements JsonSerializer<Authorisatio
 	 */
 	@Override
 	public JsonElement serialize(AuthorisationScope authorisationScope, Type type, JsonSerializationContext context) {
+		if (authorisationScope == null) { return null; }
 		return context.serialize(authorisationScope.getId());
 	}
 

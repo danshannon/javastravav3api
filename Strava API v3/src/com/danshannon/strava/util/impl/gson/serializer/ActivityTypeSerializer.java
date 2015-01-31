@@ -22,6 +22,7 @@ public class ActivityTypeSerializer implements JsonSerializer<ActivityType>, Jso
 	@Override
 	public ActivityType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return ActivityType.create(json.getAsString());
 	}
 
@@ -30,6 +31,7 @@ public class ActivityTypeSerializer implements JsonSerializer<ActivityType>, Jso
 	 */
 	@Override
 	public JsonElement serialize(ActivityType activityType, Type type, JsonSerializationContext context) {
+		if (activityType == null) { return null; }
 		return context.serialize(activityType.getValue());
 	}
 

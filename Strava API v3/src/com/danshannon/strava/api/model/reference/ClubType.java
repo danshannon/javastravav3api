@@ -11,17 +11,13 @@ public enum ClubType {
 	SHOP("shop","Shop"),
 	COMPANY("company","Company"),
 	OTHER("other","Other"),
-	UNKNOWN("Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;
 	
 	private ClubType(String id, String description) {
 		this.id = id;
-		this.description = description;
-	}
-	
-	private ClubType(String description) {
 		this.description = description;
 	}
 	

@@ -34,6 +34,8 @@ public interface SegmentServices {
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/segments/:id</p>
 	 * 
+	 * <p>Returns <code>null</code> if the segment does not exist</p>
+	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#retrieve">http://strava.github.io/api/v3/segments/#retrieve</a>
 	 * 
 	 * @param id The id of the {@link Segment} to be retrieved

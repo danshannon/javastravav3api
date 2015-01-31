@@ -7,7 +7,7 @@ package com.danshannon.strava.api.model.reference;
  */
 public enum PhotoType {
 	INSTAGRAM("InstagramPhoto","Instagram"),
-	UNKNOWN(null,"Unknown");
+	UNKNOWN("UNKNOWN","Unknown");
 	
 	private String id;
 	private String description;

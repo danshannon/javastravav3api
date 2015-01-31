@@ -22,6 +22,7 @@ public class PhotoTypeSerializer implements JsonSerializer<PhotoType>, JsonDeser
 	@Override
 	public PhotoType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
+		if (json == null) { return null; }
 		return PhotoType.create(json.getAsString());
 	}
 
@@ -30,6 +31,7 @@ public class PhotoTypeSerializer implements JsonSerializer<PhotoType>, JsonDeser
 	 */
 	@Override
 	public JsonElement serialize(PhotoType photoType, Type type, JsonSerializationContext context) {
+		if (photoType == null) { return null; }
 		return context.serialize(photoType.getValue());
 	}
 

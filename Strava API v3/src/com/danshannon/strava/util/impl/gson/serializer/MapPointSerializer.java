@@ -24,6 +24,7 @@ public class MapPointSerializer implements JsonDeserializer<MapPoint>, JsonSeria
 	 */
 	@Override
 	public JsonElement serialize(MapPoint point, Type type, JsonSerializationContext context) {
+		if (point == null) { return null; }
 		ArrayList<Float> list = new ArrayList<Float>();
 		list.add(point.getLatitude());
 		list.add(point.getLongitude());
@@ -36,6 +37,7 @@ public class MapPointSerializer implements JsonDeserializer<MapPoint>, JsonSeria
 	 */
 	@Override
 	public MapPoint deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException {
+		if (element == null) { return null; }
 		JsonArray array = element.getAsJsonArray();
 		return new MapPoint(array.get(0).getAsFloat(), array.get(1).getAsFloat());
 	}

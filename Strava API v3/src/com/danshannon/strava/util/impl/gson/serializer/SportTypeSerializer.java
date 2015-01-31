@@ -22,7 +22,7 @@ public class SportTypeSerializer implements JsonSerializer<SportType>, JsonDeser
 	@Override
 	public SportType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return SportType.create(json.getAsString());
+		return (json == null ? null : SportType.create(json.getAsString()));
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class SportTypeSerializer implements JsonSerializer<SportType>, JsonDeser
 	 */
 	@Override
 	public JsonElement serialize(SportType sportType, Type type, JsonSerializationContext context) {
-		return context.serialize(sportType.getValue());
+		return (sportType == null ? null : context.serialize(sportType.getValue()));
 	}
 
 }

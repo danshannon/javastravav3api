@@ -1,73 +1,22 @@
 package com.danshannon.strava.api.model;
 
+import lombok.Data;
+
 import com.danshannon.strava.api.model.reference.ResourceState;
 
 /**
  * @author dshannon
  *
  */
+@Data
 public class Map {
+	public Map() {
+		// Required
+		super();
+	}
+	
 	private String id;
 	private String polyline;
 	private String summaryPolyline;
 	private ResourceState resourceState;
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return this.id;
-	}
-	/**
-	 * @return the polyline
-	 */
-	public String getPolyline() {
-		return this.polyline;
-	}
-	/**
-	 * @return the summaryPolyline
-	 */
-	public String getSummaryPolyline() {
-		return this.summaryPolyline;
-	}
-	/**
-	 * @return the resourceState
-	 */
-	public ResourceState getResourceState() {
-		return this.resourceState;
-	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-	/**
-	 * @param polyline the polyline to set
-	 */
-	public void setPolyline(String polyline) {
-		this.polyline = polyline;
-	}
-	/**
-	 * @param summaryPolyline the summaryPolyline to set
-	 */
-	public void setSummaryPolyline(String summaryPolyline) {
-		this.summaryPolyline = summaryPolyline;
-	}
-	/**
-	 * @param resourceState the resourceState to set
-	 */
-	public void setResourceState(ResourceState resourceState) {
-		this.resourceState = resourceState;
-	}
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Map [" + (this.id != null ? "id=" + this.id + ", " : "")
-				+ (this.polyline != null ? "polyline=" + this.polyline + ", " : "")
-				+ (this.summaryPolyline != null ? "summaryPolyline=" + this.summaryPolyline + ", " : "")
-				+ (this.resourceState != null ? "resourceState=" + this.resourceState : "") + "]";
-	}
-	
 }
