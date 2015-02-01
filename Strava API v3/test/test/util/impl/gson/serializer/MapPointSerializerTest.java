@@ -1,5 +1,6 @@
 package test.util.impl.gson.serializer;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
@@ -25,14 +26,12 @@ public class MapPointSerializerTest {
 
 	@Test
 	public void testRoundTrip() throws ServiceException {
-		fail("Not yet implemented"); // TODO
+		MapPoint point = new MapPoint(135.4f,-40f);
+		String serialised = this.util.serialise(point);
+		MapPoint deserialised = this.util.deserialise(serialised, MapPoint.class);
+		assertEquals(point,deserialised);
 	}
 	
-	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
-		fail("Not yet implemented"); // TODO
-	}
-
 	@Test
 	public void testNullDeserialisationSafety() throws ServiceException {
 		MapPoint prompt = this.util.deserialise("", MapPoint.class);

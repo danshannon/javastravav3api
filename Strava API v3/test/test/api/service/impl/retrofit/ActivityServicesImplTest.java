@@ -1104,6 +1104,7 @@ public class ActivityServicesImplTest {
 		
 		// Get the activity again
 		stravaResponse = service.getActivity(stravaResponse.getId());
+		System.out.println(stravaResponse);
 		
 		// Check that the name is now set
 		assertEquals("Name not updated correctly",name,stravaResponse.getName());
@@ -1116,14 +1117,14 @@ public class ActivityServicesImplTest {
 		
 		// Check that the commute flag is now set
 		// TODO There seems to be a Strava bug here
-		// assertEquals("Commute flag not updated correctly",Boolean.TRUE,stravaResponse.getCommute());
+		//assertEquals("Commute flag not updated correctly",Boolean.TRUE,stravaResponse.getCommute());
 		
 		// Check that the trainer flag is now set
 		assertEquals("Trainer flag not updated correctly",Boolean.TRUE,stravaResponse.getTrainer());
 		
 		// Check that the gear id is set right
 		// TODO There seems to be a Strava bug here
-		// assertEquals("Gear not set correctly",TestUtils.GEAR_VALID_ID,stravaResponse.getGearId());
+		//assertEquals("Gear not set correctly",TestUtils.GEAR_VALID_ID,stravaResponse.getGearId());
 		
 		// Check the description has changed
 		assertEquals("Description not updated correctly",description,stravaResponse.getDescription());
@@ -1204,6 +1205,19 @@ public class ActivityServicesImplTest {
 			return;
 		}
 		fail("Successfully updated an activity despite not having write access");
+	}
+	
+	@Test
+	public void testGetActivity_privateBelongsToOtherUser() throws UnauthorizedException {
+		ActivityServices service = getActivityService();
+		try {
+			@SuppressWarnings("unused")
+			Activity activity = service.getActivity(TestUtils.ACTIVITY_PRIVATE_OTHER_USER);
+		} catch (UnauthorizedException e) {
+			// Expected
+			return;
+		}
+		fail("Got a private activity belonging to another user");
 	}
 	
 	private ActivityServices getActivityService() throws UnauthorizedException {

@@ -45,6 +45,7 @@ public class TestUtils {
 	public static Integer ACTIVITY_WITHOUT_LAPS;
 	public static Integer ACTIVITY_WITH_ZONES;
 	public static Integer ACTIVITY_WITHOUT_ZONES;
+	public static Integer ACTIVITY_PRIVATE_OTHER_USER;
 	public static Activity ACTIVITY_DEFAULT_FOR_CREATE;
 	
 	public static Integer ATHLETE_AUTHENTICATED_ID;
@@ -65,9 +66,13 @@ public class TestUtils {
 	
 	public static Long SEGMENT_EFFORT_VALID_ID;
 	public static Long SEGMENT_EFFORT_INVALID_ID;
+	public static Long SEGMENT_EFFORT_PRIVATE_ID;
+	public static Long SEGMENT_EFFORT_OTHER_USER_PRIVATE_ID;
 	
 	public static Integer SEGMENT_VALID_ID;
 	public static Integer SEGMENT_INVALID_ID;
+	public static Integer SEGMENT_PRIVATE_ID;
+	public static Integer SEGMENT_OTHER_USER_PRIVATE_ID;
 	
 	private static final String PROPERTIES_FILE = "test-config.properties";
 	private static Properties properties;
@@ -101,6 +106,7 @@ public class TestUtils {
 		ACTIVITY_FOR_AUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToAuthenticatedUser"));
 		ACTIVITY_FOR_UNAUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToUnauthenticatedUser"));
 		ACTIVITY_INVALID = new Integer(properties.getProperty("test.activityServicesImplTest.activityInvalid"));
+		ACTIVITY_PRIVATE_OTHER_USER = integerProperty("test.activityServicesImplTest.activityPrivateOtherUser");
 		ACTIVITY_DEFAULT_FOR_CREATE = createDefaultActivityForCreation();
 		
 		ATHLETE_AUTHENTICATED_ID = integerProperty("test.athleteServicesImplTest.authenticatedAthleteId");
@@ -121,9 +127,13 @@ public class TestUtils {
 		
 		SEGMENT_EFFORT_INVALID_ID = longProperty("test.segmentEffortServicesImplTest.segmentEffortInvalidId");
 		SEGMENT_EFFORT_VALID_ID = longProperty("test.segmentEffortServicesImplTest.segmentEffortId");
+		SEGMENT_EFFORT_PRIVATE_ID = longProperty("test.segmentEffortServicesImplTest.segmentEffortPrivateId");
+		SEGMENT_EFFORT_OTHER_USER_PRIVATE_ID = longProperty("test.segmentEffortServicesImplTest.segmentEffortOtherUserPrivateId");
 		
 		SEGMENT_VALID_ID = integerProperty("test.segmentServicesImplTest.segmentId");
 		SEGMENT_INVALID_ID = integerProperty("test.segmentServicesImplTest.segmentInvalidId");
+		SEGMENT_PRIVATE_ID = integerProperty("test.segmentServicesImplTest.segmentPrivateId");
+		SEGMENT_OTHER_USER_PRIVATE_ID = integerProperty("test.segmentServicesImplTest.segmentOtherUserPrivateId");
 	}
 
 	/**

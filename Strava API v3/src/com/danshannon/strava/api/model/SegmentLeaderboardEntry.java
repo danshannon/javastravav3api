@@ -30,7 +30,7 @@ public class SegmentLeaderboardEntry {
 	private Date startDate;
 	private Date startDateLocal;
 	private Integer activityId;
-	private Integer effortId;
+	private Long effortId;
 	private Integer rank;
 	private String athleteProfile;
 }

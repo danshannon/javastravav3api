@@ -22,7 +22,7 @@ public class Segment {
 		super();
 	}
 	
-	private String id;
+	private Integer id;
 	private ResourceState resourceState;
 	private String name;
 	private SegmentActivityType activityType;

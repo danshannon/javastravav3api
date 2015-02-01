@@ -3,18 +3,18 @@
  */
 package com.danshannon.strava.api.service.impl.retrofit;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
-import com.danshannon.strava.api.model.MapPoint;
 import com.danshannon.strava.api.model.Segment;
 import com.danshannon.strava.api.model.SegmentEffort;
 import com.danshannon.strava.api.model.SegmentExplorer;
 import com.danshannon.strava.api.model.SegmentLeaderboard;
 import com.danshannon.strava.api.model.reference.AgeGroup;
+import com.danshannon.strava.api.model.reference.ClimbCategory;
 import com.danshannon.strava.api.model.reference.Gender;
 import com.danshannon.strava.api.model.reference.LeaderboardDateRange;
 import com.danshannon.strava.api.model.reference.SegmentExplorerActivityType;
@@ -50,8 +50,8 @@ public interface SegmentServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.SegmentServices#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.util.Calendar, java.util.Calendar, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/segments/{id}/all_efforts")
-	public SegmentEffort[] listSegmentEfforts(@Path("id") Integer id, @Query("athlete_id") Integer athleteId, @Query("start_date_local") Calendar startDateLocal,
-			@Query("end_date_local") Calendar endDateLocal, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
+	public SegmentEffort[] listSegmentEfforts(@Path("id") Integer id, @Query("athlete_id") Integer athleteId, @Query("start_date_local") Date startDateLocal,
+			@Query("end_date_local") Date endDateLocal, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.SegmentServices#getSegmentLeaderboard(java.lang.Integer, com.danshannon.strava.api.model.reference.Gender, com.danshannon.strava.api.model.reference.AgeGroup, com.danshannon.strava.api.model.reference.WeightClass, java.lang.Boolean, java.lang.Integer, com.danshannon.strava.api.model.reference.LeaderboardDateRange, java.lang.Integer, java.lang.Integer)
@@ -65,7 +65,7 @@ public interface SegmentServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.SegmentServices#segmentExplore(com.danshannon.strava.api.model.MapPoint, com.danshannon.strava.api.model.MapPoint, com.danshannon.strava.api.model.reference.SegmentExplorerActivityType, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/segments/explore")
-	public SegmentExplorer segmentExplore(MapPoint southwestCorner, MapPoint northwestCorner,
-			@Query("activity_type") SegmentExplorerActivityType activityType, @Query("min_cat") Integer minCat, @Query("max_cat") Integer maxCat);
+	public SegmentExplorer segmentExplore(@Query("bounds") String bounds,
+			@Query("activity_type") SegmentExplorerActivityType activityType, @Query("min_cat") ClimbCategory minCategory, @Query("max_cat") ClimbCategory maxCategory);
 
 }

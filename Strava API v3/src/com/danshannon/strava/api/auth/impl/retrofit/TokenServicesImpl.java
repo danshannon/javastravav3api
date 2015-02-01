@@ -50,9 +50,6 @@ public class TokenServicesImpl implements TokenServices {
 				.build()
 				.create(TokenServicesRetrofit.class));
 
-			// Check that the token works (i.e. it is valid)
-			// TODO restService.listAuthenticatedAthleteClubs();
-
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
 			

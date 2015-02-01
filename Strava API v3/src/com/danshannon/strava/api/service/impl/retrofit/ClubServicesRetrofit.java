@@ -43,7 +43,7 @@ public interface ClubServicesRetrofit {
 	 * @see com.danshannon.strava.api.service.ClubServices#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/clubs/{id}/activities")
-	public Activity[] listRecentClubActivities(@Path("id") Integer id, @Query("page") Integer page, @Query("page") Integer perPage) throws NotFoundException, UnauthorizedException;
+	public Activity[] listRecentClubActivities(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException, UnauthorizedException;
 
 	/**
 	 * @see com.danshannon.strava.api.service.ClubServices#joinClub(java.lang.Integer)

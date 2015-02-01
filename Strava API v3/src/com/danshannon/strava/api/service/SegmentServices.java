@@ -12,6 +12,7 @@ import com.danshannon.strava.api.model.SegmentExplorer;
 import com.danshannon.strava.api.model.SegmentLeaderboard;
 import com.danshannon.strava.api.model.SegmentLeaderboardEntry;
 import com.danshannon.strava.api.model.reference.AgeGroup;
+import com.danshannon.strava.api.model.reference.ClimbCategory;
 import com.danshannon.strava.api.model.reference.Gender;
 import com.danshannon.strava.api.model.reference.LeaderboardDateRange;
 import com.danshannon.strava.api.model.reference.ResourceState;
@@ -115,6 +116,8 @@ public interface SegmentServices {
 	 * 
 	 * <p>Pagination is supported.</p>
 	 * 
+	 * <p>Returns <code>null</code> if the segment does not exist.</p>
+	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/segments/:id/all_efforts</p>
 	 * 
 	 * @see http://strava.github.io/api/v3/segments/#efforts
@@ -123,11 +126,66 @@ public interface SegmentServices {
 	 * @param athleteId (Optional) id of the {@link Athlete} to filter results by
 	 * @param startDateLocal (Optional) ISO 8601 formatted date time
 	 * @param endDateLocal (Optional) ISO 8601 formatted date time
-	 * @param page (Optional) Page to start at for pagination
-	 * @param perPage (Optional) Number of results per page (max 200)
+	 * @param pagingInstruction (Optional) Page to start at for pagination / number of results per page
 	 * @return Returns an array of {@link SegmentEffort segment effort} summary {@link ResourceState representations} sorted by start_date_local ascending or by elapsed_time if an athlete_id is provided.
 	 */
 	public List<SegmentEffort> listSegmentEfforts(Integer id, Integer athleteId, Calendar startDateLocal, Calendar endDateLocal, Paging pagingInstruction);
+	
+	/**
+	 * <p>Retrieve an array of {@link SegmentEffort segment efforts}, for a given {@link Segment}, filtered by {@link Athlete} and/or a date range.</p>
+	 * 
+	 * <p>Filtering parameters, like athlete_id, start_date_local and end_date_local, are optional. If they are not provided all efforts for the segment will be returned.</p>
+	 * 
+	 * <p>Date range filtering is accomplished using an inclusive start and end time, thus start_date_local and end_date_local must be sent together. For open ended ranges pick dates significantly in the past or future. The filtering is done over local time for the segment, so there is no need for timezone conversion. For example, all efforts on Jan. 1st, 2014 for a segment in San Francisco, CA can be fetched using 2014-01-01T00:00:00Z and 2014-01-01T23:59:59Z.</p>
+	 * 
+	 * <p>Pagination is NOT supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the segment does not exist.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/segments/:id/all_efforts</p>
+	 * 
+	 * @see http://strava.github.io/api/v3/segments/#efforts
+	 * 
+	 * @param id The id of the {@link Segment} for which {@link SegmentEffort segment efforts} are to be returned 
+	 * @param athleteId (Optional) id of the {@link Athlete} to filter results by
+	 * @param startDateLocal (Optional) ISO 8601 formatted date time
+	 * @param endDateLocal (Optional) ISO 8601 formatted date time
+	 * @return Returns an array of {@link SegmentEffort segment effort} summary {@link ResourceState representations} sorted by start_date_local ascending or by elapsed_time if an athlete_id is provided.
+	 */
+	public List<SegmentEffort> listSegmentEfforts(Integer id, Integer athleteId, Calendar startDateLocal, Calendar endDateLocal);
+	
+	/**
+	 * <p>Retrieve an array of {@link SegmentEffort segment efforts}, for a given {@link Segment}.</p>
+	 * 
+	 * <p>Pagination is supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the segment does not exist.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/segments/:id/all_efforts</p>
+	 * 
+	 * @see http://strava.github.io/api/v3/segments/#efforts
+	 * 
+	 * @param id The id of the {@link Segment} for which {@link SegmentEffort segment efforts} are to be returned 
+	 * @param pagingInstruction (Optional) paging parameters
+	 * @return Returns an array of {@link SegmentEffort segment effort} summary {@link ResourceState representations} sorted by start_date_local ascending or by elapsed_time if an athlete_id is provided.
+	 */
+	public List<SegmentEffort> listSegmentEfforts(Integer id, Paging pagingInstruction);
+	
+	/**
+	 * <p>Retrieve an array of {@link SegmentEffort segment efforts}, for a given {@link Segment}.</p>
+	 * 
+	 * <p>Pagination is NOT supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the segment does not exist.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/segments/:id/all_efforts</p>
+	 * 
+	 * @see http://strava.github.io/api/v3/segments/#efforts
+	 * 
+	 * @param id The id of the {@link Segment} for which {@link SegmentEffort segment efforts} are to be returned 
+	 * @return Returns an array of {@link SegmentEffort segment effort} summary {@link ResourceState representations} sorted by start_date_local ascending or by elapsed_time if an athlete_id is provided.
+	 */
+	public List<SegmentEffort> listSegmentEfforts(Integer id);
 	
 	/**
 	 * <p>{@link SegmentLeaderboard Leaderboards} represent the ranking of {@link Athlete athletes} on specific {@link Segment segments}.</p>
@@ -135,6 +193,8 @@ public interface SegmentServices {
 	 * <p>Filter by age_group and weight_class is only allowed if the authenticated athlete is a Strava premium member.</p>
 	 * 
 	 * <p>Pagination is supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the segment does not exist.</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/segments/:id/leaderboard</p>
 	 * 
@@ -154,19 +214,56 @@ public interface SegmentServices {
 	public SegmentLeaderboard getSegmentLeaderboard(Integer id, Gender gender, AgeGroup ageGroup, WeightClass weightClass, Boolean following, Integer clubId, LeaderboardDateRange dateRange, Paging pagingInstruction);
 	
 	/**
+	 * <p>{@link SegmentLeaderboard Leaderboards} represent the ranking of {@link Athlete athletes} on specific {@link Segment segments}.</p>
+	 * 
+	 * <p>Filter by age_group and weight_class is only allowed if the authenticated athlete is a Strava premium member.</p>
+	 * 
+	 * <p>Pagination is supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the segment does not exist.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/segments/:id/leaderboard</p>
+	 * 
+	 * @see http://strava.github.io/api/v3/segments/#leaderboard
+	 * 
+	 * @param id The id of the segment to return a leaderboard for
+	 * @param pagingInstruction (Optional) Page number, Number of results per page (max 200)
+	 * @return Returns an array of up to 10, by default, {@link SegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be considered 64-bit integers and effort_count is deprecated, use entry_count instead.
+	 */
+	public SegmentLeaderboard getSegmentLeaderboard(Integer id, Paging pagingInstruction);
+	
+	/**
+	 * <p>{@link SegmentLeaderboard Leaderboards} represent the ranking of {@link Athlete athletes} on specific {@link Segment segments}.</p>
+	 * 
+	 * <p>Filter by age_group and weight_class is only allowed if the authenticated athlete is a Strava premium member.</p>
+	 * 
+	 * <p>Pagination is NOT supported.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the segment does not exist.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/segments/:id/leaderboard</p>
+	 * 
+	 * @see http://strava.github.io/api/v3/segments/#leaderboard
+	 * 
+	 * @param id The id of the segment to return a leaderboard for
+	 * @return Returns an array of up to 10, by default, {@link SegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be considered 64-bit integers and effort_count is deprecated, use entry_count instead.
+	 */
+	public SegmentLeaderboard getSegmentLeaderboard(Integer id);
+	
+	/**
 	 * <p>This endpoint can be used to find popular segments within a given area (defined by the southwest and northeast corners of the area).</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/segments/explore</p>
 	 * 
 	 * @see http://strava.github.io/api/v3/segments/#explore
 	 * @param southwestCorner The southwest corner of the area to be explored
-	 * @param northwestCorner The northeast corner of the area to be explored 
-	 * @param activityType (Optional) �running� or �riding�, default is riding
+	 * @param northeastCorner The northeast corner of the area to be explored 
+	 * @param activityType (Optional) "running" or "riding", default is riding
 	 * @param minCat (Optional) Minimum climb category filter
 	 * @param maxCat (Optional) Maximum climb category filter
 	 * @return Returns an array of up to 10 segment objects
 	 */
-	public SegmentExplorer segmentExplore(MapPoint southwestCorner, MapPoint northwestCorner, SegmentExplorerActivityType activityType, Integer minCat, Integer maxCat);
+	public SegmentExplorer segmentExplore(MapPoint southwestCorner, MapPoint northeastCorner, SegmentExplorerActivityType activityType, ClimbCategory minCat, ClimbCategory maxCat);
 	
 	
 }

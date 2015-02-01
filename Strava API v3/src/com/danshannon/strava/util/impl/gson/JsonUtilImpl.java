@@ -2,6 +2,7 @@ package com.danshannon.strava.util.impl.gson;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 
 import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
 import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
@@ -56,6 +57,7 @@ import com.danshannon.strava.util.impl.gson.serializer.WorkoutTypeSerializer;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.internal.bind.DateTypeAdapter;
 
 /**
  * <p>
@@ -72,6 +74,8 @@ public class JsonUtilImpl implements JsonUtil {
 	public JsonUtilImpl() {
 		gsonBuilder = new GsonBuilder();
 		gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+		gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
 		gsonBuilder.registerTypeAdapter(AuthorisationApprovalPrompt.class, new AuthorisationApprovalPromptSerializer());
 		gsonBuilder.registerTypeAdapter(AuthorisationResponseType.class, new AuthorisationResponseTypeSerializer());
 		gsonBuilder.registerTypeAdapter(AuthorisationScope.class, new AuthorisationScopeSerializer());

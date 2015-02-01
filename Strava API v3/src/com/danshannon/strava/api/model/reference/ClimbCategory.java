@@ -6,7 +6,7 @@ package com.danshannon.strava.api.model.reference;
  *
  */
 public enum ClimbCategory {
-	HORS_CATEGORIE(0,"HC"),
+	HORS_CATEGORIE(5,"HC"),
 	CATEGORY1(1,"Cat 1"),
 	CATEGORY2(2,"Cat 2"),
 	CATEGORY3(3,"Cat 3"),

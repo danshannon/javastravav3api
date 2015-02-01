@@ -111,15 +111,25 @@ public class SegmentEffortServicesImplTest {
 	}
 
 	@Test
-	public void testGetSegmentEffort_private() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");		
+	public void testGetSegmentEffort_private() throws UnauthorizedException {
+		SegmentEffortServices service = getService();
+		Long id = TestUtils.SEGMENT_EFFORT_PRIVATE_ID;
+		SegmentEffort effort = service.getSegmentEffort(id);
+		assertNotNull(effort);
+		assertEquals(id,effort.getId());
 	}
 
 	@Test
-	public void testGetSegmentEffort_privateOtherAthlete() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");		
+	public void testGetSegmentEffort_privateOtherAthlete() throws UnauthorizedException {
+		SegmentEffortServices service = getService();
+		Long id = TestUtils.SEGMENT_EFFORT_OTHER_USER_PRIVATE_ID;
+		try {
+			service.getSegmentEffort(id);
+		} catch (UnauthorizedException e) {
+			// Expected
+			return;
+		}
+		fail("Returned an effort for a private segment belonging to another user!");
 	}
 	
 	private SegmentEffortServices getService() throws UnauthorizedException {

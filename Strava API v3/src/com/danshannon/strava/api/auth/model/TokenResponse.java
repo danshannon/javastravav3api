@@ -9,7 +9,7 @@ import com.danshannon.strava.api.model.Athlete;
  * 
  * @author Dan Shannon
  */
-@Data
+@Data 
 public class TokenResponse {
 	private String accessToken;
 	private String tokenType;

@@ -36,7 +36,6 @@ public class ClimbCategorySerializerTest {
 	
 	@Test
 	public void testDeserializeUnknownValue() throws ServiceException {
-		TextProducer text = Fairy.create().textProducer();
 		String serialized = "75";
 		ClimbCategory deserialized = this.util.deserialise(serialized, ClimbCategory.class);
 		assertEquals(deserialized, ClimbCategory.UNKNOWN);
