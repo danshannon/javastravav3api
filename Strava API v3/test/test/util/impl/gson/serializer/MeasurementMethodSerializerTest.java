@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.MeasurementMethod;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaMeasurementMethod;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class MeasurementMethodSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (MeasurementMethod type : MeasurementMethod.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaMeasurementMethod type : StravaMeasurementMethod.values()) {
 			String serialized = this.util.serialise(type);
-			MeasurementMethod deserialized = this.util.deserialise(serialized, MeasurementMethod.class);
+			StravaMeasurementMethod deserialized = this.util.deserialise(serialized, StravaMeasurementMethod.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		MeasurementMethod deserialized = this.util.deserialise(serialized, MeasurementMethod.class);
-		assertEquals(deserialized, MeasurementMethod.UNKNOWN);
+		StravaMeasurementMethod deserialized = this.util.deserialise(serialized, StravaMeasurementMethod.class);
+		assertEquals(deserialized, StravaMeasurementMethod.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		MeasurementMethod prompt = this.util.deserialise("", MeasurementMethod.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaMeasurementMethod prompt = this.util.deserialise("", StravaMeasurementMethod.class);
 		assertNull(prompt);
 	}
 

@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.PhotoType;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaPhotoType;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class PhotoTypeSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (PhotoType type : PhotoType.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaPhotoType type : StravaPhotoType.values()) {
 			String serialized = this.util.serialise(type);
-			PhotoType deserialized = this.util.deserialise(serialized, PhotoType.class);
+			StravaPhotoType deserialized = this.util.deserialise(serialized, StravaPhotoType.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		PhotoType deserialized = this.util.deserialise(serialized, PhotoType.class);
-		assertEquals(deserialized, PhotoType.UNKNOWN);
+		StravaPhotoType deserialized = this.util.deserialise(serialized, StravaPhotoType.class);
+		assertEquals(deserialized, StravaPhotoType.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		PhotoType prompt = this.util.deserialise("", PhotoType.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaPhotoType prompt = this.util.deserialise("", StravaPhotoType.class);
 		assertNull(prompt);
 	}
 

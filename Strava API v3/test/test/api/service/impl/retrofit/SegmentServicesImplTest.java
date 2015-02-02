@@ -12,25 +12,24 @@ import java.util.List;
 
 import org.junit.Test;
 
+import stravajava.api.v3.model.StravaMapPoint;
+import stravajava.api.v3.model.StravaSegment;
+import stravajava.api.v3.model.StravaSegmentEffort;
+import stravajava.api.v3.model.StravaSegmentExplorerResponse;
+import stravajava.api.v3.model.StravaSegmentExplorerResponseSegment;
+import stravajava.api.v3.model.StravaSegmentLeaderboard;
+import stravajava.api.v3.model.StravaSegmentLeaderboardEntry;
+import stravajava.api.v3.model.reference.StravaAgeGroup;
+import stravajava.api.v3.model.reference.StravaClimbCategory;
+import stravajava.api.v3.model.reference.StravaGender;
+import stravajava.api.v3.model.reference.StravaLeaderboardDateRange;
+import stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType;
+import stravajava.api.v3.model.reference.StravaWeightClass;
+import stravajava.api.v3.service.SegmentServices;
+import stravajava.api.v3.service.exception.UnauthorizedException;
+import stravajava.api.v3.service.impl.retrofit.SegmentServicesImpl;
+import stravajava.util.Paging;
 import test.TestUtils;
-
-import com.danshannon.strava.api.model.MapPoint;
-import com.danshannon.strava.api.model.Segment;
-import com.danshannon.strava.api.model.SegmentEffort;
-import com.danshannon.strava.api.model.SegmentExplorer;
-import com.danshannon.strava.api.model.SegmentExplorerSegment;
-import com.danshannon.strava.api.model.SegmentLeaderboard;
-import com.danshannon.strava.api.model.SegmentLeaderboardEntry;
-import com.danshannon.strava.api.model.reference.AgeGroup;
-import com.danshannon.strava.api.model.reference.ClimbCategory;
-import com.danshannon.strava.api.model.reference.Gender;
-import com.danshannon.strava.api.model.reference.LeaderboardDateRange;
-import com.danshannon.strava.api.model.reference.SegmentExplorerActivityType;
-import com.danshannon.strava.api.model.reference.WeightClass;
-import com.danshannon.strava.api.service.SegmentServices;
-import com.danshannon.strava.api.service.exception.UnauthorizedException;
-import com.danshannon.strava.api.service.impl.retrofit.SegmentServicesImpl;
-import com.danshannon.strava.util.Paging;
 
 /**
  * <p>Unit tests for {@link SegmentServicesImpl}</p>
@@ -108,7 +107,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegment_validSegment() throws UnauthorizedException {
 		SegmentServices service = getService();
-		Segment segment = service.getSegment(TestUtils.SEGMENT_VALID_ID);
+		StravaSegment segment = service.getSegment(TestUtils.SEGMENT_VALID_ID);
 		assertNotNull(segment);
 	}
 
@@ -116,7 +115,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegment_invalidSegment() throws UnauthorizedException {
 		SegmentServices service = getService();
-		Segment segment = service.getSegment(TestUtils.SEGMENT_INVALID_ID);
+		StravaSegment segment = service.getSegment(TestUtils.SEGMENT_INVALID_ID);
 		assertNull(segment);
 	}
 	
@@ -137,7 +136,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegment_private() throws UnauthorizedException {
 		SegmentServices service = getService();
-		Segment segment = service.getSegment(TestUtils.SEGMENT_PRIVATE_ID);
+		StravaSegment segment = service.getSegment(TestUtils.SEGMENT_PRIVATE_ID);
 		assertNotNull(segment);
 		assertEquals(TestUtils.SEGMENT_PRIVATE_ID,segment.getId());
 	}
@@ -147,7 +146,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListAuthenticatedAthleteStarredSegments_noPaging() {
 		SegmentServices service = getService();
-		List<Segment> segments = service.listAuthenticatedAthleteStarredSegments();
+		List<StravaSegment> segments = service.listAuthenticatedAthleteStarredSegments();
 		assertNotNull(segments);
 		assertFalse(segments.size() == 0);
 	}
@@ -156,7 +155,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListAuthenticatedAthleteStarredSegments_pageSize() {
 		SegmentServices service = getService();
-		List<Segment> segments = service.listAuthenticatedAthleteStarredSegments(new Paging(1,1));
+		List<StravaSegment> segments = service.listAuthenticatedAthleteStarredSegments(new Paging(1,1));
 		assertNotNull(segments);
 		assertEquals(1,segments.size());
 	}
@@ -165,13 +164,13 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListAuthenticatedAthleteStarredSegments_pageSizeAndNumber() {
 		SegmentServices service = getService();
-		List<Segment> defaultPage = service.listAuthenticatedAthleteStarredSegments(new Paging(1,2));
+		List<StravaSegment> defaultPage = service.listAuthenticatedAthleteStarredSegments(new Paging(1,2));
 		assertEquals(2,defaultPage.size());
 		
-		List<Segment> firstPage = service.listAuthenticatedAthleteStarredSegments(new Paging(1,1));
+		List<StravaSegment> firstPage = service.listAuthenticatedAthleteStarredSegments(new Paging(1,1));
 		assertEquals(1,firstPage.size());
 		
-		List<Segment> secondPage = service.listAuthenticatedAthleteStarredSegments(new Paging(2,1));
+		List<StravaSegment> secondPage = service.listAuthenticatedAthleteStarredSegments(new Paging(2,1));
 		assertEquals(1,secondPage.size());
 		
 		assertEquals(firstPage.get(0).getId(),defaultPage.get(0).getId());
@@ -184,7 +183,7 @@ public class SegmentServicesImplTest {
 		SegmentServices service = getService();
 		try {
 			@SuppressWarnings("unused")
-			List<Segment> segments = service.listAuthenticatedAthleteStarredSegments(new Paging(-1,-1));
+			List<StravaSegment> segments = service.listAuthenticatedAthleteStarredSegments(new Paging(-1,-1));
 		} catch (IllegalArgumentException e) {
 			// Expected result
 			return;
@@ -196,7 +195,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListAuthenticatedAthleteStarredSegments_pagingOutOfRangeHigh() {
 		SegmentServices service = getService();
-		List<Segment> segments = service.listAuthenticatedAthleteStarredSegments(new Paging(1000,200));
+		List<StravaSegment> segments = service.listAuthenticatedAthleteStarredSegments(new Paging(1000,200));
 		assertNotNull(segments);
 		assertEquals(0,segments.size());
 	}
@@ -205,7 +204,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListAuthenticatedAthleteStarredSegments_pageSizeTooLarge() {
 		SegmentServices service = getService();
-		List<Segment> segments = service.listAuthenticatedAthleteStarredSegments(new Paging(1,201));
+		List<StravaSegment> segments = service.listAuthenticatedAthleteStarredSegments(new Paging(1,201));
 		assertNotNull(segments);
 		assertFalse(0 == segments.size());
 	}
@@ -215,7 +214,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListSegmentEfforts_validSegment() {
 		SegmentServices service = getService();
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID);
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID);
 		assertNotNull(efforts);
 		assertFalse(efforts.size() == 0);
 	}
@@ -224,7 +223,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListSegmentEfforts_invalidSegment() {
 		SegmentServices service = getService();
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_INVALID_ID);
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_INVALID_ID);
 		assertNull(efforts);
 	}
 
@@ -232,10 +231,10 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListSegmentEfforts_filterByValidAthlete() {
 		SegmentServices service = getService();
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, TestUtils.ATHLETE_AUTHENTICATED_ID, null, null);
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, TestUtils.ATHLETE_AUTHENTICATED_ID, null, null);
 		assertNotNull(efforts);
 		assertFalse(0 == efforts.size());
-		for (SegmentEffort effort : efforts) {
+		for (StravaSegmentEffort effort : efforts) {
 			assertEquals(TestUtils.ATHLETE_AUTHENTICATED_ID,effort.getAthlete().getId());
 		}
 	}
@@ -244,7 +243,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListSegmentEfforts_filterByInvalidAthlete() {
 		SegmentServices service = getService();
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, TestUtils.ATHLETE_INVALID_ID, null, null);
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, TestUtils.ATHLETE_INVALID_ID, null, null);
 		assertNull(efforts);
 	}
 
@@ -255,10 +254,10 @@ public class SegmentServicesImplTest {
 		Calendar startDate = Calendar.getInstance();
 		startDate.set(2014, Calendar.JANUARY, 1, 0, 0, 0);
 		
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, null, startDate, null);
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, null, startDate, null);
 		assertNotNull(efforts);
 		assertFalse(0 == efforts.size());
-		for (SegmentEffort effort : efforts) {
+		for (StravaSegmentEffort effort : efforts) {
 			assertNotNull(effort.getStartDateLocal());
 			assertTrue(effort.getStartDateLocal().after(startDate.getTime()));
 		}
@@ -272,10 +271,10 @@ public class SegmentServicesImplTest {
 		Calendar endDate = Calendar.getInstance();
 		endDate.set(2013, Calendar.DECEMBER, 31, 23, 59, 59);
 		
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, null, null, endDate);
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, null, null, endDate);
 		assertNotNull(efforts);
 		assertFalse(0 == efforts.size());
-		for (SegmentEffort effort : efforts) {
+		for (StravaSegmentEffort effort : efforts) {
 			assertNotNull(effort.getStartDateLocal());
 			assertTrue(effort.getStartDateLocal().before(endDate.getTime()));
 		}
@@ -290,10 +289,10 @@ public class SegmentServicesImplTest {
 		Calendar endDate = Calendar.getInstance();
 		endDate.set(2014, Calendar.JANUARY, 31, 23, 59, 59);
 		
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, null, startDate, endDate);
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, null, startDate, endDate);
 		assertNotNull(efforts);
 		assertFalse(0 == efforts.size());
-		for (SegmentEffort effort : efforts) {
+		for (StravaSegmentEffort effort : efforts) {
 			assertNotNull(effort.getStartDateLocal());
 			assertTrue(effort.getStartDateLocal().after(startDate.getTime()));
 			assertTrue(effort.getStartDateLocal().before(endDate.getTime()));
@@ -304,7 +303,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListSegmentEfforts_pageSizeOnly() {
 		SegmentServices service = getService();
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1,1));
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1,1));
 		assertNotNull(efforts);
 		assertFalse(efforts.size() == 0);
 		assertEquals(1,efforts.size());
@@ -314,12 +313,12 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListSegmentEfforts_pageSizeAndNumber() {
 		SegmentServices service = getService();
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1,2));
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1,2));
 		assertNotNull(efforts);
 		assertEquals(2,efforts.size());
 		
-		List<SegmentEffort> page1 = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1,1));
-		List<SegmentEffort> page2 = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(2,1));
+		List<StravaSegmentEffort> page1 = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1,1));
+		List<StravaSegmentEffort> page2 = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(2,1));
 		
 		assertNotNull(page1);
 		assertNotNull(page2);
@@ -333,7 +332,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListSegmentEfforts_pagingOutOfRangeHigh() {
 		SegmentServices service = getService();
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1000,200));
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1000,200));
 		
 		assertNotNull(efforts);
 		assertEquals(0,efforts.size());
@@ -346,7 +345,7 @@ public class SegmentServicesImplTest {
 		
 		try { 
 			@SuppressWarnings("unused")
-			List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(-1,-1));
+			List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(-1,-1));
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;
@@ -358,7 +357,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testListSegmentEfforts_pageSizeTooLarge() {
 		SegmentServices service = getService();
-		List<SegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1,201));
+		List<StravaSegmentEffort> efforts = service.listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1,201));
 		
 		assertNotNull(efforts);
 		assertEquals(201,efforts.size());
@@ -369,9 +368,9 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_validSegment() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID);
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID);
 		assertNotNull(leaderboard);
-		for (SegmentLeaderboardEntry entry : leaderboard.getEntries()) {
+		for (StravaSegmentLeaderboardEntry entry : leaderboard.getEntries()) {
 			assertNotNull(entry.getEffortId());
 		}
 	}
@@ -380,7 +379,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_invalidSegment() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_INVALID_ID);
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_INVALID_ID);
 		assertNull(leaderboard);
 	}
 
@@ -388,11 +387,11 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_filterByGender() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, Gender.FEMALE, null, null, null, null, null, null);
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, StravaGender.FEMALE, null, null, null, null, null, null);
 		assertNotNull(leaderboard);
 		assertFalse(leaderboard.getEntries().isEmpty());
-		for (SegmentLeaderboardEntry entry : leaderboard.getEntries()) {
-			assertEquals(Gender.FEMALE,entry.getAthleteGender());
+		for (StravaSegmentLeaderboardEntry entry : leaderboard.getEntries()) {
+			assertEquals(StravaGender.FEMALE,entry.getAthleteGender());
 		}
 	}
 
@@ -400,7 +399,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_filterByAgeGroup() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, AgeGroup.AGE35_44, null, null, null, null, null);
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, StravaAgeGroup.AGE35_44, null, null, null, null, null);
 		assertNotNull(leaderboard);
 		assertFalse(leaderboard.getEntries().isEmpty());
 	}
@@ -409,7 +408,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_filterByWeightClass() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, WeightClass.KG75_84, null, null, null, null);
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, StravaWeightClass.KG75_84, null, null, null, null);
 		assertNotNull(leaderboard);
 		assertFalse(leaderboard.getEntries().isEmpty());
 	}
@@ -418,7 +417,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_filterByFollowing() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, null, Boolean.TRUE, null, null, null);
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, null, Boolean.TRUE, null, null, null);
 		assertNotNull(leaderboard);
 		assertFalse(leaderboard.getEntries().isEmpty());
 	}
@@ -427,7 +426,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_filterByClub() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, null, null, TestUtils.CLUB_VALID_ID, null, null);
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, null, null, TestUtils.CLUB_VALID_ID, null, null);
 		assertNotNull(leaderboard);
 		assertFalse(leaderboard.getEntries().isEmpty());
 	}
@@ -436,7 +435,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_filterByInvalidClub() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, null, null, TestUtils.CLUB_INVALID_ID, null, null);
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, null, null, TestUtils.CLUB_INVALID_ID, null, null);
 		assertNull(leaderboard);
 	}
 
@@ -444,7 +443,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_filterByLeaderboardDateRange() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, null, null, null, LeaderboardDateRange.THIS_YEAR, null);
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, null, null, null, StravaLeaderboardDateRange.THIS_YEAR, null);
 		assertNotNull(leaderboard);
 		assertFalse(leaderboard.getEntries().isEmpty());
 	}
@@ -453,7 +452,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_filterByAllOptions() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, Gender.MALE, AgeGroup.AGE45_54, WeightClass.KG85_94, Boolean.FALSE, TestUtils.CLUB_VALID_ID, LeaderboardDateRange.THIS_YEAR, null);
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, StravaGender.MALE, StravaAgeGroup.AGE45_54, StravaWeightClass.KG85_94, Boolean.FALSE, TestUtils.CLUB_VALID_ID, StravaLeaderboardDateRange.THIS_YEAR, null);
 		assertNotNull(leaderboard);
 		assertFalse(leaderboard.getEntries().isEmpty());
 	}
@@ -462,7 +461,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_pagingSize() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,1));
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,1));
 		assertNotNull(leaderboard);
 		assertTrue(6 == leaderboard.getEntries().size() || 1 == leaderboard.getEntries().size()); // Paging returns the requested number of efforts, plus the 5 around the authenticated athlete (if appropriate)
 	}
@@ -471,9 +470,9 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_pagingSizeAndNumber() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,2));
-		SegmentLeaderboard page1 = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,1));
-		SegmentLeaderboard page2 = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(2,1));
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,2));
+		StravaSegmentLeaderboard page1 = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,1));
+		StravaSegmentLeaderboard page2 = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(2,1));
 		
 		assertEquals(leaderboard.getEntries().get(0).getEffortId(),page1.getEntries().get(0).getEffortId());
 		assertEquals(leaderboard.getEntries().get(1).getEffortId(),page2.getEntries().get(0).getEffortId());
@@ -484,7 +483,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_pagingOutOfRangeHigh() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1000,200));
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1000,200));
 		assertNotNull(leaderboard);
 		assertEquals(0,leaderboard.getEntries().size());
 	}
@@ -495,7 +494,7 @@ public class SegmentServicesImplTest {
 		SegmentServices service = getService();
 		try {
 			@SuppressWarnings("unused")
-			SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(-1,-1));
+			StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(-1,-1));
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;
@@ -507,7 +506,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_pagingSizeTooLarge() {
 		SegmentServices service = getService();
-		SegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,201));
+		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,201));
 		assertNotNull(leaderboard);
 	}
 
@@ -516,9 +515,9 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testSegmentExplore_normal() {
 		SegmentServices service = getService();
-		SegmentExplorer response = service.segmentExplore(new MapPoint(-39.4f, 136f), new MapPoint(-25f,154f), null, null, null);
+		StravaSegmentExplorerResponse response = service.segmentExplore(new StravaMapPoint(-39.4f, 136f), new StravaMapPoint(-25f,154f), null, null, null);
 		assertNotNull(response);
-		for (SegmentExplorerSegment segment : response.getSegments()) {
+		for (StravaSegmentExplorerResponseSegment segment : response.getSegments()) {
 			System.out.println(segment.getName() + " " + segment.getDistance());
 		}
 	}
@@ -527,7 +526,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testSegmentExplore_filterByActivityType() {
 		SegmentServices service = getService();
-		SegmentExplorer response = service.segmentExplore(new MapPoint(-39.4f, 136f), new MapPoint(-25f,154f), SegmentExplorerActivityType.RUNNING, null, null);
+		StravaSegmentExplorerResponse response = service.segmentExplore(new StravaMapPoint(-39.4f, 136f), new StravaMapPoint(-25f,154f), StravaSegmentExplorerActivityType.RUNNING, null, null);
 		assertNotNull(response);
 	}
 	
@@ -535,11 +534,11 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testSegmentExplore_filterByMinimumCategory() {
 		SegmentServices service = getService();
-		SegmentExplorer response = service.segmentExplore(new MapPoint(-39.4f, 136f), new MapPoint(-25f,154f), null, ClimbCategory.HORS_CATEGORIE, null);
+		StravaSegmentExplorerResponse response = service.segmentExplore(new StravaMapPoint(-39.4f, 136f), new StravaMapPoint(-25f,154f), null, StravaClimbCategory.HORS_CATEGORIE, null);
 		assertNotNull(response);
-		for (SegmentExplorerSegment segment : response.getSegments()) {
+		for (StravaSegmentExplorerResponseSegment segment : response.getSegments()) {
 			System.out.println(segment.getName() + ": " + segment.getClimbCategory());
-			assertTrue(segment.getClimbCategory().getValue() >= ClimbCategory.HORS_CATEGORIE.getValue());
+			assertTrue(segment.getClimbCategory().getValue() >= StravaClimbCategory.HORS_CATEGORIE.getValue());
 		}
 	}
 	
@@ -547,11 +546,11 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testSegmentExplore_filterByMaximumCategory() {
 		SegmentServices service = getService();
-		SegmentExplorer response = service.segmentExplore(new MapPoint(-39.4f, 136f), new MapPoint(-25f,154f), null, null, ClimbCategory.CATEGORY1);
+		StravaSegmentExplorerResponse response = service.segmentExplore(new StravaMapPoint(-39.4f, 136f), new StravaMapPoint(-25f,154f), null, null, StravaClimbCategory.CATEGORY1);
 		assertNotNull(response);
-		for (SegmentExplorerSegment segment : response.getSegments()) {
+		for (StravaSegmentExplorerResponseSegment segment : response.getSegments()) {
 			System.out.println(segment.getName() + ": " + segment.getClimbCategory());
-			assertTrue(segment.getClimbCategory().getValue() <= ClimbCategory.CATEGORY1.getValue());;
+			assertTrue(segment.getClimbCategory().getValue() <= StravaClimbCategory.CATEGORY1.getValue());;
 		}
 	}
 	
@@ -559,9 +558,9 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testSegmentExplore_filterMaxAndMinCategory() {
 		SegmentServices service = getService();
-		SegmentExplorer response = service.segmentExplore(new MapPoint(-39.4f, 136f), new MapPoint(-25f,154f), null, null, null);
+		StravaSegmentExplorerResponse response = service.segmentExplore(new StravaMapPoint(-39.4f, 136f), new StravaMapPoint(-25f,154f), null, null, null);
 		assertNotNull(response);
-		for (SegmentExplorerSegment segment : response.getSegments()) {
+		for (StravaSegmentExplorerResponseSegment segment : response.getSegments()) {
 			System.out.println(segment.getName() + " " + segment.getDistance());
 		}
 	}

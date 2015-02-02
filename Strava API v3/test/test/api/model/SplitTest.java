@@ -6,7 +6,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
-import com.danshannon.strava.api.model.Split;
+import stravajava.api.v3.model.StravaSplit;
 
 /**
  * @author dshannon
@@ -16,11 +16,11 @@ public class SplitTest {
 
 	@Test
 	public void test() {
-		new BeanTester().testBean(Split.class);
+		new BeanTester().testBean(StravaSplit.class);
 	}
 
 	@Test
 	public void testEqualsMethod() {
-		EqualsVerifier.forClass(Split.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
+		EqualsVerifier.forClass(StravaSplit.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
 	}
 }

@@ -14,7 +14,7 @@ import org.junit.Test;
 public class StreamServicesImplTest {
 
 	/**
-	 * Test method for {@link com.danshannon.strava.api.service.impl.retrofit.StreamServicesImpl#implementation(java.lang.String)}.
+	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#implementation(java.lang.String)}.
 	 */
 	@Test
 	public void testImplementation() {
@@ -22,7 +22,7 @@ public class StreamServicesImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.danshannon.strava.api.service.impl.retrofit.StreamServicesImpl#getActivityStreams(java.lang.String, com.danshannon.strava.api.model.reference.StreamType[], com.danshannon.strava.api.model.reference.StreamResolutionType, com.danshannon.strava.api.model.reference.StreamSeriesDownsamplingType)}.
+	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
 	 */
 	@Test
 	public void testGetActivityStreams() {
@@ -30,7 +30,7 @@ public class StreamServicesImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.danshannon.strava.api.service.impl.retrofit.StreamServicesImpl#getEffortStreams(java.lang.String, com.danshannon.strava.api.model.reference.StreamType[], com.danshannon.strava.api.model.reference.StreamResolutionType, com.danshannon.strava.api.model.reference.StreamSeriesDownsamplingType)}.
+	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getEffortStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
 	 */
 	@Test
 	public void testGetEffortStreams() {
@@ -38,7 +38,7 @@ public class StreamServicesImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.danshannon.strava.api.service.impl.retrofit.StreamServicesImpl#getSegmentStreams(java.lang.String, com.danshannon.strava.api.model.reference.StreamType[], com.danshannon.strava.api.model.reference.StreamResolutionType, com.danshannon.strava.api.model.reference.StreamSeriesDownsamplingType)}.
+	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getSegmentStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
 	 */
 	@Test
 	public void testGetSegmentStreams() {

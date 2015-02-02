@@ -18,15 +18,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import com.danshannon.strava.api.auth.AuthorisationServices;
-import com.danshannon.strava.api.auth.impl.retrofit.AuthorisationServicesImpl;
-import com.danshannon.strava.api.auth.model.TokenResponse;
-import com.danshannon.strava.api.auth.ref.AuthorisationApprovalPrompt;
-import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
-import com.danshannon.strava.api.auth.ref.AuthorisationScope;
-import com.danshannon.strava.api.service.Strava;
-import com.danshannon.strava.api.service.exception.BadRequestException;
-import com.danshannon.strava.api.service.exception.UnauthorizedException;
+import stravajava.api.v3.auth.AuthorisationServices;
+import stravajava.api.v3.auth.impl.retrofit.AuthorisationServicesImpl;
+import stravajava.api.v3.auth.model.TokenResponse;
+import stravajava.api.v3.auth.ref.AuthorisationApprovalPrompt;
+import stravajava.api.v3.auth.ref.AuthorisationResponseType;
+import stravajava.api.v3.auth.ref.AuthorisationScope;
+import stravajava.api.v3.service.Strava;
+import stravajava.api.v3.service.exception.BadRequestException;
+import stravajava.api.v3.service.exception.UnauthorizedException;
 
 /**
  * @author dshannon

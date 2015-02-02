@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.WorkoutType;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaWorkoutType;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class WorkoutTypeSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (WorkoutType type : WorkoutType.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaWorkoutType type : StravaWorkoutType.values()) {
 			String serialized = this.util.serialise(type);
-			WorkoutType deserialized = this.util.deserialise(serialized, WorkoutType.class);
+			StravaWorkoutType deserialized = this.util.deserialise(serialized, StravaWorkoutType.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "75";
-		WorkoutType deserialized = this.util.deserialise(serialized, WorkoutType.class);
-		assertEquals(deserialized, WorkoutType.UNKNOWN);
+		StravaWorkoutType deserialized = this.util.deserialise(serialized, StravaWorkoutType.class);
+		assertEquals(deserialized, StravaWorkoutType.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		WorkoutType prompt = this.util.deserialise("", WorkoutType.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaWorkoutType prompt = this.util.deserialise("", StravaWorkoutType.class);
 		assertNull(prompt);
 	}
 

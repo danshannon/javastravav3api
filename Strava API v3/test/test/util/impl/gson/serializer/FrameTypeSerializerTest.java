@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.FrameType;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaFrameType;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class FrameTypeSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (FrameType type : FrameType.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaFrameType type : StravaFrameType.values()) {
 			String serialized = this.util.serialise(type);
-			FrameType deserialized = this.util.deserialise(serialized, FrameType.class);
+			StravaFrameType deserialized = this.util.deserialise(serialized, StravaFrameType.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "84";
-		FrameType deserialized = this.util.deserialise(serialized, FrameType.class);
-		assertEquals(deserialized, FrameType.UNKNOWN);
+		StravaFrameType deserialized = this.util.deserialise(serialized, StravaFrameType.class);
+		assertEquals(deserialized, StravaFrameType.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		FrameType prompt = this.util.deserialise("", FrameType.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaFrameType prompt = this.util.deserialise("", StravaFrameType.class);
 		assertNull(prompt);
 	}
 

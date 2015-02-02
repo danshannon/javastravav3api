@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.SportType;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaSportType;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class SportTypeSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (SportType type : SportType.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaSportType type : StravaSportType.values()) {
 			String serialized = this.util.serialise(type);
-			SportType deserialized = this.util.deserialise(serialized, SportType.class);
+			StravaSportType deserialized = this.util.deserialise(serialized, StravaSportType.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		SportType deserialized = this.util.deserialise(serialized, SportType.class);
-		assertEquals(deserialized, SportType.UNKNOWN);
+		StravaSportType deserialized = this.util.deserialise(serialized, StravaSportType.class);
+		assertEquals(deserialized, StravaSportType.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		SportType prompt = this.util.deserialise("", SportType.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaSportType prompt = this.util.deserialise("", StravaSportType.class);
 		assertNull(prompt);
 	}
 

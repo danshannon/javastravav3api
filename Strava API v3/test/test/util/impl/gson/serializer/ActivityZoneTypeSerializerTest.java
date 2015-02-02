@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.ActivityZoneType;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaActivityZoneType;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class ActivityZoneTypeSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (ActivityZoneType type : ActivityZoneType.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaActivityZoneType type : StravaActivityZoneType.values()) {
 			String serialized = this.util.serialise(type);
-			ActivityZoneType deserialized = this.util.deserialise(serialized, ActivityZoneType.class);
+			StravaActivityZoneType deserialized = this.util.deserialise(serialized, StravaActivityZoneType.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		ActivityZoneType deserialized = this.util.deserialise(serialized, ActivityZoneType.class);
-		assertEquals(deserialized, ActivityZoneType.UNKNOWN);
+		StravaActivityZoneType deserialized = this.util.deserialise(serialized, StravaActivityZoneType.class);
+		assertEquals(deserialized, StravaActivityZoneType.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		ActivityZoneType prompt = this.util.deserialise("", ActivityZoneType.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaActivityZoneType prompt = this.util.deserialise("", StravaActivityZoneType.class);
 		assertNull(prompt);
 	}
 

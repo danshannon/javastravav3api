@@ -8,15 +8,14 @@ import java.io.IOException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import stravajava.api.v3.auth.AuthorisationServices;
+import stravajava.api.v3.auth.impl.retrofit.AuthorisationServicesImpl;
+import stravajava.api.v3.auth.model.TokenResponse;
+import stravajava.api.v3.auth.ref.AuthorisationScope;
+import stravajava.api.v3.service.exception.BadRequestException;
+import stravajava.api.v3.service.exception.UnauthorizedException;
 import test.TestHttpUtils;
 import test.TestUtils;
-
-import com.danshannon.strava.api.auth.AuthorisationServices;
-import com.danshannon.strava.api.auth.impl.retrofit.AuthorisationServicesImpl;
-import com.danshannon.strava.api.auth.model.TokenResponse;
-import com.danshannon.strava.api.auth.ref.AuthorisationScope;
-import com.danshannon.strava.api.service.exception.BadRequestException;
-import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 public class AuthorisationServicesImplTest {
 	private static TestHttpUtils HTTP_UTILITIES;

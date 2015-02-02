@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.StreamType;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaStreamType;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class StreamTypeSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (StreamType type : StreamType.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaStreamType type : StravaStreamType.values()) {
 			String serialized = this.util.serialise(type);
-			StreamType deserialized = this.util.deserialise(serialized, StreamType.class);
+			StravaStreamType deserialized = this.util.deserialise(serialized, StravaStreamType.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		StreamType deserialized = this.util.deserialise(serialized, StreamType.class);
-		assertEquals(deserialized, StreamType.UNKNOWN);
+		StravaStreamType deserialized = this.util.deserialise(serialized, StravaStreamType.class);
+		assertEquals(deserialized, StravaStreamType.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		StreamType prompt = this.util.deserialise("", StreamType.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaStreamType prompt = this.util.deserialise("", StravaStreamType.class);
 		assertNull(prompt);
 	}
 

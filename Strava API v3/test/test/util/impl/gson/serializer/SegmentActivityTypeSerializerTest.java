@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.SegmentActivityType;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaSegmentActivityType;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class SegmentActivityTypeSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (SegmentActivityType type : SegmentActivityType.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaSegmentActivityType type : StravaSegmentActivityType.values()) {
 			String serialized = this.util.serialise(type);
-			SegmentActivityType deserialized = this.util.deserialise(serialized, SegmentActivityType.class);
+			StravaSegmentActivityType deserialized = this.util.deserialise(serialized, StravaSegmentActivityType.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		SegmentActivityType deserialized = this.util.deserialise(serialized, SegmentActivityType.class);
-		assertEquals(deserialized, SegmentActivityType.UNKNOWN);
+		StravaSegmentActivityType deserialized = this.util.deserialise(serialized, StravaSegmentActivityType.class);
+		assertEquals(deserialized, StravaSegmentActivityType.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		SegmentActivityType prompt = this.util.deserialise("", SegmentActivityType.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaSegmentActivityType prompt = this.util.deserialise("", StravaSegmentActivityType.class);
 		assertNull(prompt);
 	}
 

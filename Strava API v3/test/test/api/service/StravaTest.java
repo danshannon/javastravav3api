@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.danshannon.strava.api.service.Strava;
-import com.danshannon.strava.util.Paging;
+import stravajava.api.v3.service.Strava;
+import stravajava.util.Paging;
 
 /**
  * @author dshannon

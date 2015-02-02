@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.ResourceState;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaResourceState;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class ResourceStateSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (ResourceState type : ResourceState.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaResourceState type : StravaResourceState.values()) {
 			String serialized = this.util.serialise(type);
-			ResourceState deserialized = this.util.deserialise(serialized, ResourceState.class);
+			StravaResourceState deserialized = this.util.deserialise(serialized, StravaResourceState.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "75";
-		ResourceState deserialized = this.util.deserialise(serialized, ResourceState.class);
-		assertEquals(deserialized, ResourceState.UNKNOWN);
+		StravaResourceState deserialized = this.util.deserialise(serialized, StravaResourceState.class);
+		assertEquals(deserialized, StravaResourceState.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		ResourceState prompt = this.util.deserialise("", ResourceState.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaResourceState prompt = this.util.deserialise("", StravaResourceState.class);
 		assertNull(prompt);
 	}
 

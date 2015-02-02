@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.ClubType;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaClubType;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class ClubTypeSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (ClubType type : ClubType.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaClubType type : StravaClubType.values()) {
 			String serialized = this.util.serialise(type);
-			ClubType deserialized = this.util.deserialise(serialized, ClubType.class);
+			StravaClubType deserialized = this.util.deserialise(serialized, StravaClubType.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		ClubType deserialized = this.util.deserialise(serialized, ClubType.class);
-		assertEquals(deserialized, ClubType.UNKNOWN);
+		StravaClubType deserialized = this.util.deserialise(serialized, StravaClubType.class);
+		assertEquals(deserialized, StravaClubType.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		ClubType prompt = this.util.deserialise("", ClubType.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaClubType prompt = this.util.deserialise("", StravaClubType.class);
 		assertNull(prompt);
 	}
 

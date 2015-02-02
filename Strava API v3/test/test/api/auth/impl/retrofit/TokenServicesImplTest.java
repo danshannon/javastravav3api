@@ -5,15 +5,14 @@ import static org.junit.Assert.fail;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import stravajava.api.v3.auth.TokenServices;
+import stravajava.api.v3.auth.impl.retrofit.TokenServicesImpl;
+import stravajava.api.v3.auth.model.TokenResponse;
+import stravajava.api.v3.service.AthleteServices;
+import stravajava.api.v3.service.exception.UnauthorizedException;
+import stravajava.api.v3.service.impl.retrofit.AthleteServicesImpl;
 import test.TestHttpUtils;
 import test.TestUtils;
-
-import com.danshannon.strava.api.auth.TokenServices;
-import com.danshannon.strava.api.auth.impl.retrofit.TokenServicesImpl;
-import com.danshannon.strava.api.auth.model.TokenResponse;
-import com.danshannon.strava.api.service.AthleteServices;
-import com.danshannon.strava.api.service.exception.UnauthorizedException;
-import com.danshannon.strava.api.service.impl.retrofit.AthleteServicesImpl;
 
 public class TokenServicesImplTest {
 	private static TestHttpUtils HTTP_UTILITIES;

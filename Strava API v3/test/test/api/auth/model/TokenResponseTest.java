@@ -6,7 +6,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
-import com.danshannon.strava.api.auth.model.TokenResponse;
+import stravajava.api.v3.auth.model.TokenResponse;
 
 /**
  * @author dshannon

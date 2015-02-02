@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.LeaderboardDateRange;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaLeaderboardDateRange;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class LeaderboardDateRangeSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (LeaderboardDateRange type : LeaderboardDateRange.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaLeaderboardDateRange type : StravaLeaderboardDateRange.values()) {
 			String serialized = this.util.serialise(type);
-			LeaderboardDateRange deserialized = this.util.deserialise(serialized, LeaderboardDateRange.class);
+			StravaLeaderboardDateRange deserialized = this.util.deserialise(serialized, StravaLeaderboardDateRange.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		LeaderboardDateRange deserialized = this.util.deserialise(serialized, LeaderboardDateRange.class);
-		assertEquals(deserialized, LeaderboardDateRange.UNKNOWN);
+		StravaLeaderboardDateRange deserialized = this.util.deserialise(serialized, StravaLeaderboardDateRange.class);
+		assertEquals(deserialized, StravaLeaderboardDateRange.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		LeaderboardDateRange prompt = this.util.deserialise("", LeaderboardDateRange.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaLeaderboardDateRange prompt = this.util.deserialise("", StravaLeaderboardDateRange.class);
 		assertNull(prompt);
 	}
 

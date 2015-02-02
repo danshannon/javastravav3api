@@ -6,7 +6,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
-import com.danshannon.strava.api.model.MapPoint;
+import stravajava.api.v3.model.StravaMapPoint;
 
 /**
  * @author dshannon
@@ -16,11 +16,11 @@ public class MapPointTest {
 
 	@Test
 	public void test() {
-		new BeanTester().testBean(MapPoint.class);
+		new BeanTester().testBean(StravaMapPoint.class);
 	}
 
 	@Test
 	public void testEqualsMethod() {
-		EqualsVerifier.forClass(MapPoint.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
+		EqualsVerifier.forClass(StravaMapPoint.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
 	}
 }

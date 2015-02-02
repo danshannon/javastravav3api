@@ -6,7 +6,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
-import com.danshannon.strava.api.model.Stream;
+import stravajava.api.v3.model.StravaStream;
 
 /**
  * @author dshannon
@@ -16,11 +16,11 @@ public class StreamTest {
 
 	@Test
 	public void test() {
-		new BeanTester().testBean(Stream.class);
+		new BeanTester().testBean(StravaStream.class);
 	}
 
 	@Test
 	public void testEqualsMethod() {
-		EqualsVerifier.forClass(Stream.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
+		EqualsVerifier.forClass(StravaStream.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
 	}
 }

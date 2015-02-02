@@ -8,7 +8,7 @@ import org.meanbean.test.BeanTester;
 import org.meanbean.test.Configuration;
 import org.meanbean.test.ConfigurationBuilder;
 
-import com.danshannon.strava.api.model.Segment;
+import stravajava.api.v3.model.StravaSegment;
 
 /**
  * @author dshannon
@@ -25,11 +25,11 @@ public class SegmentTest {
 		Configuration customConfiguration = new ConfigurationBuilder()
 			.ignoreProperty("athletePrEffort")
 			.build();
-		tester.testBean(Segment.class,customConfiguration);
+		tester.testBean(StravaSegment.class,customConfiguration);
 	}
 
 	@Test
 	public void testEqualsMethod() {
-		EqualsVerifier.forClass(Segment.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
+		EqualsVerifier.forClass(StravaSegment.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
 	}
 }

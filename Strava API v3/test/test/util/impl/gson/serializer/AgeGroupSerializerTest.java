@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.AgeGroup;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaAgeGroup;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class AgeGroupSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (AgeGroup ageGroup : AgeGroup.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaAgeGroup ageGroup : StravaAgeGroup.values()) {
 			String serialized = this.util.serialise(ageGroup);
-			AgeGroup deserialized = this.util.deserialise(serialized, AgeGroup.class);
+			StravaAgeGroup deserialized = this.util.deserialise(serialized, StravaAgeGroup.class);
 			assertEquals(ageGroup, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		AgeGroup deserialized = this.util.deserialise(serialized, AgeGroup.class);
-		assertEquals(deserialized, AgeGroup.UNKNOWN);
+		StravaAgeGroup deserialized = this.util.deserialise(serialized, StravaAgeGroup.class);
+		assertEquals(deserialized, StravaAgeGroup.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		AgeGroup group = this.util.deserialise("", AgeGroup.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaAgeGroup group = this.util.deserialise("", StravaAgeGroup.class);
 		assertNull(group);
 	}
 

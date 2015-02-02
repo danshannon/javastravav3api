@@ -8,7 +8,7 @@ import org.meanbean.test.BeanTester;
 import org.meanbean.test.Configuration;
 import org.meanbean.test.ConfigurationBuilder;
 
-import com.danshannon.strava.api.model.BestEffort;
+import stravajava.api.v3.model.StravaBestRunningEffort;
 
 /**
  * @author dshannon
@@ -21,15 +21,15 @@ public class BestEffortTest {
 		BeanTester tester = new BeanTester();
 		
 		// TODO 
-		// Ignore Segment because it causes an infinite loop
+		// Ignore StravaSegment because it causes an infinite loop
 		Configuration config = new ConfigurationBuilder()
 			.ignoreProperty("segment")
 			.build();
-		tester.testBean(BestEffort.class, config);
+		tester.testBean(StravaBestRunningEffort.class, config);
 	}
 
 	@Test
 	public void testEqualsMethod() {
-		EqualsVerifier.forClass(BestEffort.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
+		EqualsVerifier.forClass(StravaBestRunningEffort.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
 	}
 }

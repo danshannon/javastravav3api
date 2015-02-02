@@ -9,12 +9,11 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
+import stravajava.api.v3.model.StravaGear;
+import stravajava.api.v3.service.GearServices;
+import stravajava.api.v3.service.exception.UnauthorizedException;
+import stravajava.api.v3.service.impl.retrofit.GearServicesImpl;
 import test.TestUtils;
-
-import com.danshannon.strava.api.model.Gear;
-import com.danshannon.strava.api.service.GearServices;
-import com.danshannon.strava.api.service.exception.UnauthorizedException;
-import com.danshannon.strava.api.service.impl.retrofit.GearServicesImpl;
 
 /**
  * <p>Unit tests for {@link GearServicesImpl}</p>
@@ -101,11 +100,11 @@ public class GearServicesImplTest {
 	// Test cases
 	// 1. Valid gear
 	// 2. Invalid gear
-	// 3. Gear which doesn't belong to the current athlete
+	// 3. StravaGear which doesn't belong to the current athlete
 	@Test
 	public void testGetGear_validGear() throws UnauthorizedException {
 		GearServices service = getGearService();
-		Gear gear = service.getGear(TestUtils.GEAR_VALID_ID);
+		StravaGear gear = service.getGear(TestUtils.GEAR_VALID_ID);
 		
 		assertNotNull(gear);
 		assertEquals("Retrieved the wrong gear id",TestUtils.GEAR_VALID_ID,gear.getId());
@@ -114,7 +113,7 @@ public class GearServicesImplTest {
 	@Test
 	public void testGetGear_invalidGear() throws UnauthorizedException {
 		GearServices service = getGearService();
-		Gear gear = service.getGear(TestUtils.GEAR_INVALID_ID);
+		StravaGear gear = service.getGear(TestUtils.GEAR_INVALID_ID);
 		
 		assertNull(gear);
 	}
@@ -122,7 +121,7 @@ public class GearServicesImplTest {
 	@Test
 	public void testGetGear_otherAthlete() throws UnauthorizedException {
 		GearServices service = getGearService();
-		Gear gear = service.getGear(TestUtils.GEAR_OTHER_ATHLETE_ID);
+		StravaGear gear = service.getGear(TestUtils.GEAR_OTHER_ATHLETE_ID);
 		
 		assertNull(gear);
 	}

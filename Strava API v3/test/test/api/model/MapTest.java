@@ -6,7 +6,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
-import com.danshannon.strava.api.model.Map;
+import stravajava.api.v3.model.StravaMap;
 
 /**
  * @author dshannon
@@ -16,11 +16,11 @@ public class MapTest {
 
 	@Test
 	public void test() {
-		new BeanTester().testBean(Map.class);
+		new BeanTester().testBean(StravaMap.class);
 	}
 
 	@Test
 	public void testEqualsMethod() {
-		EqualsVerifier.forClass(Map.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
+		EqualsVerifier.forClass(StravaMap.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
 	}
 }

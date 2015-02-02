@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.auth.ref.AuthorisationResponseType;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.auth.ref.AuthorisationResponseType;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,7 +26,7 @@ public class AuthorisationResponseTypeSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
+	public void testRoundTrip() throws JsonSerialisationException {
 		for (AuthorisationResponseType type : AuthorisationResponseType.values()) {
 			String serialized = this.util.serialise(type);
 			AuthorisationResponseType deserialized = this.util.deserialise(serialized, AuthorisationResponseType.class);
@@ -35,7 +35,7 @@ public class AuthorisationResponseTypeSerializerTest {
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
 		AuthorisationResponseType deserialized = this.util.deserialise(serialized, AuthorisationResponseType.class);
@@ -43,7 +43,7 @@ public class AuthorisationResponseTypeSerializerTest {
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
 		AuthorisationResponseType prompt = this.util.deserialise("", AuthorisationResponseType.class);
 		assertNull(prompt);
 	}

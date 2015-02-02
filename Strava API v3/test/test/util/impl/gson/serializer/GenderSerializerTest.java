@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.Gender;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaGender;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class GenderSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (Gender type : Gender.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaGender type : StravaGender.values()) {
 			String serialized = this.util.serialise(type);
-			Gender deserialized = this.util.deserialise(serialized, Gender.class);
+			StravaGender deserialized = this.util.deserialise(serialized, StravaGender.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		Gender deserialized = this.util.deserialise(serialized, Gender.class);
-		assertEquals(deserialized, Gender.UNKNOWN);
+		StravaGender deserialized = this.util.deserialise(serialized, StravaGender.class);
+		assertEquals(deserialized, StravaGender.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		Gender prompt = this.util.deserialise("", Gender.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaGender prompt = this.util.deserialise("", StravaGender.class);
 		assertNull(prompt);
 	}
 

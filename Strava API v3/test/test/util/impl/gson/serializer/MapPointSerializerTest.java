@@ -7,10 +7,10 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.MapPoint;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.StravaMapPoint;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -25,16 +25,16 @@ public class MapPointSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		MapPoint point = new MapPoint(135.4f,-40f);
+	public void testRoundTrip() throws JsonSerialisationException {
+		StravaMapPoint point = new StravaMapPoint(135.4f,-40f);
 		String serialised = this.util.serialise(point);
-		MapPoint deserialised = this.util.deserialise(serialised, MapPoint.class);
+		StravaMapPoint deserialised = this.util.deserialise(serialised, StravaMapPoint.class);
 		assertEquals(point,deserialised);
 	}
 	
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		MapPoint prompt = this.util.deserialise("", MapPoint.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaMapPoint prompt = this.util.deserialise("", StravaMapPoint.class);
 		assertNull(prompt);
 	}
 

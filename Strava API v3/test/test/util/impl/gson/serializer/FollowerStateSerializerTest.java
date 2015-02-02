@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.FollowerState;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaFollowerState;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,25 +26,25 @@ public class FollowerStateSerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (FollowerState type : FollowerState.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaFollowerState type : StravaFollowerState.values()) {
 			String serialized = this.util.serialise(type);
-			FollowerState deserialized = this.util.deserialise(serialized, FollowerState.class);
+			StravaFollowerState deserialized = this.util.deserialise(serialized, StravaFollowerState.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		TextProducer text = Fairy.create().textProducer();
 		String serialized = "\"" + text.word(2) + "\"";
-		FollowerState deserialized = this.util.deserialise(serialized, FollowerState.class);
-		assertEquals(deserialized, FollowerState.UNKNOWN);
+		StravaFollowerState deserialized = this.util.deserialise(serialized, StravaFollowerState.class);
+		assertEquals(deserialized, StravaFollowerState.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		FollowerState prompt = this.util.deserialise("", FollowerState.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaFollowerState prompt = this.util.deserialise("", StravaFollowerState.class);
 		assertNull(prompt);
 	}
 

@@ -8,12 +8,11 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import stravajava.api.v3.model.StravaSegmentEffort;
+import stravajava.api.v3.service.SegmentEffortServices;
+import stravajava.api.v3.service.exception.UnauthorizedException;
+import stravajava.api.v3.service.impl.retrofit.SegmentEffortServicesImpl;
 import test.TestUtils;
-
-import com.danshannon.strava.api.model.SegmentEffort;
-import com.danshannon.strava.api.service.SegmentEffortServices;
-import com.danshannon.strava.api.service.exception.UnauthorizedException;
-import com.danshannon.strava.api.service.impl.retrofit.SegmentEffortServicesImpl;
 
 /**
  * <p>Unit tests for {@link SegmentEffortServicesImpl}</p>
@@ -97,7 +96,7 @@ public class SegmentEffortServicesImplTest {
 	public void testGetSegmentEffort_valid() throws UnauthorizedException {
 		SegmentEffortServices service = getService();
 		Long id = TestUtils.SEGMENT_EFFORT_VALID_ID;
-		SegmentEffort effort = service.getSegmentEffort(id);
+		StravaSegmentEffort effort = service.getSegmentEffort(id);
 		assertNotNull(effort);
 		assertEquals(id,effort.getId());
 	}
@@ -106,7 +105,7 @@ public class SegmentEffortServicesImplTest {
 	public void testGetSegmentEffort_invalid() throws UnauthorizedException {
 		SegmentEffortServices service = getService();
 		Long id = TestUtils.SEGMENT_EFFORT_INVALID_ID;
-		SegmentEffort effort = service.getSegmentEffort(id);
+		StravaSegmentEffort effort = service.getSegmentEffort(id);
 		assertNull(effort);
 	}
 
@@ -114,7 +113,7 @@ public class SegmentEffortServicesImplTest {
 	public void testGetSegmentEffort_private() throws UnauthorizedException {
 		SegmentEffortServices service = getService();
 		Long id = TestUtils.SEGMENT_EFFORT_PRIVATE_ID;
-		SegmentEffort effort = service.getSegmentEffort(id);
+		StravaSegmentEffort effort = service.getSegmentEffort(id);
 		assertNotNull(effort);
 		assertEquals(id,effort.getId());
 	}

@@ -6,7 +6,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
-import com.danshannon.strava.api.model.ActivityZone;
+import stravajava.api.v3.model.StravaActivityZone;
 
 /**
  * @author dshannon
@@ -16,11 +16,11 @@ public class ActivityZoneTest {
 
 	@Test
 	public void test() {
-		new BeanTester().testBean(ActivityZone.class);
+		new BeanTester().testBean(StravaActivityZone.class);
 	}
 
 	@Test
 	public void testEqualsMethod() {
-		EqualsVerifier.forClass(ActivityZone.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
+		EqualsVerifier.forClass(StravaActivityZone.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
 	}
 }

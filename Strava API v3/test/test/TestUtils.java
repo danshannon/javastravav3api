@@ -5,15 +5,14 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
 
+import stravajava.api.v3.auth.TokenServices;
+import stravajava.api.v3.auth.impl.retrofit.TokenServicesImpl;
+import stravajava.api.v3.auth.ref.AuthorisationScope;
+import stravajava.api.v3.model.StravaActivity;
+import stravajava.api.v3.model.reference.StravaActivityType;
+import stravajava.api.v3.service.exception.BadRequestException;
+import stravajava.api.v3.service.exception.UnauthorizedException;
 import test.api.service.impl.retrofit.ActivityServicesImplTest;
-
-import com.danshannon.strava.api.auth.TokenServices;
-import com.danshannon.strava.api.auth.impl.retrofit.TokenServicesImpl;
-import com.danshannon.strava.api.auth.ref.AuthorisationScope;
-import com.danshannon.strava.api.model.Activity;
-import com.danshannon.strava.api.model.reference.ActivityType;
-import com.danshannon.strava.api.service.exception.BadRequestException;
-import com.danshannon.strava.api.service.exception.UnauthorizedException;
 
 /**
  * @author Dan Shannon
@@ -46,7 +45,7 @@ public class TestUtils {
 	public static Integer ACTIVITY_WITH_ZONES;
 	public static Integer ACTIVITY_WITHOUT_ZONES;
 	public static Integer ACTIVITY_PRIVATE_OTHER_USER;
-	public static Activity ACTIVITY_DEFAULT_FOR_CREATE;
+	public static StravaActivity ACTIVITY_DEFAULT_FOR_CREATE;
 	
 	public static Integer ATHLETE_AUTHENTICATED_ID;
 	public static Integer ATHLETE_VALID_ID;
@@ -139,10 +138,10 @@ public class TestUtils {
 	/**
 	 * @return
 	 */
-	private static Activity createDefaultActivityForCreation() {
-		Activity activity = new Activity();
+	private static StravaActivity createDefaultActivityForCreation() {
+		StravaActivity activity = new StravaActivity();
 		activity.setName("TO BE DELETED");
-		activity.setType(ActivityType.RIDE);
+		activity.setType(StravaActivityType.RIDE);
 		activity.setStartDateLocal(new Date());
 		activity.setElapsedTime(1000);
 		activity.setDescription("Created by Strava API v3 Java");

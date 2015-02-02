@@ -6,7 +6,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
-import com.danshannon.strava.api.model.Athlete;
+import stravajava.api.v3.model.StravaAthlete;
 
 /**
  * @author dshannon
@@ -16,11 +16,11 @@ public class AthleteTest {
 
 	@Test
 	public void test() {
-		new BeanTester().testBean(Athlete.class);
+		new BeanTester().testBean(StravaAthlete.class);
 	}
 
 	@Test
 	public void testEqualsMethod() {
-		EqualsVerifier.forClass(Athlete.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
+		EqualsVerifier.forClass(StravaAthlete.class).suppress(Warning.STRICT_INHERITANCE,Warning.NONFINAL_FIELDS).verify();
 	}
 }

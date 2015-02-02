@@ -8,10 +8,10 @@ import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.danshannon.strava.api.model.reference.ClimbCategory;
-import com.danshannon.strava.service.exception.ServiceException;
-import com.danshannon.strava.util.JsonUtil;
-import com.danshannon.strava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.model.reference.StravaClimbCategory;
+import stravajava.util.JsonUtil;
+import stravajava.util.exception.JsonSerialisationException;
+import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
@@ -26,24 +26,24 @@ public class ClimbCategorySerializerTest {
 	}
 
 	@Test
-	public void testRoundTrip() throws ServiceException {
-		for (ClimbCategory type : ClimbCategory.values()) {
+	public void testRoundTrip() throws JsonSerialisationException {
+		for (StravaClimbCategory type : StravaClimbCategory.values()) {
 			String serialized = this.util.serialise(type);
-			ClimbCategory deserialized = this.util.deserialise(serialized, ClimbCategory.class);
+			StravaClimbCategory deserialized = this.util.deserialise(serialized, StravaClimbCategory.class);
 			assertEquals(type, deserialized);
 		}
 	}
 	
 	@Test
-	public void testDeserializeUnknownValue() throws ServiceException {
+	public void testDeserializeUnknownValue() throws JsonSerialisationException {
 		String serialized = "75";
-		ClimbCategory deserialized = this.util.deserialise(serialized, ClimbCategory.class);
-		assertEquals(deserialized, ClimbCategory.UNKNOWN);
+		StravaClimbCategory deserialized = this.util.deserialise(serialized, StravaClimbCategory.class);
+		assertEquals(deserialized, StravaClimbCategory.UNKNOWN);
 	}
 
 	@Test
-	public void testNullDeserialisationSafety() throws ServiceException {
-		ClimbCategory prompt = this.util.deserialise("", ClimbCategory.class);
+	public void testNullDeserialisationSafety() throws JsonSerialisationException {
+		StravaClimbCategory prompt = this.util.deserialise("", StravaClimbCategory.class);
 		assertNull(prompt);
 	}
 
