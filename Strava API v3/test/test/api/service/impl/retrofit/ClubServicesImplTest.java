@@ -38,8 +38,8 @@ public class ClubServicesImplTest {
 		this.clubService = getClubService();
 		
 		// Make sure that the club memberships are right, before starting the tests
-		this.clubService.joinClub(TestUtils.CLUB_VALID_ID);
-		this.clubService.leaveClub(TestUtils.CLUB_PUBLIC_NON_MEMBER_ID);
+//		this.clubService.joinClub(TestUtils.CLUB_VALID_ID);
+//		this.clubService.leaveClub(TestUtils.CLUB_PUBLIC_NON_MEMBER_ID);
 	}
 	
 	
