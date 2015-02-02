@@ -14,8 +14,8 @@ import stravajava.api.v3.auth.model.TokenResponse;
 import stravajava.api.v3.auth.ref.AuthorisationScope;
 import stravajava.api.v3.service.exception.BadRequestException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
-import test.TestHttpUtils;
-import test.TestUtils;
+import test.utils.TestHttpUtils;
+import test.utils.TestUtils;
 
 public class AuthorisationServicesImplTest {
 	private static TestHttpUtils HTTP_UTILITIES;

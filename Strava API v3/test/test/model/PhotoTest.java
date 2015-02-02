@@ -1,0 +1,13 @@
+package test.model;
+
+import stravajava.model.Photo;
+import test.utils.BeanTest;
+
+public class PhotoTest extends BeanTest<Photo> {
+
+	@Override
+	protected Class<Photo> getClassUnderTest() {
+		return Photo.class;
+	}
+
+}

@@ -22,7 +22,7 @@ import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.AthleteServicesImpl;
 import stravajava.util.Paging;
-import test.TestUtils;
+import test.utils.TestUtils;
 
 /**
  * <p>Unit tests for {@link AthleteServicesImpl}</p>
