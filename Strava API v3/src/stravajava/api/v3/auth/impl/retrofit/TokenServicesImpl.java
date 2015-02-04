@@ -2,25 +2,18 @@ package stravajava.api.v3.auth.impl.retrofit;
 
 import java.util.HashMap;
 
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
 import stravajava.api.v3.auth.TokenServices;
 import stravajava.api.v3.auth.model.TokenResponse;
-import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.RetrofitErrorHandler;
-import stravajava.util.impl.gson.JsonUtilImpl;
+import stravajava.api.v3.service.impl.retrofit.Retrofit;
 
 /**
  * @author Dan Shannon
  *
  */
 public class TokenServicesImpl implements TokenServices {
-	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
-
-	private TokenServicesImpl(TokenServicesRetrofit restService) {
-		this.restService = restService;
+	private TokenServicesImpl(final String token) {
+		this.restService = Retrofit.retrofit(TokenServicesRetrofit.class, token, TokenServicesRetrofit.LOG_LEVEL);
 	}
 	
 	/**
@@ -35,19 +28,7 @@ public class TokenServicesImpl implements TokenServices {
 	public static TokenServices implementation(final String token) throws UnauthorizedException {
 		TokenServices restService = restServices.get(token);
 		if (restService == null) {
-			restService = new TokenServicesImpl(new RestAdapter.Builder()
-				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-				.setLogLevel(LOG_LEVEL)
-				.setEndpoint(Strava.ENDPOINT)
-				.setRequestInterceptor(new RequestInterceptor() {
-					@Override
-					public void intercept(RequestFacade request) {
-						request.addHeader("Authorization", "Bearer " + token);
-					}
-				})
-				.setErrorHandler(new RetrofitErrorHandler())
-				.build()
-				.create(TokenServicesRetrofit.class));
+			restService = new TokenServicesImpl(token);
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
