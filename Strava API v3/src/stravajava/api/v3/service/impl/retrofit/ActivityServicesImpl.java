@@ -6,9 +6,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
 import stravajava.api.v3.model.StravaActivity;
 import stravajava.api.v3.model.StravaActivityZone;
 import stravajava.api.v3.model.StravaAthlete;
@@ -22,17 +19,14 @@ import stravajava.api.v3.service.exception.BadRequestException;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
-import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author Dan Shannon
  *
  */
 public class ActivityServicesImpl implements ActivityServices {
-	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
-	
-	private ActivityServicesImpl(ActivityServicesRetrofit restService) {
-		this.restService = restService;
+	private ActivityServicesImpl(String token) {
+		this.restService = Retrofit.retrofit(ActivityServicesRetrofit.class, token, ActivityServicesRetrofit.LOG_LEVEL);
 	}
 	
 	/**
@@ -46,19 +40,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	public static ActivityServices implementation(final String token) {
 		ActivityServices restService = restServices.get(token);
 		if (restService == null) {
-			restService = new ActivityServicesImpl(new RestAdapter.Builder()
-				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-				.setLogLevel(LOG_LEVEL)
-				.setEndpoint(Strava.ENDPOINT)
-				.setRequestInterceptor(new RequestInterceptor() {
-					@Override
-					public void intercept(RequestFacade request) {
-						request.addHeader("Authorization", "Bearer " + token);
-					}
-				})
-				.setErrorHandler(new RetrofitErrorHandler())
-				.build()
-				.create(ActivityServicesRetrofit.class));
+			restService = new ActivityServicesImpl(token);
 			
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);

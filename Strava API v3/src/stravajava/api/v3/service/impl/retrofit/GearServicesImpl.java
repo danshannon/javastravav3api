@@ -2,21 +2,14 @@ package stravajava.api.v3.service.impl.retrofit;
 
 import java.util.HashMap;
 
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
 import stravajava.api.v3.model.StravaGear;
 import stravajava.api.v3.service.GearServices;
-import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.util.impl.gson.JsonUtilImpl;
 
 public class GearServicesImpl implements GearServices {
-	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
-	
-	private GearServicesImpl(GearServicesRetrofit restService) {
-		this.restService = restService;
+	private GearServicesImpl(String token) {
+		this.restService = Retrofit.retrofit(GearServicesRetrofit.class, token, GearServicesRetrofit.LOG_LEVEL);
 	}
 	
 	/**
@@ -33,19 +26,7 @@ public class GearServicesImpl implements GearServices {
 	public static GearServices implementation(final String token) {
 		GearServices restService = restServices.get(token);
 		if (restService == null) {
-			restService = new GearServicesImpl(new RestAdapter.Builder()
-				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-				.setLogLevel(LOG_LEVEL)
-				.setEndpoint(Strava.ENDPOINT)
-				.setRequestInterceptor(new RequestInterceptor() {
-					@Override
-					public void intercept(RequestFacade request) {
-						request.addHeader("Authorization", "Bearer " + token);
-					}
-				})
-				.setErrorHandler(new RetrofitErrorHandler())
-				.build()
-				.create(GearServicesRetrofit.class));
+			restService = new GearServicesImpl(token);
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);

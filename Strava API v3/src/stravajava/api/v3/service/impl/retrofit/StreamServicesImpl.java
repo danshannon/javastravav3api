@@ -4,26 +4,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
 import stravajava.api.v3.model.StravaStream;
 import stravajava.api.v3.model.reference.StravaStreamResolutionType;
 import stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import stravajava.api.v3.model.reference.StravaStreamType;
-import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.StreamServices;
-import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
  *
  */
 public class StreamServicesImpl implements StreamServices {
-	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
-	
-	private StreamServicesImpl(StreamServicesRetrofit restService) {
-		this.restService = restService;
+	private StreamServicesImpl(String token) {
+		this.restService = Retrofit.retrofit(StreamServicesRetrofit.class, token, StreamServicesRetrofit.LOG_LEVEL);
 	}
 	
 	/**
@@ -39,19 +32,7 @@ public class StreamServicesImpl implements StreamServices {
 	public static StreamServices implementation(final String token) {
 		StreamServices restService = restServices.get(token);
 		if (restService == null) {
-			restService = new StreamServicesImpl(new RestAdapter.Builder()
-				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-				.setLogLevel(LOG_LEVEL)
-				.setEndpoint(Strava.ENDPOINT)
-				.setRequestInterceptor(new RequestInterceptor() {
-					@Override
-					public void intercept(RequestFacade request) {
-						request.addHeader("Authorization", "Bearer " + token);
-					}
-				})
-				.setErrorHandler(new RetrofitErrorHandler())
-				.build()
-				.create(StreamServicesRetrofit.class));
+			restService = new StreamServicesImpl(token);
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);

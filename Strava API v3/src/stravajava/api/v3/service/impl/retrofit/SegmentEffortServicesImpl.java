@@ -2,30 +2,21 @@ package stravajava.api.v3.service.impl.retrofit;
 
 import java.util.HashMap;
 
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
 import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.service.SegmentEffortServices;
-import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author Dan Shannon
  *
  */
 public class SegmentEffortServicesImpl implements SegmentEffortServices {
-	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
-	
-	private SegmentEffortServicesImpl(SegmentEffortServicesRetrofit restService) {
-		this.restService = restService;
+	private SegmentEffortServicesImpl(String token) {
+		this.restService = Retrofit.retrofit(SegmentEffortServicesRetrofit.class, token, SegmentEffortServicesRetrofit.LOG_LEVEL);
 	}
 	
 	/**
-	 * TODO Should move all of this into a single big StravaAPIRetrofit interface, so that there's only one instance of one big service per token???
-	 * 
 	 * <p>Returns an implementation of {@link SegmentEffortServices segment effort services}</p>
 	 * 
 	 * <p>Instances are cached so that if 2 requests are made for the same token, the same instance is returned</p>
@@ -36,19 +27,7 @@ public class SegmentEffortServicesImpl implements SegmentEffortServices {
 	public static SegmentEffortServices implementation(final String token) {
 		SegmentEffortServices restService = restServices.get(token);
 		if (restService == null) {
-			restService = new SegmentEffortServicesImpl(new RestAdapter.Builder()
-				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-				.setLogLevel(LOG_LEVEL)
-				.setEndpoint(Strava.ENDPOINT)
-				.setRequestInterceptor(new RequestInterceptor() {
-					@Override
-					public void intercept(RequestFacade request) {
-						request.addHeader("Authorization", "Bearer " + token);
-					}
-				})
-				.setErrorHandler(new RetrofitErrorHandler())
-				.build()
-				.create(SegmentEffortServicesRetrofit.class));
+			restService = new SegmentEffortServicesImpl(token);
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);

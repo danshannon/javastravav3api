@@ -8,9 +8,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
 import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.model.reference.StravaGender;
@@ -19,17 +16,14 @@ import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
-import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author Dan Shannon
  *
  */
 public class AthleteServicesImpl implements AthleteServices {
-	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
-	
-	private AthleteServicesImpl(AthleteServicesRetrofit restService) {
-		this.restService = restService;
+	private AthleteServicesImpl(final String token) {
+		this.restService = Retrofit.retrofit(AthleteServicesRetrofit.class, token, AthleteServicesRetrofit.LOG_LEVEL);
 	}
 	
 	/**
@@ -39,23 +33,11 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * 
 	 * @param token The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the athlete services
-	 */
+	 */ 
 	public static AthleteServices implementation(final String token) {
 		AthleteServices restService = restServices.get(token);
 		if (restService == null) {
-			restService = new AthleteServicesImpl(new RestAdapter.Builder()
-				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-				.setLogLevel(LOG_LEVEL)
-				.setEndpoint(Strava.ENDPOINT)
-				.setRequestInterceptor(new RequestInterceptor() {
-					@Override
-					public void intercept(RequestFacade request) {
-						request.addHeader("Authorization", "Bearer " + token);
-					}
-				})
-				.setErrorHandler(new RetrofitErrorHandler())
-				.build()
-				.create(AthleteServicesRetrofit.class));
+			restService = new AthleteServicesImpl(token);
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);

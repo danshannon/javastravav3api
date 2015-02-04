@@ -2,6 +2,7 @@ package stravajava.api.v3.service.impl.retrofit;
 
 import java.io.File;
 
+import retrofit.RestAdapter;
 import retrofit.http.Field;
 import retrofit.http.GET;
 import retrofit.http.Multipart;
@@ -16,6 +17,8 @@ import stravajava.api.v3.model.reference.StravaActivityType;
  *
  */
 public interface UploadServicesRetrofit {
+	public static final RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+
 
 	/**
 	 * @see stravajava.api.v3.service.UploadServices#upload(stravajava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)

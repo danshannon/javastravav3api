@@ -1,5 +1,6 @@
 package stravajava.api.v3.service.impl.retrofit;
 
+import retrofit.RestAdapter;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
@@ -22,6 +23,9 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface ActivityServicesRetrofit {
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	
+
 	
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)

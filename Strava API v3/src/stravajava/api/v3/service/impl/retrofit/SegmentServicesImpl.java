@@ -10,9 +10,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
 import stravajava.api.v3.model.StravaMapPoint;
 import stravajava.api.v3.model.StravaSegment;
 import stravajava.api.v3.model.StravaSegmentEffort;
@@ -29,17 +26,14 @@ import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
-import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author danshannon
  *
  */
 public class SegmentServicesImpl implements SegmentServices {
-	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
-	
-	private SegmentServicesImpl(SegmentServicesRetrofit restService) {
-		this.restService = restService;
+	private SegmentServicesImpl(String token) {
+		this.restService = Retrofit.retrofit(SegmentServicesRetrofit.class, token, SegmentServicesRetrofit.LOG_LEVEL);
 	}
 	
 	/**
@@ -53,19 +47,7 @@ public class SegmentServicesImpl implements SegmentServices {
 	public static SegmentServices implementation(final String token) {
 		SegmentServices restService = restServices.get(token);
 		if (restService == null) {
-			restService = new SegmentServicesImpl(new RestAdapter.Builder()
-				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-				.setLogLevel(LOG_LEVEL)
-				.setEndpoint(Strava.ENDPOINT)
-				.setRequestInterceptor(new RequestInterceptor() {
-					@Override
-					public void intercept(RequestFacade request) {
-						request.addHeader("Authorization", "Bearer " + token);
-					}
-				})
-				.setErrorHandler(new RetrofitErrorHandler())
-				.build()
-				.create(SegmentServicesRetrofit.class));
+			restService = new SegmentServicesImpl(token);
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);

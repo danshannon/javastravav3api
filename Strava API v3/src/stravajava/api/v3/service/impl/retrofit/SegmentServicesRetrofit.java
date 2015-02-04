@@ -5,6 +5,7 @@ package stravajava.api.v3.service.impl.retrofit;
 
 import java.util.Date;
 
+import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -26,7 +27,8 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface SegmentServicesRetrofit {
-
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#getSegment(java.lang.Integer)
 	 */

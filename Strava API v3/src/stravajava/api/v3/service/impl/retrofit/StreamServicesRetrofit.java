@@ -1,5 +1,6 @@
 package stravajava.api.v3.service.impl.retrofit;
 
+import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -13,7 +14,8 @@ import stravajava.api.v3.model.reference.StravaStreamType;
  *
  */
 public interface StreamServicesRetrofit {
-
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	
 	/**
 	 * @see stravajava.api.v3.service.StreamServices#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
