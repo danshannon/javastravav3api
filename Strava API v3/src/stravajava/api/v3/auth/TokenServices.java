@@ -1,5 +1,6 @@
 package stravajava.api.v3.auth;
 
+import stravajava.api.v3.auth.model.Token;
 import stravajava.api.v3.auth.model.TokenResponse;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
@@ -39,7 +40,7 @@ public interface TokenServices {
 	 * @return Responds with the access token submitted with the request.
 	 * @throws UnauthorizedException if the token is not allowed to be deauthorised
 	 */
-	public TokenResponse deauthorise(String accessToken) throws UnauthorizedException;
+	public TokenResponse deauthorise(Token accessToken) throws UnauthorizedException;
 	
 	
 }

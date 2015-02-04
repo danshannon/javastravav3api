@@ -20,6 +20,7 @@ import org.jsoup.select.Elements;
 
 import stravajava.api.v3.auth.AuthorisationServices;
 import stravajava.api.v3.auth.impl.retrofit.AuthorisationServicesImpl;
+import stravajava.api.v3.auth.model.Token;
 import stravajava.api.v3.auth.model.TokenResponse;
 import stravajava.api.v3.auth.ref.AuthorisationApprovalPrompt;
 import stravajava.api.v3.auth.ref.AuthorisationResponseType;
@@ -269,7 +270,7 @@ public class TestHttpUtils {
 	 * @throws BadRequestException 
 	 * @throws UnauthorizedException If client secret is invalid
 	 */
-	public String getStravaAccessToken(String username, String password, AuthorisationScope... scopes) throws BadRequestException, UnauthorizedException {
+	public Token getStravaAccessToken(String username, String password, AuthorisationScope... scopes) throws BadRequestException, UnauthorizedException {
 		AuthorisationServices service = new AuthorisationServicesImpl();
 		
 		// Login
@@ -281,7 +282,8 @@ public class TestHttpUtils {
 		
 		// Perform the token exchange
 		TokenResponse tokenResponse = service.tokenExchange(TestUtils.STRAVA_APPLICATION_ID, TestUtils.STRAVA_CLIENT_SECRET, approvalCode);
-		return tokenResponse.getAccessToken();
+		Token token = new Token(tokenResponse,scopes);
+		return token;
 	}
 
 }

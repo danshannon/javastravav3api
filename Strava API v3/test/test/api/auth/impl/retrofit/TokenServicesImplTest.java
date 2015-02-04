@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import stravajava.api.v3.auth.TokenServices;
 import stravajava.api.v3.auth.impl.retrofit.TokenServicesImpl;
+import stravajava.api.v3.auth.model.Token;
 import stravajava.api.v3.auth.model.TokenResponse;
 import stravajava.api.v3.service.AthleteServices;
 import stravajava.api.v3.service.exception.UnauthorizedException;
@@ -64,18 +65,17 @@ public class TokenServicesImplTest {
 	@Test
 	public void testDeauthorise_invalidToken() throws UnauthorizedException {
 		// 1. Get a valid token
-		String token = TestUtils.getValidToken();
+		Token token = TestUtils.getValidTokenAsToken();
 		
 		// 2. Get a service implementation for the valid token
-		TokenServices service = TokenServicesImpl.implementation(token);
+		TokenServices service = TokenServicesImpl.implementation(token.getToken());
 		
 		// 3. Get an INVALID token
-		String invalidToken = TestUtils.INVALID_TOKEN;
+		token.setToken(TestUtils.INVALID_TOKEN);
 		
 		// 4. Attempt to deauthorise the invalid token
 		try {
-		@SuppressWarnings("unused")
-		TokenResponse response = service.deauthorise(invalidToken);
+			service.deauthorise(token);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour
 		}
@@ -90,10 +90,10 @@ public class TokenServicesImplTest {
 	@Test
 	public void testDeauthorise_deauthorisedToken() throws UnauthorizedException {
 		// 1. Get a deauthorised token
-		String token = TestUtils.getValidToken();
+		Token token = TestUtils.getValidTokenAsToken();
 		
 		// 2. Attempt to deauthorise it twice
-		TokenServices service = TokenServicesImpl.implementation(token);
+		TokenServices service = TokenServicesImpl.implementation(token.getToken());
 		@SuppressWarnings("unused")
 		TokenResponse response = service.deauthorise(token);
 		try {

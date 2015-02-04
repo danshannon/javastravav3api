@@ -5,8 +5,10 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
 
+import stravajava.api.v3.auth.TokenManager;
 import stravajava.api.v3.auth.TokenServices;
 import stravajava.api.v3.auth.impl.retrofit.TokenServicesImpl;
+import stravajava.api.v3.auth.model.Token;
 import stravajava.api.v3.auth.ref.AuthorisationScope;
 import stravajava.api.v3.model.StravaActivity;
 import stravajava.api.v3.model.reference.StravaActivityType;
@@ -172,27 +174,45 @@ public class TestUtils {
 		return properties;
 	}
 	
-	public static String getValidToken() {
-		try {
-			return HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD, AuthorisationScope.VIEW_PRIVATE, AuthorisationScope.WRITE);
-		} catch (BadRequestException | UnauthorizedException e) {
-			return null;
+	public static Token getValidTokenAsToken() {
+		Token token = TokenManager.implementation().retrieveTokenWithScope(USERNAME, AuthorisationScope.VIEW_PRIVATE, AuthorisationScope.WRITE);
+		if (token == null) {
+			try {
+				token = HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD, AuthorisationScope.VIEW_PRIVATE, AuthorisationScope.WRITE);
+				TokenManager.implementation().storeToken(token);
+			} catch (BadRequestException | UnauthorizedException e) {
+				return null;
+			}
 		}
+		return token;
+	}
+	
+	public static String getValidToken() {
+		return getValidTokenAsToken().getToken();
+	}
+	
+	public static Token getValidTokenWithoutWriteAccessAsToken() {
+		Token token = TokenManager.implementation().retrieveTokenWithExactScope(USERNAME);
+		if (token == null) {
+			try {
+				token = HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD);
+				TokenManager.implementation().storeToken(token);
+			} catch (BadRequestException | UnauthorizedException e) {
+				return null;
+			}
+		}
+		return token;
 	}
 	
 	public static String getValidTokenWithoutWriteAccess() {
-		try {
-			return HTTP_UTILS.getStravaAccessToken(USERNAME, PASSWORD);
-		} catch (BadRequestException | UnauthorizedException e) {
-			return null;
-		}
+		return getValidTokenWithoutWriteAccessAsToken().getToken();
 	}
 	
 	public static String getRevokedToken() throws UnauthorizedException {
-		String token = getValidToken();
-		TokenServices service = TokenServicesImpl.implementation(token);
+		Token token = getValidTokenAsToken();
+		TokenServices service = TokenServicesImpl.implementation(token.getToken());
 		service.deauthorise(token);
-		return token;
+		return token.getToken();
 	}
 
 }

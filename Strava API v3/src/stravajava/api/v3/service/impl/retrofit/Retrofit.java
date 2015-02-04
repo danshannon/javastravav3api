@@ -15,7 +15,7 @@ public class Retrofit {
 		// You can't have one of these
 	}
 	
-	public static <T> T retrofit(Class<T> class1, String token, RestAdapter.LogLevel logLevel) {
+	public static <T> T retrofit(final Class<T> class1, final String token, final RestAdapter.LogLevel logLevel) {
 		return new RestAdapter.Builder()
 				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
 				.setLogLevel(logLevel)

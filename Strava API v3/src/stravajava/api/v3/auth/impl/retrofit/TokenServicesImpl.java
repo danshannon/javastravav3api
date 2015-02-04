@@ -2,7 +2,9 @@ package stravajava.api.v3.auth.impl.retrofit;
 
 import java.util.HashMap;
 
+import stravajava.api.v3.auth.TokenManager;
 import stravajava.api.v3.auth.TokenServices;
+import stravajava.api.v3.auth.model.Token;
 import stravajava.api.v3.auth.model.TokenResponse;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.Retrofit;
@@ -46,12 +48,13 @@ public class TokenServicesImpl implements TokenServices {
 	 * @see stravajava.api.v3.auth.AuthorisationServices#deauthorise(java.lang.String)
 	 */
 	@Override
-	public TokenResponse deauthorise(String accessToken) throws UnauthorizedException {
+	public TokenResponse deauthorise(Token accessToken) throws UnauthorizedException {
 		// Remove the token / service instance from the cached list as it's no longer any use
 		restServices.remove(accessToken);
 		
 		// Deauthorise
-		TokenResponse response = restService.deauthorise(accessToken);
+		TokenResponse response = restService.deauthorise(accessToken.getToken());
+		TokenManager.implementation().revokeToken(accessToken);
 		return response;
 	}
 	
