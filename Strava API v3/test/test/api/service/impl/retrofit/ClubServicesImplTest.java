@@ -22,7 +22,7 @@ import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.ClubServicesImpl;
 import stravajava.util.Paging;
-import test.TestUtils;
+import test.utils.TestUtils;
 
 /**
  * <p>Unit tests for {@link ClubServicesImpl}</p>
@@ -38,8 +38,8 @@ public class ClubServicesImplTest {
 		this.clubService = getClubService();
 		
 		// Make sure that the club memberships are right, before starting the tests
-		this.clubService.joinClub(TestUtils.CLUB_VALID_ID);
-		this.clubService.leaveClub(TestUtils.CLUB_PUBLIC_NON_MEMBER_ID);
+//		this.clubService.joinClub(TestUtils.CLUB_VALID_ID);
+//		this.clubService.leaveClub(TestUtils.CLUB_PUBLIC_NON_MEMBER_ID);
 	}
 	
 	

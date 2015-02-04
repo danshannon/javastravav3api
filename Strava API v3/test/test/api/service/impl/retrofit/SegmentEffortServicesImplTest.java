@@ -12,7 +12,7 @@ import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.service.SegmentEffortServices;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.SegmentEffortServicesImpl;
-import test.TestUtils;
+import test.utils.TestUtils;
 
 /**
  * <p>Unit tests for {@link SegmentEffortServicesImpl}</p>

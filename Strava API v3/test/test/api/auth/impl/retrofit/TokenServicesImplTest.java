@@ -11,8 +11,8 @@ import stravajava.api.v3.auth.model.TokenResponse;
 import stravajava.api.v3.service.AthleteServices;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.AthleteServicesImpl;
-import test.TestHttpUtils;
-import test.TestUtils;
+import test.utils.TestHttpUtils;
+import test.utils.TestUtils;
 
 public class TokenServicesImplTest {
 	private static TestHttpUtils HTTP_UTILITIES;

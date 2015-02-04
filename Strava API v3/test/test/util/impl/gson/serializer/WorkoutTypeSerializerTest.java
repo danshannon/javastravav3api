@@ -3,8 +3,6 @@ package test.util.impl.gson.serializer;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.jfairy.Fairy;
-import org.jfairy.producer.text.TextProducer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,7 +34,6 @@ public class WorkoutTypeSerializerTest {
 	
 	@Test
 	public void testDeserializeUnknownValue() throws JsonSerialisationException {
-		TextProducer text = Fairy.create().textProducer();
 		String serialized = "75";
 		StravaWorkoutType deserialized = this.util.deserialise(serialized, StravaWorkoutType.class);
 		assertEquals(deserialized, StravaWorkoutType.UNKNOWN);

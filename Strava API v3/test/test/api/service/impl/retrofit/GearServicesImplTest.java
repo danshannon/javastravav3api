@@ -13,7 +13,7 @@ import stravajava.api.v3.model.StravaGear;
 import stravajava.api.v3.service.GearServices;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.GearServicesImpl;
-import test.TestUtils;
+import test.utils.TestUtils;
 
 /**
  * <p>Unit tests for {@link GearServicesImpl}</p>
