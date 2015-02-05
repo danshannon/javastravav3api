@@ -46,6 +46,7 @@ public class StreamServicesImplTest {
 	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
 	 * @throws UnauthorizedException 
 	 */
+	// TODO Test cases
 	@Test
 	public void testGetActivityStreams_validActivityAuthenticatedUser() throws UnauthorizedException {
 		StreamServices service = getService();
@@ -56,17 +57,22 @@ public class StreamServicesImplTest {
 	/**
 	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getEffortStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
 	 */
+	// TODO Test cases
 	@Test
-	public void testGetEffortStreams() {
-		fail("Not yet implemented");
+	public void testGetEffortStreams_validActivityAuthenticatedUser() throws UnauthorizedException {
+		StreamServices service = getService();
+		List<StravaStream> streams = service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID);
+		assertNotNull(streams);
 	}
 
 	/**
 	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getSegmentStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
 	 */
 	@Test
-	public void testGetSegmentStreams() {
-		fail("Not yet implemented");
+	public void testGetSegmentStreams() throws UnauthorizedException {
+		StreamServices service = getService();
+		List<StravaStream> streams = service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID);
+		assertNotNull(streams);
 	}
 
 	private StreamServices getService() {

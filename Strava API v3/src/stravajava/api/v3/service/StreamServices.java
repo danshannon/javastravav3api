@@ -77,10 +77,26 @@ public interface StreamServices {
 	 * @param id The id of the segment effort for which streams are to be retrieved
 	 * @param types List of types, if the effort does not have that stream it will not be included in the response
 	 * @param resolution (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
-	 * @param seriesType (Optional) relevant only if using resolution. Either �time� or �distance�, default is �distance�, used to index the streams if the stream is being reduced
+	 * @param seriesType (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getEffortStreams(Long id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types);
+	public List<StravaStream> getEffortStreams(Long id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) throws UnauthorizedException;
+	
+	/**
+	 * <p>A {@link StravaSegmentEffort segment effort} represents an attempt on a {@link StravaSegment segment}. This resource returns a subset of the {@link StravaActivity activity} streams that correspond to that effort.</p>
+	 * 
+	 * <p>All streams for a given segment effort will be the same length and the values at a given index correspond to the same time.</p>
+	 * 
+	 * <p>This resource is available for all public efforts.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/segment_efforts/:id/streams/:types</p>
+	 * 
+	 * @see http://strava.github.io/api/v3/streams/#effort
+	 * 
+	 * @param id The id of the segment effort for which streams are to be retrieved
+	 * @return Returns an array of unordered stream objects.
+	 */
+	public List<StravaStream> getEffortStreams(Long id) throws UnauthorizedException;
 	
 	/**
 	 * <p>Retrieve detailed geographical information streams about a specific {@link StravaSegment}.</p>
@@ -94,10 +110,24 @@ public interface StreamServices {
 	 * @param id The id of the segment for which streams are to be retrieved
 	 * @param types List of types, if the segment does not have that stream it will not be included in the response
 	 * @param resolution (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
-	 * @param seriesType (Optional) relevant only if using resolution. Either �time� or �distance�, default is �distance�, used to index the streams if the stream is being reduced
+	 * @param seriesType (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getSegmentStreams(Integer id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types);
+	public List<StravaStream> getSegmentStreams(Integer id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) throws UnauthorizedException;
+	
+	/**
+	 * <p>Retrieve detailed geographical information streams about a specific {@link StravaSegment}.</p>
+	 * 
+	 * <p>Only distance, altitude and latlng stream types are available.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/segments/:id/streams/:types</p>
+	 * 
+	 * @see http://strava.github.io/api/v3/streams/#segment
+	 * 
+	 * @param id The id of the segment for which streams are to be retrieved
+	 * @return Returns an array of unordered stream objects.
+	 */
+	public List<StravaStream> getSegmentStreams(Integer id) throws UnauthorizedException;
 	
 	
 }
