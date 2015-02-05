@@ -47,7 +47,6 @@ public class TestUtils {
 	public static Integer ACTIVITY_WITH_ZONES;
 	public static Integer ACTIVITY_WITHOUT_ZONES;
 	public static Integer ACTIVITY_PRIVATE_OTHER_USER;
-	public static StravaActivity ACTIVITY_DEFAULT_FOR_CREATE;
 	
 	public static Integer ATHLETE_AUTHENTICATED_ID;
 	public static Integer ATHLETE_VALID_ID;
@@ -108,7 +107,6 @@ public class TestUtils {
 		ACTIVITY_FOR_UNAUTHENTICATED_USER = new Integer(properties.getProperty("test.activityServicesImplTest.activityBelongingToUnauthenticatedUser"));
 		ACTIVITY_INVALID = new Integer(properties.getProperty("test.activityServicesImplTest.activityInvalid"));
 		ACTIVITY_PRIVATE_OTHER_USER = integerProperty("test.activityServicesImplTest.activityPrivateOtherUser");
-		ACTIVITY_DEFAULT_FOR_CREATE = createDefaultActivityForCreation();
 		
 		ATHLETE_AUTHENTICATED_ID = integerProperty("test.athleteServicesImplTest.authenticatedAthleteId");
 		ATHLETE_VALID_ID = integerProperty("test.athleteServicesImplTest.athleteId");
@@ -140,7 +138,7 @@ public class TestUtils {
 	/**
 	 * @return
 	 */
-	private static StravaActivity createDefaultActivityForCreation() {
+	public static StravaActivity createDefaultActivity() {
 		StravaActivity activity = new StravaActivity();
 		activity.setName("TO BE DELETED");
 		activity.setType(StravaActivityType.RIDE);

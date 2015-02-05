@@ -8,7 +8,7 @@ import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
 public interface GearServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
 	
 	/**
 	 * @see stravajava.api.v3.service.GearServices#getGear(java.lang.String)

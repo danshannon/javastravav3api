@@ -2,10 +2,11 @@ package stravajava.api.v3.model;
 
 import java.util.List;
 
+import lombok.Data;
 import stravajava.api.v3.model.reference.StravaStreamResolutionType;
 import stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import stravajava.api.v3.model.reference.StravaStreamType;
-import lombok.Data;
+import stravajava.model.MapPoint;
 
 /**
  * @author Dan Shannon
@@ -19,7 +20,8 @@ public class StravaStream {
 	}
 	
 	private StravaStreamType type;
-	private List<List<Float>> data; //?????????????????????????????????????
+	private List<Float> data; 
+	private List<MapPoint> mapPoints;
 	private StravaStreamSeriesDownsamplingType seriesType;
 	private Integer originalSize;
 	private StravaStreamResolutionType resolution;

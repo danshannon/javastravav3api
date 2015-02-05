@@ -413,7 +413,10 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testCreateManualActivity_validActivity() throws UnauthorizedException, NotFoundException, BadRequestException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		StravaActivity activity = service.createManualActivity(TestUtils.ACTIVITY_DEFAULT_FOR_CREATE);
+		StravaActivity activity = TestUtils.createDefaultActivity();
+		activity.setName("testCreateManualActivity_validActivity");
+		activity = service.createManualActivity(TestUtils.createDefaultActivity());
+		
 		assertNotNull(activity);
 		
 		// Load it from Strava
@@ -436,7 +439,9 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 		StravaActivity activity = null;
 		try {
-			activity = service.createManualActivity(TestUtils.ACTIVITY_DEFAULT_FOR_CREATE);
+			activity = TestUtils.createDefaultActivity();
+			activity.setName("testCreateManualActivity_accessTokenDoesNotHaveWriteAccess");
+			activity = service.createManualActivity(activity);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour - creation has failed because there's no write access
 			return;
@@ -463,9 +468,10 @@ public class ActivityServicesImplTest {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 		
 		// Name is required
-		StravaActivity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		StravaActivity activity = TestUtils.createDefaultActivity();
 		StravaActivity stravaResponse = null;
 		activity.setName(null);
+		activity.setDescription("testCreateManualActivity_incompleteActivityDetails");
 		try {
 			stravaResponse = service.createManualActivity(activity);
 		} catch (BadRequestException e) {
@@ -474,8 +480,9 @@ public class ActivityServicesImplTest {
 		assertNull("Created an activity with no name in error",stravaResponse);
 		
 		// Type is required
-		activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		activity = TestUtils.createDefaultActivity();
 		activity.setType(null);
+		activity.setDescription("testCreateManualActivity_incompleteActivityDetails");
 		try {
 			stravaResponse = service.createManualActivity(activity);
 		} catch (BadRequestException e) {
@@ -484,7 +491,8 @@ public class ActivityServicesImplTest {
 		assertNull("Created an activity with no type in error",stravaResponse);
 
 		// Type must be one of the specified values
-		activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		activity = TestUtils.createDefaultActivity();
+		activity.setDescription("testCreateManualActivity_incompleteActivityDetails");
 		activity.setType(StravaActivityType.UNKNOWN);
 		try {
 			stravaResponse = service.createManualActivity(activity);
@@ -494,7 +502,8 @@ public class ActivityServicesImplTest {
 		assertNull("Created an activity with unknown type in error",stravaResponse);
 
 		// Start date is required
-		activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		activity = TestUtils.createDefaultActivity();
+		activity.setDescription("testCreateManualActivity_incompleteActivityDetails");
 		activity.setStartDateLocal(null);
 		try {
 			stravaResponse = service.createManualActivity(activity);
@@ -504,7 +513,8 @@ public class ActivityServicesImplTest {
 		assertNull("Created an activity with no start date in error",stravaResponse);
 
 		// Elapsed time is required
-		activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		activity = TestUtils.createDefaultActivity();
+		activity.setDescription("testCreateManualActivity_incompleteActivityDetails");
 		activity.setElapsedTime(null);
 		try {
 			stravaResponse = service.createManualActivity(activity);
@@ -527,7 +537,8 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testDeleteActivity_validActivity() throws UnauthorizedException, BadRequestException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		StravaActivity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		StravaActivity activity = TestUtils.createDefaultActivity();
+		activity.setName("testDeleteActivity_validActivity");
 		StravaActivity stravaResponse = service.createManualActivity(activity);
 		activity = service.getActivity(stravaResponse.getId());
 		assertNotNull(activity);
@@ -547,7 +558,8 @@ public class ActivityServicesImplTest {
 	public void testDeleteActivity_accessTokenDoesNotHaveWriteAccess() throws UnauthorizedException, BadRequestException, NotFoundException {
 		// Create the activity using a service which DOES have write access
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		StravaActivity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		StravaActivity activity = TestUtils.createDefaultActivity();
+		activity.setName("testDeleteActivity_accessTokenDoesNotHaveWriteAccess");
 		StravaActivity stravaResponse = service.createManualActivity(activity);
 		activity = service.getActivity(stravaResponse.getId());
 		assertNotNull(activity);
@@ -1066,7 +1078,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testUpdateActivity_validUpdate() throws UnauthorizedException, BadRequestException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		StravaActivity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		StravaActivity activity = TestUtils.createDefaultActivity();
 		activity.setType(StravaActivityType.ALPINE_SKI);
 		Fairy fairy = Fairy.create();
 		TextProducer text = fairy.textProducer();
@@ -1075,7 +1087,7 @@ public class ActivityServicesImplTest {
 		StravaActivity stravaResponse = service.createManualActivity(activity);
 		
 		// Change the name
-		String name = text.sentence();
+		String name = "testUpdateActivity_validUpdate";
 		activity.setName(name);
 		activity.setId(stravaResponse.getId());
 		
@@ -1143,7 +1155,8 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testUpdateActivity_tooManyActivityAttributes() throws UnauthorizedException, BadRequestException, NotFoundException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		StravaActivity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		StravaActivity activity = TestUtils.createDefaultActivity();
+		activity.setName("testUpdateActivity_tooManyActivityAttributes");
 		StravaActivity stravaResponse = service.createManualActivity(activity);
 		
 		Float cadence = new Float(67.2);
@@ -1152,12 +1165,14 @@ public class ActivityServicesImplTest {
 		
 		stravaResponse = service.updateActivity(activity);
 		assertNull(stravaResponse.getAverageCadence());
+		
+		service.deleteActivity(stravaResponse.getId());
 	}
 
 	@Test
 	public void testUpdateActivity_invalidActivity() throws UnauthorizedException {
 		ActivityServices service = ActivityServicesImpl.implementation(TestUtils.getValidToken());
-		StravaActivity activity = TestUtils.ACTIVITY_DEFAULT_FOR_CREATE;
+		StravaActivity activity = TestUtils.createDefaultActivity();
 		activity.setId(TestUtils.ACTIVITY_INVALID);
 		
 		try {

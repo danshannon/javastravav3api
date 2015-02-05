@@ -20,7 +20,7 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface ClubServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
 
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#getClub(java.lang.Integer)

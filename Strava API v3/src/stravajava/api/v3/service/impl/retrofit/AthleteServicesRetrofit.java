@@ -19,7 +19,7 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface AthleteServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
 	
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#getAuthenticatedAthlete()

@@ -17,7 +17,7 @@ import stravajava.api.v3.model.reference.StravaActivityType;
  *
  */
 public interface UploadServicesRetrofit {
-	public static final RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	public static final RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
 
 
 	/**

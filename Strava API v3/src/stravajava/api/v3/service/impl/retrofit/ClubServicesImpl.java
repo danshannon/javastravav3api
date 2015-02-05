@@ -158,7 +158,13 @@ public class ClubServicesImpl implements ClubServices {
 	 */
 	@Override
 	public List<StravaActivity> listRecentClubActivities(Integer id) throws UnauthorizedException {
-		return listRecentClubActivities(id, null);
+		List<StravaActivity> activities = listRecentClubActivities(id, null);
+		
+		// Strava API returns NULL instead of an empty array
+		if (activities == null) {
+			activities = new ArrayList<StravaActivity>();
+		}
+		return activities;
 	}
 
 }
