@@ -42,24 +42,20 @@ public class TokenManager {
 	 * @return The token, or <code>null</code> if there is no cached token, or the cached token doesn't have all the required scopes
 	 */
 	public Token retrieveTokenWithScope(String username, AuthorisationScope... scopes) {
-		System.out.println("Return token for " + username + " with scopes" + scopes);
 		// Get the token from cache
 		Token token = tokens.get(username);
 		
 		// If there's no cached token, or it doesn't have any scopes (which shouldn't happen) then return null
 		if (token == null || token.getScopes() == null) { 
-			System.out.println("No token and/or no scopes");
 			return null;
 		}
 		
 		// Check that all the required scopes are in the token
 		for (AuthorisationScope scope : scopes) {
 			if (!token.getScopes().contains(scope)) {
-				System.out.println("Scope " + scope + " not in token");
 				return null;
 			}
 		}
-		System.out.println("Returning token " + token);
 		return token;
 	}
 	

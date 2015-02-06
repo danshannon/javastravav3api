@@ -17,12 +17,6 @@ public class Token {
 	private String token;
 	private List<AuthorisationScope> scopes;
 
-	public Token(StravaAthlete athlete, String token, List<AuthorisationScope> scopes) {
-		this.athlete = athlete;
-		this.token = token;
-		this.scopes = scopes;
-	}
-	
 	public Token(TokenResponse tokenResponse, AuthorisationScope... scopes) {
 		this.athlete = tokenResponse.getAthlete();
 		this.token = tokenResponse.getAccessToken();

@@ -19,6 +19,9 @@ public class Paging {
 	 */
 	private int ignoreLastN;
 	
+	/**
+	 * <p>Ignore the first N of the items in the page (this mostly applies to Strava paging)</p>
+	 */
 	private int ignoreFirstN;
 	
 	public Paging(int page, int pageSize) {

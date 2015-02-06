@@ -517,9 +517,6 @@ public class SegmentServicesImplTest {
 		SegmentServices service = getService();
 		StravaSegmentExplorerResponse response = service.segmentExplore(new StravaMapPoint(-39.4f, 136f), new StravaMapPoint(-25f,154f), null, null, null);
 		assertNotNull(response);
-		for (StravaSegmentExplorerResponseSegment segment : response.getSegments()) {
-			System.out.println(segment.getName() + " " + segment.getDistance());
-		}
 	}
 	
 	// 2. Filter by activity type
@@ -537,7 +534,6 @@ public class SegmentServicesImplTest {
 		StravaSegmentExplorerResponse response = service.segmentExplore(new StravaMapPoint(-39.4f, 136f), new StravaMapPoint(-25f,154f), null, StravaClimbCategory.HORS_CATEGORIE, null);
 		assertNotNull(response);
 		for (StravaSegmentExplorerResponseSegment segment : response.getSegments()) {
-			System.out.println(segment.getName() + ": " + segment.getClimbCategory());
 			assertTrue(segment.getClimbCategory().getValue() >= StravaClimbCategory.HORS_CATEGORIE.getValue());
 		}
 	}
@@ -549,7 +545,6 @@ public class SegmentServicesImplTest {
 		StravaSegmentExplorerResponse response = service.segmentExplore(new StravaMapPoint(-39.4f, 136f), new StravaMapPoint(-25f,154f), null, null, StravaClimbCategory.CATEGORY1);
 		assertNotNull(response);
 		for (StravaSegmentExplorerResponseSegment segment : response.getSegments()) {
-			System.out.println(segment.getName() + ": " + segment.getClimbCategory());
 			assertTrue(segment.getClimbCategory().getValue() <= StravaClimbCategory.CATEGORY1.getValue());;
 		}
 	}
@@ -560,9 +555,6 @@ public class SegmentServicesImplTest {
 		SegmentServices service = getService();
 		StravaSegmentExplorerResponse response = service.segmentExplore(new StravaMapPoint(-39.4f, 136f), new StravaMapPoint(-25f,154f), null, null, null);
 		assertNotNull(response);
-		for (StravaSegmentExplorerResponseSegment segment : response.getSegments()) {
-			System.out.println(segment.getName() + " " + segment.getDistance());
-		}
 	}
 	
 	

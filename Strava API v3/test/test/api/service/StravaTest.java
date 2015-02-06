@@ -3,8 +3,11 @@ package test.api.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import org.jfairy.Fairy;
 import org.junit.Test;
 
 import stravajava.api.v3.service.Strava;
@@ -15,6 +18,7 @@ import stravajava.util.Paging;
  *
  */
 public class StravaTest {
+	private Random random = new Random(System.currentTimeMillis());
 
 	@Test
 	public void testConvertToStravaPaging_small() {
@@ -28,9 +32,6 @@ public class StravaTest {
 	@Test
 	public void testConvertToStravaPaging_large() {
 		List<Paging> paging = Strava.convertToStravaPaging(new Paging(2,201));
-		for (Paging p : paging) {
-			System.out.println(p);
-		}
 		assertEquals("Should return 2 paging instructions",2,paging.size());
 		Paging first = paging.get(0);
 		Paging second = paging.get(1);
@@ -45,10 +46,29 @@ public class StravaTest {
 
 	@Test
 	public void testIgnoreFirstN_valid() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		// Create a list
+		List<String> list = getRandomList();
+		
+		// 
+		int size = list.size();
+		int firstN = random.nextInt(list.size() - 2) + 1; // i.e. between 1 and list.size() - 1
+		List<String> result = Strava.ignoreFirstN(list, firstN);
+		assertEquals(size - firstN,result.size());
 	}
 	
+	/**
+	 * @return
+	 */
+	private List<String> getRandomList() {
+		List<String> result = new ArrayList<String>();
+		int size = random.nextInt(998) + 2; // i.e. must be at least 2
+		Fairy fairy = Fairy.create();
+		for (int i = 1; i <= size; i++) {
+			result.add(fairy.textProducer().sentence());
+		}
+		return result;
+	}
+
 	@Test
 	public void testIgnoreFirstN_invalidNegative() {
 		// TODO Not yet implemented

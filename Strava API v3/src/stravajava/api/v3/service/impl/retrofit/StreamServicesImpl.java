@@ -10,6 +10,7 @@ import stravajava.api.v3.model.reference.StravaStreamResolutionType;
 import stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import stravajava.api.v3.model.reference.StravaStreamType;
 import stravajava.api.v3.service.StreamServices;
+import stravajava.api.v3.service.exception.BadRequestException;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
@@ -52,10 +53,36 @@ public class StreamServicesImpl implements StreamServices {
 	@Override
 	public List<StravaStream> getActivityStreams(Integer id, StravaStreamResolutionType resolution,
 			StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) throws UnauthorizedException {
+		validateArguments(resolution,seriesType,types);
+		if (types == null || types.length == 0) { types = getAllStreamTypes(); }
 		try {
 			return Arrays.asList(restService.getActivityStreams(id, typeString(types), resolution, seriesType));
 		} catch (NotFoundException e) {
 			return null;
+		} catch (BadRequestException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+	/**
+	 * @param resolution
+	 * @param seriesType
+	 * @param types
+	 */
+	private void validateArguments(StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType,
+			StravaStreamType... types) {
+		if (resolution == StravaStreamResolutionType.UNKNOWN) {
+			throw new IllegalArgumentException("Invalid stream resolution type " + resolution);
+		}
+		if (seriesType == StravaStreamSeriesDownsamplingType.UNKNOWN) {
+			throw new IllegalArgumentException("Invalid stream series downsampling type " + seriesType);
+		}
+		if (types != null) {
+			for (StravaStreamType type : types) {
+				if (type == StravaStreamType.UNKNOWN) {
+					throw new IllegalArgumentException("Invalid stream type " + type);
+				}
+			}
 		}
 	}
 
@@ -85,10 +112,14 @@ public class StreamServicesImpl implements StreamServices {
 	@Override
 	public List<StravaStream> getEffortStreams(Long id, StravaStreamResolutionType resolution,
 			StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) throws UnauthorizedException {
+		validateArguments(resolution,seriesType,types);
+		if (types == null || types.length == 0) { types = getAllStreamTypes(); }
 		try {
 			return Arrays.asList(restService.getEffortStreams(id, typeString(types), resolution, seriesType));
 		} catch (NotFoundException e) {
 			return null;
+		} catch (BadRequestException e) {
+			throw new IllegalArgumentException(e);
 		}
 	}
 
@@ -98,10 +129,17 @@ public class StreamServicesImpl implements StreamServices {
 	@Override
 	public List<StravaStream> getSegmentStreams(Integer id, StravaStreamResolutionType resolution,
 			StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) throws UnauthorizedException {
+		validateArguments(resolution,seriesType,types);
+		if (seriesType == StravaStreamSeriesDownsamplingType.TIME) {
+			throw new IllegalArgumentException("Cannot downsample a Segment by TIME");
+		}
+		if (types == null || types.length == 0) { types = getAllStreamTypes(); }
 		try {
 			return Arrays.asList(restService.getSegmentStreams(id, typeString(types), resolution, seriesType));
 		} catch (NotFoundException e) {
 			return null;
+		} catch (BadRequestException e) {
+			throw new IllegalArgumentException(e);
 		}
 	}
 

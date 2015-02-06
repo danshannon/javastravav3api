@@ -84,8 +84,12 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see stravajava.api.v3.service.ActivityServices#createManualActivity(stravajava.api.v3.model.StravaActivity)
 	 */
 	@Override
-	public StravaActivity createManualActivity(StravaActivity activity) throws UnauthorizedException, BadRequestException {
-		return restService.createManualActivity(activity);
+	public StravaActivity createManualActivity(StravaActivity activity) throws UnauthorizedException {
+		try {
+			return restService.createManualActivity(activity);
+		} catch (BadRequestException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	/**
@@ -107,8 +111,6 @@ public class ActivityServicesImpl implements ActivityServices {
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities(java.lang.Integer,
 	 *      java.lang.Integer, java.lang.Integer, java.lang.Integer)
-	 * @throws UnauthorizedException 
-	 * @throws BadRequestException 
 	 */
 	@Override
 	public List<StravaActivity> listAuthenticatedAthleteActivities(Calendar before, Calendar after, Paging pagingInstruction) throws UnauthorizedException {

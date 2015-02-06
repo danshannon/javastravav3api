@@ -293,9 +293,6 @@ public class ClubServicesImplTest {
 		activities = service.listRecentClubActivities(TestUtils.CLUB_VALID_ID, new Paging(1,200));
 		assertNotNull(activities);
 		assertFalse(0 == activities.size());
-		for (StravaActivity activity : activities) {
-			System.out.println(activity.getStartDate());
-		}
 	}
 	
 	// 5. Paging - size only (including test for max page size)

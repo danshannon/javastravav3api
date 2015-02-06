@@ -1115,7 +1115,6 @@ public class ActivityServicesImplTest {
 		
 		// Get the activity again
 		stravaResponse = service.getActivity(stravaResponse.getId());
-		System.out.println(stravaResponse);
 		
 		// Check that the name is now set
 		assertEquals("Name not updated correctly",name,stravaResponse.getName());
