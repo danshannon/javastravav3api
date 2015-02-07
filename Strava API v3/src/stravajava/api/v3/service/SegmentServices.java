@@ -43,7 +43,7 @@ public interface SegmentServices {
 	 * @return Returns a {@link StravaResourceState#DETAILED detailed representation} of the {@link StravaSegment}.
 	 * @throws UnauthorizedException If authorisation fails
 	 */
-	public StravaSegment getSegment(Integer id) throws UnauthorizedException;
+	public StravaSegment getSegment(Integer id);
 	
 	/**
 	 * <p>Returns a {@link StravaResourceState#SUMMARY summary representation} of the {@link StravaSegment segments} starred by the authenticated {@link StravaAthlete athlete}.</p>

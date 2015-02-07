@@ -70,7 +70,6 @@ public class Strava {
 		
 		for (int i = firstPageElement; i < lastPageElement; i = i + MAX_PAGE_SIZE) {
 			Paging newPaging = new Paging((i / MAX_PAGE_SIZE) + 1, MAX_PAGE_SIZE, 0, 0);
-			// TODO Ignore last N on the last record; ignore first N on the first record
 			if (i == firstPageElement) {
 				newPaging.setIgnoreFirstN(firstElement % MAX_PAGE_SIZE - 1);
 			}
@@ -89,6 +88,9 @@ public class Strava {
 	 * @return
 	 */
 	public static <T> List<T> ignoreLastN(List<T> list, int ignoreLastN) {
+		if (ignoreLastN < 0) {
+			throw new IllegalArgumentException("Cannot remove " + ignoreLastN + " items from a list!");
+		}
 		if (list == null) {
 			return null;
 		}
@@ -103,6 +105,9 @@ public class Strava {
 	}
 	
 	public static <T> List<T> ignoreFirstN(List<T> list, int ignoreFirstN) {
+		if (ignoreFirstN < 0) {
+			throw new IllegalArgumentException("Cannot remove " + ignoreFirstN + " items from a list!");
+		}
 		if (list == null) {
 			return null;
 		}

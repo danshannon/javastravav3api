@@ -3,17 +3,20 @@ package stravajava.api.v3.service.impl.retrofit;
 import java.io.File;
 import java.util.HashMap;
 
+import retrofit.mime.TypedFile;
 import stravajava.api.v3.model.StravaUploadResponse;
 import stravajava.api.v3.model.reference.StravaActivityType;
 import stravajava.api.v3.service.UploadServices;
+import stravajava.api.v3.service.exception.BadRequestException;
 
 /**
  * @author Dan Shannon
  *
  */
-public class UploadServicesImpl implements UploadServices {
+public class UploadServicesImpl extends StravaServiceImpl implements UploadServices {
 	
 	private UploadServicesImpl(String token) {
+		super(token);
 		this.restService = Retrofit.retrofit(UploadServicesRetrofit.class,token,UploadServicesRetrofit.LOG_LEVEL);
 	}
 	
@@ -43,7 +46,11 @@ public class UploadServicesImpl implements UploadServices {
 	@Override
 	public StravaUploadResponse upload(StravaActivityType activityType, String name, String description, Boolean _private, Boolean trainer,
 			String dataType, String externalId, File file) {
-		return restService.upload(activityType, name, description, _private, trainer, dataType, externalId, file);
+		try {
+			return restService.upload(activityType, name, description, _private, trainer, dataType, externalId, new TypedFile("text/xml",file));
+		} catch (BadRequestException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	/**

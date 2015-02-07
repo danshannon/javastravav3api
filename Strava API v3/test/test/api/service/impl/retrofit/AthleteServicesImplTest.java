@@ -18,7 +18,6 @@ import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.service.AthleteServices;
-import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.AthleteServicesImpl;
 import stravajava.util.Paging;
@@ -32,7 +31,7 @@ import test.utils.TestUtils;
  */
 public class AthleteServicesImplTest {
 	@Test
-	public void testImplementation_validToken() throws UnauthorizedException {
+	public void testImplementation_validToken() {
 		AthleteServices services = AthleteServicesImpl.implementation(TestUtils.getValidToken());
 		assertNotNull(services);
 	}
@@ -50,7 +49,7 @@ public class AthleteServicesImplTest {
 	}
 	
 	@Test
-	public void testImplementation_revokedToken() throws UnauthorizedException {
+	public void testImplementation_revokedToken() {
 			AthleteServices services = AthleteServicesImpl.implementation(TestUtils.getRevokedToken());
 		try {
 			services.getAuthenticatedAthlete();
@@ -64,7 +63,7 @@ public class AthleteServicesImplTest {
 	}
 	
 	@Test
-	public void testImplementation_implementationIsCached() throws UnauthorizedException {
+	public void testImplementation_implementationIsCached(){
 		String token = TestUtils.getValidToken();
 		AthleteServices service1 = AthleteServicesImpl.implementation(token);
 		AthleteServices service2 = AthleteServicesImpl.implementation(token);
@@ -72,7 +71,7 @@ public class AthleteServicesImplTest {
 	}
 	
 	@Test
-	public void testImplementation_differentImplementationIsNotCached() throws UnauthorizedException {
+	public void testImplementation_differentImplementationIsNotCached() {
 		String token1 = TestUtils.getValidToken();
 		AthleteServices service1 = AthleteServicesImpl.implementation(token1);
 		
@@ -83,14 +82,14 @@ public class AthleteServicesImplTest {
 	}
 	
 	@Test
-	public void testGetAuthenticatedAthlete() throws UnauthorizedException {
+	public void testGetAuthenticatedAthlete() {
 		AthleteServices service = getService();
 		StravaAthlete athlete = service.getAuthenticatedAthlete();
 		assertEquals(TestUtils.ATHLETE_AUTHENTICATED_ID,athlete.getId());
 	}
 	
 	@Test
-	public void testGetAthlete_validAthlete() throws UnauthorizedException {
+	public void testGetAthlete_validAthlete() {
 		AthleteServices service = getService();
 		StravaAthlete athlete = service.getAthlete(TestUtils.ATHLETE_VALID_ID);
 		assertNotNull(athlete);
@@ -98,7 +97,7 @@ public class AthleteServicesImplTest {
 	}
 	
 	@Test
-	public void testGetAthlete_invalidAthlete() throws UnauthorizedException {
+	public void testGetAthlete_invalidAthlete() {
 		AthleteServices service = getService();
 		StravaAthlete athlete = service.getAthlete(TestUtils.ATHLETE_INVALID_ID);
 		assertNull(athlete);
@@ -107,11 +106,14 @@ public class AthleteServicesImplTest {
 	
 	@Test
 	public void testGetAthlete_privateAthlete() {
-		// TODO Not yet implemented
+		AthleteServices service = getService();
+		StravaAthlete athlete = service.getAthlete(TestUtils.ATHLETE_PRIVATE_ID);
+		assertNotNull(athlete);
+		assertEquals(TestUtils.ATHLETE_PRIVATE_ID,athlete.getId());
 	}
 	
 	@Test
-	public void testUpdateAuthenticatedAthlete() throws UnauthorizedException, NotFoundException {
+	public void testUpdateAuthenticatedAthlete() {
 		AthleteServices service = getService();
 		StravaAthlete athlete = service.getAuthenticatedAthlete();
 		
@@ -126,7 +128,7 @@ public class AthleteServicesImplTest {
 	}
 	
 	@Test
-	public void testUpdateAuthenticatedAthlete_noWriteAccess() throws UnauthorizedException, NotFoundException {
+	public void testUpdateAuthenticatedAthlete_noWriteAccess() {
 		AthleteServices service = getServiceWithoutWriteAccess();
 		@SuppressWarnings("unused")
 		StravaAthlete athlete = service.getAuthenticatedAthlete();
@@ -144,7 +146,7 @@ public class AthleteServicesImplTest {
 	// Test cases
 	// 1. Valid athlete with some KOM's
 	@Test
-	public void testListAthleteKOMs_withKOM() throws UnauthorizedException {
+	public void testListAthleteKOMs_withKOM() {
 		AthleteServices service = getService();
 		List<StravaSegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID);
 		assertNotNull(koms);
@@ -153,7 +155,7 @@ public class AthleteServicesImplTest {
 
 	// 2. Valid athlete with no KOM's
 	@Test
-	public void testListAthleteKOMs_withoutKOM() throws UnauthorizedException {
+	public void testListAthleteKOMs_withoutKOM() {
 		AthleteServices service = getService();
 		List<StravaSegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_WITHOUT_KOMS);
 		assertNotNull(koms);
@@ -162,7 +164,7 @@ public class AthleteServicesImplTest {
 
 	// 2. Invalid athlete
 	@Test
-	public void testListAthleteKOMs_invalidAthlete() throws UnauthorizedException {
+	public void testListAthleteKOMs_invalidAthlete() {
 		AthleteServices service = getService();
 		List<StravaSegmentEffort> koms = null;
 		koms = service.listAthleteKOMs(TestUtils.ATHLETE_INVALID_ID);
@@ -172,7 +174,7 @@ public class AthleteServicesImplTest {
 
 	// 3. Paging - size only 
 	@Test
-	public void testListAthleteKOMs_pageSize() throws UnauthorizedException {
+	public void testListAthleteKOMs_pageSize() {
 		AthleteServices service = getService();
 		List<StravaSegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,1));
 		assertEquals(1,koms.size());
@@ -180,7 +182,7 @@ public class AthleteServicesImplTest {
 
 	// 4. Paging - size and page
 	@Test
-	public void testListAthleteKOMs_pageSizeAndNumber() throws UnauthorizedException {
+	public void testListAthleteKOMs_pageSizeAndNumber() {
 		AthleteServices service = getService();
 		List<StravaSegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(2,1));
 		Long effortId = koms.get(0).getId();
@@ -192,7 +194,7 @@ public class AthleteServicesImplTest {
 
 	// 5. Paging - out of range high
 	@Test
-	public void testListAthleteKOMs_pagingOutOfRangeHigh() throws UnauthorizedException {
+	public void testListAthleteKOMs_pagingOutOfRangeHigh() {
 		AthleteServices service = getService();
 		List<StravaSegmentEffort> koms = service.listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1000,200));
 		assertEquals(0,koms.size());
@@ -200,7 +202,7 @@ public class AthleteServicesImplTest {
 
 	// 6. Paging - out of range low
 	@Test
-	public void testListAthleteKOMs_pagingOutOfRangeLow() throws UnauthorizedException {
+	public void testListAthleteKOMs_pagingOutOfRangeLow() {
 		AthleteServices service = getService();
 		try {
 			@SuppressWarnings("unused")
@@ -213,7 +215,7 @@ public class AthleteServicesImplTest {
 	}
 
 	@Test
-	public void testListAuthenticatedAthleteFriends_friends() throws UnauthorizedException {
+	public void testListAuthenticatedAthleteFriends_friends() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAuthenticatedAthleteFriends();
 		assertNotNull(friends);
@@ -221,7 +223,7 @@ public class AthleteServicesImplTest {
 	}
 	
 	@Test
-	public void testListAuthenticatedAthleteFriends_pageSize() throws UnauthorizedException {
+	public void testListAuthenticatedAthleteFriends_pageSize() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAuthenticatedAthleteFriends(new Paging(1,1));
 		assertNotNull(friends);
@@ -229,7 +231,7 @@ public class AthleteServicesImplTest {
 	}
 
 	@Test
-	public void testListAuthenticatedAthleteFriends_pageSizeAndNumber() throws UnauthorizedException {
+	public void testListAuthenticatedAthleteFriends_pageSizeAndNumber() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAuthenticatedAthleteFriends(new Paging(2,1));
 		assertNotNull(friends);
@@ -242,7 +244,7 @@ public class AthleteServicesImplTest {
 	}
 
 	@Test
-	public void testListAuthenticatedAthleteFriends_pagingOutOfRangeHigh() throws UnauthorizedException {
+	public void testListAuthenticatedAthleteFriends_pagingOutOfRangeHigh() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAuthenticatedAthleteFriends(new Paging(1000,200));
 		assertNotNull(friends);
@@ -250,7 +252,7 @@ public class AthleteServicesImplTest {
 	}
 
 	@Test
-	public void testListAuthenticatedAthleteFriends_pagingOutOfRangelow() throws UnauthorizedException {
+	public void testListAuthenticatedAthleteFriends_pagingOutOfRangelow() {
 		AthleteServices service = getService();
 		try {
 			@SuppressWarnings("unused")
@@ -263,7 +265,7 @@ public class AthleteServicesImplTest {
 	}
 
 	@Test
-	public void testListAthleteFriends_validAthlete() throws UnauthorizedException {
+	public void testListAthleteFriends_validAthlete() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID);
 		assertNotNull(friends);
@@ -273,7 +275,7 @@ public class AthleteServicesImplTest {
 	// Test cases
 	// 2. Invalid athlete
 	@Test
-	public void testListAthleteFriends_invalidAthlete() throws UnauthorizedException {
+	public void testListAthleteFriends_invalidAthlete() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends;
 		friends = service.listAthleteFriends(TestUtils.ATHLETE_INVALID_ID);
@@ -283,7 +285,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 4. Paging - size only (including test for max page size)
-	public void testListAthleteFriends_pageSize() throws UnauthorizedException {
+	public void testListAthleteFriends_pageSize() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID, new Paging(1,1));
 		assertNotNull(friends);
@@ -292,7 +294,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 5. Paging - size and page
-	public void testListAthleteFriends_pageNumberAndSize() throws UnauthorizedException {
+	public void testListAthleteFriends_pageNumberAndSize() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID, new Paging(2,1));
 		assertNotNull(friends);
@@ -306,7 +308,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 6. Paging - out of range high
-	public void testListAthleteFriends_pagingOutOfRangeHigh() throws UnauthorizedException {
+	public void testListAthleteFriends_pagingOutOfRangeHigh() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID, new Paging(1000,200));
 		assertNotNull(friends);
@@ -314,7 +316,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 7. Paging - out of range low
-	public void testListAthleteFriends_pagingOutOfRangeLow() throws UnauthorizedException {
+	public void testListAthleteFriends_pagingOutOfRangeLow() {
 		AthleteServices service = getService();
 		try {
 			@SuppressWarnings("unused")
@@ -329,7 +331,7 @@ public class AthleteServicesImplTest {
 	// Test cases
 	// 1. Valid athlete - at least 1 common friend
 	@Test
-	public void testListAthletesBothFollowing_validAthlete() throws UnauthorizedException {
+	public void testListAthletesBothFollowing_validAthlete() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID);
 		assertNotNull(friends);
@@ -338,7 +340,7 @@ public class AthleteServicesImplTest {
 
 	// 2. Invalid other athlete
 	@Test
-	public void testListAthletesBothFollowing_invalidAthlete() throws UnauthorizedException {
+	public void testListAthletesBothFollowing_invalidAthlete() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_INVALID_ID);
 		assertNull("Returned list of athletes being followed by invalid athlete",friends);
@@ -346,7 +348,7 @@ public class AthleteServicesImplTest {
 
 	// 4. Paging - size only (including test for max page size)
 	@Test
-	public void testListAthletesBothFollowing_pageSize() throws UnauthorizedException {
+	public void testListAthletesBothFollowing_pageSize() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID, new Paging(1,1));
 		assertNotNull(friends);
@@ -356,7 +358,7 @@ public class AthleteServicesImplTest {
 
 	// 5. Paging - size and page
 	@Test
-	public void testListAthletesBothFollowing_pageSizeAndNumber() throws UnauthorizedException {
+	public void testListAthletesBothFollowing_pageSizeAndNumber() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID, new Paging(2,1));
 		assertNotNull(friends);
@@ -371,7 +373,7 @@ public class AthleteServicesImplTest {
 
 	// 6. Paging - out of range high
 	@Test
-	public void testListAthletesBothFollowing_pagingOutOfRangeHigh() throws UnauthorizedException {
+	public void testListAthletesBothFollowing_pagingOutOfRangeHigh() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID, new Paging(1000,200));
 		assertNotNull(friends);
@@ -380,7 +382,7 @@ public class AthleteServicesImplTest {
 
 	// 7. Paging - out of range low
 	@Test
-	public void testListAthletesBothFollowing_pagingOutOfRangeLow() throws UnauthorizedException {
+	public void testListAthletesBothFollowing_pagingOutOfRangeLow() {
 		AthleteServices service = getService();
 		@SuppressWarnings("unused")
 		List<StravaAthlete> friends;
@@ -397,11 +399,11 @@ public class AthleteServicesImplTest {
 	 * @return
 	 * @throws UnauthorizedException 
 	 */
-	private AthleteServices getService() throws UnauthorizedException {
+	private AthleteServices getService() {
 		return AthleteServicesImpl.implementation(TestUtils.getValidToken());
 	}
 	
-	private AthleteServices getServiceWithoutWriteAccess() throws UnauthorizedException {
+	private AthleteServices getServiceWithoutWriteAccess() {
 		return AthleteServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 	}
 

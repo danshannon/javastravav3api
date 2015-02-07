@@ -55,7 +55,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#getAuthenticatedAthlete()
 	 */
 	@Override
-	public StravaAthlete getAuthenticatedAthlete() throws UnauthorizedException {
+	public StravaAthlete getAuthenticatedAthlete() {
 		return restService.getAuthenticatedAthlete();
 	}
 
@@ -63,11 +63,19 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#getAthlete(java.lang.Integer)
 	 */
 	@Override
-	public StravaAthlete getAthlete(Integer id) throws UnauthorizedException {
+	public StravaAthlete getAthlete(Integer id) {
 		try {
 			return restService.getAthlete(id);
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				StravaAthlete athlete = new StravaAthlete();
+				athlete.setId(id);
+				return athlete;
+			} else {
+				throw e;
+			}
 		}
 	}
 
@@ -75,7 +83,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String, stravajava.api.v3.model.reference.StravaGender, java.lang.Float)
 	 */
 	@Override
-	public StravaAthlete updateAuthenticatedAthlete(String city, String state, String country, StravaGender sex, Float weight) throws UnauthorizedException, NotFoundException {
+	public StravaAthlete updateAuthenticatedAthlete(String city, String state, String country, StravaGender sex, Float weight) {
 		return restService.updateAuthenticatedAthlete(city, state, country, sex, weight);
 	}
 
@@ -211,5 +219,15 @@ public class AthleteServicesImpl implements AthleteServices {
 	public List<StravaAthlete> listAthletesBothFollowing(Integer id) {
 		return listAthletesBothFollowing(id, null);
 	}
+	
+	private boolean accessTokenIsValid() {
+		try {
+			getAuthenticatedAthlete();
+			return true;
+		} catch (UnauthorizedException e) {
+			return false;
+		}
+	}
+
 
 }

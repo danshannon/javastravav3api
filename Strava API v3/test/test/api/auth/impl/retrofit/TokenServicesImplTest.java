@@ -102,16 +102,4 @@ public class TokenServicesImplTest {
 			// This is the expected behaviour
 		}
 	}
-	
-	/**
-	 * <p>Test behaviour when attempting to deauthorise another account's token</p>
-	 * 
-	 * <p>Should fail to deauthorise!</p>
-	 */
-	@Test
-	public void testDeauthorise_otherUsersToken() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
-	}
-
 }

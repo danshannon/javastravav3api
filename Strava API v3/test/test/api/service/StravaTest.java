@@ -1,6 +1,7 @@
 package test.api.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class StravaTest {
 		// Create a list
 		List<String> list = getRandomList();
 		
-		// 
+		// Remove a random number of elements from it
 		int size = list.size();
 		int firstN = random.nextInt(list.size() - 2) + 1; // i.e. between 1 and list.size() - 1
 		List<String> result = Strava.ignoreFirstN(list, firstN);
@@ -71,43 +72,75 @@ public class StravaTest {
 
 	@Test
 	public void testIgnoreFirstN_invalidNegative() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		List<String> list = getRandomList();
+		
+		int firstN = -1;
+		try {
+			Strava.ignoreFirstN(list, firstN);
+		} catch (IllegalArgumentException e) {
+			// Expected
+			return;
+		}
+		fail("Can't remove a negative number of items from a list!");
 	}
 	
 	@Test
 	public void testIgnoreFirstN_invalidTooLarge() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		List<String> list = getRandomList();
+		list = Strava.ignoreFirstN(list, list.size() + 1);
+		assertNotNull(list);
+		assertEquals(0,list.size());
 	}
 	
 	@Test
 	public void testIgnoreFirstN_zero() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		List<String> list = getRandomList();
+		int size = list.size();
+		
+		list = Strava.ignoreFirstN(list, 0);
+		assertEquals(size,list.size());
 	}
 	
 	@Test
 	public void testIgnoreLastN_valid() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		// Create a list
+		List<String> list = getRandomList();
+		
+		// Remove a random number of elements from it
+		int size = list.size();
+		int lastN = random.nextInt(list.size() - 2) + 1; // i.e. between 1 and list.size() - 1
+		List<String> result = Strava.ignoreLastN(list, lastN);
+		assertEquals(size - lastN,result.size());
 	}
 	
 	@Test
 	public void testIgnoreLastN_zero() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		List<String> list = getRandomList();
+		int size = list.size();
+		
+		list = Strava.ignoreLastN(list, 0);
+		assertEquals(size,list.size());
 	}
 	
 	@Test
 	public void testIgnoreLastN_invalidNegative() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		List<String> list = getRandomList();
+		
+		int lastN = -1;
+		try {
+			Strava.ignoreLastN(list, lastN);
+		} catch (IllegalArgumentException e) {
+			// Expected
+			return;
+		}
+		fail("Can't remove a negative number of items from a list!");
 	}
 	
 	@Test
 	public void testIgnoreLastN_invalidTooLarge() {
-		// TODO Not yet implemented
-		fail("Not yet implemented");
+		List<String> list = getRandomList();
+		list = Strava.ignoreFirstN(list, list.size() + 1);
+		assertNotNull(list);
+		assertEquals(0,list.size());
 	}
 }

@@ -25,7 +25,7 @@ public class GearServicesImplTest {
 	private GearServices gearService;
 	
 	@Before
-	public void setUp() throws UnauthorizedException {
+	public void setUp() {
 		this.gearService = getGearService();
 	}
 	
@@ -35,7 +35,7 @@ public class GearServicesImplTest {
 	 * @throws UnauthorizedException If token is not valid
 	 */
 	@Test
-	public void testImplementation_validToken() throws UnauthorizedException {
+	public void testImplementation_validToken() {
 		GearServices service = GearServicesImpl.implementation(TestUtils.getValidToken());
 		assertNotNull("Got a NULL service for a valid token", service);
 	}
@@ -45,10 +45,10 @@ public class GearServicesImplTest {
 	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testImplementation_invalidToken() throws UnauthorizedException {
+	public void testImplementation_invalidToken() {
 		GearServices service = null;
-		service = GearServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		try {
+			service = GearServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 			service.getGear(TestUtils.GEAR_VALID_ID);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour
@@ -62,7 +62,7 @@ public class GearServicesImplTest {
 	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testImplementation_revokedToken() throws UnauthorizedException {
+	public void testImplementation_revokedToken() {
 		String token = getRevokedToken();
 		GearServices service = GearServicesImpl.implementation(token);
 		
@@ -79,7 +79,7 @@ public class GearServicesImplTest {
 	 * <p>Test that when we ask for a {@link GearServicesImpl service implementation} for a second time, we get the SAME ONE as the first time (i.e. the caching strategy is working)</p>
 	 */
 	@Test
-	public void testImplementation_implementationIsCached() throws UnauthorizedException {
+	public void testImplementation_implementationIsCached() {
 		GearServices service = GearServicesImpl.implementation(TestUtils.getValidToken());
 		GearServices service2 = GearServicesImpl.implementation(TestUtils.getValidToken());
 		assertEquals("Retrieved multiple service instances for the same token - should only be one",service,service2);
@@ -91,7 +91,7 @@ public class GearServicesImplTest {
 	 * @throws UnauthorizedException Thrown when security token is invalid
 	 */
 	@Test
-	public void testImplementation_differentImplementationIsNotCached() throws UnauthorizedException {
+	public void testImplementation_differentImplementationIsNotCached() {
 		GearServices service = getGearService();
 		GearServices service2 = getGearServiceWithoutWriteAccess();
 		assertFalse(service == service2);
@@ -102,7 +102,7 @@ public class GearServicesImplTest {
 	// 2. Invalid gear
 	// 3. StravaGear which doesn't belong to the current athlete
 	@Test
-	public void testGetGear_validGear() throws UnauthorizedException {
+	public void testGetGear_validGear() {
 		GearServices service = getGearService();
 		StravaGear gear = service.getGear(TestUtils.GEAR_VALID_ID);
 		
@@ -111,7 +111,7 @@ public class GearServicesImplTest {
 	}
 	
 	@Test
-	public void testGetGear_invalidGear() throws UnauthorizedException {
+	public void testGetGear_invalidGear()  {
 		GearServices service = getGearService();
 		StravaGear gear = service.getGear(TestUtils.GEAR_INVALID_ID);
 		
@@ -119,26 +119,26 @@ public class GearServicesImplTest {
 	}
 	
 	@Test
-	public void testGetGear_otherAthlete() throws UnauthorizedException {
+	public void testGetGear_otherAthlete()  {
 		GearServices service = getGearService();
 		StravaGear gear = service.getGear(TestUtils.GEAR_OTHER_ATHLETE_ID);
 		
 		assertNull(gear);
 	}
 	
-	private GearServices getGearService() throws UnauthorizedException {
+	private GearServices getGearService() {
 		if (this.gearService == null) {
 			this.gearService = GearServicesImpl.implementation(TestUtils.getValidToken());
 		}
 		return this.gearService;
 	}
 	
-	private String getRevokedToken() throws UnauthorizedException {
+	private String getRevokedToken() {
 		this.gearService = null;
 		return TestUtils.getRevokedToken();
 	}
 	
-	private GearServices getGearServiceWithoutWriteAccess() throws UnauthorizedException {
+	private GearServices getGearServiceWithoutWriteAccess() {
 		this.gearService = null;
 		return GearServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 	}

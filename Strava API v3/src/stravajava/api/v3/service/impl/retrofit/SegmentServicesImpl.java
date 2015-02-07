@@ -24,15 +24,15 @@ import stravajava.api.v3.model.reference.StravaWeightClass;
 import stravajava.api.v3.service.SegmentServices;
 import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.NotFoundException;
-import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
 
 /**
  * @author danshannon
  *
  */
-public class SegmentServicesImpl implements SegmentServices {
+public class SegmentServicesImpl extends StravaServiceImpl implements SegmentServices {
 	private SegmentServicesImpl(String token) {
+		super(token);
 		this.restService = Retrofit.retrofit(SegmentServicesRetrofit.class, token, SegmentServicesRetrofit.LOG_LEVEL);
 	}
 	
@@ -64,7 +64,7 @@ public class SegmentServicesImpl implements SegmentServices {
 	 * @see stravajava.api.v3.service.SegmentServices#getSegment(java.lang.Integer)
 	 */
 	@Override
-	public StravaSegment getSegment(Integer id) throws UnauthorizedException {
+	public StravaSegment getSegment(Integer id) {
 		try {
 			return restService.getSegment(id);
 		} catch (NotFoundException e) {

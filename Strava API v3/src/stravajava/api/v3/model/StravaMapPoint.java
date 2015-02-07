@@ -22,12 +22,10 @@ public class StravaMapPoint {
 		this.longitude = longitude;
 	}
 	
-// TODO	@JsonValue
 	public Float[] getValue() {
 		return new Float[]{this.latitude,this.longitude};
 	}
 	
-// TODO	@JsonCreator
 	public StravaMapPoint create(Float[] latlng) {
 		return new StravaMapPoint(latlng[0],latlng[1]);
 	}

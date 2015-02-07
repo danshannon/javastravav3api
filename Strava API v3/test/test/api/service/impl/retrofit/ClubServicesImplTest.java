@@ -18,7 +18,6 @@ import stravajava.api.v3.model.StravaClub;
 import stravajava.api.v3.model.StravaClubMembershipResponse;
 import stravajava.api.v3.service.ClubServices;
 import stravajava.api.v3.service.Strava;
-import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.ClubServicesImpl;
 import stravajava.util.Paging;
@@ -34,12 +33,8 @@ public class ClubServicesImplTest {
 	private ClubServices clubService;
 	
 	@Before
-	public void before() throws UnauthorizedException, NotFoundException {
+	public void before() {
 		this.clubService = getClubService();
-		
-		// Make sure that the club memberships are right, before starting the tests
-//		this.clubService.joinClub(TestUtils.CLUB_VALID_ID);
-//		this.clubService.leaveClub(TestUtils.CLUB_PUBLIC_NON_MEMBER_ID);
 	}
 	
 	
@@ -49,7 +44,7 @@ public class ClubServicesImplTest {
 	 * @throws UnauthorizedException If token is not valid
 	 */
 	@Test
-	public void testImplementation_validToken() throws UnauthorizedException {
+	public void testImplementation_validToken() {
 		ClubServices service = getClubService();
 		assertNotNull("Got a NULL service for a valid token", service);
 	}
@@ -75,7 +70,7 @@ public class ClubServicesImplTest {
 	 * @throws UnauthorizedException 
 	 */
 	@Test
-	public void testImplementation_revokedToken() throws UnauthorizedException {
+	public void testImplementation_revokedToken() {
 		ClubServices service = getRevokedTokenService();
 		try {
 			service.getClub(TestUtils.CLUB_VALID_ID);
@@ -90,7 +85,7 @@ public class ClubServicesImplTest {
 	 * <p>Test that when we ask for a {@link ClubServicesImpl service implementation} for a second time, we get the SAME ONE as the first time (i.e. the caching strategy is working)</p>
 	 */
 	@Test
-	public void testImplementation_implementationIsCached() throws UnauthorizedException {
+	public void testImplementation_implementationIsCached() {
 		ClubServices service = getClubService();
 		ClubServices service2 = getClubService();
 		assertEquals("Retrieved multiple service instances for the same token - should only be one",service,service2);
@@ -102,7 +97,7 @@ public class ClubServicesImplTest {
 	 * @throws UnauthorizedException Thrown when security token is invalid
 	 */
 	@Test
-	public void testImplementation_differentImplementationIsNotCached() throws UnauthorizedException {
+	public void testImplementation_differentImplementationIsNotCached() {
 		ClubServices service = getClubService();
 		ClubServices service2 = ClubServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 		assertFalse(service == service2);
@@ -111,7 +106,7 @@ public class ClubServicesImplTest {
 	// Test cases
 	// 1. Valid club
 	@Test
-	public void testGetClub_validClub() throws UnauthorizedException {
+	public void testGetClub_validClub() {
 		ClubServices service = getClubService();
 		StravaClub club = service.getClub(TestUtils.CLUB_VALID_ID);
 		assertNotNull(club);
@@ -120,7 +115,7 @@ public class ClubServicesImplTest {
 	
 	// 2. Invalid club
 	@Test
-	public void testGetClub_invalidClub() throws UnauthorizedException {
+	public void testGetClub_invalidClub() {
 		ClubServices service = getClubService();
 		StravaClub club = service.getClub(TestUtils.CLUB_INVALID_ID);
 		assertNull("Got club result despite club being invalid",club);
@@ -128,7 +123,7 @@ public class ClubServicesImplTest {
 	
 	// 3. Private club of which current authenticated athlete is a member
 	@Test
-	public void testGetClub_privateClubIsMember() throws UnauthorizedException {
+	public void testGetClub_privateClubIsMember() {
 		ClubServices service = ClubServicesImpl.implementation(TestUtils.getValidToken());
 		StravaClub club = service.getClub(TestUtils.CLUB_PRIVATE_MEMBER_ID);
 		assertNotNull(club);
@@ -137,23 +132,19 @@ public class ClubServicesImplTest {
 	
 	// 4. Private club of which current authenticated athlete is NOT a member
 	@Test
-	public void testGetClub_privateClubIsNotMember() throws UnauthorizedException {
+	public void testGetClub_privateClubIsNotMember() {
 		ClubServices service = getClubService();
-			@SuppressWarnings("unused")
-			StravaClub club = null;
-			try {
-				club = service.getClub(TestUtils.CLUB_PRIVATE_NON_MEMBER_ID);
-			} catch (UnauthorizedException e) {
-				// Expected behaviour
-				return;
-			}
-		fail("Got details of a private club?");
+		StravaClub club = service.getClub(TestUtils.CLUB_PRIVATE_NON_MEMBER_ID);
+		StravaClub comparison = new StravaClub();
+		comparison.setId(TestUtils.CLUB_PRIVATE_NON_MEMBER_ID);
+		assertNotNull(club);
+		assertEquals(comparison,club);
 	}
 	
 	// Test cases
 	// 1. StravaAthlete has clubs
 	@Test
-	public void testListAuthenticatedAthleteClubs() throws UnauthorizedException {
+	public void testListAuthenticatedAthleteClubs() {
 		ClubServices service = getClubService();
 		List<StravaClub> clubs = service.listAuthenticatedAthleteClubs();
 		assertNotNull(clubs);
@@ -163,7 +154,7 @@ public class ClubServicesImplTest {
 	// Test cases
 	// 1. Valid club
 	@Test
-	public void testListClubMembers_validClub() throws UnauthorizedException {
+	public void testListClubMembers_validClub() {
 		ClubServices service = getClubService();
 		List<StravaAthlete> members = service.listClubMembers(TestUtils.CLUB_VALID_ID);
 		assertNotNull(members);
@@ -172,7 +163,7 @@ public class ClubServicesImplTest {
 	
 	// 2. Invalid club
 	@Test
-	public void testListClubMembers_invalidClub() throws UnauthorizedException {
+	public void testListClubMembers_invalidClub() {
 		ClubServices service = getClubService();
 		List<StravaAthlete> members;
 		
@@ -182,21 +173,16 @@ public class ClubServicesImplTest {
 	
 	// 4. Private club of which current authenticated athlete is NOT a member
 	@Test
-	public void testListClubMembers_privateClubNotMember() throws UnauthorizedException {
+	public void testListClubMembers_privateClubNotMember() {
 		ClubServices service = getClubService();
-		try {
-		@SuppressWarnings("unused")
 		List<StravaAthlete> members = service.listClubMembers(TestUtils.CLUB_PRIVATE_NON_MEMBER_ID);
-		} catch (UnauthorizedException e) {
-			// Expected behaviour
-			return;
-		}
-		fail("Asked for a private club's memnber list and didn't get an UnauthorizedException");
+		assertNotNull(members);
+		assertEquals(0,members.size());
 	}
 	
 	// 3. Private club of which current authenticated athlete is a member
 	@Test
-	public void testListClubMembers_privateClubIsMember() throws UnauthorizedException {
+	public void testListClubMembers_privateClubIsMember() {
 		ClubServices service = getClubService();
 		List<StravaAthlete> members = service.listClubMembers(TestUtils.CLUB_PRIVATE_MEMBER_ID);
 		assertNotNull(members);
@@ -205,7 +191,7 @@ public class ClubServicesImplTest {
 	
 	// 5. Paging - size only (including test for max page size)
 	@Test
-	public void testListClubMembers_pageSize() throws UnauthorizedException {
+	public void testListClubMembers_pageSize() {
 		ClubServices service = getClubService();
 		List<StravaAthlete> members = service.listClubMembers(TestUtils.CLUB_VALID_ID, new Paging(1,1));
 		assertNotNull(members);
@@ -218,7 +204,7 @@ public class ClubServicesImplTest {
 	
 	// 6. Paging - size and page
 	@Test
-	public void testListClubMembers_pageSizeAndNumber() throws UnauthorizedException {
+	public void testListClubMembers_pageSizeAndNumber() {
 		ClubServices service = getClubService();
 		List<StravaAthlete> members = service.listClubMembers(TestUtils.CLUB_VALID_ID, new Paging(1,2));
 		assertNotNull(members);
@@ -232,7 +218,7 @@ public class ClubServicesImplTest {
 	
 	// 7. Paging - out of range high
 	@Test
-	public void testListClubMembers_pagingOutOfRangeHigh() throws UnauthorizedException {
+	public void testListClubMembers_pagingOutOfRangeHigh() {
 		ClubServices service = getClubService();
 		List<StravaAthlete> members = service.listClubMembers(TestUtils.CLUB_VALID_ID, new Paging(1000,200));
 		assertNotNull(members);
@@ -241,7 +227,7 @@ public class ClubServicesImplTest {
 	
 	// 8. Paging - out of range low
 	@Test
-	public void testListClubMembers_pagingOutOfRangeLow() throws UnauthorizedException {
+	public void testListClubMembers_pagingOutOfRangeLow() {
 		ClubServices service = ClubServicesImpl.implementation(TestUtils.getValidToken());
 		try {
 			@SuppressWarnings("unused")
@@ -256,7 +242,7 @@ public class ClubServicesImplTest {
 	// Test cases
 	// 1. Valid club
 	@Test
-	public void testListRecentClubActivities_validClub() throws UnauthorizedException {
+	public void testListRecentClubActivities_validClub() {
 		ClubServices service = getClubService();
 		List<StravaActivity> activities = service.listRecentClubActivities(TestUtils.CLUB_VALID_ID);
 
@@ -265,7 +251,7 @@ public class ClubServicesImplTest {
 	
 	// 2. Invalid club
 	@Test
-	public void testListRecentClubActivities_invalidClub() throws UnauthorizedException {
+	public void testListRecentClubActivities_invalidClub() {
 		ClubServices service = getClubService();
 		@SuppressWarnings("unused")
 		List<StravaActivity> activities;
@@ -276,7 +262,7 @@ public class ClubServicesImplTest {
 	
 	// 3. StravaClub the current authenticated athlete is NOT a member of (according to Strava should return 0 results)
 	@Test
-	public void testListRecentClubActivities_nonMember() throws UnauthorizedException {
+	public void testListRecentClubActivities_nonMember() {
 		ClubServices service = getClubService();
 		List<StravaActivity> activities = service.listRecentClubActivities(TestUtils.CLUB_PUBLIC_NON_MEMBER_ID);
 
@@ -285,7 +271,7 @@ public class ClubServicesImplTest {
 	
 	// 4. StravaClub with > 200 activities (according to Strava, should only return a max of 200 results)
 	@Test
-	public void testListRecentClubActivities_moreThan200() throws UnauthorizedException {
+	public void testListRecentClubActivities_moreThan200() {
 		ClubServices service = getClubService();
 		List<StravaActivity> activities = service.listRecentClubActivities(TestUtils.CLUB_VALID_ID, new Paging(2,200));
 		assertNotNull(activities);
@@ -297,7 +283,7 @@ public class ClubServicesImplTest {
 	
 	// 5. Paging - size only (including test for max page size)
 	@Test
-	public void testListRecentClubActivities_pageSize() throws UnauthorizedException {
+	public void testListRecentClubActivities_pageSize() {
 		ClubServices service = getClubService();
 		List<StravaActivity> activities = service.listRecentClubActivities(TestUtils.CLUB_VALID_ID, new Paging(1,1));
 		
@@ -307,7 +293,7 @@ public class ClubServicesImplTest {
 	
 	// 6. Paging - size and page
 	@Test
-	public void testListRecentClubActivities_pageSizeAndNumber() throws UnauthorizedException {
+	public void testListRecentClubActivities_pageSizeAndNumber() {
 		ClubServices service = getClubService();
 		List<StravaActivity> activities = service.listRecentClubActivities(TestUtils.CLUB_VALID_ID, new Paging(1,2));
 		
@@ -322,7 +308,7 @@ public class ClubServicesImplTest {
 
 	// 7. Paging - out of range high
 	@Test
-	public void testListRecentClubActivities_pagingOutOfRangeHigh() throws UnauthorizedException {
+	public void testListRecentClubActivities_pagingOutOfRangeHigh() {
 		ClubServices service = getClubService();
 		List<StravaActivity> activities = service.listRecentClubActivities(TestUtils.CLUB_VALID_ID, new Paging(1000,200));
 		
@@ -332,7 +318,7 @@ public class ClubServicesImplTest {
 
 	// 8. Paging - out of range low
 	@Test
-	public void testListRecentClubActivities_pagingOutOfRangeLow() throws UnauthorizedException {
+	public void testListRecentClubActivities_pagingOutOfRangeLow() {
 		ClubServices service = getClubService();
 		try {
 			@SuppressWarnings("unused")
@@ -347,7 +333,7 @@ public class ClubServicesImplTest {
 	// Test cases
 	// 1. Valid club which authenticated user is not already a member of
 	@Test
-	public void testJoinClub_nonMember() throws UnauthorizedException, NotFoundException {
+	public void testJoinClub_nonMember() {
 		ClubServices service = getClubService();
 		Integer id = TestUtils.CLUB_PUBLIC_NON_MEMBER_ID;
 		
@@ -368,7 +354,7 @@ public class ClubServicesImplTest {
 
 	// 2. Valid club which authenticated user is already a member of
 	@Test
-	public void testJoinClub_member() throws UnauthorizedException, NotFoundException {
+	public void testJoinClub_member() {
 		ClubServices service = getClubService();
 		Integer id = TestUtils.CLUB_VALID_ID;
 		
@@ -386,62 +372,41 @@ public class ClubServicesImplTest {
 
 	// 3. Invalid club
 	@Test
-	public void testJoinClub_invalidClub() throws UnauthorizedException, NotFoundException {
+	public void testJoinClub_invalidClub() {
 		ClubServices service = getClubService();
 		Integer id = TestUtils.CLUB_INVALID_ID;
 		
-		try {
-			service.joinClub(id);
-		} catch (NotFoundException e) {
-			// Expected behaviour
-			return;
-		}
-		
-		service.leaveClub(id);
-		fail("Succeeded in joining invalid club (id = " + id + ")");
+		StravaClubMembershipResponse response = service.joinClub(id);
+		assertEquals(Boolean.FALSE,response.getSuccess());
 	}
 
 	// 4. Private club which authenticated user is NOT a member of
 	@Test
-	public void testJoinClub_privateClub() throws UnauthorizedException, NotFoundException {
+	public void testJoinClub_privateClub() {
 		ClubServices service = getClubService();
 		Integer id = TestUtils.CLUB_PRIVATE_NON_MEMBER_ID;
 		
-		try {
-			service.joinClub(id);
-		} catch (UnauthorizedException e) {
-			// Expected behaviour
-			return;
-		}
-		
-		service.leaveClub(id);
-		fail("Succeeded in joining private club (id = " + id + ")");
+		StravaClubMembershipResponse response = service.joinClub(id);
+		assertNotNull(response);
+		assertEquals(Boolean.FALSE,response.getSuccess());
 		
 	}
 	
 	// 5. Attempt to join a club without having write access
 	@Test
-	public void testJoinClub_noWriteAccess() throws UnauthorizedException, NotFoundException {
+	public void testJoinClub_noWriteAccess() {
 		ClubServices service = getClubServiceWithoutWriteAccess();
 		Integer id = TestUtils.CLUB_VALID_ID;
 		
-		try {
-			service.joinClub(id);
-		} catch (UnauthorizedException e) {
-			// Expected behaviour
-			return;
-		}
-		
-		// If we get here there's something wrong
-		service.leaveClub(id);
-		fail("Succeeded in joining club, but token doesn't have write access (id = " + id + ")");
-
+		StravaClubMembershipResponse response = service.joinClub(id);
+		assertNotNull(response);
+		assertEquals(Boolean.FALSE,response.getSuccess());
 	}
 
 	// Test cases
 	// 1. Valid club which authenticated user is not already a member of
 	@Test
-	public void testLeaveClub_nonMember() throws UnauthorizedException, NotFoundException {
+	public void testLeaveClub_nonMember() {
 		ClubServices service = getClubService();
 		Integer id = TestUtils.CLUB_PUBLIC_NON_MEMBER_ID;
 		
@@ -455,7 +420,7 @@ public class ClubServicesImplTest {
 
 	// 2. Valid club which authenticated user is already a member of
 	@Test
-	public void testLeaveClub_member() throws UnauthorizedException, NotFoundException {
+	public void testLeaveClub_member() {
 		ClubServices service = getClubService();
 		Integer id = TestUtils.CLUB_VALID_ID;
 		
@@ -472,19 +437,12 @@ public class ClubServicesImplTest {
 
 	// 3. Invalid club
 	@Test
-	public void testLeaveClub_invalidClub() throws UnauthorizedException {
+	public void testLeaveClub_invalidClub() {
 		ClubServices service = getClubService();
 		Integer id = TestUtils.CLUB_INVALID_ID;
 		
-		try {
-			service.leaveClub(id);
-		} catch (NotFoundException e) {
-			// Expected behaviour
-			return;
-		}
-		
-		// If we get here, something went horribly wrong
-		fail("Left a club with an invalid id! (id = " + id + ")");
+		StravaClubMembershipResponse response = service.leaveClub(id);
+		assertEquals(Boolean.FALSE,response.getSuccess());
 	}
 
 	// 4. Private club which authenticated user is a member of
@@ -506,35 +464,28 @@ public class ClubServicesImplTest {
 	
 	// 5. Leave a club using a token with no write access
 	@Test
-	public void testLeaveClub_noWriteAccess() throws UnauthorizedException, NotFoundException {
+	public void testLeaveClub_noWriteAccess() {
 		ClubServices service = getClubServiceWithoutWriteAccess();
 		Integer id = TestUtils.CLUB_VALID_ID;
 		
-		try {
-			service.leaveClub(id);
-		} catch (UnauthorizedException e) {
-			// Expected behaviour
-			return;
-		}
-		
-		// If we get here then something's gone horribly wrong
-		service.joinClub(id);
-		fail("Left a club using a token without write access! (id = " + id + ")");
+		StravaClubMembershipResponse response = service.leaveClub(id);
+		assertNotNull(response);
+		assertEquals(Boolean.FALSE,response.getSuccess());
 	}
 	
-	private ClubServices getClubService() throws UnauthorizedException {
+	private ClubServices getClubService() {
 		if (this.clubService == null) {
 			this.clubService = ClubServicesImpl.implementation(TestUtils.getValidToken());
 		}
 		return this.clubService;
 	}
 	
-	private ClubServices getRevokedTokenService() throws UnauthorizedException {
+	private ClubServices getRevokedTokenService() {
 		this.clubService = null;
 		return ClubServicesImpl.implementation(TestUtils.getRevokedToken());
 	}
 	
-	private ClubServices getClubServiceWithoutWriteAccess() throws UnauthorizedException {
+	private ClubServices getClubServiceWithoutWriteAccess() {
 		this.clubService = null;
 		return ClubServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 	}

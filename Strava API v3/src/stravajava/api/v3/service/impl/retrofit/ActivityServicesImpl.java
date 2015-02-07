@@ -24,8 +24,9 @@ import stravajava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class ActivityServicesImpl implements ActivityServices {
+public class ActivityServicesImpl extends StravaServiceImpl implements ActivityServices {
 	private ActivityServicesImpl(String token) {
+		super(token);
 		this.restService = Retrofit.retrofit(ActivityServicesRetrofit.class, token, ActivityServicesRetrofit.LOG_LEVEL);
 	}
 	
@@ -58,7 +59,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see stravajava.api.v3.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
 	@Override
-	public StravaActivity getActivity(Integer id, Boolean includeAllEfforts) throws UnauthorizedException {
+	public StravaActivity getActivity(Integer id, Boolean includeAllEfforts) {
 		try {
 			boolean loop = true;
 			StravaActivity stravaResponse = null;
@@ -77,6 +78,15 @@ public class ActivityServicesImpl implements ActivityServices {
 			return stravaResponse;
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				// Activity is private
+				StravaActivity activity = new StravaActivity();
+				activity.setId(id);
+				return activity;
+			} else {
+				throw e;
+			}
 		}
 	}
 
@@ -84,7 +94,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see stravajava.api.v3.service.ActivityServices#createManualActivity(stravajava.api.v3.model.StravaActivity)
 	 */
 	@Override
-	public StravaActivity createManualActivity(StravaActivity activity) throws UnauthorizedException {
+	public StravaActivity createManualActivity(StravaActivity activity) {
 		try {
 			return restService.createManualActivity(activity);
 		} catch (BadRequestException e) {
@@ -96,16 +106,24 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see stravajava.api.v3.service.ActivityServices#updateActivity(stravajava.api.v3.model.StravaActivity)
 	 */
 	@Override
-	public StravaActivity updateActivity(StravaActivity activity) throws NotFoundException, UnauthorizedException {
-			return restService.updateActivity(activity.getId(), activity);
+	public StravaActivity updateActivity(StravaActivity activity) {
+			try {
+				return restService.updateActivity(activity.getId(), activity);
+			} catch (NotFoundException e) {
+				return null;
+			}
 	}
 
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#deleteActivity(java.lang.Integer)
 	 */
 	@Override
-	public StravaActivity deleteActivity(Integer id) throws NotFoundException, UnauthorizedException {
-		return restService.deleteActivity(id);
+	public StravaActivity deleteActivity(Integer id) {
+		try {
+			return restService.deleteActivity(id);
+		} catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -113,7 +131,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 *      java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<StravaActivity> listAuthenticatedAthleteActivities(Calendar before, Calendar after, Paging pagingInstruction) throws UnauthorizedException {
+	public List<StravaActivity> listAuthenticatedAthleteActivities(Calendar before, Calendar after, Paging pagingInstruction) {
 		Strava.validatePagingArguments(pagingInstruction);
 		Integer secondsBefore = secondsSinceUnixEpoch(before);
 		Integer secondsAfter = secondsSinceUnixEpoch(after);
@@ -175,6 +193,12 @@ public class ActivityServicesImpl implements ActivityServices {
 			return Arrays.asList(restService.listActivityZones(id));
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				return new ArrayList<StravaActivityZone>();
+			} else {
+				throw e;
+			}
 		}
 	}
 
@@ -187,6 +211,12 @@ public class ActivityServicesImpl implements ActivityServices {
 			return Arrays.asList(restService.listActivityLaps(id));
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				return new ArrayList<StravaLap>();
+			} else {
+				throw e;
+			}
 		}
 	}
 
@@ -212,6 +242,12 @@ public class ActivityServicesImpl implements ActivityServices {
 			}
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				return new ArrayList<StravaComment>();
+			} else {
+				throw e;
+			}
 		}
 		return comments;
 
@@ -239,6 +275,12 @@ public class ActivityServicesImpl implements ActivityServices {
 			}
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				return new ArrayList<StravaAthlete>();
+			} else {
+				throw e;
+			}
 		}
 		return athletes;
 	}
@@ -260,6 +302,12 @@ public class ActivityServicesImpl implements ActivityServices {
 			
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				return new ArrayList<StravaPhoto>();
+			} else {
+				throw e;
+			}
 		}
 	}
 
@@ -283,7 +331,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities(java.util.Calendar, java.util.Calendar)
 	 */
 	@Override
-	public List<StravaActivity> listAuthenticatedAthleteActivities(Calendar before, Calendar after) throws UnauthorizedException {
+	public List<StravaActivity> listAuthenticatedAthleteActivities(Calendar before, Calendar after) {
 		return listAuthenticatedAthleteActivities(before, after, null);
 	}
 
@@ -299,7 +347,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities()
 	 */
 	@Override
-	public List<StravaActivity> listAuthenticatedAthleteActivities() throws UnauthorizedException {
+	public List<StravaActivity> listAuthenticatedAthleteActivities() {
 		return listAuthenticatedAthleteActivities(null, null, null);
 	}
 
@@ -307,7 +355,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities(stravajava.util.Paging)
 	 */
 	@Override
-	public List<StravaActivity> listAuthenticatedAthleteActivities(Paging pagingInstruction) throws UnauthorizedException {
+	public List<StravaActivity> listAuthenticatedAthleteActivities(Paging pagingInstruction) {
 		return listAuthenticatedAthleteActivities(null, null, pagingInstruction);
 	}
 
@@ -340,6 +388,12 @@ public class ActivityServicesImpl implements ActivityServices {
 			}
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				return new ArrayList<StravaActivity>();
+			} else {
+				throw e;
+			}
 		}
 		return activities;
 		
@@ -349,7 +403,7 @@ public class ActivityServicesImpl implements ActivityServices {
 	 * @see stravajava.api.v3.service.ActivityServices#getActivity(java.lang.Integer)
 	 */
 	@Override
-	public StravaActivity getActivity(Integer id) throws UnauthorizedException  {
+	public StravaActivity getActivity(Integer id) {
 		return getActivity(id, Boolean.FALSE);
 	}
 

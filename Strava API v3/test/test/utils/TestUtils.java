@@ -53,6 +53,7 @@ public class TestUtils {
 	public static Integer ATHLETE_INVALID_ID;
 	public static Integer ATHLETE_WITHOUT_KOMS;
 	public static Integer ATHLETE_WITHOUT_FRIENDS;
+	public static Integer ATHLETE_PRIVATE_ID;
 	
 	public static Integer CLUB_VALID_ID;
 	public static Integer CLUB_INVALID_ID;
@@ -113,6 +114,7 @@ public class TestUtils {
 		ATHLETE_INVALID_ID = integerProperty("test.athleteServicesImplTest.athleteInvalidId");
 		ATHLETE_WITHOUT_KOMS = integerProperty("test.athleteServicesImplTest.athleteWithoutKOMs");
 		ATHLETE_WITHOUT_FRIENDS = integerProperty("test.athleteServicesImplTest.athleteWithoutFriends");
+		ATHLETE_PRIVATE_ID = integerProperty("test.athleteServicesImplTest.athletePrivate");
 		
 		CLUB_VALID_ID = integerProperty("test.clubServicesImplTest.clubId");
 		CLUB_INVALID_ID = integerProperty("test.clubServicesImplTest.clubInvalidId");

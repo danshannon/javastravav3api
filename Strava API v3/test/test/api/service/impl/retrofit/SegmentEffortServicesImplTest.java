@@ -29,7 +29,7 @@ public class SegmentEffortServicesImplTest {
 	 * @throws UnauthorizedException If token is not valid
 	 */
 	@Test
-	public void testImplementation_validToken() throws UnauthorizedException {
+	public void testImplementation_validToken() {
 		SegmentEffortServices service = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
 		assertNotNull("Got a NULL service for a valid token", service);
 	}
@@ -40,8 +40,8 @@ public class SegmentEffortServicesImplTest {
 	@Test
 	public void testImplementation_invalidToken() {
 		SegmentEffortServices service = null;
-		service = SegmentEffortServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		try {
+			service = SegmentEffortServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 			service.getSegmentEffort(TestUtils.SEGMENT_EFFORT_VALID_ID);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour
@@ -54,7 +54,7 @@ public class SegmentEffortServicesImplTest {
 	 * <p>Test that we don't get a {@link SegmentEffortServicesImpl service implementation} if the token has been revoked by the user</p>
 	 */
 	@Test
-	public void testImplementation_revokedToken() throws UnauthorizedException {
+	public void testImplementation_revokedToken() {
 		SegmentEffortServices service = SegmentEffortServicesImpl.implementation(getRevokedToken());
 		try {
 			service.getSegmentEffort(TestUtils.SEGMENT_EFFORT_VALID_ID);
@@ -69,7 +69,7 @@ public class SegmentEffortServicesImplTest {
 	 * <p>Test that when we ask for a {@link SegmentEffortServicesImpl service implementation} for a second time, we get the SAME ONE as the first time (i.e. the caching strategy is working)</p>
 	 */
 	@Test
-	public void testImplementation_implementationIsCached() throws UnauthorizedException {
+	public void testImplementation_implementationIsCached() {
 		SegmentEffortServices service = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
 		SegmentEffortServices service2 = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
 		assertEquals("Retrieved multiple service instances for the same token - should only be one",service,service2);
@@ -81,7 +81,7 @@ public class SegmentEffortServicesImplTest {
 	 * @throws UnauthorizedException Thrown when security token is invalid
 	 */
 	@Test
-	public void testImplementation_differentImplementationIsNotCached() throws UnauthorizedException {
+	public void testImplementation_differentImplementationIsNotCached() {
 		SegmentEffortServices service = getService();
 		SegmentEffortServices service2 = getServiceWithoutWriteAccess();
 		assertFalse(service == service2);
@@ -93,7 +93,7 @@ public class SegmentEffortServicesImplTest {
 	// 3. Private effort which does belong to the current athlete (is returned)
 	// 4. Private effort which doesn't belong to the current athlete (is not returned)
 	@Test
-	public void testGetSegmentEffort_valid() throws UnauthorizedException {
+	public void testGetSegmentEffort_valid() {
 		SegmentEffortServices service = getService();
 		Long id = TestUtils.SEGMENT_EFFORT_VALID_ID;
 		StravaSegmentEffort effort = service.getSegmentEffort(id);
@@ -102,7 +102,7 @@ public class SegmentEffortServicesImplTest {
 	}
 
 	@Test
-	public void testGetSegmentEffort_invalid() throws UnauthorizedException {
+	public void testGetSegmentEffort_invalid() {
 		SegmentEffortServices service = getService();
 		Long id = TestUtils.SEGMENT_EFFORT_INVALID_ID;
 		StravaSegmentEffort effort = service.getSegmentEffort(id);
@@ -110,7 +110,7 @@ public class SegmentEffortServicesImplTest {
 	}
 
 	@Test
-	public void testGetSegmentEffort_private() throws UnauthorizedException {
+	public void testGetSegmentEffort_private() {
 		SegmentEffortServices service = getService();
 		Long id = TestUtils.SEGMENT_EFFORT_PRIVATE_ID;
 		StravaSegmentEffort effort = service.getSegmentEffort(id);
@@ -119,31 +119,29 @@ public class SegmentEffortServicesImplTest {
 	}
 
 	@Test
-	public void testGetSegmentEffort_privateOtherAthlete() throws UnauthorizedException {
+	public void testGetSegmentEffort_privateOtherAthlete() {
 		SegmentEffortServices service = getService();
 		Long id = TestUtils.SEGMENT_EFFORT_OTHER_USER_PRIVATE_ID;
-		try {
-			service.getSegmentEffort(id);
-		} catch (UnauthorizedException e) {
-			// Expected
-			return;
-		}
-		fail("Returned an effort for a private segment belonging to another user!");
+		StravaSegmentEffort effort = service.getSegmentEffort(id);
+		assertNotNull(effort);
+		StravaSegmentEffort comparison = new StravaSegmentEffort();
+		comparison.setId(id);
+		assertEquals(comparison,effort);
 	}
 	
-	private SegmentEffortServices getService() throws UnauthorizedException {
+	private SegmentEffortServices getService() {
 		if (this.segmentEffortService == null) {
 			this.segmentEffortService = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
 		}
 		return this.segmentEffortService;
 	}
 	
-	private String getRevokedToken() throws UnauthorizedException {
+	private String getRevokedToken() {
 		this.segmentEffortService = null;
 		return TestUtils.getRevokedToken();
 	}
 	
-	private SegmentEffortServices getServiceWithoutWriteAccess() throws UnauthorizedException {
+	private SegmentEffortServices getServiceWithoutWriteAccess() {
 		this.segmentEffortService = null;
 		return SegmentEffortServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 	}

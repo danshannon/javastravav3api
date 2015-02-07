@@ -16,14 +16,13 @@ import stravajava.api.v3.model.StravaLap;
 import stravajava.api.v3.model.StravaPhoto;
 import stravajava.api.v3.service.exception.BadRequestException;
 import stravajava.api.v3.service.exception.NotFoundException;
-import stravajava.api.v3.service.exception.UnauthorizedException;
 
 /**
  * @author Dan Shannon
  *
  */
 public interface ActivityServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
 	
 
 	
@@ -31,31 +30,31 @@ public interface ActivityServicesRetrofit {
 	 * @see stravajava.api.v3.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
 	@GET("/activities/{id}")
-	public StravaActivity getActivity(@Path("id") Integer id, @Query("include_all_efforts") Boolean includeAllEfforts) throws NotFoundException, UnauthorizedException;
+	public StravaActivity getActivity(@Path("id") Integer id, @Query("include_all_efforts") Boolean includeAllEfforts) throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#createManualActivity(stravajava.api.v3.model.StravaActivity)
 	 */
 	@POST("/activities")
-	public StravaActivity createManualActivity(@Body StravaActivity activity) throws UnauthorizedException, BadRequestException;
+	public StravaActivity createManualActivity(@Body StravaActivity activity) throws BadRequestException;
 	
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#updateActivity(stravajava.api.v3.model.StravaActivity)
 	 */
 	@PUT("/activities/{id}")
-	public StravaActivity updateActivity(@Path("id") Integer id, @Body StravaActivity activity) throws NotFoundException, UnauthorizedException;
+	public StravaActivity updateActivity(@Path("id") Integer id, @Body StravaActivity activity) throws NotFoundException;
 	
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#deleteActivity(java.lang.Integer)
 	 */
 	@DELETE("/activities/{id}")
-	public StravaActivity deleteActivity(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
+	public StravaActivity deleteActivity(@Path("id") Integer id) throws NotFoundException;
 	
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/athlete/activities")
-	public StravaActivity[] listAuthenticatedAthleteActivities(@Query("before") Integer before, @Query("after") Integer after, @Query("page") Integer page, @Query("per_page") Integer perPage) throws UnauthorizedException;
+	public StravaActivity[] listAuthenticatedAthleteActivities(@Query("before") Integer before, @Query("after") Integer after, @Query("page") Integer page, @Query("per_page") Integer perPage);
 
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#listFriendsActivities(java.lang.Integer, java.lang.Integer)

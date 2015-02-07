@@ -102,10 +102,8 @@ public class TestHttpUtils {
 				response2.close();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -145,10 +143,8 @@ public class TestHttpUtils {
 				response2.close();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -162,20 +158,6 @@ public class TestHttpUtils {
 
 	}
 	
-	/**
-	 * <p>Indicate that the user has DENIED the application access to their Strava data</p>
-	 * 
-	 * <p>This method is provided FOR TESTING PURPOSES ONLY</p>
-	 * 
-	 * @param clientId The application's ID, obtained during registration
-	 * @param redirectURI URI to which a redirect should be issued
-	 * @param responseType must be "code"
-	 */
-	public void rejectApplication(Integer clientId, String redirectURI, AuthorisationResponseType responseType){
-		// TODO Not yet implemented
-		return;
-	}
-
 	/**
 	 * <p>Get the login page and extract the authenticity token that Strava cunningly hides in the login form</p>
 	 * @return The value of the authenticity token, which should be included when posting the form to log in

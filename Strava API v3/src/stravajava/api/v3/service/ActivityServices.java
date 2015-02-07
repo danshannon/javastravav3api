@@ -9,8 +9,6 @@ import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaComment;
 import stravajava.api.v3.model.StravaLap;
 import stravajava.api.v3.model.StravaPhoto;
-import stravajava.api.v3.service.exception.BadRequestException;
-import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
 
@@ -31,7 +29,7 @@ public interface ActivityServices {
 	 * 
 	 * <p>Each segment effort will have a hidden attribute indicating if it is "important" or not.</p>
 	 * 
-	 * <p>Returns <code>null</code> if the activity does not exist
+	 * <p>Returns <code>null</code> if the activity does not exist</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/activities/:id</p>
 	 * 
@@ -39,8 +37,9 @@ public interface ActivityServices {
 	 * 
 	 * @param id The id of the {@link StravaActivity activity} to be returned
 	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for all other requests.
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
-	public StravaActivity getActivity(Integer id) throws UnauthorizedException;
+	public StravaActivity getActivity(Integer id);
 	
 	/**
 	 * <p>StravaActivity details, including segment efforts, splits and best efforts, are only available to the owner of the activity.</p>
@@ -51,7 +50,7 @@ public interface ActivityServices {
 	 * 
 	 * <p>Each segment effort will have a hidden attribute indicating if it is "important" or not.</p>
 	 * 
-	 * <p>Returns <code>null</code> if the activity does not exist
+	 * <p>Returns <code>null</code> if the activity does not exist</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/activities/:id</p>
 	 * 
@@ -60,9 +59,9 @@ public interface ActivityServices {
 	 * @param id The id of the {@link StravaActivity activity} to be returned
 	 * @param includeAllEfforts (Optional) Used to include all segment efforts in the result (if omitted or <code>false</code> then only "important" efforts are returned).
 	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for all other requests.
-	 * @throws UnauthorizedException 
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
-	public StravaActivity getActivity(Integer id, Boolean includeAllEfforts) throws UnauthorizedException;
+	public StravaActivity getActivity(Integer id, Boolean includeAllEfforts);
 	
 	/**
 	 * <p>This API endpoint is for creating manually entered {@link StravaActivity activities}. To upload a FIT, TCX or GPX file see the Upload Documentation.</p>
@@ -80,15 +79,16 @@ public interface ActivityServices {
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
 	 * @param activity The {@link StravaActivity activity} to be uploaded</p>
-	 * @throws UnauthorizedException If user's security token does not grant write access to the activity
-	 * @throws BadRequestException If activity doesn't include all required fields
+	 * @throws UnauthorizedException If user's security token is invalid or does not grant write access to the activity
 	 */
-	public StravaActivity createManualActivity(StravaActivity activity) throws UnauthorizedException, BadRequestException;
+	public StravaActivity createManualActivity(StravaActivity activity);
 	
 	/**
 	 * <p>Requires write permissions, as requested during the authorization process.</p>
 	 * 
 	 * <p>Only updates name, type, private, commute, trainer, gear_id and description</p>
+	 * 
+	 * <p>Returns <code>null</code> if the activity doesn't exist on Strava</p>
 	 * 
 	 * <p>URL PUT https://www.strava.com/api/v3/activities/:id</p> 
 	 * 
@@ -97,17 +97,16 @@ public interface ActivityServices {
 	 * @param activity The {@link StravaActivity} to be updated
 	 * @return Returns a detailed representation of the updated {@link StravaActivity}.
 	 * 
-	 * @throws UnauthorizedException If the service's security token doesn't grant write access to this activity
-	 * @throws NotFoundException If the activity does not exist on Strava
+	 * @throws UnauthorizedException If the service's security token is invalid or doesn't grant write access to this activity
 	 */
-	public StravaActivity updateActivity(StravaActivity activity) throws UnauthorizedException, NotFoundException;
+	public StravaActivity updateActivity(StravaActivity activity);
 	
 	/**
 	 * <p>Deletes the identified {@link StravaActivity}</p>
 	 * 
 	 * <p>Requires write permissions, as requested during the authorization process.</p>
 	 * 
-	 * <p>Returns 204 No Content on success.</p>
+	 * <p>Returns <code>null</code> if the activity does not exist on Strava</p>
 	 * 
 	 * <p>URL DELETE https://www.strava.com/api/v3/activities/:id</p>
 	 * 
@@ -115,11 +114,10 @@ public interface ActivityServices {
 	 * 
 	 * @param id The id of the {@link StravaActivity} to be deleted.
 	 * 
-	 * @throws UnauthorizedException If the service's security token doesn't grant write access to this activity
-	 * @throws NotFoundException If the {@link StravaActivity} does not exist on Strava
+	 * @throws UnauthorizedException If the service's security token is invalid or doesn't grant write access to this activity
 	 * @return Should return <code>null</code>
 	 */
-	public StravaActivity deleteActivity(Integer id) throws UnauthorizedException, NotFoundException;
+	public StravaActivity deleteActivity(Integer id);
 	
 	/**
 	 * <p>This endpoint returns a list of {@link StravaActivity activities} for the authenticated {@link StravaAthlete}.</p>
@@ -129,9 +127,9 @@ public interface ActivityServices {
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
 	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default.
-	 * @throws UnauthorizedException thrown if service returns a 401 Unauthorized status
+	 * @throws UnauthorizedException thrown if service's security token is invalid
 	 */
-	public List<StravaActivity> listAuthenticatedAthleteActivities() throws UnauthorizedException;
+	public List<StravaActivity> listAuthenticatedAthleteActivities();
 	
 	/**
 	 * <p>This endpoint returns a list of {@link StravaActivity activities} for the authenticated {@link StravaAthlete}.</p>
@@ -142,9 +140,9 @@ public interface ActivityServices {
 	 * 
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
-	 * @throws UnauthorizedException thrown if service returns a 401 Unauthorized status
+	 * @throws UnauthorizedException thrown if service's security token is invalid
 	 */
-	public List<StravaActivity> listAuthenticatedAthleteActivities(Paging pagingInstruction) throws UnauthorizedException;
+	public List<StravaActivity> listAuthenticatedAthleteActivities(Paging pagingInstruction);
 	
 	/**
 	 * <p>This endpoint returns a list of {@link StravaActivity activities} for the authenticated {@link StravaAthlete}.</p>
@@ -156,9 +154,9 @@ public interface ActivityServices {
 	 * @param before (Optional) result will start with activities whose start_date is before this value
 	 * @param after (Optional) result will start with activities whose start_date is after this value, sorted oldest first
 	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
-	 * @throws UnauthorizedException thrown if service returns a 401 Unauthorized status
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
-	public List<StravaActivity> listAuthenticatedAthleteActivities(Calendar before, Calendar after) throws UnauthorizedException;
+	public List<StravaActivity> listAuthenticatedAthleteActivities(Calendar before, Calendar after);
 	
 	/**
 	 * <p>This endpoint returns a list of {@link StravaActivity activities} for the authenticated {@link StravaAthlete}.</p>
@@ -173,9 +171,9 @@ public interface ActivityServices {
 	 * @param after (Optional) result will start with activities whose start_date is after this value, sorted oldest first
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
-	 * @throws UnauthorizedException thrown if service returns a 401 Unauthorized status
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
-	public List<StravaActivity> listAuthenticatedAthleteActivities(Calendar before, Calendar after, Paging pagingInstruction) throws UnauthorizedException;
+	public List<StravaActivity> listAuthenticatedAthleteActivities(Calendar before, Calendar after, Paging pagingInstruction);
 	
 	/**
 	 * <p>List the recent activities performed by those the current authenticated {@link StravaAthlete} is following.</p>
@@ -188,6 +186,7 @@ public interface ActivityServices {
 	 * 
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of activity summary representations sorted newest first by start_date.
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaActivity> listFriendsActivities(Paging pagingInstruction);
 	
@@ -201,6 +200,7 @@ public interface ActivityServices {
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
 	 * @return Returns an array of activity summary representations sorted newest first by start_date.
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaActivity> listFriendsActivities();
 	
@@ -211,17 +211,22 @@ public interface ActivityServices {
 	 * 
 	 * <p>Requires an access token associated with the owner of the activity and the owner must be a premium user.</p>
 	 * 
+	 * <p>Returns <code>null</code> if the activity does not exist
+	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/activities/:id/zones</p>
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
 	 * @param id The id of the {@link StravaActivity activity} for which zones should be returned
 	 * @return Returns an array of {@link StravaActivityZone activity zones} for the {@link StravaActivity} identified
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaActivityZone> listActivityZones(Integer id);
 	
 	/**
 	 * <p>This resource will return all laps for an activity. Laps are triggered by athletes using their respective devices, such as Garmin watches.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the activity does not exist</p>
 	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/activities/:id/laps</p>
 	 * 
@@ -229,6 +234,7 @@ public interface ActivityServices {
 	 * 
 	 * @param id The id of the {@link StravaActivity} for which laps should be returned
 	 * @return Returns an array of {@link StravaLap lap} effort summaries
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaLap> listActivityLaps(Integer id);
 	
@@ -252,6 +258,7 @@ public interface ActivityServices {
 	 * @param id The id of the {@link StravaActivity} for which {@link StravaComment comments} should be returned
 	 * @param markdown (Optional) Include markdown in comments (default is <code>false</code> - i.e. filter out
 	 * @return List of comments
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaComment> listActivityComments(Integer id, Boolean markdown);
 	
@@ -276,6 +283,7 @@ public interface ActivityServices {
 	 * @param markdown (Optional) Include markdown in comments (default is <code>false</code> - i.e. filter out
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return List of comments
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaComment> listActivityComments(Integer id, Boolean markdown, Paging pagingInstructions);
 	
@@ -294,6 +302,7 @@ public interface ActivityServices {
 	 * 
 	 * @param id The id of the {@link StravaActivity} for which kudoers are to be listed
 	 * @return Returns an array of {@link StravaAthlete athlete} summary objects.
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaAthlete> listActivityKudoers(Integer id) ;
 	
@@ -313,6 +322,7 @@ public interface ActivityServices {
 	 * @param id The id of the {@link StravaActivity} for which kudoers are to be listed
 	 * @param pagingInstruction (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaAthlete athlete} summary objects.
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaAthlete> listActivityKudoers(Integer id, Paging pagingInstruction);
 	
@@ -331,6 +341,7 @@ public interface ActivityServices {
 	 * 
 	 * @param id The id of the {@link StravaActivity} for which photos are to be listed
 	 * @return Returns an array of {@link StravaPhoto photo} objects.
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaPhoto> listActivityPhotos(Integer id);
 	
@@ -343,6 +354,7 @@ public interface ActivityServices {
 	 * 
 	 * @param id StravaActivity id for which related activities should be listed
 	 * @return List of related activities (not including the main activity)
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaActivity> listRelatedActivities(Integer id);
 	
@@ -356,6 +368,7 @@ public interface ActivityServices {
 	 * @param id StravaActivity id for which related activities should be listed
 	 * @param pagingInstruction Paging instructions
 	 * @return List of related activities (not including the main activity)
+	 * @throws UnauthorizedException If the service's security token is invalid
 	 */
 	public List<StravaActivity> listRelatedActivities(Integer id, Paging pagingInstruction);
 }

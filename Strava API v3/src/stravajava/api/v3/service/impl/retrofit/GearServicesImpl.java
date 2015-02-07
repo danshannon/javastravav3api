@@ -7,14 +7,13 @@ import stravajava.api.v3.service.GearServices;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
-public class GearServicesImpl implements GearServices {
+public class GearServicesImpl extends StravaServiceImpl implements GearServices {
 	private GearServicesImpl(String token) {
+		super(token);
 		this.restService = Retrofit.retrofit(GearServicesRetrofit.class, token, GearServicesRetrofit.LOG_LEVEL);
 	}
 	
 	/**
-	 * TODO Should move all of this into a single big StravaAPIRetrofit interface, so that there's only one instance of one big service per token???
-	 * 
 	 * <p>Returns an implementation of {@link GearServices gear services}</p>
 	 * 
 	 * <p>Instances are cached so that if 2 requests are made for the same token, the same instance is returned</p>
@@ -41,11 +40,19 @@ public class GearServicesImpl implements GearServices {
 	
 
 	@Override
-	public StravaGear getGear(String id) throws UnauthorizedException {
+	public StravaGear getGear(String id) {
 		try {
 			return restService.getGear(id);
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				StravaGear gear = new StravaGear();
+				gear.setId(id);
+				return gear;
+			} else {
+				throw e;
+			}
 		}
 	}
 

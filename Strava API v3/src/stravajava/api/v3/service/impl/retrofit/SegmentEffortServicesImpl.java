@@ -11,8 +11,9 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  * @author Dan Shannon
  *
  */
-public class SegmentEffortServicesImpl implements SegmentEffortServices {
+public class SegmentEffortServicesImpl extends StravaServiceImpl implements SegmentEffortServices {
 	private SegmentEffortServicesImpl(String token) {
+		super(token);
 		this.restService = Retrofit.retrofit(SegmentEffortServicesRetrofit.class, token, SegmentEffortServicesRetrofit.LOG_LEVEL);
 	}
 	
@@ -44,11 +45,20 @@ public class SegmentEffortServicesImpl implements SegmentEffortServices {
 	 * @see stravajava.api.v3.service.SegmentEffortServices#getSegmentEffort(java.lang.Integer)
 	 */
 	@Override
-	public StravaSegmentEffort getSegmentEffort(Long id) throws UnauthorizedException {
+	public StravaSegmentEffort getSegmentEffort(Long id) {
 		try {
 			return restService.getSegmentEffort(id);
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				// Private effort
+				StravaSegmentEffort effort = new StravaSegmentEffort();
+				effort.setId(id);
+				return effort;
+			} else {
+				throw e;
+			}
 		}
 	}
 

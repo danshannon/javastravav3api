@@ -30,5 +30,5 @@ public interface GearServices {
 	 * @return Returns a detailed {@link StravaGear} representation.
 	 * @throws UnauthorizedException If service token is invalid 
 	 */
-	public StravaGear getGear(String id) throws UnauthorizedException;
+	public StravaGear getGear(String id);
 }

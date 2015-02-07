@@ -33,7 +33,7 @@ public class StravaStreamSerializer implements JsonSerializer<StravaStream>, Jso
 		JsonObject json = (JsonObject) element;
 		
 		// Get the type, as that will determine what the deserialization should do
-		StravaStreamType streamType = StravaStreamType.create(json.get("type").getAsString());
+		StravaStreamType streamType = (StravaStreamType) context.deserialize(json.get("type"), StravaStreamType.class);
 		
 		JsonArray array = json.getAsJsonArray("data");
 		List<StravaMapPoint> points = null;
@@ -77,8 +77,27 @@ public class StravaStreamSerializer implements JsonSerializer<StravaStream>, Jso
 	 */
 	@Override
 	public JsonElement serialize(StravaStream stream, Type type, JsonSerializationContext context) {
-		// TODO Auto-generated method stub
-		return null;
+		JsonObject element = new JsonObject();
+		element.add("original_size",context.serialize(stream.getOriginalSize()));
+		element.add("resolution",context.serialize(stream.getResolution()));
+		element.add("series_type", context.serialize(stream.getSeriesType()));
+		element.add("type", context.serialize(stream.getType()));
+		JsonArray dataArray = new JsonArray();
+		element.add("data", dataArray);
+		if (stream.getType() == StravaStreamType.MAPPOINT) {
+			for (StravaMapPoint point : stream.getMapPoints()) {
+				dataArray.add(context.serialize(point));
+			}
+		} else if (stream.getType() == StravaStreamType.MOVING){
+			for (Boolean moving : stream.getMoving()) {
+				dataArray.add(context.serialize(moving));
+			}
+		} else {
+			for (Number number : stream.getData()) {
+				dataArray.add(context.serialize(number));
+			}
+		}
+		return element;
 	}
 
 }

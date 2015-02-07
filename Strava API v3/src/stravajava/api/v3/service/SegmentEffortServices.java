@@ -1,6 +1,7 @@
 package stravajava.api.v3.service;
 
 import stravajava.api.v3.model.StravaAthlete;
+import stravajava.api.v3.model.StravaSegment;
 import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
@@ -18,6 +19,8 @@ public interface SegmentEffortServices {
 	/**
 	 * <p>Retrieve details about a specific segment effort. The effort must be public or it must correspond to the current athlete.</p>
 	 * 
+	 * <p>Returns <code>null</code> if the segment effort does not exist or is private
+	 * 
 	 * <p>URL GET https://www.strava.com/api/v3/segment_efforts/:id</p>
 	 * 
 	 * @see http://strava.github.io/api/v3/efforts/#retrieve
@@ -26,5 +29,5 @@ public interface SegmentEffortServices {
 	 * @return Returns a detailed segment effort representation.
 	 * @throws UnauthorizedException
 	 */
-	public StravaSegmentEffort getSegmentEffort(Long id) throws UnauthorizedException;
+	public StravaSegmentEffort getSegmentEffort(Long id);
 }

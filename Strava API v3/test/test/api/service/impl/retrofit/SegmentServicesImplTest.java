@@ -54,8 +54,8 @@ public class SegmentServicesImplTest {
 	 */
 	@Test
 	public void testImplementation_invalidToken() {
-		SegmentServices service = SegmentServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		try {
+			SegmentServices service = SegmentServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 			service.getSegment(TestUtils.SEGMENT_VALID_ID);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour

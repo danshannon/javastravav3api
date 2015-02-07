@@ -5,7 +5,7 @@ package stravajava.api.v3.service.exception;
  * @author dshannon
  *
  */
-public class UnauthorizedException extends Throwable {
+public class UnauthorizedException extends RuntimeException {
 
 	/**
 	 * 

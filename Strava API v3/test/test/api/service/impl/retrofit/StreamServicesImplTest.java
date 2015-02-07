@@ -42,8 +42,8 @@ public class StreamServicesImplTest {
 	
 	@Test
 	public void testImplementation_invalidToken() {
-		StreamServices service = StreamServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		try {
+			StreamServices service = StreamServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 			service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
 		} catch (UnauthorizedException e) {
 			// Expected behaviour
@@ -350,7 +350,6 @@ public class StreamServicesImplTest {
 	/**
 	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getSegmentStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
 	 */
-	// TODO Test cases
 	@Test
 	// 1. Valid segment for the authenticated user
 	public void testGetSegmentStreams_validSegment() throws UnauthorizedException {
@@ -412,14 +411,14 @@ public class StreamServicesImplTest {
 		assertEquals(StravaStreamType.DISTANCE,streams.get(0).getType());
 	}
 
-	// 6. Downsampled by time
+	// 6. Downsampled by time - can't be done for segment streams as there's no time element
 	@Test
 	public void testGetSegmentStreams_downsampledByTime() throws UnauthorizedException {
 		StreamServices service = getService();
 		for (StravaStreamResolutionType resolutionType : StravaStreamResolutionType.values()) {
 			if (resolutionType != StravaStreamResolutionType.UNKNOWN) {
 				try {
-					List<StravaStream> streams = service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID,resolutionType,StravaStreamSeriesDownsamplingType.TIME);
+					service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID,resolutionType,StravaStreamSeriesDownsamplingType.TIME);
 				} catch (IllegalArgumentException e) {
 					// expected
 					return;

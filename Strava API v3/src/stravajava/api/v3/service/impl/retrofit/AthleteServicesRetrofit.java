@@ -10,7 +10,6 @@ import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.service.AthleteServices;
 import stravajava.api.v3.service.exception.NotFoundException;
-import stravajava.api.v3.service.exception.UnauthorizedException;
 
 /**
  * Retrofit definitions for implementation of {@link AthleteServices}
@@ -25,19 +24,19 @@ public interface AthleteServicesRetrofit {
 	 * @see stravajava.api.v3.service.AthleteServices#getAuthenticatedAthlete()
 	 */
 	@GET("/athlete")
-	public StravaAthlete getAuthenticatedAthlete() throws UnauthorizedException;
+	public StravaAthlete getAuthenticatedAthlete();
 
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#getAthlete(java.lang.Integer)
 	 */
 	@GET("/athletes/{id}")
-	public StravaAthlete getAthlete(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
+	public StravaAthlete getAthlete(@Path("id") Integer id) throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#updateAuthenticatedAthlete()
 	 */
 	@PUT("/athlete")
-	public StravaAthlete updateAuthenticatedAthlete(@Query("city") String city, @Query("state") String state, @Query("country") String country, @Query("sex") StravaGender sex, @Query("weight") Float weight) throws UnauthorizedException, NotFoundException;
+	public StravaAthlete updateAuthenticatedAthlete(@Query("city") String city, @Query("state") String state, @Query("country") String country, @Query("sex") StravaGender sex, @Query("weight") Float weight);
 
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)

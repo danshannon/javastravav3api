@@ -40,7 +40,7 @@ public interface StreamServices {
 	 * @return Returns an array of unordered stream objects, or <code>null</code> if the activity doesn't exist
 	 * @throws UnauthorizedException If there is a security exception
 	 */
-	public List<StravaStream> getActivityStreams(Integer id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) throws UnauthorizedException;
+	public List<StravaStream> getActivityStreams(Integer id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types);
 	
 	/**
 	 * <p>Streams represent the raw data of the uploaded file. External applications may only access this information for activities owned by the authenticated athlete.</p>
@@ -61,7 +61,7 @@ public interface StreamServices {
 	 * @return Returns an array of unordered stream objects, or <code>null</code> if the activity doesn't exist
 	 * @throws UnauthorizedException If there is a security exception
 	 */
-	public List<StravaStream> getActivityStreams(Integer id) throws UnauthorizedException;
+	public List<StravaStream> getActivityStreams(Integer id);
 	
 	/**
 	 * <p>A {@link StravaSegmentEffort segment effort} represents an attempt on a {@link StravaSegment segment}. This resource returns a subset of the {@link StravaActivity activity} streams that correspond to that effort.</p>
@@ -80,7 +80,7 @@ public interface StreamServices {
 	 * @param seriesType (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getEffortStreams(Long id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) throws UnauthorizedException;
+	public List<StravaStream> getEffortStreams(Long id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types);
 	
 	/**
 	 * <p>A {@link StravaSegmentEffort segment effort} represents an attempt on a {@link StravaSegment segment}. This resource returns a subset of the {@link StravaActivity activity} streams that correspond to that effort.</p>
@@ -96,7 +96,7 @@ public interface StreamServices {
 	 * @param id The id of the segment effort for which streams are to be retrieved
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getEffortStreams(Long id) throws UnauthorizedException;
+	public List<StravaStream> getEffortStreams(Long id);
 	
 	/**
 	 * <p>Retrieve detailed geographical information streams about a specific {@link StravaSegment}.</p>
@@ -113,7 +113,7 @@ public interface StreamServices {
 	 * @param seriesType (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getSegmentStreams(Integer id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) throws UnauthorizedException;
+	public List<StravaStream> getSegmentStreams(Integer id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types);
 	
 	/**
 	 * <p>Retrieve detailed geographical information streams about a specific {@link StravaSegment}.</p>
@@ -127,7 +127,7 @@ public interface StreamServices {
 	 * @param id The id of the segment for which streams are to be retrieved
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getSegmentStreams(Integer id) throws UnauthorizedException;
+	public List<StravaStream> getSegmentStreams(Integer id);
 	
 	
 }
