@@ -1,10 +1,17 @@
 package stravajava.util;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 
 /**
  * @author Dan Shannon
  *
  */
+@Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class Paging {
 	/**
 	 * <p>Page number to be retrieved (NB is 1-indexed, so page 1 starts with item 1; page 0 doesn't exist)</p>
@@ -37,71 +44,4 @@ public class Paging {
 		this.ignoreLastN = ignoreLastN;
 		this.ignoreFirstN = ignoreFirstN;
 	}
-
-	/**
-	 * @return the page
-	 */
-	public int getPage() {
-		return this.page;
-	}
-
-	/**
-	 * @return the pageSize
-	 */
-	public int getPageSize() {
-		return this.pageSize;
-	}
-
-	/**
-	 * @param page the page to set
-	 */
-	public void setPage(int page) {
-		this.page = page;
-	}
-
-	/**
-	 * @param pageSize the pageSize to set
-	 */
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	/**
-	 * @return the ignoreLastN
-	 */
-	public int getIgnoreLastN() {
-		return this.ignoreLastN;
-	}
-
-	/**
-	 * @param ignoreLastN the ignoreLastN to set
-	 */
-	public void setIgnoreLastN(int ignoreLastN) {
-		this.ignoreLastN = ignoreLastN;
-	}
-
-	/**
-	 * @return the ignoreFirstN
-	 */
-	public int getIgnoreFirstN() {
-		return this.ignoreFirstN;
-	}
-
-	/**
-	 * @param ignoreFirstN the ignoreFirstN to set
-	 */
-	public void setIgnoreFirstN(int ignoreFirstN) {
-		this.ignoreFirstN = ignoreFirstN;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Paging [page=" + this.page + ", pageSize=" + this.pageSize + ", ignoreLastN=" + this.ignoreLastN
-				+ ", ignoreFirstN=" + this.ignoreFirstN + "]";
-	}
-	
-	
 }

@@ -5,7 +5,9 @@ import java.util.TimeZone;
 
 import org.meanbean.test.BeanTester;
 
+import stravajava.api.v3.model.StravaSegment;
 import test.utils.meanbean.factory.CalendarFactory;
+import test.utils.meanbean.factory.StravaSegmentFactory;
 import test.utils.meanbean.factory.TimeZoneFactory;
 
 public class MeanBean {
@@ -15,6 +17,7 @@ public class MeanBean {
 		tester.setIterations(1);
 		tester.getFactoryCollection().addFactory(TimeZone.class, new TimeZoneFactory());
 		tester.getFactoryCollection().addFactory(Calendar.class, new CalendarFactory());
+		tester.getFactoryCollection().addFactory(StravaSegment.class, new StravaSegmentFactory());
 		tester.testBean(class1);
 	}
 

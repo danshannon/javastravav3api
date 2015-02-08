@@ -55,8 +55,8 @@ public class ClubServicesImplTest {
 	@Test
 	public void testImplementation_invalidToken() {
 		ClubServices service = null;
-		service = ClubServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 		try {
+			service = ClubServicesImpl.implementation(TestUtils.INVALID_TOKEN);
 			service.getClub(TestUtils.CLUB_VALID_ID);
 		} catch (UnauthorizedException e) {
 			// This is the expected behaviour

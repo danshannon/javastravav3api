@@ -60,6 +60,7 @@ import stravajava.util.impl.gson.serializer.WorkoutTypeSerializer;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.bind.DateTypeAdapter;
 
 /**
@@ -122,7 +123,11 @@ public class JsonUtilImpl implements JsonUtil {
 	 */
 	@Override
 	public <T> T deserialise(String is, Class<T> class1) throws JsonSerialisationException {
-		return gson.fromJson(is, class1);
+		try {
+			return gson.fromJson(is, class1);
+		} catch (JsonSyntaxException e) {
+			throw new JsonSerialisationException("Failed to deserialise string '" + is + "' to " + class1.getName(), e);
+		}
 	}
 
 	/**
