@@ -17,9 +17,6 @@ public abstract class SerializerTest<T> {
 	public abstract void testRoundTrip() throws JsonSerialisationException;
 	
 	@Test
-	public abstract void testDeserializeUnknownValue() throws JsonSerialisationException;
-	
-	@Test
 	public void testNullDeserialisationSafety() throws JsonSerialisationException {
 		T value = this.util.deserialise("", getClassUnderTest());
 		assertNull(value);

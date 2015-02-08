@@ -15,7 +15,7 @@ import stravajava.util.impl.gson.JsonUtilImpl;
  * @author dshannon
  *
  */
-public class MapPointSerializerTest {
+public class MapPointSerializerTest extends SerializerTest<StravaMapPoint>{
 	private JsonUtil util;
 	
 	@Before
@@ -35,6 +35,23 @@ public class MapPointSerializerTest {
 	public void testNullDeserialisationSafety() throws JsonSerialisationException {
 		StravaMapPoint prompt = this.util.deserialise("", StravaMapPoint.class);
 		assertNull(prompt);
+	}
+
+	/**
+	 * @see test.util.impl.gson.serializer.SerializerTest#testDeserialiseInputStream()
+	 */
+	@Override
+	public void testDeserialiseInputStream() throws JsonSerialisationException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @see test.util.impl.gson.serializer.SerializerTest#getClassUnderTest()
+	 */
+	@Override
+	public Class<StravaMapPoint> getClassUnderTest() {
+		return StravaMapPoint.class;
 	}
 
 }

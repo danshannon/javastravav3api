@@ -1,48 +1,26 @@
 package test.util.impl.gson.serializer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import stravajava.api.v3.model.reference.StravaFrameType;
-import stravajava.util.JsonUtil;
-import stravajava.util.exception.JsonSerialisationException;
-import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
  *
  */
-public class FrameTypeSerializerTest {
-	private JsonUtil util;
-	
-	@Before
-	public void before() {
-		this.util = new JsonUtilImpl();
+public class FrameTypeSerializerTest extends EnumSerializerTest<StravaFrameType>{
+
+	/**
+	 * @see test.util.impl.gson.serializer.EnumSerializerTest#getUnknownValue()
+	 */
+	@Override
+	protected StravaFrameType getUnknownValue() {
+		return StravaFrameType.UNKNOWN;
 	}
 
-	@Test
-	public void testRoundTrip() throws JsonSerialisationException {
-		for (StravaFrameType type : StravaFrameType.values()) {
-			String serialized = this.util.serialise(type);
-			StravaFrameType deserialized = this.util.deserialise(serialized, StravaFrameType.class);
-			assertEquals(type, deserialized);
-		}
+	/**
+	 * @see test.util.impl.gson.serializer.SerializerTest#getClassUnderTest()
+	 */
+	@Override
+	public Class<StravaFrameType> getClassUnderTest() {
+		return StravaFrameType.class;
 	}
-	
-	@Test
-	public void testDeserializeUnknownValue() throws JsonSerialisationException {
-		String serialized = "84";
-		StravaFrameType deserialized = this.util.deserialise(serialized, StravaFrameType.class);
-		assertEquals(deserialized, StravaFrameType.UNKNOWN);
-	}
-
-	@Test
-	public void testNullDeserialisationSafety() throws JsonSerialisationException {
-		StravaFrameType prompt = this.util.deserialise("", StravaFrameType.class);
-		assertNull(prompt);
-	}
-
 }

@@ -1,51 +1,27 @@
 package test.util.impl.gson.serializer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-import org.jfairy.Fairy;
-import org.jfairy.producer.text.TextProducer;
-import org.junit.Before;
-import org.junit.Test;
-
 import stravajava.api.v3.model.reference.StravaClubType;
-import stravajava.util.JsonUtil;
-import stravajava.util.exception.JsonSerialisationException;
-import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
  *
  */
-public class ClubTypeSerializerTest {
-	private JsonUtil util;
-	
-	@Before
-	public void before() {
-		this.util = new JsonUtilImpl();
+public class ClubTypeSerializerTest extends EnumSerializerTest<StravaClubType> {
+
+	/**
+	 * @see test.util.impl.gson.serializer.EnumSerializerTest#getUnknownValue()
+	 */
+	@Override
+	protected StravaClubType getUnknownValue() {
+		return StravaClubType.UNKNOWN;
 	}
 
-	@Test
-	public void testRoundTrip() throws JsonSerialisationException {
-		for (StravaClubType type : StravaClubType.values()) {
-			String serialized = this.util.serialise(type);
-			StravaClubType deserialized = this.util.deserialise(serialized, StravaClubType.class);
-			assertEquals(type, deserialized);
-		}
-	}
-	
-	@Test
-	public void testDeserializeUnknownValue() throws JsonSerialisationException {
-		TextProducer text = Fairy.create().textProducer();
-		String serialized = "\"" + text.word(2) + "\"";
-		StravaClubType deserialized = this.util.deserialise(serialized, StravaClubType.class);
-		assertEquals(deserialized, StravaClubType.UNKNOWN);
-	}
-
-	@Test
-	public void testNullDeserialisationSafety() throws JsonSerialisationException {
-		StravaClubType prompt = this.util.deserialise("", StravaClubType.class);
-		assertNull(prompt);
+	/**
+	 * @see test.util.impl.gson.serializer.SerializerTest#getClassUnderTest()
+	 */
+	@Override
+	public Class<StravaClubType> getClassUnderTest() {
+		return StravaClubType.class;
 	}
 
 }
