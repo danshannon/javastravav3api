@@ -19,11 +19,4 @@ public class JsonSerialisationException extends Exception {
 		super(string, e);
 	}
 
-	/**
-	 * @param string
-	 */
-	public JsonSerialisationException(String string) {
-		super(string);
-	}
-
 }

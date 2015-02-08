@@ -23,7 +23,14 @@ public class WorkoutTypeSerializer implements JsonSerializer<StravaWorkoutType>,
 	@Override
 	public StravaWorkoutType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return (json == null ? null : StravaWorkoutType.create(json.getAsInt()));
+		if (json == null) {
+			return null;
+		}
+		try {
+			return StravaWorkoutType.create(json.getAsInt());
+		} catch (NumberFormatException e) {
+			throw new JsonParseException("Could not parse '" + json.getAsString() + "' as an integer",e);
+		}
 	}
 
 	/**

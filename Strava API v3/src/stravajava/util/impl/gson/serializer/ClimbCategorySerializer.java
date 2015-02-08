@@ -24,7 +24,11 @@ public class ClimbCategorySerializer implements JsonSerializer<StravaClimbCatego
 	public StravaClimbCategory deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
 		if (json == null) { return null; }
+		try {
 		return StravaClimbCategory.create(json.getAsInt());
+		} catch (NumberFormatException e) {
+			throw new JsonParseException(e);
+		}
 	}
 
 	/**

@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.jfairy.Fairy;
-import org.jfairy.producer.text.TextProducer;
 import org.junit.Test;
 
 import stravajava.util.exception.JsonSerialisationException;
@@ -28,8 +26,7 @@ public abstract class EnumSerializerTest<T extends Enum<T>> extends SerializerTe
 
 	@Test
 	public void testDeserializeUnknownValue() throws JsonSerialisationException {
-		TextProducer text = Fairy.create().textProducer();
-		String serialized = "\"" + text.word(2) + "\"";
+		String serialized = getUnknownValue().toString();
 		T deserialized = this.util.deserialise(serialized, getClassUnderTest());
 		assertEquals(deserialized, getUnknownValue());
 	}

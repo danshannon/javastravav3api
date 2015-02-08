@@ -24,7 +24,11 @@ public class FrameTypeSerializer implements JsonSerializer<StravaFrameType>, Jso
 	public StravaFrameType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
 		if (json == null) { return null; }
-		return StravaFrameType.create(json.getAsInt());
+		try {
+			return StravaFrameType.create(json.getAsInt());
+		} catch (NumberFormatException e) {
+			throw new JsonParseException("Could not parse '" + json.getAsString() + "' as an integer",e);
+		}
 	}
 
 	/**

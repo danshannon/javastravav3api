@@ -46,39 +46,57 @@ public class Strava {
 		}
 		
 		// Calculate the first and last elements to be returned
-		int lastElement = inputPaging.getPage() * inputPaging.getPageSize();
-		int firstElement = lastElement - inputPaging.getPageSize() + 1;
+		int lastElement = inputPaging.getPage() * inputPaging.getPageSize() - inputPaging.getIgnoreLastN();
+		int firstElement = ((inputPaging.getPage() - 1) * inputPaging.getPageSize()) + inputPaging.getIgnoreFirstN() + 1;
 		
-		// Handle the ignore instructions being more than one page full
-		int ignoreLastN = inputPaging.getIgnoreLastN();
-		while (ignoreLastN >= MAX_PAGE_SIZE) {
-			ignoreLastN -= MAX_PAGE_SIZE;
-			lastElement -= MAX_PAGE_SIZE;
+		// If the last element fits in one page, return one page
+		if (lastElement <= Strava.MAX_PAGE_SIZE) {
+			stravaPaging.add(new Paging(1,lastElement,inputPaging.getIgnoreFirstN(),0));
+			return stravaPaging;
 		}
 		
-		int ignoreFirstN = inputPaging.getIgnoreFirstN();
-		while (ignoreFirstN >= MAX_PAGE_SIZE) {
-			firstElement += MAX_PAGE_SIZE;
-			ignoreFirstN -= MAX_PAGE_SIZE;
-		}
-		
-		int firstPageElement = firstElement - (firstElement % MAX_PAGE_SIZE) + 1;
-		int lastPageElement = lastElement;
-		if (lastElement % MAX_PAGE_SIZE != 0) {
-			lastPageElement= lastElement - (lastElement % MAX_PAGE_SIZE) + MAX_PAGE_SIZE;
-		}
-		
-		for (int i = firstPageElement; i < lastPageElement; i = i + MAX_PAGE_SIZE) {
-			Paging newPaging = new Paging((i / MAX_PAGE_SIZE) + 1, MAX_PAGE_SIZE, 0, 0);
-			if (i == firstPageElement) {
-				newPaging.setIgnoreFirstN(firstElement % MAX_PAGE_SIZE - 1);
+		// Otherwise, return a series of pages
+		int currentPage = 0;
+		for (int i = 0; i <= lastElement; i = i + Strava.MAX_PAGE_SIZE) {
+			currentPage++;
+			if (currentPage * Strava.MAX_PAGE_SIZE + 1 >= firstElement) {
+				int ignoreLastN = Math.max(0, (currentPage * Strava.MAX_PAGE_SIZE) - lastElement);
+				int ignoreFirstN = Math.max(0, firstElement - ((currentPage - 1) * Strava.MAX_PAGE_SIZE) - 1);
+				stravaPaging.add(new Paging(currentPage,Strava.MAX_PAGE_SIZE,ignoreFirstN,ignoreLastN));
 			}
-			if (i >= lastPageElement - MAX_PAGE_SIZE) {
-				newPaging.setIgnoreLastN(lastPageElement - lastElement);
-			}
-			stravaPaging.add(newPaging);
 		}
 		return stravaPaging;
+		
+//		// Handle the ignore instructions being more than one page full
+//		int ignoreLastN = inputPaging.getIgnoreLastN();
+//		while (ignoreLastN >= MAX_PAGE_SIZE) {
+//			ignoreLastN -= MAX_PAGE_SIZE;
+//			lastElement -= MAX_PAGE_SIZE;
+//		}
+//		
+//		int ignoreFirstN = inputPaging.getIgnoreFirstN();
+//		while (ignoreFirstN >= MAX_PAGE_SIZE) {
+//			firstElement += MAX_PAGE_SIZE;
+//			ignoreFirstN -= MAX_PAGE_SIZE;
+//		}
+//		
+//		int firstPageElement = firstElement - (firstElement % MAX_PAGE_SIZE) + 1;
+//		int lastPageElement = lastElement;
+//		if (lastElement % MAX_PAGE_SIZE != 0) {
+//			lastPageElement= lastElement - (lastElement % MAX_PAGE_SIZE) + MAX_PAGE_SIZE;
+//		}
+//		
+//		for (int i = firstPageElement; i < lastPageElement; i = i + MAX_PAGE_SIZE) {
+//			Paging newPaging = new Paging((i / MAX_PAGE_SIZE) + 1, MAX_PAGE_SIZE, 0, 0);
+//			if (i == firstPageElement) {
+//				newPaging.setIgnoreFirstN(ignoreFirstN);
+//			}
+//			if (i >= lastPageElement - MAX_PAGE_SIZE) {
+//				newPaging.setIgnoreLastN(lastPageElement - lastElement);
+//			}
+//			stravaPaging.add(newPaging);
+//		}
+//		return stravaPaging;
 	}
 	
 	/**
@@ -136,6 +154,9 @@ public class Strava {
 			throw new IllegalArgumentException("perPage argument may not be < 0");
 		}
 		if (pagingInstruction.getIgnoreLastN() > 0 && pagingInstruction.getIgnoreLastN() > pagingInstruction.getPageSize()) {
+			throw new IllegalArgumentException("Cannot ignore more items than the page size");
+		}
+		if (pagingInstruction.getIgnoreFirstN() > 0 && pagingInstruction.getIgnoreFirstN() > pagingInstruction.getPageSize()) {
 			throw new IllegalArgumentException("Cannot ignore more items than the page size");
 		}
 	}

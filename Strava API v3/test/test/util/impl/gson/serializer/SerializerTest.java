@@ -3,6 +3,9 @@ package test.util.impl.gson.serializer;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import org.jfairy.Fairy;
 import org.junit.Test;
 
@@ -21,6 +24,28 @@ public abstract class SerializerTest<T> {
 		T value = this.util.deserialise("", getClassUnderTest());
 		assertNull(value);
 		value = this.util.deserialise("null", getClassUnderTest());
+		assertNull(value);
+	}
+	
+	@Test
+	public void testDeserialiseNullString() throws JsonSerialisationException {
+		String nullString = null;
+		T value = this.util.deserialise(nullString, getClassUnderTest());
+		assertNull(value);
+	}
+	
+	@Test
+	public void testDeserialiseNullInputStream() throws JsonSerialisationException {
+		InputStream is = new ByteArrayInputStream("".getBytes());
+		is = null;
+		T value = this.util.deserialise(is, getClassUnderTest());
+		assertNull(value);
+	}
+	
+	@Test
+	public void testSerialiseNull() throws JsonSerialisationException {
+		T value = null;
+		String stringValue = this.util.serialise(value);
 		assertNull(value);
 	}
 	

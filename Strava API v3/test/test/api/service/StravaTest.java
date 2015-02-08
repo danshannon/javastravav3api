@@ -2,6 +2,7 @@ package test.api.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -143,4 +144,119 @@ public class StravaTest {
 		assertNotNull(list);
 		assertEquals(0,list.size());
 	}
+	
+	@Test
+	public void testConvertToStravaPaging_defaultValueTest() {
+		List<Paging> pagingList = Strava.convertToStravaPaging(new Paging(0,0));
+		assertNotNull(pagingList);
+		assertEquals(1,pagingList.size());
+		Paging paging = pagingList.get(0);
+		assertEquals(1,paging.getPage());
+		assertEquals(Strava.DEFAULT_PAGE_SIZE,paging.getPageSize());
+	}
+	
+	@Test
+	public void testConvertToStravaPaging_ignoreFirstNLargerThanMaxPageSize() {
+		// One page of MAX+2 elements, ignoring the first MAX+1
+		List<Paging> pagingList = Strava.convertToStravaPaging(new Paging(1,Strava.MAX_PAGE_SIZE + 2,Strava.MAX_PAGE_SIZE + 1,0));
+		assertNotNull(pagingList);
+		assertEquals(1,pagingList.size());
+		Paging paging = pagingList.get(0);
+		System.out.println(paging);
+		Paging expected = new Paging(2,Strava.MAX_PAGE_SIZE,1,Strava.MAX_PAGE_SIZE - 2);
+		assertEquals(expected,paging);
+
+		// Second page of MAX+2 elements, ignoring the first MAX+1
+		pagingList = Strava.convertToStravaPaging(new Paging(2,Strava.MAX_PAGE_SIZE + 2,Strava.MAX_PAGE_SIZE + 1,0));
+		assertNotNull(pagingList);
+		assertEquals(1,pagingList.size());
+		paging = pagingList.get(0);
+		expected = new Paging(3,Strava.MAX_PAGE_SIZE,3,Strava.MAX_PAGE_SIZE - 4);
+		assertEquals(expected,paging);
+}
+	
+	@Test
+	public void testConvertToStravaPaging_ignoreLastNLargerThanMaxPageSize() {
+		// One page of MAX+2 elements, ignoring the last MAX+1
+		// Should return only the first element
+		List<Paging> pagingList = Strava.convertToStravaPaging(new Paging(1,Strava.MAX_PAGE_SIZE + 2,0,Strava.MAX_PAGE_SIZE + 1));
+		assertNotNull(pagingList);
+		assertEquals(1,pagingList.size());
+		Paging paging = pagingList.get(0);
+		System.out.println(paging);
+		assertEquals(1,paging.getPage());
+		assertEquals(1,paging.getPageSize());
+		assertEquals(0,paging.getIgnoreLastN());
+		assertEquals(0,paging.getIgnoreFirstN());
+		
+	}
+	
+	@Test
+	public void testIgnoreFirstN_nullList() {
+		List<String> list = null;
+		List<String> result = Strava.ignoreFirstN(list, 10);
+		assertNull(result);
+	}
+	
+	@Test
+	public void testIgnoreLastN_nullList() {
+		List<String> list = null;
+		List<String> result = Strava.ignoreLastN(list, 1);
+		assertNull(result);
+	}
+	
+	@Test
+	public void testValidatePagingArguments_nullPagingInstruction() {
+		Paging paging = null;
+		Strava.validatePagingArguments(paging);
+	}
+	
+	@Test
+	public void testValidatePagingArguments_negativePage() {
+		Paging paging = new Paging(-1,0);
+		try {
+			Strava.validatePagingArguments(paging);
+		} catch (IllegalArgumentException e) {
+			// Expected
+			return;
+		}
+		fail("Succeeded in validating a paging instruction for page -1");
+	}
+	
+	@Test
+	public void testValidatePagingArguments_negativePageSize() {
+		Paging paging = new Paging(1,-1);
+		try {
+			Strava.validatePagingArguments(paging);
+		} catch (IllegalArgumentException e) {
+			// Expected
+			return;
+		}
+		fail("Succeeded in validating a paging instruction for page size -1");
+	}
+	
+	@Test
+	public void testValidatePagingArguments_ignoreFirstNGreaterThanPageSize() {
+		Paging paging = new Paging(1,Strava.MAX_PAGE_SIZE,Strava.MAX_PAGE_SIZE + 1,0);
+		try {
+			Strava.validatePagingArguments(paging);
+		} catch (IllegalArgumentException e) {
+			// Expected
+			return;
+		}
+		fail("Succeeded in validating a paging instruction to ignore more elements than are on the page");
+	}
+	
+	@Test
+	public void testValidatePagingArguments_ignoreLastNGreaterThanPageSize() {
+		Paging paging = new Paging(1,Strava.MAX_PAGE_SIZE,0,Strava.MAX_PAGE_SIZE + 1);
+		try {
+			Strava.validatePagingArguments(paging);
+		} catch (IllegalArgumentException e) {
+			// Expected
+			return;
+		}
+		fail("Succeeded in validating a paging instruction to ignore more elements than are on the page");
+	}
+	
 }

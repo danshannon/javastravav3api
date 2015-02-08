@@ -3,26 +3,19 @@ package test.util.impl.gson.serializer;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Before;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import org.junit.Test;
 
 import stravajava.api.v3.model.StravaMapPoint;
-import stravajava.util.JsonUtil;
 import stravajava.util.exception.JsonSerialisationException;
-import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
  * @author dshannon
  *
  */
 public class MapPointSerializerTest extends SerializerTest<StravaMapPoint>{
-	private JsonUtil util;
-	
-	@Before
-	public void before() {
-		this.util = new JsonUtilImpl();
-	}
-
 	@Test
 	public void testRoundTrip() throws JsonSerialisationException {
 		StravaMapPoint point = new StravaMapPoint(135.4f,-40f);
@@ -42,7 +35,11 @@ public class MapPointSerializerTest extends SerializerTest<StravaMapPoint>{
 	 */
 	@Override
 	public void testDeserialiseInputStream() throws JsonSerialisationException {
-		// TODO Auto-generated method stub
+		StravaMapPoint point = new StravaMapPoint(111.11f,-43f);
+		String serialised = this.util.serialise(point);
+		InputStream is = new ByteArrayInputStream(serialised.getBytes());
+		StravaMapPoint deserialised = this.util.deserialise(is, StravaMapPoint.class);
+		assertEquals(point,deserialised);
 		
 	}
 

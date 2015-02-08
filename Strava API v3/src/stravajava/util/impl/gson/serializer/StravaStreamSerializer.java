@@ -30,7 +30,12 @@ public class StravaStreamSerializer implements JsonSerializer<StravaStream>, Jso
 	 */
 	@Override
 	public StravaStream deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException {
-		JsonObject json = (JsonObject) element;
+		JsonObject json = null;
+		try {
+			json = (JsonObject) element;
+		} catch (ClassCastException e) { // happens if it's a primitive, or if it's crap data
+			throw new JsonParseException(e);
+		}
 		
 		// Get the type, as that will determine what the deserialization should do
 		StravaStreamType streamType = (StravaStreamType) context.deserialize(json.get("type"), StravaStreamType.class);

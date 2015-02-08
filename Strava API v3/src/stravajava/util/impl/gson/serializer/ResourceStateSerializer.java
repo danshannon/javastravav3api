@@ -24,7 +24,11 @@ public class ResourceStateSerializer implements JsonSerializer<StravaResourceSta
 	public StravaResourceState deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
 		if (json == null) { return null; }
-		return StravaResourceState.create(json.getAsInt());
+		try {
+			return StravaResourceState.create(json.getAsInt());
+		} catch (NumberFormatException e) {
+			throw new JsonParseException("Could not parse '" + json.getAsString() + "' as an integer");
+		}
 	}
 
 	/**
