@@ -46,7 +46,8 @@ public abstract class SerializerTest<T> {
 	public void testSerialiseNull() throws JsonSerialisationException {
 		T value = null;
 		String stringValue = this.util.serialise(value);
-		assertNull(value);
+		T comparison = this.util.deserialise(stringValue, getClassUnderTest());
+		assertNull(comparison);
 	}
 	
 	@Test

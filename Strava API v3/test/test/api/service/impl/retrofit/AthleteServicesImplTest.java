@@ -110,6 +110,9 @@ public class AthleteServicesImplTest {
 		StravaAthlete athlete = service.getAthlete(TestUtils.ATHLETE_PRIVATE_ID);
 		assertNotNull(athlete);
 		assertEquals(TestUtils.ATHLETE_PRIVATE_ID,athlete.getId());
+		StravaAthlete privateAthlete = new StravaAthlete();
+		privateAthlete.setId(TestUtils.ATHLETE_PRIVATE_ID);
+		assertEquals(privateAthlete,athlete);
 	}
 	
 	@Test
@@ -171,7 +174,7 @@ public class AthleteServicesImplTest {
 
 		assertNull(koms);
 	}
-
+	
 	// 3. Paging - size only 
 	@Test
 	public void testListAthleteKOMs_pageSize() {
@@ -326,6 +329,18 @@ public class AthleteServicesImplTest {
 			return;
 		}
 		fail("Listed friends despite paging instructions being illegal");
+	}
+	
+	public void testListAthleteFriends_pagingIgnoreFirstN() {
+		fail("Not yet implemented"); // TODO
+	}
+	
+	public void testListAthleteFriends_pagingIgnoreLastN() {
+		fail("Not yet implemented"); // TODO
+	}
+	
+	public void testListAthleteFriends_pagingPageSizeTooLarge() {
+		fail("Not yet implemented"); // TODO
 	}
 
 	// Test cases

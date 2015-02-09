@@ -563,5 +563,44 @@ public class SegmentServicesImplTest {
 	private SegmentServices getService() {
 		return SegmentServicesImpl.implementation(TestUtils.getValidToken());
 	}
-
+	
+	@Test
+	public void testListStarredSegments_authenticatedUser() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testListStarredSegments_otherUser() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testListStarredSegments_invalidAthlete() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testListStarredSegments_pagingOutOfRangeHigh() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testListStarredSegments_pagingOutOfRangeLow() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testListStarredSegments_pagingSize() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testListStarredSegments_pagingSizeAndNumber() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testListStarredSegments_pagingSizeTooLarge() {
+		fail("Not yet implemented!"); // TODO
+	}
 }

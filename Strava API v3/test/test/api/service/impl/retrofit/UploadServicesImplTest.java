@@ -47,6 +47,21 @@ public class UploadServicesImplTest {
 	}
 
 	@Test
+	public void testImplementation_revokedToken() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testImplementation_implementationIsCached() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testImplementation_differentImplementationIsNotCached() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
 	public void testUpload_valid() throws InterruptedException, UnauthorizedException, NotFoundException, BadRequestException {
 		UploadServices service = getService();
 		File file = new File("hyperdrive.gpx");
@@ -93,6 +108,31 @@ public class UploadServicesImplTest {
 
 	}
 
+	@Test
+	public void testUpload_badActivityType() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testUpload_badDataType() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testUpload_noName() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testUpload_noFile() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testUpload_badFileContent() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
 	@Test
 	public void testCheckUploadStatus() throws UnauthorizedException {
 		UploadServices service = getService();

@@ -114,7 +114,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 				segments = Strava.ignoreFirstN(segments, pagingInstruction.getIgnoreFirstN());
 			}
 		} catch (NotFoundException e) {
-			// StravaSegment doesn't exist
+			// Athlete doesn't exist
 			return null;
 		}
 		return segments;

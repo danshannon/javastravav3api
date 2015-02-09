@@ -126,6 +126,11 @@ public class GearServicesImplTest {
 		assertNull(gear);
 	}
 	
+	@Test
+	public void testGetGear_privateAthlete() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
 	private GearServices getGearService() {
 		if (this.gearService == null) {
 			this.gearService = GearServicesImpl.implementation(TestUtils.getValidToken());

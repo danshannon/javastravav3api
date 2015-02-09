@@ -116,7 +116,7 @@ public class Strava {
 			return list;
 		}
 		if (ignoreLastN >= list.size()) {
-			list.removeAll(list);
+			list = new ArrayList<T>();
 			return list;
 		}
 		return list.subList(0, list.size() - ignoreLastN);
@@ -133,7 +133,7 @@ public class Strava {
 			return list;
 		}
 		if (ignoreFirstN >= list.size()) {
-			list.removeAll(list);
+			list = new ArrayList<T>();
 			return list;
 		}
 		return list.subList(ignoreFirstN - 1, list.size() - 1);

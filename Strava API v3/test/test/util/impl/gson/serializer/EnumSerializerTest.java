@@ -30,6 +30,13 @@ public abstract class EnumSerializerTest<T extends Enum<T>> extends SerializerTe
 		T deserialized = this.util.deserialise(serialized, getClassUnderTest());
 		assertEquals(deserialized, getUnknownValue());
 	}
+	
+	@Test
+	public void testDeserializeUnexpectedValue() throws JsonSerialisationException {
+		String serialized = "-999";
+		T deserialized = this.util.deserialise(serialized, getClassUnderTest());
+		assertEquals(deserialized, getUnknownValue());
+	}
 
 	@Override
 	public void testDeserialiseInputStream() throws JsonSerialisationException {

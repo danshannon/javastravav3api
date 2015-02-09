@@ -52,6 +52,16 @@ public class StreamServicesImplTest {
 		fail("Got a usable implementation from an invalid token");
 	}
 
+	@Test
+	public void testImplementation_implementationIsCached() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
+	@Test
+	public void testImplementation_differentImplementationIsNotCached() {
+		fail("Not yet implemented!"); // TODO
+	}
+	
 	/**
 	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
 	 * @throws UnauthorizedException 
