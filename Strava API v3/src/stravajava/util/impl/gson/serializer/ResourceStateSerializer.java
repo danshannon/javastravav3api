@@ -23,7 +23,6 @@ public class ResourceStateSerializer implements JsonSerializer<StravaResourceSta
 	@Override
 	public StravaResourceState deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		try {
 			return StravaResourceState.create(json.getAsInt());
 		} catch (NumberFormatException e) {
@@ -36,7 +35,6 @@ public class ResourceStateSerializer implements JsonSerializer<StravaResourceSta
 	 */
 	@Override
 	public JsonElement serialize(StravaResourceState resourceState, Type type, JsonSerializationContext context) {
-		if (resourceState == null) { return null; }
 		return context.serialize(resourceState.getValue());
 	}
 

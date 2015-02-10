@@ -205,4 +205,6 @@ public interface AthleteServices {
 	 * @throws UnauthorizedException If the service's access token is invalid
 	 */
 	public List<StravaAthlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction);
+	
+	// TODO Athlete stats (GET https://www.strava.com/api/v3/athletes/:id/stats)
 }

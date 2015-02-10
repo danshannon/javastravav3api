@@ -23,7 +23,7 @@ public class StreamTypeSerializer implements JsonSerializer<StravaStreamType>, J
 	@Override
 	public StravaStreamType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return (json == null ? null : StravaStreamType.create(json.getAsString()));
+		return StravaStreamType.create(json.getAsString());
 	}
 
 	/**
@@ -31,6 +31,7 @@ public class StreamTypeSerializer implements JsonSerializer<StravaStreamType>, J
 	 */
 	@Override
 	public JsonElement serialize(StravaStreamType streamType, Type type, JsonSerializationContext context) {
-		return (streamType == null ? null : context.serialize(streamType.getValue()));	}
+		return context.serialize(streamType.getValue());
+	}
 
 }

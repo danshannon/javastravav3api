@@ -27,7 +27,7 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface SegmentServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
 	
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#getSegment(java.lang.Integer)
@@ -44,7 +44,7 @@ public interface SegmentServicesRetrofit {
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#listStarredSegments(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	@GET("/athlete/{id}/segments/starred")
+	@GET("/athletes/{id}/segments/starred")
 	public StravaSegment[] listStarredSegments(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
 
 	/**

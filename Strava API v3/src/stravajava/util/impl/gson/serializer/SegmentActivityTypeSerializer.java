@@ -23,7 +23,7 @@ public class SegmentActivityTypeSerializer implements JsonSerializer<StravaSegme
 	@Override
 	public StravaSegmentActivityType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return (json == null ? null : StravaSegmentActivityType.create(json.getAsString()));
+		return StravaSegmentActivityType.create(json.getAsString());
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class SegmentActivityTypeSerializer implements JsonSerializer<StravaSegme
 	 */
 	@Override
 	public JsonElement serialize(StravaSegmentActivityType segmentActivityType, Type type, JsonSerializationContext context) {
-		return (segmentActivityType == null ? null : context.serialize(segmentActivityType.getValue()));
+		return context.serialize(segmentActivityType.getValue());
 	}
 
 }

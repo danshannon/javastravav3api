@@ -1,6 +1,7 @@
 package stravajava.api.v3.auth;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import stravajava.api.v3.auth.model.Token;
@@ -27,11 +28,20 @@ public class TokenManager {
 	
 	public void storeToken(Token token) {
 		String username = null;
-		try {
-			username = token.getAthlete().getEmail();
-		} catch (NullPointerException e) {
-			throw new IllegalArgumentException(e);
+		if (token == null) {
+			throw new IllegalArgumentException("Cannot store null token");
 		}
+		
+		if (token.getAthlete() == null) {
+			throw new IllegalArgumentException("Cannot store a token if it has no athlete");
+		}
+		if (token.getAthlete().getEmail() == null) {
+			throw new IllegalArgumentException("Cannot store a token if the athlete has no email");
+		}
+		if (token.getScopes() == null) {
+			throw new IllegalArgumentException("Cannot store a token with <null> scopes");
+		}
+		username = token.getAthlete().getEmail();
 		this.tokens.put(username,token);
 	}
 	
@@ -44,6 +54,11 @@ public class TokenManager {
 	public Token retrieveTokenWithScope(String username, AuthorisationScope... scopes) {
 		// Get the token from cache
 		Token token = tokens.get(username);
+		
+		// If scopes = null
+		if (scopes == null) {
+			scopes = new AuthorisationScope[0];
+		}
 		
 		// If there's no cached token, or it doesn't have any scopes (which shouldn't happen) then return null
 		if (token == null || token.getScopes() == null) { 
@@ -100,6 +115,41 @@ public class TokenManager {
 	
 	public void revokeToken(Token token) {
 		this.tokens.remove(token.getAthlete().getEmail());
+	}
+
+	/**
+	 * @param username
+	 * @param allScopes
+	 * @return
+	 */
+	public Token retrieveTokenWithExactScope(String username, List<AuthorisationScope> allScopes) {
+		if (allScopes == null) { return retrieveTokenWithExactScope(username, new AuthorisationScope[]{}); }
+		AuthorisationScope[] array = new AuthorisationScope[allScopes.size()];
+		for (int i = 0; i < allScopes.size(); i++) {
+			array[i] = allScopes.get(i);
+		}
+		return retrieveTokenWithExactScope(username, array);
+	}
+
+	/**
+	 * @param email
+	 * @param noScope
+	 */
+	public Token retrieveTokenWithScope(String username, List<AuthorisationScope> scope) {
+		
+		if (scope == null) { return retrieveTokenWithScope(username, new AuthorisationScope[]{}); }
+		AuthorisationScope[] array = new AuthorisationScope[scope.size()];
+		for (int i = 0; i < scope.size(); i++) {
+			array[i] = scope.get(i);
+		}
+		return retrieveTokenWithExactScope(username, array);
+		
+	}
+	
+	public void clearTokenCache() {
+		for (Token token : tokens.values()) {
+			revokeToken(token);
+		}
 	}
 	
 }

@@ -23,7 +23,7 @@ public class StreamSeriesDownsamplingTypeSerializer implements JsonSerializer<St
 	@Override
 	public StravaStreamSeriesDownsamplingType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return (json == null ? null : StravaStreamSeriesDownsamplingType.create(json.getAsString()));
+		return StravaStreamSeriesDownsamplingType.create(json.getAsString());
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class StreamSeriesDownsamplingTypeSerializer implements JsonSerializer<St
 	 */
 	@Override
 	public JsonElement serialize(StravaStreamSeriesDownsamplingType downsamplingType, Type type, JsonSerializationContext context) {
-		return (downsamplingType == null ?  null : context.serialize(downsamplingType.getValue()));
+		return context.serialize(downsamplingType.getValue());
 	}
 
 }

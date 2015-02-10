@@ -566,17 +566,31 @@ public class SegmentServicesImplTest {
 	
 	@Test
 	public void testListStarredSegments_authenticatedUser() {
-		fail("Not yet implemented!"); // TODO
+		SegmentServices service = getService();
+		List<StravaSegment> segments = service.listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID);
+		assertNotNull(segments);
 	}
 	
 	@Test
 	public void testListStarredSegments_otherUser() {
-		fail("Not yet implemented!"); // TODO
+		SegmentServices service = getService();
+		List<StravaSegment> segments = service.listStarredSegments(TestUtils.ATHLETE_VALID_ID);
+		assertNotNull(segments);
 	}
 	
 	@Test
 	public void testListStarredSegments_invalidAthlete() {
-		fail("Not yet implemented!"); // TODO
+		SegmentServices service = getService();
+		List<StravaSegment> segments = service.listStarredSegments(TestUtils.ATHLETE_INVALID_ID);
+		assertNull(segments);
+	}
+	
+	@Test
+	public void testListStarredSegments_privateAthlete() {
+		SegmentServices service = getService();
+		List<StravaSegment> segments = service.listStarredSegments(TestUtils.ATHLETE_PRIVATE_ID);
+		assertNotNull(segments);
+		assertEquals(0,segments.size());
 	}
 	
 	@Test

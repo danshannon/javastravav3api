@@ -23,7 +23,6 @@ public class GenderSerializer implements JsonSerializer<StravaGender>, JsonDeser
 	@Override
 	public StravaGender deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		return StravaGender.create(json.getAsString());
 	}
 
@@ -32,7 +31,6 @@ public class GenderSerializer implements JsonSerializer<StravaGender>, JsonDeser
 	 */
 	@Override
 	public JsonElement serialize(StravaGender gender, Type type, JsonSerializationContext context) {
-		if (gender == null) { return null; }
 		return context.serialize(gender.getValue());
 	}
 

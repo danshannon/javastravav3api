@@ -23,7 +23,6 @@ public class AuthorisationScopeSerializer implements JsonSerializer<Authorisatio
 	@Override
 	public AuthorisationScope deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		return AuthorisationScope.create(json.getAsString());
 	}
 
@@ -32,7 +31,6 @@ public class AuthorisationScopeSerializer implements JsonSerializer<Authorisatio
 	 */
 	@Override
 	public JsonElement serialize(AuthorisationScope authorisationScope, Type type, JsonSerializationContext context) {
-		if (authorisationScope == null) { return null; }
 		return context.serialize(authorisationScope.getId());
 	}
 

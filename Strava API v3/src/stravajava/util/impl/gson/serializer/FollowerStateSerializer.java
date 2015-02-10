@@ -23,7 +23,6 @@ public class FollowerStateSerializer implements JsonSerializer<StravaFollowerSta
 	@Override
 	public StravaFollowerState deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		return StravaFollowerState.create(json.getAsString());
 	}
 
@@ -32,7 +31,6 @@ public class FollowerStateSerializer implements JsonSerializer<StravaFollowerSta
 	 */
 	@Override
 	public JsonElement serialize(StravaFollowerState followerState, Type type, JsonSerializationContext context) {
-		if (followerState == null) { return null; }
 		return context.serialize(followerState.getValue());
 	}
 

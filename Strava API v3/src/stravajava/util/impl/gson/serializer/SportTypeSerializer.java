@@ -23,7 +23,7 @@ public class SportTypeSerializer implements JsonSerializer<StravaSportType>, Jso
 	@Override
 	public StravaSportType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return (json == null ? null : StravaSportType.create(json.getAsString()));
+		return StravaSportType.create(json.getAsString());
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class SportTypeSerializer implements JsonSerializer<StravaSportType>, Jso
 	 */
 	@Override
 	public JsonElement serialize(StravaSportType sportType, Type type, JsonSerializationContext context) {
-		return (sportType == null ? null : context.serialize(sportType.getValue()));
+		return context.serialize(sportType.getValue());
 	}
 
 }

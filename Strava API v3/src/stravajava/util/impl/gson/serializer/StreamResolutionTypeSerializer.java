@@ -23,7 +23,7 @@ public class StreamResolutionTypeSerializer implements JsonSerializer<StravaStre
 	@Override
 	public StravaStreamResolutionType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return (json == null ? null : StravaStreamResolutionType.create(json.getAsString()));
+		return StravaStreamResolutionType.create(json.getAsString());
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class StreamResolutionTypeSerializer implements JsonSerializer<StravaStre
 	 */
 	@Override
 	public JsonElement serialize(StravaStreamResolutionType resolutionType, Type type, JsonSerializationContext context) {
-		return (resolutionType == null ? null : context.serialize(resolutionType.getValue()));
+		return context.serialize(resolutionType.getValue());
 	}
 
 }

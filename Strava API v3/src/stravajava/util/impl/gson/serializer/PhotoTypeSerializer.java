@@ -23,7 +23,6 @@ public class PhotoTypeSerializer implements JsonSerializer<StravaPhotoType>, Jso
 	@Override
 	public StravaPhotoType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		return StravaPhotoType.create(json.getAsString());
 	}
 
@@ -32,7 +31,6 @@ public class PhotoTypeSerializer implements JsonSerializer<StravaPhotoType>, Jso
 	 */
 	@Override
 	public JsonElement serialize(StravaPhotoType photoType, Type type, JsonSerializationContext context) {
-		if (photoType == null) { return null; }
 		return context.serialize(photoType.getValue());
 	}
 

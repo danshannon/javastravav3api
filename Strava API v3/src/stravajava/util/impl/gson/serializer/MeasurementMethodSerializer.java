@@ -23,7 +23,6 @@ public class MeasurementMethodSerializer implements JsonSerializer<StravaMeasure
 	@Override
 	public StravaMeasurementMethod deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		return StravaMeasurementMethod.create(json.getAsString());
 	}
 
@@ -32,7 +31,6 @@ public class MeasurementMethodSerializer implements JsonSerializer<StravaMeasure
 	 */
 	@Override
 	public JsonElement serialize(StravaMeasurementMethod method, Type type, JsonSerializationContext context) {
-		if (method == null) { return null; }
 		return context.serialize(method.getValue());
 	}
 

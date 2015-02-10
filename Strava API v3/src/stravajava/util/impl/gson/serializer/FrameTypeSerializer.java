@@ -23,7 +23,6 @@ public class FrameTypeSerializer implements JsonSerializer<StravaFrameType>, Jso
 	@Override
 	public StravaFrameType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		try {
 			return StravaFrameType.create(json.getAsInt());
 		} catch (NumberFormatException e) {
@@ -36,7 +35,6 @@ public class FrameTypeSerializer implements JsonSerializer<StravaFrameType>, Jso
 	 */
 	@Override
 	public JsonElement serialize(StravaFrameType frameType, Type type, JsonSerializationContext context) {
-		if (frameType == null) { return null; }
 		return context.serialize(frameType.getValue());
 	}
 

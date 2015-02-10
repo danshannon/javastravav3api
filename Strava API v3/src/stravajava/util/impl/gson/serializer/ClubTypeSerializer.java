@@ -23,7 +23,6 @@ public class ClubTypeSerializer implements JsonSerializer<StravaClubType>, JsonD
 	@Override
 	public StravaClubType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		return StravaClubType.create(json.getAsString());
 	}
 
@@ -32,7 +31,6 @@ public class ClubTypeSerializer implements JsonSerializer<StravaClubType>, JsonD
 	 */
 	@Override
 	public JsonElement serialize(StravaClubType clubType, Type type, JsonSerializationContext context) {
-		if (clubType == null) { return null; }
 		return context.serialize(clubType.getValue());
 	}
 

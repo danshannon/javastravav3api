@@ -23,7 +23,6 @@ public class AuthorisationResponseTypeSerializer implements JsonSerializer<Autho
 	@Override
 	public AuthorisationResponseType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		return AuthorisationResponseType.create(json.getAsString());
 	}
 
@@ -32,7 +31,6 @@ public class AuthorisationResponseTypeSerializer implements JsonSerializer<Autho
 	 */
 	@Override
 	public JsonElement serialize(AuthorisationResponseType authorisationResponseType, Type type, JsonSerializationContext context) {
-		if (authorisationResponseType == null) { return null; }
 		return context.serialize(authorisationResponseType.getId());
 	}
 

@@ -23,7 +23,6 @@ public class LeaderboardDateRangeSerializer implements JsonSerializer<StravaLead
 	@Override
 	public StravaLeaderboardDateRange deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		return StravaLeaderboardDateRange.create(json.getAsString());
 	}
 
@@ -32,7 +31,6 @@ public class LeaderboardDateRangeSerializer implements JsonSerializer<StravaLead
 	 */
 	@Override
 	public JsonElement serialize(StravaLeaderboardDateRange dateRange, Type type, JsonSerializationContext context) {
-		if (dateRange == null) { return null; }
 		return context.serialize(dateRange.getValue());
 	}
 

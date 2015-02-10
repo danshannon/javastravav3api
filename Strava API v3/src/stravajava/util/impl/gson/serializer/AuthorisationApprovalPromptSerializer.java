@@ -22,7 +22,6 @@ public class AuthorisationApprovalPromptSerializer implements JsonSerializer<Aut
 	 */
 	@Override
 	public JsonElement serialize(AuthorisationApprovalPrompt prompt, Type type, JsonSerializationContext context) {
-		if (prompt == null) { return null; }
 		return context.serialize(prompt.getId());
 	}
 
@@ -32,7 +31,6 @@ public class AuthorisationApprovalPromptSerializer implements JsonSerializer<Aut
 	@Override
 	public AuthorisationApprovalPrompt deserialize(JsonElement element, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (element == null) { return null; }
 		return AuthorisationApprovalPrompt.create(element.getAsString());
 	}
 

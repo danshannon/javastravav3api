@@ -23,7 +23,6 @@ public class AgeGroupSerializer implements JsonSerializer<StravaAgeGroup>, JsonD
 	@Override
 	public StravaAgeGroup deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		return StravaAgeGroup.create(json.getAsString());
 	}
 
@@ -32,7 +31,6 @@ public class AgeGroupSerializer implements JsonSerializer<StravaAgeGroup>, JsonD
 	 */
 	@Override
 	public JsonElement serialize(StravaAgeGroup ageGroup, Type type, JsonSerializationContext context) {
-		if (ageGroup == null) { return null; }
 		return context.serialize(ageGroup.getValue());
 	}
 

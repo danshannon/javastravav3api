@@ -23,7 +23,7 @@ public class WeightClassSerializer implements JsonSerializer<StravaWeightClass>,
 	@Override
 	public StravaWeightClass deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		return (json == null ? null : StravaWeightClass.create(json.getAsString()));
+		return StravaWeightClass.create(json.getAsString());
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class WeightClassSerializer implements JsonSerializer<StravaWeightClass>,
 	 */
 	@Override
 	public JsonElement serialize(StravaWeightClass weightClass, Type type, JsonSerializationContext context) {
-		return (weightClass == null ? null : context.serialize(weightClass.getValue()));
+		return context.serialize(weightClass.getValue());
 	}
 
 }

@@ -23,7 +23,6 @@ public class ActivityTypeSerializer implements JsonSerializer<StravaActivityType
 	@Override
 	public StravaActivityType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
 			throws JsonParseException {
-		if (json == null) { return null; }
 		return StravaActivityType.create(json.getAsString());
 	}
 
@@ -32,7 +31,6 @@ public class ActivityTypeSerializer implements JsonSerializer<StravaActivityType
 	 */
 	@Override
 	public JsonElement serialize(StravaActivityType activityType, Type type, JsonSerializationContext context) {
-		if (activityType == null) { return null; }
 		return context.serialize(activityType.getValue());
 	}
 
