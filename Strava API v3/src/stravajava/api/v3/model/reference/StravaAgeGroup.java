@@ -34,7 +34,7 @@ public enum StravaAgeGroup {
 	public static StravaAgeGroup create(String id) {
 		StravaAgeGroup[] ageGroups = StravaAgeGroup.values();
 		for (StravaAgeGroup ageGroup : ageGroups) {
-			if (ageGroup.getId() != null && ageGroup.getId().equals(id)) {
+			if (ageGroup.getId().equals(id)) {
 				return ageGroup;
 			}
 		}

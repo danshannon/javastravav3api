@@ -4,6 +4,7 @@ import java.util.List;
 
 import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaSegmentEffort;
+import stravajava.api.v3.model.StravaStatistics;
 import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
@@ -207,4 +208,17 @@ public interface AthleteServices {
 	public List<StravaAthlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction);
 	
 	// TODO Athlete stats (GET https://www.strava.com/api/v3/athletes/:id/stats)
+	/**
+	 * <p>Returns recent (last 4 weeks), year to date and all time stats for a given athlete. Only available for the authenticated athlete.</p>
+	 * 
+	 * <p>This is the recommended endpoint when polling for athlete upload events.</p>
+	 * 
+	 * <p>URL GET https://www.strava.com/api/v3/athletes/:id/stats</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/athlete/#stats">http://strava.github.io/api/v3/athlete/#stats</a>
+	 * 
+	 * @param id The id of the athlete (must match authenticated athlete)
+	 * @return Strava statistics object; values are in seconds and metres.
+	 */
+	public StravaStatistics statistics(Integer id);
 }

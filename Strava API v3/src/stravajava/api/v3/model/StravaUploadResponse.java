@@ -2,6 +2,8 @@ package stravajava.api.v3.model;
 
 import stravajava.api.v3.service.UploadServices;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>Response to an {@link UploadServices#upload(stravajava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, stravajava.api.v3.service.athlete.UploadDataType, String, java.io.File) upload request}</p>
@@ -10,12 +12,9 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaUploadResponse {
-	public StravaUploadResponse() {
-		// Required
-		super();
-	}
-	
 	/**
 	 * 
 	 */

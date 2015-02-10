@@ -2,6 +2,8 @@ package stravajava.api.v3.model;
 
 import stravajava.api.v3.model.reference.StravaClimbCategory;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * Summary of segment returned by the segment explorer
@@ -10,12 +12,9 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaSegmentExplorerResponseSegment {
-	public StravaSegmentExplorerResponseSegment() {
-		// Required
-		super();
-	}
-	
 	private Integer id;
 	private String name;
 	private StravaClimbCategory climbCategory;

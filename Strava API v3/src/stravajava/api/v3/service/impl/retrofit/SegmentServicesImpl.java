@@ -15,6 +15,7 @@ import stravajava.api.v3.model.StravaSegment;
 import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.model.StravaSegmentExplorerResponse;
 import stravajava.api.v3.model.StravaSegmentLeaderboard;
+import stravajava.api.v3.model.StravaSegmentLeaderboardEntry;
 import stravajava.api.v3.model.reference.StravaAgeGroup;
 import stravajava.api.v3.model.reference.StravaClimbCategory;
 import stravajava.api.v3.model.reference.StravaGender;
@@ -171,6 +172,9 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	@Override
 	public StravaSegmentLeaderboard getSegmentLeaderboard(Integer id, StravaGender gender, StravaAgeGroup ageGroup,
 			StravaWeightClass weightClass, Boolean following, Integer clubId, StravaLeaderboardDateRange dateRange, Paging pagingInstruction) {
+		if (pagingInstruction == null) {
+			pagingInstruction = new Paging();
+		}
 		Strava.validatePagingArguments(pagingInstruction);
 		
 		StravaSegmentLeaderboard leaderboard = null;
@@ -193,6 +197,48 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 		} catch (NotFoundException e) {
 			return null;
 		}
+		
+		// Handle the spurious extra 5 that Strava sometimes throws in for good measure
+		int firstPosition = 0;
+		boolean inSequence = true;
+		int rank = 0;
+		int firstAthletePosition = 0;
+		List<StravaSegmentLeaderboardEntry> athleteEntries = new ArrayList<StravaSegmentLeaderboardEntry>();
+		leaderboard.setAthleteEntries(athleteEntries);
+		List<StravaSegmentLeaderboardEntry> entries = leaderboard.getEntries();
+		
+		// If there are EXACTLY 5 entries, then they are athlete entries if they're not in the expected range
+		if (entries.size() == 5) {
+			int firstRank = entries.get(0).getRank();
+			int lastRank = entries.get(0).getRank();
+			int expectedFirstRank = (pagingInstruction.getPage() - 1) * pagingInstruction.getPageSize() + 1;
+			int expectedLastRank = (pagingInstruction.getPage() * pagingInstruction.getPageSize());
+			if (firstRank > expectedLastRank || lastRank < expectedFirstRank) {
+				athleteEntries.addAll(entries);
+			}
+		} else {
+			
+			// Otherwise, they are athlete entries if the ranks are too high
+			for (int position = 0; position < entries.size(); position++) {
+				rank = entries.get(position).getRank();
+				if (firstPosition == 0) {
+					firstPosition = rank;
+				}
+				if (rank > firstPosition + position && inSequence) {
+					inSequence = false;
+					if (firstAthletePosition == 0) {
+						firstAthletePosition = position;
+					}
+				}
+				if (!inSequence) {
+					athleteEntries.add(entries.get(position));
+				}
+			}
+		}
+		
+		// Take the athlete-specific entries out
+		entries.removeAll(athleteEntries);
+		
 		return leaderboard;
 	}
 

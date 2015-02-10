@@ -4,6 +4,8 @@ import java.util.List;
 
 import stravajava.api.v3.service.SegmentServices;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * Returned by the {@link SegmentServices#segmentExplore(StravaMapPoint, StravaMapPoint, stravajava.api.v3.service.athlete.SegmentExplorerActivityType, Integer, Integer) segment explorer service}.
@@ -14,11 +16,8 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaSegmentExplorerResponse {
-	public StravaSegmentExplorerResponse() {
-		// Required
-		super();
-	}
-	
 	private List<StravaSegmentExplorerResponseSegment> segments;
 }

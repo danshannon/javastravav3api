@@ -6,6 +6,8 @@ import stravajava.api.v3.model.reference.StravaClimbCategory;
 import stravajava.api.v3.model.reference.StravaResourceState;
 import stravajava.api.v3.model.reference.StravaSegmentActivityType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -16,12 +18,9 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaSegment {
-	public StravaSegment() {
-		// Required
-		super();
-	}
-	
 	private Integer id;
 	private StravaResourceState resourceState;
 	private String name;

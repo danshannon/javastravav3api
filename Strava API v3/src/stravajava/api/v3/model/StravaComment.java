@@ -4,18 +4,17 @@ import java.util.Date;
 
 import stravajava.api.v3.model.reference.StravaResourceState;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * @author dshannon
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaComment {
-	public StravaComment() {
-		// Required
-		super();
-	}
-	
 	private Integer id;
 	private StravaResourceState resourceState;
 	private Integer activityId;

@@ -128,7 +128,8 @@ public class GearServicesImplTest {
 	
 	@Test
 	public void testGetGear_privateAthlete() {
-		fail("Not yet implemented!"); // TODO
+		StravaGear gear = getGearService().getGear(TestUtils.GEAR_OTHER_ATHLETE_ID);
+		assertNull(gear);
 	}
 	
 	private GearServices getGearService() {

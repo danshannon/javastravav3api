@@ -4,6 +4,8 @@ import java.util.Date;
 
 import stravajava.api.v3.model.reference.StravaGender;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * A single entry in a {@link StravaSegmentLeaderboard}
@@ -12,12 +14,9 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaSegmentLeaderboardEntry {
-	public StravaSegmentLeaderboardEntry() {
-		// Required
-		super();
-	}
-	
 	private String athleteName;
 	private Integer athleteId;
 	private StravaGender athleteGender;

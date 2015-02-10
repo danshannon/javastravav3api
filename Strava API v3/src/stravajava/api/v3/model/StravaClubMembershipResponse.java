@@ -2,6 +2,8 @@ package stravajava.api.v3.model;
 
 import stravajava.api.v3.service.ClubServices;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>Container for response from club membership join and leave</p>
@@ -12,12 +14,9 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaClubMembershipResponse {
-	public StravaClubMembershipResponse() {
-		// Required
-		super();
-	}
-	
 	private Boolean success;
 	private Boolean active;
 }

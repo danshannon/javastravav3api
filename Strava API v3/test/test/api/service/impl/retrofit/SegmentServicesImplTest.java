@@ -26,6 +26,7 @@ import stravajava.api.v3.model.reference.StravaLeaderboardDateRange;
 import stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType;
 import stravajava.api.v3.model.reference.StravaWeightClass;
 import stravajava.api.v3.service.SegmentServices;
+import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.SegmentServicesImpl;
 import stravajava.util.Paging;
@@ -464,7 +465,7 @@ public class SegmentServicesImplTest {
 		SegmentServices service = getService();
 		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,1));
 		assertNotNull(leaderboard);
-		assertTrue(6 == leaderboard.getEntries().size() || 1 == leaderboard.getEntries().size()); // Paging returns the requested number of efforts, plus the 5 around the authenticated athlete (if appropriate)
+		assertTrue(1 == leaderboard.getEntries().size()); 
 	}
 
 	// 12. Paging size and number
@@ -486,8 +487,7 @@ public class SegmentServicesImplTest {
 		SegmentServices service = getService();
 		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1000,200));
 		assertNotNull(leaderboard);
-		// TODO Move the athlete's entries somewhere
-		// assertEquals(0,leaderboard.getEntries().size());
+		assertEquals(0,leaderboard.getEntries().size());
 	}
 
 	// 14. Paging out of range low
@@ -595,26 +595,48 @@ public class SegmentServicesImplTest {
 	
 	@Test
 	public void testListStarredSegments_pagingOutOfRangeHigh() {
-		fail("Not yet implemented!"); // TODO
+		SegmentServices service = getService();
+		List<StravaSegment> segments = service.listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1000,200));
+		assertNotNull(segments);
+		assertEquals(0,segments.size());
 	}
 	
 	@Test
 	public void testListStarredSegments_pagingOutOfRangeLow() {
-		fail("Not yet implemented!"); // TODO
+		SegmentServices service = getService();
+		try {
+			service.listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(-1,-1));
+		} catch(IllegalArgumentException e) {
+			// Expected
+			return;
+		}
+		fail("Got starred segments for page -1, size -1");
 	}
 	
 	@Test
 	public void testListStarredSegments_pagingSize() {
-		fail("Not yet implemented!"); // TODO
+		List<StravaSegment> segments = getService().listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,1));
+		assertNotNull(segments);
+		assertEquals(1,segments.size());
 	}
 	
 	@Test
 	public void testListStarredSegments_pagingSizeAndNumber() {
-		fail("Not yet implemented!"); // TODO
+		List<StravaSegment> pageOf2 = getService().listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,2));
+		List<StravaSegment> page1Of1 = getService().listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,1));
+		List<StravaSegment> page2Of1 = getService().listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(2,1));
+		assertNotNull(pageOf2);
+		assertEquals(2,pageOf2.size());
+		assertEquals(1,page1Of1.size());
+		assertEquals(1,page2Of1.size());
+		assertEquals(pageOf2.get(0),page1Of1.get(0));
+		assertEquals(pageOf2.get(1),page2Of1.get(0));
 	}
 	
 	@Test
 	public void testListStarredSegments_pagingSizeTooLarge() {
-		fail("Not yet implemented!"); // TODO
+		List<StravaSegment> segments = getService().listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,Strava.MAX_PAGE_SIZE + 1));
+		assertNotNull(segments);
+		// Don't know a priori how many we'll get so no further testing...
 	}
 }

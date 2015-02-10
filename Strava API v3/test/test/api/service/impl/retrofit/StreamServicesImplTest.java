@@ -4,6 +4,7 @@
 package test.api.service.impl.retrofit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -17,8 +18,10 @@ import stravajava.api.v3.model.StravaStream;
 import stravajava.api.v3.model.reference.StravaStreamResolutionType;
 import stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import stravajava.api.v3.model.reference.StravaStreamType;
+import stravajava.api.v3.service.SegmentServices;
 import stravajava.api.v3.service.StreamServices;
 import stravajava.api.v3.service.exception.UnauthorizedException;
+import stravajava.api.v3.service.impl.retrofit.SegmentServicesImpl;
 import stravajava.api.v3.service.impl.retrofit.StreamServicesImpl;
 import test.utils.TestUtils;
 
@@ -54,12 +57,16 @@ public class StreamServicesImplTest {
 
 	@Test
 	public void testImplementation_implementationIsCached() {
-		fail("Not yet implemented!"); // TODO
+		StreamServices service = StreamServicesImpl.implementation(TestUtils.getValidToken());
+		StreamServices service2 = StreamServicesImpl.implementation(TestUtils.getValidToken());
+		assertEquals("Retrieved multiple service instances for the same token - should only be one",service,service2);
 	}
 	
 	@Test
 	public void testImplementation_differentImplementationIsNotCached() {
-		fail("Not yet implemented!"); // TODO
+		StreamServices service = StreamServicesImpl.implementation(TestUtils.getValidToken());
+		StreamServices service2 = StreamServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
+		assertFalse(service == service2);
 	}
 	
 	/**

@@ -3,10 +3,12 @@ package stravajava.api.v3.model;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import stravajava.api.v3.model.reference.StravaActivityType;
 import stravajava.api.v3.model.reference.StravaResourceState;
 import stravajava.api.v3.model.reference.StravaWorkoutType;
-import lombok.Data;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -15,12 +17,9 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaActivity {
-	public StravaActivity() {
-		// Required
-		super();
-	}
-	
 	private Integer id;
 	private StravaResourceState resourceState;
 	private String externalId;

@@ -5,18 +5,17 @@ import java.util.Date;
 import stravajava.api.v3.model.reference.StravaPhotoType;
 import stravajava.api.v3.model.reference.StravaResourceState;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Dan Shannon
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaPhoto {
-	public StravaPhoto() {
-		// Required
-		super();
-	}
-	
 	private Integer id;
 	private Integer activityId;
 	private StravaResourceState resourceState;

@@ -2,21 +2,20 @@ package stravajava.api.v3.model;
 
 import java.util.List;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import stravajava.api.v3.model.reference.StravaActivityZoneType;
 import stravajava.api.v3.model.reference.StravaResourceState;
-import lombok.Data;
 
 /**
  * @author Dan Shannon
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaActivityZone {
-	public StravaActivityZone() {
-		// Required
-		super();
-	}
-	
 	private Integer score;
 	private List<StravaActivityZoneDistributionBucket> distributionBuckets;
 	private StravaActivityZoneType type;

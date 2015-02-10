@@ -1,5 +1,7 @@
 package test.api.service.impl.retrofit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -48,17 +50,29 @@ public class UploadServicesImplTest {
 
 	@Test
 	public void testImplementation_revokedToken() {
-		fail("Not yet implemented!"); // TODO
+		try {
+			UploadServices service = UploadServicesImpl.implementation(TestUtils.getRevokedToken());
+			service.checkUploadStatus(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
+		} catch (UnauthorizedException e) {
+			// Expected
+			return;
+		}
+		fail("Got a service implementation with a valid token!");
 	}
 	
 	@Test
 	public void testImplementation_implementationIsCached() {
-		fail("Not yet implemented!"); // TODO
+		String token = TestUtils.getValidToken();
+		UploadServices service = UploadServicesImpl.implementation(token);
+		UploadServices service2 = UploadServicesImpl.implementation(token);
+		assertEquals(service,service2);
 	}
 	
 	@Test
 	public void testImplementation_differentImplementationIsNotCached() {
-		fail("Not yet implemented!"); // TODO
+		UploadServices service = UploadServicesImpl.implementation(TestUtils.getValidToken());
+		UploadServices service2 = UploadServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
+		assertFalse(service == service2);
 	}
 	
 	@Test
@@ -66,6 +80,11 @@ public class UploadServicesImplTest {
 		UploadServices service = getService();
 		File file = new File("hyperdrive.gpx");
 		StravaUploadResponse response = service.upload(StravaActivityType.RIDE, "UploadServicesImplTest", null, null, null, "gpx", "ABC", file);
+		waitForCompletionAndDelete(response);
+	}
+	
+	private void waitForCompletionAndDelete(StravaUploadResponse response) {
+		UploadServices service = getService();
 		Integer id = response.getId();
 		boolean loop = true;
 		while (loop) {
@@ -74,7 +93,11 @@ public class UploadServicesImplTest {
 			if (!response.getStatus().equals("Your activity is still being processed.")) {
 				loop = false;
 			} else {
-				Thread.sleep(1000);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// Ignore and continue
+				}
 			}
 		}
 		if (response.getStatus().equals("Your activity is ready.")) {
@@ -85,13 +108,18 @@ public class UploadServicesImplTest {
 				if (activity != null && activity.getResourceState() != StravaResourceState.UPDATING) {
 					loop = false;
 				} else {
-					Thread.sleep(1000);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// Ignore and continue
+					}
 				}
 			}
 			activityService.deleteActivity(response.getActivityId());
 		}
+
 	}
-	
+
 	@Test
 	public void testUpload_noWriteAccess() throws BadRequestException, UnauthorizedException, InterruptedException, NotFoundException {
 		UploadServices service = getServiceWithoutWriteAccess();
@@ -110,27 +138,57 @@ public class UploadServicesImplTest {
 
 	@Test
 	public void testUpload_badActivityType() {
-		fail("Not yet implemented!"); // TODO
+		UploadServices service = getService();
+		File file = new File("hyperdrive.gpx");
+		StravaUploadResponse response = service.upload(StravaActivityType.UNKNOWN, "UploadServicesImplTest,testUpload_badActivityType", null, null, null, "gpx", "ABC", file);
+		waitForCompletionAndDelete(response);
 	}
 	
 	@Test
 	public void testUpload_badDataType() {
-		fail("Not yet implemented!"); // TODO
+		UploadServices service = getService();
+		File file = new File("hyperdrive.gpx");
+		try {
+			service.upload(StravaActivityType.RIDE, "UploadServicesImplTest.testUpload_badDataType", null, null, null, "UNKNOWN", "ABC", file);
+		} catch (IllegalArgumentException e) {
+			// Expected
+			return;
+		}
+		fail("Uploaded a file with a bad data type!");
 	}
 	
 	@Test
-	public void testUpload_noName() {
-		fail("Not yet implemented!"); // TODO
+	public void testUpload_noName() throws UnauthorizedException, BadRequestException {
+		UploadServices service = getService();
+		File file = new File("hyperdrive.gpx");
+		StravaUploadResponse response = service.upload(StravaActivityType.RIDE, null, "UploadServicesImplTest.testUpload_noName", null, null, "gpx", "ABC", file);
+		waitForCompletionAndDelete(response);
 	}
 	
 	@Test
 	public void testUpload_noFile() {
-		fail("Not yet implemented!"); // TODO
+		UploadServices service = getService();
+		File file = null;
+		try {
+			service.upload(StravaActivityType.RIDE, "UploadServicesImplTest.testUpload_noName", null, null, null, "gpx", "ABC", file);
+		} catch (IllegalArgumentException e) {
+			// Expected
+			return;
+		}
+		fail("Uploaded a file with no actual file!");
 	}
 	
 	@Test
 	public void testUpload_badFileContent() {
-		fail("Not yet implemented!"); // TODO
+		UploadServices service = getService();
+		File file = new File("Plan");
+		try {
+			service.upload(StravaActivityType.RIDE, "UploadServicesImplTest.testUpload_noName", null, null, null, "gpx", "ABC", file);
+		} catch (IllegalArgumentException e) {
+			// Expected
+			return;
+		}
+		fail("Uploaded a file with an invalid file!");
 	}
 	
 	@Test

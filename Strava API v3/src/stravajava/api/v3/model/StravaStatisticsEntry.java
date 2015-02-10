@@ -4,17 +4,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-/**
- * @author Dan Shannon
- *
- */
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
-public class StravaSplit {
+public class StravaStatisticsEntry {
+	private Integer count;
 	private Float distance;
-	private Integer elapsedTime;
-	private Float elevationDifference;
 	private Integer movingTime;
-	private Integer split;
+	private Integer elapsedTime;
+	private Float elevationGain;
+	private Integer achievementCount;
 }

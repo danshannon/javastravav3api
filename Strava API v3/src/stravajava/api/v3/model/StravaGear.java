@@ -3,6 +3,8 @@ package stravajava.api.v3.model;
 import stravajava.api.v3.model.reference.StravaFrameType;
 import stravajava.api.v3.model.reference.StravaResourceState;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>StravaGear represents equipment used during an {@link StravaActivity}.</p>
@@ -13,12 +15,9 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaGear {
-	public StravaGear() {
-		// Required
-		super();
-	}
-	
 	private String id;
 	private Boolean primary;
 	private String name;

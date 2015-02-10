@@ -4,18 +4,17 @@ import java.util.Date;
 
 import stravajava.api.v3.model.reference.StravaResourceState;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Dan Shannon
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaSegmentEffort {
-	public StravaSegmentEffort() {
-		// Required
-		super();
-	}
-	
 	private Long id;
 	private StravaResourceState resourceState;
 	private String name;

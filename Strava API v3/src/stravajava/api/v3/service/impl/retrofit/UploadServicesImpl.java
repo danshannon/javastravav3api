@@ -32,6 +32,7 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 		UploadServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new UploadServicesImpl(token);
+			restServices.put(token, restService);
 		}
 		return restService;
 	}
@@ -46,6 +47,9 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 	@Override
 	public StravaUploadResponse upload(StravaActivityType activityType, String name, String description, Boolean _private, Boolean trainer,
 			String dataType, String externalId, File file) {
+		if (file == null) { 
+			throw new IllegalArgumentException("Cannot upload a <null> file!");
+		}
 		try {
 			return restService.upload(activityType, name, description, _private, trainer, dataType, externalId, new TypedFile("text/xml",file));
 		} catch (BadRequestException e) {

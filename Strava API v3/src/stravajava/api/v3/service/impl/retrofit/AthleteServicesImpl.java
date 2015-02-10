@@ -10,6 +10,7 @@ import java.util.List;
 
 import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaSegmentEffort;
+import stravajava.api.v3.model.StravaStatistics;
 import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.service.AthleteServices;
 import stravajava.api.v3.service.Strava;
@@ -226,6 +227,23 @@ public class AthleteServicesImpl implements AthleteServices {
 			return true;
 		} catch (UnauthorizedException e) {
 			return false;
+		}
+	}
+
+	/**
+	 * @see stravajava.api.v3.service.AthleteServices#statistics(Integer)
+	 */
+	@Override
+	public StravaStatistics statistics(Integer id) {
+		try {
+			return restService.statistics(id);
+		} catch (NotFoundException e) {
+			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				return new StravaStatistics();
+			}
+			throw e;
 		}
 	}
 

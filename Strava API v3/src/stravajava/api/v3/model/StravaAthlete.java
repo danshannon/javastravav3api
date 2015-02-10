@@ -8,6 +8,8 @@ import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.model.reference.StravaMeasurementMethod;
 import stravajava.api.v3.model.reference.StravaResourceState;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * Detailed representation of an StravaAthlete
@@ -18,12 +20,9 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaAthlete {
-	public StravaAthlete() {
-		// Required
-		super();
-	}
-	
 	private Integer id;
 	private StravaResourceState resourceState;
 	private String firstName;

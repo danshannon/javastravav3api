@@ -4,6 +4,8 @@ import stravajava.api.v3.model.reference.StravaClubType;
 import stravajava.api.v3.model.reference.StravaResourceState;
 import stravajava.api.v3.model.reference.StravaSportType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>Clubs represent groups of athletes on Strava. They can be public or private. Only members of private clubs can access their details. The object is returned in summary or detailed {@link StravaResourceState representations}.</p>
@@ -12,12 +14,9 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class StravaClub {
-	public StravaClub() {
-		// Required
-		super();
-	}
-	
 	private Integer id;
 	private StravaResourceState resourceState;
 	private String name;

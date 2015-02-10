@@ -7,9 +7,11 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaSegmentEffort;
+import stravajava.api.v3.model.StravaStatistics;
 import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.service.AthleteServices;
 import stravajava.api.v3.service.exception.NotFoundException;
+import stravajava.api.v3.service.exception.UnauthorizedException;
 
 /**
  * Retrofit definitions for implementation of {@link AthleteServices}
@@ -61,5 +63,11 @@ public interface AthleteServicesRetrofit {
 	 */
 	@GET("/athletes/{id}/both-following")
 	public StravaAthlete[] listAthletesBothFollowing(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
+	
+	/**
+	 * @see stravajava.api.v3.service.AthleteServices#statistics(Integer)
+	 */
+	@GET("/athletes/{id}/stats")
+	public StravaStatistics statistics(@Path("id") Integer id) throws NotFoundException;
 	
 }

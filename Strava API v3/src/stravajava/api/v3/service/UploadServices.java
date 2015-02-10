@@ -46,7 +46,7 @@ public interface UploadServices {
 	 * @return Returns an Upload Status object. This object will include an English language status. If success, it will indicate the data is still processing. If there was an error, it will describe the error, potentially containing HTML. Upon a successful submission the request will return 201 Created. If there was an error the request will return 400 Bad Request.
 	 * @throws BadRequestException 
 	 */
-	public StravaUploadResponse upload(StravaActivityType activityType, String name, String description, Boolean _private, Boolean trainer, String dataType, String externalId, File file) throws UnauthorizedException, BadRequestException;
+	public StravaUploadResponse upload(StravaActivityType activityType, String name, String description, Boolean _private, Boolean trainer, String dataType, String externalId, File file) throws UnauthorizedException;
 	
 	/**
 	 * <p>Upon upload, Strava will respond with an upload ID. You may use this ID to poll the status of your upload. Strava recommends polling no more than once a second. Polling more frequently is unnecessary. The mean processing time is around 8 seconds.</p>
