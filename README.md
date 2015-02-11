@@ -42,7 +42,7 @@ To use the paging options, you pass in a stravajava.util.Paging object as the pa
 
 Testing
 =======
-The test suite which comes with JavaStrava (everything inside the test package) is attempting to be a complete exercise of the whole API and all the options that come with it. 
+The test suite which comes with JavaStrava (everything inside the test package) is attempting to be a complete exercise of the whole API and all the options that come with it. You're encouraged to use it. To configure the tests, rename the sample-test-config.properties file to test-config.properties and set all the relevant values (they're documented). You might need to set up some additional accounts on Strava (and email accounts on, say, gmail) to help with that.
 
 Leaderboards
 ============
