@@ -16,10 +16,10 @@ public class StravaStreamSeriesDownsamplingTypeTest {
 	public void testGetId() {
 		for (StravaStreamSeriesDownsamplingType type : StravaStreamSeriesDownsamplingType.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaStreamSeriesDownsamplingType.create(type.getId()));
+			assertEquals(type, StravaStreamSeriesDownsamplingType.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaStreamSeriesDownsamplingType type : StravaStreamSeriesDownsamplingType.values()) {

@@ -16,10 +16,10 @@ public class StravaFrameTypeTest {
 	public void testGetId() {
 		for (StravaFrameType type : StravaFrameType.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaFrameType.create(type.getId()));
+			assertEquals(type, StravaFrameType.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaFrameType type : StravaFrameType.values()) {

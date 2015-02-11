@@ -17,5 +17,5 @@ public class StreamTypeSerializerTest extends EnumSerializerTest<StravaStreamTyp
 	public Class<StravaStreamType> getClassUnderTest() {
 		return StravaStreamType.class;
 	}
-	
+
 }

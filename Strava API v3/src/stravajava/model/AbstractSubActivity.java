@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class AbstractSubActivity extends AbstractActivity {
 	private Activity activity;

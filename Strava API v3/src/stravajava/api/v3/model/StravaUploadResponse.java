@@ -1,12 +1,16 @@
 package stravajava.api.v3.model;
 
-import stravajava.api.v3.service.UploadServices;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import stravajava.api.v3.service.UploadServices;
 
 /**
- * <p>Response to an {@link UploadServices#upload(stravajava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, stravajava.api.v3.service.athlete.UploadDataType, String, java.io.File) upload request}</p>
+ * <p>
+ * Response to an
+ * {@link UploadServices#upload(stravajava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, stravajava.api.v3.service.athlete.UploadDataType, String, java.io.File)
+ * upload request}
+ * </p>
  * 
  * @author Dan Shannon
  *
@@ -21,11 +25,15 @@ public class StravaUploadResponse {
 	private Integer id;
 	private String externalId;
 	/**
-	 * <p>if there was an error during processing, this will contain a human a human readable error message that may include escaped HTML</p>
+	 * <p>
+	 * if there was an error during processing, this will contain a human a human readable error message that may include escaped HTML
+	 * </p>
 	 */
 	private String error;
 	/**
-	 * <p>describes the error, possible values:</p>
+	 * <p>
+	 * describes the error, possible values:
+	 * </p>
 	 * <ul>
 	 * <li>Your activity is still being processed.</li>
 	 * <li>The created activity has been deleted.</li>

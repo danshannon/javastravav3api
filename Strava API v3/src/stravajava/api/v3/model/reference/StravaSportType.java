@@ -1,32 +1,26 @@
 package stravajava.api.v3.model.reference;
 
-
-
 /**
  * @author Dan Shannon
  *
  */
 public enum StravaSportType {
-	CYCLING("cycling","Cycling"),
-	RUNNING("running","Running"),
-	TRIATHLON("triathlon","Triathlon"),
-	OTHER("other","Other"),
-	UNKNOWN("UNKNOWN","Unknown");
-	
+	CYCLING("cycling", "Cycling"), RUNNING("running", "Running"), TRIATHLON("triathlon", "Triathlon"), OTHER("other", "Other"), UNKNOWN("UNKNOWN", "Unknown");
+
 	private String id;
 	private String description;
-	
+
 	private StravaSportType(String id, String description) {
 		this.id = id;
 		this.description = description;
 	}
-	
-	//@JsonValue
+
+	// @JsonValue
 	public String getValue() {
 		return this.id;
 	}
-	
-	//@JsonCreator
+
+	// @JsonCreator
 	public static StravaSportType create(String id) {
 		StravaSportType[] sportTypes = StravaSportType.values();
 		for (StravaSportType sportType : sportTypes) {
@@ -58,6 +52,5 @@ public enum StravaSportType {
 	public String toString() {
 		return this.id;
 	}
-	
-	
+
 }

@@ -15,14 +15,13 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class LeaderboardDateRangeSerializer implements JsonSerializer<StravaLeaderboardDateRange>, JsonDeserializer<StravaLeaderboardDateRange>{
+public class LeaderboardDateRangeSerializer implements JsonSerializer<StravaLeaderboardDateRange>, JsonDeserializer<StravaLeaderboardDateRange> {
 
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaLeaderboardDateRange deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public StravaLeaderboardDateRange deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		return StravaLeaderboardDateRange.create(json.getAsString());
 	}
 

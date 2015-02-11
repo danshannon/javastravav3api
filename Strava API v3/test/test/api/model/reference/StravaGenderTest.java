@@ -16,10 +16,10 @@ public class StravaGenderTest {
 	public void testGetId() {
 		for (StravaGender type : StravaGender.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaGender.create(type.getId()));
+			assertEquals(type, StravaGender.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaGender type : StravaGender.values()) {

@@ -15,14 +15,13 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class StreamResolutionTypeSerializer implements JsonSerializer<StravaStreamResolutionType>, JsonDeserializer<StravaStreamResolutionType>{
+public class StreamResolutionTypeSerializer implements JsonSerializer<StravaStreamResolutionType>, JsonDeserializer<StravaStreamResolutionType> {
 
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaStreamResolutionType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public StravaStreamResolutionType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		return StravaStreamResolutionType.create(json.getAsString());
 	}
 

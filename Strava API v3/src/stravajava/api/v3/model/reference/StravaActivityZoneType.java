@@ -1,28 +1,25 @@
 package stravajava.api.v3.model.reference;
 
-
 /**
  * @author Dan Shannon
  *
  */
 public enum StravaActivityZoneType {
-	HEARTRATE("heartrate","Heartrate"),
-	POWER("power","Power"),
-	UNKNOWN("UNKNOWN","Unknown");
-	
+	HEARTRATE("heartrate", "Heartrate"), POWER("power", "Power"), UNKNOWN("UNKNOWN", "Unknown");
+
 	private String id;
 	private String description;
-	
+
 	private StravaActivityZoneType(String id, String description) {
 		this.id = id;
 		this.description = description;
 	}
-	
+
 	// For use as Jackson @JsonValue
 	public String getValue() {
 		return this.id;
 	}
-	
+
 	// For use as Jackson @JsonCreator
 	public static StravaActivityZoneType create(String id) {
 		StravaActivityZoneType[] types = StravaActivityZoneType.values();

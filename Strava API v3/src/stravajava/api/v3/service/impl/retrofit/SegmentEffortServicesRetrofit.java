@@ -12,7 +12,7 @@ import stravajava.api.v3.service.exception.NotFoundException;
  */
 public interface SegmentEffortServicesRetrofit {
 	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
-	
+
 	/**
 	 * @see stravajava.api.v3.service.SegmentEffortServices#getSegmentEffort(java.lang.Long)
 	 */

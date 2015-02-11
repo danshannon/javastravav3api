@@ -16,10 +16,10 @@ public class StravaAgeGroupTest {
 	public void testGetId() {
 		for (StravaAgeGroup type : StravaAgeGroup.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaAgeGroup.create(type.getId()));
+			assertEquals(type, StravaAgeGroup.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaAgeGroup type : StravaAgeGroup.values()) {

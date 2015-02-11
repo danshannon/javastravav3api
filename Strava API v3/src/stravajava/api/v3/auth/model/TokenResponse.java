@@ -4,11 +4,14 @@ import lombok.Data;
 import stravajava.api.v3.model.StravaAthlete;
 
 /**
- * <p>The TokenResponse is returned by authorisation services; it contains the access token which is then used for authentication purposes for all other Strava API access</p>
+ * <p>
+ * The TokenResponse is returned by authorisation services; it contains the access token which is then used for authentication purposes for all other Strava API
+ * access
+ * </p>
  * 
  * @author Dan Shannon
  */
-@Data 
+@Data
 public class TokenResponse {
 	private String accessToken;
 	private String tokenType;

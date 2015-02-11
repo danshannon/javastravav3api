@@ -17,10 +17,10 @@ public class StravaActivityZoneTypeTest {
 	public void testGetId() {
 		for (StravaActivityZoneType type : StravaActivityZoneType.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaActivityZoneType.create(type.getId()));
+			assertEquals(type, StravaActivityZoneType.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaActivityZoneType type : StravaActivityZoneType.values()) {

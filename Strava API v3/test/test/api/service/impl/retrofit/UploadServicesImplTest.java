@@ -26,16 +26,17 @@ public class UploadServicesImplTest {
 
 	/**
 	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#implementation(java.lang.String)}.
-	 * @throws UnauthorizedException 
+	 * 
+	 * @throws UnauthorizedException
 	 */
 	@Test
 	public void testImplementation_validToken() throws UnauthorizedException {
 		UploadServices service = UploadServicesImpl.implementation(TestUtils.getValidToken());
-		assertNotNull("Didn't get a service implementation using a valid token",service);
+		assertNotNull("Didn't get a service implementation using a valid token", service);
 		StravaUploadResponse response = service.checkUploadStatus(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
 		assertNotNull(response);
 	}
-	
+
 	@Test
 	public void testImplementation_invalidToken() {
 		try {
@@ -59,22 +60,22 @@ public class UploadServicesImplTest {
 		}
 		fail("Got a service implementation with a valid token!");
 	}
-	
+
 	@Test
 	public void testImplementation_implementationIsCached() {
 		String token = TestUtils.getValidToken();
 		UploadServices service = UploadServicesImpl.implementation(token);
 		UploadServices service2 = UploadServicesImpl.implementation(token);
-		assertEquals(service,service2);
+		assertEquals(service, service2);
 	}
-	
+
 	@Test
 	public void testImplementation_differentImplementationIsNotCached() {
 		UploadServices service = UploadServicesImpl.implementation(TestUtils.getValidToken());
 		UploadServices service2 = UploadServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 		assertFalse(service == service2);
 	}
-	
+
 	@Test
 	public void testUpload_valid() throws InterruptedException, UnauthorizedException, NotFoundException, BadRequestException {
 		UploadServices service = getService();
@@ -82,7 +83,7 @@ public class UploadServicesImplTest {
 		StravaUploadResponse response = service.upload(StravaActivityType.RIDE, "UploadServicesImplTest", null, null, null, "gpx", "ABC", file);
 		waitForCompletionAndDelete(response);
 	}
-	
+
 	private void waitForCompletionAndDelete(final StravaUploadResponse response) {
 		UploadServices service = getService();
 		Integer id = response.getId();
@@ -125,12 +126,13 @@ public class UploadServicesImplTest {
 		UploadServices service = getServiceWithoutWriteAccess();
 		File file = new File("hyperdrive.gpx");
 		try {
-			service.upload(StravaActivityType.RIDE, "UploadServicesImplTest.testUpoad_noWriteAccess", null,Boolean.TRUE, null, "gpx", "testUpload_noWriteAccess", file);
+			service.upload(StravaActivityType.RIDE, "UploadServicesImplTest.testUpoad_noWriteAccess", null, Boolean.TRUE, null, "gpx",
+					"testUpload_noWriteAccess", file);
 		} catch (UnauthorizedException e) {
 			// Expected
 			return;
 		}
-		
+
 		// Fail
 		fail("Uploaded an activity without write access!");
 
@@ -140,10 +142,11 @@ public class UploadServicesImplTest {
 	public void testUpload_badActivityType() {
 		UploadServices service = getService();
 		File file = new File("hyperdrive.gpx");
-		StravaUploadResponse response = service.upload(StravaActivityType.UNKNOWN, "UploadServicesImplTest,testUpload_badActivityType", null, null, null, "gpx", "ABC", file);
+		StravaUploadResponse response = service.upload(StravaActivityType.UNKNOWN, "UploadServicesImplTest,testUpload_badActivityType", null, null, null,
+				"gpx", "ABC", file);
 		waitForCompletionAndDelete(response);
 	}
-	
+
 	@Test
 	public void testUpload_badDataType() {
 		UploadServices service = getService();
@@ -156,15 +159,16 @@ public class UploadServicesImplTest {
 		}
 		fail("Uploaded a file with a bad data type!");
 	}
-	
+
 	@Test
 	public void testUpload_noName() throws UnauthorizedException, BadRequestException {
 		UploadServices service = getService();
 		File file = new File("hyperdrive.gpx");
-		StravaUploadResponse response = service.upload(StravaActivityType.RIDE, null, "UploadServicesImplTest.testUpload_noName", null, null, "gpx", "ABC", file);
+		StravaUploadResponse response = service.upload(StravaActivityType.RIDE, null, "UploadServicesImplTest.testUpload_noName", null, null, "gpx", "ABC",
+				file);
 		waitForCompletionAndDelete(response);
 	}
-	
+
 	@Test
 	public void testUpload_noFile() {
 		UploadServices service = getService();
@@ -177,7 +181,7 @@ public class UploadServicesImplTest {
 		}
 		fail("Uploaded a file with no actual file!");
 	}
-	
+
 	@Test
 	public void testUpload_badFileContent() {
 		UploadServices service = getService();
@@ -190,18 +194,18 @@ public class UploadServicesImplTest {
 		}
 		fail("Uploaded a file with an invalid file!");
 	}
-	
+
 	@Test
 	public void testCheckUploadStatus() throws UnauthorizedException {
 		UploadServices service = getService();
 		StravaUploadResponse response = service.checkUploadStatus(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
 		assertNotNull(response);
 	}
-	
+
 	private UploadServices getService() {
 		return UploadServicesImpl.implementation(TestUtils.getValidToken());
 	}
-	
+
 	private UploadServices getServiceWithoutWriteAccess() {
 		return UploadServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 	}

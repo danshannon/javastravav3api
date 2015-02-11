@@ -15,18 +15,17 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class FrameTypeSerializer implements JsonSerializer<StravaFrameType>, JsonDeserializer<StravaFrameType>{
+public class FrameTypeSerializer implements JsonSerializer<StravaFrameType>, JsonDeserializer<StravaFrameType> {
 
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaFrameType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public StravaFrameType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		try {
 			return StravaFrameType.create(json.getAsInt());
 		} catch (NumberFormatException e) {
-			throw new JsonParseException("Could not parse '" + json.getAsString() + "' as an integer",e);
+			throw new JsonParseException("Could not parse '" + json.getAsString() + "' as an integer", e);
 		}
 	}
 

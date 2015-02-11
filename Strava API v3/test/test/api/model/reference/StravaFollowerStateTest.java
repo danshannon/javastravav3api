@@ -16,10 +16,10 @@ public class StravaFollowerStateTest {
 	public void testGetId() {
 		for (StravaFollowerState type : StravaFollowerState.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaFollowerState.create(type.getId()));
+			assertEquals(type, StravaFollowerState.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaFollowerState type : StravaFollowerState.values()) {

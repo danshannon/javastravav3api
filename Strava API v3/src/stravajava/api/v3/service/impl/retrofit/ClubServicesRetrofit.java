@@ -43,14 +43,15 @@ public interface ClubServicesRetrofit {
 	 * @see stravajava.api.v3.service.ClubServices#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/clubs/{id}/activities")
-	public StravaActivity[] listRecentClubActivities(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
+	public StravaActivity[] listRecentClubActivities(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage)
+			throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#joinClub(java.lang.Integer)
 	 */
 	@POST("/clubs/{id}/join")
-	public StravaClubMembershipResponse join(@Path("id") Integer id) throws NotFoundException;		
-	
+	public StravaClubMembershipResponse join(@Path("id") Integer id) throws NotFoundException;
+
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#leaveClub(java.lang.Integer)
 	 */

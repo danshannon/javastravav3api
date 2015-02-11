@@ -15,14 +15,14 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class StreamSeriesDownsamplingTypeSerializer implements JsonSerializer<StravaStreamSeriesDownsamplingType>, JsonDeserializer<StravaStreamSeriesDownsamplingType>{
+public class StreamSeriesDownsamplingTypeSerializer implements JsonSerializer<StravaStreamSeriesDownsamplingType>,
+		JsonDeserializer<StravaStreamSeriesDownsamplingType> {
 
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaStreamSeriesDownsamplingType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public StravaStreamSeriesDownsamplingType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		return StravaStreamSeriesDownsamplingType.create(json.getAsString());
 	}
 

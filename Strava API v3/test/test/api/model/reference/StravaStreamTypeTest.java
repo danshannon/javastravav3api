@@ -16,10 +16,10 @@ public class StravaStreamTypeTest {
 	public void testGetId() {
 		for (StravaStreamType type : StravaStreamType.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaStreamType.create(type.getId()));
+			assertEquals(type, StravaStreamType.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaStreamType type : StravaStreamType.values()) {

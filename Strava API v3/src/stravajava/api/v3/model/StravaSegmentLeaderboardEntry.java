@@ -2,10 +2,10 @@ package stravajava.api.v3.model;
 
 import java.util.Date;
 
-import stravajava.api.v3.model.reference.StravaGender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import stravajava.api.v3.model.reference.StravaGender;
 
 /**
  * A single entry in a {@link StravaSegmentLeaderboard}

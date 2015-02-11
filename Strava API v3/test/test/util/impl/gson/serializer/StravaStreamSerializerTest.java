@@ -24,7 +24,8 @@ public class StravaStreamSerializerTest extends SerializerTest<StravaStream> {
 	public void testRoundTrip() throws UnauthorizedException, JsonSerialisationException {
 		// Get a stream
 		StreamServices service = StreamServicesImpl.implementation(TestUtils.getValidToken());
-		List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, StravaStreamResolutionType.LOW, StravaStreamSeriesDownsamplingType.DISTANCE);
+		List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, StravaStreamResolutionType.LOW,
+				StravaStreamSeriesDownsamplingType.DISTANCE);
 		assertNotNull(streams);
 		assertTrue(streams.size() > 0);
 		for (StravaStream stream : streams) {
@@ -36,14 +37,15 @@ public class StravaStreamSerializerTest extends SerializerTest<StravaStream> {
 			assertNotNull(returned);
 			assertTrue(returned.equals(stream));
 		}
-		
+
 	}
-	
+
 	@Override
 	public void testDeserialiseInputStream() throws JsonSerialisationException {
 		// Get a stream
 		StreamServices service = StreamServicesImpl.implementation(TestUtils.getValidToken());
-		List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, StravaStreamResolutionType.LOW, StravaStreamSeriesDownsamplingType.DISTANCE);
+		List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, StravaStreamResolutionType.LOW,
+				StravaStreamSeriesDownsamplingType.DISTANCE);
 		assertNotNull(streams);
 		assertTrue(streams.size() > 0);
 		for (StravaStream stream : streams) {
@@ -56,7 +58,7 @@ public class StravaStreamSerializerTest extends SerializerTest<StravaStream> {
 			assertNotNull(returned);
 			assertTrue(returned.equals(stream));
 		}
-		
+
 	}
 
 	@Override

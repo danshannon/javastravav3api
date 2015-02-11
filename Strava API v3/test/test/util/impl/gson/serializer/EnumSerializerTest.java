@@ -21,7 +21,7 @@ public abstract class EnumSerializerTest<T extends Enum<T>> extends SerializerTe
 			assertEquals(value, deserialized);
 		}
 	}
-	
+
 	protected abstract T getUnknownValue();
 
 	@Test
@@ -30,7 +30,7 @@ public abstract class EnumSerializerTest<T extends Enum<T>> extends SerializerTe
 		T deserialized = this.util.deserialise(serialized, getClassUnderTest());
 		assertEquals(deserialized, getUnknownValue());
 	}
-	
+
 	@Test
 	public void testDeserializeUnexpectedValue() throws JsonSerialisationException {
 		String serialized = "-999";
@@ -47,7 +47,7 @@ public abstract class EnumSerializerTest<T extends Enum<T>> extends SerializerTe
 			InputStream is = new ByteArrayInputStream(text.getBytes());
 			T deserialised = this.util.deserialise(is, getClassUnderTest());
 			assertEquals(deserialised, value);
-		}		
+		}
 	}
-	
+
 }

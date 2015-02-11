@@ -16,10 +16,10 @@ public class StravaActivityTypeTest {
 	public void testGetId() {
 		for (StravaActivityType type : StravaActivityType.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaActivityType.create(type.getId()));
+			assertEquals(type, StravaActivityType.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaActivityType type : StravaActivityType.values()) {

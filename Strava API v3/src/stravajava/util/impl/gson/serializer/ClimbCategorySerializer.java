@@ -15,14 +15,13 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class ClimbCategorySerializer implements JsonSerializer<StravaClimbCategory>, JsonDeserializer<StravaClimbCategory>{
+public class ClimbCategorySerializer implements JsonSerializer<StravaClimbCategory>, JsonDeserializer<StravaClimbCategory> {
 
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaClimbCategory deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public StravaClimbCategory deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		try {
 			return StravaClimbCategory.create(json.getAsInt());
 		} catch (NumberFormatException e) {

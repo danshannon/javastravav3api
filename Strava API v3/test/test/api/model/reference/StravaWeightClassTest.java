@@ -20,16 +20,16 @@ public class StravaWeightClassTest {
 		for (StravaMeasurementMethod method : StravaMeasurementMethod.values()) {
 			List<StravaWeightClass> classes = StravaWeightClass.listByMeasurementMethod(method);
 			for (StravaWeightClass weightClass : classes) {
-				assertEquals(method,weightClass.getMeasurementMethod());
+				assertEquals(method, weightClass.getMeasurementMethod());
 			}
 		}
 	}
-	
+
 	@Test
 	public void testGetId() {
 		for (StravaWeightClass weightClass : StravaWeightClass.values()) {
 			assertNotNull(weightClass.getId());
-			assertEquals(weightClass,StravaWeightClass.create(weightClass.getId()));
+			assertEquals(weightClass, StravaWeightClass.create(weightClass.getId()));
 		}
 	}
 

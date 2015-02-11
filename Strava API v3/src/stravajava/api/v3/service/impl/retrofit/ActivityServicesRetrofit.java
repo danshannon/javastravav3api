@@ -23,9 +23,7 @@ import stravajava.api.v3.service.exception.NotFoundException;
  */
 public interface ActivityServicesRetrofit {
 	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
-	
 
-	
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
@@ -37,24 +35,26 @@ public interface ActivityServicesRetrofit {
 	 */
 	@POST("/activities")
 	public StravaActivity createManualActivity(@Body StravaActivity activity) throws BadRequestException;
-	
+
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#updateActivity(stravajava.api.v3.model.StravaActivity)
 	 */
 	@PUT("/activities/{id}")
 	public StravaActivity updateActivity(@Path("id") Integer id, @Body StravaActivity activity) throws NotFoundException;
-	
+
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#deleteActivity(java.lang.Integer)
 	 */
 	@DELETE("/activities/{id}")
 	public StravaActivity deleteActivity(@Path("id") Integer id) throws NotFoundException;
-	
+
 	/**
-	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer,
+	 *      java.lang.Integer)
 	 */
 	@GET("/athlete/activities")
-	public StravaActivity[] listAuthenticatedAthleteActivities(@Query("before") Integer before, @Query("after") Integer after, @Query("page") Integer page, @Query("per_page") Integer perPage);
+	public StravaActivity[] listAuthenticatedAthleteActivities(@Query("before") Integer before, @Query("after") Integer after, @Query("page") Integer page,
+			@Query("per_page") Integer perPage);
 
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#listFriendsActivities(java.lang.Integer, java.lang.Integer)
@@ -78,26 +78,27 @@ public interface ActivityServicesRetrofit {
 	 * @see stravajava.api.v3.service.ActivityServices#listActivityComments(java.lang.Integer, java.lang.Boolean, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/activities/{id}/comments")
-	public StravaComment[] listActivityComments(@Path("id") Integer id, @Query("markdown") Boolean markdown, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
+	public StravaComment[] listActivityComments(@Path("id") Integer id, @Query("markdown") Boolean markdown, @Query("page") Integer page,
+			@Query("per_page") Integer perPage) throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#listActivityKudoers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/activities/{id}/kudos")
-	public StravaAthlete[] listActivityKudoers(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page")Integer perPage) throws NotFoundException;
+	public StravaAthlete[] listActivityKudoers(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage)
+			throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#listActivityPhotos(java.lang.Integer)
 	 */
 	@GET("/activities/{id}/photos")
 	public StravaPhoto[] listActivityPhotos(@Path("id") Integer id) throws NotFoundException;
-	
+
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#listRelatedActivities(java.lang.Integer, stravajava.util.Paging)
 	 */
 	@GET("/activities/{id}/related")
-	public StravaActivity[] listRelatedActivities(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
+	public StravaActivity[] listRelatedActivities(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage)
+			throws NotFoundException;
 
 }
-
-

@@ -72,8 +72,8 @@ import com.google.gson.internal.bind.DateTypeAdapter;
  * 
  */
 public class JsonUtilImpl implements JsonUtil {
-	private final GsonBuilder	gsonBuilder;
-	private final Gson		gson;
+	private final GsonBuilder gsonBuilder;
+	private final Gson gson;
 
 	public JsonUtilImpl() {
 		this.gsonBuilder = new GsonBuilder();
@@ -106,7 +106,6 @@ public class JsonUtilImpl implements JsonUtil {
 		this.gsonBuilder.registerTypeAdapter(StravaWeightClass.class, new WeightClassSerializer());
 		this.gsonBuilder.registerTypeAdapter(StravaWorkoutType.class, new WorkoutTypeSerializer());
 
-		
 		this.gson = this.gsonBuilder.create();
 	}
 
@@ -140,7 +139,7 @@ public class JsonUtilImpl implements JsonUtil {
 	public <T> String serialise(final T object) throws JsonSerialisationException {
 		return this.gson.toJson(object);
 	}
-	
+
 	public Gson getGson() {
 		return this.gson;
 	}

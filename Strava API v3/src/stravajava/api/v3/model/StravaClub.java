@@ -1,14 +1,17 @@
 package stravajava.api.v3.model;
 
-import stravajava.api.v3.model.reference.StravaClubType;
-import stravajava.api.v3.model.reference.StravaResourceState;
-import stravajava.api.v3.model.reference.StravaSportType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import stravajava.api.v3.model.reference.StravaClubType;
+import stravajava.api.v3.model.reference.StravaResourceState;
+import stravajava.api.v3.model.reference.StravaSportType;
 
 /**
- * <p>Clubs represent groups of athletes on Strava. They can be public or private. Only members of private clubs can access their details. The object is returned in summary or detailed {@link StravaResourceState representations}.</p>
+ * <p>
+ * Clubs represent groups of athletes on Strava. They can be public or private. Only members of private clubs can access their details. The object is returned
+ * in summary or detailed {@link StravaResourceState representations}.
+ * </p>
  * 
  * @author Dan Shannon
  *

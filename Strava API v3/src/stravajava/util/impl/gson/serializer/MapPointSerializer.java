@@ -20,8 +20,7 @@ import com.google.gson.JsonSerializer;
 public class MapPointSerializer implements JsonDeserializer<StravaMapPoint>, JsonSerializer<StravaMapPoint> {
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
-	 *      com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
 	@Override
 	public JsonElement serialize(StravaMapPoint point, Type type, JsonSerializationContext context) {
@@ -32,8 +31,7 @@ public class MapPointSerializer implements JsonDeserializer<StravaMapPoint>, Jso
 	}
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
-	 *      com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
 	public StravaMapPoint deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException {

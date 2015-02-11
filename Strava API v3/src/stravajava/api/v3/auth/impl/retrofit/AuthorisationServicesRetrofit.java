@@ -16,13 +16,11 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface AuthorisationServicesRetrofit {
-    /**
-     * @see stravajava.api.v3.auth.AuthorisationServices#tokenExchange(java.lang.Integer,
-     *      java.lang.String, java.lang.String)
-     */
-    @FormUrlEncoded
-    @POST("/oauth/token")
-    public TokenResponse tokenExchange(@Field("client_id") final Integer clientId,
-	    @Field("client_secret") final String clientSecret, @Field("code") final String code)
-	    throws BadRequestException, UnauthorizedException;
+	/**
+	 * @see stravajava.api.v3.auth.AuthorisationServices#tokenExchange(java.lang.Integer, java.lang.String, java.lang.String)
+	 */
+	@FormUrlEncoded
+	@POST("/oauth/token")
+	public TokenResponse tokenExchange(@Field("client_id") final Integer clientId, @Field("client_secret") final String clientSecret,
+			@Field("code") final String code) throws BadRequestException, UnauthorizedException;
 }

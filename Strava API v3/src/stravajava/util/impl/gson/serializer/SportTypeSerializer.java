@@ -15,14 +15,13 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class SportTypeSerializer implements JsonSerializer<StravaSportType>, JsonDeserializer<StravaSportType>{
+public class SportTypeSerializer implements JsonSerializer<StravaSportType>, JsonDeserializer<StravaSportType> {
 
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaSportType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public StravaSportType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		return StravaSportType.create(json.getAsString());
 	}
 

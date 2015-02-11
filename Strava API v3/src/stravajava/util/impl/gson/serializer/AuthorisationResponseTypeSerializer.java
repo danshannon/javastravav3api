@@ -15,14 +15,13 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class AuthorisationResponseTypeSerializer implements JsonSerializer<AuthorisationResponseType>, JsonDeserializer<AuthorisationResponseType>{
-	
+public class AuthorisationResponseTypeSerializer implements JsonSerializer<AuthorisationResponseType>, JsonDeserializer<AuthorisationResponseType> {
+
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public AuthorisationResponseType deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public AuthorisationResponseType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		return AuthorisationResponseType.create(json.getAsString());
 	}
 

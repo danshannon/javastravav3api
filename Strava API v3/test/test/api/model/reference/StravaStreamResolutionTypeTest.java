@@ -16,10 +16,10 @@ public class StravaStreamResolutionTypeTest {
 	public void testGetId() {
 		for (StravaStreamResolutionType type : StravaStreamResolutionType.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaStreamResolutionType.create(type.getId()));
+			assertEquals(type, StravaStreamResolutionType.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaStreamResolutionType type : StravaStreamResolutionType.values()) {

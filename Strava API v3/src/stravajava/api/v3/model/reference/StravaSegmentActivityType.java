@@ -1,29 +1,26 @@
 package stravajava.api.v3.model.reference;
 
-
 /**
  * @author dshannon
  *
  */
 public enum StravaSegmentActivityType {
-	RIDE("Ride","Ride"),
-	RUN("Run","Run"),
-	UNKNOWN("UNKNOWN","Unknown");
-	
+	RIDE("Ride", "Ride"), RUN("Run", "Run"), UNKNOWN("UNKNOWN", "Unknown");
+
 	private String id;
 	private String description;
-	
+
 	private StravaSegmentActivityType(String id, String description) {
 		this.id = id;
 		this.description = description;
 	}
-	
-	//@JsonValue
+
+	// @JsonValue
 	public String getValue() {
 		return this.id;
 	}
-	
-	//@JsonCreator
+
+	// @JsonCreator
 	public static StravaSegmentActivityType create(String id) {
 		StravaSegmentActivityType[] activityTypes = StravaSegmentActivityType.values();
 		for (StravaSegmentActivityType activityType : activityTypes) {
@@ -55,6 +52,5 @@ public enum StravaSegmentActivityType {
 	public String getDescription() {
 		return this.description;
 	}
-	
-	
+
 }

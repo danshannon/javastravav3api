@@ -16,10 +16,10 @@ public class StravaPhotoTypeTest {
 	public void testGetId() {
 		for (StravaPhotoType type : StravaPhotoType.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaPhotoType.create(type.getId()));
+			assertEquals(type, StravaPhotoType.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaPhotoType type : StravaPhotoType.values()) {

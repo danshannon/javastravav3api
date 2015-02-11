@@ -3,7 +3,6 @@ package test.api.model;
 import stravajava.api.v3.model.StravaLap;
 import test.utils.BeanTest;
 
-
 /**
  * @author dshannon
  *

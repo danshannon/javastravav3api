@@ -22,13 +22,18 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 		super(token);
 		this.restService = Retrofit.retrofit(StreamServicesRetrofit.class, token, StreamServicesRetrofit.LOG_LEVEL);
 	}
-	
+
 	/**
-	 * <p>Returns an implementation of {@link StreamServices segment effort services}</p>
+	 * <p>
+	 * Returns an implementation of {@link StreamServices segment effort services}
+	 * </p>
 	 * 
-	 * <p>Instances are cached so that if 2 requests are made for the same token, the same instance is returned</p>
+	 * <p>
+	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
+	 * </p>
 	 * 
-	 * @param token The Strava access token to be used in requests to the Strava API
+	 * @param token
+	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the stream services
 	 */
 	public static StreamServices implementation(final String token) {
@@ -38,24 +43,27 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
-			
+
 		}
 		return restService;
 	}
-	
-	private static HashMap<String,StreamServices> restServices = new HashMap<String,StreamServices>();
-	
+
+	private static HashMap<String, StreamServices> restServices = new HashMap<String, StreamServices>();
+
 	private final StreamServicesRetrofit restService;
 
 	/**
-	 * @see stravajava.api.v3.service.StreamServices#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
+	 * @see stravajava.api.v3.service.StreamServices#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[],
+	 *      stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
 	@Override
 	public List<StravaStream> getActivityStreams(final Integer id, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
-	    StravaStreamType[] typesToGet = types;
-		validateArguments(resolution,seriesType,typesToGet);
-		if (typesToGet == null || typesToGet.length == 0) { typesToGet = getAllStreamTypes(); }
+		StravaStreamType[] typesToGet = types;
+		validateArguments(resolution, seriesType, typesToGet);
+		if (typesToGet == null || typesToGet.length == 0) {
+			typesToGet = getAllStreamTypes();
+		}
 		try {
 			return Arrays.asList(this.restService.getActivityStreams(id, typeString(typesToGet), resolution, seriesType));
 		} catch (NotFoundException e) {
@@ -92,7 +100,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 * @return
 	 */
 	private String typeString(final StravaStreamType[] types) {
-		if (types.length == 0) { 
+		if (types.length == 0) {
 			return null;
 		}
 		if (types.length == 1) {
@@ -106,14 +114,17 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.StreamServices#getEffortStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
+	 * @see stravajava.api.v3.service.StreamServices#getEffortStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[],
+	 *      stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
 	@Override
-	public List<StravaStream> getEffortStreams(final Long id, final StravaStreamResolutionType resolution,
-			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
-		validateArguments(resolution,seriesType,types);
+	public List<StravaStream> getEffortStreams(final Long id, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaStreamType... types) {
+		validateArguments(resolution, seriesType, types);
 		StravaStreamType[] typesToGet = types;
-		if (types == null || types.length == 0) { typesToGet = getAllStreamTypes(); }
+		if (types == null || types.length == 0) {
+			typesToGet = getAllStreamTypes();
+		}
 		try {
 			return Arrays.asList(this.restService.getEffortStreams(id, typeString(typesToGet), resolution, seriesType));
 		} catch (NotFoundException e) {
@@ -124,17 +135,20 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.StreamServices#getSegmentStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
+	 * @see stravajava.api.v3.service.StreamServices#getSegmentStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[],
+	 *      stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
 	@Override
 	public List<StravaStream> getSegmentStreams(final Integer id, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
-		validateArguments(resolution,seriesType,types);
+		validateArguments(resolution, seriesType, types);
 		StravaStreamType[] typesToGet = types;
 		if (seriesType == StravaStreamSeriesDownsamplingType.TIME) {
 			throw new IllegalArgumentException("Cannot downsample a Segment by TIME");
 		}
-		if (types == null || types.length == 0) { typesToGet = getAllStreamTypes(); }
+		if (types == null || types.length == 0) {
+			typesToGet = getAllStreamTypes();
+		}
 		try {
 			return Arrays.asList(this.restService.getSegmentStreams(id, typeString(typesToGet), resolution, seriesType));
 		} catch (NotFoundException e) {

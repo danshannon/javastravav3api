@@ -6,7 +6,7 @@ import test.utils.equalsverifier.EqualsVerifierUtil;
 import test.utils.meanbean.MeanBean;
 
 public abstract class BeanTest<T> {
-	protected abstract Class<T> getClassUnderTest() ;
+	protected abstract Class<T> getClassUnderTest();
 
 	@Test
 	public void testGettersAndSetters() {

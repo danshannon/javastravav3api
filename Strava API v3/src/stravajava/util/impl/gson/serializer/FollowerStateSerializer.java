@@ -15,14 +15,13 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class FollowerStateSerializer implements JsonSerializer<StravaFollowerState>, JsonDeserializer<StravaFollowerState>{
+public class FollowerStateSerializer implements JsonSerializer<StravaFollowerState>, JsonDeserializer<StravaFollowerState> {
 
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaFollowerState deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public StravaFollowerState deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		return StravaFollowerState.create(json.getAsString());
 	}
 

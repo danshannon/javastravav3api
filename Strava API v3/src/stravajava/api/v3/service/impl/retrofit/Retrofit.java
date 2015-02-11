@@ -14,22 +14,15 @@ public class Retrofit {
 	private Retrofit() {
 		// You can't have one of these
 	}
-	
+
 	public static <T> T retrofit(final Class<T> class1, final String token, final RestAdapter.LogLevel logLevel) {
-		return new RestAdapter.Builder()
-				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-				.setLogLevel(logLevel)
-				.setEndpoint(Strava.ENDPOINT)
+		return new RestAdapter.Builder().setConverter(new GsonConverter(new JsonUtilImpl().getGson())).setLogLevel(logLevel).setEndpoint(Strava.ENDPOINT)
 				.setRequestInterceptor(new RequestInterceptor() {
 					@Override
 					public void intercept(RequestFacade request) {
 						request.addHeader("Authorization", "Bearer " + token);
 					}
-				})
-				.setErrorHandler(new RetrofitErrorHandler())
-				.build()
-				.create(class1);
+				}).setErrorHandler(new RetrofitErrorHandler()).build().create(class1);
 	}
-	
 
 }

@@ -1,9 +1,9 @@
 package stravajava.api.v3.model;
 
-import stravajava.api.v3.model.reference.StravaClimbCategory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import stravajava.api.v3.model.reference.StravaClimbCategory;
 
 /**
  * Summary of segment returned by the segment explorer

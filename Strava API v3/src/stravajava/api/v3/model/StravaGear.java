@@ -1,15 +1,19 @@
 package stravajava.api.v3.model;
 
-import stravajava.api.v3.model.reference.StravaFrameType;
-import stravajava.api.v3.model.reference.StravaResourceState;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import stravajava.api.v3.model.reference.StravaFrameType;
+import stravajava.api.v3.model.reference.StravaResourceState;
 
 /**
- * <p>StravaGear represents equipment used during an {@link StravaActivity}.</p>
+ * <p>
+ * StravaGear represents equipment used during an {@link StravaActivity}.
+ * </p>
  * 
- * <p>The object is returned in summary or detailed {@link StravaResourceState representations}.</p>
+ * <p>
+ * The object is returned in summary or detailed {@link StravaResourceState representations}.
+ * </p>
  * 
  * @author Dan Shannon
  *

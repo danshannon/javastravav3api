@@ -15,27 +15,34 @@ import stravajava.api.v3.service.impl.retrofit.SegmentEffortServicesImpl;
 import test.utils.TestUtils;
 
 /**
- * <p>Unit tests for {@link SegmentEffortServicesImpl}</p>
+ * <p>
+ * Unit tests for {@link SegmentEffortServicesImpl}
+ * </p>
  * 
  * @author Dan Shannon
  *
  */
 public class SegmentEffortServicesImplTest {
 	private SegmentEffortServices segmentEffortService;
-	
+
 	/**
-	 * <p>Test we get a {@link SegmentEffortServicesImpl service implementation} successfully with a valid token</p>
+	 * <p>
+	 * Test we get a {@link SegmentEffortServicesImpl service implementation} successfully with a valid token
+	 * </p>
 	 * 
-	 * @throws UnauthorizedException If token is not valid
+	 * @throws UnauthorizedException
+	 *             If token is not valid
 	 */
 	@Test
 	public void testImplementation_validToken() {
 		SegmentEffortServices service = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
 		assertNotNull("Got a NULL service for a valid token", service);
 	}
-	
+
 	/**
-	 * <p>Test that we don't get a {@link SegmentEffortServicesImpl service implementation} if the token isn't valid</p>
+	 * <p>
+	 * Test that we don't get a {@link SegmentEffortServicesImpl service implementation} if the token isn't valid
+	 * </p>
 	 */
 	@Test
 	public void testImplementation_invalidToken() {
@@ -51,7 +58,9 @@ public class SegmentEffortServicesImplTest {
 	}
 
 	/**
-	 * <p>Test that we don't get a {@link SegmentEffortServicesImpl service implementation} if the token has been revoked by the user</p>
+	 * <p>
+	 * Test that we don't get a {@link SegmentEffortServicesImpl service implementation} if the token has been revoked by the user
+	 * </p>
 	 */
 	@Test
 	public void testImplementation_revokedToken() {
@@ -64,21 +73,28 @@ public class SegmentEffortServicesImplTest {
 		}
 		fail("Revoked a token, but it's still useful");
 	}
-	
+
 	/**
-	 * <p>Test that when we ask for a {@link SegmentEffortServicesImpl service implementation} for a second time, we get the SAME ONE as the first time (i.e. the caching strategy is working)</p>
+	 * <p>
+	 * Test that when we ask for a {@link SegmentEffortServicesImpl service implementation} for a second time, we get the SAME ONE as the first time (i.e. the
+	 * caching strategy is working)
+	 * </p>
 	 */
 	@Test
 	public void testImplementation_implementationIsCached() {
 		SegmentEffortServices service = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
 		SegmentEffortServices service2 = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
-		assertEquals("Retrieved multiple service instances for the same token - should only be one",service,service2);
+		assertEquals("Retrieved multiple service instances for the same token - should only be one", service, service2);
 	}
-	
+
 	/**
-	 * <p>Test that when we ask for a {@link SegmentEffortServicesImpl service implementation} for a second, valid, different token, we get a DIFFERENT implementation</p>
+	 * <p>
+	 * Test that when we ask for a {@link SegmentEffortServicesImpl service implementation} for a second, valid, different token, we get a DIFFERENT
+	 * implementation
+	 * </p>
 	 * 
-	 * @throws UnauthorizedException Thrown when security token is invalid
+	 * @throws UnauthorizedException
+	 *             Thrown when security token is invalid
 	 */
 	@Test
 	public void testImplementation_differentImplementationIsNotCached() {
@@ -86,9 +102,9 @@ public class SegmentEffortServicesImplTest {
 		SegmentEffortServices service2 = getServiceWithoutWriteAccess();
 		assertFalse(service == service2);
 	}
-	
+
 	// Test cases
-	// 1. Valid effort 
+	// 1. Valid effort
 	// 2. Invalid effort
 	// 3. Private effort which does belong to the current athlete (is returned)
 	// 4. Private effort which doesn't belong to the current athlete (is not returned)
@@ -98,7 +114,7 @@ public class SegmentEffortServicesImplTest {
 		Long id = TestUtils.SEGMENT_EFFORT_VALID_ID;
 		StravaSegmentEffort effort = service.getSegmentEffort(id);
 		assertNotNull(effort);
-		assertEquals(id,effort.getId());
+		assertEquals(id, effort.getId());
 	}
 
 	@Test
@@ -115,7 +131,7 @@ public class SegmentEffortServicesImplTest {
 		Long id = TestUtils.SEGMENT_EFFORT_PRIVATE_ID;
 		StravaSegmentEffort effort = service.getSegmentEffort(id);
 		assertNotNull(effort);
-		assertEquals(id,effort.getId());
+		assertEquals(id, effort.getId());
 	}
 
 	@Test
@@ -126,21 +142,21 @@ public class SegmentEffortServicesImplTest {
 		assertNotNull(effort);
 		StravaSegmentEffort comparison = new StravaSegmentEffort();
 		comparison.setId(id);
-		assertEquals(comparison,effort);
+		assertEquals(comparison, effort);
 	}
-	
+
 	private SegmentEffortServices getService() {
 		if (this.segmentEffortService == null) {
 			this.segmentEffortService = SegmentEffortServicesImpl.implementation(TestUtils.getValidToken());
 		}
 		return this.segmentEffortService;
 	}
-	
+
 	private String getRevokedToken() {
 		this.segmentEffortService = null;
 		return TestUtils.getRevokedToken();
 	}
-	
+
 	private SegmentEffortServices getServiceWithoutWriteAccess() {
 		this.segmentEffortService = null;
 		return SegmentEffortServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());

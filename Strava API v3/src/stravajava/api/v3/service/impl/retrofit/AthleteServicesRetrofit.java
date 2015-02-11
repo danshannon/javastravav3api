@@ -20,7 +20,7 @@ import stravajava.api.v3.service.exception.NotFoundException;
  */
 public interface AthleteServicesRetrofit {
 	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
-	
+
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#getAuthenticatedAthlete()
 	 */
@@ -37,13 +37,15 @@ public interface AthleteServicesRetrofit {
 	 * @see stravajava.api.v3.service.AthleteServices#updateAuthenticatedAthlete()
 	 */
 	@PUT("/athlete")
-	public StravaAthlete updateAuthenticatedAthlete(@Query("city") String city, @Query("state") String state, @Query("country") String country, @Query("sex") StravaGender sex, @Query("weight") Float weight);
+	public StravaAthlete updateAuthenticatedAthlete(@Query("city") String city, @Query("state") String state, @Query("country") String country,
+			@Query("sex") StravaGender sex, @Query("weight") Float weight);
 
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/athletes/{id}/koms")
-	public StravaSegmentEffort[] listAthleteKOMs(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
+	public StravaSegmentEffort[] listAthleteKOMs(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage)
+			throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer)
@@ -61,12 +63,13 @@ public interface AthleteServicesRetrofit {
 	 * @see stravajava.api.v3.service.AthleteServices#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/athletes/{id}/both-following")
-	public StravaAthlete[] listAthletesBothFollowing(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
-	
+	public StravaAthlete[] listAthletesBothFollowing(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage)
+			throws NotFoundException;
+
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#statistics(Integer)
 	 */
 	@GET("/athletes/{id}/stats")
 	public StravaStatistics statistics(@Path("id") Integer id) throws NotFoundException;
-	
+
 }

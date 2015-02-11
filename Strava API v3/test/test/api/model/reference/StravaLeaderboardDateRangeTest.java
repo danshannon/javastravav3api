@@ -16,10 +16,10 @@ public class StravaLeaderboardDateRangeTest {
 	public void testGetId() {
 		for (StravaLeaderboardDateRange type : StravaLeaderboardDateRange.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaLeaderboardDateRange.create(type.getId()));
+			assertEquals(type, StravaLeaderboardDateRange.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaLeaderboardDateRange type : StravaLeaderboardDateRange.values()) {

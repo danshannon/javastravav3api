@@ -16,10 +16,10 @@ public class StravaClimbCategoryTest {
 	public void testGetId() {
 		for (StravaClimbCategory type : StravaClimbCategory.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaClimbCategory.create(type.getId()));
+			assertEquals(type, StravaClimbCategory.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaClimbCategory type : StravaClimbCategory.values()) {

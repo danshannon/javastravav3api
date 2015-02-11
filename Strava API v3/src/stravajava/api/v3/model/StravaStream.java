@@ -18,7 +18,7 @@ import stravajava.api.v3.model.reference.StravaStreamType;
 @NoArgsConstructor
 public class StravaStream {
 	private StravaStreamType type;
-	private List<Float> data; 
+	private List<Float> data;
 	private List<StravaMapPoint> mapPoints;
 	private List<Boolean> moving;
 	private StravaStreamSeriesDownsamplingType seriesType;

@@ -1,32 +1,28 @@
 package stravajava.api.v3.model.reference;
 
-
 /**
  * @author Dan Shannon
  *
  */
 public enum StravaStreamResolutionType {
-	LOW("low","low",100),
-	MEDIUM("medium","medium",1000),
-	HIGH("high","high",10000),
-	UNKNOWN("UNKNOWN","Unknown",0);
-	
+	LOW("low", "low", 100), MEDIUM("medium", "medium", 1000), HIGH("high", "high", 10000), UNKNOWN("UNKNOWN", "Unknown", 0);
+
 	private String id;
 	private String description;
 	private int size;
-	
+
 	private StravaStreamResolutionType(String id, String description, Integer size) {
 		this.id = id;
 		this.description = description;
 		this.size = size;
 	}
-	
-	//@JsonValue
+
+	// @JsonValue
 	public String getValue() {
 		return this.id;
 	}
-	
-	//@JsonCreator
+
+	// @JsonCreator
 	public static StravaStreamResolutionType create(String id) {
 		StravaStreamResolutionType[] types = StravaStreamResolutionType.values();
 		for (StravaStreamResolutionType type : types) {

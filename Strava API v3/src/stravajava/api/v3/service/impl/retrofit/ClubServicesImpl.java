@@ -28,15 +28,21 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 		super(token);
 		this.restService = Retrofit.retrofit(ClubServicesRetrofit.class, token, ClubServicesRetrofit.LOG_LEVEL);
 	}
-	
+
 	/**
-	 * <p>Returns an implementation of {@link ClubServices club services}</p>
+	 * <p>
+	 * Returns an implementation of {@link ClubServices club services}
+	 * </p>
 	 * 
-	 * <p>Instances are cached so that if 2 requests are made for the same token, the same instance is returned</p>
+	 * <p>
+	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
+	 * </p>
 	 * 
-	 * @param token The Strava access token to be used in requests to the Strava API
+	 * @param token
+	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the club services
-	 * @throws UnauthorizedException If the token used to create the service is invalid
+	 * @throws UnauthorizedException
+	 *             If the token used to create the service is invalid
 	 */
 	public static ClubServices implementation(final String token) {
 		ClubServices restService = restServices.get(token);
@@ -45,15 +51,14 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
-			
+
 		}
 		return restService;
 	}
-	
-	private static HashMap<String,ClubServices> restServices = new HashMap<String,ClubServices>();
-	
+
+	private static HashMap<String, ClubServices> restServices = new HashMap<String, ClubServices>();
+
 	final ClubServicesRetrofit restService;
-	
 
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#getClub(java.lang.Integer)
@@ -65,13 +70,13 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {
-				if (accessTokenIsValid()) {
-					// If we get here, the access token is valid
-					// Therefore the club is private, so return an empty club
-					return privateClubRepresentation(id);
-				} else {
-					throw e;
-				}
+			if (accessTokenIsValid()) {
+				// If we get here, the access token is valid
+				// Therefore the club is private, so return an empty club
+				return privateClubRepresentation(id);
+			} else {
+				throw e;
+			}
 		}
 	}
 
@@ -93,8 +98,8 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 * @see stravajava.api.v3.service.ClubServices#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<StravaAthlete> listClubMembers(final Integer id, final Paging pagingInstruction) { 
-		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>(){
+	public List<StravaAthlete> listClubMembers(final Integer id, final Paging pagingInstruction) {
+		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>() {
 			@Override
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(ClubServicesImpl.this.restService.listClubMembers(id, thisPage.getPage(), thisPage.getPageSize()));
@@ -172,7 +177,7 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	@Override
 	public List<StravaActivity> listRecentClubActivities(final Integer id) {
 		List<StravaActivity> activities = listRecentClubActivities(id, null);
-		
+
 		// Strava API returns NULL instead of an empty array
 		if (activities == null) {
 			activities = new ArrayList<StravaActivity>();

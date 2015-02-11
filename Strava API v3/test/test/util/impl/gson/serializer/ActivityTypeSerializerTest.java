@@ -7,7 +7,7 @@ import stravajava.api.v3.model.reference.StravaActivityType;
  *
  */
 public class ActivityTypeSerializerTest extends EnumSerializerTest<StravaActivityType> {
-	
+
 	@Override
 	public Class<StravaActivityType> getClassUnderTest() {
 		return StravaActivityType.class;

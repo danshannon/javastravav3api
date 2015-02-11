@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-
 /**
  * @author dshannon
  *
@@ -20,9 +19,9 @@ public class StravaMapPoint {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
-	
+
 	public StravaMapPoint create(final Float[] latlng) {
-		return new StravaMapPoint(latlng[0],latlng[1]);
+		return new StravaMapPoint(latlng[0], latlng[1]);
 	}
 
 }

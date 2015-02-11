@@ -12,7 +12,10 @@ import stravajava.api.v3.model.reference.StravaSegmentActivityType;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * <p>{@link StravaSegment Segments} are specific sections of road. {@link StravaAthlete Athletes}&apos; {@link StravaSegmentEffort efforts} are compared on these segments and leaderboards are created.</p>
+ * <p>
+ * {@link StravaSegment Segments} are specific sections of road. {@link StravaAthlete Athletes}&apos; {@link StravaSegmentEffort efforts} are compared on these
+ * segments and leaderboards are created.
+ * </p>
  * 
  * @author Dan Shannon
  *

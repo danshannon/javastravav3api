@@ -15,14 +15,13 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class ResourceStateSerializer implements JsonSerializer<StravaResourceState>, JsonDeserializer<StravaResourceState>{
+public class ResourceStateSerializer implements JsonSerializer<StravaResourceState>, JsonDeserializer<StravaResourceState> {
 
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaResourceState deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public StravaResourceState deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		try {
 			return StravaResourceState.create(json.getAsInt());
 		} catch (NumberFormatException e) {

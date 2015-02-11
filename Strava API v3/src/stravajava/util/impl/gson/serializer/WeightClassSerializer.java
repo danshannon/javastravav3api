@@ -15,14 +15,13 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class WeightClassSerializer implements JsonSerializer<StravaWeightClass>, JsonDeserializer<StravaWeightClass>{
+public class WeightClassSerializer implements JsonSerializer<StravaWeightClass>, JsonDeserializer<StravaWeightClass> {
 
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaWeightClass deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public StravaWeightClass deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		return StravaWeightClass.create(json.getAsString());
 	}
 

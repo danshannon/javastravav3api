@@ -18,7 +18,9 @@ public class PagingHandler {
 		try {
 			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
 				List<T> pageOfData = callback.getPageOfData(paging);
-				if (pageOfData.size() == 0) { break; }
+				if (pageOfData.size() == 0) {
+					break;
+				}
 				pageOfData = Strava.ignoreLastN(pageOfData, paging.getIgnoreLastN());
 				pageOfData = Strava.ignoreFirstN(pageOfData, paging.getIgnoreFirstN());
 				records.addAll(pageOfData);
@@ -26,7 +28,7 @@ public class PagingHandler {
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {
-		    return new ArrayList<T>();
+			return new ArrayList<T>();
 		}
 		return records;
 

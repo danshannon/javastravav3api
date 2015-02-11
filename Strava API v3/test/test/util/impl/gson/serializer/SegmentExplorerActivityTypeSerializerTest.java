@@ -6,7 +6,7 @@ import stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType;
  * @author dshannon
  *
  */
-public class SegmentExplorerActivityTypeSerializerTest extends EnumSerializerTest<StravaSegmentExplorerActivityType>{
+public class SegmentExplorerActivityTypeSerializerTest extends EnumSerializerTest<StravaSegmentExplorerActivityType> {
 
 	@Override
 	protected StravaSegmentExplorerActivityType getUnknownValue() {

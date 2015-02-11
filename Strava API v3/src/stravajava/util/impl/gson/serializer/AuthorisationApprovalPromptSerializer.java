@@ -29,8 +29,7 @@ public class AuthorisationApprovalPromptSerializer implements JsonSerializer<Aut
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public AuthorisationApprovalPrompt deserialize(JsonElement element, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public AuthorisationApprovalPrompt deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException {
 		return AuthorisationApprovalPrompt.create(element.getAsString());
 	}
 

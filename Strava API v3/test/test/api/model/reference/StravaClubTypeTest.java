@@ -16,10 +16,10 @@ public class StravaClubTypeTest {
 	public void testGetId() {
 		for (StravaClubType type : StravaClubType.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaClubType.create(type.getId()));
+			assertEquals(type, StravaClubType.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaClubType type : StravaClubType.values()) {

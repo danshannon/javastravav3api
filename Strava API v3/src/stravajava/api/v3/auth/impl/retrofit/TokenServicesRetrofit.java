@@ -16,13 +16,13 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface TokenServicesRetrofit {
-    public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
 
-    /**
-     * @see stravajava.api.v3.auth.TokenServices#deauthorise(java.lang.String)
-     */
-    @FormUrlEncoded
-    @POST("/oauth/deauthorize")
-    public TokenResponse deauthorise(@Field("access_token") final String accessToken) throws UnauthorizedException;
+	/**
+	 * @see stravajava.api.v3.auth.TokenServices#deauthorise(java.lang.String)
+	 */
+	@FormUrlEncoded
+	@POST("/oauth/deauthorize")
+	public TokenResponse deauthorise(@Field("access_token") final String accessToken) throws UnauthorizedException;
 
 }

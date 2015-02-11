@@ -76,5 +76,5 @@ public class StravaActivity {
 	private List<StravaSegmentEffort> segmentEfforts;
 	private List<StravaSplit> splitsMetric;
 	private List<StravaSplit> splitsStandard;
-	private List<StravaBestRunningEffort> bestEfforts; 
+	private List<StravaBestRunningEffort> bestEfforts;
 }

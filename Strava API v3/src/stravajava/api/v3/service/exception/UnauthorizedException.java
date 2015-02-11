@@ -1,6 +1,5 @@
 package stravajava.api.v3.service.exception;
 
-
 /**
  * @author dshannon
  *
@@ -10,7 +9,7 @@ public class UnauthorizedException extends RuntimeException {
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @param cause

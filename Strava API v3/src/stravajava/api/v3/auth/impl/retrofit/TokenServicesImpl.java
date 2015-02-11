@@ -14,57 +14,55 @@ import stravajava.api.v3.service.impl.retrofit.Retrofit;
  *
  */
 public class TokenServicesImpl implements TokenServices {
-    /**
-     * <p>
-     * Returns an implementation of {@link TokenServices token services}
-     * </p>
-     * 
-     * <p>
-     * Instances are cached so that if 2 requests are made for the same token,
-     * the same instance is returned
-     * </p>
-     * 
-     * @param token
-     *            The Strava access token to be used in requests to the Strava
-     *            API
-     * @return An implementation of the token services
-     * @throws UnauthorizedException
-     *             If the token used to create the service is invalid
-     */
-    public static TokenServices implementation(final String token) throws UnauthorizedException {
-	TokenServices restService = restServices.get(token);
-	if (restService == null) {
-	    restService = new TokenServicesImpl(token);
+	/**
+	 * <p>
+	 * Returns an implementation of {@link TokenServices token services}
+	 * </p>
+	 * 
+	 * <p>
+	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
+	 * </p>
+	 * 
+	 * @param token
+	 *            The Strava access token to be used in requests to the Strava API
+	 * @return An implementation of the token services
+	 * @throws UnauthorizedException
+	 *             If the token used to create the service is invalid
+	 */
+	public static TokenServices implementation(final String token) throws UnauthorizedException {
+		TokenServices restService = restServices.get(token);
+		if (restService == null) {
+			restService = new TokenServicesImpl(token);
 
-	    // Store the token for later retrieval so that there's only one
-	    // service per token
-	    restServices.put(token, restService);
+			// Store the token for later retrieval so that there's only one
+			// service per token
+			restServices.put(token, restService);
 
+		}
+		return restService;
 	}
-	return restService;
-    }
 
-    private static HashMap<String, TokenServices> restServices = new HashMap<String, TokenServices>();
+	private static HashMap<String, TokenServices> restServices = new HashMap<String, TokenServices>();
 
-    private final TokenServicesRetrofit restService;
+	private final TokenServicesRetrofit restService;
 
-    private TokenServicesImpl(final String token) {
-	this.restService = Retrofit.retrofit(TokenServicesRetrofit.class, token, TokenServicesRetrofit.LOG_LEVEL);
-    }
+	private TokenServicesImpl(final String token) {
+		this.restService = Retrofit.retrofit(TokenServicesRetrofit.class, token, TokenServicesRetrofit.LOG_LEVEL);
+	}
 
-    /**
-     * @see stravajava.api.v3.auth.AuthorisationServices#deauthorise(java.lang.String)
-     */
-    @Override
-    public TokenResponse deauthorise(final Token accessToken) throws UnauthorizedException {
-	// Remove the token / service instance from the cached list as it's no
-	// longer any use
-	restServices.remove(accessToken);
+	/**
+	 * @see stravajava.api.v3.auth.AuthorisationServices#deauthorise(java.lang.String)
+	 */
+	@Override
+	public TokenResponse deauthorise(final Token accessToken) throws UnauthorizedException {
+		// Remove the token / service instance from the cached list as it's no
+		// longer any use
+		restServices.remove(accessToken);
 
-	// Deauthorise
-	final TokenResponse response = this.restService.deauthorise(accessToken.getToken());
-	TokenManager.implementation().revokeToken(accessToken);
-	return response;
-    }
+		// Deauthorise
+		final TokenResponse response = this.restService.deauthorise(accessToken.getToken());
+		TokenManager.implementation().revokeToken(accessToken);
+		return response;
+	}
 
 }

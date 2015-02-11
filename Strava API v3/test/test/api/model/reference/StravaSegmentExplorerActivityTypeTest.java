@@ -16,10 +16,10 @@ public class StravaSegmentExplorerActivityTypeTest {
 	public void testGetId() {
 		for (StravaSegmentExplorerActivityType type : StravaSegmentExplorerActivityType.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaSegmentExplorerActivityType.create(type.getId()));
+			assertEquals(type, StravaSegmentExplorerActivityType.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaSegmentExplorerActivityType type : StravaSegmentExplorerActivityType.values()) {

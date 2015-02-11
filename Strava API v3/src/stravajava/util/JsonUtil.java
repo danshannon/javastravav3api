@@ -5,7 +5,9 @@ import java.io.InputStream;
 import stravajava.util.exception.JsonSerialisationException;
 
 /**
- * <p>Abstracted JSON utilities for serialisation and de-serialisation, so we're not reliant on any one JSON library for the basic code</p>
+ * <p>
+ * Abstracted JSON utilities for serialisation and de-serialisation, so we're not reliant on any one JSON library for the basic code
+ * </p>
  * 
  * @author Dan Shannon
  */

@@ -1,38 +1,28 @@
 package stravajava.api.v3.model.reference;
 
-
 /**
  * @author Dan Shannon
  *
  */
 public enum StravaStreamType {
-	TIME("time","Time"),
-	MAPPOINT("latlng","Latitude/Longitude"),
-	DISTANCE("distance","Distance"),
-	ALTITUDE("altitude","Altitude"),
-	VELOCITY("velocity_smooth","Velocity (smoothed)"),
-	HEARTRATE("heartrate","Heartrate"),
-	CADENCE("cadence","Cadence"),
-	POWER("watts","Watts"),
-	TEMPERATURE("temp","Temperature"),
-	MOVING("moving","Moving?"),
-	GRADE("grade_smooth","Grade % (smoothed)"),
-	UNKNOWN("UNKNOWN","Unknown");
-	
+	TIME("time", "Time"), MAPPOINT("latlng", "Latitude/Longitude"), DISTANCE("distance", "Distance"), ALTITUDE("altitude", "Altitude"), VELOCITY(
+			"velocity_smooth", "Velocity (smoothed)"), HEARTRATE("heartrate", "Heartrate"), CADENCE("cadence", "Cadence"), POWER("watts", "Watts"), TEMPERATURE(
+			"temp", "Temperature"), MOVING("moving", "Moving?"), GRADE("grade_smooth", "Grade % (smoothed)"), UNKNOWN("UNKNOWN", "Unknown");
+
 	private String id;
 	private String description;
-	
+
 	private StravaStreamType(String id, String description) {
 		this.id = id;
 		this.description = description;
 	}
-	
-	//@JsonValue
+
+	// @JsonValue
 	public String getValue() {
 		return this.id;
 	}
-	
-	//@JsonCreator
+
+	// @JsonCreator
 	public static StravaStreamType create(String id) {
 		StravaStreamType[] streamTypes = StravaStreamType.values();
 		for (StravaStreamType streamType : streamTypes) {

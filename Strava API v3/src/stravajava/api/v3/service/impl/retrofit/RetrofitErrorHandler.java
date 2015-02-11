@@ -19,22 +19,22 @@ public class RetrofitErrorHandler implements ErrorHandler {
 	@Override
 	public Throwable handleError(final RetrofitError cause) {
 		Response r = cause.getResponse();
-		
+
 		// Handle 400 Bad request error
 		if (r != null && r.getStatus() == 400) {
 			return new BadRequestException(cause);
 		}
-		
-		// Handle 401 Unauthorized error 
+
+		// Handle 401 Unauthorized error
 		if (r != null && r.getStatus() == 401) {
 			return new UnauthorizedException(cause);
 		}
-		
+
 		// Handle 404 Not Found error
 		if (r != null && r.getStatus() == 404) {
 			return new NotFoundException(cause);
 		}
-		
+
 		return cause;
 	}
 

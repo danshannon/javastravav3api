@@ -16,10 +16,10 @@ public class StravaResourceStateTest {
 	public void testGetId() {
 		for (StravaResourceState type : StravaResourceState.values()) {
 			assertNotNull(type.getId());
-			assertEquals(type,StravaResourceState.create(type.getId()));
+			assertEquals(type, StravaResourceState.create(type.getId()));
 		}
 	}
-	
+
 	@Test
 	public void testGetDescription() {
 		for (StravaResourceState type : StravaResourceState.values()) {

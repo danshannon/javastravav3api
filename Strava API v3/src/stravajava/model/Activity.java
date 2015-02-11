@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class Activity extends AbstractActivity {
-		private Athlete athlete;
-		private Gear gear;
+	private Athlete athlete;
+	private Gear gear;
 }

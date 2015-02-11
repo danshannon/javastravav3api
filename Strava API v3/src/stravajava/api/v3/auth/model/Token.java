@@ -22,5 +22,5 @@ public class Token {
 		this.token = tokenResponse.getAccessToken();
 		this.scopes = Arrays.asList(scopes);
 	}
-	
+
 }

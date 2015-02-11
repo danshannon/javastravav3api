@@ -1,14 +1,17 @@
 package stravajava.api.v3.model;
 
-import stravajava.api.v3.service.ClubServices;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import stravajava.api.v3.service.ClubServices;
 
 /**
- * <p>Container for response from club membership join and leave</p>
+ * <p>
+ * Container for response from club membership join and leave
+ * </p>
  * 
- * <p>See {@link ClubServices#joinClub(Integer)} and {@link ClubServices#leaveClub(Integer)}
+ * <p>
+ * See {@link ClubServices#joinClub(Integer)} and {@link ClubServices#leaveClub(Integer)}
  * 
  * @author Dan Shannon
  *

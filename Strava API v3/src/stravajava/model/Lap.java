@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class Lap extends AbstractSubActivity {
 	private Integer lapNumber;

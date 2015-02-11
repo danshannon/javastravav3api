@@ -31,16 +31,17 @@ public class StreamServicesImplTest {
 
 	/**
 	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#implementation(java.lang.String)}.
-	 * @throws UnauthorizedException 
+	 * 
+	 * @throws UnauthorizedException
 	 */
 	@Test
 	public void testImplementation_validToken() throws UnauthorizedException {
 		StreamServices service = StreamServicesImpl.implementation(TestUtils.getValidToken());
-		assertNotNull("Didn't get a service implementation using a valid token",service);
+		assertNotNull("Didn't get a service implementation using a valid token", service);
 		List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
 		assertNotNull(streams);
 	}
-	
+
 	@Test
 	public void testImplementation_invalidToken() {
 		try {
@@ -57,19 +58,22 @@ public class StreamServicesImplTest {
 	public void testImplementation_implementationIsCached() {
 		StreamServices service = StreamServicesImpl.implementation(TestUtils.getValidToken());
 		StreamServices service2 = StreamServicesImpl.implementation(TestUtils.getValidToken());
-		assertEquals("Retrieved multiple service instances for the same token - should only be one",service,service2);
+		assertEquals("Retrieved multiple service instances for the same token - should only be one", service, service2);
 	}
-	
+
 	@Test
 	public void testImplementation_differentImplementationIsNotCached() {
 		StreamServices service = StreamServicesImpl.implementation(TestUtils.getValidToken());
 		StreamServices service2 = StreamServicesImpl.implementation(TestUtils.getValidTokenWithoutWriteAccess());
 		assertFalse(service == service2);
 	}
-	
+
 	/**
-	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
-	 * @throws UnauthorizedException 
+	 * Test method for
+	 * {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}
+	 * .
+	 * 
+	 * @throws UnauthorizedException
 	 */
 	// 1. Valid activity for the authenticated user
 	@Test
@@ -108,15 +112,15 @@ public class StreamServicesImplTest {
 		assertNotNull(streams);
 		int size = 0;
 		for (StravaStream stream : streams) {
-			if (size == 0) { 
-				size = stream.getOriginalSize(); 
+			if (size == 0) {
+				size = stream.getOriginalSize();
 			}
 			if (stream.getType() == StravaStreamType.MAPPOINT) {
-				assertEquals(size,stream.getMapPoints().size());
+				assertEquals(size, stream.getMapPoints().size());
 			} else if (stream.getType() == StravaStreamType.MOVING) {
-				assertEquals(size,stream.getMoving().size());
+				assertEquals(size, stream.getMoving().size());
 			} else {
-				assertEquals(size,stream.getData().size());
+				assertEquals(size, stream.getData().size());
 			}
 			assertNotNull(stream.getType());
 		}
@@ -126,10 +130,10 @@ public class StreamServicesImplTest {
 	@Test
 	public void testGetActivityStreams_oneStreamType() throws UnauthorizedException {
 		StreamServices service = getService();
-		List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER,null,null,StravaStreamType.DISTANCE);
+		List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, null, null, StravaStreamType.DISTANCE);
 		assertNotNull(streams);
-		assertEquals(1,streams.size());
-		assertEquals(StravaStreamType.DISTANCE,streams.get(0).getType());
+		assertEquals(1, streams.size());
+		assertEquals(StravaStreamType.DISTANCE, streams.get(0).getType());
 	}
 
 	// 6. Downsampled by time
@@ -138,10 +142,11 @@ public class StreamServicesImplTest {
 		StreamServices service = getService();
 		for (StravaStreamResolutionType resolutionType : StravaStreamResolutionType.values()) {
 			if (resolutionType != StravaStreamResolutionType.UNKNOWN) {
-				List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER,resolutionType,StravaStreamSeriesDownsamplingType.TIME);
+				List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, resolutionType,
+						StravaStreamSeriesDownsamplingType.TIME);
 				assertNotNull(streams);
 				for (StravaStream stream : streams) {
-					assertEquals(resolutionType,stream.getResolution());
+					assertEquals(resolutionType, stream.getResolution());
 					if (stream.getType() == StravaStreamType.MAPPOINT) {
 						assertTrue(resolutionType.getSize() >= stream.getMapPoints().size());
 					} else if (stream.getType() == StravaStreamType.MOVING) {
@@ -160,10 +165,11 @@ public class StreamServicesImplTest {
 		StreamServices service = getService();
 		for (StravaStreamResolutionType resolutionType : StravaStreamResolutionType.values()) {
 			if (resolutionType != StravaStreamResolutionType.UNKNOWN && resolutionType != null) {
-				List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER,resolutionType,StravaStreamSeriesDownsamplingType.DISTANCE);
+				List<StravaStream> streams = service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, resolutionType,
+						StravaStreamSeriesDownsamplingType.DISTANCE);
 				assertNotNull(streams);
 				for (StravaStream stream : streams) {
-					assertEquals(resolutionType,stream.getResolution());
+					assertEquals(resolutionType, stream.getResolution());
 					if (stream.getType() == StravaStreamType.MAPPOINT) {
 						assertTrue(resolutionType.getSize() >= stream.getMapPoints().size());
 					} else if (stream.getType() == StravaStreamType.MOVING) {
@@ -181,7 +187,7 @@ public class StreamServicesImplTest {
 	public void testGetActivityStreams_invalidStreamType() throws UnauthorizedException {
 		StreamServices service = getService();
 		try {
-			service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER,null,null,StravaStreamType.UNKNOWN);
+			service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, null, null, StravaStreamType.UNKNOWN);
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;
@@ -194,7 +200,7 @@ public class StreamServicesImplTest {
 	public void testGetActivityStreams_invalidDownsampleResolution() throws UnauthorizedException {
 		StreamServices service = getService();
 		try {
-			service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER,StravaStreamResolutionType.UNKNOWN,null);
+			service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, StravaStreamResolutionType.UNKNOWN, null);
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;
@@ -207,7 +213,7 @@ public class StreamServicesImplTest {
 	public void testGetActivityStreams_invalidDownsampleType() throws UnauthorizedException {
 		StreamServices service = getService();
 		try {
-			service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER,StravaStreamResolutionType.LOW,StravaStreamSeriesDownsamplingType.UNKNOWN);
+			service.getActivityStreams(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, StravaStreamResolutionType.LOW, StravaStreamSeriesDownsamplingType.UNKNOWN);
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;
@@ -216,7 +222,9 @@ public class StreamServicesImplTest {
 	}
 
 	/**
-	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getEffortStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
+	 * Test method for
+	 * {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getEffortStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}
+	 * .
 	 */
 	// 1. Valid effort for the authenticated user
 	@Test
@@ -255,15 +263,15 @@ public class StreamServicesImplTest {
 		assertNotNull(streams);
 		int size = 0;
 		for (StravaStream stream : streams) {
-			if (size == 0) { 
-				size = stream.getOriginalSize(); 
+			if (size == 0) {
+				size = stream.getOriginalSize();
 			}
 			if (stream.getType() == StravaStreamType.MAPPOINT) {
-				assertEquals(size,stream.getMapPoints().size());
+				assertEquals(size, stream.getMapPoints().size());
 			} else if (stream.getType() == StravaStreamType.MOVING) {
-				assertEquals(size,stream.getMoving().size());
+				assertEquals(size, stream.getMoving().size());
 			} else {
-				assertEquals(size,stream.getData().size());
+				assertEquals(size, stream.getData().size());
 			}
 			assertNotNull(stream.getType());
 		}
@@ -273,10 +281,10 @@ public class StreamServicesImplTest {
 	@Test
 	public void testGetEffortStreams_oneStreamType() throws UnauthorizedException {
 		StreamServices service = getService();
-		List<StravaStream> streams = service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID,null,null,StravaStreamType.DISTANCE);
+		List<StravaStream> streams = service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID, null, null, StravaStreamType.DISTANCE);
 		assertNotNull(streams);
-		assertEquals(1,streams.size());
-		assertEquals(StravaStreamType.DISTANCE,streams.get(0).getType());
+		assertEquals(1, streams.size());
+		assertEquals(StravaStreamType.DISTANCE, streams.get(0).getType());
 	}
 
 	// 6. Downsampled by time
@@ -285,10 +293,11 @@ public class StreamServicesImplTest {
 		StreamServices service = getService();
 		for (StravaStreamResolutionType resolutionType : StravaStreamResolutionType.values()) {
 			if (resolutionType != StravaStreamResolutionType.UNKNOWN) {
-				List<StravaStream> streams = service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID,resolutionType,StravaStreamSeriesDownsamplingType.TIME);
+				List<StravaStream> streams = service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID, resolutionType,
+						StravaStreamSeriesDownsamplingType.TIME);
 				assertNotNull(streams);
 				for (StravaStream stream : streams) {
-					assertEquals(resolutionType,stream.getResolution());
+					assertEquals(resolutionType, stream.getResolution());
 					if (stream.getType() == StravaStreamType.MAPPOINT) {
 						assertTrue(resolutionType.getSize() >= stream.getMapPoints().size());
 					} else if (stream.getType() == StravaStreamType.MOVING) {
@@ -307,10 +316,11 @@ public class StreamServicesImplTest {
 		StreamServices service = getService();
 		for (StravaStreamResolutionType resolutionType : StravaStreamResolutionType.values()) {
 			if (resolutionType != StravaStreamResolutionType.UNKNOWN && resolutionType != null) {
-				List<StravaStream> streams = service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID,resolutionType,StravaStreamSeriesDownsamplingType.DISTANCE);
+				List<StravaStream> streams = service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID, resolutionType,
+						StravaStreamSeriesDownsamplingType.DISTANCE);
 				assertNotNull(streams);
 				for (StravaStream stream : streams) {
-					assertEquals(resolutionType,stream.getResolution());
+					assertEquals(resolutionType, stream.getResolution());
 					if (stream.getType() == StravaStreamType.MAPPOINT) {
 						assertTrue(resolutionType.getSize() >= stream.getMapPoints().size());
 					} else if (stream.getType() == StravaStreamType.MOVING) {
@@ -328,7 +338,7 @@ public class StreamServicesImplTest {
 	public void testGetEffortStreams_invalidStreamType() throws UnauthorizedException {
 		StreamServices service = getService();
 		try {
-			service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID,null,null,StravaStreamType.UNKNOWN);
+			service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID, null, null, StravaStreamType.UNKNOWN);
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;
@@ -341,7 +351,7 @@ public class StreamServicesImplTest {
 	public void testGetEffortStreams_invalidDownsampleResolution() throws UnauthorizedException {
 		StreamServices service = getService();
 		try {
-			service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID,StravaStreamResolutionType.UNKNOWN,null);
+			service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID, StravaStreamResolutionType.UNKNOWN, null);
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;
@@ -354,7 +364,7 @@ public class StreamServicesImplTest {
 	public void testGetEffortStreams_invalidDownsampleType() throws UnauthorizedException {
 		StreamServices service = getService();
 		try {
-			service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID,StravaStreamResolutionType.LOW,StravaStreamSeriesDownsamplingType.UNKNOWN);
+			service.getEffortStreams(TestUtils.SEGMENT_EFFORT_VALID_ID, StravaStreamResolutionType.LOW, StravaStreamSeriesDownsamplingType.UNKNOWN);
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;
@@ -363,7 +373,9 @@ public class StreamServicesImplTest {
 	}
 
 	/**
-	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getSegmentStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}.
+	 * Test method for
+	 * {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getSegmentStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}
+	 * .
 	 */
 	@Test
 	// 1. Valid segment for the authenticated user
@@ -373,7 +385,7 @@ public class StreamServicesImplTest {
 		assertNotNull(streams);
 	}
 
-	// 2. Invalid segment 
+	// 2. Invalid segment
 	@Test
 	public void testGetSegmentStreams_invalidSegment() throws UnauthorizedException {
 		StreamServices service = getService();
@@ -402,15 +414,15 @@ public class StreamServicesImplTest {
 		assertNotNull(streams);
 		int size = 0;
 		for (StravaStream stream : streams) {
-			if (size == 0) { 
-				size = stream.getOriginalSize(); 
+			if (size == 0) {
+				size = stream.getOriginalSize();
 			}
 			if (stream.getType() == StravaStreamType.MAPPOINT) {
-				assertEquals(size,stream.getMapPoints().size());
+				assertEquals(size, stream.getMapPoints().size());
 			} else if (stream.getType() == StravaStreamType.MOVING) {
-				assertEquals(size,stream.getMoving().size());
+				assertEquals(size, stream.getMoving().size());
 			} else {
-				assertEquals(size,stream.getData().size());
+				assertEquals(size, stream.getData().size());
 			}
 			assertNotNull(stream.getType());
 		}
@@ -420,10 +432,10 @@ public class StreamServicesImplTest {
 	@Test
 	public void testGetSegmentStreams_oneStreamType() throws UnauthorizedException {
 		StreamServices service = getService();
-		List<StravaStream> streams = service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID,null,null,StravaStreamType.DISTANCE);
+		List<StravaStream> streams = service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID, null, null, StravaStreamType.DISTANCE);
 		assertNotNull(streams);
-		assertEquals(1,streams.size());
-		assertEquals(StravaStreamType.DISTANCE,streams.get(0).getType());
+		assertEquals(1, streams.size());
+		assertEquals(StravaStreamType.DISTANCE, streams.get(0).getType());
 	}
 
 	// 6. Downsampled by time - can't be done for segment streams as there's no time element
@@ -433,24 +445,27 @@ public class StreamServicesImplTest {
 		for (StravaStreamResolutionType resolutionType : StravaStreamResolutionType.values()) {
 			if (resolutionType != StravaStreamResolutionType.UNKNOWN) {
 				try {
-					service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID,resolutionType,StravaStreamSeriesDownsamplingType.TIME);
+					service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID, resolutionType, StravaStreamSeriesDownsamplingType.TIME);
 				} catch (IllegalArgumentException e) {
 					// expected
 					return;
 				}
 				fail("Can't return a segment stream which is downsampled by TIME!");
-//				assertNotNull(streams);
-//				for (StravaStream stream : streams) {
-//					assertEquals(resolutionType,stream.getResolution());
-//					assertEquals(StravaStreamSeriesDownsamplingType.TIME,stream.getSeriesType());
-//					if (stream.getType() == StravaStreamType.MAPPOINT) {
-//						assertTrue("Expected max resolution of " + resolutionType.getSize() + ", but got " + stream.getMapPoints().size() + " map points!",resolutionType.getSize() >= stream.getMapPoints().size());
-//					} else if (stream.getType() == StravaStreamType.MOVING) {
-//						assertTrue("Expected max resolution of " + resolutionType.getSize() + ", but got " + stream.getMoving().size() + " moving data points!",resolutionType.getSize() >= stream.getMoving().size());
-//					} else {
-//						assertTrue("Expected max resolution of " + resolutionType.getSize() + ", but got " + stream.getData().size() + " data points!",resolutionType.getSize() >= stream.getData().size());
-//					}
-//				}
+				// assertNotNull(streams);
+				// for (StravaStream stream : streams) {
+				// assertEquals(resolutionType,stream.getResolution());
+				// assertEquals(StravaStreamSeriesDownsamplingType.TIME,stream.getSeriesType());
+				// if (stream.getType() == StravaStreamType.MAPPOINT) {
+				// assertTrue("Expected max resolution of " + resolutionType.getSize() + ", but got " + stream.getMapPoints().size() +
+				// " map points!",resolutionType.getSize() >= stream.getMapPoints().size());
+				// } else if (stream.getType() == StravaStreamType.MOVING) {
+				// assertTrue("Expected max resolution of " + resolutionType.getSize() + ", but got " + stream.getMoving().size() +
+				// " moving data points!",resolutionType.getSize() >= stream.getMoving().size());
+				// } else {
+				// assertTrue("Expected max resolution of " + resolutionType.getSize() + ", but got " + stream.getData().size() +
+				// " data points!",resolutionType.getSize() >= stream.getData().size());
+				// }
+				// }
 			}
 		}
 	}
@@ -461,10 +476,10 @@ public class StreamServicesImplTest {
 		StreamServices service = getService();
 		for (StravaStreamResolutionType resolutionType : StravaStreamResolutionType.values()) {
 			if (resolutionType != StravaStreamResolutionType.UNKNOWN && resolutionType != null) {
-				List<StravaStream> streams = service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID,resolutionType,StravaStreamSeriesDownsamplingType.DISTANCE);
+				List<StravaStream> streams = service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID, resolutionType, StravaStreamSeriesDownsamplingType.DISTANCE);
 				assertNotNull(streams);
 				for (StravaStream stream : streams) {
-					assertEquals(resolutionType,stream.getResolution());
+					assertEquals(resolutionType, stream.getResolution());
 					if (stream.getType() == StravaStreamType.MAPPOINT) {
 						assertTrue(resolutionType.getSize() >= stream.getMapPoints().size());
 					} else if (stream.getType() == StravaStreamType.MOVING) {
@@ -482,7 +497,7 @@ public class StreamServicesImplTest {
 	public void testGetSegmentStreams_invalidStreamType() throws UnauthorizedException {
 		StreamServices service = getService();
 		try {
-			service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID,null,null,StravaStreamType.UNKNOWN);
+			service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID, null, null, StravaStreamType.UNKNOWN);
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;
@@ -495,7 +510,7 @@ public class StreamServicesImplTest {
 	public void testGetSegmentStreams_invalidDownsampleResolution() throws UnauthorizedException {
 		StreamServices service = getService();
 		try {
-			service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID,StravaStreamResolutionType.UNKNOWN,null);
+			service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID, StravaStreamResolutionType.UNKNOWN, null);
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;
@@ -508,7 +523,7 @@ public class StreamServicesImplTest {
 	public void testGetSegmentStreams_invalidDownsampleType() throws UnauthorizedException {
 		StreamServices service = getService();
 		try {
-			service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID,StravaStreamResolutionType.LOW,StravaStreamSeriesDownsamplingType.UNKNOWN);
+			service.getSegmentStreams(TestUtils.SEGMENT_VALID_ID, StravaStreamResolutionType.LOW, StravaStreamSeriesDownsamplingType.UNKNOWN);
 		} catch (IllegalArgumentException e) {
 			// Expected
 			return;

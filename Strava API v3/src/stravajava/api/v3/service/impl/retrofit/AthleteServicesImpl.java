@@ -26,15 +26,20 @@ public class AthleteServicesImpl implements AthleteServices {
 	private AthleteServicesImpl(final String token) {
 		this.restService = Retrofit.retrofit(AthleteServicesRetrofit.class, token, AthleteServicesRetrofit.LOG_LEVEL);
 	}
-	
+
 	/**
-	 * <p>Returns an implementation of {@link AthleteServices athlete services}</p>
+	 * <p>
+	 * Returns an implementation of {@link AthleteServices athlete services}
+	 * </p>
 	 * 
-	 * <p>Instances are cached so that if 2 requests are made for the same token, the same instance is returned</p>
+	 * <p>
+	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
+	 * </p>
 	 * 
-	 * @param token The Strava access token to be used in requests to the Strava API
+	 * @param token
+	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the athlete services
-	 */ 
+	 */
 	public static AthleteServices implementation(final String token) {
 		AthleteServices restService = restServices.get(token);
 		if (restService == null) {
@@ -42,15 +47,14 @@ public class AthleteServicesImpl implements AthleteServices {
 
 			// Store the token for later retrieval so that there's only one service per token
 			restServices.put(token, restService);
-			
+
 		}
 		return restService;
 	}
-	
-	private static HashMap<String,AthleteServices> restServices = new HashMap<String,AthleteServices>();
-	
+
+	private static HashMap<String, AthleteServices> restServices = new HashMap<String, AthleteServices>();
+
 	final AthleteServicesRetrofit restService;
-	
 
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#getAuthenticatedAthlete()
@@ -81,7 +85,8 @@ public class AthleteServicesImpl implements AthleteServices {
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.AthleteServices#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String, stravajava.api.v3.model.reference.StravaGender, java.lang.Float)
+	 * @see stravajava.api.v3.service.AthleteServices#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String,
+	 *      stravajava.api.v3.model.reference.StravaGender, java.lang.Float)
 	 */
 	@Override
 	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
@@ -92,7 +97,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id, final Paging pagingInstruction) { 
+	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id, final Paging pagingInstruction) {
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
@@ -112,7 +117,7 @@ public class AthleteServicesImpl implements AthleteServices {
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(AthleteServicesImpl.this.restService.listAuthenticatedAthleteFriends(thisPage.getPage(), thisPage.getPageSize()));
 			}
-			
+
 		});
 	}
 
@@ -173,7 +178,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	public List<StravaAthlete> listAthletesBothFollowing(final Integer id) {
 		return listAthletesBothFollowing(id, null);
 	}
-	
+
 	private boolean accessTokenIsValid() {
 		try {
 			getAuthenticatedAthlete();
@@ -199,6 +204,5 @@ public class AthleteServicesImpl implements AthleteServices {
 			throw e;
 		}
 	}
-
 
 }

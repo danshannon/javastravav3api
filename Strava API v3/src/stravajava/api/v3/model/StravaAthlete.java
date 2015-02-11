@@ -3,13 +3,13 @@ package stravajava.api.v3.model;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import stravajava.api.v3.model.reference.StravaFollowerState;
 import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.model.reference.StravaMeasurementMethod;
 import stravajava.api.v3.model.reference.StravaResourceState;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * Detailed representation of an StravaAthlete

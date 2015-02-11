@@ -1,29 +1,26 @@
 package stravajava.api.v3.model.reference;
 
-
 /**
  * @author dshannon
  *
  */
 public enum StravaGender {
-	MALE("M","Male"),
-	FEMALE("F","Female"),
-	UNKNOWN("UNKNOWN","Unknown");
-	
+	MALE("M", "Male"), FEMALE("F", "Female"), UNKNOWN("UNKNOWN", "Unknown");
+
 	private String id;
 	private String description;
-	
+
 	private StravaGender(String id, String description) {
 		this.id = id;
 		this.description = description;
 	}
-	
-	//@JsonValue
+
+	// @JsonValue
 	public String getValue() {
 		return this.id;
 	}
-	
-	//@JsonCreator
+
+	// @JsonCreator
 	public static StravaGender create(String id) {
 		StravaGender[] genders = StravaGender.values();
 		for (StravaGender gender : genders) {
@@ -55,6 +52,5 @@ public enum StravaGender {
 	public String toString() {
 		return this.id;
 	}
-	
-	
+
 }

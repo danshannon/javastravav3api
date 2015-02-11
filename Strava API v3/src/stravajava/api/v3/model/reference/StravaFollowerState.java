@@ -1,30 +1,26 @@
 package stravajava.api.v3.model.reference;
 
-
 /**
  * @author Dan Shannon
  *
  */
 public enum StravaFollowerState {
-	PENDING("pending","Pending"),
-	ACCEPTED("accepted","Accepted"),
-	BLOCKED("blocked","Blocked"),
-	UNKNOWN("UNKNOWN","Unknown");
-	
+	PENDING("pending", "Pending"), ACCEPTED("accepted", "Accepted"), BLOCKED("blocked", "Blocked"), UNKNOWN("UNKNOWN", "Unknown");
+
 	private String id;
 	private String description;
-	
-	private StravaFollowerState(String id,String description) {
+
+	private StravaFollowerState(String id, String description) {
 		this.id = id;
 		this.description = description;
 	}
-	
-	//@JsonValue
+
+	// @JsonValue
 	public String getValue() {
 		return this.id;
 	}
-	
-	//@JsonCreator
+
+	// @JsonCreator
 	public static StravaFollowerState create(String id) {
 		StravaFollowerState[] followerStates = StravaFollowerState.values();
 		for (StravaFollowerState followerState : followerStates) {

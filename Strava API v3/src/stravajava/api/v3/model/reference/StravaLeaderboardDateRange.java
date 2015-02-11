@@ -1,31 +1,27 @@
 package stravajava.api.v3.model.reference;
 
-
 /**
  * @author Dan Shannon
  *
  */
 public enum StravaLeaderboardDateRange {
-	THIS_YEAR("this_year","This year"),
-	THIS_MONTH("this_month","This month"),
-	THIS_WEEK("this_week","This week"),
-	TODAY("today","Today"),
-	UNKNOWN("UNKNOWN","Unknown");
-	
+	THIS_YEAR("this_year", "This year"), THIS_MONTH("this_month", "This month"), THIS_WEEK("this_week", "This week"), TODAY("today", "Today"), UNKNOWN(
+			"UNKNOWN", "Unknown");
+
 	private String id;
 	private String description;
-	
+
 	private StravaLeaderboardDateRange(String id, String description) {
 		this.id = id;
 		this.description = description;
 	}
-	
-	//@JsonValue
+
+	// @JsonValue
 	public String getValue() {
 		return this.id;
 	}
-	
-	//@JsonCreator
+
+	// @JsonCreator
 	public static StravaLeaderboardDateRange create(String id) {
 		for (StravaLeaderboardDateRange dateRange : StravaLeaderboardDateRange.values()) {
 			if (dateRange.getId().equals(id)) {
@@ -56,6 +52,5 @@ public enum StravaLeaderboardDateRange {
 	public String toString() {
 		return this.id;
 	}
-	
-	
+
 }

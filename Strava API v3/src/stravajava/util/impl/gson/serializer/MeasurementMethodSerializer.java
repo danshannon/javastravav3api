@@ -15,14 +15,13 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class MeasurementMethodSerializer implements JsonSerializer<StravaMeasurementMethod>, JsonDeserializer<StravaMeasurementMethod>{
+public class MeasurementMethodSerializer implements JsonSerializer<StravaMeasurementMethod>, JsonDeserializer<StravaMeasurementMethod> {
 
 	/**
 	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaMeasurementMethod deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public StravaMeasurementMethod deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		return StravaMeasurementMethod.create(json.getAsString());
 	}
 
