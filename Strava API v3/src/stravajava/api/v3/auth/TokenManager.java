@@ -10,6 +10,7 @@ import stravajava.api.v3.auth.ref.AuthorisationScope;
 /**
  * <p>
  * Manages the cache of tokens
+ * </p>
  *
  * @author Dan Shannon
  *

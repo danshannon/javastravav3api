@@ -15,7 +15,7 @@ import stravajava.util.impl.gson.JsonUtilImpl;
  *
  */
 public class AuthorisationServicesImpl implements AuthorisationServices {
-	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	private static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
 
 	private final AuthorisationServicesRetrofit restService;
 
@@ -25,8 +25,13 @@ public class AuthorisationServicesImpl implements AuthorisationServices {
 	 * </p>
 	 */
 	public AuthorisationServicesImpl() {
-		this.restService = new RestAdapter.Builder().setConverter(new GsonConverter(new JsonUtilImpl().getGson())).setLogLevel(LOG_LEVEL)
-				.setEndpoint(Strava.AUTH_ENDPOINT).setErrorHandler(new RetrofitErrorHandler()).build().create(AuthorisationServicesRetrofit.class);
+		this.restService = new RestAdapter.Builder()
+				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
+				.setLogLevel(LOG_LEVEL)
+				.setEndpoint(Strava.AUTH_ENDPOINT)
+				.setErrorHandler(new RetrofitErrorHandler())
+				.build()
+				.create(AuthorisationServicesRetrofit.class);
 	}
 
 	/**
