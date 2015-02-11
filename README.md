@@ -16,11 +16,11 @@ To use StravaJava, all you really need is an access token. StravaJava doesn't pr
 
 Once you've got an access token, life is pretty simple really. Getting a service implementation (in this case for the athlete service endpoints) looks like this:
 
-AthleteServices service = AthleteServicesImpl.implementation(accessToken);
+<code>AthleteServices service = AthleteServicesImpl.implementation(accessToken);</code>
 
 Then, getting an athlete looks like this:
 
-StravaAthlete athlete = service.getAthlete(id);
+<code>StravaAthlete athlete = service.getAthlete(id);</code>
 
 Tricks of the trade
 ===================
