@@ -8,7 +8,7 @@ import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
 public class GearServicesImpl extends StravaServiceImpl implements GearServices {
-	private GearServicesImpl(String token) {
+	private GearServicesImpl(final String token) {
 		super(token);
 		this.restService = Retrofit.retrofit(GearServicesRetrofit.class, token, GearServicesRetrofit.LOG_LEVEL);
 	}
@@ -36,13 +36,13 @@ public class GearServicesImpl extends StravaServiceImpl implements GearServices 
 	
 	private static HashMap<String,GearServices> restServices = new HashMap<String,GearServices>();
 	
-	private GearServicesRetrofit restService;
+	private final GearServicesRetrofit restService;
 	
 
 	@Override
-	public StravaGear getGear(String id) {
+	public StravaGear getGear(final String id) { 
 		try {
-			return restService.getGear(id);
+			return this.restService.getGear(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {

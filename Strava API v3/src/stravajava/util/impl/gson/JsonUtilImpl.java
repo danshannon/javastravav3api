@@ -72,62 +72,62 @@ import com.google.gson.internal.bind.DateTypeAdapter;
  * 
  */
 public class JsonUtilImpl implements JsonUtil {
-	private GsonBuilder	gsonBuilder;
-	private Gson		gson;
+	private final GsonBuilder	gsonBuilder;
+	private final Gson		gson;
 
 	public JsonUtilImpl() {
-		gsonBuilder = new GsonBuilder();
-		gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-		gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
-		gsonBuilder.registerTypeAdapter(AuthorisationApprovalPrompt.class, new AuthorisationApprovalPromptSerializer());
-		gsonBuilder.registerTypeAdapter(AuthorisationResponseType.class, new AuthorisationResponseTypeSerializer());
-		gsonBuilder.registerTypeAdapter(AuthorisationScope.class, new AuthorisationScopeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaActivityType.class, new ActivityTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaActivityZoneType.class, new ActivityZoneTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaAgeGroup.class, new AgeGroupSerializer());
-		gsonBuilder.registerTypeAdapter(StravaClimbCategory.class, new ClimbCategorySerializer());
-		gsonBuilder.registerTypeAdapter(StravaClubType.class, new ClubTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaFollowerState.class, new FollowerStateSerializer());
-		gsonBuilder.registerTypeAdapter(StravaFrameType.class, new FrameTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaGender.class, new GenderSerializer());
-		gsonBuilder.registerTypeAdapter(StravaLeaderboardDateRange.class, new LeaderboardDateRangeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaMapPoint.class, new MapPointSerializer());
-		gsonBuilder.registerTypeAdapter(StravaMeasurementMethod.class, new MeasurementMethodSerializer());
-		gsonBuilder.registerTypeAdapter(StravaPhotoType.class, new PhotoTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaResourceState.class, new ResourceStateSerializer());
-		gsonBuilder.registerTypeAdapter(StravaSegmentActivityType.class, new SegmentActivityTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaSegmentExplorerActivityType.class, new SegmentExplorerActivityTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaSportType.class, new SportTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaStreamResolutionType.class, new StreamResolutionTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaStreamSeriesDownsamplingType.class, new StreamSeriesDownsamplingTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaStream.class, new StravaStreamSerializer());
-		gsonBuilder.registerTypeAdapter(StravaStreamType.class, new StreamTypeSerializer());
-		gsonBuilder.registerTypeAdapter(StravaWeightClass.class, new WeightClassSerializer());
-		gsonBuilder.registerTypeAdapter(StravaWorkoutType.class, new WorkoutTypeSerializer());
+		this.gsonBuilder = new GsonBuilder();
+		this.gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+		this.gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		this.gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
+		this.gsonBuilder.registerTypeAdapter(AuthorisationApprovalPrompt.class, new AuthorisationApprovalPromptSerializer());
+		this.gsonBuilder.registerTypeAdapter(AuthorisationResponseType.class, new AuthorisationResponseTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(AuthorisationScope.class, new AuthorisationScopeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaActivityType.class, new ActivityTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaActivityZoneType.class, new ActivityZoneTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaAgeGroup.class, new AgeGroupSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaClimbCategory.class, new ClimbCategorySerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaClubType.class, new ClubTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaFollowerState.class, new FollowerStateSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaFrameType.class, new FrameTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaGender.class, new GenderSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaLeaderboardDateRange.class, new LeaderboardDateRangeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaMapPoint.class, new MapPointSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaMeasurementMethod.class, new MeasurementMethodSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaPhotoType.class, new PhotoTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaResourceState.class, new ResourceStateSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaSegmentActivityType.class, new SegmentActivityTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaSegmentExplorerActivityType.class, new SegmentExplorerActivityTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaSportType.class, new SportTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaStreamResolutionType.class, new StreamResolutionTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaStreamSeriesDownsamplingType.class, new StreamSeriesDownsamplingTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaStream.class, new StravaStreamSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaStreamType.class, new StreamTypeSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaWeightClass.class, new WeightClassSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaWorkoutType.class, new WorkoutTypeSerializer());
 
 		
-		gson = gsonBuilder.create();
+		this.gson = this.gsonBuilder.create();
 	}
 
 	/**
 	 * @see stravajava.util.JsonUtil#deserialise(java.io.InputStream, java.lang.Class)
 	 */
 	@Override
-	public <T> T deserialise(InputStream is, Class<T> class1) throws JsonSerialisationException {
+	public <T> T deserialise(final InputStream is, final Class<T> class1) throws JsonSerialisationException {
 		if (is == null) {
 			return null;
 		}
-		return gson.fromJson(new InputStreamReader(is), class1);
+		return this.gson.fromJson(new InputStreamReader(is), class1);
 	}
 
 	/**
 	 * @see stravajava.util.JsonUtil#deserialise(java.lang.String, java.lang.Class)
 	 */
 	@Override
-	public <T> T deserialise(String is, Class<T> class1) throws JsonSerialisationException {
+	public <T> T deserialise(final String is, final Class<T> class1) throws JsonSerialisationException {
 		try {
-			return gson.fromJson(is, class1);
+			return this.gson.fromJson(is, class1);
 		} catch (JsonParseException e) {
 			throw new JsonSerialisationException("Failed to deserialise string '" + is + "' to " + class1.getName(), e);
 		}
@@ -137,8 +137,8 @@ public class JsonUtilImpl implements JsonUtil {
 	 * @see stravajava.util.JsonUtil#serialise(T)
 	 */
 	@Override
-	public <T> String serialise(T object) throws JsonSerialisationException {
-		return gson.toJson(object);
+	public <T> String serialise(final T object) throws JsonSerialisationException {
+		return this.gson.toJson(object);
 	}
 	
 	public Gson getGson() {

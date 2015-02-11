@@ -52,16 +52,16 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	
 	private static HashMap<String,ClubServices> restServices = new HashMap<String,ClubServices>();
 	
-	private ClubServicesRetrofit restService;
+	final ClubServicesRetrofit restService;
 	
 
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#getClub(java.lang.Integer)
 	 */
 	@Override
-	public StravaClub getClub(Integer id) {
+	public StravaClub getClub(final Integer id) {
 		try {
-			return restService.getClub(id);
+			return this.restService.getClub(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {
@@ -75,7 +75,7 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 		}
 	}
 
-	private StravaClub privateClubRepresentation(Integer id) {
+	private StravaClub privateClubRepresentation(final Integer id) {
 		StravaClub club = new StravaClub();
 		club.setId(id);
 		return club;
@@ -86,18 +86,18 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 */
 	@Override
 	public List<StravaClub> listAuthenticatedAthleteClubs() {
-		return Arrays.asList(restService.listAuthenticatedAthleteClubs());
+		return Arrays.asList(this.restService.listAuthenticatedAthleteClubs());
 	}
 
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<StravaAthlete> listClubMembers(Integer id, Paging pagingInstruction) {
+	public List<StravaAthlete> listClubMembers(final Integer id, final Paging pagingInstruction) { 
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>(){
 			@Override
-			public List<StravaAthlete> getPageOfData(Paging thisPage) throws NotFoundException {
-				return Arrays.asList(restService.listClubMembers(id, thisPage.getPage(), thisPage.getPageSize()));
+			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return Arrays.asList(ClubServicesImpl.this.restService.listClubMembers(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -106,11 +106,11 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 * @see stravajava.api.v3.service.ClubServices#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<StravaActivity> listRecentClubActivities(Integer id, Paging pagingInstruction) {
+	public List<StravaActivity> listRecentClubActivities(final Integer id, final Paging pagingInstruction) {
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
 			@Override
-			public List<StravaActivity> getPageOfData(Paging thisPage) throws NotFoundException {
-				return Arrays.asList(restService.listRecentClubActivities(id, thisPage.getPage(), thisPage.getPageSize()));
+			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return Arrays.asList(ClubServicesImpl.this.restService.listRecentClubActivities(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -119,9 +119,9 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 * @see stravajava.api.v3.service.ClubServices#joinClub(java.lang.Integer)
 	 */
 	@Override
-	public StravaClubMembershipResponse joinClub(Integer id) {
+	public StravaClubMembershipResponse joinClub(final Integer id) {
 		try {
-			return restService.join(id);
+			return this.restService.join(id);
 		} catch (NotFoundException e) {
 			return failedClubMembershipResponse();
 		} catch (UnauthorizedException e) {
@@ -144,9 +144,9 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 * @see stravajava.api.v3.service.ClubServices#leaveClub(java.lang.Integer)
 	 */
 	@Override
-	public StravaClubMembershipResponse leaveClub(Integer id) {
+	public StravaClubMembershipResponse leaveClub(final Integer id) {
 		try {
-			return restService.leave(id);
+			return this.restService.leave(id);
 		} catch (UnauthorizedException e) {
 			if (accessTokenIsValid()) {
 				return failedClubMembershipResponse();
@@ -162,7 +162,7 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 * @see stravajava.api.v3.service.ClubServices#listClubMembers(java.lang.Integer)
 	 */
 	@Override
-	public List<StravaAthlete> listClubMembers(Integer id) {
+	public List<StravaAthlete> listClubMembers(final Integer id) {
 		return listClubMembers(id, null);
 	}
 
@@ -170,7 +170,7 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 * @see stravajava.api.v3.service.ClubServices#listRecentClubActivities(java.lang.Integer)
 	 */
 	@Override
-	public List<StravaActivity> listRecentClubActivities(Integer id) {
+	public List<StravaActivity> listRecentClubActivities(final Integer id) {
 		List<StravaActivity> activities = listRecentClubActivities(id, null);
 		
 		// Strava API returns NULL instead of an empty array

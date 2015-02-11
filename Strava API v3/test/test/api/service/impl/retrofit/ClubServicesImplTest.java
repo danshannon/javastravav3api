@@ -241,12 +241,16 @@ public class ClubServicesImplTest {
 	
 	@Test
 	public void testListClubMembers_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+	    List<StravaAthlete> athletes = getClubService().listClubMembers(TestUtils.CLUB_VALID_ID, new Paging(1,2,1,0));
+	    assertNotNull(athletes);
+	    assertEquals(1,athletes.size());
 	}
 	
 	@Test
 	public void testListClubMembers_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+	    List<StravaAthlete> athletes = getClubService().listClubMembers(TestUtils.CLUB_VALID_ID, new Paging(1,2,0,1));
+	    assertNotNull(athletes);
+	    assertEquals(1,athletes.size());
 	}
 	
 	// Test cases
@@ -342,12 +346,20 @@ public class ClubServicesImplTest {
 	
 	@Test
 	public void testListRecentClubActivities_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+	    List<StravaActivity> activities = getClubService().listRecentClubActivities(TestUtils.CLUB_VALID_ID, new Paging(1,2,1,0));
+	    assertNotNull(activities);
+	    assertEquals(1,activities.size());
+	    List<StravaActivity> expectedActivities = getClubService().listRecentClubActivities(TestUtils.CLUB_VALID_ID);
+	    assertEquals(expectedActivities.get(1),activities.get(0));
 	}
 	
 	@Test 
 	public void testListRecentClubActivities_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+	    List<StravaActivity> activities = getClubService().listRecentClubActivities(TestUtils.CLUB_VALID_ID, new Paging(1,2,0,1));
+	    assertNotNull(activities);
+	    assertEquals(1,activities.size());
+	    List<StravaActivity> expectedActivities = getClubService().listRecentClubActivities(TestUtils.CLUB_VALID_ID);
+	    assertEquals(expectedActivities.get(0),activities.get(0));
 	}
 
 	// Test cases
@@ -515,7 +527,7 @@ public class ClubServicesImplTest {
 	 * @param id Id of the club we're checking for membership
 	 * @return <code>true</code> if one of the clubs has the given id
 	 */
-	private boolean checkIsMember(List<StravaClub> clubs, Integer id) {
+	private boolean checkIsMember(final List<StravaClub> clubs, final Integer id) {
 		for (StravaClub club : clubs) {
 			if (club.getId().intValue() == id.intValue()) {
 				return true;

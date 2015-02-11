@@ -15,7 +15,7 @@ import stravajava.api.v3.service.exception.BadRequestException;
  */
 public class UploadServicesImpl extends StravaServiceImpl implements UploadServices {
 	
-	private UploadServicesImpl(String token) {
+	private UploadServicesImpl(final String token) {
 		super(token);
 		this.restService = Retrofit.retrofit(UploadServicesRetrofit.class,token,UploadServicesRetrofit.LOG_LEVEL);
 	}
@@ -39,19 +39,19 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 	
 	private static HashMap<String,UploadServices> restServices = new HashMap<String,UploadServices>();
 	
-	private UploadServicesRetrofit restService;
+	private final UploadServicesRetrofit restService;
 
 	/**
 	 * @see stravajava.api.v3.service.UploadServices#upload(stravajava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
 	 */
 	@Override
-	public StravaUploadResponse upload(StravaActivityType activityType, String name, String description, Boolean _private, Boolean trainer,
-			String dataType, String externalId, File file) {
+	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer,
+			final String dataType, final String externalId, final File file) {
 		if (file == null) { 
 			throw new IllegalArgumentException("Cannot upload a <null> file!");
 		}
 		try {
-			return restService.upload(activityType, name, description, _private, trainer, dataType, externalId, new TypedFile("text/xml",file));
+			return this.restService.upload(activityType, name, description, _private, trainer, dataType, externalId, new TypedFile("text/xml",file));
 		} catch (BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -61,8 +61,8 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 	 * @see stravajava.api.v3.service.UploadServices#checkUploadStatus(java.lang.Integer)
 	 */
 	@Override
-	public StravaUploadResponse checkUploadStatus(Integer id) {
-		return restService.checkUploadStatus(id);
+	public StravaUploadResponse checkUploadStatus(final Integer id) {
+		return this.restService.checkUploadStatus(id);
 	}
 
 }

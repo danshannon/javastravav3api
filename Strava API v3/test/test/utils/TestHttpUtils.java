@@ -39,8 +39,8 @@ public class TestHttpUtils {
 	private static final AuthorisationResponseType DEFAULT_RESPONSE_TYPE = AuthorisationResponseType.CODE;
 	private static final String DEFAULT_REDIRECT_URI = "http://localhost";
 	
-	private CloseableHttpClient httpClient;
-	private BasicCookieStore cookieStore;
+	private final CloseableHttpClient httpClient;
+	private final BasicCookieStore cookieStore;
 
 	public TestHttpUtils() {
 		
@@ -49,7 +49,7 @@ public class TestHttpUtils {
 		this.httpClient = HttpClients.custom().setDefaultCookieStore(this.cookieStore).build();
 	}
 
-	public Document httpGet(String uri, NameValuePair... parameters) throws IOException {
+	public Document httpGet(final String uri, final NameValuePair... parameters) throws IOException {
 		HttpUriRequest get = null;
 		Document page = null;
 		if (parameters == null) {
@@ -82,7 +82,7 @@ public class TestHttpUtils {
 	 * @param authenticityToken token handed out by the Strava login page within the login form
 	 * @return The string URL to redirect to next
 	 */
-	public String login(String email, String password, String authenticityToken) {
+	public String login(final String email, final String password, final String authenticityToken) {
 		String location = null;
 		try {
 			HttpUriRequest login = RequestBuilder.post()
@@ -92,7 +92,7 @@ public class TestHttpUtils {
 					.addParameter("authenticity_token",authenticityToken)
 					.addParameter("utf8","✓")
 					.build();
-			CloseableHttpResponse response2 = httpClient.execute(login);
+			CloseableHttpResponse response2 = this.httpClient.execute(login);
 			try {
 				HttpEntity entity = response2.getEntity();
 				location = response2.getFirstHeader("Location").getValue();
@@ -118,7 +118,7 @@ public class TestHttpUtils {
 	 * @param authenticityToken The hidden value of the authenticity token which must be returned with the form to Strava
 	 * @return The code used by {@link #tokenExchange(Integer, String, String)} to get an access token
 	 */
-	public String acceptApplication(String authenticityToken, AuthorisationScope... scopes) {
+	public String acceptApplication(final String authenticityToken, final AuthorisationScope... scopes) {
 		String scopeString = "";
 		for (AuthorisationScope scope : scopes) {
 			scopeString = scopeString + scope.toString() + ",";
@@ -133,7 +133,7 @@ public class TestHttpUtils {
 					.addParameter("authenticity_token", authenticityToken)
 					.addParameter("scope",scopeString)
 					.build();
-			CloseableHttpResponse response2 = httpClient.execute(post);
+			CloseableHttpResponse response2 = this.httpClient.execute(post);
 			try {
 				HttpEntity entity = response2.getEntity();
 				location = response2.getFirstHeader("Location").getValue();
@@ -180,7 +180,7 @@ public class TestHttpUtils {
 	 * @return The authenticity token
 	 * @throws IOException
 	 */
-	public String getAuthorisationPageAuthenticityToken(AuthorisationScope... scopes) {
+	public String getAuthorisationPageAuthenticityToken(final AuthorisationScope... scopes) {
 		String scopeString = "";
 		for (AuthorisationScope scope : scopes) {
 			scopeString = scopeString + scope.toString() + ",";
@@ -209,7 +209,7 @@ public class TestHttpUtils {
 	 * @param password
 	 * @throws IOException 
 	 */
-	public void loginToSession(String username, String password) throws IOException, UnauthorizedException {
+	public void loginToSession(final String username, final String password) throws IOException, UnauthorizedException {
 		// Get the login page and find the authenticity token that Strava cunningly hides in there :)
 		String authenticityToken = getLoginAuthenticityToken();
 		if (authenticityToken == null || authenticityToken.equals("")) {
@@ -233,7 +233,7 @@ public class TestHttpUtils {
 	 * @param scopes
 	 * @return
 	 */
-	public String approveApplication(AuthorisationScope... scopes) {
+	public String approveApplication(final AuthorisationScope... scopes) {
 		// Get the auth page
 		String authenticityToken = getAuthorisationPageAuthenticityToken(scopes);
 		
@@ -252,7 +252,7 @@ public class TestHttpUtils {
 	 * @throws BadRequestException 
 	 * @throws UnauthorizedException If client secret is invalid
 	 */
-	public Token getStravaAccessToken(String username, String password, AuthorisationScope... scopes) throws BadRequestException, UnauthorizedException {
+	public Token getStravaAccessToken(final String username, final String password, final AuthorisationScope... scopes) throws BadRequestException, UnauthorizedException {
 		AuthorisationServices service = new AuthorisationServicesImpl();
 		
 		// Login

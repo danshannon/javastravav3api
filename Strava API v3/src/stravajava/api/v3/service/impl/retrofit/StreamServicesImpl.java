@@ -18,7 +18,7 @@ import stravajava.api.v3.service.exception.NotFoundException;
  *
  */
 public class StreamServicesImpl extends StravaServiceImpl implements StreamServices {
-	private StreamServicesImpl(String token) {
+	private StreamServicesImpl(final String token) {
 		super(token);
 		this.restService = Retrofit.retrofit(StreamServicesRetrofit.class, token, StreamServicesRetrofit.LOG_LEVEL);
 	}
@@ -45,18 +45,19 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	
 	private static HashMap<String,StreamServices> restServices = new HashMap<String,StreamServices>();
 	
-	private StreamServicesRetrofit restService;
+	private final StreamServicesRetrofit restService;
 
 	/**
 	 * @see stravajava.api.v3.service.StreamServices#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
 	@Override
-	public List<StravaStream> getActivityStreams(Integer id, StravaStreamResolutionType resolution,
-			StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) {
-		validateArguments(resolution,seriesType,types);
-		if (types == null || types.length == 0) { types = getAllStreamTypes(); }
+	public List<StravaStream> getActivityStreams(final Integer id, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
+	    StravaStreamType[] typesToGet = types;
+		validateArguments(resolution,seriesType,typesToGet);
+		if (typesToGet == null || typesToGet.length == 0) { typesToGet = getAllStreamTypes(); }
 		try {
-			return Arrays.asList(restService.getActivityStreams(id, typeString(types), resolution, seriesType));
+			return Arrays.asList(this.restService.getActivityStreams(id, typeString(typesToGet), resolution, seriesType));
 		} catch (NotFoundException e) {
 			return null;
 		} catch (BadRequestException e) {
@@ -69,8 +70,8 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 * @param seriesType
 	 * @param types
 	 */
-	private void validateArguments(StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType,
-			StravaStreamType... types) {
+	private void validateArguments(final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaStreamType... types) {
 		if (resolution == StravaStreamResolutionType.UNKNOWN) {
 			throw new IllegalArgumentException("Invalid stream resolution type " + resolution);
 		}
@@ -90,7 +91,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 * @param types
 	 * @return
 	 */
-	private String typeString(StravaStreamType[] types) {
+	private String typeString(final StravaStreamType[] types) {
 		if (types.length == 0) { 
 			return null;
 		}
@@ -108,12 +109,13 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 * @see stravajava.api.v3.service.StreamServices#getEffortStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
 	@Override
-	public List<StravaStream> getEffortStreams(Long id, StravaStreamResolutionType resolution,
-			StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) {
+	public List<StravaStream> getEffortStreams(final Long id, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
 		validateArguments(resolution,seriesType,types);
-		if (types == null || types.length == 0) { types = getAllStreamTypes(); }
+		StravaStreamType[] typesToGet = types;
+		if (types == null || types.length == 0) { typesToGet = getAllStreamTypes(); }
 		try {
-			return Arrays.asList(restService.getEffortStreams(id, typeString(types), resolution, seriesType));
+			return Arrays.asList(this.restService.getEffortStreams(id, typeString(typesToGet), resolution, seriesType));
 		} catch (NotFoundException e) {
 			return null;
 		} catch (BadRequestException e) {
@@ -125,15 +127,16 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 * @see stravajava.api.v3.service.StreamServices#getSegmentStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
 	@Override
-	public List<StravaStream> getSegmentStreams(Integer id, StravaStreamResolutionType resolution,
-			StravaStreamSeriesDownsamplingType seriesType, StravaStreamType... types) {
+	public List<StravaStream> getSegmentStreams(final Integer id, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
 		validateArguments(resolution,seriesType,types);
+		StravaStreamType[] typesToGet = types;
 		if (seriesType == StravaStreamSeriesDownsamplingType.TIME) {
 			throw new IllegalArgumentException("Cannot downsample a Segment by TIME");
 		}
-		if (types == null || types.length == 0) { types = getAllStreamTypes(); }
+		if (types == null || types.length == 0) { typesToGet = getAllStreamTypes(); }
 		try {
-			return Arrays.asList(restService.getSegmentStreams(id, typeString(types), resolution, seriesType));
+			return Arrays.asList(this.restService.getSegmentStreams(id, typeString(typesToGet), resolution, seriesType));
 		} catch (NotFoundException e) {
 			return null;
 		} catch (BadRequestException e) {
@@ -145,7 +148,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 * @see stravajava.api.v3.service.StreamServices#getActivityStreams(java.lang.Integer)
 	 */
 	@Override
-	public List<StravaStream> getActivityStreams(Integer id) {
+	public List<StravaStream> getActivityStreams(final Integer id) {
 		return getActivityStreams(id, null, null, getAllStreamTypes());
 	}
 
@@ -164,12 +167,12 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	}
 
 	@Override
-	public List<StravaStream> getEffortStreams(Long id) {
+	public List<StravaStream> getEffortStreams(final Long id) {
 		return getEffortStreams(id, null, null, getAllStreamTypes());
 	}
 
 	@Override
-	public List<StravaStream> getSegmentStreams(Integer id) {
+	public List<StravaStream> getSegmentStreams(final Integer id) {
 		return getSegmentStreams(id, null, null, getAllStreamTypes());
 	}
 

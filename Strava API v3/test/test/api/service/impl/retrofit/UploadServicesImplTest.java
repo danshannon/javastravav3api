@@ -83,14 +83,14 @@ public class UploadServicesImplTest {
 		waitForCompletionAndDelete(response);
 	}
 	
-	private void waitForCompletionAndDelete(StravaUploadResponse response) {
+	private void waitForCompletionAndDelete(final StravaUploadResponse response) {
 		UploadServices service = getService();
 		Integer id = response.getId();
+		StravaUploadResponse localResponse = null;
 		boolean loop = true;
 		while (loop) {
-			response = service.checkUploadStatus(id);
-			System.out.println(response);
-			if (!response.getStatus().equals("Your activity is still being processed.")) {
+			localResponse = service.checkUploadStatus(id);
+			if (!localResponse.getStatus().equals("Your activity is still being processed.")) {
 				loop = false;
 			} else {
 				try {
@@ -100,11 +100,11 @@ public class UploadServicesImplTest {
 				}
 			}
 		}
-		if (response.getStatus().equals("Your activity is ready.")) {
+		if (localResponse.getStatus().equals("Your activity is ready.")) {
 			ActivityServices activityService = ActivityServicesImpl.implementation(TestUtils.getValidToken());
 			loop = true;
 			while (loop) {
-				StravaActivity activity = activityService.getActivity(response.getActivityId());
+				StravaActivity activity = activityService.getActivity(localResponse.getActivityId());
 				if (activity != null && activity.getResourceState() != StravaResourceState.UPDATING) {
 					loop = false;
 				} else {
@@ -115,7 +115,7 @@ public class UploadServicesImplTest {
 					}
 				}
 			}
-			activityService.deleteActivity(response.getActivityId());
+			activityService.deleteActivity(localResponse.getActivityId());
 		}
 
 	}

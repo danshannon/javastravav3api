@@ -17,7 +17,7 @@ public class Token {
 	private String token;
 	private List<AuthorisationScope> scopes;
 
-	public Token(TokenResponse tokenResponse, AuthorisationScope... scopes) {
+	public Token(final TokenResponse tokenResponse, final AuthorisationScope... scopes) {
 		this.athlete = tokenResponse.getAthlete();
 		this.token = tokenResponse.getAccessToken();
 		this.scopes = Arrays.asList(scopes);

@@ -221,12 +221,20 @@ public class AthleteServicesImplTest {
 	
 	@Test
 	public void testListAthleteKOMs_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaSegmentEffort> efforts = getService().listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,2,1,0));
+		assertNotNull(efforts);
+		assertEquals(1,efforts.size());
+		List<StravaSegmentEffort> expectedEfforts = getService().listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID);
+		assertEquals(expectedEfforts.get(1),efforts.get(0));
 	}
 	
 	@Test
 	public void testListAthleteKOMs_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaSegmentEffort> efforts = getService().listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,2,0,1));
+		assertNotNull(efforts);
+		assertEquals(1,efforts.size());
+		List<StravaSegmentEffort> expectedEfforts = getService().listAthleteKOMs(TestUtils.ATHLETE_AUTHENTICATED_ID);
+		assertEquals(expectedEfforts.get(0),efforts.get(0));
 	}
 
 	@Test
@@ -281,12 +289,16 @@ public class AthleteServicesImplTest {
 
 	@Test
 	public void testListAuthenticatedAthleteFriends_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaAthlete> athletes = getService().listAuthenticatedAthleteFriends(new Paging(1,2,1,0));
+		assertNotNull(athletes);
+		assertEquals(1,athletes.size());
 	}
 	
 	@Test
 	public void testListAuthenticatedAthleteFriends_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaAthlete> athletes = getService().listAuthenticatedAthleteFriends(new Paging(1,2,0,1));
+		assertNotNull(athletes);
+		assertEquals(1,athletes.size());
 	}
 	
 	@Test
@@ -446,12 +458,16 @@ public class AthleteServicesImplTest {
 	
 	@Test
 	public void testListAthletesBothFollowing_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaAthlete> athletes = getService().listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID,new Paging(1,2,1,0));
+		assertNotNull(athletes);
+		assertEquals(1,athletes.size());
 	}
 	
 	@Test
 	public void testListAthletesBothFollowing_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaAthlete> athletes = getService().listAthletesBothFollowing(TestUtils.ATHLETE_VALID_ID,new Paging(1,2,0,1));
+		assertNotNull(athletes);
+		assertEquals(1,athletes.size());
 	}
 
 	@Test

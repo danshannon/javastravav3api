@@ -49,7 +49,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	
 	private static HashMap<String,AthleteServices> restServices = new HashMap<String,AthleteServices>();
 	
-	private AthleteServicesRetrofit restService;
+	final AthleteServicesRetrofit restService;
 	
 
 	/**
@@ -57,16 +57,16 @@ public class AthleteServicesImpl implements AthleteServices {
 	 */
 	@Override
 	public StravaAthlete getAuthenticatedAthlete() {
-		return restService.getAuthenticatedAthlete();
+		return this.restService.getAuthenticatedAthlete();
 	}
 
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#getAthlete(java.lang.Integer)
 	 */
 	@Override
-	public StravaAthlete getAthlete(Integer id) {
+	public StravaAthlete getAthlete(final Integer id) {
 		try {
-			return restService.getAthlete(id);
+			return this.restService.getAthlete(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {
@@ -84,19 +84,19 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String, stravajava.api.v3.model.reference.StravaGender, java.lang.Float)
 	 */
 	@Override
-	public StravaAthlete updateAuthenticatedAthlete(String city, String state, String country, StravaGender sex, Float weight) {
-		return restService.updateAuthenticatedAthlete(city, state, country, sex, weight);
+	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
+		return this.restService.updateAuthenticatedAthlete(city, state, country, sex, weight);
 	}
 
 	/**
 	 * @see stravajava.api.v3.service.AthleteServices#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<StravaSegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction) {
+	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id, final Paging pagingInstruction) { 
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
 			@Override
-			public List<StravaSegmentEffort> getPageOfData(Paging thisPage) throws NotFoundException {
-				return Arrays.asList(restService.listAthleteKOMs(id, thisPage.getPage(), thisPage.getPageSize()));
+			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return Arrays.asList(AthleteServicesImpl.this.restService.listAthleteKOMs(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -105,12 +105,12 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<StravaAthlete> listAuthenticatedAthleteFriends(Paging pagingInstruction) {
+	public List<StravaAthlete> listAuthenticatedAthleteFriends(final Paging pagingInstruction) {
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>() {
 
 			@Override
-			public List<StravaAthlete> getPageOfData(Paging thisPage) throws NotFoundException {
-				return Arrays.asList(restService.listAuthenticatedAthleteFriends(thisPage.getPage(), thisPage.getPageSize()));
+			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return Arrays.asList(AthleteServicesImpl.this.restService.listAuthenticatedAthleteFriends(thisPage.getPage(), thisPage.getPageSize()));
 			}
 			
 		});
@@ -120,11 +120,11 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#listAthleteFriends(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<StravaAthlete> listAthleteFriends(Integer id, Paging pagingInstruction) {
+	public List<StravaAthlete> listAthleteFriends(final Integer id, final Paging pagingInstruction) {
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>() {
 			@Override
-			public List<StravaAthlete> getPageOfData(Paging thisPage) throws NotFoundException {
-				return Arrays.asList(restService.listAthleteFriends(id, thisPage.getPage(), thisPage.getPageSize()));
+			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return Arrays.asList(AthleteServicesImpl.this.restService.listAthleteFriends(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -133,11 +133,11 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<StravaAthlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction) {
+	public List<StravaAthlete> listAthletesBothFollowing(final Integer id, final Paging pagingInstruction) {
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>() {
 			@Override
-			public List<StravaAthlete> getPageOfData(Paging thisPage) throws NotFoundException {
-				return Arrays.asList(restService.listAthletesBothFollowing(id, thisPage.getPage(), thisPage.getPageSize()));
+			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return Arrays.asList(AthleteServicesImpl.this.restService.listAthletesBothFollowing(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -146,7 +146,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#listAthleteKOMs(java.lang.Integer)
 	 */
 	@Override
-	public List<StravaSegmentEffort> listAthleteKOMs(Integer id) {
+	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id) {
 		return listAthleteKOMs(id, null);
 	}
 
@@ -162,7 +162,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#listAthleteFriends(java.lang.Integer)
 	 */
 	@Override
-	public List<StravaAthlete> listAthleteFriends(Integer id) {
+	public List<StravaAthlete> listAthleteFriends(final Integer id) {
 		return listAthleteFriends(id, null);
 	}
 
@@ -170,7 +170,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#listAthletesBothFollowing(java.lang.Integer)
 	 */
 	@Override
-	public List<StravaAthlete> listAthletesBothFollowing(Integer id) {
+	public List<StravaAthlete> listAthletesBothFollowing(final Integer id) {
 		return listAthletesBothFollowing(id, null);
 	}
 	
@@ -187,9 +187,9 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @see stravajava.api.v3.service.AthleteServices#statistics(Integer)
 	 */
 	@Override
-	public StravaStatistics statistics(Integer id) {
+	public StravaStatistics statistics(final Integer id) {
 		try {
-			return restService.statistics(id);
+			return this.restService.statistics(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {

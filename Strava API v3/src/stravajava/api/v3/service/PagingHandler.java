@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stravajava.api.v3.service.exception.NotFoundException;
+import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
 
 /**
@@ -11,7 +12,7 @@ import stravajava.util.Paging;
  *
  */
 public class PagingHandler {
-	public static <T> List<T> handlePaging(Paging pagingInstruction, PagingCallback<T> callback) {
+	public static <T> List<T> handlePaging(final Paging pagingInstruction, final PagingCallback<T> callback) {
 		Strava.validatePagingArguments(pagingInstruction);
 		List<T> records = new ArrayList<T>();
 		try {
@@ -23,8 +24,9 @@ public class PagingHandler {
 				records.addAll(pageOfData);
 			}
 		} catch (NotFoundException e) {
-			// Athlete doesn't exist
 			return null;
+		} catch (UnauthorizedException e) {
+		    return new ArrayList<T>();
 		}
 		return records;
 

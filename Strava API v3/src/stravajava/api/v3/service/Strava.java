@@ -24,7 +24,7 @@ public class Strava {
 	 * @param inputPaging 
 	 * @return List of Strava paging instructions that can be given to the Strava engine
 	 */
-	public static List<Paging> convertToStravaPaging(Paging inputPaging) {
+	public static List<Paging> convertToStravaPaging(final Paging inputPaging) {
 		validatePagingArguments(inputPaging);
 		List<Paging> stravaPaging = new ArrayList<Paging>();
 		if (inputPaging == null) {
@@ -105,7 +105,7 @@ public class Strava {
 	 * @param ignoreLastN
 	 * @return
 	 */
-	public static <T> List<T> ignoreLastN(List<T> list, int ignoreLastN) {
+	public static <T> List<T> ignoreLastN(final List<T> list, final int ignoreLastN) {
 		if (ignoreLastN < 0) {
 			throw new IllegalArgumentException("Cannot remove " + ignoreLastN + " items from a list!");
 		}
@@ -116,13 +116,12 @@ public class Strava {
 			return list;
 		}
 		if (ignoreLastN >= list.size()) {
-			list = new ArrayList<T>();
-			return list;
+			return new ArrayList<T>();
 		}
 		return list.subList(0, list.size() - ignoreLastN);
 	}
 	
-	public static <T> List<T> ignoreFirstN(List<T> list, int ignoreFirstN) {
+	public static <T> List<T> ignoreFirstN(final List<T> list, final int ignoreFirstN) {
 		if (ignoreFirstN < 0) {
 			throw new IllegalArgumentException("Cannot remove " + ignoreFirstN + " items from a list!");
 		}
@@ -133,8 +132,7 @@ public class Strava {
 			return list;
 		}
 		if (ignoreFirstN >= list.size()) {
-			list = new ArrayList<T>();
-			return list;
+			return new ArrayList<T>();
 		}
 		//return list.subList(ignoreFirstN, list.size() - 1);
 		ArrayList<T> returnList = new ArrayList<T>();
@@ -148,7 +146,7 @@ public class Strava {
 	 * <p>Throw an IllegalArgumentException if the page or perPage parameters are set but are invalid</p>
 	 * @param pagingInstruction The page to be returned
 	 */
-	public static void validatePagingArguments(Paging pagingInstruction) {
+	public static void validatePagingArguments(final Paging pagingInstruction) {
 		if (pagingInstruction == null) { 
 			return;
 		}

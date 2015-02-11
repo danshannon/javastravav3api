@@ -3,49 +3,58 @@ package stravajava.api.v3.auth.ref;
 import stravajava.api.v3.auth.AuthorisationServices;
 
 /**
- * <p>Valid authorisation response types for {@link AuthorisationServices#requestAccess(Integer, String, AuthorisationResponseType, stravajava.api.v3.auth.AuthorisationApprovalPrompt, stravajava.api.v3.auth.AuthorisationScope[], String) access requests}</p>
+ * <p>
+ * Valid authorisation response types for
+ * {@link AuthorisationServices#requestAccess(Integer, String, AuthorisationResponseType, stravajava.api.v3.auth.AuthorisationApprovalPrompt, stravajava.api.v3.auth.AuthorisationScope[], String)
+ * access requests}
+ * </p>
+ *
+ * <p>
+ * As of Strava API v3.0, this value must be set to {@link #CODE}
+ * </p>
  * 
- * <p>As of Strava API v3.0, this value must be set to {@link #CODE}</p>
  * @author Dan Shannon
  *
  */
 public enum AuthorisationResponseType {
-	CODE("code"),
-	UNKNOWN("UNKNOWN");
-	
-	private final String id;
-	
-	private AuthorisationResponseType(String id) {
-		this.id = id;
-	}
+    CODE("code"), UNKNOWN("UNKNOWN");
 
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return this.id;
+    /**
+     * Required by GSON serialiser
+     * 
+     * @param id
+     *            The String value of the id
+     * @return An instance of {@link AuthorisationResponseType} corresponding to
+     *         the id, or {@link #UNKNOWN} if no such instance is available.
+     */
+    public static AuthorisationResponseType create(final String id) {
+	for (final AuthorisationResponseType type : AuthorisationResponseType.values()) {
+	    if (type.getId().equals(id)) {
+		return type;
+	    }
 	}
+	return AuthorisationResponseType.UNKNOWN;
+    }
 
-	/**
-	 * @see java.lang.Enum#toString()
-	 */
-	@Override
-	public String toString() {
-		return this.id;
-	}
+    private final String id;
 
-	/**
-	 * Required by GSON serialiser
-	 * @param id The String value of the id
-	 * @return An instance of {@link AuthorisationResponseType} corresponding to the id, or {@link #UNKNOWN} if no such instance is available.
-	 */
-	public static AuthorisationResponseType create(String id) {
-		for (AuthorisationResponseType type : AuthorisationResponseType.values()) {
-			if (type.getId().equals(id)) {
-				return type;
-			}
-		}
-		return AuthorisationResponseType.UNKNOWN;
-	}
+    private AuthorisationResponseType(final String id) {
+	this.id = id;
+    }
+
+    /**
+     * @return the id
+     */
+    public String getId() {
+	return this.id;
+    }
+
+    /**
+     * @see java.lang.Enum#toString()
+     */
+    @Override
+    public String toString() {
+	return this.id;
+    }
 
 }

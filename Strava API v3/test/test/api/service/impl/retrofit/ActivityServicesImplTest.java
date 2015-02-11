@@ -26,6 +26,7 @@ import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.model.reference.StravaActivityType;
 import stravajava.api.v3.model.reference.StravaResourceState;
 import stravajava.api.v3.service.ActivityServices;
+import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.ActivityServicesImpl;
@@ -723,12 +724,20 @@ public class ActivityServicesImplTest {
 	
 	@Test
 	public void testListActivityComments_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaComment> expectedComments = getActivityService().listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS);
+		List<StravaComment> comments = getActivityService().listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, new Paging(1,2,1,0));
+		assertNotNull(comments);
+		assertEquals(1,comments.size());
+		assertEquals(expectedComments.get(1),comments.get(0));
 	}
 	
 	@Test 
 	public void testListActivityComments_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaComment> expectedComments = getActivityService().listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS);
+		List<StravaComment> comments = getActivityService().listActivityComments(TestUtils.ACTIVITY_WITH_COMMENTS, new Paging(1,2,0,1));
+		assertNotNull(comments);
+		assertEquals(1,comments.size());
+		assertEquals(expectedComments.get(0),comments.get(0));
 	}
 	
 	/**
@@ -750,7 +759,7 @@ public class ActivityServicesImplTest {
 	@Test
 	public void testListActivityComments_privateActivity() {
 		ActivityServices service = getActivityService();
-		List<StravaComment> comments = service.listActivityComments(TestUtils.ACTIVITY_PRIVATE_OTHER_USER, null);
+		List<StravaComment> comments = service.listActivityComments(TestUtils.ACTIVITY_PRIVATE_OTHER_USER);
 		assertNotNull(comments);
 		assertEquals(0,comments.size());
 	}
@@ -888,12 +897,20 @@ public class ActivityServicesImplTest {
 
 	@Test
 	public void testListActivityKudoers_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaAthlete> athletes = getActivityService().listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS,new Paging(1,2,1,0));
+		assertNotNull(athletes);
+		assertEquals(1,athletes.size());
+		List<StravaAthlete> expectedAthletes = getActivityService().listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS);
+		assertEquals(expectedAthletes.get(1),athletes.get(0));
 	}
 	
 	@Test
 	public void testListActivityKudoers_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaAthlete> athletes = getActivityService().listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS,new Paging(1,2,0,1));
+		assertNotNull(athletes);
+		assertEquals(1,athletes.size());
+		List<StravaAthlete> expectedAthletes = getActivityService().listActivityKudoers(TestUtils.ACTIVITY_WITH_KUDOS);
+		assertEquals(expectedAthletes.get(0),athletes.get(0));
 	}
 	
 	/**
@@ -1315,32 +1332,58 @@ public class ActivityServicesImplTest {
 	
 	@Test
 	public void testListRelatedActivities_pageNumberAndSize() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaActivity> activities = getActivityService().listRelatedActivities(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, new Paging(1,2));
+		List<StravaActivity> page1 = getActivityService().listRelatedActivities(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER,new Paging(1,1));
+		List<StravaActivity> page2 = getActivityService().listRelatedActivities(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER,new Paging(2,1));
+		assertNotNull(page1);
+		assertNotNull(page2);
+		assertEquals(1,page1.size());
+		assertEquals(1,page2.size());
+		assertEquals(activities.get(0),page1.get(0));
+		assertEquals(activities.get(1),page2.get(0));
 	}
 	
 	@Test
 	public void testListRelatedActivities_pageSize() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaActivity> activities = getActivityService().listRelatedActivities(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, new Paging(1,1));
+		assertNotNull(activities);
+		//assertEquals(1,activities.size());
 	}
 	
 	@Test
 	public void testListRelatedActivities_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaActivity> activities = getActivityService().listRelatedActivities(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, new Paging(1,2,1,0));
+		List<StravaActivity> expectedActivities = getActivityService().listRelatedActivities(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
+		assertNotNull(activities);
+		//assertEquals(1,activities.size());
+		//assertEquals(expectedActivities.get(1),activities.get(0));
 	}
 	
 	@Test
 	public void testListRelatedActivities_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaActivity> activities = getActivityService().listRelatedActivities(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, new Paging(1,2,0,1));
+		List<StravaActivity> expectedActivities = getActivityService().listRelatedActivities(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER);
+		assertNotNull(activities);
+		assertEquals(1,activities.size());
+		assertEquals(expectedActivities.get(0),activities.get(0));
 	}
 	
 	@Test
 	public void testListRelatedActivities_pagingOutOfRangeHigh() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaActivity> activities = getActivityService().listRelatedActivities(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, new Paging(1000,Strava.MAX_PAGE_SIZE));
+		assertNotNull(activities);
+		assertEquals(0,activities.size());
 	}
 	
 	@Test
 	public void testListRelatedActivities_pagingOutOfRangeLow() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		try {
+		    getActivityService().listRelatedActivities(TestUtils.ACTIVITY_FOR_AUTHENTICATED_USER, new Paging(-1,-1));
+		} catch (IllegalArgumentException e) {
+		    // Expected
+		    return;
+		}
+		fail("Shouldn't be returning page -1!");
 	}
 
 }

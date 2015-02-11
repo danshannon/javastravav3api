@@ -20,7 +20,7 @@ import stravajava.util.Paging;
  *
  */
 public class StravaTest {
-	private Random random = new Random(System.currentTimeMillis());
+	private final Random random = new Random(System.currentTimeMillis());
 
 	@Test
 	public void testConvertToStravaPaging_small() {
@@ -53,7 +53,7 @@ public class StravaTest {
 		
 		// Remove a random number of elements from it
 		int size = list.size();
-		int firstN = random.nextInt(list.size() - 2) + 1; // i.e. between 1 and list.size() - 1
+		int firstN = this.random.nextInt(list.size() - 2) + 1; // i.e. between 1 and list.size() - 1
 		List<String> result = Strava.ignoreFirstN(list, firstN);
 		assertEquals(size - firstN,result.size());
 	}
@@ -63,7 +63,7 @@ public class StravaTest {
 	 */
 	private List<String> getRandomList() {
 		List<String> result = new ArrayList<String>();
-		int size = random.nextInt(998) + 2; // i.e. must be at least 2
+		int size = this.random.nextInt(998) + 2; // i.e. must be at least 2
 		Fairy fairy = Fairy.create();
 		for (int i = 1; i <= size; i++) {
 			result.add(fairy.textProducer().sentence());
@@ -109,7 +109,7 @@ public class StravaTest {
 		
 		// Remove a random number of elements from it
 		int size = list.size();
-		int lastN = random.nextInt(list.size() - 2) + 1; // i.e. between 1 and list.size() - 1
+		int lastN = this.random.nextInt(list.size() - 2) + 1; // i.e. between 1 and list.size() - 1
 		List<String> result = Strava.ignoreLastN(list, lastN);
 		assertEquals(size - lastN,result.size());
 	}

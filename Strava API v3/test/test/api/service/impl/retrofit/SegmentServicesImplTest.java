@@ -212,12 +212,16 @@ public class SegmentServicesImplTest {
 	
 	@Test
 	public void testListAuthenticatedAthleteStarredSegments_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaSegment> segments = getService().listAuthenticatedAthleteStarredSegments(new Paging(1,2,1,0));
+		assertNotNull(segments);
+		assertEquals(1,segments.size());
 	}
 	
 	@Test
 	public void testListAuthenticatedAthleteStarredSegments_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaSegment> segments = getService().listAuthenticatedAthleteStarredSegments(new Paging(1,2,0,1));
+		assertNotNull(segments);
+		assertEquals(1,segments.size());
 	}
 	
 	// Test cases
@@ -376,12 +380,16 @@ public class SegmentServicesImplTest {
 	
 	@Test
 	public void testListSegmentEfforts_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+	    List<StravaSegmentEffort> efforts = getService().listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1,2,1,0));
+	    assertNotNull(efforts);
+	    assertEquals(1,efforts.size());
 	}
 	
 	@Test
 	public void testListSegmentEfforts_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+	    List<StravaSegmentEffort> efforts = getService().listSegmentEfforts(TestUtils.SEGMENT_VALID_ID, new Paging(1,2,0,1));
+	    assertNotNull(efforts);
+	    assertEquals(1,efforts.size());
 	}
 
 	// Test cases
@@ -535,12 +543,16 @@ public class SegmentServicesImplTest {
 	
 	@Test
 	public void testGetSegmentLeaderboard_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		StravaSegmentLeaderboard leaderBoard = getService().getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,2,1,0));
+		assertNotNull(leaderBoard);
+		assertEquals(1,leaderBoard.getEntries().size());
 	}
 	
 	@Test
 	public void testGetSegmentLeaderboard_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		StravaSegmentLeaderboard leaderBoard = getService().getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,2,0,1));
+		assertNotNull(leaderBoard);
+		assertEquals(1,leaderBoard.getEntries().size());
 	}
 
 	// Test cases
@@ -673,11 +685,15 @@ public class SegmentServicesImplTest {
 	
 	@Test
 	public void testListStarredSegments_pagingIgnoreFirstN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaSegment> segments = getService().listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,2,1,0));
+		assertNotNull(segments);
+		assertEquals(1,segments.size());
 	}
 	
 	@Test
 	public void testListStarredSegments_pagingIgnoreLastN() {
-		fail("Not yet implemented!"); // TODO Implement this test
+		List<StravaSegment> segments = getService().listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,2,0,1));
+		assertNotNull(segments);
+		assertEquals(1,segments.size());
 	}
 }

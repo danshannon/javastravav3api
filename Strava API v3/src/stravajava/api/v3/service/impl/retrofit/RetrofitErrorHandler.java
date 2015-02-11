@@ -17,7 +17,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 	 * @see retrofit.ErrorHandler#handleError(retrofit.RetrofitError)
 	 */
 	@Override
-	public Throwable handleError(RetrofitError cause) {
+	public Throwable handleError(final RetrofitError cause) {
 		Response r = cause.getResponse();
 		
 		// Handle 400 Bad request error
@@ -26,7 +26,6 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		}
 		
 		// Handle 401 Unauthorized error 
-		// TODO Distinguish between security violation and privacy violation
 		if (r != null && r.getStatus() == 401) {
 			return new UnauthorizedException(cause);
 		}

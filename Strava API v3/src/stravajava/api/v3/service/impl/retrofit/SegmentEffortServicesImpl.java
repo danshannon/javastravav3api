@@ -12,7 +12,7 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public class SegmentEffortServicesImpl extends StravaServiceImpl implements SegmentEffortServices {
-	private SegmentEffortServicesImpl(String token) {
+	private SegmentEffortServicesImpl(final String token) {
 		super(token);
 		this.restService = Retrofit.retrofit(SegmentEffortServicesRetrofit.class, token, SegmentEffortServicesRetrofit.LOG_LEVEL);
 	}
@@ -25,7 +25,7 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 	 * @param token The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the segment effort services
 	 */
-	public static SegmentEffortServices implementation(final String token) {
+	public static SegmentEffortServices implementation(final String token) { 
 		SegmentEffortServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new SegmentEffortServicesImpl(token);
@@ -39,15 +39,15 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 	
 	private static HashMap<String,SegmentEffortServices> restServices = new HashMap<String,SegmentEffortServices>();
 	
-	private SegmentEffortServicesRetrofit restService;
+	private final SegmentEffortServicesRetrofit restService;
 
 	/**
 	 * @see stravajava.api.v3.service.SegmentEffortServices#getSegmentEffort(java.lang.Integer)
 	 */
 	@Override
-	public StravaSegmentEffort getSegmentEffort(Long id) {
+	public StravaSegmentEffort getSegmentEffort(final Long id) {
 		try {
-			return restService.getSegmentEffort(id);
+			return this.restService.getSegmentEffort(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {

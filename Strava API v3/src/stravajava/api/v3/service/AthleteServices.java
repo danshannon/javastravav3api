@@ -42,7 +42,7 @@ public interface AthleteServices {
 	 * @return Returns a summary representation of the {@link StravaAthlete athlete} even if the indicated athlete matches the authenticated athlete.
 	 * @throws UnauthorizedException If the service's access token is invalid
 	 */
-	public StravaAthlete getAthlete(Integer id) throws UnauthorizedException;
+	public StravaAthlete getAthlete(final Integer id) throws UnauthorizedException;
 	
 	/**
 	 * <p>Updates the personal details of the currently authenticated {@link StravaAthlete athlete}.</p>
@@ -59,7 +59,7 @@ public interface AthleteServices {
 	 * @throws UnauthorizedException If the security token in use is invalid or does not have write access
 	 * @return Detailed representation of the updated athlete
 	 */
-	public StravaAthlete updateAuthenticatedAthlete(String city, String state, String country, StravaGender sex, Float weight);
+	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight);
 	
 	/**
 	 * <p>Returns an array of {@link StravaSegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given athlete.</p>
@@ -78,7 +78,7 @@ public interface AthleteServices {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary representations
 	 * @throws UnauthorizedException If the service's access token is invalid
 	 */
-	public List<StravaSegmentEffort> listAthleteKOMs(Integer id);
+	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id);
 	
 	/**
 	 * <p>Returns an array of {@link StravaSegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given athlete.</p>
@@ -98,7 +98,7 @@ public interface AthleteServices {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary representations
 	 * @throws UnauthorizedException If the service's access token is invalid
 	 */
-	public List<StravaSegmentEffort> listAthleteKOMs(Integer id, Paging pagingInstruction);
+	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id, final Paging pagingInstruction);
 	
 	/**
 	 * <p>Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
@@ -131,7 +131,7 @@ public interface AthleteServices {
 	 * @return Returns an array of {@link StravaAthlete athlete} summary representations.
 	 * @throws UnauthorizedException If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listAuthenticatedAthleteFriends(Paging pagingInstruction);
+	public List<StravaAthlete> listAuthenticatedAthleteFriends(final Paging pagingInstruction);
 	
 	/**
 	 * <p>Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
@@ -151,7 +151,7 @@ public interface AthleteServices {
 	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
 	 * @throws UnauthorizedException If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listAthleteFriends(Integer id, Paging pagingInstruction);
+	public List<StravaAthlete> listAthleteFriends(final Integer id, final Paging pagingInstruction);
 	
 	/**
 	 * <p>Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.</p>
@@ -170,7 +170,7 @@ public interface AthleteServices {
 	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
 	 * @throws UnauthorizedException If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listAthleteFriends(Integer id);
+	public List<StravaAthlete> listAthleteFriends(final Integer id);
 	
 	/**
 	 * <p>Retrieve the {@link StravaAthlete athletes} who both the authenticated athlete and the indicated athlete are following.</p>
@@ -187,7 +187,7 @@ public interface AthleteServices {
 	 * @return Returns an array of {@link StravaAthlete athlete} summary representations.
 	 * @throws UnauthorizedException If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listAthletesBothFollowing(Integer id);
+	public List<StravaAthlete> listAthletesBothFollowing(final Integer id);
 
 	/**
 	 * <p>Retrieve the {@link StravaAthlete athletes} who both the authenticated athlete and the indicated athlete are following.</p>
@@ -205,9 +205,8 @@ public interface AthleteServices {
 	 * @return Returns an array of {@link StravaAthlete athlete} summary representations.
 	 * @throws UnauthorizedException If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listAthletesBothFollowing(Integer id, Paging pagingInstruction);
+	public List<StravaAthlete> listAthletesBothFollowing(final Integer id, final Paging pagingInstruction);
 	
-	// TODO Athlete stats (GET https://www.strava.com/api/v3/athletes/:id/stats)
 	/**
 	 * <p>Returns recent (last 4 weeks), year to date and all time stats for a given athlete. Only available for the authenticated athlete.</p>
 	 * 
@@ -220,5 +219,5 @@ public interface AthleteServices {
 	 * @param id The id of the athlete (must match authenticated athlete)
 	 * @return Strava statistics object; values are in seconds and metres.
 	 */
-	public StravaStatistics statistics(Integer id);
+	public StravaStatistics statistics(final Integer id);
 }

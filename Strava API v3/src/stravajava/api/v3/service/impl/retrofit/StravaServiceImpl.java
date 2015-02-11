@@ -4,9 +4,9 @@ import stravajava.api.v3.service.AthleteServices;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
 public abstract class StravaServiceImpl {
-	private AthleteServices athleteService;
+	private final AthleteServices athleteService;
 	
-	protected StravaServiceImpl(String token) {
+	protected StravaServiceImpl(final String token) {
 		this.athleteService = AthleteServicesImpl.implementation(token);
 		if (!accessTokenIsValid()) {
 			throw new UnauthorizedException("Access token " + token + " is invalid");
@@ -15,7 +15,7 @@ public abstract class StravaServiceImpl {
 	
 	protected boolean accessTokenIsValid() {
 		try {
-			athleteService.getAuthenticatedAthlete();
+			this.athleteService.getAuthenticatedAthlete();
 			return true;
 		} catch (UnauthorizedException e) {
 			return false;
