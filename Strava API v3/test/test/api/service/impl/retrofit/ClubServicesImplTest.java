@@ -239,6 +239,16 @@ public class ClubServicesImplTest {
 		fail("Attempted to process illegal paging instruction");
 	}
 	
+	@Test
+	public void testListClubMembers_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListClubMembers_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
 	// Test cases
 	// 1. Valid club
 	@Test
@@ -328,6 +338,16 @@ public class ClubServicesImplTest {
 			return;
 		}
 		fail("Didn't handle illegal paging instruction properly");
+	}
+	
+	@Test
+	public void testListRecentClubActivities_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test 
+	public void testListRecentClubActivities_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
 	}
 
 	// Test cases

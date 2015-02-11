@@ -25,7 +25,8 @@ public class RetrofitErrorHandler implements ErrorHandler {
 			return new BadRequestException(cause);
 		}
 		
-		// Handle 401 Unauthorized error
+		// Handle 401 Unauthorized error 
+		// TODO Distinguish between security violation and privacy violation
 		if (r != null && r.getStatus() == 401) {
 			return new UnauthorizedException(cause);
 		}

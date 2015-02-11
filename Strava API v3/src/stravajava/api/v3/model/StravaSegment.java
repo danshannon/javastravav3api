@@ -2,17 +2,17 @@ package stravajava.api.v3.model;
 
 import java.util.Date;
 
-import stravajava.api.v3.model.reference.StravaClimbCategory;
-import stravajava.api.v3.model.reference.StravaResourceState;
-import stravajava.api.v3.model.reference.StravaSegmentActivityType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import stravajava.api.v3.model.reference.StravaClimbCategory;
+import stravajava.api.v3.model.reference.StravaResourceState;
+import stravajava.api.v3.model.reference.StravaSegmentActivityType;
 
 import com.google.gson.annotations.SerializedName;
 
 /**
- * <p>{@link StravaSegment Segments} are specific sections of road. {@link StravaAthlete Athletes�} {@link StravaSegmentEffort} efforts are compared on these segments and leaderboards are created.</p>
+ * <p>{@link StravaSegment Segments} are specific sections of road. {@link StravaAthlete Athletes}&apos; {@link StravaSegmentEffort efforts} are compared on these segments and leaderboards are created.</p>
  * 
  * @author Dan Shannon
  *

@@ -210,6 +210,16 @@ public class SegmentServicesImplTest {
 		assertFalse(0 == segments.size());
 	}
 	
+	@Test
+	public void testListAuthenticatedAthleteStarredSegments_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListAuthenticatedAthleteStarredSegments_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
 	// Test cases
 	// 1. No filtering, valid segment
 	@Test
@@ -363,6 +373,16 @@ public class SegmentServicesImplTest {
 		assertNotNull(efforts);
 		assertEquals(201,efforts.size());
 	}
+	
+	@Test
+	public void testListSegmentEfforts_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListSegmentEfforts_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
 
 	// Test cases
 	// 1. Valid segment, no filtering
@@ -436,6 +456,7 @@ public class SegmentServicesImplTest {
 	@Test
 	public void testGetSegmentLeaderboard_filterByInvalidClub() {
 		SegmentServices service = getService();
+		@SuppressWarnings("unused")
 		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, null, null, null, null, TestUtils.CLUB_INVALID_ID, null, null);
 		// TODO There's a Strava bug here - returns the full leaderboard
 		// assertNull(leaderboard);
@@ -510,6 +531,16 @@ public class SegmentServicesImplTest {
 		SegmentServices service = getService();
 		StravaSegmentLeaderboard leaderboard = service.getSegmentLeaderboard(TestUtils.SEGMENT_VALID_ID, new Paging(1,201));
 		assertNotNull(leaderboard);
+	}
+	
+	@Test
+	public void testGetSegmentLeaderboard_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testGetSegmentLeaderboard_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
 	}
 
 	// Test cases
@@ -638,5 +669,15 @@ public class SegmentServicesImplTest {
 		List<StravaSegment> segments = getService().listStarredSegments(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,Strava.MAX_PAGE_SIZE + 1));
 		assertNotNull(segments);
 		// Don't know a priori how many we'll get so no further testing...
+	}
+	
+	@Test
+	public void testListStarredSegments_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListStarredSegments_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
 	}
 }

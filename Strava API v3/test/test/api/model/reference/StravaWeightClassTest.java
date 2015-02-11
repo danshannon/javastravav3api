@@ -29,6 +29,7 @@ public class StravaWeightClassTest {
 	public void testGetId() {
 		for (StravaWeightClass weightClass : StravaWeightClass.values()) {
 			assertNotNull(weightClass.getId());
+			assertEquals(weightClass,StravaWeightClass.create(weightClass.getId()));
 		}
 	}
 

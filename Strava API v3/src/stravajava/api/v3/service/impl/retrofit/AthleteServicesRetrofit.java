@@ -11,7 +11,6 @@ import stravajava.api.v3.model.StravaStatistics;
 import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.service.AthleteServices;
 import stravajava.api.v3.service.exception.NotFoundException;
-import stravajava.api.v3.service.exception.UnauthorizedException;
 
 /**
  * Retrofit definitions for implementation of {@link AthleteServices}

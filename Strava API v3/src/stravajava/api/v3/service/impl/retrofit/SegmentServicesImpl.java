@@ -22,6 +22,8 @@ import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.model.reference.StravaLeaderboardDateRange;
 import stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType;
 import stravajava.api.v3.model.reference.StravaWeightClass;
+import stravajava.api.v3.service.PagingCallback;
+import stravajava.api.v3.service.PagingHandler;
 import stravajava.api.v3.service.SegmentServices;
 import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.NotFoundException;
@@ -78,20 +80,12 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 */
 	@Override
 	public List<StravaSegment> listAuthenticatedAthleteStarredSegments(Paging pagingInstruction) {
-		Strava.validatePagingArguments(pagingInstruction);
-		List<StravaSegment> segments = new ArrayList<StravaSegment>();
-		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-			List<StravaSegment> segmentPage = Arrays.asList(restService.listAuthenticatedAthleteStarredSegments(paging.getPage(), paging.getPageSize()));
-			if (segmentPage.size() == 0) { break; }
-			segmentPage = Strava.ignoreLastN(segmentPage, paging.getIgnoreLastN());
-			segmentPage = Strava.ignoreFirstN(segmentPage, paging.getIgnoreFirstN());
-			segments.addAll(segmentPage);
-		}
-		if (pagingInstruction != null) {
-			segments = Strava.ignoreLastN(segments, pagingInstruction.getIgnoreLastN());
-			segments = Strava.ignoreFirstN(segments, pagingInstruction.getIgnoreFirstN());
-		}
-		return segments;
+		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
+			@Override
+			public List<StravaSegment> getPageOfData(Paging thisPage) throws NotFoundException {
+				return Arrays.asList(restService.listAuthenticatedAthleteStarredSegments(thisPage.getPage(), thisPage.getPageSize()));
+			}
+		});
 	}
 
 	/**
@@ -99,27 +93,12 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 */
 	@Override
 	public List<StravaSegment> listStarredSegments(Integer id, Paging pagingInstruction) {
-		Strava.validatePagingArguments(pagingInstruction);
-
-		List<StravaSegment> segments = new ArrayList<StravaSegment>();
-		try {
-			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-				List<StravaSegment> segmentPage = Arrays.asList(restService.listStarredSegments(id, paging.getPage(), paging.getPageSize()));
-				if (segmentPage.size() == 0) { break; }
-				segmentPage = Strava.ignoreLastN(segmentPage, paging.getIgnoreLastN());
-				segmentPage = Strava.ignoreFirstN(segmentPage, paging.getIgnoreFirstN());
-				segments.addAll(segmentPage);
+		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
+			@Override
+			public List<StravaSegment> getPageOfData(Paging thisPage) throws NotFoundException {
+				return Arrays.asList(restService.listStarredSegments(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
-			if (pagingInstruction != null) {
-				segments = Strava.ignoreLastN(segments, pagingInstruction.getIgnoreLastN());
-				segments = Strava.ignoreFirstN(segments, pagingInstruction.getIgnoreFirstN());
-			}
-		} catch (NotFoundException e) {
-			// Athlete doesn't exist
-			return null;
-		}
-		return segments;
-
+		});
 	}
 
 	/**
@@ -143,27 +122,12 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 		Date startDate = (startDateLocal == null ? null : startDateLocal.getTime());
 		Date endDate = (endDateLocal == null ? null : endDateLocal.getTime());
 		
-		// Check that the paging instruction is OK
-		Strava.validatePagingArguments(pagingInstruction);
-		
-		List<StravaSegmentEffort> efforts = new ArrayList<StravaSegmentEffort>();
-		try {
-			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-				List<StravaSegmentEffort> effortPage = Arrays.asList(restService.listSegmentEfforts(id, athleteId, startDate, endDate, paging.getPage(), paging.getPageSize()));
-				if (effortPage.size() == 0) { break; }
-				effortPage = Strava.ignoreLastN(effortPage, paging.getIgnoreLastN());
-				effortPage = Strava.ignoreFirstN(effortPage, paging.getIgnoreFirstN());
-				efforts.addAll(effortPage);
+		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
+			@Override
+			public List<StravaSegmentEffort> getPageOfData(Paging thisPage) throws NotFoundException {
+				return Arrays.asList(restService.listSegmentEfforts(id, athleteId, startDate, endDate, thisPage.getPage(), thisPage.getPageSize()));
 			}
-			if (pagingInstruction != null) {
-				efforts = Strava.ignoreLastN(efforts, pagingInstruction.getIgnoreLastN());
-				efforts = Strava.ignoreFirstN(efforts, pagingInstruction.getIgnoreFirstN());
-			}
-		} catch (NotFoundException e) {
-			// StravaSegment doesn't exist
-			return null;
-		}
-		return efforts;
+		});
 	}
 	
 	/**
@@ -189,10 +153,6 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 				} else {
 					leaderboard.getEntries().addAll(current.getEntries());
 				}
-			}
-			if (pagingInstruction != null) {
-				leaderboard.setEntries(Strava.ignoreLastN(leaderboard.getEntries(), pagingInstruction.getIgnoreLastN()));
-				leaderboard.setEntries(Strava.ignoreFirstN(leaderboard.getEntries(), pagingInstruction.getIgnoreFirstN()));
 			}
 		} catch (NotFoundException e) {
 			return null;

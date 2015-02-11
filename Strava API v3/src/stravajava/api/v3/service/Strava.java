@@ -136,7 +136,12 @@ public class Strava {
 			list = new ArrayList<T>();
 			return list;
 		}
-		return list.subList(ignoreFirstN - 1, list.size() - 1);
+		//return list.subList(ignoreFirstN, list.size() - 1);
+		ArrayList<T> returnList = new ArrayList<T>();
+		for (int i = ignoreFirstN; i < list.size(); i++) {
+			returnList.add(list.get(i));
+		}
+		return returnList;
 	}
 	
 	/**

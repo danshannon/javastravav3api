@@ -355,6 +355,24 @@ public class ActivityServicesImplTest {
 		fail("Unexpected return of activities for paging out of range (low)");
 	}
 	
+	@Test 
+	public void testListAuthenticatedAthleteActivities_pagingIgnoreFirstN() {
+		List<StravaActivity> activities = getActivityService().listAuthenticatedAthleteActivities(new Paging(1,2,1,0));
+		assertNotNull(activities);
+		assertEquals(1,activities.size());
+		List<StravaActivity> expectedActivities = getActivityService().listAuthenticatedAthleteActivities();
+		assertEquals(expectedActivities.get(1),activities.get(0));
+	}
+	
+	@Test
+	public void testListAuthenticatedAthleteActivities_pagingIgnoreLastN() {
+		List<StravaActivity> activities = getActivityService().listAuthenticatedAthleteActivities(new Paging(1,2,0,1));
+		assertNotNull(activities);
+		assertEquals(1,activities.size());
+		List<StravaActivity> expectedActivities = getActivityService().listAuthenticatedAthleteActivities();
+		assertEquals(expectedActivities.get(0),activities.get(0));
+	}
+	
 	/**
 	 * <p>List {@link StravaPhoto photos}, with an {@link StravaActivity activity} that has a known non-zero number of photos</p>
 	 * 
@@ -703,6 +721,16 @@ public class ActivityServicesImplTest {
 		fail("Paging of comments for out-of-range (low) parameters should have failed, but didn't!");
 	}
 	
+	@Test
+	public void testListActivityComments_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test 
+	public void testListActivityComments_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
 	/**
 	 * <p>Attempt to list {@link StravaComment comments} for a non-existent {@link StravaActivity}</p>
 	 * 
@@ -858,6 +886,16 @@ public class ActivityServicesImplTest {
 		fail("Paging of kudoers for out-of-range (low) parameters should have failed, but didn't!");
 	}
 
+	@Test
+	public void testListActivityKudoers_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListActivityKudoers_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
 	/**
 	 * <p>Attempt to list the {@link StravaLap laps} in an {@link StravaActivity} which has laps</p>
 	 * 
@@ -1067,6 +1105,24 @@ public class ActivityServicesImplTest {
 		fail("Unexpected return of activities for paging out of range (low)");
 	}
 	
+	@Test
+	public void testListFriendsActivities_pagingIgnoreFirstN() {
+		List<StravaActivity> activities = getActivityService().listFriendsActivities(new Paging(1,2,1,0));
+		assertNotNull(activities);
+		assertEquals(1,activities.size());
+		List<StravaActivity> expectedActivities = getActivityService().listFriendsActivities();
+		assertEquals(expectedActivities.get(1),activities.get(0));
+	}
+	
+	@Test
+	public void testListFriendsActivities_pagingIgnoreLastN() {
+		List<StravaActivity> activities = getActivityService().listFriendsActivities(new Paging(1,2,0,1));
+		assertNotNull(activities);
+		assertEquals(1,activities.size());
+		List<StravaActivity> expectedActivities = getActivityService().listFriendsActivities();
+		assertEquals(expectedActivities.get(0),activities.get(0));
+	}
+	
 	/** 
 	 * <p>Test cases: allowed to update the following attributes:</p>
 	 * <ol>
@@ -1255,6 +1311,36 @@ public class ActivityServicesImplTest {
 	
 	private ActivityServices getActivityService() {
 		return ActivityServicesImpl.implementation(TestUtils.getValidToken());
+	}
+	
+	@Test
+	public void testListRelatedActivities_pageNumberAndSize() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListRelatedActivities_pageSize() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListRelatedActivities_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListRelatedActivities_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListRelatedActivities_pagingOutOfRangeHigh() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListRelatedActivities_pagingOutOfRangeLow() {
+		fail("Not yet implemented!"); // TODO Implement this test
 	}
 
 }

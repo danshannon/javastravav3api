@@ -218,6 +218,16 @@ public class AthleteServicesImplTest {
 		}
 		fail("Illegal paging parameters were accepted");
 	}
+	
+	@Test
+	public void testListAthleteKOMs_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListAthleteKOMs_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
 
 	@Test
 	public void testListAuthenticatedAthleteFriends_friends() {
@@ -270,6 +280,16 @@ public class AthleteServicesImplTest {
 	}
 
 	@Test
+	public void testListAuthenticatedAthleteFriends_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListAuthenticatedAthleteFriends_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
 	public void testListAthleteFriends_validAthlete() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID);
@@ -290,6 +310,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 4. Paging - size only (including test for max page size)
+	@Test
 	public void testListAthleteFriends_pageSize() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID, new Paging(1,1));
@@ -299,6 +320,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 5. Paging - size and page
+	@Test
 	public void testListAthleteFriends_pageNumberAndSize() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID, new Paging(2,1));
@@ -313,6 +335,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 6. Paging - out of range high
+	@Test
 	public void testListAthleteFriends_pagingOutOfRangeHigh() {
 		AthleteServices service = getService();
 		List<StravaAthlete> friends = service.listAthleteFriends(TestUtils.ATHLETE_VALID_ID, new Paging(1000,200));
@@ -321,6 +344,7 @@ public class AthleteServicesImplTest {
 	}
 
 	// 7. Paging - out of range low
+	@Test
 	public void testListAthleteFriends_pagingOutOfRangeLow() {
 		AthleteServices service = getService();
 		try {
@@ -333,18 +357,21 @@ public class AthleteServicesImplTest {
 		fail("Listed friends despite paging instructions being illegal");
 	}
 	
+	@Test
 	public void testListAthleteFriends_pagingIgnoreFirstN() {
 		List<StravaAthlete> friends = getService().listAthleteFriends(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,2,1,0));
 		assertNotNull(friends);
 		assertEquals(1,friends.size());
 	}
 	
+	@Test
 	public void testListAthleteFriends_pagingIgnoreLastN() {
 		List<StravaAthlete> friends = getService().listAthleteFriends(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,2,0,1));
 		assertNotNull(friends);
 		assertEquals(1,friends.size());
 	}
 	
+	@Test
 	public void testListAthleteFriends_pagingPageSizeTooLarge() {
 		List<StravaAthlete> friends = getService().listAthleteFriends(TestUtils.ATHLETE_AUTHENTICATED_ID, new Paging(1,Strava.MAX_PAGE_SIZE + 1));
 		assertNotNull(friends);
@@ -415,6 +442,16 @@ public class AthleteServicesImplTest {
 			return;
 		}
 		fail("Listed friends despite paging instructions being illegal");		
+	}
+	
+	@Test
+	public void testListAthletesBothFollowing_pagingIgnoreFirstN() {
+		fail("Not yet implemented!"); // TODO Implement this test
+	}
+	
+	@Test
+	public void testListAthletesBothFollowing_pagingIgnoreLastN() {
+		fail("Not yet implemented!"); // TODO Implement this test
 	}
 
 	@Test

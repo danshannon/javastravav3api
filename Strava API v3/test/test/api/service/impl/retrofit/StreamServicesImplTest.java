@@ -18,10 +18,8 @@ import stravajava.api.v3.model.StravaStream;
 import stravajava.api.v3.model.reference.StravaStreamResolutionType;
 import stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import stravajava.api.v3.model.reference.StravaStreamType;
-import stravajava.api.v3.service.SegmentServices;
 import stravajava.api.v3.service.StreamServices;
 import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.SegmentServicesImpl;
 import stravajava.api.v3.service.impl.retrofit.StreamServicesImpl;
 import test.utils.TestUtils;
 

@@ -13,7 +13,8 @@ import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaClub;
 import stravajava.api.v3.model.StravaClubMembershipResponse;
 import stravajava.api.v3.service.ClubServices;
-import stravajava.api.v3.service.Strava;
+import stravajava.api.v3.service.PagingCallback;
+import stravajava.api.v3.service.PagingHandler;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
@@ -93,31 +94,12 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 */
 	@Override
 	public List<StravaAthlete> listClubMembers(Integer id, Paging pagingInstruction) {
-		Strava.validatePagingArguments(pagingInstruction);
-		
-		List<StravaAthlete> members = new ArrayList<StravaAthlete>();
-		try {
-			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-				List<StravaAthlete> memberPage = Arrays.asList(restService.listClubMembers(id, paging.getPage(), paging.getPageSize()));
-				memberPage = Strava.ignoreLastN(memberPage, paging.getIgnoreLastN());
-				memberPage = Strava.ignoreFirstN(memberPage, paging.getIgnoreFirstN());
-				members.addAll(memberPage);
+		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>(){
+			@Override
+			public List<StravaAthlete> getPageOfData(Paging thisPage) throws NotFoundException {
+				return Arrays.asList(restService.listClubMembers(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
-			if (pagingInstruction != null) {
-				members = Strava.ignoreFirstN(members, pagingInstruction.getIgnoreFirstN());
-				members = Strava.ignoreLastN(members, pagingInstruction.getIgnoreLastN());
-			}
-		} catch (NotFoundException e) {
-			return null;
-		} catch (UnauthorizedException e) {
-			if (accessTokenIsValid()) {
-				// Club must be private, so return an empty list
-				return new ArrayList<StravaAthlete>();
-			} else {
-				throw e;
-			}
-		}
-		return members;
+		});
 	}
 
 	/**
@@ -125,34 +107,12 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 */
 	@Override
 	public List<StravaActivity> listRecentClubActivities(Integer id, Paging pagingInstruction) {
-		Strava.validatePagingArguments(pagingInstruction);
-
-		List<StravaActivity> activities = new ArrayList<StravaActivity>();
-		try {
-		for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
-			List<StravaActivity> activityPage = Arrays.asList(restService.listRecentClubActivities(id, paging.getPage(), paging.getPageSize()));
-			activityPage = Strava.ignoreLastN(activityPage, paging.getIgnoreLastN());
-			activityPage = Strava.ignoreFirstN(activityPage, paging.getIgnoreFirstN());
-			activities.addAll(activityPage);
-		}
-		if (pagingInstruction != null) {
-			activities = Strava.ignoreFirstN(activities, pagingInstruction.getIgnoreFirstN());
-			activities = Strava.ignoreLastN(activities, pagingInstruction.getIgnoreLastN());
-		}
-		} catch (NotFoundException e) {
-			// StravaClub doesn't exist
-			return null;
-		} catch (UnauthorizedException e1) {
-			if (accessTokenIsValid()) {
-				// Private club, not a member
-				return new ArrayList<StravaActivity>();
-			} else {
-				throw e1;
+		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
+			@Override
+			public List<StravaActivity> getPageOfData(Paging thisPage) throws NotFoundException {
+				return Arrays.asList(restService.listRecentClubActivities(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
-		}
-		return activities;
-
-
+		});
 	}
 
 	/**
