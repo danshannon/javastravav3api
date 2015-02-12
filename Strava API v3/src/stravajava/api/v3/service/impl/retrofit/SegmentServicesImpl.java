@@ -158,27 +158,34 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 				if (current.getEntries().isEmpty()) {
 					break;
 				}
+				for (StravaSegmentLeaderboardEntry entry : current.getEntries()) {
+					System.out.println(entry);
+				}
+				current.setAthleteEntries(splitOutAthleteEntries(current.getEntries(), paging));
+				current.getEntries().removeAll(current.getAthleteEntries());
 				current.setEntries(Strava.ignoreLastN(current.getEntries(), paging.getIgnoreLastN()));
 				current.setEntries(Strava.ignoreFirstN(current.getEntries(), paging.getIgnoreFirstN()));
 				if (leaderboard == null) {
 					leaderboard = current;
 				} else {
 					leaderboard.getEntries().addAll(current.getEntries());
+					leaderboard.getAthleteEntries().addAll(current.getAthleteEntries());
 				}
 			}
 		} catch (NotFoundException e) {
 			return null;
 		}
+		return leaderboard;
+	}
 
+	private List<StravaSegmentLeaderboardEntry> splitOutAthleteEntries(final List<StravaSegmentLeaderboardEntry> entries, final Paging pagingInstruction) {
 		// Handle the spurious extra 5 that Strava sometimes throws in for good measure
 		int firstPosition = 0;
 		boolean inSequence = true;
 		int rank = 0;
 		int firstAthletePosition = 0;
 		List<StravaSegmentLeaderboardEntry> athleteEntries = new ArrayList<StravaSegmentLeaderboardEntry>();
-		leaderboard.setAthleteEntries(athleteEntries);
-		List<StravaSegmentLeaderboardEntry> entries = leaderboard.getEntries();
-
+		
 		// If there are EXACTLY 5 entries, then they are athlete entries if they're not in the expected range
 		if (entries.size() == 5) {
 			int firstRank = entries.get(0).getRank();
@@ -207,11 +214,8 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 				}
 			}
 		}
+		return athleteEntries;
 
-		// Take the athlete-specific entries out
-		entries.removeAll(athleteEntries);
-
-		return leaderboard;
 	}
 
 	/**

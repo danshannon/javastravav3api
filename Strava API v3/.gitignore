@@ -2,3 +2,7 @@
 /target
 /targettest/
 /.apt_generated/
+/build/
+/classes/
+/maven-archiver/
+/maven-status/
