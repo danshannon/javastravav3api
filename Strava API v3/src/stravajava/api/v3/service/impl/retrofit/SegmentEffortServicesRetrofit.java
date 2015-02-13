@@ -11,12 +11,12 @@ import stravajava.api.v3.service.exception.NotFoundException;
  *
  */
 public interface SegmentEffortServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
 
 	/**
 	 * @see stravajava.api.v3.service.SegmentEffortServices#getSegmentEffort(java.lang.Long)
 	 */
 	@GET("/segment_efforts/{id}")
-	public StravaSegmentEffort getSegmentEffort(@Path("id") Long id) throws NotFoundException;
+	public StravaSegmentEffort getSegmentEffort(@Path("id") final Long id) throws NotFoundException;
 
 }

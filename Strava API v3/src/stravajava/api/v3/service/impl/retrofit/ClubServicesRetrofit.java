@@ -19,13 +19,13 @@ import stravajava.api.v3.service.exception.NotFoundException;
  *
  */
 public interface ClubServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
 
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#getClub(java.lang.Integer)
 	 */
 	@GET("/clubs/{id}")
-	public StravaClub getClub(@Path("id") Integer id) throws NotFoundException;
+	public StravaClub getClub(@Path("id") final Integer id) throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#listAuthenticatedAthleteClubs()
@@ -37,24 +37,24 @@ public interface ClubServicesRetrofit {
 	 * @see stravajava.api.v3.service.ClubServices#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/clubs/{id}/members")
-	public StravaAthlete[] listClubMembers(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException;
+	public StravaAthlete[] listClubMembers(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/clubs/{id}/activities")
-	public StravaActivity[] listRecentClubActivities(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage)
+	public StravaActivity[] listRecentClubActivities(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
 			throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#joinClub(java.lang.Integer)
 	 */
 	@POST("/clubs/{id}/join")
-	public StravaClubMembershipResponse join(@Path("id") Integer id) throws NotFoundException;
+	public StravaClubMembershipResponse join(@Path("id") final Integer id) throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.ClubServices#leaveClub(java.lang.Integer)
 	 */
 	@POST("/clubs/{id}/leave")
-	public StravaClubMembershipResponse leave(@Path("id") Integer id) throws NotFoundException;
+	public StravaClubMembershipResponse leave(@Path("id") final Integer id) throws NotFoundException;
 }

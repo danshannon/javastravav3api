@@ -27,25 +27,25 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface SegmentServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
 
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#getSegment(java.lang.Integer)
 	 */
 	@GET("/segments/{id}")
-	public StravaSegment getSegment(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
+	public StravaSegment getSegment(@Path("id") final Integer id) throws NotFoundException, UnauthorizedException;
 
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/segments/starred")
-	public StravaSegment[] listAuthenticatedAthleteStarredSegments(@Query("page") Integer page, @Query("per_page") Integer perPage);
+	public StravaSegment[] listAuthenticatedAthleteStarredSegments(@Query("page") final Integer page, @Query("per_page") final Integer perPage);
 
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#listStarredSegments(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/athletes/{id}/segments/starred")
-	public StravaSegment[] listStarredSegments(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage)
+	public StravaSegment[] listStarredSegments(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
 			throws NotFoundException;
 
 	/**
@@ -53,9 +53,9 @@ public interface SegmentServicesRetrofit {
 	 *      java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/segments/{id}/all_efforts")
-	public StravaSegmentEffort[] listSegmentEfforts(@Path("id") Integer id, @Query("athlete_id") Integer athleteId,
-			@Query("start_date_local") Date startDateLocal, @Query("end_date_local") Date endDateLocal, @Query("page") Integer page,
-			@Query("per_page") Integer perPage) throws NotFoundException;
+	public StravaSegmentEffort[] listSegmentEfforts(@Path("id") final Integer id, @Query("athlete_id") final Integer athleteId,
+			@Query("start_date_local") final Date startDateLocal, @Query("end_date_local") final Date endDateLocal, @Query("page") final Integer page,
+			@Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#getSegmentLeaderboard(java.lang.Integer, stravajava.api.v3.model.reference.StravaGender,
@@ -63,17 +63,17 @@ public interface SegmentServicesRetrofit {
 	 *      stravajava.api.v3.model.reference.StravaLeaderboardDateRange, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/segments/{id}/leaderboard")
-	public StravaSegmentLeaderboard getSegmentLeaderboard(@Path("id") Integer id, @Query("gender") StravaGender gender,
-			@Query("age_group") StravaAgeGroup ageGroup, @Query("weight_class") StravaWeightClass weightClass, @Query("following") Boolean following,
-			@Query("club_id") Integer clubId, @Query("date_range") StravaLeaderboardDateRange dateRange, @Query("page") Integer page,
-			@Query("per_page") Integer perPage) throws NotFoundException;
+	public StravaSegmentLeaderboard getSegmentLeaderboard(@Path("id") final Integer id, @Query("gender") final StravaGender gender,
+			@Query("age_group") final StravaAgeGroup ageGroup, @Query("weight_class") final StravaWeightClass weightClass, @Query("following") final Boolean following,
+			@Query("club_id") final Integer clubId, @Query("date_range") final StravaLeaderboardDateRange dateRange, @Query("page") final Integer page,
+			@Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#segmentExplore(stravajava.api.v3.model.StravaMapPoint, stravajava.api.v3.model.StravaMapPoint,
 	 *      stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType, java.lang.Integer, java.lang.Integer)
 	 */
 	@GET("/segments/explore")
-	public StravaSegmentExplorerResponse segmentExplore(@Query("bounds") String bounds, @Query("activity_type") StravaSegmentExplorerActivityType activityType,
-			@Query("min_cat") StravaClimbCategory minCategory, @Query("max_cat") StravaClimbCategory maxCategory);
+	public StravaSegmentExplorerResponse segmentExplore(@Query("bounds") final String bounds, @Query("activity_type") final StravaSegmentExplorerActivityType activityType,
+			@Query("min_cat") final StravaClimbCategory minCategory, @Query("max_cat") final StravaClimbCategory maxCategory);
 
 }

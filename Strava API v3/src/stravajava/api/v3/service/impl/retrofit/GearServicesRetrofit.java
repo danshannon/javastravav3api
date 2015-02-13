@@ -7,12 +7,12 @@ import stravajava.api.v3.model.StravaGear;
 import stravajava.api.v3.service.exception.NotFoundException;
 
 public interface GearServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
 
 	/**
 	 * @see stravajava.api.v3.service.GearServices#getGear(java.lang.String)
 	 */
 	@GET("/gear/{id}")
-	public StravaGear getGear(@Path("id") String id) throws NotFoundException;
+	public StravaGear getGear(@Path("id") final String id) throws NotFoundException;
 
 }

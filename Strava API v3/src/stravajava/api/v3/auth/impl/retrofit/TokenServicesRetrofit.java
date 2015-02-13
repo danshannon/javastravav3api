@@ -16,7 +16,7 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface TokenServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
 
 	/**
 	 * @see stravajava.api.v3.auth.TokenServices#deauthorise(java.lang.String)

@@ -158,9 +158,6 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 				if (current.getEntries().isEmpty()) {
 					break;
 				}
-				for (StravaSegmentLeaderboardEntry entry : current.getEntries()) {
-					System.out.println(entry);
-				}
 				current.setAthleteEntries(splitOutAthleteEntries(current.getEntries(), paging));
 				current.getEntries().removeAll(current.getAthleteEntries());
 				current.setEntries(Strava.ignoreLastN(current.getEntries(), paging.getIgnoreLastN()));

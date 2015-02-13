@@ -1,5 +1,6 @@
 package stravajava.api.v3.auth.impl.retrofit;
 
+import retrofit.RestAdapter;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
@@ -16,6 +17,8 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface AuthorisationServicesRetrofit {
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
+
 	/**
 	 * @see stravajava.api.v3.auth.AuthorisationServices#tokenExchange(java.lang.Integer, java.lang.String, java.lang.String)
 	 */

@@ -162,7 +162,6 @@ public class StravaTest {
 		assertNotNull(pagingList);
 		assertEquals(1, pagingList.size());
 		Paging paging = pagingList.get(0);
-		System.out.println(paging);
 		Paging expected = new Paging(2, Strava.MAX_PAGE_SIZE, 1, Strava.MAX_PAGE_SIZE - 2);
 		assertEquals(expected, paging);
 
@@ -183,7 +182,6 @@ public class StravaTest {
 		assertNotNull(pagingList);
 		assertEquals(1, pagingList.size());
 		Paging paging = pagingList.get(0);
-		System.out.println(paging);
 		assertEquals(1, paging.getPage());
 		assertEquals(1, paging.getPageSize());
 		assertEquals(0, paging.getIgnoreLastN());
