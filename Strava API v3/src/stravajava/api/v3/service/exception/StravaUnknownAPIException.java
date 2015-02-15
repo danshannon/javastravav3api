@@ -12,7 +12,7 @@ public class StravaUnknownAPIException extends RuntimeException implements Strav
 	private StravaResponse	response;
 
 	public StravaUnknownAPIException(final String status, final StravaResponse response, final Throwable cause) {
-		super(status + " : " + response.toString(),cause);
+		super(status + " : " + (response == null ? null : response.toString()),cause);
 		setResponse(response); 
 	}
 	

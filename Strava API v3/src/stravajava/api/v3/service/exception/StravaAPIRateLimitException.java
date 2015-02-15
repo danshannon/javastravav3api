@@ -12,7 +12,7 @@ public class StravaAPIRateLimitException extends Throwable implements StravaAPIE
 	private StravaResponse	response;
 	
 	public StravaAPIRateLimitException(final String status, final StravaResponse response, final Throwable cause) {
-		super(status + " : " + response.toString(),cause);
+		super(status + " : " + (response == null ? null : response.toString()),cause);
 		setResponse(response);
 	}
 

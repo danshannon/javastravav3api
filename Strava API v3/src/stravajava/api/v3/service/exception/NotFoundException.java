@@ -15,7 +15,7 @@ public class NotFoundException extends Throwable implements StravaAPIException {
 	private static final long serialVersionUID = 1L;
 
 	public NotFoundException(final StravaResponse response, final Throwable cause) {
-		super(response.toString(),cause);
+		super((response == null ? null : response.toString()),cause);
 		this.response = response;
 	}
 
