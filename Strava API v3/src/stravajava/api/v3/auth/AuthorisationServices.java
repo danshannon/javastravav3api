@@ -8,8 +8,8 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  * <h2>Authentication</h2>
  *
  * <p>
- * Strava uses OAuth2 as an authentication protocol. It allows external applications to request authorisation to a user�s private data without requiring their
- * Strava username and password. It allows users to grant and revoke API access on a per-application basis and keeps users� authentication details safe.
+ * Strava uses OAuth2 as an authentication protocol. It allows external applications to request authorisation to a user's private data without requiring their
+ * Strava username and password. It allows users to grant and revoke API access on a per-application basis and keeps users' authentication details safe.
  * </p>
  *
  * <p>
@@ -87,9 +87,8 @@ public interface AuthorisationServices {
 	 * @param code
 	 *            authorisation code
 	 * @return Returns an access_token and a detailed representation of the current athlete.
-	 * @throws BadRequestException
-	 * @throws UnauthorizedException
-	 *             If client secret is invalid
+	 * @throws BadRequestException Where the request does not contain all the required information
+	 * @throws UnauthorizedException If client secret is invalid
 	 */
 	public TokenResponse tokenExchange(final Integer clientId, final String clientSecret, final String code) throws BadRequestException, UnauthorizedException;
 }

@@ -17,6 +17,7 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public interface AuthorisationServicesRetrofit {
+	// TODO Get log level from config
 	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
 
 	/**

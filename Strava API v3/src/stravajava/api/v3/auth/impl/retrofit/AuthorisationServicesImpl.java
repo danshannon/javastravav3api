@@ -7,6 +7,7 @@ import stravajava.api.v3.auth.model.TokenResponse;
 import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.BadRequestException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
+import stravajava.api.v3.service.impl.retrofit.RetrofitClientResponseInterceptor;
 import stravajava.api.v3.service.impl.retrofit.RetrofitErrorHandler;
 import stravajava.util.impl.gson.JsonUtilImpl;
 
@@ -25,6 +26,7 @@ public class AuthorisationServicesImpl implements AuthorisationServices {
 	 */
 	public AuthorisationServicesImpl() {
 		this.restService = new RestAdapter.Builder()
+				.setClient(new RetrofitClientResponseInterceptor())
 				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
 				.setLogLevel(AuthorisationServicesRetrofit.LOG_LEVEL)
 				.setEndpoint(Strava.AUTH_ENDPOINT)

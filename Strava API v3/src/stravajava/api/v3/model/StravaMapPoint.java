@@ -20,8 +20,4 @@ public class StravaMapPoint {
 		this.longitude = longitude;
 	}
 
-	public StravaMapPoint create(final Float[] latlng) {
-		return new StravaMapPoint(latlng[0], latlng[1]);
-	}
-
 }

@@ -8,7 +8,8 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
 public abstract class StravaServiceImpl {
 	private final AthleteServices athleteService;
 	
-	public static int warnAtRequestLimitPercent = 90;
+	// TODO Parameterise in config files
+	public static int warnAtRequestLimitPercent = 10;
 	
 	public static int requestRate = 0;
 	public static int requestRateDaily = 0;

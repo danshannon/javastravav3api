@@ -8,12 +8,13 @@ import stravajava.api.v3.auth.model.Token;
 import stravajava.api.v3.auth.model.TokenResponse;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.api.v3.service.impl.retrofit.Retrofit;
+import stravajava.api.v3.service.impl.retrofit.StravaServiceImpl;
 
 /**
  * @author Dan Shannon
  *
  */
-public class TokenServicesImpl implements TokenServices {
+public class TokenServicesImpl extends StravaServiceImpl implements TokenServices {
 	/**
 	 * <p>
 	 * Returns an implementation of {@link TokenServices token services}
@@ -47,6 +48,7 @@ public class TokenServicesImpl implements TokenServices {
 	private final TokenServicesRetrofit restService;
 
 	private TokenServicesImpl(final String token) {
+		super(token);
 		this.restService = Retrofit.retrofit(TokenServicesRetrofit.class, token, TokenServicesRetrofit.LOG_LEVEL);
 	}
 

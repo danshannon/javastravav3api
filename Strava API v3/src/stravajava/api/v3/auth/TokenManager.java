@@ -9,7 +9,7 @@ import stravajava.api.v3.auth.ref.AuthorisationScope;
 
 /**
  * <p>
- * Manages the cache of tokens
+ * Manages the caching of tokens
  * </p>
  *
  * @author Dan Shannon
@@ -37,14 +37,16 @@ public class TokenManager {
 
 	/**
 	 * <p>
-	 * Retrieve a cached token which has <strong>exactly</strong> the given set of scopes
+	 * Retrieve a cached token which has <strong>exactly</strong> the given set
+	 * of scopes
 	 * </p>
 	 * 
 	 * @param username
 	 *            The username
 	 * @param requiredScopes
 	 *            This list of scopes which must match the scopes of the token
-	 * @return The token with the matching list of scopes, or <code>null</code> if there is no such token
+	 * @return The token with the matching list of scopes, or <code>null</code>
+	 *         if there is no such token
 	 */
 	public Token retrieveTokenWithExactScope(final String username, final AuthorisationScope... requiredScopes) {
 		// Get the token from the cache
@@ -80,31 +82,38 @@ public class TokenManager {
 	}
 
 	/**
-	 * @param username
-	 * @param allScopes
-	 * @return
+	 * <p>
+	 * Retrieve a cached token which has <strong>exactly</strong> the given set
+	 * of scopes
+	 * </p>
+	 * 
+	 * @param username The user to look up for a cached token
+	 * @param scopes The set of scopes the token must have
+	 * @return The matching token from the cache, or <code>null</code> if there is no matching token
 	 */
-	public Token retrieveTokenWithExactScope(final String username, final List<AuthorisationScope> allScopes) {
-		if (allScopes == null) {
+	public Token retrieveTokenWithExactScope(final String username, final List<AuthorisationScope> scopes) {
+		if (scopes == null) {
 			return retrieveTokenWithExactScope(username, new AuthorisationScope[] {});
 		}
-		final AuthorisationScope[] array = new AuthorisationScope[allScopes.size()];
-		for (int i = 0; i < allScopes.size(); i++) {
-			array[i] = allScopes.get(i);
+		final AuthorisationScope[] array = new AuthorisationScope[scopes.size()];
+		for (int i = 0; i < scopes.size(); i++) {
+			array[i] = scopes.get(i);
 		}
 		return retrieveTokenWithExactScope(username, array);
 	}
 
 	/**
 	 * <p>
-	 * Retrieve a token which has <strong>at least</strong> the given set of scopes.
+	 * Retrieve a token which has <strong>at least</strong> the given set of
+	 * scopes.
 	 * </p>
 	 * 
 	 * @param username
 	 *            The username
 	 * @param scopes
 	 *            The list of scopes which are required to be in the token
-	 * @return The token, or <code>null</code> if there is no cached token, or the cached token doesn't have all the required scopes
+	 * @return The token, or <code>null</code> if there is no cached token, or
+	 *         the cached token doesn't have all the required scopes
 	 */
 	public Token retrieveTokenWithScope(final String username, final AuthorisationScope... scopes) {
 		// Get the token from cache
@@ -132,26 +141,50 @@ public class TokenManager {
 	}
 
 	/**
-	 * @param email
-	 * @param noScope
+	 * <p>
+	 * Retrieve a token which has <strong>at least</strong> the given set of
+	 * scopes.
+	 * </p>
+	 * 
+	 * @param username
+	 *            The username
+	 * @param scopes
+	 *            The list of scopes which are required to be in the token
+	 * @return The token, or <code>null</code> if there is no cached token, or
+	 *         the cached token doesn't have all the required scopes
 	 */
-	public Token retrieveTokenWithScope(final String username, final List<AuthorisationScope> scope) {
+	public Token retrieveTokenWithScope(final String username, final List<AuthorisationScope> scopes) {
 
-		if (scope == null) {
+		if (scopes == null) {
 			return retrieveTokenWithScope(username, new AuthorisationScope[] {});
 		}
-		final AuthorisationScope[] array = new AuthorisationScope[scope.size()];
-		for (int i = 0; i < scope.size(); i++) {
-			array[i] = scope.get(i);
+		final AuthorisationScope[] array = new AuthorisationScope[scopes.size()];
+		for (int i = 0; i < scopes.size(); i++) {
+			array[i] = scopes.get(i);
 		}
 		return retrieveTokenWithExactScope(username, array);
 
 	}
 
+	/**
+	 * <p>
+	 * Revoke an access token - that is, remove it from the cache of tokens.
+	 * </p>
+	 * 
+	 * @param token The token to be removed from the cache
+	 */
 	public void revokeToken(final Token token) {
 		this.tokens.remove(token.getAthlete().getEmail());
 	}
 
+	/**
+	 * <p>
+	 * Place a token in the cache
+	 * </p>
+	 * 
+	 * @param token The token to be stored in the cache. 
+	 * @throws IllegalArgumentException If the token is null, or the athlete contained in it is null or has a null email, or there are no authorisation scopes, then 
+	 */
 	public void storeToken(final Token token) {
 		String username = null;
 		if (token == null) {
