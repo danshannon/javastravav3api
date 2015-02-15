@@ -66,12 +66,16 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	 */
 	@Override
 	public StravaActivity getActivity(final Integer id, final Boolean includeAllEfforts) {
+		StravaActivity stravaResponse = null;
+		
 		try {
 			boolean loop = true;
-			StravaActivity stravaResponse = null;
+			int i = 0;
 			while (loop) {
+				i++;
 				stravaResponse = this.restService.getActivity(id, includeAllEfforts);
-				if (stravaResponse.getResourceState() == StravaResourceState.UPDATING) {
+				
+				if (i < 10 && stravaResponse.getResourceState() == StravaResourceState.UPDATING) {
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {

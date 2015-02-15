@@ -15,7 +15,7 @@ public class BadRequestException extends Throwable implements StravaAPIException
 	private static final long serialVersionUID = 1L;
 
 	public BadRequestException(final String status, final StravaResponse response, final Throwable cause) {
-		super(status + " : " + response.toString(),cause);
+		super(status + " : " + (response == null ? "" : response.toString()),cause);
 		this.response = response;
 	}
 
