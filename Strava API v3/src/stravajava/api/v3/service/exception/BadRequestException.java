@@ -3,6 +3,10 @@ package stravajava.api.v3.service.exception;
 import stravajava.api.v3.model.StravaResponse;
 
 /**
+ * <p>
+ * Thrown when Strava API returns an HTTP status of 400
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */

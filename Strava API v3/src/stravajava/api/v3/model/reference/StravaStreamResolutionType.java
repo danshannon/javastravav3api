@@ -1,6 +1,12 @@
 package stravajava.api.v3.model.reference;
 
+import stravajava.api.v3.model.StravaStream;
+
 /**
+ * <p>
+ * Resolution type for requested/returned {@link StravaStream streams}
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */
@@ -11,7 +17,7 @@ public enum StravaStreamResolutionType {
 	private String description;
 	private int size;
 
-	private StravaStreamResolutionType(String id, String description, Integer size) {
+	private StravaStreamResolutionType(final String id, final String description, final Integer size) {
 		this.id = id;
 		this.description = description;
 		this.size = size;
@@ -23,7 +29,7 @@ public enum StravaStreamResolutionType {
 	}
 
 	// @JsonCreator
-	public static StravaStreamResolutionType create(String id) {
+	public static StravaStreamResolutionType create(final String id) {
 		StravaStreamResolutionType[] types = StravaStreamResolutionType.values();
 		for (StravaStreamResolutionType type : types) {
 			if (type.getId().equals(id)) {

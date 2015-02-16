@@ -19,6 +19,10 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
 
 /**
+ * <p>
+ * Implementation of {@link AthleteServices}
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */

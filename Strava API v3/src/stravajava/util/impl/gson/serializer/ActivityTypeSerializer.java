@@ -18,18 +18,21 @@ import com.google.gson.JsonSerializer;
 public class ActivityTypeSerializer implements JsonSerializer<StravaActivityType>, JsonDeserializer<StravaActivityType> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaActivityType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaActivityType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
+			throws JsonParseException {
 		return StravaActivityType.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaActivityType activityType, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaActivityType activityType, final Type type, final JsonSerializationContext context) {
 		return context.serialize(activityType.getValue());
 	}
 

@@ -1,16 +1,20 @@
 package stravajava.api.v3.model.reference;
 
 /**
- * @author dshannon
+ * <p>
+ * Preferred measurement system for an athlete. Those of you living in the 19th century will prefer {@link #IMPERIAL}
+ * </p>
+ * 
+ * @author Dan Shannon
  *
  */
 public enum StravaMeasurementMethod {
 	IMPERIAL("feet", "Imperial"), METRIC("meters", "Metric"), UNKNOWN("UNKNOWN", "Unknown");
 
-	private String id;
-	private String description;
+	private String	id;
+	private String	description;
 
-	private StravaMeasurementMethod(String id, String description) {
+	private StravaMeasurementMethod(final String id, final String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -21,7 +25,7 @@ public enum StravaMeasurementMethod {
 	}
 
 	// @JsonCreator
-	public static StravaMeasurementMethod create(String id) {
+	public static StravaMeasurementMethod create(final String id) {
 		StravaMeasurementMethod[] methods = StravaMeasurementMethod.values();
 		for (StravaMeasurementMethod method : methods) {
 			if (method.getId().equals(id)) {

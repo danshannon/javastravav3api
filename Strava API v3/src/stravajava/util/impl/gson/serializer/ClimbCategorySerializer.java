@@ -18,10 +18,12 @@ import com.google.gson.JsonSerializer;
 public class ClimbCategorySerializer implements JsonSerializer<StravaClimbCategory>, JsonDeserializer<StravaClimbCategory> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaClimbCategory deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaClimbCategory deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
+			throws JsonParseException {
 		try {
 			return StravaClimbCategory.create(json.getAsInt());
 		} catch (NumberFormatException e) {
@@ -30,10 +32,11 @@ public class ClimbCategorySerializer implements JsonSerializer<StravaClimbCatego
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaClimbCategory climbCategory, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaClimbCategory climbCategory, final Type type, final JsonSerializationContext context) {
 		return context.serialize(climbCategory.getValue());
 	}
 

@@ -18,10 +18,12 @@ import com.google.gson.JsonSerializer;
 public class ResourceStateSerializer implements JsonSerializer<StravaResourceState>, JsonDeserializer<StravaResourceState> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaResourceState deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaResourceState deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
+			throws JsonParseException {
 		try {
 			return StravaResourceState.create(json.getAsInt());
 		} catch (NumberFormatException e) {
@@ -30,10 +32,11 @@ public class ResourceStateSerializer implements JsonSerializer<StravaResourceSta
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaResourceState resourceState, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaResourceState resourceState, final Type type, final JsonSerializationContext context) {
 		return context.serialize(resourceState.getValue());
 	}
 

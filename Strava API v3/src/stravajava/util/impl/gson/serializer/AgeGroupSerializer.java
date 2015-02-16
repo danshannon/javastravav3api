@@ -18,18 +18,20 @@ import com.google.gson.JsonSerializer;
 public class AgeGroupSerializer implements JsonSerializer<StravaAgeGroup>, JsonDeserializer<StravaAgeGroup> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaAgeGroup deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaAgeGroup deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 		return StravaAgeGroup.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaAgeGroup ageGroup, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaAgeGroup ageGroup, final Type type, final JsonSerializationContext context) {
 		return context.serialize(ageGroup.getValue());
 	}
 

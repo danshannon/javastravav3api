@@ -18,18 +18,20 @@ import com.google.gson.JsonSerializer;
 public class SportTypeSerializer implements JsonSerializer<StravaSportType>, JsonDeserializer<StravaSportType> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaSportType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaSportType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 		return StravaSportType.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaSportType sportType, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaSportType sportType, final Type type, final JsonSerializationContext context) {
 		return context.serialize(sportType.getValue());
 	}
 

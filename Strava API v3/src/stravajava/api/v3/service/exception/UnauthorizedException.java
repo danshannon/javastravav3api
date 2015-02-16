@@ -3,7 +3,11 @@ package stravajava.api.v3.service.exception;
 import stravajava.api.v3.model.StravaResponse;
 
 /**
- * @author dshannon
+ * <p>
+ * Thrown when the Strava API returns an HTTP status of 401 Unauthorised
+ * </p>
+ * 
+ * @author Dan Shannon
  *
  */
 public class UnauthorizedException extends RuntimeException implements StravaAPIException  {

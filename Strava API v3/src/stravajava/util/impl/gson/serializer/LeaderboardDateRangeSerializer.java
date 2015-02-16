@@ -15,21 +15,25 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class LeaderboardDateRangeSerializer implements JsonSerializer<StravaLeaderboardDateRange>, JsonDeserializer<StravaLeaderboardDateRange> {
+public class LeaderboardDateRangeSerializer implements JsonSerializer<StravaLeaderboardDateRange>,
+		JsonDeserializer<StravaLeaderboardDateRange> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaLeaderboardDateRange deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaLeaderboardDateRange deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
+			throws JsonParseException {
 		return StravaLeaderboardDateRange.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaLeaderboardDateRange dateRange, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaLeaderboardDateRange dateRange, final Type type, final JsonSerializationContext context) {
 		return context.serialize(dateRange.getValue());
 	}
 

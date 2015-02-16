@@ -18,18 +18,20 @@ import com.google.gson.JsonSerializer;
 public class PhotoTypeSerializer implements JsonSerializer<StravaPhotoType>, JsonDeserializer<StravaPhotoType> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaPhotoType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaPhotoType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 		return StravaPhotoType.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaPhotoType photoType, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaPhotoType photoType, final Type type, final JsonSerializationContext context) {
 		return context.serialize(photoType.getValue());
 	}
 

@@ -7,11 +7,15 @@ import retrofit.http.Query;
 import stravajava.api.v3.model.StravaStream;
 import stravajava.api.v3.model.reference.StravaStreamResolutionType;
 import stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
+import stravajava.api.v3.service.StreamServices;
 import stravajava.api.v3.service.exception.BadRequestException;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
 /**
+ * <p>
+ * Retrofit definitions for {@link StreamServices} endpoints
+ * </p>
  * @author Dan Shannon
  *
  */

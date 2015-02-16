@@ -10,11 +10,22 @@ import stravajava.api.v3.service.UploadServices;
 import stravajava.api.v3.service.exception.BadRequestException;
 
 /**
+ * <p>
+ * Implementation of {@link UploadServices}
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */
 public class UploadServicesImpl extends StravaServiceImpl implements UploadServices {
 
+	/**
+	 * <p>
+	 * Private constructor prevents anyone getting an instance without going via {@link #implementation(String)}
+	 * </p>
+	 * 
+	 * @param token The access token used to authenticate to the Strava API
+	 */
 	private UploadServicesImpl(final String token) {
 		super(token);
 		this.restService = Retrofit.retrofit(UploadServicesRetrofit.class, token, UploadServicesRetrofit.LOG_LEVEL);

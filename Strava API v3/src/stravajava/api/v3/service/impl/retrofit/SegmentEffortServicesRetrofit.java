@@ -7,6 +7,10 @@ import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.service.exception.NotFoundException;
 
 /**
+ * <p>
+ * Retrofit definition of segment effort services endpoints on the Strava API
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */

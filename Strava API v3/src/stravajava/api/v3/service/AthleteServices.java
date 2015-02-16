@@ -159,7 +159,7 @@ public interface AthleteServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is not supported.
+	 * Pagination is not supported. Returns only the first page of athletes.
 	 * </p>
 	 * 
 	 * <p>
@@ -246,7 +246,7 @@ public interface AthleteServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is not supported.
+	 * Pagination is not supported. Returns only the first page of athletes.
 	 * </p>
 	 * 
 	 * <p>
@@ -274,7 +274,7 @@ public interface AthleteServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is not supported.
+	 * Pagination is not supported. Returns only the first page of athletes.
 	 * </p>
 	 * 
 	 * <p>
@@ -331,6 +331,10 @@ public interface AthleteServices {
 	 * 
 	 * <p>
 	 * This is the recommended endpoint when polling for athlete upload events.
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is not supported. Returns all statistics for the athlete.
 	 * </p>
 	 * 
 	 * <p>

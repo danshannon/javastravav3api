@@ -6,7 +6,13 @@ import java.util.List;
 import stravajava.util.Paging;
 
 public class Strava {
+	/**
+	 * Strava's default page size. If you don't specify a size, then this is what you'll get from endpoints that support paging.
+	 */
 	public static int DEFAULT_PAGE_SIZE = 50;
+	/**
+	 * Maximum page size that is returned by Strava
+	 */
 	public static int MAX_PAGE_SIZE = 200;
 	/**
 	 * <p>
@@ -20,6 +26,9 @@ public class Strava {
 	 * </p>
 	 */
 	public static final String AUTH_ENDPOINT = "https://www.strava.com";
+	/**
+	 * Name of the Strava session cookie
+	 */
 	public static final String SESSION_COOKIE_NAME = "_strava3_session";
 
 	/**
@@ -74,36 +83,6 @@ public class Strava {
 		}
 		return stravaPaging;
 
-		// // Handle the ignore instructions being more than one page full
-		// int ignoreLastN = inputPaging.getIgnoreLastN();
-		// while (ignoreLastN >= MAX_PAGE_SIZE) {
-		// ignoreLastN -= MAX_PAGE_SIZE;
-		// lastElement -= MAX_PAGE_SIZE;
-		// }
-		//
-		// int ignoreFirstN = inputPaging.getIgnoreFirstN();
-		// while (ignoreFirstN >= MAX_PAGE_SIZE) {
-		// firstElement += MAX_PAGE_SIZE;
-		// ignoreFirstN -= MAX_PAGE_SIZE;
-		// }
-		//
-		// int firstPageElement = firstElement - (firstElement % MAX_PAGE_SIZE) + 1;
-		// int lastPageElement = lastElement;
-		// if (lastElement % MAX_PAGE_SIZE != 0) {
-		// lastPageElement= lastElement - (lastElement % MAX_PAGE_SIZE) + MAX_PAGE_SIZE;
-		// }
-		//
-		// for (int i = firstPageElement; i < lastPageElement; i = i + MAX_PAGE_SIZE) {
-		// Paging newPaging = new Paging((i / MAX_PAGE_SIZE) + 1, MAX_PAGE_SIZE, 0, 0);
-		// if (i == firstPageElement) {
-		// newPaging.setIgnoreFirstN(ignoreFirstN);
-		// }
-		// if (i >= lastPageElement - MAX_PAGE_SIZE) {
-		// newPaging.setIgnoreLastN(lastPageElement - lastElement);
-		// }
-		// stravaPaging.add(newPaging);
-		// }
-		// return stravaPaging;
 	}
 
 	/**
@@ -111,9 +90,9 @@ public class Strava {
 	 * Removes the last ignoreLastN items from the list
 	 * </p>
 	 * 
-	 * @param list
-	 * @param ignoreLastN
-	 * @return
+	 * @param list List of items
+	 * @param ignoreFirstN Number of items to remove
+	 * @return The resulting list
 	 */
 	public static <T> List<T> ignoreLastN(final List<T> list, final int ignoreLastN) {
 		if (ignoreLastN < 0) {
@@ -131,6 +110,15 @@ public class Strava {
 		return list.subList(0, list.size() - ignoreLastN);
 	}
 
+	/**
+	 * <p>
+	 * Removes the first N items from a list
+	 * </p>
+	 * 
+	 * @param list List of items
+	 * @param ignoreFirstN Number of items to remove
+	 * @return The resulting list
+	 */
 	public static <T> List<T> ignoreFirstN(final List<T> list, final int ignoreFirstN) {
 		if (ignoreFirstN < 0) {
 			throw new IllegalArgumentException("Cannot remove " + ignoreFirstN + " items from a list!");

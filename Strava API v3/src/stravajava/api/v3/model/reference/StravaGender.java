@@ -1,16 +1,20 @@
 package stravajava.api.v3.model.reference;
 
 /**
- * @author dshannon
+ * <p>
+ * Athlete gender
+ * </p>
+ * 
+ * @author Dan Shannon
  *
  */
 public enum StravaGender {
 	MALE("M", "Male"), FEMALE("F", "Female"), UNKNOWN("UNKNOWN", "Unknown");
 
-	private String id;
-	private String description;
+	private String	id;
+	private String	description;
 
-	private StravaGender(String id, String description) {
+	private StravaGender(final String id, final String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -21,7 +25,7 @@ public enum StravaGender {
 	}
 
 	// @JsonCreator
-	public static StravaGender create(String id) {
+	public static StravaGender create(final String id) {
 		StravaGender[] genders = StravaGender.values();
 		for (StravaGender gender : genders) {
 			if (gender.getId().equals(id)) {

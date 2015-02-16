@@ -18,10 +18,11 @@ import com.google.gson.JsonSerializer;
 public class WorkoutTypeSerializer implements JsonSerializer<StravaWorkoutType>, JsonDeserializer<StravaWorkoutType> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaWorkoutType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaWorkoutType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 		try {
 			return StravaWorkoutType.create(json.getAsInt());
 		} catch (NumberFormatException e) {
@@ -30,10 +31,11 @@ public class WorkoutTypeSerializer implements JsonSerializer<StravaWorkoutType>,
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaWorkoutType workoutType, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaWorkoutType workoutType, final Type type, final JsonSerializationContext context) {
 		return context.serialize(workoutType.getValue());
 	}
 

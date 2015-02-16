@@ -12,6 +12,13 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  *
  */
 public class SegmentEffortServicesImpl extends StravaServiceImpl implements SegmentEffortServices {
+	/**
+	 * <p>
+	 * Private constructor ensures that the only way to get an instance is by using {@link #implementation(String)} with a valid access token.
+	 * </p>
+	 * 
+	 * @param token The access token to be used for authentication to the Strava API
+	 */
 	private SegmentEffortServicesImpl(final String token) {
 		super(token);
 		this.restService = Retrofit.retrofit(SegmentEffortServicesRetrofit.class, token, SegmentEffortServicesRetrofit.LOG_LEVEL);
@@ -54,6 +61,7 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 		try {
 			return this.restService.getSegmentEffort(id);
 		} catch (NotFoundException e) {
+			// Segment effort doesn't exist
 			return null;
 		} catch (UnauthorizedException e) {
 			if (accessTokenIsValid()) {
@@ -62,6 +70,7 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 				effort.setId(id);
 				return effort;
 			} else {
+				// Token broken
 				throw e;
 			}
 		}

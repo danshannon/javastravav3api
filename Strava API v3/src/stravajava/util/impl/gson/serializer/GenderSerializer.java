@@ -18,18 +18,20 @@ import com.google.gson.JsonSerializer;
 public class GenderSerializer implements JsonSerializer<StravaGender>, JsonDeserializer<StravaGender> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaGender deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaGender deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 		return StravaGender.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaGender gender, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaGender gender, final Type type, final JsonSerializationContext context) {
 		return context.serialize(gender.getValue());
 	}
 

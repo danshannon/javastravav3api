@@ -12,6 +12,7 @@ import stravajava.api.v3.service.ClubServices;
  * 
  * <p>
  * See {@link ClubServices#joinClub(Integer)} and {@link ClubServices#leaveClub(Integer)}
+ * </p>
  * 
  * @author Dan Shannon
  *
@@ -20,6 +21,12 @@ import stravajava.api.v3.service.ClubServices;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class StravaClubMembershipResponse {
+	/**
+	 * TODO ???
+	 */
 	private Boolean success;
+	/**
+	 * TODO ???
+	 */
 	private Boolean active;
 }

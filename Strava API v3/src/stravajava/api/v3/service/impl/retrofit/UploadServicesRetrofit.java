@@ -9,9 +9,14 @@ import retrofit.http.Path;
 import retrofit.mime.TypedFile;
 import stravajava.api.v3.model.StravaUploadResponse;
 import stravajava.api.v3.model.reference.StravaActivityType;
+import stravajava.api.v3.service.UploadServices;
 import stravajava.api.v3.service.exception.BadRequestException;
 
 /**
+ * <p>
+ * Retrofit definitions for {@link UploadServices} endpoints
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */

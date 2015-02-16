@@ -20,9 +20,12 @@ import stravajava.api.v3.service.UploadServices;
 @NoArgsConstructor
 public class StravaUploadResponse {
 	/**
-	 * 
+	 * Unique identifier of the upload
 	 */
 	private Integer id;
+	/**
+	 * Unique identifier for the activity as given by the uploading application
+	 */
 	private String externalId;
 	/**
 	 * <p>
@@ -42,5 +45,8 @@ public class StravaUploadResponse {
 	 * </ul>
 	 */
 	private String status;
+	/**
+	 * Unique identifier of the activity, if it was created as part of the upload process.
+	 */
 	private Integer activityId;
 }

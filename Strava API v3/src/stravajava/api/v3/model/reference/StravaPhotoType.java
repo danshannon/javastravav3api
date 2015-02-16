@@ -1,16 +1,20 @@
 package stravajava.api.v3.model.reference;
 
 /**
+ * <p>
+ * Type of photo - currently Instagram only
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */
 public enum StravaPhotoType {
 	INSTAGRAM("InstagramPhoto", "Instagram"), UNKNOWN("UNKNOWN", "Unknown");
 
-	private String id;
-	private String description;
+	private String	id;
+	private String	description;
 
-	private StravaPhotoType(String id, String description) {
+	private StravaPhotoType(final String id, final String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -21,7 +25,7 @@ public enum StravaPhotoType {
 	}
 
 	// @JsonCreator
-	public static StravaPhotoType create(String id) {
+	public static StravaPhotoType create(final String id) {
 		StravaPhotoType[] types = StravaPhotoType.values();
 		for (StravaPhotoType type : types) {
 			if (type.getId().equals(id)) {

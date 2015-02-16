@@ -15,6 +15,10 @@ import stravajava.api.v3.model.StravaClubMembershipResponse;
 import stravajava.api.v3.service.exception.NotFoundException;
 
 /**
+ * <p>
+ * Retrofit definition of the endpoints for club services
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */

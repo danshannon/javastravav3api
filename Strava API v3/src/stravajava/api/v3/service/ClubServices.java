@@ -38,15 +38,15 @@ public interface ClubServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * URL GET https://www.strava.com/api/v3/clubs/:id
-	 * </p>
-	 * 
-	 * <p>
 	 * Returns <code>null</code> if club with the given id does not exist
 	 * </p>
 	 * 
 	 * <p>
 	 * Returns an empty club (with only the id set) if the club is private and the authenticated athlete is not a member
+	 * </p>
+	 * 
+	 * <p>
+	 * URL GET https://www.strava.com/api/v3/clubs/:id
 	 * </p>
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-details>http://strava.github.io/api/v3/clubs/#get-details</a>
@@ -57,7 +57,7 @@ public interface ClubServices {
 	 * @throws UnauthorizedException
 	 *             If the service's security token is invalid
 	 */
-	public StravaClub getClub(Integer id);
+	public StravaClub getClub(final Integer id);
 
 	/**
 	 * <p>
@@ -65,7 +65,12 @@ public interface ClubServices {
 	 * </p>
 	 * 
 	 * <p>
+	 * Pagination is not supported. Returns all clubs of which the athlete is a member.
+	 * </p>
+	 * 
+	 * <p>
 	 * URL GET https://www.strava.com/api/v3/athlete/clubs
+	 * </p>
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-athletes">http://strava.github.io/api/v3/clubs/#get-athletes</a>
 	 * 
@@ -79,7 +84,7 @@ public interface ClubServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is not supported.
+	 * Pagination is not supported. Returns only the first page of members.
 	 * </p>
 	 * 
 	 * <p>
@@ -102,7 +107,7 @@ public interface ClubServices {
 	 * @throws UnauthorizedException
 	 *             If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listClubMembers(Integer id);
+	public List<StravaAthlete> listClubMembers(final Integer id);
 
 	/**
 	 * <p>
@@ -135,7 +140,7 @@ public interface ClubServices {
 	 * @throws UnauthorizedException
 	 *             If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listClubMembers(Integer id, Paging pagingInstruction);
+	public List<StravaAthlete> listClubMembers(final Integer id, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -147,7 +152,7 @@ public interface ClubServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is NOT supported.
+	 * Pagination is NOT supported. Returns only the first page of activities.
 	 * </p>
 	 * 
 	 * <p>
@@ -170,7 +175,7 @@ public interface ClubServices {
 	 * @throws UnauthorizedException
 	 *             If the service's access token is invalid
 	 */
-	public List<StravaActivity> listRecentClubActivities(Integer id);
+	public List<StravaActivity> listRecentClubActivities(final Integer id);
 
 	/**
 	 * <p>
@@ -205,7 +210,7 @@ public interface ClubServices {
 	 * @throws UnauthorizedException
 	 *             If the service's access token is invalid
 	 */
-	public List<StravaActivity> listRecentClubActivities(Integer id, Paging pagingInstruction);
+	public List<StravaActivity> listRecentClubActivities(final Integer id, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -220,7 +225,7 @@ public interface ClubServices {
 	 * @throws UnauthorizedException
 	 *             If the user does not have a token with write permission or the token is invalid
 	 */
-	public StravaClubMembershipResponse joinClub(Integer id);
+	public StravaClubMembershipResponse joinClub(final Integer id);
 
 	/**
 	 * <p>
@@ -235,5 +240,5 @@ public interface ClubServices {
 	 * @throws UnauthorizedException
 	 *             If the user does not have a token with write permission or the token is invalid
 	 */
-	public StravaClubMembershipResponse leaveClub(Integer id);
+	public StravaClubMembershipResponse leaveClub(final Integer id);
 }

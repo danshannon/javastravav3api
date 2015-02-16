@@ -15,21 +15,25 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class MeasurementMethodSerializer implements JsonSerializer<StravaMeasurementMethod>, JsonDeserializer<StravaMeasurementMethod> {
+public class MeasurementMethodSerializer implements JsonSerializer<StravaMeasurementMethod>,
+		JsonDeserializer<StravaMeasurementMethod> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaMeasurementMethod deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaMeasurementMethod deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
+			throws JsonParseException {
 		return StravaMeasurementMethod.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaMeasurementMethod method, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaMeasurementMethod method, final Type type, final JsonSerializationContext context) {
 		return context.serialize(method.getValue());
 	}
 

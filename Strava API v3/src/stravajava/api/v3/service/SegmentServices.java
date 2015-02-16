@@ -56,7 +56,7 @@ public interface SegmentServices {
 	 * @throws UnauthorizedException
 	 *             If authorisation fails
 	 */
-	public StravaSegment getSegment(Integer id);
+	public StravaSegment getSegment(final Integer id);
 
 	/**
 	 * <p>
@@ -81,7 +81,7 @@ public interface SegmentServices {
 	 * @return Returns a {@link StravaResourceState#SUMMARY summary representation} of the {@link StravaSegment segments} starred by the authenticated
 	 *         {@link StravaAthlete}.
 	 */
-	public List<StravaSegment> listAuthenticatedAthleteStarredSegments(Paging pagingInstruction);
+	public List<StravaSegment> listAuthenticatedAthleteStarredSegments(final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -90,7 +90,7 @@ public interface SegmentServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is NOT supported.
+	 * Pagination is NOT supported. Returns only the first page of segments.
 	 * </p>
 	 * 
 	 * <p>
@@ -133,7 +133,7 @@ public interface SegmentServices {
 	 * @return Returns a {@link StravaResourceState#SUMMARY summary representation} of the {@link StravaSegment segments} starred by the identified
 	 *         {@link StravaAthlete}.
 	 */
-	public List<StravaSegment> listStarredSegments(Integer id, Paging pagingInstruction);
+	public List<StravaSegment> listStarredSegments(final Integer id, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -142,7 +142,7 @@ public interface SegmentServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is NOT supported.
+	 * Pagination is NOT supported. Returns only the first page of segments
 	 * </p>
 	 * 
 	 * <p>
@@ -160,7 +160,7 @@ public interface SegmentServices {
 	 * @return Returns a {@link StravaResourceState#SUMMARY summary representation} of the {@link StravaSegment segments} starred by the identified
 	 *         {@link StravaAthlete}.
 	 */
-	public List<StravaSegment> listStarredSegments(Integer id);
+	public List<StravaSegment> listStarredSegments(final Integer id);
 
 	/**
 	 * <p>
@@ -207,7 +207,7 @@ public interface SegmentServices {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(Integer id, Integer athleteId, Calendar startDateLocal, Calendar endDateLocal, Paging pagingInstruction);
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -228,7 +228,7 @@ public interface SegmentServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is NOT supported.
+	 * Pagination is NOT supported. Returns only the first page of segment efforts.
 	 * </p>
 	 * 
 	 * <p>
@@ -252,7 +252,7 @@ public interface SegmentServices {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(Integer id, Integer athleteId, Calendar startDateLocal, Calendar endDateLocal);
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal);
 
 	/**
 	 * <p>
@@ -280,7 +280,7 @@ public interface SegmentServices {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(Integer id, Paging pagingInstruction);
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -288,7 +288,7 @@ public interface SegmentServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is NOT supported.
+	 * Pagination is NOT supported. Returns only the first page of segment efforts.
 	 * </p>
 	 * 
 	 * <p>
@@ -306,7 +306,7 @@ public interface SegmentServices {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(Integer id);
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id);
 
 	/**
 	 * <p>
@@ -353,8 +353,8 @@ public interface SegmentServices {
 	 * @return Returns an array of up to 10, by default, {@link StravaSegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be
 	 *         considered 64-bit integers and effort_count is deprecated, use entry_count instead.
 	 */
-	public StravaSegmentLeaderboard getSegmentLeaderboard(Integer id, StravaGender gender, StravaAgeGroup ageGroup, StravaWeightClass weightClass,
-			Boolean following, Integer clubId, StravaLeaderboardDateRange dateRange, Paging pagingInstruction);
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final StravaGender gender, final StravaAgeGroup ageGroup, final StravaWeightClass weightClass,
+			final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -386,7 +386,7 @@ public interface SegmentServices {
 	 * @return Returns an array of up to 10, by default, {@link StravaSegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be
 	 *         considered 64-bit integers and effort_count is deprecated, use entry_count instead.
 	 */
-	public StravaSegmentLeaderboard getSegmentLeaderboard(Integer id, Paging pagingInstruction);
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -398,7 +398,7 @@ public interface SegmentServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is NOT supported.
+	 * Pagination is NOT supported. Returns only the first page of leaderboard entries.
 	 * </p>
 	 * 
 	 * <p>
@@ -416,11 +416,15 @@ public interface SegmentServices {
 	 * @return Returns an array of up to 10, by default, {@link StravaSegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be
 	 *         considered 64-bit integers and effort_count is deprecated, use entry_count instead.
 	 */
-	public StravaSegmentLeaderboard getSegmentLeaderboard(Integer id);
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id);
 
 	/**
 	 * <p>
 	 * This endpoint can be used to find popular segments within a given area (defined by the southwest and northeast corners of the area).
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is not supported. Returns up to 10 segments only.
 	 * </p>
 	 * 
 	 * <p>
@@ -440,7 +444,7 @@ public interface SegmentServices {
 	 *            (Optional) Maximum climb category filter
 	 * @return Returns an array of up to 10 segment objects
 	 */
-	public StravaSegmentExplorerResponse segmentExplore(StravaMapPoint southwestCorner, StravaMapPoint northeastCorner,
-			StravaSegmentExplorerActivityType activityType, StravaClimbCategory minCat, StravaClimbCategory maxCat);
+	public StravaSegmentExplorerResponse segmentExplore(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner,
+			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat, final StravaClimbCategory maxCat);
 
 }

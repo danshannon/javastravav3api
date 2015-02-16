@@ -1,7 +1,13 @@
 package stravajava.api.v3.model.reference;
 
+import stravajava.api.v3.model.StravaSegment;
+
 /**
- * @author dshannon
+ * <p>
+ * Activity type associated with a {@link StravaSegment}
+ * </p>
+ * 
+ * @author Dan Shannon
  *
  */
 public enum StravaSegmentActivityType {
@@ -10,7 +16,7 @@ public enum StravaSegmentActivityType {
 	private String id;
 	private String description;
 
-	private StravaSegmentActivityType(String id, String description) {
+	private StravaSegmentActivityType(final String id, final String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -21,7 +27,7 @@ public enum StravaSegmentActivityType {
 	}
 
 	// @JsonCreator
-	public static StravaSegmentActivityType create(String id) {
+	public static StravaSegmentActivityType create(final String id) {
 		StravaSegmentActivityType[] activityTypes = StravaSegmentActivityType.values();
 		for (StravaSegmentActivityType activityType : activityTypes) {
 			if (activityType.getId().equals(id)) {

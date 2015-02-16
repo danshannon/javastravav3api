@@ -7,7 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
+ * <p>
  * {@link StravaSegment} leaderboard
+ * </p>
  * 
  * @author Dan Shannon
  *

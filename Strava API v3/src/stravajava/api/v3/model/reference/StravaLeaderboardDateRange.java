@@ -1,17 +1,26 @@
 package stravajava.api.v3.model.reference;
 
+import stravajava.api.v3.model.StravaSegmentLeaderboard;
+
 /**
+ * <p>
+ * Date range options used for filtering {@link StravaSegmentLeaderboard leaderboards}
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */
 public enum StravaLeaderboardDateRange {
-	THIS_YEAR("this_year", "This year"), THIS_MONTH("this_month", "This month"), THIS_WEEK("this_week", "This week"), TODAY("today", "Today"), UNKNOWN(
-			"UNKNOWN", "Unknown");
+	THIS_YEAR("this_year", "This year"),
+	THIS_MONTH("this_month", "This month"),
+	THIS_WEEK("this_week", "This week"),
+	TODAY("today", "Today"),
+	UNKNOWN("UNKNOWN", "Unknown");
 
-	private String id;
-	private String description;
+	private String	id;
+	private String	description;
 
-	private StravaLeaderboardDateRange(String id, String description) {
+	private StravaLeaderboardDateRange(final String id, final String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -22,7 +31,7 @@ public enum StravaLeaderboardDateRange {
 	}
 
 	// @JsonCreator
-	public static StravaLeaderboardDateRange create(String id) {
+	public static StravaLeaderboardDateRange create(final String id) {
 		for (StravaLeaderboardDateRange dateRange : StravaLeaderboardDateRange.values()) {
 			if (dateRange.getId().equals(id)) {
 				return dateRange;

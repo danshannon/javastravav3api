@@ -1,17 +1,25 @@
 package stravajava.api.v3.model.reference;
 
 /**
+ * <p>
+ * Strava club type
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */
 public enum StravaClubType {
-	CASUAL("casual_club", "Casual club"), TEAM("racing_team", "Racing team"), SHOP("shop", "Shop"), COMPANY("company", "Company"), OTHER("other", "Other"), UNKNOWN(
-			"UNKNOWN", "Unknown");
+	CASUAL("casual_club", "Casual club"),
+	TEAM("racing_team", "Racing team"),
+	SHOP("shop", "Shop"),
+	COMPANY("company", "Company"),
+	OTHER("other", "Other"),
+	UNKNOWN("UNKNOWN", "Unknown");
 
-	private String id;
-	private String description;
+	private String	id;
+	private String	description;
 
-	private StravaClubType(String id, String description) {
+	private StravaClubType(final String id, final String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -22,7 +30,7 @@ public enum StravaClubType {
 	}
 
 	// @JsonCreator
-	public static StravaClubType create(String id) {
+	public static StravaClubType create(final String id) {
 		StravaClubType[] clubTypes = StravaClubType.values();
 		for (StravaClubType clubType : clubTypes) {
 			if (clubType.getId().equals(id)) {

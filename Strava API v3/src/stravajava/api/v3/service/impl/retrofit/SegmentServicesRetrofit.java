@@ -19,10 +19,15 @@ import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.model.reference.StravaLeaderboardDateRange;
 import stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType;
 import stravajava.api.v3.model.reference.StravaWeightClass;
+import stravajava.api.v3.service.SegmentServices;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
 /**
+ * <p>
+ * Retrofit definitions for the {@link SegmentServices} Strava endpoints
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */

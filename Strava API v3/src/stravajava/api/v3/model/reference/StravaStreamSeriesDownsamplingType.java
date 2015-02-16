@@ -1,7 +1,11 @@
 package stravajava.api.v3.model.reference;
 
 /**
- * @author dshannon
+ * <p>
+ * Method for downsampling a strava stream - either by time or by distance
+ * </p>
+ * 
+ * @author Dan Shannon
  *
  */
 public enum StravaStreamSeriesDownsamplingType {
@@ -10,7 +14,7 @@ public enum StravaStreamSeriesDownsamplingType {
 	private String id;
 	private String description;
 
-	private StravaStreamSeriesDownsamplingType(String id, String description) {
+	private StravaStreamSeriesDownsamplingType(final String id, final String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -21,7 +25,7 @@ public enum StravaStreamSeriesDownsamplingType {
 	}
 
 	// @JsonCreator
-	public static StravaStreamSeriesDownsamplingType create(String id) {
+	public static StravaStreamSeriesDownsamplingType create(final String id) {
 		StravaStreamSeriesDownsamplingType[] types = StravaStreamSeriesDownsamplingType.values();
 		for (StravaStreamSeriesDownsamplingType type : types) {
 			if (type.getId().equals(id)) {

@@ -15,21 +15,25 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class AuthorisationResponseTypeSerializer implements JsonSerializer<AuthorisationResponseType>, JsonDeserializer<AuthorisationResponseType> {
+public class AuthorisationResponseTypeSerializer implements JsonSerializer<AuthorisationResponseType>,
+		JsonDeserializer<AuthorisationResponseType> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public AuthorisationResponseType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public AuthorisationResponseType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
+			throws JsonParseException {
 		return AuthorisationResponseType.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(AuthorisationResponseType authorisationResponseType, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final AuthorisationResponseType authorisationResponseType, final Type type, final JsonSerializationContext context) {
 		return context.serialize(authorisationResponseType.getId());
 	}
 

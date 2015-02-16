@@ -17,7 +17,19 @@ import stravajava.util.exception.JsonSerialisationException;
 import stravajava.util.impl.gson.JsonUtilImpl;
 
 /**
- * @author dshannon
+ * <p>
+ * Interceptor to handle errors thrown by the Strava API.
+ * </p>
+ * 
+ * <p>
+ * HTTP error status codes are converted to checked (if recoverable) or unchecked (if not) exceptions and thrown
+ * </p>
+ * 
+ * <p>
+ * With each error, Strava also returns a set of error messages which are encapsulated in {@link StravaResponse}
+ * </p>
+ * 
+ * @author Dan Shannon
  *
  */
 @Log4j2
@@ -67,6 +79,8 @@ public class RetrofitErrorHandler implements ErrorHandler {
 			log.info(status + " : " + response);
 			return new NotFoundException(response,cause);
 		}
+		
+		// TODO Handle 500-series errors
 		
 		log.error(response);
 		return new StravaUnknownAPIException(status,response,cause);

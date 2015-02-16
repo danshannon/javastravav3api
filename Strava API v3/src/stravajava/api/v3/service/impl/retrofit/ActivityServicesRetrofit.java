@@ -17,12 +17,15 @@ import stravajava.api.v3.model.StravaPhoto;
 import stravajava.api.v3.service.exception.BadRequestException;
 import stravajava.api.v3.service.exception.NotFoundException;
 
-/**
+/**<p>
+ * Retrofit declarations of activity service endpoints
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */
 public interface ActivityServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL; // TODO parameterise in config
 
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)

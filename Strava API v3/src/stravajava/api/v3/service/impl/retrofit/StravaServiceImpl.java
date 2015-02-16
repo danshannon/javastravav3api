@@ -4,18 +4,46 @@ import lombok.extern.log4j.Log4j2;
 import stravajava.api.v3.service.AthleteServices;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
+/**
+ * <p>
+ * Base class for all implementations of Strava services
+ * </p>
+ * 
+ * @author Dan Shannon
+ *
+ */
 @Log4j2
 public abstract class StravaServiceImpl {
 	private final AthleteServices athleteService;
 	
 	// TODO Parameterise in config files
-	public static int warnAtRequestLimitPercent = 10;
+	/**
+	 * The percentage of request limits that, if exceeded, should log a warning
+	 */
+	private static int warnAtRequestLimitPercent = 10;
 	
+	/**
+	 * Current request rate over the last 15 minutes
+	 */
 	public static int requestRate = 0;
+	/**
+	 * Current request rate over the last day
+	 */
 	public static int requestRateDaily = 0;
+	/**
+	 * Request limit every 15 minutes (default is 600)
+	 */
 	public static int requestLimit = 0;
+	/**
+	 * Daily request limit (default is 30,000)
+	 */
 	public static int requestLimitDaily = 0;
 	
+	/**
+	 * Calculates the percentage of the per-15-minute request limit that has been used, issues a warning if required
+	 * 
+	 * @return Percentage used.
+	 */
 	public static float requestRatePercentage() {
 		float percent = (requestLimit == 0 ? 0 : 100 * new Float(requestRate) / new Float(requestLimit));
 		if (percent > StravaServiceImpl.warnAtRequestLimitPercent) {
@@ -24,6 +52,11 @@ public abstract class StravaServiceImpl {
 		return percent;
 	}
 	
+	/**
+	 * Calculates the percentage of the daily request limit that has been used, issues a warning if required
+	 * 
+	 * @return Percentage used.
+	 */
 	public static float requestRateDailyPercentage() {
 		float percent = (requestLimitDaily == 0 ? 0 : 100 * new Float(requestRateDaily) / new Float(requestLimitDaily));
 		if (percent > warnAtRequestLimitPercent) {
@@ -32,6 +65,13 @@ public abstract class StravaServiceImpl {
 		return percent;
 	}
 
+	/**
+	 * <p>
+	 * Protected constructor prevents user from getting a service instance without a valid token
+	 * </p>
+	 * 
+	 * @param token The access token to be used to authenticate to the Strava API
+	 */
 	protected StravaServiceImpl(final String token) {
 		this.athleteService = AthleteServicesImpl.implementation(token);
 		if (!accessTokenIsValid()) {
@@ -39,6 +79,13 @@ public abstract class StravaServiceImpl {
 		}
 	}
 
+	/**
+	 * <p>
+	 * Work out if the access token is valid (i.e. has not been revoked)
+	 * </p>
+	 * 
+	 * @return <code>true</code> if the token can be used to get the authenticated athlete, <code>false</code> otherwise
+	 */
 	protected boolean accessTokenIsValid() {
 		try {
 			this.athleteService.getAuthenticatedAthlete();

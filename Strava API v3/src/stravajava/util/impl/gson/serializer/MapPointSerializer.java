@@ -14,16 +14,17 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 /**
- * @author dshannon
+ * @author Dan Shannon
  *
  */
 public class MapPointSerializer implements JsonDeserializer<StravaMapPoint>, JsonSerializer<StravaMapPoint> {
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaMapPoint point, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaMapPoint point, final Type type, final JsonSerializationContext context) {
 		ArrayList<Float> list = new ArrayList<Float>();
 		list.add(point.getLatitude());
 		list.add(point.getLongitude());
@@ -31,10 +32,12 @@ public class MapPointSerializer implements JsonDeserializer<StravaMapPoint>, Jso
 	}
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaMapPoint deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaMapPoint deserialize(final JsonElement element, final Type type, final JsonDeserializationContext context)
+			throws JsonParseException {
 		JsonArray array = element.getAsJsonArray();
 		return new StravaMapPoint(array.get(0).getAsFloat(), array.get(1).getAsFloat());
 	}

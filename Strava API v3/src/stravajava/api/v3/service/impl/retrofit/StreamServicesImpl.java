@@ -14,10 +14,21 @@ import stravajava.api.v3.service.exception.BadRequestException;
 import stravajava.api.v3.service.exception.NotFoundException;
 
 /**
- * @author dshannon
+ * <p>
+ * Implementation of {@link StreamServices}
+ * </p>
+ * 
+ * @author Dan Shannon
  *
  */
 public class StreamServicesImpl extends StravaServiceImpl implements StreamServices {
+	/**
+	 * <p>
+	 * Private constructor prevents anyone from getting an instance without a valid access token
+	 * </p>
+	 * 
+	 * @param token The access token to be used to authenticate to the Strava API
+	 */
 	private StreamServicesImpl(final String token) {
 		super(token);
 		this.restService = Retrofit.retrofit(StreamServicesRetrofit.class, token, StreamServicesRetrofit.LOG_LEVEL);
@@ -74,6 +85,8 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	}
 
 	/**
+	 * Validate that what's being asked for from the service makes any sense
+	 * 
 	 * @param resolution
 	 * @param seriesType
 	 * @param types
@@ -96,6 +109,8 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	}
 
 	/**
+	 * convert array of types to a comma-separated string, that's what Strava expects
+	 * 
 	 * @param types
 	 * @return
 	 */
@@ -180,11 +195,17 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 		return returnList.toArray(new StravaStreamType[returnList.size()]);
 	}
 
+	/**
+	 * @see stravajava.api.v3.service.StreamServices#getEffortStreams(java.lang.Long)
+	 */
 	@Override
 	public List<StravaStream> getEffortStreams(final Long id) {
 		return getEffortStreams(id, null, null, getAllStreamTypes());
 	}
 
+	/**
+	 * @see stravajava.api.v3.service.StreamServices#getSegmentStreams(java.lang.Integer)
+	 */
 	@Override
 	public List<StravaStream> getSegmentStreams(final Integer id) {
 		return getSegmentStreams(id, null, null, getAllStreamTypes());

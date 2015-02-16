@@ -18,10 +18,11 @@ import com.google.gson.JsonSerializer;
 public class FrameTypeSerializer implements JsonSerializer<StravaFrameType>, JsonDeserializer<StravaFrameType> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaFrameType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaFrameType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 		try {
 			return StravaFrameType.create(json.getAsInt());
 		} catch (NumberFormatException e) {
@@ -30,10 +31,11 @@ public class FrameTypeSerializer implements JsonSerializer<StravaFrameType>, Jso
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaFrameType frameType, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaFrameType frameType, final Type type, final JsonSerializationContext context) {
 		return context.serialize(frameType.getValue());
 	}
 

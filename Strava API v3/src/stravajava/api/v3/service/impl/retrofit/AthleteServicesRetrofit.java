@@ -13,7 +13,9 @@ import stravajava.api.v3.service.AthleteServices;
 import stravajava.api.v3.service.exception.NotFoundException;
 
 /**
+ * <p>
  * Retrofit definitions for implementation of {@link AthleteServices}
+ * </p>
  * 
  * @author Dan Shannon
  *

@@ -1,27 +1,31 @@
 package stravajava.api.v3.model.reference;
 
 /**
+ * <p>
+ * State of a resource returned from Strava.
+ * </p>
+ * 
  * @author Dan Shannon
  *
  */
 public enum StravaResourceState {
 	UPDATING(-1, "updating"), META(1, "meta"), SUMMARY(2, "summary"), DETAILED(3, "detailed"), UNKNOWN(-2, "Unknown");
 
-	private Integer id;
-	private String description;
+	private Integer	id;
+	private String	description;
 
 	// @JsonValue
 	public Integer getValue() {
 		return this.id;
 	}
 
-	private StravaResourceState(Integer id, String description) {
+	private StravaResourceState(final Integer id, final String description) {
 		this.id = id;
 		this.description = description;
 	}
 
 	// @JsonCreator
-	public static StravaResourceState create(Integer id) {
+	public static StravaResourceState create(final Integer id) {
 		StravaResourceState[] states = StravaResourceState.values();
 		for (StravaResourceState state : states) {
 			if (state.getValue() != null && state.getValue().equals(id)) {

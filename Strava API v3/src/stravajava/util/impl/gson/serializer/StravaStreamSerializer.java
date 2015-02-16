@@ -20,16 +20,17 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 /**
- * @author dshannon
+ * @author Dan Shannon
  *
  */
 public class StravaStreamSerializer implements JsonSerializer<StravaStream>, JsonDeserializer<StravaStream> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaStream deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaStream deserialize(final JsonElement element, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 		JsonObject json = null;
 		try {
 			json = (JsonObject) element;
@@ -71,17 +72,20 @@ public class StravaStreamSerializer implements JsonSerializer<StravaStream>, Jso
 		stream.setMapPoints(points);
 		stream.setMoving(moving);
 		stream.setOriginalSize(json.get("original_size").getAsInt());
-		stream.setResolution((StravaStreamResolutionType) context.deserialize(json.get("resolution"), StravaStreamResolutionType.class));
-		stream.setSeriesType((StravaStreamSeriesDownsamplingType) context.deserialize(json.get("series_type"), StravaStreamSeriesDownsamplingType.class));
+		stream.setResolution((StravaStreamResolutionType) context.deserialize(json.get("resolution"),
+				StravaStreamResolutionType.class));
+		stream.setSeriesType((StravaStreamSeriesDownsamplingType) context.deserialize(json.get("series_type"),
+				StravaStreamSeriesDownsamplingType.class));
 		stream.setType(streamType);
 		return stream;
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaStream stream, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaStream stream, final Type type, final JsonSerializationContext context) {
 		JsonObject element = new JsonObject();
 		element.add("original_size", context.serialize(stream.getOriginalSize()));
 		element.add("resolution", context.serialize(stream.getResolution()));

@@ -11,6 +11,14 @@ import retrofit.client.Response;
 
 import com.squareup.okhttp.OkHttpClient;
 
+/**
+ * <p>
+ * Overrides the OkHttp client in order to intercept the rate limit data returned by the API in headers
+ * </p>
+ * 
+ * @author Dan Shannon
+ *
+ */
 @NoArgsConstructor
 public class RetrofitClientResponseInterceptor extends OkClient {
 
@@ -18,6 +26,13 @@ public class RetrofitClientResponseInterceptor extends OkClient {
 		super(client);
 	}
 
+	/**
+	 * <p>
+	 * Gets and stores the values of the rate limit information headers returned by Strava with each response
+	 * </p>
+	 * 
+	 * @see retrofit.client.OkClient#execute(retrofit.client.Request)
+	 */
 	@Override
 	public Response execute(final Request request) throws IOException {
 		Response response = super.execute(request);

@@ -13,10 +13,31 @@ import stravajava.util.exception.JsonSerialisationException;
  */
 public interface JsonUtil {
 
-	public abstract <T> T deserialise(InputStream is, Class<T> class1) throws JsonSerialisationException;
+	/**
+	 * Deserialise an input stream representation of a JSON document to the named class
+	 * 
+	 * @param is The input stream to deserialise
+	 * @param class1 The class to which is should be deserialised
+	 * @return An instance of the class as deserialised from the document
+	 * @throws JsonSerialisationException
+	 */
+	public abstract <T> T deserialise(final InputStream is, final Class<T> class1) throws JsonSerialisationException;
 
-	public abstract <T> T deserialise(String is, Class<T> class1) throws JsonSerialisationException;
+	/**
+	 * Deserialise a string representation of a JSON document to the named class
+	 * @param input The input string to deserialise
+	 * @param class1 The class to which the input should be deserialised
+	 * @return An instance of the class as deserialised from the document
+	 * @throws JsonSerialisationException
+	 */
+	public abstract <T> T deserialise(final String input, final Class<T> class1) throws JsonSerialisationException;
 
-	public abstract <T> String serialise(T object) throws JsonSerialisationException;
+	/**
+	 * Serialise an object to a JSON string
+	 * @param object The object to be serialised
+	 * @return The JSON string representation of the object
+	 * @throws JsonSerialisationException
+	 */
+	public abstract <T> String serialise(final T object) throws JsonSerialisationException;
 
 }

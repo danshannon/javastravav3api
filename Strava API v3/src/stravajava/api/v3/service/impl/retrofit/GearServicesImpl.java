@@ -3,11 +3,27 @@ package stravajava.api.v3.service.impl.retrofit;
 import java.util.HashMap;
 
 import stravajava.api.v3.model.StravaGear;
+import stravajava.api.v3.service.ClubServices;
 import stravajava.api.v3.service.GearServices;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
+/**
+ * <p>
+ * Implementation of {@link ClubServices}
+ * </p>
+ * 
+ * @author Dan Shannon
+ *
+ */
 public class GearServicesImpl extends StravaServiceImpl implements GearServices {
+	/**
+	 * <p>
+	 * Private constructor ensures that the only way to get an instance is via the {@link #implementation(String)} method
+	 * </p>
+	 * 
+	 * @param token The access token to be used to authenticate to the Strava API
+	 */
 	private GearServicesImpl(final String token) {
 		super(token);
 		this.restService = Retrofit.retrofit(GearServicesRetrofit.class, token, GearServicesRetrofit.LOG_LEVEL);
@@ -44,6 +60,9 @@ public class GearServicesImpl extends StravaServiceImpl implements GearServices 
 
 	private final GearServicesRetrofit restService;
 
+	/**
+	 * @see stravajava.api.v3.service.GearServices#getGear(java.lang.String)
+	 */
 	@Override
 	public StravaGear getGear(final String id) {
 		try {

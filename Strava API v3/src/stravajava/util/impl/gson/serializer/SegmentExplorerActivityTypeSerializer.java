@@ -19,18 +19,22 @@ public class SegmentExplorerActivityTypeSerializer implements JsonSerializer<Str
 		JsonDeserializer<StravaSegmentExplorerActivityType> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaSegmentExplorerActivityType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaSegmentExplorerActivityType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
+			throws JsonParseException {
 		return StravaSegmentExplorerActivityType.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaSegmentExplorerActivityType segmentExplorerActivityType, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaSegmentExplorerActivityType segmentExplorerActivityType, final Type type,
+			final JsonSerializationContext context) {
 		return context.serialize(segmentExplorerActivityType.getValue());
 	}
 

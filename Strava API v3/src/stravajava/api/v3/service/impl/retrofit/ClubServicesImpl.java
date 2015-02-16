@@ -20,7 +20,11 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
 
 /**
- * @author danshannon
+ * <p>
+ * Implementation of {@link ClubServices}
+ * </p>
+ * 
+ * @author Dan Shannon
  *
  */
 public class ClubServicesImpl extends StravaServiceImpl implements ClubServices {

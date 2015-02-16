@@ -16,6 +16,7 @@ import stravajava.api.v3.model.reference.StravaResourceState;
 import stravajava.api.v3.service.ActivityServices;
 import stravajava.api.v3.service.PagingCallback;
 import stravajava.api.v3.service.PagingHandler;
+import stravajava.api.v3.service.Strava;
 import stravajava.api.v3.service.exception.BadRequestException;
 import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
@@ -74,7 +75,8 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 			while (loop) {
 				i++;
 				stravaResponse = this.restService.getActivity(id, includeAllEfforts);
-				
+		
+				// If the activity is being updated, wait for the update to complete
 				if (i < 10 && stravaResponse.getResourceState() == StravaResourceState.UPDATING) {
 					try {
 						Thread.sleep(1000);
@@ -87,6 +89,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 			}
 			return stravaResponse;
 		} catch (NotFoundException e) {
+			// Activity doesn't exist - return null
 			return null;
 		} catch (UnauthorizedException e) {
 			if (accessTokenIsValid()) {
@@ -156,7 +159,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 
 	/**
 	 * @param date
-	 * @return
+	 * @return Number of seconds after the unix epoch date equivalent to the given date
 	 */
 	private Integer secondsSinceUnixEpoch(final Calendar date) {
 		if (date == null) {
@@ -346,14 +349,39 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 		return getActivity(id, Boolean.FALSE);
 	}
 
+	/**
+	 * @see stravajava.api.v3.service.ActivityServices#listActivityComments(java.lang.Integer)
+	 */
 	@Override
 	public List<StravaComment> listActivityComments(final Integer id) {
 		return listActivityComments(id, Boolean.FALSE);
 	}
 
+	/**
+	 * @see stravajava.api.v3.service.ActivityServices#listActivityComments(java.lang.Integer, stravajava.util.Paging)
+	 */
 	@Override
 	public List<StravaComment> listActivityComments(final Integer id, final Paging pagingInstruction) {
 		return listActivityComments(id, Boolean.FALSE, pagingInstruction);
+	}
+
+	/**
+	 * @see stravajava.api.v3.service.ActivityServices#listAllAuthenticatedAthleteActivities()
+	 */
+	@Override
+	public List<StravaActivity> listAllAuthenticatedAthleteActivities() {
+		boolean loop = true;
+		List<StravaActivity> activities = new ArrayList<StravaActivity>();
+		int page = 0;
+		while (loop) {
+			page++;
+			List<StravaActivity> currentPage = listAuthenticatedAthleteActivities(new Paging(page,Strava.MAX_PAGE_SIZE));
+			activities.addAll(currentPage);
+			if (currentPage.size() < Strava.MAX_PAGE_SIZE) {
+				loop = false;
+			}
+		}
+		return activities;
 	}
 
 }

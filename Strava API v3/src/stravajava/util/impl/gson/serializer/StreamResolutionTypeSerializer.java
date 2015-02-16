@@ -15,21 +15,25 @@ import com.google.gson.JsonSerializer;
  * @author Dan Shannon
  *
  */
-public class StreamResolutionTypeSerializer implements JsonSerializer<StravaStreamResolutionType>, JsonDeserializer<StravaStreamResolutionType> {
+public class StreamResolutionTypeSerializer implements JsonSerializer<StravaStreamResolutionType>,
+		JsonDeserializer<StravaStreamResolutionType> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaStreamResolutionType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaStreamResolutionType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
+			throws JsonParseException {
 		return StravaStreamResolutionType.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaStreamResolutionType resolutionType, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaStreamResolutionType resolutionType, final Type type, final JsonSerializationContext context) {
 		return context.serialize(resolutionType.getValue());
 	}
 

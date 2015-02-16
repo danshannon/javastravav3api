@@ -18,18 +18,20 @@ import com.google.gson.JsonSerializer;
 public class ClubTypeSerializer implements JsonSerializer<StravaClubType>, JsonDeserializer<StravaClubType> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
+	 *      com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
-	public StravaClubType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+	public StravaClubType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 		return StravaClubType.create(json.getAsString());
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
+	 *      com.google.gson.JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(StravaClubType clubType, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaClubType clubType, final Type type, final JsonSerializationContext context) {
 		return context.serialize(clubType.getValue());
 	}
 

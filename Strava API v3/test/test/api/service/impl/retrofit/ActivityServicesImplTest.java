@@ -424,6 +424,9 @@ public class ActivityServicesImplTest {
 		fail("Unexpected return of activities for paging out of range (low)");
 	}
 
+	/**
+	 * Test handling of getting a page of activities and ignoring the first N
+	 */
 	@Test
 	public void testListAuthenticatedAthleteActivities_pagingIgnoreFirstN() {
 		List<StravaActivity> activities = getActivityService().listAuthenticatedAthleteActivities(new Paging(1, 2, 1, 0));
@@ -433,6 +436,9 @@ public class ActivityServicesImplTest {
 		assertEquals(expectedActivities.get(1), activities.get(0));
 	}
 
+	/**
+	 * Test handling of getting a page of activities and ignoring the last N
+	 */
 	@Test
 	public void testListAuthenticatedAthleteActivities_pagingIgnoreLastN() {
 		List<StravaActivity> activities = getActivityService().listAuthenticatedAthleteActivities(new Paging(1, 2, 0, 1));
@@ -479,6 +485,15 @@ public class ActivityServicesImplTest {
 		assertNull("Photos returned for an invalid activity", photos);
 	}
 
+	/**
+	 * <p>
+	 * Attempt to list {@link StravaPhoto photos} for an activity marked as private
+	 * </p>
+	 * 
+	 * <p>
+	 * Should return an empty list
+	 * </p>
+	 */
 	@Test
 	public void testListActivityPhotos_privateActivity() {
 		ActivityServices service = getActivityService();
@@ -493,7 +508,7 @@ public class ActivityServicesImplTest {
 	 * </p>
 	 * 
 	 * <p>
-	 * Should return an empty array
+	 * Should return an empty list
 	 * </p>
 	 * 
 	 * @throws UnauthorizedException
@@ -1612,4 +1627,9 @@ public class ActivityServicesImplTest {
 		fail("Shouldn't be returning page -1!");
 	}
 
+	@Test
+	public void testListAllAuthenticatedAthleteActivities() {
+		List<StravaActivity> activities = getActivityService().listAllAuthenticatedAthleteActivities();
+		assertNotNull(activities);
+	}
 }

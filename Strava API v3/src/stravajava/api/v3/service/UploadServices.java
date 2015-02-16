@@ -37,8 +37,6 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  * before contacting support.
  * </p>
  * 
- * 
- * 
  * @author Dan Shannon
  *
  */
@@ -79,8 +77,8 @@ public interface UploadServices {
 	 *         If there was an error the request will return 400 Bad Request.
 	 * @throws BadRequestException
 	 */
-	public StravaUploadResponse upload(StravaActivityType activityType, String name, String description, Boolean _private, Boolean trainer, String dataType,
-			String externalId, File file) throws UnauthorizedException;
+	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer, final String dataType,
+			final String externalId, final File file) throws UnauthorizedException;
 
 	/**
 	 * <p>
@@ -100,5 +98,5 @@ public interface UploadServices {
 	 * @throws UnauthorizedException
 	 *             If security token is not valid
 	 */
-	public StravaUploadResponse checkUploadStatus(Integer id) throws UnauthorizedException;
+	public StravaUploadResponse checkUploadStatus(final Integer id) throws UnauthorizedException;
 }

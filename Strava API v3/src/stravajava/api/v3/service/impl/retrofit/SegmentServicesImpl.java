@@ -30,10 +30,21 @@ import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.util.Paging;
 
 /**
- * @author danshannon
+ * <p>
+ * Implementation of {@link SegmentServices}
+ * </p>
+ * 
+ * @author Dan Shannon
  *
  */
 public class SegmentServicesImpl extends StravaServiceImpl implements SegmentServices {
+	/**
+	 * <p>
+	 * Private constructor ensures that the only way to get an instance is via {@link #implementation(String)} with a valid access token
+	 * </p>
+	 * 
+	 * @param token The access token to use for authentication with the Strava API
+	 */
 	private SegmentServicesImpl(final String token) {
 		super(token);
 		this.restService = Retrofit.retrofit(SegmentServicesRetrofit.class, token, SegmentServicesRetrofit.LOG_LEVEL);
@@ -175,6 +186,19 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 		return leaderboard;
 	}
 
+	/**
+	 * <p>
+	 * Most irritatingly, Strava returns one list of leaderboard entries that is actually two lists
+	 * </p>
+	 * 
+	 * <p>
+	 * This utility method separates them again.
+	 * </p>
+	 * 
+	 * @param entries The set of entries to be split out
+	 * @param pagingInstruction The paging instruction that was sent to Strava API, so we can work out how to split the entries up
+	 * @return
+	 */
 	private List<StravaSegmentLeaderboardEntry> splitOutAthleteEntries(final List<StravaSegmentLeaderboardEntry> entries, final Paging pagingInstruction) {
 		// Handle the spurious extra 5 that Strava sometimes throws in for good measure
 		int firstPosition = 0;
@@ -243,26 +267,41 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 		return listStarredSegments(id, null);
 	}
 
+	/**
+	 * @see stravajava.api.v3.service.SegmentServices#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.util.Calendar, java.util.Calendar)
+	 */
 	@Override
 	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal) {
 		return listSegmentEfforts(id, athleteId, startDateLocal, endDateLocal, null);
 	}
 
+	/**
+	 * @see stravajava.api.v3.service.SegmentServices#listSegmentEfforts(java.lang.Integer, stravajava.util.Paging)
+	 */
 	@Override
 	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Paging pagingInstruction) {
 		return listSegmentEfforts(id, null, null, null, pagingInstruction);
 	}
 
+	/**
+	 * @see stravajava.api.v3.service.SegmentServices#listSegmentEfforts(java.lang.Integer)
+	 */
 	@Override
 	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id) {
 		return listSegmentEfforts(id, null, null, null, null);
 	}
 
+	/**
+	 * @see stravajava.api.v3.service.SegmentServices#getSegmentLeaderboard(java.lang.Integer, stravajava.util.Paging)
+	 */
 	@Override
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final Paging pagingInstruction) {
 		return getSegmentLeaderboard(id, null, null, null, null, null, null, pagingInstruction);
 	}
 
+	/**
+	 * @see stravajava.api.v3.service.SegmentServices#getSegmentLeaderboard(java.lang.Integer)
+	 */
 	@Override
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id) {
 		return getSegmentLeaderboard(id, null);
