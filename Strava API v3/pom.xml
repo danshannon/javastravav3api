@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>stravajava</groupId>
-	<artifactId>StravaAPI</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>com.github.danshannon.stravajava</groupId>
+	<artifactId>stravajava-api</artifactId>
+	<version>0.0.1-ALPHA</version>
 	<name>Strava API</name>
 	<description>POJO driven API fronted onto Strava</description>
 	<build>
@@ -37,6 +37,7 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.4-beta1</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -87,4 +88,16 @@
 		<dependencies>
 		</dependencies>
 	</dependencyManagement>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<url>https://github.com/danshannon/javastravav3api</url>
+	<scm>
+		<url>https://github.com/danshannon/javastravav3api.git</url>
+		<developerConnection>danshannon</developerConnection>
+	</scm>
+	<organization>
+		<url>https://github.com/danshannon/javastravav3api</url>
+		<name>Dan Shannon</name>
+	</organization>
 </project>
