@@ -7,7 +7,7 @@ JavaStrava is a functionally complete implementation of the Strava API (v3). It 
 
 Dependencies
 ============
-- We use Lombok for simplicity of bean code; if you want to modify or compile the project, you'll need the appropriate plugin for the Java compiler from lombok.org
+- We use Lombok for simplicity of bean code; if you want to modify or compile the project, you'll need the appropriate plugin for your chosen IDE from lombok.org
 - The REST client is written using Retrofit, because it makes life ridiculously easy
 
 Use
