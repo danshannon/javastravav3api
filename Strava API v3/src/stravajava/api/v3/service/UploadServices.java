@@ -4,7 +4,6 @@ import java.io.File;
 
 import stravajava.api.v3.model.StravaUploadResponse;
 import stravajava.api.v3.model.reference.StravaActivityType;
-import stravajava.api.v3.service.exception.BadRequestException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 
 /**
@@ -15,7 +14,7 @@ import stravajava.api.v3.service.exception.UnauthorizedException;
  * 
  * <p>
  * Processing status may be checked by polling Strava. A one-second or longer polling interval is recommended. The mean processing time is currently around 8
- * seconds. Once processing is complete, Strava will respond to polling requests with the activity�s ID.
+ * seconds. Once processing is complete, Strava will respond to polling requests with the activity's ID.
  * </p>
  * 
  * <p>
@@ -54,7 +53,7 @@ public interface UploadServices {
 	 * URL POST https://www.strava.com/api/v3/uploads
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/uploads/#post-file
+	 * @see <a href="http://strava.github.io/api/v3/uploads/#post-file">http://strava.github.io/api/v3/uploads/#post-file</a>
 	 * 
 	 * @param activityType
 	 *            (Optional) Type of activity being uploaded
@@ -63,7 +62,7 @@ public interface UploadServices {
 	 * @param description
 	 *            (Optional)
 	 * @param _private
-	 *            (Optional) set to 1 to mark the resulting activity as private, �view_private� permissions will be necessary to view the activity
+	 *            (Optional) set to 1 to mark the resulting activity as private, 'view_private' permissions will be necessary to view the activity
 	 * @param trainer
 	 *            (Optional) activities without lat/lng info in the file are auto marked as stationary, set to 1 to force
 	 * @param dataType
@@ -75,10 +74,9 @@ public interface UploadServices {
 	 * @return Returns an Upload Status object. This object will include an English language status. If success, it will indicate the data is still processing.
 	 *         If there was an error, it will describe the error, potentially containing HTML. Upon a successful submission the request will return 201 Created.
 	 *         If there was an error the request will return 400 Bad Request.
-	 * @throws BadRequestException
 	 */
 	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer, final String dataType,
-			final String externalId, final File file) throws UnauthorizedException;
+			final String externalId, final File file);
 
 	/**
 	 * <p>
@@ -90,13 +88,11 @@ public interface UploadServices {
 	 * URL GET https://www.strava.com/api/v3/uploads/:id
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/uploads/#get-status
+	 * @see <a href="http://strava.github.io/api/v3/uploads/#get-status">http://strava.github.io/api/v3/uploads/#get-status</a>
 	 * 
 	 * @param id
 	 *            Upload id originally returned when the upload was done
 	 * @return Upload response indicating current status of the upload
-	 * @throws UnauthorizedException
-	 *             If security token is not valid
 	 */
 	public StravaUploadResponse checkUploadStatus(final Integer id) throws UnauthorizedException;
 }

@@ -9,7 +9,7 @@ import stravajava.api.v3.model.reference.StravaResourceState;
 
 /**
  * <p>
- * A 'best running effort' - calculated by Strava for runs only. See {@link StravaActivity#getBestEfforts()}
+ * A 'best running effort' - calculated by Strava for runs only. Returned as part of activity details.
  * </p>
  * 
  * @author Dan Shannon

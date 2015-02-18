@@ -37,7 +37,7 @@ public class Strava {
 	 * maximum page sizes etc.)
 	 * </p>
 	 * 
-	 * @param inputPaging
+	 * @param inputPaging The paging instruction to be converted
 	 * @return List of Strava paging instructions that can be given to the Strava engine
 	 */
 	public static List<Paging> convertToStravaPaging(final Paging inputPaging) {
@@ -91,7 +91,8 @@ public class Strava {
 	 * </p>
 	 * 
 	 * @param list List of items
-	 * @param ignoreFirstN Number of items to remove
+	 * @param ignoreLastN Number of items to remove
+	 * @param <T> The class of the objects contained in the list
 	 * @return The resulting list
 	 */
 	public static <T> List<T> ignoreLastN(final List<T> list, final int ignoreLastN) {
@@ -117,6 +118,7 @@ public class Strava {
 	 * 
 	 * @param list List of items
 	 * @param ignoreFirstN Number of items to remove
+	 * @param <T> The class of object in the list
 	 * @return The resulting list
 	 */
 	public static <T> List<T> ignoreFirstN(final List<T> list, final int ignoreFirstN) {

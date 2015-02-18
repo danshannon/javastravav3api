@@ -7,8 +7,6 @@ import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaClub;
 import stravajava.api.v3.model.StravaClubMembershipResponse;
 import stravajava.api.v3.model.reference.StravaResourceState;
-import stravajava.api.v3.service.exception.NotFoundException;
-import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
 
 /**
@@ -49,13 +47,11 @@ public interface ClubServices {
 	 * URL GET https://www.strava.com/api/v3/clubs/:id
 	 * </p>
 	 * 
-	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-details>http://strava.github.io/api/v3/clubs/#get-details</a>
+	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-details">http://strava.github.io/api/v3/clubs/#get-details</a>
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaClub} to be retrieved
 	 * @return Returns a detailed club representation.
-	 * @throws UnauthorizedException
-	 *             If the service's security token is invalid
 	 */
 	public StravaClub getClub(final Integer id);
 
@@ -104,8 +100,6 @@ public interface ClubServices {
 	 * @param id
 	 *            The id of the {@link StravaClub} whose member {@link StravaAthlete athletes} should be returned
 	 * @return Returns an array of {@link StravaAthlete athlete} summary {@link StravaResourceState representations}.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
 	public List<StravaAthlete> listClubMembers(final Integer id);
 
@@ -137,8 +131,6 @@ public interface ClubServices {
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaAthlete athlete} summary {@link StravaResourceState representations}.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
 	public List<StravaAthlete> listClubMembers(final Integer id, final Paging pagingInstruction);
 
@@ -167,13 +159,7 @@ public interface ClubServices {
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaClub} for which recent {@link StravaActivity activities} are to be returned.
-	 * @param page
-	 *            (Optional) Page to start at for pagination
-	 * @param perPage
-	 *            (Optional) Number of results per page (max 200)
 	 * @return Returns an array of {@link StravaActivity activity} summary {@link StravaResourceState representations}.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
 	public List<StravaActivity> listRecentClubActivities(final Integer id);
 
@@ -202,13 +188,9 @@ public interface ClubServices {
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaClub} for which recent {@link StravaActivity activities} are to be returned.
-	 * @param page
-	 *            (Optional) Page to start at for pagination
-	 * @param perPage
-	 *            (Optional) Number of results per page (max 200)
+	 * @param pagingInstruction
+	 *            (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaActivity activity} summary {@link StravaResourceState representations}.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
 	public List<StravaActivity> listRecentClubActivities(final Integer id, final Paging pagingInstruction);
 
@@ -220,11 +202,7 @@ public interface ClubServices {
 	 * @param id
 	 *            ID of the {@link StravaClub} to join
 	 * @return Response detailing whether request was successful and whether the member is active
-	 * @throws NotFoundException
-	 *             If the club does not exist
-	 * @throws UnauthorizedException
-	 *             If the user does not have a token with write permission or the token is invalid
-	 */
+\	 */
 	public StravaClubMembershipResponse joinClub(final Integer id);
 
 	/**
@@ -235,10 +213,6 @@ public interface ClubServices {
 	 * @param id
 	 *            ID of the club to join
 	 * @return Response detailing whether request was successful and whether the member is active
-	 * @throws NotFoundException
-	 *             If the club does not exist
-	 * @throws UnauthorizedException
-	 *             If the user does not have a token with write permission or the token is invalid
 	 */
 	public StravaClubMembershipResponse leaveClub(final Integer id);
 }

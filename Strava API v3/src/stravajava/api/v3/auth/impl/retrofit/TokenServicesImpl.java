@@ -53,7 +53,7 @@ public class TokenServicesImpl extends StravaServiceImpl implements TokenService
 	}
 
 	/**
-	 * @see stravajava.api.v3.auth.AuthorisationServices#deauthorise(java.lang.String)
+	 * @see TokenServices#deauthorise(Token)
 	 */
 	@Override
 	public TokenResponse deauthorise(final Token accessToken) throws UnauthorizedException {

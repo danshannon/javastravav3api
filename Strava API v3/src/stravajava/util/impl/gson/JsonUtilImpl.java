@@ -133,7 +133,7 @@ public class JsonUtilImpl implements JsonUtil {
 	}
 
 	/**
-	 * @see stravajava.util.JsonUtil#serialise(T)
+	 * @see stravajava.util.JsonUtil#serialise(Object)
 	 */
 	@Override
 	public <T> String serialise(final T object) throws JsonSerialisationException {

@@ -140,8 +140,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer,
-	 *      java.lang.Integer)
+	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities(Calendar, Calendar, Paging)
 	 */
 	@Override
 	public List<StravaActivity> listAuthenticatedAthleteActivities(final Calendar before, final Calendar after, final Paging pagingInstruction) {
@@ -170,7 +169,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.ActivityServices#listFriendsActivities(java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ActivityServices#listFriendsActivities(Paging)
 	 */
 	@Override
 	public List<StravaActivity> listFriendsActivities(final Paging pagingInstruction) {
@@ -219,7 +218,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.ActivityServices#listActivityComments(java.lang.Integer, java.lang.Boolean, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ActivityServices#listActivityComments(Integer, Boolean, Paging)
 	 */
 	@Override
 	public List<StravaComment> listActivityComments(final Integer id, final Boolean markdown, final Paging pagingInstruction) {
@@ -232,7 +231,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.ActivityServices#listActivityKudoers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ActivityServices#listActivityKudoers(Integer, Paging)
 	 */
 	@Override
 	public List<StravaAthlete> listActivityKudoers(final Integer id, final Paging pagingInstruction) {

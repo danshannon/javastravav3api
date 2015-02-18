@@ -3,11 +3,10 @@ package stravajava.api.v3.service;
 import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaSegment;
 import stravajava.api.v3.model.StravaSegmentEffort;
-import stravajava.api.v3.service.exception.UnauthorizedException;
 
 /**
  * <p>
- * A {@link StravaSegmentEffort segment effort} represents an {@link StravaAthlete athlete�s} attempt at a {@link StravaSegment segment}.
+ * A {@link StravaSegmentEffort segment effort} represents an {@link StravaAthlete athlete's} attempt at a {@link StravaSegment segment}.
  * </p>
  * 
  * <p>
@@ -29,17 +28,18 @@ public interface SegmentEffortServices {
 	 * 
 	 * <p>
 	 * Returns <code>null</code> if the segment effort does not exist or is private
+	 * </p>
 	 * 
 	 * <p>
 	 * URL GET https://www.strava.com/api/v3/segment_efforts/:id
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/efforts/#retrieve
+	 * @see <a href="http://strava.github.io/api/v3/efforts/#retrieve">http://strava.github.io/api/v3/efforts/#retrieve</a>
+	 * 
 	 * 
 	 * @param id
 	 *            The id of the segment to be retrieved
-	 * @return Returns a detailed segment effort representation.
-	 * @throws UnauthorizedException
+	 * @return Returns a detailed segment effort representation
 	 */
-	public StravaSegmentEffort getSegmentEffort(Long id);
+	public StravaSegmentEffort getSegmentEffort(final Long id);
 }

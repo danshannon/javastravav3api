@@ -42,7 +42,7 @@ public interface StreamServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * StravaStream requests made using a public access_token will be cropped with the user�s privacy zones, regardless if the requesting athlete owns the
+	 * StravaStream requests made using a public access_token will be cropped with the user's privacy zones, regardless if the requesting athlete owns the
 	 * requested activity. To fetch the complete stream data use an access_token with view_private permissions.
 	 * </p>
 	 * 
@@ -50,7 +50,7 @@ public interface StreamServices {
 	 * URL GET https://www.strava.com/api/v3/activities/:id/streams/:types
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/streams/#activity
+	 * @see <a href="http://strava.github.io/api/v3/streams/#activity">http://strava.github.io/api/v3/streams/#activity</a>
 	 * 
 	 * @param id
 	 *            The id of the activity for which streams are to be retrieved
@@ -66,8 +66,8 @@ public interface StreamServices {
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
 	 */
-	public List<StravaStream> getActivityStreams(Integer id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType,
-			StravaStreamType... types);
+	public List<StravaStream> getActivityStreams(final Integer id, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaStreamType... types);
 
 	/**
 	 * <p>
@@ -98,7 +98,7 @@ public interface StreamServices {
 	 * URL GET https://www.strava.com/api/v3/activities/:id/streams/:types
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/streams/#activity
+	 * @see <a href="http://strava.github.io/api/v3/streams/#activity">http://strava.github.io/api/v3/streams/#activity</a>
 	 * 
 	 * @param id
 	 *            The id of the activity for which streams are to be retrieved
@@ -106,7 +106,7 @@ public interface StreamServices {
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
 	 */
-	public List<StravaStream> getActivityStreams(Integer id);
+	public List<StravaStream> getActivityStreams(final Integer id);
 
 	/**
 	 * <p>
@@ -126,7 +126,7 @@ public interface StreamServices {
 	 * URL GET https://www.strava.com/api/v3/segment_efforts/:id/streams/:types
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/streams/#effort
+	 * @see <a href="http://strava.github.io/api/v3/streams/#effort">http://strava.github.io/api/v3/streams/#effort</a>
 	 * 
 	 * @param id
 	 *            The id of the segment effort for which streams are to be retrieved
@@ -140,8 +140,8 @@ public interface StreamServices {
 	 *            being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getEffortStreams(Long id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType,
-			StravaStreamType... types);
+	public List<StravaStream> getEffortStreams(final Long id, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaStreamType... types);
 
 	/**
 	 * <p>
@@ -161,13 +161,13 @@ public interface StreamServices {
 	 * URL GET https://www.strava.com/api/v3/segment_efforts/:id/streams/:types
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/streams/#effort
+	 * @see <a href="http://strava.github.io/api/v3/streams/#effort">http://strava.github.io/api/v3/streams/#effort</a>
 	 * 
 	 * @param id
 	 *            The id of the segment effort for which streams are to be retrieved
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getEffortStreams(Long id);
+	public List<StravaStream> getEffortStreams(final Long id);
 
 	/**
 	 * <p>
@@ -182,7 +182,7 @@ public interface StreamServices {
 	 * URL GET https://www.strava.com/api/v3/segments/:id/streams/:types
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/streams/#segment
+	 * @see <a href="http://strava.github.io/api/v3/streams/#segment">http://strava.github.io/api/v3/streams/#segment</a>
 	 * 
 	 * @param id
 	 *            The id of the segment for which streams are to be retrieved
@@ -196,8 +196,8 @@ public interface StreamServices {
 	 *            being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getSegmentStreams(Integer id, StravaStreamResolutionType resolution, StravaStreamSeriesDownsamplingType seriesType,
-			StravaStreamType... types);
+	public List<StravaStream> getSegmentStreams(final Integer id, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaStreamType... types);
 
 	/**
 	 * <p>
@@ -212,12 +212,12 @@ public interface StreamServices {
 	 * URL GET https://www.strava.com/api/v3/segments/:id/streams/:types
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/streams/#segment
+	 * @see <a href="http://strava.github.io/api/v3/streams/#segment">http://strava.github.io/api/v3/streams/#segment</a>
 	 * 
 	 * @param id
 	 *            The id of the segment for which streams are to be retrieved
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getSegmentStreams(Integer id);
+	public List<StravaStream> getSegmentStreams(final Integer id);
 
 }

@@ -30,11 +30,26 @@ public interface ActivityServicesRetrofit {
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
+	/**
+	 * @param id
+	 *            The id of the {@link StravaActivity activity} to be returned
+	 * @param includeAllEfforts
+	 *            (Optional) Used to include all segment efforts in the result (if omitted or <code>false</code> then only
+	 *            "important" efforts are returned).
+	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns
+	 *         a summary representation for all other requests.
+	 * @throws NotFoundException If the activity does not exist
+	 */
 	@GET("/activities/{id}")
 	public StravaActivity getActivity(@Path("id") final Integer id, @Query("include_all_efforts") final Boolean includeAllEfforts) throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.ActivityServices#createManualActivity(stravajava.api.v3.model.StravaActivity)
+	 */
+	/**
+	 * @param activity The activity to be created on Strava
+	 * @return The activity as stored by Strava
+	 * @throws BadRequestException If the activity is malformed and can't be uploaded
 	 */
 	@POST("/activities")
 	public StravaActivity createManualActivity(@Body final StravaActivity activity) throws BadRequestException;

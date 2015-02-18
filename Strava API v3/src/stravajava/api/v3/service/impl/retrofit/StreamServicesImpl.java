@@ -64,8 +64,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	private final StreamServicesRetrofit restService;
 
 	/**
-	 * @see stravajava.api.v3.service.StreamServices#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[],
-	 *      stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
+	 * @see stravajava.api.v3.service.StreamServices#getActivityStreams(Integer, StravaStreamResolutionType, StravaStreamSeriesDownsamplingType, StravaStreamType...)
 	 */
 	@Override
 	public List<StravaStream> getActivityStreams(final Integer id, final StravaStreamResolutionType resolution,
@@ -129,8 +128,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.StreamServices#getEffortStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[],
-	 *      stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
+	 * @see stravajava.api.v3.service.StreamServices#getEffortStreams(Long, StravaStreamResolutionType, StravaStreamSeriesDownsamplingType, StravaStreamType...)
 	 */
 	@Override
 	public List<StravaStream> getEffortStreams(final Long id, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
@@ -150,8 +148,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.StreamServices#getSegmentStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[],
-	 *      stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
+	 * @see stravajava.api.v3.service.StreamServices#getSegmentStreams(Integer, StravaStreamResolutionType, StravaStreamSeriesDownsamplingType, StravaStreamType...)
 	 */
 	@Override
 	public List<StravaStream> getSegmentStreams(final Integer id, final StravaStreamResolutionType resolution,

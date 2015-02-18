@@ -26,8 +26,8 @@ public class StravaMapPoint {
 
 	/**
 	 * Constructor allows creation of a map point by specifying latitude and longitude
-	 * @param latitude
-	 * @param longitude
+	 * @param latitude Latitude of the point to be created
+	 * @param longitude Longitude of the point to be created
 	 */
 	public StravaMapPoint(final Float latitude, final Float longitude) {
 		this.latitude = latitude;

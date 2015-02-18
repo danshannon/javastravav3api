@@ -9,6 +9,7 @@ import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaSegment;
 import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.model.StravaSegmentExplorerResponse;
@@ -17,6 +18,7 @@ import stravajava.api.v3.model.reference.StravaAgeGroup;
 import stravajava.api.v3.model.reference.StravaClimbCategory;
 import stravajava.api.v3.model.reference.StravaGender;
 import stravajava.api.v3.model.reference.StravaLeaderboardDateRange;
+import stravajava.api.v3.model.reference.StravaResourceState;
 import stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType;
 import stravajava.api.v3.model.reference.StravaWeightClass;
 import stravajava.api.v3.service.SegmentServices;
@@ -37,11 +39,20 @@ public interface SegmentServicesRetrofit {
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#getSegment(java.lang.Integer)
 	 */
+	/**
+	 * @param id The unique identifier of the segment
+	 * @return The Segment
+	 * @throws NotFoundException If the segment with the given id does not exist
+	 */
 	@GET("/segments/{id}")
-	public StravaSegment getSegment(@Path("id") final Integer id) throws NotFoundException, UnauthorizedException;
+	public StravaSegment getSegment(@Path("id") final Integer id) throws NotFoundException;
 
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)
+	 * 
+	 * @param page (optional) Page number to be returned
+	 * @param perPage (optional) Number of entries to return per page
+	 * @return An array of segments
 	 */
 	@GET("/segments/starred")
 	public StravaSegment[] listAuthenticatedAthleteStarredSegments(@Query("page") final Integer page, @Query("per_page") final Integer perPage);
@@ -49,13 +60,35 @@ public interface SegmentServicesRetrofit {
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#listStarredSegments(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
+	/**
+	 * @param id The id of the athlete whose starred segments are to be retrieved
+	 * @param page (optional) Page number to be returned
+	 * @param perPage (optional) Number of entries to return per page
+	 * @return An array of segments
+	 * @throws NotFoundException If the segment with the given id does not exist
+	 * @throws UnauthorizedException If there is a security or privacy violation
+	 */
 	@GET("/athletes/{id}/segments/starred")
 	public StravaSegment[] listStarredSegments(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
 			throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.SegmentServices#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.util.Calendar, java.util.Calendar,
-	 *      java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.SegmentServices#listSegmentEfforts(Integer, Integer, java.util.Calendar, java.util.Calendar, stravajava.util.Paging)
+	 * 
+	 * @param id
+	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
+	 * @param athleteId
+	 *            (Optional) id of the {@link StravaAthlete} to filter results by
+	 * @param startDateLocal
+	 *            (Optional) ISO 8601 formatted date time
+	 * @param endDateLocal
+	 *            (Optional) ISO 8601 formatted date time
+	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
+	 *         ascending or by elapsed_time if an athlete_id is provided.
+	 * @param page (optional) Page number to be returned
+	 * @param perPage (optional) Number of entries to return per page
+	 * @return Array of Segment Efforts
+	 * @throws NotFoundException
 	 */
 	@GET("/segments/{id}/all_efforts")
 	public StravaSegmentEffort[] listSegmentEfforts(@Path("id") final Integer id, @Query("athlete_id") final Integer athleteId,

@@ -10,7 +10,7 @@ import stravajava.api.v3.service.SegmentServices;
 
 /**
  * <p>
- * A segment effort represents an athlete’s attempt at a segment. It can also be thought of as a portion of a ride that covers a
+ * A segment effort represents an athlete's attempt at a segment. It can also be thought of as a portion of a ride that covers a
  * segment. The object is returned in summary or detailed representations. They are currently the same.
  * </p>
  * 

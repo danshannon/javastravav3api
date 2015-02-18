@@ -10,7 +10,7 @@ import stravajava.api.v3.service.SegmentServices;
 /**
  * <p>
  * Returned by the
- * {@link SegmentServices#segmentExplore(StravaMapPoint, StravaMapPoint, stravajava.api.v3.service.athlete.SegmentExplorerActivityType, Integer, Integer)
+ * {@link SegmentServices#segmentExplore(StravaMapPoint, StravaMapPoint, stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType, stravajava.api.v3.model.reference.StravaClimbCategory, stravajava.api.v3.model.reference.StravaClimbCategory)
  * segment explorer service}.
  * </p>
  * 

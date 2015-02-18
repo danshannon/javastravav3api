@@ -1,12 +1,9 @@
 package stravajava.api.v3.auth.ref;
 
-import stravajava.api.v3.auth.AuthorisationServices;
 
 /**
  * <p>
- * Valid authorisation response types for
- * {@link AuthorisationServices#requestAccess(Integer, String, AuthorisationResponseType, stravajava.api.v3.auth.AuthorisationApprovalPrompt, stravajava.api.v3.auth.AuthorisationScope[], String)
- * access requests}
+ * Valid authorisation response types
  * </p>
  *
  * <p>

@@ -6,7 +6,6 @@ import stravajava.api.v3.model.StravaAthlete;
 import stravajava.api.v3.model.StravaSegmentEffort;
 import stravajava.api.v3.model.StravaStatistics;
 import stravajava.api.v3.model.reference.StravaGender;
-import stravajava.api.v3.service.exception.NotFoundException;
 import stravajava.api.v3.service.exception.UnauthorizedException;
 import stravajava.util.Paging;
 
@@ -27,7 +26,7 @@ public interface AthleteServices {
 	 * URL GET https://www.strava.com/api/v3/athlete
 	 * </p>
 	 * 
-	 * @see <a href="http://strava.github.io/api/v3/athlete/"/>http://strava.github.io/api/v3/athlete/</a>
+	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
 	 * @return Returns a detailed representation of the {@link StravaAthlete athlete}
 	 * @throws UnauthorizedException
 	 *             If the service's access token is invalid
@@ -47,7 +46,7 @@ public interface AthleteServices {
 	 * URL GET https://www.strava.com/api/v3/athletes/:id
 	 * </p>
 	 * 
-	 * @see <a href="http://strava.github.io/api/v3/athlete/"/>http://strava.github.io/api/v3/athlete/</a>
+	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaAthlete athlete} to be returned
@@ -76,10 +75,13 @@ public interface AthleteServices {
 	 *
 	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
 	 * 
-	 * @throws NotFoundException
-	 *             If the athlete does not exist (this is almost impossible, but just in case the athlete has somehow removed themselves from Strava altogether)
 	 * @throws UnauthorizedException
 	 *             If the security token in use is invalid or does not have write access
+	 * @param city The city where the athlete wants Strava to think they live
+	 * @param state The state, county or whatever the athlete wants Strava to think they live
+	 * @param country The country where the athlete wants Strava to think they live
+	 * @param sex The gender the athlete wants Strava to think they identify with
+	 * @param weight The weight that the athlete wants Strava to believe that they are
 	 * @return Detailed representation of the updated athlete
 	 */
 	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight);
@@ -150,7 +152,7 @@ public interface AthleteServices {
 
 	/**
 	 * <p>
-	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete�s
+	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's
 	 * activity feed.
 	 * </p>
 	 * 
@@ -176,7 +178,7 @@ public interface AthleteServices {
 
 	/**
 	 * <p>
-	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete�s
+	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's
 	 * activity feed.
 	 * </p>
 	 * 
@@ -204,7 +206,7 @@ public interface AthleteServices {
 
 	/**
 	 * <p>
-	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.
+	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's activity feed.
 	 * </p>
 	 * 
 	 * <p>
@@ -238,7 +240,7 @@ public interface AthleteServices {
 
 	/**
 	 * <p>
-	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete�s activity feed.
+	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's activity feed.
 	 * </p>
 	 * 
 	 * <p>

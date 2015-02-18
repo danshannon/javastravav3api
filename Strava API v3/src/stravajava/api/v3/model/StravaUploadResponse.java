@@ -7,11 +7,10 @@ import stravajava.api.v3.service.UploadServices;
 
 /**
  * <p>
- * Response to an
- * {@link UploadServices#upload(stravajava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, stravajava.api.v3.service.athlete.UploadDataType, String, java.io.File)
- * upload request}
+ * Response to an upload request
  * </p>
  * 
+ * @see UploadServices#upload(stravajava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, String, String, java.io.File)
  * @author Dan Shannon
  *
  */

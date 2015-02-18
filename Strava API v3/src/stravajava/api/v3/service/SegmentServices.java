@@ -27,7 +27,7 @@ import stravajava.util.Paging;
  * </p>
  * 
  * <p>
- * {@link StravaAthlete Athletes�} {@link StravaSegmentEffort efforts} are compared on these segments and {@link StravaSegmentLeaderboard leaderboards} are
+ * {@link StravaAthlete Athletes'} {@link StravaSegmentEffort efforts} are compared on these segments and {@link StravaSegmentLeaderboard leaderboards} are
  * created.
  * </p>
  * 
@@ -74,10 +74,7 @@ public interface SegmentServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#starred">http://strava.github.io/api/v3/segments/#starred</a>
 	 * 
-	 * @param page
-	 *            (Optional) Page to start at for pagination
-	 * @param perPage
-	 *            (Optional) Number of results per page (max 200)
+	 * @param pagingInstruction (Optional) paging instructions
 	 * @return Returns a {@link StravaResourceState#SUMMARY summary representation} of the {@link StravaSegment segments} starred by the authenticated
 	 *         {@link StravaAthlete}.
 	 */
@@ -126,10 +123,7 @@ public interface SegmentServices {
 	 * 
 	 * @param id
 	 *            Identifier of the {@link StravaAthlete} for which starred {@link StravaSegment segments} are to be returned
-	 * @param page
-	 *            (Optional) Page to start at for pagination
-	 * @param perPage
-	 *            (Optional) Number of results per page (max 200)
+	 * @param pagingInstruction (Optional) paging instructions
 	 * @return Returns a {@link StravaResourceState#SUMMARY summary representation} of the {@link StravaSegment segments} starred by the identified
 	 *         {@link StravaAthlete}.
 	 */
@@ -192,7 +186,7 @@ public interface SegmentServices {
 	 * URL GET https://www.strava.com/api/v3/segments/:id/all_efforts
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/segments/#efforts
+	 * @see <a href="http://strava.github.io/api/v3/segments/#efforts">http://strava.github.io/api/v3/segments/#efforts</a>
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
@@ -239,7 +233,7 @@ public interface SegmentServices {
 	 * URL GET https://www.strava.com/api/v3/segments/:id/all_efforts
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/segments/#efforts
+	 * @see <a href="http://strava.github.io/api/v3/segments/#efforts">http://strava.github.io/api/v3/segments/#efforts</a>
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
@@ -271,7 +265,7 @@ public interface SegmentServices {
 	 * URL GET https://www.strava.com/api/v3/segments/:id/all_efforts
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/segments/#efforts
+	 * @see <a href="http://strava.github.io/api/v3/segments/#efforts">http://strava.github.io/api/v3/segments/#efforts</a>
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
@@ -299,7 +293,7 @@ public interface SegmentServices {
 	 * URL GET https://www.strava.com/api/v3/segments/:id/all_efforts
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/segments/#efforts
+	 * @see <a href="http://strava.github.io/api/v3/segments/#efforts">http://strava.github.io/api/v3/segments/#efforts</a>
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
@@ -329,7 +323,7 @@ public interface SegmentServices {
 	 * URL GET https://www.strava.com/api/v3/segments/:id/leaderboard
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/segments/#leaderboard
+	 * @see <a href="http://strava.github.io/api/v3/segments/#leaderboard">http://strava.github.io/api/v3/segments/#leaderboard</a>
 	 * 
 	 * @param id
 	 *            The id of the segment to return a leaderboard for
@@ -346,10 +340,8 @@ public interface SegmentServices {
 	 *            (Optional) Id of {@link StravaClub} to filter results by
 	 * @param dateRange
 	 *            (Optional) Use to set to return results for this year, this month, this week etc.
-	 * @param page
+	 * @param pagingInstruction
 	 *            (Optional) Page to start at for pagination
-	 * @param perPage
-	 *            (Optional) Number of results per page (max 200)
 	 * @return Returns an array of up to 10, by default, {@link StravaSegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be
 	 *         considered 64-bit integers and effort_count is deprecated, use entry_count instead.
 	 */
@@ -377,7 +369,7 @@ public interface SegmentServices {
 	 * URL GET https://www.strava.com/api/v3/segments/:id/leaderboard
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/segments/#leaderboard
+	 * @see <a href="http://strava.github.io/api/v3/segments/#leaderboard">http://strava.github.io/api/v3/segments/#leaderboard</a>
 	 * 
 	 * @param id
 	 *            The id of the segment to return a leaderboard for
@@ -409,7 +401,7 @@ public interface SegmentServices {
 	 * URL GET https://www.strava.com/api/v3/segments/:id/leaderboard
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/segments/#leaderboard
+	 * @see <a href="http://strava.github.io/api/v3/segments/#leaderboard">http://strava.github.io/api/v3/segments/#leaderboard</a>
 	 * 
 	 * @param id
 	 *            The id of the segment to return a leaderboard for
@@ -431,7 +423,8 @@ public interface SegmentServices {
 	 * URL GET https://www.strava.com/api/v3/segments/explore
 	 * </p>
 	 * 
-	 * @see http://strava.github.io/api/v3/segments/#explore
+	 * @see <a href="http://strava.github.io/api/v3/segments/#explore">http://strava.github.io/api/v3/segments/#explore</a>
+	 * 
 	 * @param southwestCorner
 	 *            The southwest corner of the area to be explored
 	 * @param northeastCorner

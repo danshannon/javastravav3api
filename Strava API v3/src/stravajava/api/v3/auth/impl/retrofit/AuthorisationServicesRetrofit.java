@@ -22,6 +22,16 @@ public interface AuthorisationServicesRetrofit {
 
 	/**
 	 * @see stravajava.api.v3.auth.AuthorisationServices#tokenExchange(java.lang.Integer, java.lang.String, java.lang.String)
+	 * 
+	 * @param clientId
+	 *            application's ID, obtained during registration
+	 * @param clientSecret
+	 *            application's secret, obtained during registration
+	 * @param code
+	 *            authorisation code
+	 * @return Returns an access_token and a detailed representation of the current athlete.
+	 * @throws BadRequestException Where the request does not contain all the required information
+	 * @throws UnauthorizedException If client secret is invalid
 	 */
 	@FormUrlEncoded
 	@POST("/oauth/token")

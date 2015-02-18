@@ -96,8 +96,6 @@ public interface ActivityServices {
 	 *            "important" efforts are returned).
 	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns
 	 *         a summary representation for all other requests.
-	 * @throws UnauthorizedException
-	 *             If the service's security token is invalid
 	 */
 	public StravaActivity getActivity(final Integer id, final Boolean includeAllEfforts);
 
@@ -130,7 +128,8 @@ public interface ActivityServices {
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
 	 * @param activity
-	 *            The {@link StravaActivity activity} to be uploaded</p>
+	 *            The {@link StravaActivity activity} to be uploaded
+	 * @return The activity as it was uploaded on Strava
 	 * @throws UnauthorizedException
 	 *             If user's security token is invalid or does not grant write access to the activity
 	 */
@@ -548,6 +547,7 @@ public interface ActivityServices {
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaActivity} for which {@link StravaComment comments} should be returned
+	 * @param pagingInstruction (Optional) Paging instructions. If not provided then the first page is returned.
 	 * @return List of comments
 	 * @throws UnauthorizedException
 	 *             If the service's security token is invalid
@@ -596,7 +596,7 @@ public interface ActivityServices {
 	 * @throws UnauthorizedException
 	 *             If the service's security token is invalid
 	 */
-	public List<StravaComment> listActivityComments(final Integer id, final Boolean markdown, final Paging pagingInstructions);
+	public List<StravaComment> listActivityComments(final Integer id, final Boolean markdown, final Paging pagingInstruction);
 
 	/**
 	 * <p>
