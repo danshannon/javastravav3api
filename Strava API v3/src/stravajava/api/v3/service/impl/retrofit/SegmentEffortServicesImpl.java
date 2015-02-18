@@ -54,7 +54,7 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 	private final SegmentEffortServicesRetrofit restService;
 
 	/**
-	 * @see stravajava.api.v3.service.SegmentEffortServices#getSegmentEffort(java.lang.Integer)
+	 * @see stravajava.api.v3.service.SegmentEffortServices#getSegmentEffort(Long)
 	 */
 	@Override
 	public StravaSegmentEffort getSegmentEffort(final Long id) {

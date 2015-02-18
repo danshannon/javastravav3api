@@ -99,7 +99,7 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.ClubServices#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ClubServices#listClubMembers(Integer, Paging)
 	 */
 	@Override
 	public List<StravaAthlete> listClubMembers(final Integer id, final Paging pagingInstruction) {
@@ -112,7 +112,7 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.ClubServices#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ClubServices#listRecentClubActivities(Integer, Paging)
 	 */
 	@Override
 	public List<StravaActivity> listRecentClubActivities(final Integer id, final Paging pagingInstruction) {

@@ -38,13 +38,13 @@ public interface ClubServicesRetrofit {
 	public StravaClub[] listAuthenticatedAthleteClubs();
 
 	/**
-	 * @see stravajava.api.v3.service.ClubServices#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ClubServices#listClubMembers(Integer, stravajava.util.Paging)
 	 */
 	@GET("/clubs/{id}/members")
 	public StravaAthlete[] listClubMembers(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.ClubServices#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ClubServices#listRecentClubActivities(Integer, stravajava.util.Paging)
 	 */
 	@GET("/clubs/{id}/activities")
 	public StravaActivity[] listRecentClubActivities(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage)

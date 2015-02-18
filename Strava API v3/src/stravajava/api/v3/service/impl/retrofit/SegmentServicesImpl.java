@@ -92,7 +92,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.SegmentServices#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.SegmentServices#listAuthenticatedAthleteStarredSegments(Paging)
 	 */
 	@Override
 	public List<StravaSegment> listAuthenticatedAthleteStarredSegments(final Paging pagingInstruction) {
@@ -105,7 +105,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.SegmentServices#listStarredSegments(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.SegmentServices#listStarredSegments(Integer, Paging)
 	 */
 	@Override
 	public List<StravaSegment> listStarredSegments(final Integer id, final Paging pagingInstruction) {
@@ -118,8 +118,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.SegmentServices#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.util.Calendar, java.util.Calendar,
-	 *      java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.SegmentServices#listSegmentEfforts(Integer, Integer, Calendar, Calendar, Paging)
 	 */
 	@Override
 	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocalTZ,
@@ -151,9 +150,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.SegmentServices#getSegmentLeaderboard(java.lang.Integer, stravajava.api.v3.model.reference.StravaGender,
-	 *      stravajava.api.v3.model.reference.StravaAgeGroup, stravajava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
-	 *      stravajava.api.v3.model.reference.StravaLeaderboardDateRange, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.SegmentServices#getSegmentLeaderboard(Integer, StravaGender, StravaAgeGroup, StravaWeightClass, Boolean, Integer, StravaLeaderboardDateRange, Paging)
 	 */
 	@Override
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final StravaGender gender, final StravaAgeGroup ageGroup,
@@ -240,8 +237,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.SegmentServices#segmentExplore(stravajava.api.v3.model.StravaMapPoint, stravajava.api.v3.model.StravaMapPoint,
-	 *      stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.SegmentServices#segmentExplore(StravaMapPoint, StravaMapPoint, StravaSegmentExplorerActivityType, StravaClimbCategory, StravaClimbCategory)
 	 */
 	@Override
 	public StravaSegmentExplorerResponse segmentExplore(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner,

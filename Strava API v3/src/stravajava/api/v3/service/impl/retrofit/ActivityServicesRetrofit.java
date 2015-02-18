@@ -67,15 +67,14 @@ public interface ActivityServicesRetrofit {
 	public StravaActivity deleteActivity(@Path("id") final Integer id) throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer,
-	 *      java.lang.Integer)
+	 * @see stravajava.api.v3.service.ActivityServices#listAuthenticatedAthleteActivities(java.util.Calendar, java.util.Calendar, stravajava.util.Paging)
 	 */
 	@GET("/athlete/activities")
 	public StravaActivity[] listAuthenticatedAthleteActivities(@Query("before") final Integer before, @Query("after") final Integer after, @Query("page") final Integer page,
 			@Query("per_page") final Integer perPage);
 
 	/**
-	 * @see stravajava.api.v3.service.ActivityServices#listFriendsActivities(java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ActivityServices#listFriendsActivities(stravajava.util.Paging)
 	 */
 	@GET("/activities/following")
 	public StravaActivity[] listFriendsActivities(@Query("page") final Integer page, @Query("per_page") final Integer perPage);
@@ -93,14 +92,14 @@ public interface ActivityServicesRetrofit {
 	public StravaLap[] listActivityLaps(@Path("id") final Integer id) throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.ActivityServices#listActivityComments(java.lang.Integer, java.lang.Boolean, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ActivityServices#listActivityComments(Integer, Boolean, stravajava.util.Paging)
 	 */
 	@GET("/activities/{id}/comments")
 	public StravaComment[] listActivityComments(@Path("id") final Integer id, @Query("markdown") final Boolean markdown, @Query("page") final Integer page,
 			@Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.ActivityServices#listActivityKudoers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.ActivityServices#listActivityKudoers(Integer, stravajava.util.Paging)
 	 */
 	@GET("/activities/{id}/kudos")
 	public StravaAthlete[] listActivityKudoers(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage)

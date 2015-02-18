@@ -98,7 +98,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.AthleteServices#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.AthleteServices#listAthleteKOMs(Integer, Paging)
 	 */
 	@Override
 	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id, final Paging pagingInstruction) {
@@ -111,7 +111,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.AthleteServices#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.AthleteServices#listAuthenticatedAthleteFriends(Paging)
 	 */
 	@Override
 	public List<StravaAthlete> listAuthenticatedAthleteFriends(final Paging pagingInstruction) {
@@ -126,7 +126,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.AthleteServices#listAthleteFriends(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.AthleteServices#listAthleteFriends(Integer, Paging)
 	 */
 	@Override
 	public List<StravaAthlete> listAthleteFriends(final Integer id, final Paging pagingInstruction) {
@@ -139,7 +139,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	}
 
 	/**
-	 * @see stravajava.api.v3.service.AthleteServices#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.AthleteServices#listAthletesBothFollowing(Integer, Paging)
 	 */
 	@Override
 	public List<StravaAthlete> listAthletesBothFollowing(final Integer id, final Paging pagingInstruction) {

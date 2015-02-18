@@ -48,7 +48,7 @@ public interface SegmentServicesRetrofit {
 	public StravaSegment getSegment(@Path("id") final Integer id) throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.SegmentServices#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.SegmentServices#listAuthenticatedAthleteStarredSegments(stravajava.util.Paging)
 	 * 
 	 * @param page (optional) Page number to be returned
 	 * @param perPage (optional) Number of entries to return per page
@@ -96,9 +96,7 @@ public interface SegmentServicesRetrofit {
 			@Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.SegmentServices#getSegmentLeaderboard(java.lang.Integer, stravajava.api.v3.model.reference.StravaGender,
-	 *      stravajava.api.v3.model.reference.StravaAgeGroup, stravajava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
-	 *      stravajava.api.v3.model.reference.StravaLeaderboardDateRange, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.SegmentServices#getSegmentLeaderboard(Integer, StravaGender, StravaAgeGroup, StravaWeightClass, Boolean, Integer, StravaLeaderboardDateRange, stravajava.util.Paging)
 	 */
 	@GET("/segments/{id}/leaderboard")
 	public StravaSegmentLeaderboard getSegmentLeaderboard(@Path("id") final Integer id, @Query("gender") final StravaGender gender,
@@ -107,8 +105,7 @@ public interface SegmentServicesRetrofit {
 			@Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.SegmentServices#segmentExplore(stravajava.api.v3.model.StravaMapPoint, stravajava.api.v3.model.StravaMapPoint,
-	 *      stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.SegmentServices#segmentExplore(stravajava.api.v3.model.StravaMapPoint, stravajava.api.v3.model.StravaMapPoint, StravaSegmentExplorerActivityType, StravaClimbCategory, StravaClimbCategory)
 	 */
 	@GET("/segments/explore")
 	public StravaSegmentExplorerResponse segmentExplore(@Query("bounds") final String bounds, @Query("activity_type") final StravaSegmentExplorerActivityType activityType,

@@ -36,33 +36,33 @@ public interface AthleteServicesRetrofit {
 	public StravaAthlete getAthlete(@Path("id") final Integer id) throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.AthleteServices#updateAuthenticatedAthlete()
+	 * @see stravajava.api.v3.service.AthleteServices#updateAuthenticatedAthlete(String, String, String, StravaGender, Float)
 	 */
 	@PUT("/athlete")
 	public StravaAthlete updateAuthenticatedAthlete(@Query("city") final String city, @Query("state") final String state, @Query("country") final String country,
 			@Query("sex") final StravaGender sex, @Query("weight") final Float weight);
 
 	/**
-	 * @see stravajava.api.v3.service.AthleteServices#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.AthleteServices#listAthleteKOMs(Integer, stravajava.util.Paging)
 	 */
 	@GET("/athletes/{id}/koms")
 	public StravaSegmentEffort[] listAthleteKOMs(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
 			throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.AthleteServices#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.AthleteServices#listAuthenticatedAthleteFriends(stravajava.util.Paging)
 	 */
 	@GET("/athlete/friends")
 	public StravaAthlete[] listAuthenticatedAthleteFriends(@Query("page") final Integer page, @Query("per_page") final Integer perPage);
 
 	/**
-	 * @see stravajava.api.v3.service.AthleteServices#listAthleteFriends(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.AthleteServices#listAthleteFriends(Integer, stravajava.util.Paging)
 	 */
 	@GET("/athletes/{id}/friends")
 	public StravaAthlete[] listAthleteFriends(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
-	 * @see stravajava.api.v3.service.AthleteServices#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see stravajava.api.v3.service.AthleteServices#listAthletesBothFollowing(Integer, stravajava.util.Paging)
 	 */
 	@GET("/athletes/{id}/both-following")
 	public StravaAthlete[] listAthletesBothFollowing(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
