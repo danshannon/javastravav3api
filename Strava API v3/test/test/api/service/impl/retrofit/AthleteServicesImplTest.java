@@ -12,17 +12,18 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
+import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaSegmentEffort;
+import javastrava.api.v3.model.StravaStatistics;
+import javastrava.api.v3.model.reference.StravaGender;
+import javastrava.api.v3.service.AthleteServices;
+import javastrava.api.v3.service.Strava;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.AthleteServicesImpl;
+import javastrava.util.Paging;
+
 import org.junit.Test;
 
-import stravajava.api.v3.model.StravaAthlete;
-import stravajava.api.v3.model.StravaSegmentEffort;
-import stravajava.api.v3.model.StravaStatistics;
-import stravajava.api.v3.model.reference.StravaGender;
-import stravajava.api.v3.service.AthleteServices;
-import stravajava.api.v3.service.Strava;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.AthleteServicesImpl;
-import stravajava.util.Paging;
 import test.utils.TestUtils;
 
 /**

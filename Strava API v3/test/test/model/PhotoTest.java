@@ -1,6 +1,6 @@
 package test.model;
 
-import stravajava.model.Photo;
+import javastrava.model.Photo;
 import test.utils.BeanTest;
 
 public class PhotoTest extends BeanTest<Photo> {

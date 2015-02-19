@@ -5,19 +5,20 @@ import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 
+import javastrava.api.v3.auth.AuthorisationServices;
+import javastrava.api.v3.auth.impl.retrofit.AuthorisationServicesImpl;
+import javastrava.api.v3.auth.model.TokenResponse;
+import javastrava.api.v3.auth.ref.AuthorisationScope;
+import javastrava.api.v3.model.StravaActivity;
+import javastrava.api.v3.service.ActivityServices;
+import javastrava.api.v3.service.exception.BadRequestException;
+import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.ActivityServicesImpl;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import stravajava.api.v3.auth.AuthorisationServices;
-import stravajava.api.v3.auth.impl.retrofit.AuthorisationServicesImpl;
-import stravajava.api.v3.auth.model.TokenResponse;
-import stravajava.api.v3.auth.ref.AuthorisationScope;
-import stravajava.api.v3.model.StravaActivity;
-import stravajava.api.v3.service.ActivityServices;
-import stravajava.api.v3.service.exception.BadRequestException;
-import stravajava.api.v3.service.exception.NotFoundException;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.ActivityServicesImpl;
 import test.utils.TestHttpUtils;
 import test.utils.TestUtils;
 

@@ -7,15 +7,16 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 
+import javastrava.api.v3.model.StravaStream;
+import javastrava.api.v3.model.reference.StravaStreamResolutionType;
+import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
+import javastrava.api.v3.service.StreamServices;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.StreamServicesImpl;
+import javastrava.util.exception.JsonSerialisationException;
+
 import org.junit.Test;
 
-import stravajava.api.v3.model.StravaStream;
-import stravajava.api.v3.model.reference.StravaStreamResolutionType;
-import stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
-import stravajava.api.v3.service.StreamServices;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.StreamServicesImpl;
-import stravajava.util.exception.JsonSerialisationException;
 import test.utils.TestUtils;
 
 public class StravaStreamSerializerTest extends SerializerTest<StravaStream> {

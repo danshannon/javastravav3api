@@ -1,17 +1,17 @@
 package test.api.auth.impl.retrofit;
 
 import static org.junit.Assert.fail;
+import javastrava.api.v3.auth.TokenServices;
+import javastrava.api.v3.auth.impl.retrofit.TokenServicesImpl;
+import javastrava.api.v3.auth.model.Token;
+import javastrava.api.v3.auth.model.TokenResponse;
+import javastrava.api.v3.service.AthleteServices;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.AthleteServicesImpl;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import stravajava.api.v3.auth.TokenServices;
-import stravajava.api.v3.auth.impl.retrofit.TokenServicesImpl;
-import stravajava.api.v3.auth.model.Token;
-import stravajava.api.v3.auth.model.TokenResponse;
-import stravajava.api.v3.service.AthleteServices;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.AthleteServicesImpl;
 import test.utils.TestHttpUtils;
 import test.utils.TestUtils;
 

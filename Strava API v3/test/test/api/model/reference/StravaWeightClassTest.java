@@ -5,10 +5,10 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
-import org.junit.Test;
+import javastrava.api.v3.model.reference.StravaMeasurementMethod;
+import javastrava.api.v3.model.reference.StravaWeightClass;
 
-import stravajava.api.v3.model.reference.StravaMeasurementMethod;
-import stravajava.api.v3.model.reference.StravaWeightClass;
+import org.junit.Test;
 
 /**
  * @author dshannon

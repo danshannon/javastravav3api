@@ -1,6 +1,6 @@
 package test.util.impl.gson.serializer;
 
-import stravajava.api.v3.model.reference.StravaPhotoType;
+import javastrava.api.v3.model.reference.StravaPhotoType;
 
 /**
  * @author dshannon

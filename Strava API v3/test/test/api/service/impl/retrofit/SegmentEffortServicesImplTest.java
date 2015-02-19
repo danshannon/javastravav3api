@@ -5,13 +5,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+import javastrava.api.v3.model.StravaSegmentEffort;
+import javastrava.api.v3.service.SegmentEffortServices;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.SegmentEffortServicesImpl;
 
 import org.junit.Test;
 
-import stravajava.api.v3.model.StravaSegmentEffort;
-import stravajava.api.v3.service.SegmentEffortServices;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.SegmentEffortServicesImpl;
 import test.utils.TestUtils;
 
 /**

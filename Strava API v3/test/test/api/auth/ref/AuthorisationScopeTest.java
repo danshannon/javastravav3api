@@ -2,10 +2,9 @@ package test.api.auth.ref;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import javastrava.api.v3.auth.ref.AuthorisationScope;
 
 import org.junit.Test;
-
-import stravajava.api.v3.auth.ref.AuthorisationScope;
 
 /**
  * @author dshannon

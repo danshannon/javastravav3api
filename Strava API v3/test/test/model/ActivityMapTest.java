@@ -1,6 +1,6 @@
 package test.model;
 
-import stravajava.model.ActivityMap;
+import javastrava.model.ActivityMap;
 import test.utils.BeanTest;
 
 public class ActivityMapTest extends BeanTest<ActivityMap> {

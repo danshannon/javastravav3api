@@ -1,6 +1,6 @@
 package test.model;
 
-import stravajava.model.Lap;
+import javastrava.model.Lap;
 import test.utils.BeanTest;
 
 public class LapTest extends BeanTest<Lap> {

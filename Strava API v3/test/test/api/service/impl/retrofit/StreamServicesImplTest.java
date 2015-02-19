@@ -12,15 +12,16 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
+import javastrava.api.v3.model.StravaStream;
+import javastrava.api.v3.model.reference.StravaStreamResolutionType;
+import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
+import javastrava.api.v3.model.reference.StravaStreamType;
+import javastrava.api.v3.service.StreamServices;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.StreamServicesImpl;
+
 import org.junit.Test;
 
-import stravajava.api.v3.model.StravaStream;
-import stravajava.api.v3.model.reference.StravaStreamResolutionType;
-import stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
-import stravajava.api.v3.model.reference.StravaStreamType;
-import stravajava.api.v3.service.StreamServices;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.StreamServicesImpl;
 import test.utils.TestUtils;
 
 /**
@@ -30,7 +31,7 @@ import test.utils.TestUtils;
 public class StreamServicesImplTest {
 
 	/**
-	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#implementation(java.lang.String)}.
+	 * Test method for {@link javastrava.api.v3.service.impl.retrofit.StreamServicesImpl#implementation(java.lang.String)}.
 	 * 
 	 * @throws UnauthorizedException
 	 */
@@ -70,7 +71,7 @@ public class StreamServicesImplTest {
 
 	/**
 	 * Test method for
-	 * {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getActivityStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}
+	 * {@link javastrava.api.v3.service.impl.retrofit.StreamServicesImpl#getActivityStreams(java.lang.String, javastrava.api.v3.model.reference.StravaStreamType[], javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}
 	 * .
 	 * 
 	 * @throws UnauthorizedException
@@ -223,7 +224,7 @@ public class StreamServicesImplTest {
 
 	/**
 	 * Test method for
-	 * {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getEffortStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}
+	 * {@link javastrava.api.v3.service.impl.retrofit.StreamServicesImpl#getEffortStreams(java.lang.String, javastrava.api.v3.model.reference.StravaStreamType[], javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}
 	 * .
 	 */
 	// 1. Valid effort for the authenticated user
@@ -374,7 +375,7 @@ public class StreamServicesImplTest {
 
 	/**
 	 * Test method for
-	 * {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#getSegmentStreams(java.lang.String, stravajava.api.v3.model.reference.StravaStreamType[], stravajava.api.v3.model.reference.StravaStreamResolutionType, stravajava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}
+	 * {@link javastrava.api.v3.service.impl.retrofit.StreamServicesImpl#getSegmentStreams(java.lang.String, javastrava.api.v3.model.reference.StravaStreamType[], javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)}
 	 * .
 	 */
 	@Test

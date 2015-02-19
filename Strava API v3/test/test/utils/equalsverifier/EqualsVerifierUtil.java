@@ -1,8 +1,8 @@
 package test.utils.equalsverifier;
 
+import javastrava.api.v3.model.StravaSegment;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import stravajava.api.v3.model.StravaSegment;
 import test.utils.meanbean.factory.StravaSegmentFactory;
 
 public class EqualsVerifierUtil {

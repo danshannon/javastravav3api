@@ -1,6 +1,6 @@
 package test.api.auth.model;
 
-import stravajava.api.v3.auth.model.TokenResponse;
+import javastrava.api.v3.auth.model.TokenResponse;
 import test.utils.BeanTest;
 
 /**

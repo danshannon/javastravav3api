@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.junit.Test;
+import javastrava.util.exception.JsonSerialisationException;
 
-import stravajava.util.exception.JsonSerialisationException;
+import org.junit.Test;
 
 public abstract class EnumSerializerTest<T extends Enum<T>> extends SerializerTest<T> {
 

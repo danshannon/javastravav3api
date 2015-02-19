@@ -1,6 +1,6 @@
 package test.model;
 
-import stravajava.model.Club;
+import javastrava.model.Club;
 import test.utils.BeanTest;
 
 public class ClubTest extends BeanTest<Club> {

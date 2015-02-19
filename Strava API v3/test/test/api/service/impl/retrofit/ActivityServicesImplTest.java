@@ -12,25 +12,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import javastrava.api.v3.model.StravaActivity;
+import javastrava.api.v3.model.StravaActivityZone;
+import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaComment;
+import javastrava.api.v3.model.StravaLap;
+import javastrava.api.v3.model.StravaPhoto;
+import javastrava.api.v3.model.StravaSegmentEffort;
+import javastrava.api.v3.model.reference.StravaActivityType;
+import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.api.v3.service.ActivityServices;
+import javastrava.api.v3.service.Strava;
+import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.ActivityServicesImpl;
+import javastrava.util.Paging;
+
 import org.jfairy.Fairy;
 import org.jfairy.producer.text.TextProducer;
 import org.junit.Test;
 
-import stravajava.api.v3.model.StravaActivity;
-import stravajava.api.v3.model.StravaActivityZone;
-import stravajava.api.v3.model.StravaAthlete;
-import stravajava.api.v3.model.StravaComment;
-import stravajava.api.v3.model.StravaLap;
-import stravajava.api.v3.model.StravaPhoto;
-import stravajava.api.v3.model.StravaSegmentEffort;
-import stravajava.api.v3.model.reference.StravaActivityType;
-import stravajava.api.v3.model.reference.StravaResourceState;
-import stravajava.api.v3.service.ActivityServices;
-import stravajava.api.v3.service.Strava;
-import stravajava.api.v3.service.exception.NotFoundException;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.ActivityServicesImpl;
-import stravajava.util.Paging;
 import test.utils.TestUtils;
 
 /**

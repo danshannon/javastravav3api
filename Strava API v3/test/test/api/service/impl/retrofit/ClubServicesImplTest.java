@@ -9,18 +9,19 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
+import javastrava.api.v3.model.StravaActivity;
+import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaClub;
+import javastrava.api.v3.model.StravaClubMembershipResponse;
+import javastrava.api.v3.service.ClubServices;
+import javastrava.api.v3.service.Strava;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.ClubServicesImpl;
+import javastrava.util.Paging;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import stravajava.api.v3.model.StravaActivity;
-import stravajava.api.v3.model.StravaAthlete;
-import stravajava.api.v3.model.StravaClub;
-import stravajava.api.v3.model.StravaClubMembershipResponse;
-import stravajava.api.v3.service.ClubServices;
-import stravajava.api.v3.service.Strava;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.ClubServicesImpl;
-import stravajava.util.Paging;
 import test.utils.TestUtils;
 
 /**

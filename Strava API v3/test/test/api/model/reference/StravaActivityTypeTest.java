@@ -2,10 +2,9 @@ package test.api.model.reference;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import javastrava.api.v3.model.reference.StravaActivityType;
 
 import org.junit.Test;
-
-import stravajava.api.v3.model.reference.StravaActivityType;
 
 /**
  * @author dshannon

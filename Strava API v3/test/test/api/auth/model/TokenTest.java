@@ -1,6 +1,6 @@
 package test.api.auth.model;
 
-import stravajava.api.v3.auth.model.Token;
+import javastrava.api.v3.auth.model.Token;
 import test.utils.BeanTest;
 
 public class TokenTest extends BeanTest<Token> {

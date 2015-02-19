@@ -1,6 +1,6 @@
 package test.api.model;
 
-import stravajava.api.v3.model.StravaStream;
+import javastrava.api.v3.model.StravaStream;
 import test.utils.BeanTest;
 
 /**

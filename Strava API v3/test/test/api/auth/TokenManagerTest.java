@@ -7,12 +7,12 @@ import static org.junit.Assert.fail;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import javastrava.api.v3.auth.TokenManager;
+import javastrava.api.v3.auth.model.Token;
+import javastrava.api.v3.auth.ref.AuthorisationScope;
+import javastrava.api.v3.model.StravaAthlete;
 
-import stravajava.api.v3.auth.TokenManager;
-import stravajava.api.v3.auth.model.Token;
-import stravajava.api.v3.auth.ref.AuthorisationScope;
-import stravajava.api.v3.model.StravaAthlete;
+import org.junit.Test;
 
 /**
  * @author dshannon

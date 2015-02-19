@@ -1,6 +1,6 @@
 package test.api.model;
 
-import stravajava.api.v3.model.StravaBestRunningEffort;
+import javastrava.api.v3.model.StravaBestRunningEffort;
 import test.utils.BeanTest;
 
 /**

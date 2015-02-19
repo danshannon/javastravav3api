@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javastrava.api.v3.service.Strava;
+import javastrava.util.Paging;
+
 import org.jfairy.Fairy;
 import org.junit.Test;
-
-import stravajava.api.v3.service.Strava;
-import stravajava.util.Paging;
 
 /**
  * @author dshannon

@@ -5,14 +5,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+import javastrava.api.v3.model.StravaGear;
+import javastrava.api.v3.service.GearServices;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.GearServicesImpl;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import stravajava.api.v3.model.StravaGear;
-import stravajava.api.v3.service.GearServices;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.GearServicesImpl;
 import test.utils.TestUtils;
 
 /**

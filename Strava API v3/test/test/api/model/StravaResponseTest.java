@@ -1,6 +1,6 @@
 package test.api.model;
 
-import stravajava.api.v3.model.StravaResponse;
+import javastrava.api.v3.model.StravaResponse;
 import test.utils.BeanTest;
 
 public class StravaResponseTest extends BeanTest<StravaResponse> {

@@ -1,6 +1,6 @@
 package test.util.impl.gson.serializer;
 
-import stravajava.api.v3.model.reference.StravaStreamType;
+import javastrava.api.v3.model.reference.StravaStreamType;
 
 /**
  * @author dshannon

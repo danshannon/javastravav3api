@@ -3,9 +3,10 @@ package test.utils.meanbean;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import javastrava.api.v3.model.StravaSegment;
+
 import org.meanbean.test.BeanTester;
 
-import stravajava.api.v3.model.StravaSegment;
 import test.utils.meanbean.factory.CalendarFactory;
 import test.utils.meanbean.factory.StravaSegmentFactory;
 import test.utils.meanbean.factory.TimeZoneFactory;

@@ -1,6 +1,6 @@
 package test.model;
 
-import stravajava.model.Segment;
+import javastrava.model.Segment;
 import test.utils.BeanTest;
 
 public class SegmentTest extends BeanTest<Segment> {

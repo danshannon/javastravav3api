@@ -1,11 +1,11 @@
 package test.utils.meanbean.factory;
 
-import org.meanbean.lang.Factory;
+import javastrava.api.v3.model.StravaSegment;
+import javastrava.api.v3.model.reference.StravaClimbCategory;
+import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.api.v3.model.reference.StravaSegmentActivityType;
 
-import stravajava.api.v3.model.StravaSegment;
-import stravajava.api.v3.model.reference.StravaClimbCategory;
-import stravajava.api.v3.model.reference.StravaResourceState;
-import stravajava.api.v3.model.reference.StravaSegmentActivityType;
+import org.meanbean.lang.Factory;
 
 public class StravaSegmentFactory implements Factory<StravaSegment> {
 

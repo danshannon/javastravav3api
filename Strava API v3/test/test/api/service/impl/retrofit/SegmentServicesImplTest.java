@@ -10,26 +10,27 @@ import static org.junit.Assert.fail;
 import java.util.Calendar;
 import java.util.List;
 
+import javastrava.api.v3.model.StravaMapPoint;
+import javastrava.api.v3.model.StravaSegment;
+import javastrava.api.v3.model.StravaSegmentEffort;
+import javastrava.api.v3.model.StravaSegmentExplorerResponse;
+import javastrava.api.v3.model.StravaSegmentExplorerResponseSegment;
+import javastrava.api.v3.model.StravaSegmentLeaderboard;
+import javastrava.api.v3.model.StravaSegmentLeaderboardEntry;
+import javastrava.api.v3.model.reference.StravaAgeGroup;
+import javastrava.api.v3.model.reference.StravaClimbCategory;
+import javastrava.api.v3.model.reference.StravaGender;
+import javastrava.api.v3.model.reference.StravaLeaderboardDateRange;
+import javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType;
+import javastrava.api.v3.model.reference.StravaWeightClass;
+import javastrava.api.v3.service.SegmentServices;
+import javastrava.api.v3.service.Strava;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.SegmentServicesImpl;
+import javastrava.util.Paging;
+
 import org.junit.Test;
 
-import stravajava.api.v3.model.StravaMapPoint;
-import stravajava.api.v3.model.StravaSegment;
-import stravajava.api.v3.model.StravaSegmentEffort;
-import stravajava.api.v3.model.StravaSegmentExplorerResponse;
-import stravajava.api.v3.model.StravaSegmentExplorerResponseSegment;
-import stravajava.api.v3.model.StravaSegmentLeaderboard;
-import stravajava.api.v3.model.StravaSegmentLeaderboardEntry;
-import stravajava.api.v3.model.reference.StravaAgeGroup;
-import stravajava.api.v3.model.reference.StravaClimbCategory;
-import stravajava.api.v3.model.reference.StravaGender;
-import stravajava.api.v3.model.reference.StravaLeaderboardDateRange;
-import stravajava.api.v3.model.reference.StravaSegmentExplorerActivityType;
-import stravajava.api.v3.model.reference.StravaWeightClass;
-import stravajava.api.v3.service.SegmentServices;
-import stravajava.api.v3.service.Strava;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.SegmentServicesImpl;
-import stravajava.util.Paging;
 import test.utils.TestUtils;
 
 /**

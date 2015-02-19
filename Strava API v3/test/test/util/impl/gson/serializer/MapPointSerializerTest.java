@@ -6,10 +6,10 @@ import static org.junit.Assert.assertNull;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.junit.Test;
+import javastrava.api.v3.model.StravaMapPoint;
+import javastrava.util.exception.JsonSerialisationException;
 
-import stravajava.api.v3.model.StravaMapPoint;
-import stravajava.util.exception.JsonSerialisationException;
+import org.junit.Test;
 
 /**
  * @author dshannon

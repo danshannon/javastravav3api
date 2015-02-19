@@ -7,25 +7,26 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 
+import javastrava.api.v3.model.StravaActivity;
+import javastrava.api.v3.model.StravaUploadResponse;
+import javastrava.api.v3.model.reference.StravaActivityType;
+import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.api.v3.service.ActivityServices;
+import javastrava.api.v3.service.UploadServices;
+import javastrava.api.v3.service.exception.BadRequestException;
+import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.retrofit.ActivityServicesImpl;
+import javastrava.api.v3.service.impl.retrofit.UploadServicesImpl;
+
 import org.junit.Test;
 
-import stravajava.api.v3.model.StravaActivity;
-import stravajava.api.v3.model.StravaUploadResponse;
-import stravajava.api.v3.model.reference.StravaActivityType;
-import stravajava.api.v3.model.reference.StravaResourceState;
-import stravajava.api.v3.service.ActivityServices;
-import stravajava.api.v3.service.UploadServices;
-import stravajava.api.v3.service.exception.BadRequestException;
-import stravajava.api.v3.service.exception.NotFoundException;
-import stravajava.api.v3.service.exception.UnauthorizedException;
-import stravajava.api.v3.service.impl.retrofit.ActivityServicesImpl;
-import stravajava.api.v3.service.impl.retrofit.UploadServicesImpl;
 import test.utils.TestUtils;
 
 public class UploadServicesImplTest {
 
 	/**
-	 * Test method for {@link stravajava.api.v3.service.impl.retrofit.StreamServicesImpl#implementation(java.lang.String)}.
+	 * Test method for {@link javastrava.api.v3.service.impl.retrofit.StreamServicesImpl#implementation(java.lang.String)}.
 	 * 
 	 * @throws UnauthorizedException
 	 */

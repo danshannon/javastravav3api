@@ -1,6 +1,6 @@
 package test.util;
 
-import stravajava.util.Paging;
+import javastrava.util.Paging;
 import test.utils.BeanTest;
 
 public class PagingTest extends BeanTest<Paging> {

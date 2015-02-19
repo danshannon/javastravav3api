@@ -1,6 +1,6 @@
 package test.model;
 
-import stravajava.model.MapPoint;
+import javastrava.model.MapPoint;
 import test.utils.BeanTest;
 
 public class MapPointTest extends BeanTest<MapPoint> {

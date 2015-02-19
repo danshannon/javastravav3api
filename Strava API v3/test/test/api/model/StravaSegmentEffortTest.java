@@ -1,6 +1,6 @@
 package test.api.model;
 
-import stravajava.api.v3.model.StravaSegmentEffort;
+import javastrava.api.v3.model.StravaSegmentEffort;
 import test.utils.BeanTest;
 
 /**

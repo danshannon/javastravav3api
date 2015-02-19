@@ -1,6 +1,6 @@
 package test.model;
 
-import stravajava.model.Comment;
+import javastrava.model.Comment;
 import test.utils.BeanTest;
 
 public class CommentTest extends BeanTest<Comment> {

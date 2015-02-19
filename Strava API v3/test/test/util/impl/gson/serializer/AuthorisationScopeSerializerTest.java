@@ -1,6 +1,6 @@
 package test.util.impl.gson.serializer;
 
-import stravajava.api.v3.auth.ref.AuthorisationScope;
+import javastrava.api.v3.auth.ref.AuthorisationScope;
 
 /**
  * @author dshannon

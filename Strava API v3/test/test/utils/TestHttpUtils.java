@@ -4,6 +4,17 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javastrava.api.v3.auth.AuthorisationServices;
+import javastrava.api.v3.auth.impl.retrofit.AuthorisationServicesImpl;
+import javastrava.api.v3.auth.model.Token;
+import javastrava.api.v3.auth.model.TokenResponse;
+import javastrava.api.v3.auth.ref.AuthorisationApprovalPrompt;
+import javastrava.api.v3.auth.ref.AuthorisationResponseType;
+import javastrava.api.v3.auth.ref.AuthorisationScope;
+import javastrava.api.v3.service.Strava;
+import javastrava.api.v3.service.exception.BadRequestException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -17,17 +28,6 @@ import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-
-import stravajava.api.v3.auth.AuthorisationServices;
-import stravajava.api.v3.auth.impl.retrofit.AuthorisationServicesImpl;
-import stravajava.api.v3.auth.model.Token;
-import stravajava.api.v3.auth.model.TokenResponse;
-import stravajava.api.v3.auth.ref.AuthorisationApprovalPrompt;
-import stravajava.api.v3.auth.ref.AuthorisationResponseType;
-import stravajava.api.v3.auth.ref.AuthorisationScope;
-import stravajava.api.v3.service.Strava;
-import stravajava.api.v3.service.exception.BadRequestException;
-import stravajava.api.v3.service.exception.UnauthorizedException;
 
 /**
  * @author dshannon

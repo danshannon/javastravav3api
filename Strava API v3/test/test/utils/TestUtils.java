@@ -5,15 +5,15 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
 
-import stravajava.api.v3.auth.TokenManager;
-import stravajava.api.v3.auth.TokenServices;
-import stravajava.api.v3.auth.impl.retrofit.TokenServicesImpl;
-import stravajava.api.v3.auth.model.Token;
-import stravajava.api.v3.auth.ref.AuthorisationScope;
-import stravajava.api.v3.model.StravaActivity;
-import stravajava.api.v3.model.reference.StravaActivityType;
-import stravajava.api.v3.service.exception.BadRequestException;
-import stravajava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.auth.TokenManager;
+import javastrava.api.v3.auth.TokenServices;
+import javastrava.api.v3.auth.impl.retrofit.TokenServicesImpl;
+import javastrava.api.v3.auth.model.Token;
+import javastrava.api.v3.auth.ref.AuthorisationScope;
+import javastrava.api.v3.model.StravaActivity;
+import javastrava.api.v3.model.reference.StravaActivityType;
+import javastrava.api.v3.service.exception.BadRequestException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
 import test.api.service.impl.retrofit.ActivityServicesImplTest;
 
 /**

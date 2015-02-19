@@ -6,12 +6,12 @@ import static org.junit.Assert.fail;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import javastrava.util.JsonUtil;
+import javastrava.util.exception.JsonSerialisationException;
+import javastrava.util.impl.gson.JsonUtilImpl;
+
 import org.jfairy.Fairy;
 import org.junit.Test;
-
-import stravajava.util.JsonUtil;
-import stravajava.util.exception.JsonSerialisationException;
-import stravajava.util.impl.gson.JsonUtilImpl;
 
 public abstract class SerializerTest<T> {
 	protected JsonUtil util = new JsonUtilImpl();

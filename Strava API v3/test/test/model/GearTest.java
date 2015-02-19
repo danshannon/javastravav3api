@@ -1,6 +1,6 @@
 package test.model;
 
-import stravajava.model.Gear;
+import javastrava.model.Gear;
 import test.utils.BeanTest;
 
 public class GearTest extends BeanTest<Gear> {

@@ -1,11 +1,10 @@
 package test.api.service.exception;
 
 import static org.junit.Assert.assertEquals;
+import javastrava.api.v3.model.StravaResponse;
+import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 
 import org.junit.Test;
-
-import stravajava.api.v3.model.StravaResponse;
-import stravajava.api.v3.service.exception.StravaUnknownAPIException;
 
 public class StravaUnknownAPIExceptionTest {
 
