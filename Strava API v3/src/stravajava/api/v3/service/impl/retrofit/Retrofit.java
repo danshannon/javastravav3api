@@ -27,6 +27,7 @@ public class Retrofit {
 	 * @param class1 The class to be returned
 	 * @param token The access token required for authentication of requests to the Strava API
 	 * @param logLevel Log level required for the service
+	 * @param <T> Class of Retrofit interface to be instantiated (one of the *Retrofit.java interfaces)
 	 * @return A REST service
 	 */
 	public static <T> T retrofit(final Class<T> class1, final String token, final RestAdapter.LogLevel logLevel) {

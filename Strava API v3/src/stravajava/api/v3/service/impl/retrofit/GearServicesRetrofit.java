@@ -19,6 +19,10 @@ public interface GearServicesRetrofit {
 
 	/**
 	 * @see stravajava.api.v3.service.GearServices#getGear(java.lang.String)
+	 * 
+	 * @param id Gear identifier
+	 * @return Details of the identified gear
+	 * @throws NotFoundException If the gear with the given id doesn't exist
 	 */
 	@GET("/gear/{id}")
 	public StravaGear getGear(@Path("id") final String id) throws NotFoundException;

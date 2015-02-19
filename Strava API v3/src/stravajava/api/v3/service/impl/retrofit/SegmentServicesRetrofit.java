@@ -88,7 +88,7 @@ public interface SegmentServicesRetrofit {
 	 * @param page (optional) Page number to be returned
 	 * @param perPage (optional) Number of entries to return per page
 	 * @return Array of Segment Efforts
-	 * @throws NotFoundException
+	 * @throws NotFoundException If the segment with the given id doesn't exist
 	 */
 	@GET("/segments/{id}/all_efforts")
 	public StravaSegmentEffort[] listSegmentEfforts(@Path("id") final Integer id, @Query("athlete_id") final Integer athleteId,
@@ -97,6 +97,18 @@ public interface SegmentServicesRetrofit {
 
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#getSegmentLeaderboard(Integer, StravaGender, StravaAgeGroup, StravaWeightClass, Boolean, Integer, StravaLeaderboardDateRange, stravajava.util.Paging)
+	 * 
+	 * @param id Segment identifier
+	 * @param gender (Optional) Gender to filter the leaderboard by
+	 * @param ageGroup (Optional) Age group to filter the leaderboard by
+	 * @param weightClass (Optional) Weight class to filter the leaderboard by
+	 * @param following (Optional) If <code>true</code> then filter leaderboard by athletes the authenticated athlete is following
+	 * @param clubId (Optional) Club to filter the leaderboard by
+	 * @param dateRange (Optional) Date range (this year, this month etc.) to filter the leaderboard by
+	 * @param page (Optional) Page number to return (default is 1)
+	 * @param perPage (Optional) Page size to return (default is 50)
+	 * @return A Strava leaderboard
+	 * @throws NotFoundException If the segment with the given id doesn't exist
 	 */
 	@GET("/segments/{id}/leaderboard")
 	public StravaSegmentLeaderboard getSegmentLeaderboard(@Path("id") final Integer id, @Query("gender") final StravaGender gender,
@@ -106,6 +118,12 @@ public interface SegmentServicesRetrofit {
 
 	/**
 	 * @see stravajava.api.v3.service.SegmentServices#segmentExplore(stravajava.api.v3.model.StravaMapPoint, stravajava.api.v3.model.StravaMapPoint, StravaSegmentExplorerActivityType, StravaClimbCategory, StravaClimbCategory)
+	 * 
+	 * @param bounds Pair of co-ordinates defining a box which is to be searched for segments
+	 * @param activityType (Optional) Activity type to filter by (default is 'ride')
+	 * @param minCategory (Optional) Minimum climb category for which rides should be returned
+	 * @param maxCategory (Optional) Maximum climb category for which rides should be returned
+	 * @return A response full of slightly weird-looking segments
 	 */
 	@GET("/segments/explore")
 	public StravaSegmentExplorerResponse segmentExplore(@Query("bounds") final String bounds, @Query("activity_type") final StravaSegmentExplorerActivityType activityType,
