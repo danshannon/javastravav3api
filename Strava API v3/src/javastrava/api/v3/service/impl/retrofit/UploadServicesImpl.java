@@ -67,6 +67,9 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 		if (file == null) {
 			throw new IllegalArgumentException("Cannot upload a <null> file!");
 		}
+		if (!file.exists() || file.isDirectory()) {
+			throw new IllegalArgumentException("File " + file.getName() + " does not exist!");
+		}
 		try {
 			return this.restService.upload(activityType, name, description, _private, trainer, dataType, externalId, new TypedFile("text/xml", file));
 		} catch (BadRequestException e) {
