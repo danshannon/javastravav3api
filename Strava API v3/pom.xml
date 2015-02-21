@@ -3,9 +3,23 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.danshannon</groupId>
 	<artifactId>javastrava-api</artifactId>
-	<version>0.0.1-ALPHA</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<name>Strava API</name>
 	<description>Java implementation of the Strava API</description>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Dan Shannon</name>
+			<email>stravajava@gmail.com</email>
+			<organization>stravajava</organization>
+			<organizationUrl>http://danshannon.github.io/javastravav3api/</organizationUrl>
+		</developer>
+	</developers>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<directory>target</directory>
@@ -44,6 +58,31 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -53,44 +92,15 @@
 			<version>1.9.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.4-beta1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.8.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jfairy</groupId>
-			<artifactId>jfairy</artifactId>
-			<version>0.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.0</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.meanbean</groupId>
-			<artifactId>meanbean</artifactId>
-			<version>2.0.3</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>nl.jqno.equalsverifier</groupId>
-			<artifactId>equalsverifier</artifactId>
-			<version>1.6</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -112,8 +122,9 @@
 	</properties>
 	<url>https://github.com/danshannon/javastravav3api</url>
 	<scm>
-		<url>https://github.com/danshannon/javastravav3api.git</url>
-		<developerConnection>danshannon</developerConnection>
+		<url>https://github.com/danshannon/javastravav3api</url>
+		<developerConnection>scm:git:https://github.com/danshannon/javastravav3api.git</developerConnection>
+		<connection>scm:git:https://github.com/danshannon/javastravav3api.git</connection>
 	</scm>
 	<organization>
 		<url>https://github.com/danshannon/javastravav3api</url>

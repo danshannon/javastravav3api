@@ -9,6 +9,7 @@ import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaPhoto;
+import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.util.Paging;
 
@@ -26,10 +27,9 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * By default, only "important" efforts are included. "Importance" is based on a number of undocumented factors and its value
-	 * may change over time. Factors considered include: segment age, views and stars, if the user has hidden/shown the segment and
-	 * if the effort was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated
-	 * effort is "important" but not for the other.
+	 * By default, only "important" efforts are included. "Importance" is based on a number of undocumented factors and its value may change over time. Factors
+	 * considered include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the
+	 * same segment, it is possible that for one activity the associated effort is "important" but not for the other.
 	 * </p>
 	 * 
 	 * <p>
@@ -52,8 +52,8 @@ public interface ActivityServices {
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaActivity activity} to be returned
-	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns
-	 *         a summary representation for all other requests.
+	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for
+	 *         all other requests.
 	 * @throws UnauthorizedException
 	 *             If the service's security token is invalid
 	 */
@@ -65,10 +65,9 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * By default, only "important" efforts are included. "Importance" is based on a number of factors and its value may change over
-	 * time. Factors considered include: segment age, views and stars, if the user has hidden/shown the segment and if the effort
-	 * was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated effort is
-	 * "important" but not for the other.
+	 * By default, only "important" efforts are included. "Importance" is based on a number of factors and its value may change over time. Factors considered
+	 * include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same
+	 * segment, it is possible that for one activity the associated effort is "important" but not for the other.
 	 * </p>
 	 * 
 	 * <p>
@@ -92,17 +91,15 @@ public interface ActivityServices {
 	 * @param id
 	 *            The id of the {@link StravaActivity activity} to be returned
 	 * @param includeAllEfforts
-	 *            (Optional) Used to include all segment efforts in the result (if omitted or <code>false</code> then only
-	 *            "important" efforts are returned).
-	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns
-	 *         a summary representation for all other requests.
+	 *            (Optional) Used to include all segment efforts in the result (if omitted or <code>false</code> then only "important" efforts are returned).
+	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for
+	 *         all other requests.
 	 */
 	public StravaActivity getActivity(final Integer id, final Boolean includeAllEfforts);
 
 	/**
 	 * <p>
-	 * This API endpoint is for creating manually entered {@link StravaActivity activities}. To upload a FIT, TCX or GPX file see
-	 * the Upload Documentation.
+	 * This API endpoint is for creating manually entered {@link StravaActivity activities}. To upload a FIT, TCX or GPX file see the Upload Documentation.
 	 * </p>
 	 * 
 	 * <p>
@@ -197,8 +194,8 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls
-	 * to the Strava API are required to achieve this.
+	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls to the Strava API are
+	 * required to achieve this.
 	 * </p>
 	 * 
 	 * <p>
@@ -251,8 +248,8 @@ public interface ActivityServices {
 	 * 
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
-	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted
-	 *         oldest first if the after parameter is used.
+	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after
+	 *         parameter is used.
 	 * @throws UnauthorizedException
 	 *             thrown if service's security token is invalid
 	 */
@@ -277,8 +274,8 @@ public interface ActivityServices {
 	 *            (Optional) result will start with activities whose start_date is before this value
 	 * @param after
 	 *            (Optional) result will start with activities whose start_date is after this value, sorted oldest first
-	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted
-	 *         oldest first if the after parameter is used.
+	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after
+	 *         parameter is used.
 	 * @throws UnauthorizedException
 	 *             If the service's security token is invalid
 	 */
@@ -309,13 +306,12 @@ public interface ActivityServices {
 	 *            (Optional) result will start with activities whose start_date is after this value, sorted oldest first
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
-	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted
-	 *         oldest first if the after parameter is used.
+	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after
+	 *         parameter is used.
 	 * @throws UnauthorizedException
 	 *             If the service's security token is invalid
 	 */
-	public List<StravaActivity> listAuthenticatedAthleteActivities(final Calendar before, final Calendar after,
-			final Paging pagingInstruction);
+	public List<StravaActivity> listAuthenticatedAthleteActivities(final Calendar before, final Calendar after, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -363,8 +359,8 @@ public interface ActivityServices {
 
 	/**
 	 * <p>
-	 * Heartrate and power zones are set by the {@link StravaAthlete athlete}. This endpoint returns the time (seconds) in each zone
-	 * for the {@link StravaActivity activity}.
+	 * Heartrate and power zones are set by the {@link StravaAthlete athlete}. This endpoint returns the time (seconds) in each zone for the
+	 * {@link StravaActivity activity}.
 	 * </p>
 	 * 
 	 * <p>
@@ -399,8 +395,7 @@ public interface ActivityServices {
 
 	/**
 	 * <p>
-	 * This resource will return all laps for an activity. Laps are triggered by athletes using their respective devices, such as
-	 * Garmin watches.
+	 * This resource will return all laps for an activity. Laps are triggered by athletes using their respective devices, such as Garmin watches.
 	 * </p>
 	 * 
 	 * <p>
@@ -435,8 +430,8 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of
-	 * comments left on a given activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
+	 * activity.
 	 * </p>
 	 * 
 	 * <p>
@@ -477,13 +472,12 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * {@link StravaComment Comment} posting can be enabled on a per application basis, email developers -at- strava.com for more
-	 * information.
+	 * {@link StravaComment Comment} posting can be enabled on a per application basis, email developers -at- strava.com for more information.
 	 * </p>
 	 * 
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of
-	 * comments left on a given activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
+	 * activity.
 	 * </p>
 	 * 
 	 * <p>
@@ -518,13 +512,12 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * {@link StravaComment Comment} posting can be enabled on a per application basis, email developers -at- strava.com for more
-	 * information.
+	 * {@link StravaComment Comment} posting can be enabled on a per application basis, email developers -at- strava.com for more information.
 	 * </p>
 	 * 
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of
-	 * comments left on a given activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
+	 * activity.
 	 * </p>
 	 * 
 	 * <p>
@@ -547,7 +540,8 @@ public interface ActivityServices {
 	 * 
 	 * @param id
 	 *            The id of the {@link StravaActivity} for which {@link StravaComment comments} should be returned
-	 * @param pagingInstruction (Optional) Paging instructions. If not provided then the first page is returned.
+	 * @param pagingInstruction
+	 *            (Optional) Paging instructions. If not provided then the first page is returned.
 	 * @return List of comments
 	 * @throws UnauthorizedException
 	 *             If the service's security token is invalid
@@ -564,8 +558,8 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of
-	 * comments left on a given activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
+	 * activity.
 	 * </p>
 	 * 
 	 * <p>
@@ -608,8 +602,8 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more
-	 * detailed information on the athletes who have left kudos and can only be accessed by the owner of the activity.
+	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the
+	 * athletes who have left kudos and can only be accessed by the owner of the activity.
 	 * </p>
 	 * 
 	 * <p>
@@ -640,8 +634,8 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more
-	 * detailed information on the athletes who have left kudos and can only be accessed by the owner of the activity.
+	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the
+	 * athletes who have left kudos and can only be accessed by the owner of the activity.
 	 * </p>
 	 * 
 	 * <p>
@@ -674,8 +668,8 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
-	 * The number of photos is included in the activity summary and detail responses. Use this endpoint to retrieve a list of photos
-	 * associated with this activity. This endpoint can only be accessed by the owner of the activity.
+	 * The number of photos is included in the activity summary and detail responses. Use this endpoint to retrieve a list of photos associated with this
+	 * activity. This endpoint can only be accessed by the owner of the activity.
 	 * </p>
 	 * 
 	 * <p>
@@ -744,4 +738,43 @@ public interface ActivityServices {
 	 */
 	public List<StravaActivity> listRelatedActivities(final Integer id, final Paging pagingInstruction);
 
+	/**
+	 * <p>
+	 * Create a comment on an activity.
+	 * </p>
+	 * 
+	 * <p>
+	 * Comment posting must be explicitly authorised by Strava for your application.
+	 * </p>
+	 * 
+	 * <p>
+	 * The comment will be made by the user associated with the access_token.
+	 * </p>
+	 * 
+	 * <p>
+	 * URL POST https://www.strava.com/api/v3/activities/:id/comments
+	 * </p>
+	 * 
+	 * @param id
+	 *            Activity identifier
+	 * @param text
+	 *            Comment text
+	 * @throws NotFoundException 
+	 */
+	public StravaComment createComment(final Integer id, final String text) throws NotFoundException;
+	
+	/**
+	 * <p>
+	 * Delete a comment belonging to the authenticated user
+	 * </p>
+	 * 
+	 * @param commentId Identifier of the comment to be deleted
+	 * @param activityId Identifier of the activity the comment was posted to
+	 * @throws NotFoundException if the activity or the comment does exist
+	 */
+	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException;
+	
+	public void deleteComment(final StravaComment comment);
+	
+	public void giveKudos(final Integer activityId);
 }

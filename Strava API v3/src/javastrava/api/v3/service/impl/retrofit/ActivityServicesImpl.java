@@ -383,4 +383,28 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 		return activities;
 	}
 
+	@Override
+	public StravaComment createComment(final Integer id, final String text) throws NotFoundException {
+		return this.restService.createComment(id, text);
+		
+	}
+
+	@Override
+	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
+		this.restService.deleteComment(activityId, commentId);
+		
+	}
+
+	@Override
+	public void deleteComment(final StravaComment comment) {
+		this.restService.deleteComment(comment.getActivityId(), comment.getId());
+		
+	}
+
+	@Override
+	public void giveKudos(final Integer activityId) {
+		this.restService.giveKudos(activityId);
+		
+	}
+
 }

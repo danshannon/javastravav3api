@@ -6,6 +6,7 @@ import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaPhoto;
+import javastrava.api.v3.model.StravaResponse;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import retrofit.RestAdapter;
@@ -167,4 +168,23 @@ public interface ActivityServicesRetrofit {
 	public StravaActivity[] listRelatedActivities(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
 			throws NotFoundException;
 
+	/**
+	 * @param id Activity identifier
+	 * @param text Text of the comment to create
+	 * @return
+	 * @throws NotFoundException If the activity does not exist
+	 */
+	@POST("/activities/{id}/comments")
+	public StravaComment createComment(@Path("id") final Integer id, @Query("text") final String text) throws NotFoundException;
+	
+	/**
+	 * @param activityId Id of the activity the comment was posted to
+	 * @param commentId Id of the comment
+	 * @return 
+	 */
+	@DELETE("/activities/{activityId}/comments/{commentId}")
+	public StravaResponse deleteComment(@Path("activityId") final Integer activityId, @Path("commentId") final Integer commentId);
+	
+	@POST("/activities/{id}/kudos")
+	public StravaResponse giveKudos(@Path("id") final Integer activityId);
 }
