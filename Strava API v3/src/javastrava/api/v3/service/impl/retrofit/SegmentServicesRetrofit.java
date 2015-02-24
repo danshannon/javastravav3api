@@ -34,7 +34,7 @@ import retrofit.http.Query;
  *
  */
 public interface SegmentServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentServices#getSegment(java.lang.Integer)

@@ -56,7 +56,7 @@ public class Strava {
 		}
 
 		// If it's already valid for Strava purposes, just use that
-		if (inputPaging.getPageSize() <= DEFAULT_PAGE_SIZE) {
+		if (inputPaging.getPageSize() <= MAX_PAGE_SIZE) {
 			stravaPaging.add(inputPaging);
 			return stravaPaging;
 		}

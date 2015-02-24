@@ -27,6 +27,7 @@ import javastrava.api.v3.service.PagingHandler;
 import javastrava.api.v3.service.SegmentServices;
 import javastrava.api.v3.service.Strava;
 import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.util.Paging;
 
 /**
@@ -43,7 +44,8 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 * Private constructor ensures that the only way to get an instance is via {@link #implementation(String)} with a valid access token
 	 * </p>
 	 * 
-	 * @param token The access token to use for authentication with the Strava API
+	 * @param token
+	 *            The access token to use for authentication with the Strava API
 	 */
 	private SegmentServicesImpl(final String token) {
 		super(token);
@@ -150,7 +152,8 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentServices#getSegmentLeaderboard(Integer, StravaGender, StravaAgeGroup, StravaWeightClass, Boolean, Integer, StravaLeaderboardDateRange, Paging)
+	 * @see javastrava.api.v3.service.SegmentServices#getSegmentLeaderboard(Integer, StravaGender, StravaAgeGroup, StravaWeightClass, Boolean, Integer,
+	 *      StravaLeaderboardDateRange, Paging)
 	 */
 	@Override
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final StravaGender gender, final StravaAgeGroup ageGroup,
@@ -192,8 +195,10 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 * This utility method separates them again.
 	 * </p>
 	 * 
-	 * @param entries The set of entries to be split out
-	 * @param pagingInstruction The paging instruction that was sent to Strava API, so we can work out how to split the entries up
+	 * @param entries
+	 *            The set of entries to be split out
+	 * @param pagingInstruction
+	 *            The paging instruction that was sent to Strava API, so we can work out how to split the entries up
 	 * @return
 	 */
 	private List<StravaSegmentLeaderboardEntry> splitOutAthleteEntries(final List<StravaSegmentLeaderboardEntry> entries, final Paging pagingInstruction) {
@@ -203,7 +208,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 		int rank = 0;
 		int firstAthletePosition = 0;
 		List<StravaSegmentLeaderboardEntry> athleteEntries = new ArrayList<StravaSegmentLeaderboardEntry>();
-		
+
 		// If there are EXACTLY 5 entries, then they are athlete entries if they're not in the expected range
 		if (entries.size() == 5) {
 			int firstRank = entries.get(0).getRank();
@@ -237,7 +242,8 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentServices#segmentExplore(StravaMapPoint, StravaMapPoint, StravaSegmentExplorerActivityType, StravaClimbCategory, StravaClimbCategory)
+	 * @see javastrava.api.v3.service.SegmentServices#segmentExplore(StravaMapPoint, StravaMapPoint, StravaSegmentExplorerActivityType, StravaClimbCategory,
+	 *      StravaClimbCategory)
 	 */
 	@Override
 	public StravaSegmentExplorerResponse segmentExplore(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner,
@@ -301,6 +307,89 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	@Override
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id) {
 		return getSegmentLeaderboard(id, null);
+	}
+
+	@Override
+	public List<StravaSegment> listAllAuthenticatedAthleteStarredSegments() {
+		return PagingHandler.handleListAll(new PagingCallback<StravaSegment>() {
+
+			@Override
+			public List<StravaSegment> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listAuthenticatedAthleteStarredSegments(thisPage);
+			}
+
+		});
+	}
+
+	@Override
+	public List<StravaSegment> listAllStarredSegments(final Integer athleteId) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaSegment>() {
+
+			@Override
+			public List<StravaSegment> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listStarredSegments(athleteId, thisPage);
+			}
+		});
+	}
+
+	@Override
+	public StravaSegmentLeaderboard getAllSegmentLeaderboard(final Integer segmentId) {
+		return getAllSegmentLeaderboard(segmentId,null,null,null,null,null,null);
+	}
+
+	@Override
+	public StravaSegmentLeaderboard getAllSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
+			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange) {
+		boolean loop = true;
+		StravaSegmentLeaderboard leaderboard = null;
+		
+		int page = 0;
+		while (loop) {
+			page++;
+			StravaSegmentLeaderboard currentPage;
+			try {
+				currentPage = getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, new Paging(page, Strava.MAX_PAGE_SIZE));
+			} catch (UnauthorizedException e) {
+				return new StravaSegmentLeaderboard();
+			}
+			if (currentPage == null) {
+				return null; // Activity doesn't exist
+			}
+			if (currentPage.getEntries().isEmpty()) {
+				loop = false;
+			}
+			if (page == 1) {
+				leaderboard = currentPage;
+			} else {
+				leaderboard.getEntries().addAll(currentPage.getEntries());
+			}
+		}
+		return leaderboard;
+
+	}
+
+	@Override
+	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaSegmentEffort>() {
+
+			@Override
+			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listSegmentEfforts(segmentId, thisPage);
+			}
+
+		});
+	}
+
+	@Override
+	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar before, final Calendar after) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaSegmentEffort>() {
+
+			@Override
+			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listSegmentEfforts(segmentId,athleteId,before,after,thisPage);
+			}
+			
+		});
 	}
 
 }

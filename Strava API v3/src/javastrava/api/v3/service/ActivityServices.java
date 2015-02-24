@@ -216,6 +216,30 @@ public interface ActivityServices {
 	 * </p>
 	 * 
 	 * <p>
+	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls to the Strava API are
+	 * required to achieve this.
+	 * </p>
+	 * 
+	 * <p>
+	 * URL GET https://www.strava.com/api/v3/athlete/activities
+	 * </p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
+	 * 
+	 * @param before Return only rides started BEFORE this date/time
+	 * @param after Return only rides started AFTER this data/time
+	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default.
+	 * @throws UnauthorizedException
+	 *             thrown if service's security token is invalid
+	 */
+	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final Calendar before, final Calendar after);
+
+	/**
+	 * <p>
+	 * This endpoint returns a list of {@link StravaActivity activities} for the authenticated {@link StravaAthlete}.
+	 * </p>
+	 * 
+	 * <p>
 	 * URL GET https://www.strava.com/api/v3/athlete/activities
 	 * </p>
 	 * 
@@ -356,6 +380,31 @@ public interface ActivityServices {
 	 *             If the service's security token is invalid
 	 */
 	public List<StravaActivity> listFriendsActivities();
+
+	/**
+	 * <p>
+	 * List the recent activities performed by those the current authenticated {@link StravaAthlete} is following.
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is not supported - this method just returns ALL friends' activities (although it is restricted by Strava to the last 200)
+	 * </p>
+	 * 
+	 * <p>
+	 * USE WITH CAUTION - ACTIVITIES WITH MANY RELATED ACTIVITIES WILL REQUIRE MANY CALLS TO THE STRAVA API
+	 * </p>
+	 * 
+	 * <p>
+	 * URL GET https://www.strava.com/api/v3/activities/following
+	 * </p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
+	 * 
+	 * @return Returns an array of activity summary representations sorted newest first by start_date.
+	 * @throws UnauthorizedException
+	 *             If the service's security token is invalid
+	 */
+	public List<StravaActivity> listAllFriendsActivities();
 
 	/**
 	 * <p>
@@ -759,22 +808,107 @@ public interface ActivityServices {
 	 *            Activity identifier
 	 * @param text
 	 *            Comment text
-	 * @throws NotFoundException 
+	 * @throws NotFoundException
 	 */
 	public StravaComment createComment(final Integer id, final String text) throws NotFoundException;
-	
+
 	/**
 	 * <p>
 	 * Delete a comment belonging to the authenticated user
 	 * </p>
 	 * 
-	 * @param commentId Identifier of the comment to be deleted
-	 * @param activityId Identifier of the activity the comment was posted to
-	 * @throws NotFoundException if the activity or the comment does exist
+	 * @param commentId
+	 *            Identifier of the comment to be deleted
+	 * @param activityId
+	 *            Identifier of the activity the comment was posted to
+	 * @throws NotFoundException
+	 *             if the activity or the comment does exist
 	 */
 	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException;
-	
+
+	/**
+	 * <p>
+	 * Delete a comment belonging to the authenticated user
+	 * </p>
+	 * 
+	 * @param comment
+	 *            The comment to be deleted
+	 */
 	public void deleteComment(final StravaComment comment);
-	
+
+	/**
+	 * <p>
+	 * Kudo an activity (kudo is given by the authenticated athlete). You can do this multiple times, but the activity only receives one kudos.
+	 * </p>
+	 * 
+	 * @param activityId
+	 *            Identifier of the activity to be kudoed.
+	 */
 	public void giveKudos(final Integer activityId);
+	
+	/**
+	 * <p>
+	 * List ALL comments on an activity, regardless of how many there are
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns <code>null</code> if the activity does not exist
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is not supported - this method just returns ALL comments
+	 * </p>
+	 * 
+	 * <p>
+	 * USE WITH CAUTION - ACTIVITIES WITH MANY COMMENTS WILL REQUIRE MANY CALLS TO THE STRAVA API
+	 * </p>
+	 * 
+	 * @param activityId The activity whose comments should be listed
+	 * @return All comments on the activity
+	 */
+	public List<StravaComment> listAllActivityComments(final Integer activityId);
+	
+	/**
+	 * <p>
+	 * List ALL kudoers on an activity, regardless of how many there are
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns <code>null</code> if the activity does not exist
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is not supported - this method just returns ALL kudoers
+	 * </p>
+	 * 
+	 * <p>
+	 * USE WITH CAUTION - ACTIVITIES WITH MANY KUDOS WILL REQUIRE MANY CALLS TO THE STRAVA API
+	 * </p>
+	 * 
+	 * @param activityId The activity whose kudoers should be listed
+	 * @return All athletes who have kudoed the activity
+	 */
+	public List<StravaAthlete> listAllActivityKudoers(final Integer activityId);
+	
+	/**
+	 * <p>
+	 * List ALL related activities, regardless of how many there are
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns <code>null</code> if the activity does not exist
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is not supported - this method just returns ALL related activities
+	 * </p>
+	 * 
+	 * <p>
+	 * USE WITH CAUTION - ACTIVITIES WITH MANY RELATED ACTIVITIES WILL REQUIRE MANY CALLS TO THE STRAVA API
+	 * </p>
+	 * 
+	 * @param activityId The activity identifier
+	 * @return List of Strava activities that Strava has determined are related to this one
+	 */
+	public List<StravaActivity> listAllRelatedActivities(final Integer activityId);
 }

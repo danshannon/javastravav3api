@@ -209,4 +209,53 @@ public class AthleteServicesImpl implements AthleteServices {
 		}
 	}
 
+	@Override
+	public List<StravaAthlete> listAllAthleteFriends(final Integer athleteId) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaAthlete>() {
+
+			@Override
+			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listAthleteFriends(athleteId, thisPage);
+			}
+			
+		});
+	}
+
+	@Override
+	public List<StravaAthlete> listAllAuthenticatedAthleteFriends() {
+		return PagingHandler.handleListAll(new PagingCallback<StravaAthlete>() {
+
+			@Override
+			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listAuthenticatedAthleteFriends(thisPage);
+			}
+			
+		});
+	}
+
+	@Override
+	public List<StravaSegmentEffort> listAllAthleteKOMs(final Integer athleteId) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaSegmentEffort>() {
+
+			@Override
+			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listAthleteKOMs(athleteId,thisPage);
+			}
+			
+		});
+	}
+
+	@Override
+	public List<StravaAthlete> listAllAthletesBothFollowing(final Integer athleteId) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaAthlete>() {
+
+			@Override
+			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listAthletesBothFollowing(athleteId, thisPage);
+			}
+			
+		});
+		
+	}
+
 }

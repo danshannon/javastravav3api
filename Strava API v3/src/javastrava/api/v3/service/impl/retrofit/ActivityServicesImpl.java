@@ -16,7 +16,6 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.ActivityServices;
 import javastrava.api.v3.service.PagingCallback;
 import javastrava.api.v3.service.PagingHandler;
-import javastrava.api.v3.service.Strava;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
@@ -369,42 +368,119 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	 */
 	@Override
 	public List<StravaActivity> listAllAuthenticatedAthleteActivities() {
-		boolean loop = true;
-		List<StravaActivity> activities = new ArrayList<StravaActivity>();
-		int page = 0;
-		while (loop) {
-			page++;
-			List<StravaActivity> currentPage = listAuthenticatedAthleteActivities(new Paging(page,Strava.MAX_PAGE_SIZE));
-			activities.addAll(currentPage);
-			if (currentPage.size() < Strava.MAX_PAGE_SIZE) {
-				loop = false;
+		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
+
+			@Override
+			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listAuthenticatedAthleteActivities(thisPage);
 			}
-		}
-		return activities;
+			
+		});
+		
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.ActivityServices#createComment(java.lang.Integer, java.lang.String)
+	 */
 	@Override
 	public StravaComment createComment(final Integer id, final String text) throws NotFoundException {
 		return this.restService.createComment(id, text);
 		
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.ActivityServices#deleteComment(java.lang.Integer, java.lang.Integer)
+	 */
 	@Override
 	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
 		this.restService.deleteComment(activityId, commentId);
 		
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.ActivityServices#deleteComment(javastrava.api.v3.model.StravaComment)
+	 */
 	@Override
 	public void deleteComment(final StravaComment comment) {
 		this.restService.deleteComment(comment.getActivityId(), comment.getId());
 		
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.ActivityServices#giveKudos(java.lang.Integer)
+	 */
 	@Override
 	public void giveKudos(final Integer activityId) {
 		this.restService.giveKudos(activityId);
 		
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ActivityServices#listAllActivityComments(java.lang.Integer)
+	 */
+	@Override
+	public List<StravaComment> listAllActivityComments(final Integer activityId) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaComment>() {
+
+			@Override
+			public List<StravaComment> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listActivityComments(activityId, thisPage);
+			}
+			
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ActivityServices#listAllActivityKudoers(java.lang.Integer)
+	 */
+	@Override
+	public List<StravaAthlete> listAllActivityKudoers(final Integer activityId) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaAthlete>() {
+
+			@Override
+			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listActivityKudoers(activityId, thisPage);
+			}
+			
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ActivityServices#listAllRelatedActivities(java.lang.Integer)
+	 */
+	@Override
+	public List<StravaActivity> listAllRelatedActivities(final Integer activityId) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
+
+			@Override
+			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listRelatedActivities(activityId, thisPage);
+			}
+		});
+	}
+
+	@Override
+	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final Calendar before, final Calendar after) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
+
+			@Override
+			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listAuthenticatedAthleteActivities(before, after, thisPage);
+			}
+			
+		});
+	}
+
+	@Override
+	public List<StravaActivity> listAllFriendsActivities() {
+		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
+
+			@Override
+			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listFriendsActivities(thisPage);
+			}
+			
+		});
 	}
 
 }

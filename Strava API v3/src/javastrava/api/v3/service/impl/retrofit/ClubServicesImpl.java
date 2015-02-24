@@ -189,4 +189,29 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 		return activities;
 	}
 
+	@Override
+	public List<StravaAthlete> listAllClubMembers(final Integer clubId) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaAthlete>() {
+
+			@Override
+			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listClubMembers(clubId,thisPage);
+			}
+			
+		});
+		
+	}
+
+	@Override
+	public List<StravaActivity> listAllRecentClubActivities(final Integer clubId) {
+		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
+
+			@Override
+			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
+				return listRecentClubActivities(clubId, thisPage);
+			}
+			
+		});
+	}
+
 }

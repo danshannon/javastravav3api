@@ -42,7 +42,7 @@ public class StravaActivityZone {
 	 */
 	private Boolean sensorBased;
 	/**
-	 * Points in this zone (contributing to the total suffer score) TODO ???
+	 * Points in this zone (contributing to the total suffer score) 
 	 */
 	private Integer points;
 	/**

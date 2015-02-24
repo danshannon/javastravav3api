@@ -202,7 +202,7 @@ public interface ClubServices {
 	 * @param id
 	 *            ID of the {@link StravaClub} to join
 	 * @return Response detailing whether request was successful and whether the member is active
-\	 */
+	 */
 	public StravaClubMembershipResponse joinClub(final Integer id);
 
 	/**
@@ -215,4 +215,8 @@ public interface ClubServices {
 	 * @return Response detailing whether request was successful and whether the member is active
 	 */
 	public StravaClubMembershipResponse leaveClub(final Integer id);
+	
+	public List<StravaAthlete> listAllClubMembers(final Integer clubId);
+	
+	public List<StravaActivity> listAllRecentClubActivities(final Integer clubId);
 }

@@ -74,7 +74,8 @@ public interface SegmentServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#starred">http://strava.github.io/api/v3/segments/#starred</a>
 	 * 
-	 * @param pagingInstruction (Optional) paging instructions
+	 * @param pagingInstruction
+	 *            (Optional) paging instructions
 	 * @return Returns a {@link StravaResourceState#SUMMARY summary representation} of the {@link StravaSegment segments} starred by the authenticated
 	 *         {@link StravaAthlete}.
 	 */
@@ -123,7 +124,8 @@ public interface SegmentServices {
 	 * 
 	 * @param id
 	 *            Identifier of the {@link StravaAthlete} for which starred {@link StravaSegment segments} are to be returned
-	 * @param pagingInstruction (Optional) paging instructions
+	 * @param pagingInstruction
+	 *            (Optional) paging instructions
 	 * @return Returns a {@link StravaResourceState#SUMMARY summary representation} of the {@link StravaSegment segments} starred by the identified
 	 *         {@link StravaAthlete}.
 	 */
@@ -201,7 +203,8 @@ public interface SegmentServices {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal, final Paging pagingInstruction);
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal,
+			final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -345,8 +348,9 @@ public interface SegmentServices {
 	 * @return Returns an array of up to 10, by default, {@link StravaSegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be
 	 *         considered 64-bit integers and effort_count is deprecated, use entry_count instead.
 	 */
-	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final StravaGender gender, final StravaAgeGroup ageGroup, final StravaWeightClass weightClass,
-			final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Paging pagingInstruction);
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final StravaGender gender, final StravaAgeGroup ageGroup,
+			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange,
+			final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -439,5 +443,18 @@ public interface SegmentServices {
 	 */
 	public StravaSegmentExplorerResponse segmentExplore(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner,
 			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat, final StravaClimbCategory maxCat);
+
+	public List<StravaSegment> listAllAuthenticatedAthleteStarredSegments();
+
+	public List<StravaSegment> listAllStarredSegments(final Integer athleteId);
+
+	public StravaSegmentLeaderboard getAllSegmentLeaderboard(final Integer segmentId);
+
+	public StravaSegmentLeaderboard getAllSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
+			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange);
+
+	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId);
+
+	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar before, final Calendar after);
 
 }

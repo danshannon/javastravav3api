@@ -350,4 +350,12 @@ public interface AthleteServices {
 	 * @return Strava statistics object; values are in seconds and metres.
 	 */
 	public StravaStatistics statistics(final Integer id);
+	
+	public List<StravaAthlete> listAllAthleteFriends(final Integer athleteId);
+	
+	public List<StravaAthlete> listAllAuthenticatedAthleteFriends();
+	
+	public List<StravaSegmentEffort> listAllAthleteKOMs(final Integer athleteId);
+	
+	public List<StravaAthlete> listAllAthletesBothFollowing(final Integer athleteId);
 }
