@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
  * 
  * See http://strava.github.io/api/v3/athlete/
  * 
- * @author dshannon
+ * @author Dan Shannon
  *
  */
 @Data
@@ -25,8 +25,8 @@ import lombok.NoArgsConstructor;
 public class StravaAthlete {
 	private Integer id;
 	private StravaResourceState resourceState;
-	private String firstName;
-	private String lastName;
+	private String firstname;
+	private String lastname;
 	private String profileMedium;
 	private String profile;
 	private String city;
@@ -42,7 +42,7 @@ public class StravaAthlete {
 	private Integer followerCount;
 	private Integer friendCount;
 	private Integer mutualFriendCount;
-	private String dateFormatPreference;
+	private String datePreference;
 	private StravaMeasurementMethod measurementPreference;
 	private String email;
 	private Integer ftp;
