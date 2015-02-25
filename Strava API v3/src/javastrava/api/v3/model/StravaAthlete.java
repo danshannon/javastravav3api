@@ -50,4 +50,5 @@ public class StravaAthlete {
 	private List<StravaGear> bikes;
 	private List<StravaGear> shoes;
 	private Float weight;
+	private Integer badgeTypeId;
 }

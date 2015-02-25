@@ -19,6 +19,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StravaSegmentLeaderboard {
 	private Integer entryCount;
+	private Integer effortCount;
+	private Integer neighborhoodCount;
+	private String komType;
 	/**
 	 * The entries that were actually asked for
 	 */
