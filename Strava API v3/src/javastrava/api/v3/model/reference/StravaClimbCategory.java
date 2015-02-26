@@ -16,6 +16,7 @@ public enum StravaClimbCategory {
 	CATEGORY2(2, "Cat 2"),
 	CATEGORY3(3, "Cat 3"),
 	CATEGORY4(4, "Cat 4"),
+	FLAT(0,"Flat"),
 	UNKNOWN(-1, "Unknown");
 
 	private Integer	id;

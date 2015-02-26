@@ -1,6 +1,7 @@
 package javastrava.api.v3.model;
 
 import javastrava.api.v3.model.reference.StravaFrameType;
+import javastrava.api.v3.model.reference.StravaGearType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -58,4 +59,13 @@ public class StravaGear {
 	 * State of this resource on Strava
 	 */
 	private StravaResourceState	resourceState;
+	
+	private StravaGearType gearType;
+	
+	public void setId(final String id) {
+		this.id = id;
+		if (id != null) {
+			this.gearType = StravaGearType.create(id.substring(0, 0));
+		}
+	}
 }

@@ -84,15 +84,15 @@ public class StravaActivity {
 	/**
 	 * Time zone
 	 */
-	private String timeZone;
+	private String timezone;
 	/**
 	 * Start location
 	 */
-	private StravaMapPoint startLatLng;
+	private StravaMapPoint startLatlng;
 	/**
 	 * End location
 	 */
-	private StravaMapPoint endLatLng;
+	private StravaMapPoint endLatlng;
 	/**
 	 * City the activity started in
 	 */
@@ -293,4 +293,9 @@ public class StravaActivity {
 	 * Runs only - list of best efforts
 	 */
 	private List<StravaBestRunningEffort> bestEfforts;
+	
+	/**
+	 * Identifier of the original upload
+	 */
+	private String uploadId;
 }
