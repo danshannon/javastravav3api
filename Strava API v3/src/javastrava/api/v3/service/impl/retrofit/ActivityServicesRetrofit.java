@@ -1,6 +1,7 @@
 package javastrava.api.v3.service.impl.retrofit;
 
 import javastrava.api.v3.model.StravaActivity;
+import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaComment;
@@ -63,7 +64,7 @@ public interface ActivityServicesRetrofit {
 	 * @throws NotFoundException If the activity doesn't exist
 	 */
 	@PUT("/activities/{id}")
-	public StravaActivity updateActivity(@Path("id") final Integer id, @Body final StravaActivity activity) throws NotFoundException;
+	public StravaActivity updateActivity(@Path("id") final Integer id, @Body final StravaActivityUpdate activity) throws NotFoundException;
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityServices#deleteActivity(java.lang.Integer)

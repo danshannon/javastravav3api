@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import javastrava.api.v3.model.StravaActivity;
+import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaPhoto;
+import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.ActivityServices;
 import javastrava.api.v3.service.PagingCallback;
@@ -86,7 +88,22 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 					loop = false;
 				}
 			}
+			
+			if (stravaResponse.getSegmentEfforts() != null) {
+				for (StravaSegmentEffort effort : stravaResponse.getSegmentEfforts()) {
+					// TODO This is a workaround for a Strava bug (Issue javastrava-api #11)
+					if (effort.getActivity().getResourceState() == null) {
+						effort.getActivity().setResourceState(StravaResourceState.META);
+					}
+					// TODO This is a workaround for a Strava bug (Issue javastrava-api #12)
+					if (effort.getAthlete().getResourceState() == null) {
+						effort.getAthlete().setResourceState(StravaResourceState.META);
+					}
+				}
+			}
+			
 			return stravaResponse;
+
 		} catch (NotFoundException e) {
 			// Activity doesn't exist - return null
 			return null;
@@ -95,6 +112,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 				// Activity is private
 				StravaActivity activity = new StravaActivity();
 				activity.setId(id);
+				activity.setResourceState(StravaResourceState.META);
 				return activity;
 			} else {
 				throw e;
@@ -120,7 +138,8 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	@Override
 	public StravaActivity updateActivity(final StravaActivity activity) {
 		try {
-			return this.restService.updateActivity(activity.getId(), activity);
+			StravaActivity response = this.restService.updateActivity(activity.getId(), new StravaActivityUpdate(activity));
+			return response;
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -204,7 +223,23 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	@Override
 	public List<StravaLap> listActivityLaps(final Integer id) {
 		try {
-			return Arrays.asList(this.restService.listActivityLaps(id));
+			List<StravaLap> laps = Arrays.asList(this.restService.listActivityLaps(id));
+			
+			for (StravaLap lap : laps) {
+				// TODO This is a workaround for Strava issue javastrava-api #15
+				if (lap.getActivity().getResourceState() == null) {
+					lap.getActivity().setResourceState(StravaResourceState.META);
+				}
+				// TODO This is a workaround for Strava issue javastrava-api #16
+				if (lap.getAthlete().getResourceState() == null) {
+					lap.getAthlete().setResourceState(StravaResourceState.META);
+				}
+				// TODO This is a workaround for Strava issue javastrava-api #17
+				if (lap.getAverageWatts() != null && lap.getDeviceWatts() == null) {
+					lap.setDeviceWatts(Boolean.FALSE);
+				}
+			}
+			return laps;
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {
