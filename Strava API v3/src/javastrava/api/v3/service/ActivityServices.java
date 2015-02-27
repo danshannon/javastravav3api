@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javastrava.api.v3.model.StravaActivity;
+import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaComment;
@@ -151,14 +152,15 @@ public interface ActivityServices {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 * 
+	 * @param id The identifier of the activity to be updated
 	 * @param activity
-	 *            The {@link StravaActivity} to be updated
+	 *            The {@link StravaActivityUpdate} to be updated
 	 * @return Returns a detailed representation of the updated {@link StravaActivity}.
 	 * 
 	 * @throws UnauthorizedException
 	 *             If the service's security token is invalid or doesn't grant write access to this activity
 	 */
-	public StravaActivity updateActivity(final StravaActivity activity);
+	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity);
 
 	/**
 	 * <p>

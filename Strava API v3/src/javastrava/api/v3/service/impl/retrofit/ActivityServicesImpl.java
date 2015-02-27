@@ -133,12 +133,15 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityServices#updateActivity(javastrava.api.v3.model.StravaActivity)
+	 * @see javastrava.api.v3.service.ActivityServices#updateActivity(javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
-	public StravaActivity updateActivity(final StravaActivity activity) {
+	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) {
 		try {
-			StravaActivity response = this.restService.updateActivity(activity.getId(), new StravaActivityUpdate(activity));
+			StravaActivity response = this.restService.updateActivity(id, activity);
+			if (response.getResourceState() == StravaResourceState.UPDATING) {
+				response = getActivity(id);
+			}
 			return response;
 		} catch (NotFoundException e) {
 			return null;
