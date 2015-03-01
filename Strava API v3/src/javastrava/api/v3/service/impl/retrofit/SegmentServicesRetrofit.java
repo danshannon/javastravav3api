@@ -6,6 +6,7 @@ package javastrava.api.v3.service.impl.retrofit;
 import java.util.Date;
 
 import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaSegmentExplorerResponse;
@@ -36,6 +37,18 @@ import retrofit.http.Query;
 public interface SegmentServicesRetrofit {
 	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
 
+	// TODO This is a workaround for issue javastrava-api #23 (https://github.com/danshannon/javastravav3api/issues/23)
+	/**
+	 * @see javastrava.api.v3.service.ClubServices#getClub(java.lang.Integer)
+	 * 
+	 * @param id Club identifier
+	 * @return Club details
+	 * @throws NotFoundException If the club with the given id doesn't exist
+	 */
+	@GET("/clubs/{id}")
+	public StravaClub getClub(@Path("id") final Integer id) throws NotFoundException;
+	// End of workaround
+	
 	/**
 	 * @see javastrava.api.v3.service.SegmentServices#getSegment(java.lang.Integer)
 	 */
@@ -107,6 +120,7 @@ public interface SegmentServicesRetrofit {
 	 * @param dateRange (Optional) Date range (this year, this month etc.) to filter the leaderboard by
 	 * @param page (Optional) Page number to return (default is 1)
 	 * @param perPage (Optional) Page size to return (default is 50)
+	 * @param contextEntries (Optional) Number of context entries to return either side of the authenticated athlete (default is 2, maximum is 15)
 	 * @return A Strava leaderboard
 	 * @throws NotFoundException If the segment with the given id doesn't exist
 	 */
@@ -114,7 +128,7 @@ public interface SegmentServicesRetrofit {
 	public StravaSegmentLeaderboard getSegmentLeaderboard(@Path("id") final Integer id, @Query("gender") final StravaGender gender,
 			@Query("age_group") final StravaAgeGroup ageGroup, @Query("weight_class") final StravaWeightClass weightClass, @Query("following") final Boolean following,
 			@Query("club_id") final Integer clubId, @Query("date_range") final StravaLeaderboardDateRange dateRange, @Query("page") final Integer page,
-			@Query("per_page") final Integer perPage) throws NotFoundException;
+			@Query("per_page") final Integer perPage, @Query("context_entries") final Integer contextEntries) throws NotFoundException;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentServices#segmentExplore(javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.StravaMapPoint, StravaSegmentExplorerActivityType, StravaClimbCategory, StravaClimbCategory)

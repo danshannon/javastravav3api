@@ -11,6 +11,7 @@ import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaStatistics;
 import javastrava.api.v3.model.reference.StravaGender;
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.AthleteServices;
 import javastrava.api.v3.service.PagingCallback;
 import javastrava.api.v3.service.PagingHandler;
@@ -102,12 +103,33 @@ public class AthleteServicesImpl implements AthleteServices {
 	 */
 	@Override
 	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id, final Paging pagingInstruction) {
-		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
+		List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(AthleteServicesImpl.this.restService.listAthleteKOMs(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
+
+		// This is a workaround for issue javastrava-api #26 (https://github.com/danshannon/javastravav3api/issues/26)
+		if (efforts != null) {
+    		for (StravaSegmentEffort effort : efforts) {
+    			if (effort != null && effort.getActivity() != null && effort.getActivity().getResourceState() == null) {
+    				effort.getActivity().setResourceState(StravaResourceState.META);
+    			}
+    		}
+		}
+		// End of workaround
+
+		// This is a workaround for issue javastrava-api #27 (https://github.com/danshannon/javastravav3api/issues/27)
+		if (efforts != null) {
+    		for (StravaSegmentEffort effort : efforts) {
+    			if (effort != null && effort.getAthlete() != null && effort.getAthlete().getResourceState() == null) {
+    				effort.getAthlete().setResourceState(StravaResourceState.META);
+    			}
+    		}
+		}		
+		// End of workaround
+		return efforts;
 	}
 
 	/**
@@ -217,7 +239,7 @@ public class AthleteServicesImpl implements AthleteServices {
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return listAthleteFriends(athleteId, thisPage);
 			}
-			
+
 		});
 	}
 
@@ -229,7 +251,7 @@ public class AthleteServicesImpl implements AthleteServices {
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return listAuthenticatedAthleteFriends(thisPage);
 			}
-			
+
 		});
 	}
 
@@ -239,9 +261,9 @@ public class AthleteServicesImpl implements AthleteServices {
 
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return listAthleteKOMs(athleteId,thisPage);
+				return listAthleteKOMs(athleteId, thisPage);
 			}
-			
+
 		});
 	}
 
@@ -253,9 +275,9 @@ public class AthleteServicesImpl implements AthleteServices {
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return listAthletesBothFollowing(athleteId, thisPage);
 			}
-			
+
 		});
-		
+
 	}
 
 }

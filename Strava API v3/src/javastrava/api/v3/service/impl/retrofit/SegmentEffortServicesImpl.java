@@ -3,6 +3,7 @@ package javastrava.api.v3.service.impl.retrofit;
 import java.util.HashMap;
 
 import javastrava.api.v3.model.StravaSegmentEffort;
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.SegmentEffortServices;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
@@ -58,22 +59,37 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 	 */
 	@Override
 	public StravaSegmentEffort getSegmentEffort(final Long id) {
+		StravaSegmentEffort effort = null;
 		try {
-			return this.restService.getSegmentEffort(id);
+			effort = this.restService.getSegmentEffort(id);
 		} catch (NotFoundException e) {
 			// Segment effort doesn't exist
 			return null;
 		} catch (UnauthorizedException e) {
 			if (accessTokenIsValid()) {
 				// Private effort
-				StravaSegmentEffort effort = new StravaSegmentEffort();
+				effort = new StravaSegmentEffort();
 				effort.setId(id);
+				effort.setResourceState(StravaResourceState.META);
 				return effort;
 			} else {
 				// Token broken
 				throw e;
 			}
 		}
+		
+		// TODO This is a workaround for issue javastrava-api #26 (https://github.com/danshannon/javastravav3api/issues/26)
+		if (effort != null && effort.getActivity() != null && effort.getActivity().getResourceState() == null) {
+			effort.getActivity().setResourceState(StravaResourceState.META);
+		}
+		// End of workaround
+		
+		// TODO This is a workaround for issue javastrava-api #27 (https://github.com/danshannon/javastravav3api/issues/27)
+		if (effort != null && effort.getAthlete() != null && effort.getAthlete().getResourceState() == null) {
+			effort.getAthlete().setResourceState(StravaResourceState.META);
+		}
+		
+		return effort;
 	}
 
 }

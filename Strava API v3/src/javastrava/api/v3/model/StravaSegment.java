@@ -131,4 +131,9 @@ public class StravaSegment {
 	 * The authenticated athlete's fastest effort on this segment - only returned with {@link SegmentServices#listStarredSegments()}
 	 */
 	private StravaSegmentEffort athletePrEffort;
+	
+	/**
+	 * Date the athlete starred the segment (only returned when listing starred segments)
+	 */
+	private Date starredDate;
 }

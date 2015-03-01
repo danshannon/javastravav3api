@@ -15,7 +15,7 @@ import retrofit.http.Path;
  *
  */
 public interface SegmentEffortServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentEffortServices#getSegmentEffort(java.lang.Long)

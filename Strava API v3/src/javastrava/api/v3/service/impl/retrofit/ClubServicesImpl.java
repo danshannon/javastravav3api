@@ -12,6 +12,7 @@ import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.ClubServices;
 import javastrava.api.v3.service.PagingCallback;
 import javastrava.api.v3.service.PagingHandler;
@@ -87,6 +88,7 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	private StravaClub privateClubRepresentation(final Integer id) {
 		StravaClub club = new StravaClub();
 		club.setId(id);
+		club.setResourceState(StravaResourceState.META);
 		return club;
 	}
 

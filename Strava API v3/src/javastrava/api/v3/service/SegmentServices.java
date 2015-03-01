@@ -345,12 +345,13 @@ public interface SegmentServices {
 	 *            (Optional) Use to set to return results for this year, this month, this week etc.
 	 * @param pagingInstruction
 	 *            (Optional) Page to start at for pagination
+	 * @param contextEntries (Optional) number of entries to return as athlete context either side of the athlete (default is 2, maximum is 15)
 	 * @return Returns an array of up to 10, by default, {@link StravaSegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be
 	 *         considered 64-bit integers and effort_count is deprecated, use entry_count instead.
 	 */
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final StravaGender gender, final StravaAgeGroup ageGroup,
 			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange,
-			final Paging pagingInstruction);
+			final Paging pagingInstruction, final Integer contextEntries);
 
 	/**
 	 * <p>

@@ -20,6 +20,7 @@ import javastrava.api.v3.model.reference.StravaAgeGroup;
 import javastrava.api.v3.model.reference.StravaClimbCategory;
 import javastrava.api.v3.model.reference.StravaGender;
 import javastrava.api.v3.model.reference.StravaLeaderboardDateRange;
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType;
 import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.service.PagingCallback;
@@ -98,12 +99,23 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 */
 	@Override
 	public List<StravaSegment> listAuthenticatedAthleteStarredSegments(final Paging pagingInstruction) {
-		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
+		List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
 			@Override
 			public List<StravaSegment> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(SegmentServicesImpl.this.restService.listAuthenticatedAthleteStarredSegments(thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
+		
+		// TODO This is a workaround for issue javastrava-api #25 (https://github.com/danshannon/javastravav3api/issues/25)
+		if (segments != null) {
+    		for (StravaSegment segment : segments) {
+    			if (segment.getAthletePrEffort() != null && segment.getAthletePrEffort().getResourceState() == null) {
+    				segment.getAthletePrEffort().setResourceState(StravaResourceState.SUMMARY);
+    			}
+    		}
+		}		
+		
+		return segments;
 	}
 
 	/**
@@ -111,12 +123,23 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 */
 	@Override
 	public List<StravaSegment> listStarredSegments(final Integer id, final Paging pagingInstruction) {
-		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
+		List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
 			@Override
 			public List<StravaSegment> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(SegmentServicesImpl.this.restService.listStarredSegments(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
+		
+		// TODO This is a workaround for issue javastrava-api #25 (https://github.com/danshannon/javastravav3api/issues/25)
+		if (segments != null) {
+    		for (StravaSegment segment : segments) {
+    			if (segment.getAthletePrEffort() != null && segment.getAthletePrEffort().getResourceState() == null) {
+    				segment.getAthletePrEffort().setResourceState(StravaResourceState.SUMMARY);
+    			}
+    		}
+		}
+		
+		return segments;
 	}
 
 	/**
@@ -142,13 +165,35 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 		final Date startDate = (startDateLocal == null ? null : startDateLocal.getTime());
 		final Date endDate = (endDateLocal == null ? null : endDateLocal.getTime());
 
-		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
+		List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(SegmentServicesImpl.this.restService.listSegmentEfforts(id, athleteId, startDate, endDate, thisPage.getPage(),
 						thisPage.getPageSize()));
 			}
 		});
+		
+		// TODO This is a workaround for issue javastrava-api #19 (https://github.com/danshannon/javastravav3api/issues/19)
+		if (efforts != null) {
+    		for (StravaSegmentEffort effort : efforts) {
+    			if (effort.getActivity().getResourceState() == null) {
+    				effort.getActivity().setResourceState(StravaResourceState.META);
+    			}
+    		}
+		}
+		// End of workaround
+		
+		// TODO This is a workaround for issue javastrava-api #20 (https://github.com/danshannon/javastravav3api/issues/20)
+		if (efforts != null) {
+    		for (StravaSegmentEffort effort : efforts) {
+    			if (effort.getAthlete().getResourceState() == null) {
+    				effort.getAthlete().setResourceState(StravaResourceState.META);
+    			}
+    		}
+		}
+		// End of workaround
+		
+		return efforts;
 	}
 
 	/**
@@ -158,18 +203,34 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	@Override
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final StravaGender gender, final StravaAgeGroup ageGroup,
 			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange,
-			final Paging pagingInstruction) {
+			final Paging pagingInstruction, final Integer contextEntries) {
 		Strava.validatePagingArguments(pagingInstruction);
 
 		StravaSegmentLeaderboard leaderboard = null;
+		
+		// If null, then the default value for contextEntries is 2; the max is 15
+		Integer context = (contextEntries == null ? 2 : Math.max(0, Math.min(15, contextEntries)));
+		Integer contextSize = context * 2 + 1;
+		
+		// TODO This is a workaround for issue javastrava-api #23 (https://github.com/danshannon/javastravav3api/issues/23) - see also the workaround in SegmentServicesRetrofit
+		if (clubId != null) {
+			try {
+				this.restService.getClub(clubId);
+			} catch (NotFoundException e) {
+				// Club doesn't exist, so return null
+				return null;
+			}
+		}
+		// End of workaround
+		
 		try {
 			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
 				StravaSegmentLeaderboard current = this.restService.getSegmentLeaderboard(id, gender, ageGroup, weightClass, following, clubId, dateRange,
-						paging.getPage(), paging.getPageSize());
+						paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
 					break;
 				}
-				current.setAthleteEntries(splitOutAthleteEntries(current.getEntries(), paging));
+				current.setAthleteEntries(calculateAthleteEntries(current, paging, contextSize));
 				current.getEntries().removeAll(current.getAthleteEntries());
 				current.setEntries(Strava.ignoreLastN(current.getEntries(), paging.getIgnoreLastN()));
 				current.setEntries(Strava.ignoreFirstN(current.getEntries(), paging.getIgnoreFirstN()));
@@ -201,44 +262,80 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 *            The paging instruction that was sent to Strava API, so we can work out how to split the entries up
 	 * @return
 	 */
-	private List<StravaSegmentLeaderboardEntry> splitOutAthleteEntries(final List<StravaSegmentLeaderboardEntry> entries, final Paging pagingInstruction) {
-		// Handle the spurious extra 5 that Strava sometimes throws in for good measure
-		int firstPosition = 0;
-		boolean inSequence = true;
-		int rank = 0;
-		int firstAthletePosition = 0;
+	private List<StravaSegmentLeaderboardEntry> calculateAthleteEntries(final StravaSegmentLeaderboard leaderboard, final Paging pagingInstruction, final Integer contextSize) {
+		// Get the entries
+		List<StravaSegmentLeaderboardEntry> entries = leaderboard.getEntries();
+		if (entries == null) {
+			return null;
+		}
+
 		List<StravaSegmentLeaderboardEntry> athleteEntries = new ArrayList<StravaSegmentLeaderboardEntry>();
-
-		// If there are EXACTLY 5 entries, then they are athlete entries if they're not in the expected range
-		if (entries.size() == 5) {
-			int firstRank = entries.get(0).getRank();
-			int lastRank = entries.get(0).getRank();
-			int expectedFirstRank = (pagingInstruction.getPage() - 1) * pagingInstruction.getPageSize() + 1;
-			int expectedLastRank = (pagingInstruction.getPage() * pagingInstruction.getPageSize());
-			if (firstRank > expectedLastRank || lastRank < expectedFirstRank) {
-				athleteEntries.addAll(entries);
-			}
-		} else {
-
-			// Otherwise, they are athlete entries if the ranks are too high
-			for (int position = 0; position < entries.size(); position++) {
-				rank = entries.get(position).getRank();
-				if (firstPosition == 0) {
-					firstPosition = rank;
-				}
-				if (rank > firstPosition + position && inSequence) {
-					inSequence = false;
-					if (firstAthletePosition == 0) {
-						firstAthletePosition = position;
-					}
-				}
-				if (!inSequence) {
-					athleteEntries.add(entries.get(position));
+		
+		// If there are two neighbourhoods, then the first is the overall and the second is the athlete bit
+		if (leaderboard.getNeighborhoodCount() == 2) {
+			for (StravaSegmentLeaderboardEntry entry : entries) {
+				if (entry.getNeighborhoodIndex() == 1) {
+					athleteEntries.add(entry);
 				}
 			}
 		}
+		
+		// If there is only one neighbourhood, and the athlete has completed the segment, then it must be the athlete one
+		if (leaderboard.getNeighborhoodCount() == 1) {
+			if (entries.size() == contextSize.intValue()) {
+				boolean foundAthlete = false;
+    			for (StravaSegmentLeaderboardEntry entry : entries) {
+    				if (entry.getAthleteId().equals(super.getAuthenticatedAthlete().getId())) {
+    					foundAthlete = true;
+    				}
+    			}
+    			if (foundAthlete) {
+    				athleteEntries.addAll(entries);
+    			}
+			}
+		}
+		
+		// TODO What if the current athlete is within the main returned leaderboard??
+		
 		return athleteEntries;
-
+		
+//		// Handle the spurious extra 5 that Strava sometimes throws in for good measure
+//		int firstPosition = 0;
+//		boolean inSequence = true;
+//		int rank = 0;
+//		int firstAthletePosition = 0;
+//		List<StravaSegmentLeaderboardEntry> athleteEntries = new ArrayList<StravaSegmentLeaderboardEntry>();
+//
+//		// If there are EXACTLY 5 entries, then they are athlete entries if they're not in the expected range
+//		if (entries.size() == 5) {
+//			int firstRank = entries.get(0).getRank();
+//			int lastRank = entries.get(4).getRank();
+//			int expectedFirstRank = (pagingInstruction.getPage() - 1) * pagingInstruction.getPageSize() + 1;
+//			int expectedLastRank = (pagingInstruction.getPage() * pagingInstruction.getPageSize());
+//			if (firstRank > expectedLastRank || lastRank < expectedFirstRank) {
+//				athleteEntries.addAll(entries);
+//			}
+//		} else {
+//
+//			// Otherwise, they are athlete entries if the ranks are too high
+//			for (int position = 0; position < entries.size(); position++) {
+//				rank = entries.get(position).getRank();
+//				if (firstPosition == 0) {
+//					firstPosition = rank;
+//				}
+//				if (rank > firstPosition + position && inSequence) {
+//					inSequence = false;
+//					if (firstAthletePosition == 0) {
+//						firstAthletePosition = position;
+//					}
+//				}
+//				if (!inSequence) {
+//					athleteEntries.add(entries.get(position));
+//				}
+//			}
+//		}
+//		return athleteEntries;
+//
 	}
 
 	/**
@@ -298,7 +395,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 */
 	@Override
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final Paging pagingInstruction) {
-		return getSegmentLeaderboard(id, null, null, null, null, null, null, pagingInstruction);
+		return getSegmentLeaderboard(id, null, null, null, null, null, null, pagingInstruction, null);
 	}
 
 	/**
@@ -348,14 +445,14 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 			page++;
 			StravaSegmentLeaderboard currentPage;
 			try {
-				currentPage = getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, new Paging(page, Strava.MAX_PAGE_SIZE));
+				currentPage = getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, new Paging(page, Strava.MAX_PAGE_SIZE), 2);
 			} catch (UnauthorizedException e) {
 				return new StravaSegmentLeaderboard();
 			}
 			if (currentPage == null) {
 				return null; // Activity doesn't exist
 			}
-			if (currentPage.getEntries().isEmpty()) {
+			if (currentPage.getEntries().size() < Strava.MAX_PAGE_SIZE) {
 				loop = false;
 			}
 			if (page == 1) {

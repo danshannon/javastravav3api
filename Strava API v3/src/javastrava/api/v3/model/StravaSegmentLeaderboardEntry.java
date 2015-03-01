@@ -75,4 +75,8 @@ public class StravaSegmentLeaderboardEntry {
 	 * URL of the athlete's profile picture
 	 */
 	private String athleteProfile;
+	/**
+	 * Indicates which grouping the entry is in (overall leaderboard, or the athlete extract)
+	 */
+	private Integer neighborhoodIndex;
 }

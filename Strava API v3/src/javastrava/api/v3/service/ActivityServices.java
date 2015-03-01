@@ -10,6 +10,7 @@ import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaPhoto;
+import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.util.Paging;
@@ -810,9 +811,10 @@ public interface ActivityServices {
 	 *            Activity identifier
 	 * @param text
 	 *            Comment text
-	 * @throws NotFoundException
+	 * @throws NotFoundException if the activity does not exist
+	 * @throws BadRequestException if the comment is invalid
 	 */
-	public StravaComment createComment(final Integer id, final String text) throws NotFoundException;
+	public StravaComment createComment(final Integer id, final String text) throws NotFoundException, BadRequestException;
 
 	/**
 	 * <p>
@@ -836,7 +838,7 @@ public interface ActivityServices {
 	 * @param comment
 	 *            The comment to be deleted
 	 */
-	public void deleteComment(final StravaComment comment);
+	public void deleteComment(final StravaComment comment) throws NotFoundException;
 
 	/**
 	 * <p>
@@ -846,7 +848,7 @@ public interface ActivityServices {
 	 * @param activityId
 	 *            Identifier of the activity to be kudoed.
 	 */
-	public void giveKudos(final Integer activityId);
+	public void giveKudos(final Integer activityId) throws NotFoundException;
 	
 	/**
 	 * <p>

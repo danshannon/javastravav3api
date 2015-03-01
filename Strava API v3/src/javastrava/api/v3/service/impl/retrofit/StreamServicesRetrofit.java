@@ -21,7 +21,7 @@ import retrofit.http.Query;
  *
  */
 public interface StreamServicesRetrofit {
-	public static RestAdapter.LogLevel	LOG_LEVEL	= RestAdapter.LogLevel.NONE;
+	public static RestAdapter.LogLevel	LOG_LEVEL	= RestAdapter.LogLevel.FULL;
 
 	/**
 	 * @see javastrava.api.v3.service.StreamServices#getActivityStreams(Integer, StravaStreamResolutionType,

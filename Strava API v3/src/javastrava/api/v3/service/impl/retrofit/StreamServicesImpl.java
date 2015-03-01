@@ -74,13 +74,24 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 		if (typesToGet == null || typesToGet.length == 0) {
 			typesToGet = getAllStreamTypes();
 		}
+		List<StravaStream> streams = null;
 		try {
-			return Arrays.asList(this.restService.getActivityStreams(id, typeString(typesToGet), resolution, seriesType));
+			streams = Arrays.asList(this.restService.getActivityStreams(id, typeString(typesToGet), resolution, seriesType));
 		} catch (NotFoundException e) {
 			return null;
 		} catch (BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}
+		
+		// TODO This is a workaround for issue javastrava-api #21 (https://github.com/danshannon/javastravav3api/issues/21)
+		if (streams != null && resolution == null) {
+			for (StravaStream stream : streams) {
+				stream.setResolution(null);
+			}
+		}
+		// End of workaround
+		
+		return streams;
 	}
 
 	/**

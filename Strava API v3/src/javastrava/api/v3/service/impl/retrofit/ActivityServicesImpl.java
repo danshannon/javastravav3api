@@ -80,7 +80,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 				// If the activity is being updated, wait for the update to complete
 				if (i < 10 && stravaResponse.getResourceState() == StravaResourceState.UPDATING) {
 					try {
-						Thread.sleep(1000);
+						Thread.sleep(1000 + i * 100);
 					} catch (InterruptedException e) {
 						// Ignore
 					}
@@ -137,8 +137,18 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	 */
 	@Override
 	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) {
+		StravaActivityUpdate update = activity;
+		if (activity == null) {
+			update = new StravaActivityUpdate();
+		}
+		
+		// If there's nothing to update, just get the activity
+		if (update.getCommute() == null && update.getPrivateActivity() == null && update.getTrainer() == null && update.getDescription() == null && update.getGearId() == null && update.getName() == null && update.getType() == null) {
+			return getActivity(id);
+		}
+		
 		try {
-			StravaActivity response = this.restService.updateActivity(id, activity);
+			StravaActivity response = this.restService.updateActivity(id, update);
 			if (response.getResourceState() == StravaResourceState.UPDATING) {
 				response = getActivity(id);
 			}
@@ -194,12 +204,13 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	 */
 	@Override
 	public List<StravaActivity> listFriendsActivities(final Paging pagingInstruction) {
-		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
+		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
 			@Override
 			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(ActivityServicesImpl.this.restService.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
+		return activities;
 	}
 
 	/**
@@ -421,9 +432,12 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	 * @see javastrava.api.v3.service.ActivityServices#createComment(java.lang.Integer, java.lang.String)
 	 */
 	@Override
-	public StravaComment createComment(final Integer id, final String text) throws NotFoundException {
+	public StravaComment createComment(final Integer id, final String text) throws NotFoundException, BadRequestException {
+		if (text == null || text.equals("")) {
+			throw new IllegalArgumentException("Text of a comment cannot be empty");
+		}
 		return this.restService.createComment(id, text);
-		
+				
 	}
 
 	/**
@@ -439,7 +453,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	 * @see javastrava.api.v3.service.ActivityServices#deleteComment(javastrava.api.v3.model.StravaComment)
 	 */
 	@Override
-	public void deleteComment(final StravaComment comment) {
+	public void deleteComment(final StravaComment comment) throws NotFoundException {
 		this.restService.deleteComment(comment.getActivityId(), comment.getId());
 		
 	}
@@ -448,7 +462,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	 * @see javastrava.api.v3.service.ActivityServices#giveKudos(java.lang.Integer)
 	 */
 	@Override
-	public void giveKudos(final Integer activityId) {
+	public void giveKudos(final Integer activityId) throws NotFoundException {
 		this.restService.giveKudos(activityId);
 		
 	}

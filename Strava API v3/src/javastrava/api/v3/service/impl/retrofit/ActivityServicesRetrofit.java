@@ -172,11 +172,12 @@ public interface ActivityServicesRetrofit {
 	/**
 	 * @param id Activity identifier
 	 * @param text Text of the comment to create
-	 * @return
+	 * @return The comment as posted
 	 * @throws NotFoundException If the activity does not exist
+	 * @throws BadRequestException If the comment text is null or the empty string
 	 */
 	@POST("/activities/{id}/comments")
-	public StravaComment createComment(@Path("id") final Integer id, @Query("text") final String text) throws NotFoundException;
+	public StravaComment createComment(@Path("id") final Integer id, @Query("text") final String text) throws BadRequestException, NotFoundException;
 	
 	/**
 	 * @param activityId Id of the activity the comment was posted to
@@ -184,8 +185,8 @@ public interface ActivityServicesRetrofit {
 	 * @return 
 	 */
 	@DELETE("/activities/{activityId}/comments/{commentId}")
-	public StravaResponse deleteComment(@Path("activityId") final Integer activityId, @Path("commentId") final Integer commentId);
+	public StravaResponse deleteComment(@Path("activityId") final Integer activityId, @Path("commentId") final Integer commentId) throws NotFoundException;
 	
 	@POST("/activities/{id}/kudos")
-	public StravaResponse giveKudos(@Path("id") final Integer activityId);
+	public StravaResponse giveKudos(@Path("id") final Integer activityId) throws NotFoundException;
 }

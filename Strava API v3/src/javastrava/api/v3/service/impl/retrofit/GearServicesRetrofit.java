@@ -15,7 +15,7 @@ import retrofit.http.Path;
  *
  */
 public interface GearServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
 
 	/**
 	 * @see javastrava.api.v3.service.GearServices#getGear(java.lang.String)

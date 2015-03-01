@@ -1,5 +1,6 @@
 package javastrava.api.v3.service.impl.retrofit;
 
+import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.service.AthleteServices;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import lombok.extern.log4j.Log4j2;
@@ -38,6 +39,8 @@ public abstract class StravaServiceImpl {
 	 * Daily request limit (default is 30,000)
 	 */
 	public static int requestLimitDaily = 0;
+	
+	private StravaAthlete authenticatedAthlete;
 	
 	/**
 	 * Calculates the percentage of the per-15-minute request limit that has been used, issues a warning if required
@@ -88,10 +91,14 @@ public abstract class StravaServiceImpl {
 	 */
 	protected boolean accessTokenIsValid() {
 		try {
-			this.athleteService.getAuthenticatedAthlete();
+			this.authenticatedAthlete = this.athleteService.getAuthenticatedAthlete();
 			return true;
 		} catch (UnauthorizedException e) {
 			return false;
 		}
+	}
+	
+	protected StravaAthlete getAuthenticatedAthlete() {
+		return this.authenticatedAthlete;
 	}
 }

@@ -1,6 +1,7 @@
 package javastrava.api.v3.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.SegmentServices;
@@ -105,4 +106,13 @@ public class StravaSegmentEffort {
 	 * see {@link SegmentServices#starredSegments()}
 	 */
 	private Boolean				isKom;
+	
+	/**
+	 * Summary of achievements on this effort
+	 */
+	private List<StravaAchievement> achievements;
+	/**
+	 * Summary of athlete's statistics on this segment
+	 */
+	private StravaAthleteSegmentStats athleteSegmentStats;
 }

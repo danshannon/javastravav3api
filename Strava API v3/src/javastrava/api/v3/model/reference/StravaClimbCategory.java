@@ -12,11 +12,11 @@ import javastrava.api.v3.model.StravaSegment;
  */
 public enum StravaClimbCategory {
 	HORS_CATEGORIE(5, "HC"),
-	CATEGORY1(1, "Cat 1"),
-	CATEGORY2(2, "Cat 2"),
-	CATEGORY3(3, "Cat 3"),
-	CATEGORY4(4, "Cat 4"),
-	FLAT(0,"Flat"),
+	CATEGORY1(1, "1"),
+	CATEGORY2(2, "2"),
+	CATEGORY3(3, "3"),
+	CATEGORY4(4, "4"),
+	FLAT(0,"NC"),
 	UNKNOWN(-1, "Unknown");
 
 	private Integer	id;
