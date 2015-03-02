@@ -456,6 +456,6 @@ public interface SegmentServices {
 
 	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId);
 
-	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar before, final Calendar after);
+	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDate, final Calendar endDate);
 
 }

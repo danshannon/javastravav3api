@@ -2,7 +2,6 @@ package javastrava.util.impl.gson;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Date;
 
 import javastrava.api.v3.auth.ref.AuthorisationApprovalPrompt;
 import javastrava.api.v3.auth.ref.AuthorisationResponseType;
@@ -61,7 +60,6 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
-import com.google.gson.internal.bind.DateTypeAdapter;
 
 /**
  * <p>
@@ -78,8 +76,8 @@ public class JsonUtilImpl implements JsonUtil {
 	public JsonUtilImpl() {
 		this.gsonBuilder = new GsonBuilder();
 		this.gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-		this.gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		this.gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
+		this.gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
+		//this.gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationApprovalPrompt.class, new AuthorisationApprovalPromptSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationResponseType.class, new AuthorisationResponseTypeSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationScope.class, new AuthorisationScopeSerializer());

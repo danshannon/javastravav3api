@@ -243,6 +243,8 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 			}
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			return null;
 		}
 		return leaderboard;
 	}
@@ -478,12 +480,12 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	}
 
 	@Override
-	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar before, final Calendar after) {
+	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDate, final Calendar endDate) {
 		return PagingHandler.handleListAll(new PagingCallback<StravaSegmentEffort>() {
 
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return listSegmentEfforts(segmentId,athleteId,before,after,thisPage);
+				return listSegmentEfforts(segmentId,athleteId,startDate,endDate,thisPage);
 			}
 			
 		});
