@@ -221,8 +221,8 @@ public class Strava {
 	}
 
 	public static LogLevel logLevel(final Class<?> class1) {
-		String propertyName = "retrofit." + class1.getName() + "loglevel";
-		return RestAdapter.LogLevel.valueOf(PROPERTIES.getProperty(propertyName,"retrofit.loglevel"));
+		String propertyName = "retrofit." + class1.getName() + "log_level";
+		return RestAdapter.LogLevel.valueOf(PROPERTIES.getProperty(propertyName,PROPERTIES.getProperty("retrofit.log_level")));
 	}
 
 	/**

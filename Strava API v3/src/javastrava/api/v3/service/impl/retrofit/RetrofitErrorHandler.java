@@ -44,6 +44,9 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		Response r = cause.getResponse();
 		StravaResponse response = null;
 		String status = (r == null ? "Unknown error has occurred" : r.getStatus() + " " + r.getReason());
+		if (r == null) {
+			throw new StravaUnknownAPIException(status, response, cause);
+		}
 		try {
 			response = this.json.deserialise(r.getBody().in(),StravaResponse.class);
 		} catch (JsonSerialisationException e) {
