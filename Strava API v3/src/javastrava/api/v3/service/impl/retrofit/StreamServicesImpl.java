@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaStream;
 import javastrava.api.v3.model.reference.StravaStreamResolutionType;
 import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
@@ -29,7 +30,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 * 
 	 * @param token The access token to be used to authenticate to the Strava API
 	 */
-	private StreamServicesImpl(final String token) {
+	private StreamServicesImpl(final Token token) {
 		super(token);
 		this.restService = Retrofit.retrofit(StreamServicesRetrofit.class, token, StreamServicesRetrofit.LOG_LEVEL);
 	}
@@ -47,7 +48,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the stream services
 	 */
-	public static StreamServices implementation(final String token) {
+	public static StreamServices implementation(final Token token) {
 		StreamServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new StreamServicesImpl(token);
@@ -59,7 +60,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 		return restService;
 	}
 
-	private static HashMap<String, StreamServices> restServices = new HashMap<String, StreamServices>();
+	private static HashMap<Token, StreamServices> restServices = new HashMap<Token, StreamServices>();
 
 	private final StreamServicesRetrofit restService;
 

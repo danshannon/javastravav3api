@@ -69,7 +69,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		// Handle 403 forbidden error
 		if (r != null && r.getStatus() == 403) {
 			log.error(status + " : " + response);
-			if (response.getMessage() == "Rate Limit Exceeded") {
+			if (response.getMessage().equals("Rate Limit Exceeded")) {
 				return new StravaAPIRateLimitException(status, response, cause);
 			}
 		}

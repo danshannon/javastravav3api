@@ -48,7 +48,7 @@ public enum StravaActivityType {
 	// For use as Jackson @JsonCreator
 	public static StravaActivityType create(final String id) {
 		for (StravaActivityType type : StravaActivityType.values()) {
-			if (type.getId().toLowerCase().equals(id.toLowerCase())) {
+			if (type.getId().equalsIgnoreCase(id)) {
 				return type;
 			}
 		}

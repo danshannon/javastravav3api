@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
@@ -29,7 +30,7 @@ import javastrava.util.Paging;
  *
  */
 public class ClubServicesImpl extends StravaServiceImpl implements ClubServices {
-	private ClubServicesImpl(final String token) {
+	private ClubServicesImpl(final Token token) {
 		super(token);
 		this.restService = Retrofit.retrofit(ClubServicesRetrofit.class, token, ClubServicesRetrofit.LOG_LEVEL);
 	}
@@ -49,7 +50,7 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 * @throws UnauthorizedException
 	 *             If the token used to create the service is invalid
 	 */
-	public static ClubServices implementation(final String token) {
+	public static ClubServices implementation(final Token token) {
 		ClubServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new ClubServicesImpl(token);
@@ -61,7 +62,7 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 		return restService;
 	}
 
-	private static HashMap<String, ClubServices> restServices = new HashMap<String, ClubServices>();
+	private static HashMap<Token, ClubServices> restServices = new HashMap<Token, ClubServices>();
 
 	final ClubServicesRetrofit restService;
 

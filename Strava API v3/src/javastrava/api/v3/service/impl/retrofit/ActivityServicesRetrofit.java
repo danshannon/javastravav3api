@@ -27,7 +27,7 @@ import retrofit.http.Query;
  *
  */
 public interface ActivityServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL; // TODO parameterise in config
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE; // TODO parameterise in config
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)

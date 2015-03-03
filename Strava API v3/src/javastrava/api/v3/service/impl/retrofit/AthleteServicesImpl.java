@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaStatistics;
@@ -28,7 +29,7 @@ import javastrava.util.Paging;
  *
  */
 public class AthleteServicesImpl implements AthleteServices {
-	private AthleteServicesImpl(final String token) {
+	private AthleteServicesImpl(final Token token) {
 		this.restService = Retrofit.retrofit(AthleteServicesRetrofit.class, token, AthleteServicesRetrofit.LOG_LEVEL);
 	}
 
@@ -45,7 +46,7 @@ public class AthleteServicesImpl implements AthleteServices {
 	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the athlete services
 	 */
-	public static AthleteServices implementation(final String token) {
+	public static AthleteServices implementation(final Token token) {
 		AthleteServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new AthleteServicesImpl(token);
@@ -57,7 +58,7 @@ public class AthleteServicesImpl implements AthleteServices {
 		return restService;
 	}
 
-	private static HashMap<String, AthleteServices> restServices = new HashMap<String, AthleteServices>();
+	private static HashMap<Token, AthleteServices> restServices = new HashMap<Token, AthleteServices>();
 
 	final AthleteServicesRetrofit restService;
 

@@ -3,8 +3,6 @@
  */
 package javastrava.api.v3.service.impl.retrofit;
 
-import java.util.Date;
-
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaSegment;
@@ -35,7 +33,7 @@ import retrofit.http.Query;
  *
  */
 public interface SegmentServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
+	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
 
 	// TODO This is a workaround for issue javastrava-api #23 (https://github.com/danshannon/javastravav3api/issues/23)
 	/**
@@ -92,9 +90,9 @@ public interface SegmentServicesRetrofit {
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
 	 * @param athleteId
 	 *            (Optional) id of the {@link StravaAthlete} to filter results by
-	 * @param startDateLocal
+	 * @param start
 	 *            (Optional) ISO 8601 formatted date time
-	 * @param endDateLocal
+	 * @param end
 	 *            (Optional) ISO 8601 formatted date time
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
@@ -105,7 +103,7 @@ public interface SegmentServicesRetrofit {
 	 */
 	@GET("/segments/{id}/all_efforts")
 	public StravaSegmentEffort[] listSegmentEfforts(@Path("id") final Integer id, @Query("athlete_id") final Integer athleteId,
-			@Query("start_date_local") final Date startDateLocal, @Query("end_date_local") final Date endDateLocal, @Query("page") final Integer page,
+			@Query("start_date_local") final String start, @Query("end_date_local") final String end, @Query("page") final Integer page,
 			@Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**

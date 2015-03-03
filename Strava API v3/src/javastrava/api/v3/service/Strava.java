@@ -9,11 +9,11 @@ public class Strava {
 	/**
 	 * Strava's default page size. If you don't specify a size, then this is what you'll get from endpoints that support paging.
 	 */
-	public static int DEFAULT_PAGE_SIZE = 50;
+	public static final int DEFAULT_PAGE_SIZE = 50;
 	/**
 	 * Maximum page size that is returned by Strava
 	 */
-	public static int MAX_PAGE_SIZE = 200;
+	public static final int MAX_PAGE_SIZE = 200;
 	/**
 	 * <p>
 	 * API endpoint for the Strava data API
@@ -31,6 +31,7 @@ public class Strava {
 	 */
 	public static final String SESSION_COOKIE_NAME = "_strava3_session";
 
+	public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssX";
 	/**
 	 * <p>
 	 * Utility method - give it any paging instruction and it will return a list of paging instructions that will work with the Strava API (i.e. that conform to

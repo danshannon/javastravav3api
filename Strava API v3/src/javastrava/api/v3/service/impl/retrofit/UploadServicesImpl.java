@@ -3,6 +3,7 @@ package javastrava.api.v3.service.impl.retrofit;
 import java.io.File;
 import java.util.HashMap;
 
+import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaUploadResponse;
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.service.UploadServices;
@@ -26,7 +27,7 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 	 * 
 	 * @param token The access token used to authenticate to the Strava API
 	 */
-	private UploadServicesImpl(final String token) {
+	private UploadServicesImpl(final Token token) {
 		super(token);
 		this.restService = Retrofit.retrofit(UploadServicesRetrofit.class, token, UploadServicesRetrofit.LOG_LEVEL);
 	}
@@ -44,7 +45,7 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the upload services
 	 */
-	public static UploadServices implementation(final String token) {
+	public static UploadServices implementation(final Token token) {
 		UploadServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new UploadServicesImpl(token);
@@ -53,7 +54,7 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 		return restService;
 	}
 
-	private static HashMap<String, UploadServices> restServices = new HashMap<String, UploadServices>();
+	private static HashMap<Token, UploadServices> restServices = new HashMap<Token, UploadServices>();
 
 	private final UploadServicesRetrofit restService;
 

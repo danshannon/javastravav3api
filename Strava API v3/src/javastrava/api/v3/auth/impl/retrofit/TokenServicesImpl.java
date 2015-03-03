@@ -30,7 +30,7 @@ public class TokenServicesImpl extends StravaServiceImpl implements TokenService
 	 * @throws UnauthorizedException
 	 *             If the token used to create the service is invalid
 	 */
-	public static TokenServices implementation(final String token) throws UnauthorizedException {
+	public static TokenServices implementation(final Token token) throws UnauthorizedException {
 		TokenServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new TokenServicesImpl(token);
@@ -43,11 +43,11 @@ public class TokenServicesImpl extends StravaServiceImpl implements TokenService
 		return restService;
 	}
 
-	private static HashMap<String, TokenServices> restServices = new HashMap<String, TokenServices>();
+	private static HashMap<Token, TokenServices> restServices = new HashMap<Token, TokenServices>();
 
 	private final TokenServicesRetrofit restService;
 
-	private TokenServicesImpl(final String token) {
+	private TokenServicesImpl(final Token token) {
 		super(token);
 		this.restService = Retrofit.retrofit(TokenServicesRetrofit.class, token, TokenServicesRetrofit.LOG_LEVEL);
 	}

@@ -2,6 +2,7 @@ package javastrava.api.v3.service.impl.retrofit;
 
 import java.util.HashMap;
 
+import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaGear;
 import javastrava.api.v3.service.ClubServices;
 import javastrava.api.v3.service.GearServices;
@@ -24,7 +25,7 @@ public class GearServicesImpl extends StravaServiceImpl implements GearServices 
 	 * 
 	 * @param token The access token to be used to authenticate to the Strava API
 	 */
-	private GearServicesImpl(final String token) {
+	private GearServicesImpl(final Token token) {
 		super(token);
 		this.restService = Retrofit.retrofit(GearServicesRetrofit.class, token, GearServicesRetrofit.LOG_LEVEL);
 	}
@@ -44,7 +45,7 @@ public class GearServicesImpl extends StravaServiceImpl implements GearServices 
 	 * @throws UnauthorizedException
 	 *             If the token used to create the service is invalid
 	 */
-	public static GearServices implementation(final String token) {
+	public static GearServices implementation(final Token token) {
 		GearServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new GearServicesImpl(token);
@@ -56,7 +57,7 @@ public class GearServicesImpl extends StravaServiceImpl implements GearServices 
 		return restService;
 	}
 
-	private static HashMap<String, GearServices> restServices = new HashMap<String, GearServices>();
+	private static HashMap<Token, GearServices> restServices = new HashMap<Token, GearServices>();
 
 	private final GearServicesRetrofit restService;
 

@@ -11,7 +11,7 @@ import javastrava.api.v3.model.StravaSegment;
  *
  */
 public enum StravaSegmentActivityType {
-	RIDE("Ride", "Ride"), RUN("Run", "Run"), UNKNOWN("UNKNOWN", "Unknown");
+	RIDE("Ride", "Ride"), RUN("Run", "Run"), WALK("Walk","Walk"), UNKNOWN("UNKNOWN", "Unknown");
 
 	private String id;
 	private String description;

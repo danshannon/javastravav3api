@@ -2,6 +2,7 @@ package javastrava.api.v3.service.impl.retrofit;
 
 import java.util.HashMap;
 
+import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.SegmentEffortServices;
@@ -20,7 +21,7 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 	 * 
 	 * @param token The access token to be used for authentication to the Strava API
 	 */
-	private SegmentEffortServicesImpl(final String token) {
+	private SegmentEffortServicesImpl(final Token token) {
 		super(token);
 		this.restService = Retrofit.retrofit(SegmentEffortServicesRetrofit.class, token, SegmentEffortServicesRetrofit.LOG_LEVEL);
 	}
@@ -38,7 +39,7 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the segment effort services
 	 */
-	public static SegmentEffortServices implementation(final String token) {
+	public static SegmentEffortServices implementation(final Token token) {
 		SegmentEffortServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new SegmentEffortServicesImpl(token);
@@ -50,7 +51,7 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 		return restService;
 	}
 
-	private static HashMap<String, SegmentEffortServices> restServices = new HashMap<String, SegmentEffortServices>();
+	private static HashMap<Token, SegmentEffortServices> restServices = new HashMap<Token, SegmentEffortServices>();
 
 	private final SegmentEffortServicesRetrofit restService;
 

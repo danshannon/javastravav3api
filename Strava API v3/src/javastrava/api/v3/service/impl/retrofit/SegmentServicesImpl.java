@@ -3,6 +3,7 @@
  */
 package javastrava.api.v3.service.impl.retrofit;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaMapPoint;
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.api.v3.model.StravaSegmentEffort;
@@ -48,7 +50,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 * @param token
 	 *            The access token to use for authentication with the Strava API
 	 */
-	private SegmentServicesImpl(final String token) {
+	private SegmentServicesImpl(final Token token) {
 		super(token);
 		this.restService = Retrofit.retrofit(SegmentServicesRetrofit.class, token, SegmentServicesRetrofit.LOG_LEVEL);
 	}
@@ -66,7 +68,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the club services
 	 */
-	public static SegmentServices implementation(final String token) {
+	public static SegmentServices implementation(final Token token) {
 		SegmentServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new SegmentServicesImpl(token);
@@ -78,7 +80,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 		return restService;
 	}
 
-	private static HashMap<String, SegmentServices> restServices = new HashMap<String, SegmentServices>();
+	private static HashMap<Token, SegmentServices> restServices = new HashMap<Token, SegmentServices>();
 
 	final SegmentServicesRetrofit restService;
 
@@ -165,10 +167,12 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 		final Date startDate = (startDateLocal == null ? null : startDateLocal.getTime());
 		final Date endDate = (endDateLocal == null ? null : endDateLocal.getTime());
 
+		final String start = (startDate == null ? null : new SimpleDateFormat(Strava.DATE_FORMAT).format(startDate));
+		final String end = (endDate == null ? null : new SimpleDateFormat(Strava.DATE_FORMAT).format(endDate));
 		List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(SegmentServicesImpl.this.restService.listSegmentEfforts(id, athleteId, startDate, endDate, thisPage.getPage(),
+				return Arrays.asList(SegmentServicesImpl.this.restService.listSegmentEfforts(id, athleteId, start, end, thisPage.getPage(),
 						thisPage.getPageSize()));
 			}
 		});

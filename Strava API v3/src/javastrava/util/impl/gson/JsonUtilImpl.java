@@ -28,6 +28,7 @@ import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import javastrava.api.v3.model.reference.StravaStreamType;
 import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.model.reference.StravaWorkoutType;
+import javastrava.api.v3.service.Strava;
 import javastrava.util.JsonUtil;
 import javastrava.util.exception.JsonSerialisationException;
 import javastrava.util.impl.gson.serializer.ActivityTypeSerializer;
@@ -76,7 +77,7 @@ public class JsonUtilImpl implements JsonUtil {
 	public JsonUtilImpl() {
 		this.gsonBuilder = new GsonBuilder();
 		this.gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-		this.gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
+		this.gsonBuilder.setDateFormat(Strava.DATE_FORMAT);
 		//this.gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationApprovalPrompt.class, new AuthorisationApprovalPromptSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationResponseType.class, new AuthorisationResponseTypeSerializer());

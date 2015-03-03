@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
@@ -28,7 +29,7 @@ import javastrava.util.Paging;
  *
  */
 public class ActivityServicesImpl extends StravaServiceImpl implements ActivityServices {
-	private ActivityServicesImpl(final String token) {
+	private ActivityServicesImpl(final Token token) {
 		super(token);
 		this.restService = Retrofit.retrofit(ActivityServicesRetrofit.class, token, ActivityServicesRetrofit.LOG_LEVEL);
 	}
@@ -46,7 +47,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An implementation of the activity services
 	 */
-	public static ActivityServices implementation(final String token) {
+	public static ActivityServices implementation(final Token token) {
 		ActivityServices restService = restServices.get(token);
 		if (restService == null) {
 			restService = new ActivityServicesImpl(token);
@@ -59,7 +60,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 		return restService;
 	}
 
-	private static HashMap<String, ActivityServices> restServices = new HashMap<String, ActivityServices>();
+	private static HashMap<Token, ActivityServices> restServices = new HashMap<Token, ActivityServices>();
 
 	final ActivityServicesRetrofit restService;
 

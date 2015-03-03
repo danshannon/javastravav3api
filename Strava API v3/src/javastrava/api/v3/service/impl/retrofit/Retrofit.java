@@ -1,5 +1,6 @@
 package javastrava.api.v3.service.impl.retrofit;
 
+import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.service.Strava;
 import javastrava.util.impl.gson.JsonUtilImpl;
 import retrofit.RequestInterceptor;
@@ -30,7 +31,7 @@ public class Retrofit {
 	 * @param <T> Class of Retrofit interface to be instantiated (one of the *Retrofit.java interfaces)
 	 * @return A REST service
 	 */
-	public static <T> T retrofit(final Class<T> class1, final String token, final RestAdapter.LogLevel logLevel) {
+	public static <T> T retrofit(final Class<T> class1, final Token token, final RestAdapter.LogLevel logLevel) {
 		return new RestAdapter.Builder()
 				// Client overrides handling of Strava-specific headers in the response, to deal with rate limiting
 				.setClient(new RetrofitClientResponseInterceptor())
@@ -44,7 +45,7 @@ public class Retrofit {
 				.setRequestInterceptor(new RequestInterceptor() {
 					@Override
 					public void intercept(final RequestFacade request) {
-						request.addHeader("Authorization", "Bearer " + token);
+						request.addHeader("Authorization", "Bearer " + token.getToken());
 					}
 				})
 				// Error handler deals with Strava's implementations of 400, 401, 403, 404 errors etc.

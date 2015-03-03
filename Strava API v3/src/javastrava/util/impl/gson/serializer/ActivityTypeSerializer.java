@@ -24,7 +24,8 @@ public class ActivityTypeSerializer implements JsonSerializer<StravaActivityType
 	@Override
 	public StravaActivityType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
 			throws JsonParseException {
-		return StravaActivityType.create(json.getAsString());
+		StravaActivityType activityType = StravaActivityType.create(json.getAsString());
+		return activityType;
 	}
 
 	/**

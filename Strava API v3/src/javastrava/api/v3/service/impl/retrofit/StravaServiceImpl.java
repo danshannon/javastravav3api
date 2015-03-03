@@ -1,5 +1,6 @@
 package javastrava.api.v3.service.impl.retrofit;
 
+import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.service.AthleteServices;
 import javastrava.api.v3.service.exception.UnauthorizedException;
@@ -75,7 +76,7 @@ public abstract class StravaServiceImpl {
 	 * 
 	 * @param token The access token to be used to authenticate to the Strava API
 	 */
-	protected StravaServiceImpl(final String token) {
+	protected StravaServiceImpl(final Token token) {
 		this.athleteService = AthleteServicesImpl.implementation(token);
 		if (!accessTokenIsValid()) {
 			throw new UnauthorizedException("Access token " + token + " is invalid");
