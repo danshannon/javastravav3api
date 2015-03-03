@@ -29,7 +29,7 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 	 */
 	private UploadServicesImpl(final Token token) {
 		super(token);
-		this.restService = Retrofit.retrofit(UploadServicesRetrofit.class, token, UploadServicesRetrofit.LOG_LEVEL);
+		this.restService = Retrofit.retrofit(UploadServicesRetrofit.class, token);
 	}
 
 	/**

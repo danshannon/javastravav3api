@@ -3,6 +3,7 @@ package javastrava.api.v3.service.impl.retrofit;
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.service.AthleteServices;
+import javastrava.api.v3.service.Strava;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import lombok.extern.log4j.Log4j2;
 
@@ -18,12 +19,6 @@ import lombok.extern.log4j.Log4j2;
 public abstract class StravaServiceImpl {
 	private final AthleteServices athleteService;
 	
-	// TODO Parameterise in config files
-	/**
-	 * The percentage of request limits that, if exceeded, should log a warning
-	 */
-	private static int warnAtRequestLimitPercent = 10;
-	
 	/**
 	 * Current request rate over the last 15 minutes
 	 */
@@ -32,14 +27,6 @@ public abstract class StravaServiceImpl {
 	 * Current request rate over the last day
 	 */
 	public static int requestRateDaily = 0;
-	/**
-	 * Request limit every 15 minutes (default is 600)
-	 */
-	public static int requestLimit = 0;
-	/**
-	 * Daily request limit (default is 30,000)
-	 */
-	public static int requestLimitDaily = 0;
 	
 	private StravaAthlete authenticatedAthlete;
 	
@@ -49,9 +36,9 @@ public abstract class StravaServiceImpl {
 	 * @return Percentage used.
 	 */
 	public static float requestRatePercentage() {
-		float percent = (requestLimit == 0 ? 0 : 100 * new Float(requestRate) / new Float(requestLimit));
-		if (percent > StravaServiceImpl.warnAtRequestLimitPercent) {
-			log.warn("Approaching rate limit - " + requestRate + " of " + requestLimit + " requests (" + percent + "%) used");
+		float percent = (Strava.RATE_LIMIT == 0 ? 0 : 100 * new Float(requestRate) / new Float(Strava.RATE_LIMIT));
+		if (percent > Strava.WARN_AT_REQUEST_LIMIT_PERCENT) {
+			log.warn("Approaching rate limit - " + requestRate + " of " + Strava.RATE_LIMIT + " requests (" + percent + "%) used");
 		}
 		return percent;
 	}
@@ -62,9 +49,9 @@ public abstract class StravaServiceImpl {
 	 * @return Percentage used.
 	 */
 	public static float requestRateDailyPercentage() {
-		float percent = (requestLimitDaily == 0 ? 0 : 100 * new Float(requestRateDaily) / new Float(requestLimitDaily));
-		if (percent > warnAtRequestLimitPercent) {
-			log.warn("Approaching rate limit - " + requestRateDaily + " of " + requestLimitDaily + " requests (" + percent + "%) used");
+		float percent = (Strava.RATE_LIMIT_DAILY == 0 ? 0 : 100 * new Float(requestRateDaily) / new Float(Strava.RATE_LIMIT_DAILY));
+		if (percent > Strava.WARN_AT_REQUEST_LIMIT_PERCENT) {
+			log.warn("Approaching rate limit - " + requestRateDaily + " of " + Strava.RATE_LIMIT_DAILY + " requests (" + percent + "%) used");
 		}
 		return percent;
 	}

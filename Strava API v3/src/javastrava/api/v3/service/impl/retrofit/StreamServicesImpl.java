@@ -32,7 +32,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 */
 	private StreamServicesImpl(final Token token) {
 		super(token);
-		this.restService = Retrofit.retrofit(StreamServicesRetrofit.class, token, StreamServicesRetrofit.LOG_LEVEL);
+		this.restService = Retrofit.retrofit(StreamServicesRetrofit.class, token);
 	}
 
 	/**

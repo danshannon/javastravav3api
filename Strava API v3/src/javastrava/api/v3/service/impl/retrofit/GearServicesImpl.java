@@ -27,7 +27,7 @@ public class GearServicesImpl extends StravaServiceImpl implements GearServices 
 	 */
 	private GearServicesImpl(final Token token) {
 		super(token);
-		this.restService = Retrofit.retrofit(GearServicesRetrofit.class, token, GearServicesRetrofit.LOG_LEVEL);
+		this.restService = Retrofit.retrofit(GearServicesRetrofit.class, token);
 	}
 
 	/**

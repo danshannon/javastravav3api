@@ -19,7 +19,6 @@ import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.service.SegmentServices;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
-import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -33,9 +32,8 @@ import retrofit.http.Query;
  *
  */
 public interface SegmentServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
-
 	// TODO This is a workaround for issue javastrava-api #23 (https://github.com/danshannon/javastravav3api/issues/23)
+	// When the issue is fixed, remove this
 	/**
 	 * @see javastrava.api.v3.service.ClubServices#getClub(java.lang.Integer)
 	 * 

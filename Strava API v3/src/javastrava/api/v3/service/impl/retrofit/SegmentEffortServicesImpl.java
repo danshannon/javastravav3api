@@ -23,7 +23,7 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 	 */
 	private SegmentEffortServicesImpl(final Token token) {
 		super(token);
-		this.restService = Retrofit.retrofit(SegmentEffortServicesRetrofit.class, token, SegmentEffortServicesRetrofit.LOG_LEVEL);
+		this.restService = Retrofit.retrofit(SegmentEffortServicesRetrofit.class, token);
 	}
 
 	/**

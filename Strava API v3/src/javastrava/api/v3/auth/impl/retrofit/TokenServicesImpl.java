@@ -49,7 +49,7 @@ public class TokenServicesImpl extends StravaServiceImpl implements TokenService
 
 	private TokenServicesImpl(final Token token) {
 		super(token);
-		this.restService = Retrofit.retrofit(TokenServicesRetrofit.class, token, TokenServicesRetrofit.LOG_LEVEL);
+		this.restService = Retrofit.retrofit(TokenServicesRetrofit.class, token);
 	}
 
 	/**

@@ -4,7 +4,6 @@ import javastrava.api.v3.model.StravaUploadResponse;
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.service.UploadServices;
 import javastrava.api.v3.service.exception.BadRequestException;
-import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
@@ -21,8 +20,6 @@ import retrofit.mime.TypedFile;
  *
  */
 public interface UploadServicesRetrofit {
-	public static final RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE;
-
 	/**
 	 * @see javastrava.api.v3.service.UploadServices#upload(StravaActivityType, String, String, Boolean, Boolean, String, String, java.io.File)
 	 * 

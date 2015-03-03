@@ -28,7 +28,7 @@ public class AuthorisationServicesImpl implements AuthorisationServices {
 		this.restService = new RestAdapter.Builder()
 				.setClient(new RetrofitClientResponseInterceptor())
 				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-				.setLogLevel(AuthorisationServicesRetrofit.LOG_LEVEL)
+				.setLogLevel(Strava.logLevel(AuthorisationServicesImpl.class))
 				.setEndpoint(Strava.AUTH_ENDPOINT)
 				.setErrorHandler(new RetrofitErrorHandler())
 				.build()

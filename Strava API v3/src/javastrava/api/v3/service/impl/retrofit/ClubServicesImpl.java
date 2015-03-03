@@ -32,7 +32,7 @@ import javastrava.util.Paging;
 public class ClubServicesImpl extends StravaServiceImpl implements ClubServices {
 	private ClubServicesImpl(final Token token) {
 		super(token);
-		this.restService = Retrofit.retrofit(ClubServicesRetrofit.class, token, ClubServicesRetrofit.LOG_LEVEL);
+		this.restService = Retrofit.retrofit(ClubServicesRetrofit.class, token);
 	}
 
 	/**

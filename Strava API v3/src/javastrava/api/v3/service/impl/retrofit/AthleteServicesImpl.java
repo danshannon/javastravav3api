@@ -30,7 +30,7 @@ import javastrava.util.Paging;
  */
 public class AthleteServicesImpl implements AthleteServices {
 	private AthleteServicesImpl(final Token token) {
-		this.restService = Retrofit.retrofit(AthleteServicesRetrofit.class, token, AthleteServicesRetrofit.LOG_LEVEL);
+		this.restService = Retrofit.retrofit(AthleteServicesRetrofit.class, token);
 	}
 
 	/**

@@ -2,7 +2,6 @@ package javastrava.api.v3.service.impl.retrofit;
 
 import javastrava.api.v3.model.StravaGear;
 import javastrava.api.v3.service.exception.NotFoundException;
-import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
@@ -15,8 +14,6 @@ import retrofit.http.Path;
  *
  */
 public interface GearServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
-
 	/**
 	 * @see javastrava.api.v3.service.GearServices#getGear(java.lang.String)
 	 * 

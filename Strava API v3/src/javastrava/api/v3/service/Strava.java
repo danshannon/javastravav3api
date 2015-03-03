@@ -1,11 +1,18 @@
 package javastrava.api.v3.service;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javastrava.util.Paging;
+import retrofit.RestAdapter;
+import retrofit.RestAdapter.LogLevel;
 
 public class Strava {
+	private static final String PROPERTIES_FILE = "config.properties";
+	private static final Properties PROPERTIES;
 	/**
 	 * Strava's default page size. If you don't specify a size, then this is what you'll get from endpoints that support paging.
 	 */
@@ -19,19 +26,53 @@ public class Strava {
 	 * API endpoint for the Strava data API
 	 * </p>
 	 */
-	public static final String ENDPOINT = "https://www.strava.com/api/v3";
+	public static final String ENDPOINT;
 	/**
 	 * <p>
 	 * API endpoint for the Strava authorisation API
 	 * </p>
 	 */
-	public static final String AUTH_ENDPOINT = "https://www.strava.com";
+	public static final String AUTH_ENDPOINT;
 	/**
 	 * Name of the Strava session cookie
 	 */
-	public static final String SESSION_COOKIE_NAME = "_strava3_session";
+	public static final String SESSION_COOKIE_NAME;
 
-	public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssX";
+	/**
+	 * Date format to use in query parameters and in (de)serialisation of JSON
+	 */
+	public static final String DATE_FORMAT;
+
+	/**
+	 * Request rate limit every 15 minutes (default is 600)
+	 */
+	public static int RATE_LIMIT;
+	/**
+	 * Daily request rate limit (default is 30,000)
+	 */
+	public static int RATE_LIMIT_DAILY;
+
+	/**
+	 * The percentage of request limits that, if exceeded, should log a warning
+	 */
+	public static final int WARN_AT_REQUEST_LIMIT_PERCENT;
+	
+
+	
+	static {
+		try {
+			PROPERTIES = loadPropertiesFile(PROPERTIES_FILE);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		ENDPOINT = stringProperty("strava.endpoint");
+		AUTH_ENDPOINT = stringProperty("strava.auth.endpoint");
+		SESSION_COOKIE_NAME = stringProperty("strava.session_cookie");
+		DATE_FORMAT = stringProperty("strava.date_format");
+		RATE_LIMIT = integerProperty("strava.rate_limit");
+		RATE_LIMIT_DAILY = integerProperty("strava.rate_limit_daily");
+		WARN_AT_REQUEST_LIMIT_PERCENT = integerProperty("strava.warn_at_request_limit_percent");
+	}
 	/**
 	 * <p>
 	 * Utility method - give it any paging instruction and it will return a list of paging instructions that will work with the Strava API (i.e. that conform to
@@ -85,6 +126,16 @@ public class Strava {
 		return stravaPaging;
 
 	}
+
+	private static String stringProperty(final String property) {
+		return PROPERTIES.getProperty(property);
+	}
+
+	private static Properties loadPropertiesFile(final String propertiesFile) throws IOException {
+		Properties properties = new Properties();
+		URL url = Strava.class.getClassLoader().getResource(PROPERTIES_FILE);
+		properties.load(url.openStream());
+		return properties;	}
 
 	/**
 	 * <p>
@@ -168,5 +219,19 @@ public class Strava {
 			throw new IllegalArgumentException("Cannot ignore more items than the page size");
 		}
 	}
+
+	public static LogLevel logLevel(final Class<?> class1) {
+		String propertyName = "retrofit." + class1.getName() + "loglevel";
+		return RestAdapter.LogLevel.valueOf(PROPERTIES.getProperty(propertyName,"retrofit.loglevel"));
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	private static Integer integerProperty(final String key) {
+		return new Integer(PROPERTIES.getProperty(key));
+	}
+
 
 }

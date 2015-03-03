@@ -3,7 +3,6 @@ package javastrava.api.v3.auth.impl.retrofit;
 import javastrava.api.v3.auth.TokenServices;
 import javastrava.api.v3.auth.model.TokenResponse;
 import javastrava.api.v3.service.exception.UnauthorizedException;
-import retrofit.RestAdapter;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
@@ -17,8 +16,6 @@ import retrofit.http.POST;
  *
  */
 public interface TokenServicesRetrofit {
-	public static RestAdapter.LogLevel	LOG_LEVEL	= RestAdapter.LogLevel.NONE;
-
 	/**
 	 * @see TokenServices#deauthorise(javastrava.api.v3.auth.model.Token)
 	 * 

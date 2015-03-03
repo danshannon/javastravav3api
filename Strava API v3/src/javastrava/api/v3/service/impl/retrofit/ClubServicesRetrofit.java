@@ -8,7 +8,6 @@ import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.service.exception.NotFoundException;
-import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -23,8 +22,6 @@ import retrofit.http.Query;
  *
  */
 public interface ClubServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
-
 	/**
 	 * @see javastrava.api.v3.service.ClubServices#getClub(java.lang.Integer)
 	 * 

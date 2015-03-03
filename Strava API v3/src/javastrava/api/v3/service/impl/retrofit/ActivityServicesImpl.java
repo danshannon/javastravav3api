@@ -31,7 +31,7 @@ import javastrava.util.Paging;
 public class ActivityServicesImpl extends StravaServiceImpl implements ActivityServices {
 	private ActivityServicesImpl(final Token token) {
 		super(token);
-		this.restService = Retrofit.retrofit(ActivityServicesRetrofit.class, token, ActivityServicesRetrofit.LOG_LEVEL);
+		this.restService = Retrofit.retrofit(ActivityServicesRetrofit.class, token);
 	}
 
 	/**

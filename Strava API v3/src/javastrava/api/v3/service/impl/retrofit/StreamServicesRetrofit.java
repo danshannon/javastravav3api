@@ -7,7 +7,6 @@ import javastrava.api.v3.service.StreamServices;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
-import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -21,8 +20,6 @@ import retrofit.http.Query;
  *
  */
 public interface StreamServicesRetrofit {
-	public static RestAdapter.LogLevel	LOG_LEVEL	= RestAdapter.LogLevel.FULL;
-
 	/**
 	 * @see javastrava.api.v3.service.StreamServices#getActivityStreams(Integer, StravaStreamResolutionType,
 	 *      StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType...)

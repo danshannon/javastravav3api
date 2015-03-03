@@ -3,6 +3,7 @@ package javastrava.api.v3.service.impl.retrofit;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import javastrava.api.v3.service.Strava;
 import lombok.NoArgsConstructor;
 import retrofit.client.Header;
 import retrofit.client.OkClient;
@@ -48,8 +49,8 @@ public class RetrofitClientResponseInterceptor extends OkClient {
 			if (header.getName().equals("X-RateLimit-Limit")) {
 				String values = header.getValue();
 				StringTokenizer tokenizer = new StringTokenizer(values, ",");
-				StravaServiceImpl.requestLimit = new Integer(tokenizer.nextToken());
-				StravaServiceImpl.requestLimitDaily = new Integer(tokenizer.nextToken());
+				Strava.RATE_LIMIT = new Integer(tokenizer.nextToken());
+				Strava.RATE_LIMIT_DAILY = new Integer(tokenizer.nextToken());
 				StravaServiceImpl.requestRateDailyPercentage();
 			}
 		}

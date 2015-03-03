@@ -27,18 +27,17 @@ public class Retrofit {
 	 * 
 	 * @param class1 The class to be returned
 	 * @param token The access token required for authentication of requests to the Strava API
-	 * @param logLevel Log level required for the service
 	 * @param <T> Class of Retrofit interface to be instantiated (one of the *Retrofit.java interfaces)
 	 * @return A REST service
 	 */
-	public static <T> T retrofit(final Class<T> class1, final Token token, final RestAdapter.LogLevel logLevel) {
+	public static <T> T retrofit(final Class<T> class1, final Token token) {
 		return new RestAdapter.Builder()
 				// Client overrides handling of Strava-specific headers in the response, to deal with rate limiting
 				.setClient(new RetrofitClientResponseInterceptor())
 				// Converter is a GSON implementation with custom converters
 				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
 				// Log level is determined per Retrofit service
-				.setLogLevel(logLevel)
+				.setLogLevel(Strava.logLevel(class1))
 				// Endpoint is the same for all services
 				.setEndpoint(Strava.ENDPOINT)
 				// Request interceptor adds the access token into headers for each request

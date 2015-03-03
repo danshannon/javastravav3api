@@ -10,7 +10,6 @@ import javastrava.api.v3.model.StravaPhoto;
 import javastrava.api.v3.model.StravaResponse;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
-import retrofit.RestAdapter;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
@@ -27,8 +26,7 @@ import retrofit.http.Query;
  *
  */
 public interface ActivityServicesRetrofit {
-	public static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.NONE; // TODO parameterise in config
-
+	
 	/**
 	 * @see javastrava.api.v3.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
