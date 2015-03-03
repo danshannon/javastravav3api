@@ -52,10 +52,6 @@ The methods that do include paging instructions are built to override the Strava
 
 To use the paging options, you pass in a stravajava.util.Paging object as the pagingInstruction parameter. Have a look; it's amazimgly flexible!
 
-Testing
-=======
-The test suite which comes with JavaStrava (everything inside the test package) is attempting to be a complete exercise of the whole API and all the options that come with it. You're encouraged to use it. To configure the tests, rename the sample-test-config.properties file to test-config.properties and set all the relevant values (they're documented). You might need to set up some additional accounts on Strava (and email accounts on, say, gmail) to help with that.
-
 Leaderboards
 ============
 The Strava API is annoying when it passes your own results along with every page of a leaderboard. We've hacked that out, so that in the stravajava.api.v3.model.StravaSegmentLeaderboard definitions you'll see there are 2 collections of entries - <code>entries</code> is the one that you actually asked for, <code>athleteEntries</code> is the one that relates to the 5 entries around the authenticated athlete / you. Should be *much* simpler to deal with!
