@@ -5,6 +5,18 @@ Strava API v3 implementation written in Java v7
 
 JavaStrava is a functionally complete implementation of the Strava API (v3). It includes all the changes made to the API up to Feb 7, 2015.
 
+Maven
+=====
+javastrava is available on Maven. Just add this to your POM.
+
+```
+		<dependency>
+			<groupId>com.github.danshannon</groupId>
+			<artifactId>javastrava-api</artifactId>
+			<version>0.1.0-ALPHA</version>
+		</dependency>
+```
+
 Dependencies
 ============
 - We use Lombok for simplicity of bean code; if you want to modify or compile the project, you'll need the appropriate plugin for your chosen IDE from lombok.org
