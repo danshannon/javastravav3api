@@ -16,7 +16,7 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public interface AthleteServices {
+public interface AthleteServices extends StravaServices {
 	/**
 	 * <p>
 	 * This request is used to retrieve information about the currently authenticated {@link StravaAthlete athlete}.

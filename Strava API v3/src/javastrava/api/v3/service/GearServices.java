@@ -22,7 +22,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
  * @author Dan Shannon
  *
  */
-public interface GearServices {
+public interface GearServices extends StravaServices {
 	/**
 	 * <p>
 	 * Retrieve details about a specific item of {@link StravaGear}. The requesting {@link StravaAthlete} must own the {@link StravaGear}. At this time it is
@@ -45,5 +45,5 @@ public interface GearServices {
 	 * @throws UnauthorizedException
 	 *             If service token is invalid
 	 */
-	public StravaGear getGear(String id);
+	public StravaGear getGear(final String id);
 }

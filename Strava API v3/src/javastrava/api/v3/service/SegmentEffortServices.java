@@ -20,7 +20,7 @@ import javastrava.api.v3.model.StravaSegmentEffort;
  * @author Dan Shannon
  *
  */
-public interface SegmentEffortServices {
+public interface SegmentEffortServices extends StravaServices {
 	/**
 	 * <p>
 	 * Retrieve details about a specific segment effort. The effort must be public or it must correspond to the current athlete.

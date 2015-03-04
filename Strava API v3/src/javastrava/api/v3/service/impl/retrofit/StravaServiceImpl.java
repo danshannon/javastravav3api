@@ -1,8 +1,6 @@
 package javastrava.api.v3.service.impl.retrofit;
 
 import javastrava.api.v3.auth.model.Token;
-import javastrava.api.v3.model.StravaAthlete;
-import javastrava.api.v3.service.AthleteServices;
 import javastrava.api.v3.service.Strava;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import lombok.extern.log4j.Log4j2;
@@ -13,11 +11,14 @@ import lombok.extern.log4j.Log4j2;
  * </p>
  * 
  * @author Dan Shannon
+ * @param <T> The class of retrofit interface to be created
+ * @param <U> The service interface class to be returned by the {@link #implementation} method
+ * @param <V>
  *
  */
 @Log4j2
-public abstract class StravaServiceImpl {
-	private final AthleteServices athleteService;
+public abstract class StravaServiceImpl<T> {
+//	private final AthleteServices athleteService;
 	
 	/**
 	 * Current request rate over the last 15 minutes
@@ -28,7 +29,8 @@ public abstract class StravaServiceImpl {
 	 */
 	public static int requestRateDaily = 0;
 	
-	private StravaAthlete authenticatedAthlete;
+	private final Token token;
+	protected final T restService;
 	
 	/**
 	 * Calculates the percentage of the per-15-minute request limit that has been used, issues a warning if required
@@ -63,11 +65,12 @@ public abstract class StravaServiceImpl {
 	 * 
 	 * @param token The access token to be used to authenticate to the Strava API
 	 */
-	protected StravaServiceImpl(final Token token) {
-		this.athleteService = AthleteServicesImpl.implementation(token);
-		if (!accessTokenIsValid()) {
-			throw new UnauthorizedException("Access token " + token + " is invalid");
-		}
+	protected StravaServiceImpl(final Class<T> class1, final Token token) {
+		this.token = token;
+//		if (!accessTokenIsValid()) {
+//			throw new UnauthorizedException("Access token " + token.getToken() + " is invalid");
+//		}
+		this.restService = Retrofit.retrofit(class1, token);
 	}
 
 	/**
@@ -79,14 +82,14 @@ public abstract class StravaServiceImpl {
 	 */
 	protected boolean accessTokenIsValid() {
 		try {
-			this.authenticatedAthlete = this.athleteService.getAuthenticatedAthlete();
+			AthleteServicesImpl.implementation(this.token).getAuthenticatedAthlete();
 			return true;
 		} catch (UnauthorizedException e) {
 			return false;
 		}
 	}
 	
-	protected StravaAthlete getAuthenticatedAthlete() {
-		return this.authenticatedAthlete;
+	protected final Token getToken() {
+		return this.token;
 	}
 }

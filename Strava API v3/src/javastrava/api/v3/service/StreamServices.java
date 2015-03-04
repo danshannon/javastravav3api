@@ -20,7 +20,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
  * @author Dan Shannon
  *
  */
-public interface StreamServices {
+public interface StreamServices extends StravaServices {
 	/**
 	 * <p>
 	 * Streams represent the raw data of the uploaded file. External applications may only access this information for activities owned by the authenticated

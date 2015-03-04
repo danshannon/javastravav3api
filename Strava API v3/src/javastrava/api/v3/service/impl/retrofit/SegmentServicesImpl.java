@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import javastrava.api.v3.auth.model.Token;
@@ -41,7 +40,7 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class SegmentServicesImpl extends StravaServiceImpl implements SegmentServices {
+public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrofit> implements SegmentServices {
 	/**
 	 * <p>
 	 * Private constructor ensures that the only way to get an instance is via {@link #implementation(String)} with a valid access token
@@ -51,8 +50,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 *            The access token to use for authentication with the Strava API
 	 */
 	private SegmentServicesImpl(final Token token) {
-		super(token);
-		this.restService = Retrofit.retrofit(SegmentServicesRetrofit.class, token);
+		super(SegmentServicesRetrofit.class,token);
 	}
 
 	/**
@@ -69,20 +67,20 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	 * @return An implementation of the club services
 	 */
 	public static SegmentServices implementation(final Token token) {
-		SegmentServices restService = restServices.get(token);
-		if (restService == null) {
-			restService = new SegmentServicesImpl(token);
-
-			// Store the token for later retrieval so that there's only one service per token
-			restServices.put(token, restService);
-
+		if (token == null) {
+			throw new IllegalArgumentException("Cannot instantiate a service with a null token!");
 		}
-		return restService;
+		Class<SegmentServices> class1 = SegmentServices.class;
+		// Get the service from the token's cache
+		SegmentServices service = token.getService(class1);
+		
+		// If it's not already there, create a new one and put it in the token
+		if (service == null) {
+			service = new SegmentServicesImpl(token);
+			token.addService(class1, service);
+		}
+		return service;
 	}
-
-	private static HashMap<Token, SegmentServices> restServices = new HashMap<Token, SegmentServices>();
-
-	final SegmentServicesRetrofit restService;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentServices#getSegment(java.lang.Integer)
@@ -150,6 +148,21 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 	@Override
 	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocalTZ,
 			final Calendar endDateLocalTZ, final Paging pagingInstruction) {
+		// TODO Workaround for issue javastrava-api #33 (https://github.com/danshannon/javastravav3api/issues/33)
+		// Check if the segment is flagged as hazardous
+		StravaSegment segment = getSegment(id);
+		
+		// If the segment is null it doesn't exist, so return null
+		if (segment == null) {
+			return null;
+		}
+		
+		// If the segment is hazardous, return an empty list
+		if (segment.getHazardous()) {
+			return new ArrayList<StravaSegmentEffort>();
+		}
+		// End of workaround
+		
 		Calendar endDateLocal = endDateLocalTZ;
 		Calendar startDateLocal = startDateLocalTZ;
 		// If start date is set, but end date isn't, then Strava likes it to be set to something high
@@ -176,8 +189,8 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 						thisPage.getPageSize()));
 			}
 		});
-		
-		// TODO This is a workaround for issue javastrava-api #19 (https://github.com/danshannon/javastravav3api/issues/19)
+				
+		// TODO workaround for issue javastrava-api #19 (https://github.com/danshannon/javastravav3api/issues/19)
 		if (efforts != null) {
     		for (StravaSegmentEffort effort : efforts) {
     			if (effort.getActivity().getResourceState() == null) {
@@ -187,7 +200,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 		}
 		// End of workaround
 		
-		// TODO This is a workaround for issue javastrava-api #20 (https://github.com/danshannon/javastravav3api/issues/20)
+		// TODO workaround for issue javastrava-api #20 (https://github.com/danshannon/javastravav3api/issues/20)
 		if (efforts != null) {
     		for (StravaSegmentEffort effort : efforts) {
     			if (effort.getAthlete().getResourceState() == null) {
@@ -291,7 +304,7 @@ public class SegmentServicesImpl extends StravaServiceImpl implements SegmentSer
 			if (entries.size() == contextSize.intValue()) {
 				boolean foundAthlete = false;
     			for (StravaSegmentLeaderboardEntry entry : entries) {
-    				if (entry.getAthleteId().equals(super.getAuthenticatedAthlete().getId())) {
+    				if (entry.getAthleteId().equals(super.getToken().getAthlete().getId())) {
     					foundAthlete = true;
     				}
     			}

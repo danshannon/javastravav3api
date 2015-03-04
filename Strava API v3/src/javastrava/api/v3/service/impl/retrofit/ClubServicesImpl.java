@@ -5,7 +5,6 @@ package javastrava.api.v3.service.impl.retrofit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import javastrava.api.v3.auth.model.Token;
@@ -29,10 +28,9 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class ClubServicesImpl extends StravaServiceImpl implements ClubServices {
+public class ClubServicesImpl extends StravaServiceImpl<ClubServicesRetrofit> implements ClubServices {
 	private ClubServicesImpl(final Token token) {
-		super(token);
-		this.restService = Retrofit.retrofit(ClubServicesRetrofit.class, token);
+		super(ClubServicesRetrofit.class,token);
 	}
 
 	/**
@@ -51,20 +49,16 @@ public class ClubServicesImpl extends StravaServiceImpl implements ClubServices 
 	 *             If the token used to create the service is invalid
 	 */
 	public static ClubServices implementation(final Token token) {
-		ClubServices restService = restServices.get(token);
-		if (restService == null) {
-			restService = new ClubServicesImpl(token);
-
-			// Store the token for later retrieval so that there's only one service per token
-			restServices.put(token, restService);
-
+		// Get the service from the token's cache
+		ClubServices service = token.getService(ClubServices.class);
+		
+		// If it's not already there, create a new one and put it in the token
+		if (service == null) {
+			service = new ClubServicesImpl(token);
+			token.addService(ClubServices.class, service);
 		}
-		return restService;
+		return service;
 	}
-
-	private static HashMap<Token, ClubServices> restServices = new HashMap<Token, ClubServices>();
-
-	final ClubServicesRetrofit restService;
 
 	/**
 	 * @see javastrava.api.v3.service.ClubServices#getClub(java.lang.Integer)

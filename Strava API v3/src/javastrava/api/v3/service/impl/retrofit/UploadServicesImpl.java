@@ -1,7 +1,6 @@
 package javastrava.api.v3.service.impl.retrofit;
 
 import java.io.File;
-import java.util.HashMap;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaUploadResponse;
@@ -18,7 +17,7 @@ import retrofit.mime.TypedFile;
  * @author Dan Shannon
  *
  */
-public class UploadServicesImpl extends StravaServiceImpl implements UploadServices {
+public class UploadServicesImpl extends StravaServiceImpl<UploadServicesRetrofit> implements UploadServices {
 
 	/**
 	 * <p>
@@ -28,8 +27,7 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 	 * @param token The access token used to authenticate to the Strava API
 	 */
 	private UploadServicesImpl(final Token token) {
-		super(token);
-		this.restService = Retrofit.retrofit(UploadServicesRetrofit.class, token);
+		super(UploadServicesRetrofit.class, token);
 	}
 
 	/**
@@ -46,17 +44,16 @@ public class UploadServicesImpl extends StravaServiceImpl implements UploadServi
 	 * @return An implementation of the upload services
 	 */
 	public static UploadServices implementation(final Token token) {
-		UploadServices restService = restServices.get(token);
-		if (restService == null) {
-			restService = new UploadServicesImpl(token);
-			restServices.put(token, restService);
+		// Get the service from the token's cache
+		UploadServices service = token.getService(UploadServices.class);
+		
+		// If it's not already there, create a new one and put it in the token
+		if (service == null) {
+			service = new UploadServicesImpl(token);
+			token.addService(UploadServices.class, service);
 		}
-		return restService;
+		return service;
 	}
-
-	private static HashMap<Token, UploadServices> restServices = new HashMap<Token, UploadServices>();
-
-	private final UploadServicesRetrofit restService;
 
 	/**
 	 * @see javastrava.api.v3.service.UploadServices#upload(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String,

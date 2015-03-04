@@ -4,7 +4,6 @@
 package javastrava.api.v3.service.impl.retrofit;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import javastrava.api.v3.auth.model.Token;
@@ -28,9 +27,9 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class AthleteServicesImpl implements AthleteServices {
+public class AthleteServicesImpl extends StravaServiceImpl<AthleteServicesRetrofit> implements AthleteServices {
 	private AthleteServicesImpl(final Token token) {
-		this.restService = Retrofit.retrofit(AthleteServicesRetrofit.class, token);
+		super(AthleteServicesRetrofit.class, token);
 	}
 
 	/**
@@ -47,20 +46,16 @@ public class AthleteServicesImpl implements AthleteServices {
 	 * @return An implementation of the athlete services
 	 */
 	public static AthleteServices implementation(final Token token) {
-		AthleteServices restService = restServices.get(token);
-		if (restService == null) {
-			restService = new AthleteServicesImpl(token);
-
-			// Store the token for later retrieval so that there's only one service per token
-			restServices.put(token, restService);
-
+		// Get the service from the token's cache
+		AthleteServices service = token.getService(AthleteServices.class);
+		
+		// If it's not already there, create a new one and put it in the token
+		if (service == null) {
+			service = new AthleteServicesImpl(token);
+			token.addService(AthleteServices.class, service);
 		}
-		return restService;
+		return service;
 	}
-
-	private static HashMap<Token, AthleteServices> restServices = new HashMap<Token, AthleteServices>();
-
-	final AthleteServicesRetrofit restService;
 
 	/**
 	 * @see javastrava.api.v3.service.AthleteServices#getAuthenticatedAthlete()
@@ -204,15 +199,6 @@ public class AthleteServicesImpl implements AthleteServices {
 	@Override
 	public List<StravaAthlete> listAthletesBothFollowing(final Integer id) {
 		return listAthletesBothFollowing(id, null);
-	}
-
-	private boolean accessTokenIsValid() {
-		try {
-			getAuthenticatedAthlete();
-			return true;
-		} catch (UnauthorizedException e) {
-			return false;
-		}
 	}
 
 	/**

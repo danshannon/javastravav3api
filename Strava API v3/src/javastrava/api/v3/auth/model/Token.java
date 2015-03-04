@@ -1,11 +1,13 @@
 package javastrava.api.v3.auth.model;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import javastrava.api.v3.auth.AuthorisationServices;
 import javastrava.api.v3.auth.ref.AuthorisationScope;
 import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.service.StravaServices;
 import javastrava.api.v3.service.impl.retrofit.StravaServiceImpl;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -65,6 +67,11 @@ public class Token {
 	 * token
 	 */
 	private List<AuthorisationScope> scopes;
+	
+	/**
+	 * List of service implementations associated with this token
+	 */
+	private HashMap<Class<? extends StravaServices>,StravaServices> services;
 
 	/**
 	 * <p>
@@ -80,6 +87,20 @@ public class Token {
 		this.athlete = tokenResponse.getAthlete();
 		this.token = tokenResponse.getAccessToken();
 		this.scopes = Arrays.asList(scopes);
+		this.services = new HashMap<Class<? extends StravaServices>,StravaServices>();
+	}
+	
+	public void addService(final Class<? extends StravaServices> class1, final StravaServices service) {
+		this.services.put(class1, service);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends StravaServices> T getService(final Class<T> class1) {
+		return (T) this.services.get(class1);
+	}
+
+	public void removeService(final Class<? extends StravaServices> class1) {
+		this.services.remove(class1);
 	}
 
 }

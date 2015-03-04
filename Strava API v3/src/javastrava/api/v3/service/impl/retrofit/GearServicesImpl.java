@@ -1,7 +1,5 @@
 package javastrava.api.v3.service.impl.retrofit;
 
-import java.util.HashMap;
-
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaGear;
 import javastrava.api.v3.service.ClubServices;
@@ -17,7 +15,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
  * @author Dan Shannon
  *
  */
-public class GearServicesImpl extends StravaServiceImpl implements GearServices {
+public class GearServicesImpl extends StravaServiceImpl<GearServicesRetrofit> implements GearServices {
 	/**
 	 * <p>
 	 * Private constructor ensures that the only way to get an instance is via the {@link #implementation(String)} method
@@ -26,8 +24,7 @@ public class GearServicesImpl extends StravaServiceImpl implements GearServices 
 	 * @param token The access token to be used to authenticate to the Strava API
 	 */
 	private GearServicesImpl(final Token token) {
-		super(token);
-		this.restService = Retrofit.retrofit(GearServicesRetrofit.class, token);
+		super(GearServicesRetrofit.class, token);
 	}
 
 	/**
@@ -46,20 +43,16 @@ public class GearServicesImpl extends StravaServiceImpl implements GearServices 
 	 *             If the token used to create the service is invalid
 	 */
 	public static GearServices implementation(final Token token) {
-		GearServices restService = restServices.get(token);
-		if (restService == null) {
-			restService = new GearServicesImpl(token);
-
-			// Store the token for later retrieval so that there's only one service per token
-			restServices.put(token, restService);
-
+		// Get the service from the token's cache
+		GearServices service = token.getService(GearServices.class);
+		
+		// If it's not already there, create a new one and put it in the token
+		if (service == null) {
+			service = new GearServicesImpl(token);
+			token.addService(GearServices.class, service);
 		}
-		return restService;
+		return service;
 	}
-
-	private static HashMap<Token, GearServices> restServices = new HashMap<Token, GearServices>();
-
-	private final GearServicesRetrofit restService;
 
 	/**
 	 * @see javastrava.api.v3.service.GearServices#getGear(java.lang.String)

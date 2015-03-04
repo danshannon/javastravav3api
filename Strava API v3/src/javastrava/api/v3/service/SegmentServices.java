@@ -34,7 +34,7 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public interface SegmentServices {
+public interface SegmentServices extends StravaServices {
 	/**
 	 * <p>
 	 * Retrieve details about a specific {@link StravaSegment segment}.

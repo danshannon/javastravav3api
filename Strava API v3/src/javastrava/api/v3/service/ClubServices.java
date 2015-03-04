@@ -29,7 +29,7 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public interface ClubServices {
+public interface ClubServices extends StravaServices {
 	/**
 	 * <p>
 	 * Retrieve details about a specific {@link StravaClub club}. The club must be public or the current {@link StravaAthlete athlete} must be a member.

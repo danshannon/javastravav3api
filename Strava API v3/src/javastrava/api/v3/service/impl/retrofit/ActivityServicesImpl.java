@@ -3,7 +3,6 @@ package javastrava.api.v3.service.impl.retrofit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 import javastrava.api.v3.auth.model.Token;
@@ -28,10 +27,9 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class ActivityServicesImpl extends StravaServiceImpl implements ActivityServices {
+public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetrofit> implements ActivityServices {
 	private ActivityServicesImpl(final Token token) {
-		super(token);
-		this.restService = Retrofit.retrofit(ActivityServicesRetrofit.class, token);
+		super(ActivityServicesRetrofit.class,token);
 	}
 
 	/**
@@ -48,22 +46,17 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	 * @return An implementation of the activity services
 	 */
 	public static ActivityServices implementation(final Token token) {
-		ActivityServices restService = restServices.get(token);
-		if (restService == null) {
-			restService = new ActivityServicesImpl(token);
-
-			// Store the token for later retrieval so that there's only one
-			// service per token
-			restServices.put(token, restService);
-
+		// Get the service from the token's cache
+		ActivityServices service = token.getService(ActivityServices.class);
+		
+		// If it's not already there, create a new one and put it in the token
+		if (service == null) {
+			service = new ActivityServicesImpl(token);
+			token.addService(ActivityServices.class, service);
 		}
-		return restService;
-	}
-
-	private static HashMap<Token, ActivityServices> restServices = new HashMap<Token, ActivityServices>();
-
-	final ActivityServicesRetrofit restService;
-
+		return service;
+	}		
+		
 	/**
 	 * @see javastrava.api.v3.service.ActivityServices#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
@@ -464,6 +457,7 @@ public class ActivityServicesImpl extends StravaServiceImpl implements ActivityS
 	 */
 	@Override
 	public void giveKudos(final Integer activityId) throws NotFoundException {
+		
 		this.restService.giveKudos(activityId);
 		
 	}

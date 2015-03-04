@@ -22,7 +22,7 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public interface ActivityServices {
+public interface ActivityServices extends StravaServices {
 	/**
 	 * <p>
 	 * StravaActivity details, including segment efforts, splits and best efforts, are only available to the owner of the activity.

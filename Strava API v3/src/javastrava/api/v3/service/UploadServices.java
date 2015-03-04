@@ -39,7 +39,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
  * @author Dan Shannon
  *
  */
-public interface UploadServices {
+public interface UploadServices extends StravaServices {
 	/**
 	 * <p>
 	 * Requires write permissions, as requested during the authorization process.

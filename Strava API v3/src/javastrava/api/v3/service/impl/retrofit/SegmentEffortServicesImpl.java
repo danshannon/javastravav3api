@@ -1,7 +1,5 @@
 package javastrava.api.v3.service.impl.retrofit;
 
-import java.util.HashMap;
-
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.reference.StravaResourceState;
@@ -13,7 +11,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
  * @author Dan Shannon
  *
  */
-public class SegmentEffortServicesImpl extends StravaServiceImpl implements SegmentEffortServices {
+public class SegmentEffortServicesImpl extends StravaServiceImpl<SegmentEffortServicesRetrofit> implements SegmentEffortServices {
 	/**
 	 * <p>
 	 * Private constructor ensures that the only way to get an instance is by using {@link #implementation(String)} with a valid access token.
@@ -22,8 +20,7 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 	 * @param token The access token to be used for authentication to the Strava API
 	 */
 	private SegmentEffortServicesImpl(final Token token) {
-		super(token);
-		this.restService = Retrofit.retrofit(SegmentEffortServicesRetrofit.class, token);
+		super(SegmentEffortServicesRetrofit.class, token);
 	}
 
 	/**
@@ -40,20 +37,16 @@ public class SegmentEffortServicesImpl extends StravaServiceImpl implements Segm
 	 * @return An implementation of the segment effort services
 	 */
 	public static SegmentEffortServices implementation(final Token token) {
-		SegmentEffortServices restService = restServices.get(token);
-		if (restService == null) {
-			restService = new SegmentEffortServicesImpl(token);
-
-			// Store the token for later retrieval so that there's only one service per token
-			restServices.put(token, restService);
-
+		// Get the service from the token's cache
+		SegmentEffortServices service = token.getService(SegmentEffortServices.class);
+		
+		// If it's not already there, create a new one and put it in the token
+		if (service == null) {
+			service = new SegmentEffortServicesImpl(token);
+			token.addService(SegmentEffortServices.class, service);
 		}
-		return restService;
+		return service;
 	}
-
-	private static HashMap<Token, SegmentEffortServices> restServices = new HashMap<Token, SegmentEffortServices>();
-
-	private final SegmentEffortServicesRetrofit restService;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentEffortServices#getSegmentEffort(Long)

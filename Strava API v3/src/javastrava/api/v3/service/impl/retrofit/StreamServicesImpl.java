@@ -2,7 +2,6 @@ package javastrava.api.v3.service.impl.retrofit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import javastrava.api.v3.auth.model.Token;
@@ -22,7 +21,7 @@ import javastrava.api.v3.service.exception.NotFoundException;
  * @author Dan Shannon
  *
  */
-public class StreamServicesImpl extends StravaServiceImpl implements StreamServices {
+public class StreamServicesImpl extends StravaServiceImpl<StreamServicesRetrofit> implements StreamServices {
 	/**
 	 * <p>
 	 * Private constructor prevents anyone from getting an instance without a valid access token
@@ -31,8 +30,7 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 * @param token The access token to be used to authenticate to the Strava API
 	 */
 	private StreamServicesImpl(final Token token) {
-		super(token);
-		this.restService = Retrofit.retrofit(StreamServicesRetrofit.class, token);
+		super(StreamServicesRetrofit.class, token);
 	}
 
 	/**
@@ -49,20 +47,16 @@ public class StreamServicesImpl extends StravaServiceImpl implements StreamServi
 	 * @return An implementation of the stream services
 	 */
 	public static StreamServices implementation(final Token token) {
-		StreamServices restService = restServices.get(token);
-		if (restService == null) {
-			restService = new StreamServicesImpl(token);
-
-			// Store the token for later retrieval so that there's only one service per token
-			restServices.put(token, restService);
-
+		// Get the service from the token's cache
+		StreamServices service = token.getService(StreamServices.class);
+		
+		// If it's not already there, create a new one and put it in the token
+		if (service == null) {
+			service = new StreamServicesImpl(token);
+			token.addService(StreamServices.class, service);
 		}
-		return restService;
+		return service;
 	}
-
-	private static HashMap<Token, StreamServices> restServices = new HashMap<Token, StreamServices>();
-
-	private final StreamServicesRetrofit restService;
 
 	/**
 	 * @see javastrava.api.v3.service.StreamServices#getActivityStreams(Integer, StravaStreamResolutionType, StravaStreamSeriesDownsamplingType, StravaStreamType...)
