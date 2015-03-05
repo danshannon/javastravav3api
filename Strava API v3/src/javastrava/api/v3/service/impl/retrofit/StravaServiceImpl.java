@@ -12,8 +12,6 @@ import lombok.extern.log4j.Log4j2;
  * 
  * @author Dan Shannon
  * @param <T> The class of retrofit interface to be created
- * @param <U> The service interface class to be returned by the {@link #implementation} method
- * @param <V>
  *
  */
 @Log4j2
