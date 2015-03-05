@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import javastrava.api.v3.auth.model.Token;
-import javastrava.api.v3.auth.ref.AuthorisationScope;
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
@@ -432,8 +431,7 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 			throw new IllegalArgumentException("Text of a comment cannot be empty");
 		}
 		// TODO Workaround for issue javastrava-api #30 (https://github.com/danshannon/javastravav3api/issues/30)
-		List<AuthorisationScope> scopes = getToken().getScopes();
-		if (!scopes.contains(AuthorisationScope.WRITE)) {
+		if (!(getToken().hasWriteAccess())) {
 			throw new UnauthorizedException("Cannot create comments without write access");
 		}
 		// End of workaround
@@ -455,6 +453,7 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 	 */
 	@Override
 	public void deleteComment(final StravaComment comment) throws NotFoundException {
+		
 		this.restService.deleteComment(comment.getActivityId(), comment.getId());
 		
 	}
@@ -464,6 +463,11 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 	 */
 	@Override
 	public void giveKudos(final Integer activityId) throws NotFoundException {
+		// TODO Workaround for issue javastrava-api #29 (https://github.com/danshannon/javastravav3api/issues/29)
+		if (!(getToken().hasWriteAccess())) {
+			throw new UnauthorizedException("Cannot give kudos without write access");
+		}
+		// End of workaround
 		
 		this.restService.giveKudos(activityId);
 		

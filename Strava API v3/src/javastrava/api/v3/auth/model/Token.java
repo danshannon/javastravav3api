@@ -102,5 +102,19 @@ public class Token {
 	public void removeService(final Class<? extends StravaServices> class1) {
 		this.services.remove(class1);
 	}
+	
+	public boolean hasWriteAccess() {
+		if (this.scopes != null && this.scopes.contains(AuthorisationScope.WRITE)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean hasViewPrivate() {
+		if (this.scopes != null && this.scopes.contains(AuthorisationScope.VIEW_PRIVATE)) {
+			return true;
+		}
+		return false;
+	}
 
 }
