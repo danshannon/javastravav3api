@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javastrava.api.v3.auth.model.Token;
+import javastrava.api.v3.auth.ref.AuthorisationScope;
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
@@ -430,6 +431,12 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 		if (text == null || text.equals("")) {
 			throw new IllegalArgumentException("Text of a comment cannot be empty");
 		}
+		// TODO Workaround for issue javastrava-api #30 (https://github.com/danshannon/javastravav3api/issues/30)
+		List<AuthorisationScope> scopes = getToken().getScopes();
+		if (!scopes.contains(AuthorisationScope.WRITE)) {
+			throw new UnauthorizedException("Cannot create comments without write access");
+		}
+		// End of workaround
 		return this.restService.createComment(id, text);
 				
 	}
