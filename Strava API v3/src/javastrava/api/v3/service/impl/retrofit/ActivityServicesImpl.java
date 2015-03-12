@@ -20,6 +20,7 @@ import javastrava.api.v3.service.PagingCallback;
 import javastrava.api.v3.service.PagingHandler;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.util.Paging;
 
@@ -135,12 +136,28 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 		if (activity == null) {
 			update = new StravaActivityUpdate();
 		}
+		StravaActivity response = null;
 		
-		// If there's nothing to update, just get the activity
-		if (update.getCommute() == null && update.getPrivateActivity() == null && update.getTrainer() == null && update.getDescription() == null && update.getGearId() == null && update.getName() == null && update.getType() == null) {
-			return getActivity(id);
+		
+		// TODO Workaround for issue javastrava-api #36 (https://github.com/danshannon/javastravav3api/issues/36)
+		if (update.getCommute() != null) {
+			StravaActivityUpdate commuteUpdate = new StravaActivityUpdate();
+			commuteUpdate.setCommute(update.getCommute());
+			response = doUpdateActivity(id, commuteUpdate);
+			if (response.getCommute() != update.getCommute()) { 
+				throw new StravaUnknownAPIException("Failed to update commute flag on activity " + id, null, null);
+			}
+			
+			update.setCommute(null);
 		}
+
+		// End of workaround
 		
+		response = doUpdateActivity(id, update);
+		return response;
+		
+	}		
+	private StravaActivity doUpdateActivity(final Integer id, final StravaActivityUpdate update) {
 		try {
 			StravaActivity response = this.restService.updateActivity(id, update);
 			if (response.getResourceState() == StravaResourceState.UPDATING) {
