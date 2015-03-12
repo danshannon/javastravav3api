@@ -486,18 +486,25 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 
 	@Override
 	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId) {
-		return PagingHandler.handleListAll(new PagingCallback<StravaSegmentEffort>() {
-
-			@Override
-			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return listSegmentEfforts(segmentId, thisPage);
-			}
-
-		});
+		return listAllSegmentEfforts(segmentId, null, null, null);
 	}
 
 	@Override
 	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDate, final Calendar endDate) {
+		// TODO Workaround for issue javastrava-api #33 (https://github.com/danshannon/javastravav3api/issues/33)
+		// Check if the segment is flagged as hazardous
+		StravaSegment segment = getSegment(segmentId);
+		
+		// If the segment is null it doesn't exist, so return null
+		if (segment == null) {
+			return null;
+		}
+		
+		// If the segment is hazardous, return an empty list
+		if (segment.getHazardous()) {
+			return new ArrayList<StravaSegmentEffort>();
+		}
+		// End of workaround
 		return PagingHandler.handleListAll(new PagingCallback<StravaSegmentEffort>() {
 
 			@Override

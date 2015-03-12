@@ -134,7 +134,7 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) {
 		StravaActivityUpdate update = activity;
 		if (activity == null) {
-			update = new StravaActivityUpdate();
+			return getActivity(id);
 		}
 		StravaActivity response = null;
 		
