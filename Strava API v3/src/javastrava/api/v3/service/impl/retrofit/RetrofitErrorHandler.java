@@ -6,6 +6,8 @@ import javastrava.api.v3.model.StravaResponse;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.StravaAPIRateLimitException;
+import javastrava.api.v3.service.exception.StravaInternalServerErrorException;
+import javastrava.api.v3.service.exception.StravaServiceUnavailableException;
 import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.util.JsonUtil;
@@ -74,6 +76,8 @@ public class RetrofitErrorHandler implements ErrorHandler {
 			log.error(status + " : " + response);
 			if (response.getMessage().equals("Rate Limit Exceeded")) {
 				return new StravaAPIRateLimitException(status, response, cause);
+			} else {
+				return new UnauthorizedException(status, response, cause);
 			}
 		}
 
@@ -83,7 +87,17 @@ public class RetrofitErrorHandler implements ErrorHandler {
 			return new NotFoundException(response,cause);
 		}
 		
-		// TODO Handle 500-series errors
+		// Handle 500 Internal Server error
+		if (r != null && r.getStatus() == 500) {
+			log.error(status + " : " + response);
+			return new StravaInternalServerErrorException(status, response, cause);
+		}
+		
+		// Handle 503 Service Unavailable error
+		if (r != null && r.getStatus() == 503) {
+			log.error(status + " : " + response);
+			return new StravaServiceUnavailableException(status, response, cause);
+		}
 		
 		log.error(response);
 		return new StravaUnknownAPIException(status,response,cause);
