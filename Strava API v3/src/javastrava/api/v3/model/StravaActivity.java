@@ -298,4 +298,10 @@ public class StravaActivity {
 	 * Identifier of the original upload
 	 */
 	private String uploadId;
+	
+	private Float startLatitude;
+	private Float startLongitude;
+	private String instagramPrimaryPhoto;
+	private StravaActivityPhotos photos;
+	
 }

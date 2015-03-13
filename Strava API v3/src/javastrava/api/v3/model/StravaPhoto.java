@@ -60,4 +60,7 @@ public class StravaPhoto {
 	 * Location of the photo
 	 */
 	private StravaMapPoint		location;
+	
+	private Integer source;
+	private StravaPhotoUrls urls;
 }
