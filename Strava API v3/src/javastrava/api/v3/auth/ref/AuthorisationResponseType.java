@@ -1,6 +1,5 @@
 package javastrava.api.v3.auth.ref;
 
-import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
 
 /**
@@ -27,7 +26,7 @@ public enum AuthorisationResponseType {
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.string("Common.unknown")); //$NON-NLS-1$
+	UNKNOWN(StravaConfig.string("Common.unknown")); //$NON-NLS-1$
 
 	/**
 	 * Required by GSON serialiser

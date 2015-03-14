@@ -33,7 +33,7 @@ public enum StravaClimbCategory {
 	/**
 	 * Category 4
 	 */
-	CATEGORY4(StravaConfig.integer("StraveClimbCategory.cat4"), Messages.string("StravaClimbCategory.cat4.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CATEGORY4(StravaConfig.integer("StravaClimbCategory.cat4"), Messages.string("StravaClimbCategory.cat4.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Category 5
 	 */
