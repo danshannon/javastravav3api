@@ -27,9 +27,10 @@ import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.service.PagingCallback;
 import javastrava.api.v3.service.PagingHandler;
 import javastrava.api.v3.service.SegmentServices;
-import javastrava.api.v3.service.Strava;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.Paging;
 
 /**
@@ -43,7 +44,7 @@ import javastrava.util.Paging;
 public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrofit> implements SegmentServices {
 	/**
 	 * <p>
-	 * Private constructor ensures that the only way to get an instance is via {@link #implementation(String)} with a valid access token
+	 * Private constructor ensures that the only way to get an instance is via {@link #implementation(Token)} with a valid access token
 	 * </p>
 	 * 
 	 * @param token
@@ -68,7 +69,7 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 	 */
 	public static SegmentServices implementation(final Token token) {
 		if (token == null) {
-			throw new IllegalArgumentException("Cannot instantiate a service with a null token!");
+			throw new IllegalArgumentException(Messages.getString("SegmentServicesImpl.cannotInstantiateWithNullToken")); //$NON-NLS-1$
 		}
 		Class<SegmentServices> class1 = SegmentServices.class;
 		// Get the service from the token's cache
@@ -158,7 +159,7 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 		}
 		
 		// If the segment is hazardous, return an empty list
-		if (segment.getHazardous()) {
+		if (segment.getHazardous() == Boolean.TRUE) {
 			return new ArrayList<StravaSegmentEffort>();
 		}
 		// End of workaround
@@ -364,7 +365,7 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 	@Override
 	public StravaSegmentExplorerResponse segmentExplore(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner,
 			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
-		String bounds = southwestCorner.getLatitude() + "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + ","
+		String bounds = southwestCorner.getLatitude() + "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ northeastCorner.getLongitude();
 		return this.restService.segmentExplore(bounds, activityType, minCat, maxCat);
 	}

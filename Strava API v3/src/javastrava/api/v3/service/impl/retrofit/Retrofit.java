@@ -1,7 +1,8 @@
 package javastrava.api.v3.service.impl.retrofit;
 
 import javastrava.api.v3.auth.model.Token;
-import javastrava.api.v3.service.Strava;
+import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.JsonUtilImpl;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -9,7 +10,7 @@ import retrofit.converter.GsonConverter;
 
 /**
  * <p>
- * Provides a static method {@link #retrofit(Class, String, retrofit.RestAdapter.LogLevel)} which constructs a standard retrofit service with all the required options.
+ * Provides a static method {@link #retrofit(Class, Token)} which constructs a standard retrofit service with all the required options.
  * </p>
  *  
  * @author Dan Shannon
@@ -44,7 +45,7 @@ public class Retrofit {
 				.setRequestInterceptor(new RequestInterceptor() {
 					@Override
 					public void intercept(final RequestFacade request) {
-						request.addHeader("Authorization", "Bearer " + token.getToken());
+						request.addHeader(Messages.getString("Retrofit.authorizationHeaderName"), Messages.getString("Retrofit.bearer") + token.getToken()); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				})
 				// Error handler deals with Strava's implementations of 400, 401, 403, 404 errors etc.

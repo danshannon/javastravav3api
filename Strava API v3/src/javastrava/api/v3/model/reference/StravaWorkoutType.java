@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaActivity;
+import javastrava.config.Messages;
 
 /**
  * <p>
@@ -11,7 +12,11 @@ import javastrava.api.v3.model.StravaActivity;
  *
  */
 public enum StravaWorkoutType {
-	DEFAULT(0, "Default"), RACE(1, "Race"), LONG_RUN(2, "Long run"), INTERVALS(3, "Intervals"), UNKNOWN(-1, "Unknown");
+	DEFAULT(0, Messages.getString("StravaWorkoutType.default.description")),  //$NON-NLS-1$
+	RACE(1, Messages.getString("StravaWorkoutType.race.description")),  //$NON-NLS-1$
+	LONG_RUN(2, Messages.getString("StravaWorkoutType.longRun.description")),  //$NON-NLS-1$
+	INTERVALS(3, Messages.getString("StravaWorkoutType.intervals.description")),  //$NON-NLS-1$
+	UNKNOWN(-1, Messages.getString("Common.unknown.description")); //$NON-NLS-1$
 
 	private Integer	id;
 	private String	description;

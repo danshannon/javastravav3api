@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.service.ActivityServices;
+import javastrava.config.Messages;
 
 /**
  * <p>
@@ -11,7 +12,9 @@ import javastrava.api.v3.service.ActivityServices;
  *
  */
 public enum StravaActivityZoneType {
-	HEARTRATE("heartrate", "Heartrate"), POWER("power", "Power"), UNKNOWN("UNKNOWN", "Unknown");
+	HEARTRATE(Messages.getString("StravaActivityZoneType.heartrate"), Messages.getString("StravaActivityZoneType.heartrate.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	POWER(Messages.getString("StravaActivityZoneType.power"), Messages.getString("StravaActivityZoneType.power.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

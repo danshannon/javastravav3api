@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaSegmentLeaderboard;
+import javastrava.config.Messages;
 
 /**
  * <p>
@@ -11,13 +12,13 @@ import javastrava.api.v3.model.StravaSegmentLeaderboard;
  *
  */
 public enum StravaAgeGroup {
-	AGE0_24("0_24", "Up to 24"),
-	AGE25_34("25_34", "25 to 34"),
-	AGE35_44("35_44", "35 to 44"),
-	AGE45_54("45_54", "45 to 54"),
-	AGE55_64("55_64", "55 to 64"),
-	AGE65_PLUS("65_plus", "65 and over"),
-	UNKNOWN("UNKNOWN", "Unknown");
+	AGE0_24(Messages.getString("StravaAgeGroup.0-24"), Messages.getString("StravaAgeGroup.0-24.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE25_34(Messages.getString("StravaAgeGroup.25-34"), Messages.getString("StravaAgeGroup.25-34.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE35_44(Messages.getString("StravaAgeGroup.35-44"), Messages.getString("StravaAgeGroup.35-44.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE45_54(Messages.getString("StravaAgeGroup.45-54"), Messages.getString("StravaAgeGroup.45-54.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE55_64(Messages.getString("StravaAgeGroup.55-64"), Messages.getString("StravaAgeGroup.55-64.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE65_PLUS(Messages.getString("StravaAgeGroup.65plus"), Messages.getString("StravaAgeGroup.65plus.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

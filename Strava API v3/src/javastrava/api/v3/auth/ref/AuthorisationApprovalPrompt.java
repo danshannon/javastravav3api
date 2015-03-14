@@ -1,5 +1,7 @@
 package javastrava.api.v3.auth.ref;
 
+import javastrava.config.Messages;
+
 /**
  * <p>
  * {@link #FORCE} or {@link #AUTO}
@@ -17,7 +19,7 @@ package javastrava.api.v3.auth.ref;
  *
  */
 public enum AuthorisationApprovalPrompt {
-	FORCE("force"), AUTO("auto"), UNKNOWN("UNKNOWN");
+	FORCE(Messages.getString("AuthorisationApprovalPrompt.force")), AUTO(Messages.getString("AuthorisationApprovalPrompt.auto")), UNKNOWN(Messages.getString("Common.unknown")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 	public static AuthorisationApprovalPrompt create(final String id) {
 		for (final AuthorisationApprovalPrompt prompt : AuthorisationApprovalPrompt.values()) {

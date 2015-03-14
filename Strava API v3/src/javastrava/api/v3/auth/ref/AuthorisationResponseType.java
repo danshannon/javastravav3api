@@ -1,5 +1,7 @@
 package javastrava.api.v3.auth.ref;
 
+import javastrava.config.Messages;
+
 
 /**
  * <p>
@@ -14,7 +16,7 @@ package javastrava.api.v3.auth.ref;
  *
  */
 public enum AuthorisationResponseType {
-	CODE("code"), UNKNOWN("UNKNOWN");
+	CODE(Messages.getString("AuthorisationResponseType.code")), UNKNOWN(Messages.getString("Common.unknown")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * Required by GSON serialiser

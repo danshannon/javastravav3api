@@ -1,5 +1,7 @@
 package javastrava.api.v3.model.reference;
 
+import javastrava.config.Messages;
+
 /**
  * <p>
  * Type of photo - currently Instagram only
@@ -9,7 +11,8 @@ package javastrava.api.v3.model.reference;
  *
  */
 public enum StravaPhotoType {
-	INSTAGRAM("InstagramPhoto", "Instagram"), UNKNOWN("UNKNOWN", "Unknown");
+	INSTAGRAM(Messages.getString("StravaPhotoType.instagram"), Messages.getString("StravaPhotoType.instagram.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

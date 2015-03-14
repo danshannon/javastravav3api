@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javastrava.api.v3.model.StravaSegmentLeaderboard;
+import javastrava.config.Messages;
 
 /**
  * <p>
@@ -14,19 +15,19 @@ import javastrava.api.v3.model.StravaSegmentLeaderboard;
  *
  */
 public enum StravaWeightClass {
-	POUNDS0_124("0_124", "Under 125lb (under 8st 13lb)", StravaMeasurementMethod.IMPERIAL),
-	POUNDS125_149("125_149", "125-149lb (8st 13lb to 10st 9lb)", StravaMeasurementMethod.IMPERIAL),
-	POUNDS150_164("150_164", "150-164lb (10st 10lb to 11st 10lb)", StravaMeasurementMethod.IMPERIAL),
-	POUNDS165_179("165_179", "165-179lb (11st 11lb to 12st 11lb)", StravaMeasurementMethod.IMPERIAL),
-	POUNDS180_199("180_199", "180-199lb (12st 12lb to 14st 3lb)", StravaMeasurementMethod.IMPERIAL),
-	POUNDS_200PLUS("200_plus", "200lb and over (14st 4lb and over)", StravaMeasurementMethod.IMPERIAL),
-	KG0_54("0_54", "Under 55kg", StravaMeasurementMethod.METRIC),
-	KG55_64("55_64", "55-64kg", StravaMeasurementMethod.METRIC),
-	KG65_74("65_74", "65-74kg", StravaMeasurementMethod.METRIC),
-	KG75_84("75_84", "75-84kg", StravaMeasurementMethod.METRIC),
-	KG85_94("85_94", "85-94kg", StravaMeasurementMethod.METRIC),
-	KG95PLUS("95_plus", "95kg and over", StravaMeasurementMethod.METRIC),
-	UNKNOWN("UNKNOWN", "Unkown", StravaMeasurementMethod.UNKNOWN);
+	POUNDS0_124(Messages.getString("StravaWeightClass.0-124lb"), Messages.getString("StravaWeightClass.0-124lb.description"), StravaMeasurementMethod.IMPERIAL), //$NON-NLS-1$ //$NON-NLS-2$
+	POUNDS125_149(Messages.getString("StravaWeightClass.125-149lb"), Messages.getString("StravaWeightClass.125-149lb.description"), StravaMeasurementMethod.IMPERIAL), //$NON-NLS-1$ //$NON-NLS-2$
+	POUNDS150_164(Messages.getString("StravaWeightClass.150-164lb"), Messages.getString("StravaWeightClass.150-164lb.description"), StravaMeasurementMethod.IMPERIAL), //$NON-NLS-1$ //$NON-NLS-2$
+	POUNDS165_179(Messages.getString("StravaWeightClass.165-179lb"), Messages.getString("StravaWeightClass.165-179lb.description"), StravaMeasurementMethod.IMPERIAL), //$NON-NLS-1$ //$NON-NLS-2$
+	POUNDS180_199(Messages.getString("StravaWeightClass.180-199lb"), Messages.getString("StravaWeightClass.180-199lb.description"), StravaMeasurementMethod.IMPERIAL), //$NON-NLS-1$ //$NON-NLS-2$
+	POUNDS_200PLUS(Messages.getString("StravaWeightClass.200lbPlus"), Messages.getString("StravaWeightClass.200lbPlus.description"), StravaMeasurementMethod.IMPERIAL), //$NON-NLS-1$ //$NON-NLS-2$
+	KG0_54(Messages.getString("StravaWeightClass.0-54kg"), Messages.getString("StravaWeightClass.0-54kg.description"), StravaMeasurementMethod.METRIC), //$NON-NLS-1$ //$NON-NLS-2$
+	KG55_64(Messages.getString("StravaWeightClass.55-64kg"), Messages.getString("StravaWeightClass.55-64kg.description"), StravaMeasurementMethod.METRIC), //$NON-NLS-1$ //$NON-NLS-2$
+	KG65_74(Messages.getString("StravaWeightClass.65-74kg"), Messages.getString("StravaWeightClass.65-74kg.description"), StravaMeasurementMethod.METRIC), //$NON-NLS-1$ //$NON-NLS-2$
+	KG75_84(Messages.getString("StravaWeightClass.75-84kg"), Messages.getString("StravaWeightClass.75-84kg.description"), StravaMeasurementMethod.METRIC), //$NON-NLS-1$ //$NON-NLS-2$
+	KG85_94(Messages.getString("StravaWeightClass.85-94kg"), Messages.getString("StravaWeightClass.85-94kg.description"), StravaMeasurementMethod.METRIC), //$NON-NLS-1$ //$NON-NLS-2$
+	KG95PLUS(Messages.getString("StravaWeightClass.95kgPlus"), Messages.getString("StravaWeightClass.95kgPlus.description"), StravaMeasurementMethod.METRIC), //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description"), StravaMeasurementMethod.UNKNOWN); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String					id;
 	private String					description;

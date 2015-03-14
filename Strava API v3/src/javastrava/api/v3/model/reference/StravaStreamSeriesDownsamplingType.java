@@ -1,5 +1,7 @@
 package javastrava.api.v3.model.reference;
 
+import javastrava.config.Messages;
+
 /**
  * <p>
  * Method for downsampling a strava stream - either by time or by distance
@@ -9,7 +11,9 @@ package javastrava.api.v3.model.reference;
  *
  */
 public enum StravaStreamSeriesDownsamplingType {
-	TIME("time", "Time"), DISTANCE("distance", "Distance"), UNKNOWN("UNKNOWN", "Unknown");
+	TIME(Messages.getString("StravaStreamSeriesDownsamplingType.time"), Messages.getString("StravaStreamSeriesDownsamplingType.time.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	DISTANCE(Messages.getString("StravaStreamSeriesDownsamplingType.distance"), Messages.getString("StravaStreamSeriesDownsamplingType.distance.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String id;
 	private String description;

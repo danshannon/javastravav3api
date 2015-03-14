@@ -1,5 +1,7 @@
 package javastrava.api.v3.model.reference;
 
+import javastrava.config.Messages;
+
 /**
  * <p>
  * Bicycle frame type
@@ -9,7 +11,11 @@ package javastrava.api.v3.model.reference;
  *
  */
 public enum StravaFrameType {
-	MOUNTAIN_BIKE(1, "Mountain Bike"), CROSS(2, "Cross"), ROAD(3, "Road Bike"), TIME_TRIAL(4, "Time Trial"), UNKNOWN(-1, "Unknown");
+	MOUNTAIN_BIKE(1, Messages.getString("StravaFrameType.mountain_bike.description")),  //$NON-NLS-1$
+	CROSS(2, Messages.getString("StravaFrameType.cross.description")),  //$NON-NLS-1$
+	ROAD(3, Messages.getString("StravaFrameType.road.description")),  //$NON-NLS-1$
+	TIME_TRIAL(4, Messages.getString("StravaFrameType.tt.description")),  //$NON-NLS-1$
+	UNKNOWN(-1, Messages.getString("Common.unknown.description")); //$NON-NLS-1$
 
 	private Integer	id;
 	private String	description;

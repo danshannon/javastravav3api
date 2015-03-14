@@ -6,6 +6,7 @@ import java.util.List;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.api.v3.service.impl.retrofit.ActivityServicesImpl;
+import javastrava.config.Strava;
 import javastrava.util.Paging;
 
 /**

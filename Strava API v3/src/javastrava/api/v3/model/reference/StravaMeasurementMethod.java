@@ -1,5 +1,7 @@
 package javastrava.api.v3.model.reference;
 
+import javastrava.config.Messages;
+
 /**
  * <p>
  * Preferred measurement system for an athlete. Those of you living in the 19th century will prefer {@link #IMPERIAL}
@@ -9,7 +11,9 @@ package javastrava.api.v3.model.reference;
  *
  */
 public enum StravaMeasurementMethod {
-	IMPERIAL("feet", "Imperial"), METRIC("meters", "Metric"), UNKNOWN("UNKNOWN", "Unknown");
+	IMPERIAL(Messages.getString("StravaMeasurementMethod.imperial"), Messages.getString("StravaMeasurementMethod.imperial.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	METRIC(Messages.getString("StravaMeasurementMethod.metric"), Messages.getString("StravaMeasurementMethod.metric.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

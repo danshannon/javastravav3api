@@ -1,5 +1,7 @@
 package javastrava.api.v3.model.reference;
 
+import javastrava.config.Messages;
+
 /**
  * <p>
  * Athlete gender
@@ -9,7 +11,9 @@ package javastrava.api.v3.model.reference;
  *
  */
 public enum StravaGender {
-	MALE("M", "Male"), FEMALE("F", "Female"), UNKNOWN("UNKNOWN", "Unknown");
+	MALE(Messages.getString("StravaGender.male"), Messages.getString("StravaGender.male.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	FEMALE(Messages.getString("StravaGender.female"), Messages.getString("StravaGender.female.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

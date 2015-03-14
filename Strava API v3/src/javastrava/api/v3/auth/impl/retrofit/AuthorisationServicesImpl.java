@@ -2,11 +2,11 @@ package javastrava.api.v3.auth.impl.retrofit;
 
 import javastrava.api.v3.auth.AuthorisationServices;
 import javastrava.api.v3.auth.model.TokenResponse;
-import javastrava.api.v3.service.Strava;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.api.v3.service.impl.retrofit.RetrofitClientResponseInterceptor;
 import javastrava.api.v3.service.impl.retrofit.RetrofitErrorHandler;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.JsonUtilImpl;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;

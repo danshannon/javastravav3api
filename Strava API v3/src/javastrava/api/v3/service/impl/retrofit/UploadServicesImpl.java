@@ -7,6 +7,7 @@ import javastrava.api.v3.model.StravaUploadResponse;
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.service.UploadServices;
 import javastrava.api.v3.service.exception.BadRequestException;
+import javastrava.config.Messages;
 import retrofit.mime.TypedFile;
 
 /**
@@ -21,7 +22,7 @@ public class UploadServicesImpl extends StravaServiceImpl<UploadServicesRetrofit
 
 	/**
 	 * <p>
-	 * Private constructor prevents anyone getting an instance without going via {@link #implementation(String)}
+	 * Private constructor prevents anyone getting an instance without going via {@link #implementation(Token)}
 	 * </p>
 	 * 
 	 * @param token The access token used to authenticate to the Strava API
@@ -63,13 +64,13 @@ public class UploadServicesImpl extends StravaServiceImpl<UploadServicesRetrofit
 	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private,
 			final Boolean trainer, final String dataType, final String externalId, final File file) {
 		if (file == null) {
-			throw new IllegalArgumentException("Cannot upload a <null> file!");
+			throw new IllegalArgumentException(Messages.getString("UploadServicesImpl.cannotUploadNullFile")); //$NON-NLS-1$
 		}
 		if (!file.exists() || file.isDirectory()) {
-			throw new IllegalArgumentException("File " + file.getName() + " does not exist!");
+			throw new IllegalArgumentException(String.format(Messages.getString("UploadServicesImpl.fileDoesNotExist"), file.getName())); //$NON-NLS-1$
 		}
 		try {
-			return this.restService.upload(activityType, name, description, _private, trainer, dataType, externalId, new TypedFile("text/xml", file));
+			return this.restService.upload(activityType, name, description, _private, trainer, dataType, externalId, new TypedFile("text/xml", file)); //$NON-NLS-1$
 		} catch (BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}

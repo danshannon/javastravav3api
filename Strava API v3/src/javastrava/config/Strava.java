@@ -1,18 +1,27 @@
-package javastrava.api.v3.service;
+package javastrava.config;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import javastrava.util.Paging;
 import retrofit.RestAdapter;
 import retrofit.RestAdapter.LogLevel;
 
+/**
+ * <p>
+ * Configuration and paging utilities
+ * </p>
+ * 
+ * @author Dan Shannon
+ *
+ */
 public class Strava {
-	private static final String PROPERTIES_FILE = "config.properties";
-	private static final Properties PROPERTIES;
+	private static final String BUNDLE_NAME = "config"; //$NON-NLS-1$
+
+	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+
 	/**
 	 * Strava's default page size. If you don't specify a size, then this is what you'll get from endpoints that support paging.
 	 */
@@ -26,60 +35,45 @@ public class Strava {
 	 * API endpoint for the Strava data API
 	 * </p>
 	 */
-	public static final String ENDPOINT;
+	public static final String ENDPOINT = stringProperty("strava.endpoint"); //$NON-NLS-1$
 	/**
 	 * <p>
 	 * API endpoint for the Strava authorisation API
 	 * </p>
 	 */
-	public static final String AUTH_ENDPOINT;
+	public static final String AUTH_ENDPOINT = stringProperty("strava.auth.endpoint"); //$NON-NLS-1$
 	/**
 	 * Name of the Strava session cookie
 	 */
-	public static final String SESSION_COOKIE_NAME;
+	public static final String SESSION_COOKIE_NAME = stringProperty("strava.session_cookie"); //$NON-NLS-1$
 
 	/**
 	 * Date format to use in query parameters and in (de)serialisation of JSON
 	 */
-	public static final String DATE_FORMAT;
+	public static final String DATE_FORMAT = stringProperty("strava.date_format"); //$NON-NLS-1$
 
 	/**
 	 * Request rate limit every 15 minutes (default is 600)
 	 */
-	public static int RATE_LIMIT;
+	public static int RATE_LIMIT = integerProperty("strava.rate_limit"); //$NON-NLS-1$
 	/**
 	 * Daily request rate limit (default is 30,000)
 	 */
-	public static int RATE_LIMIT_DAILY;
+	public static int RATE_LIMIT_DAILY = integerProperty("strava.rate_limit_daily"); //$NON-NLS-1$
 
 	/**
 	 * The percentage of request limits that, if exceeded, should log a warning
 	 */
-	public static final int WARN_AT_REQUEST_LIMIT_PERCENT;
-	
+	public static final int WARN_AT_REQUEST_LIMIT_PERCENT = integerProperty("strava.warn_at_request_limit_percent"); //$NON-NLS-1$
 
-	
-	static {
-		try {
-			PROPERTIES = loadPropertiesFile(PROPERTIES_FILE);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-		ENDPOINT = stringProperty("strava.endpoint");
-		AUTH_ENDPOINT = stringProperty("strava.auth.endpoint");
-		SESSION_COOKIE_NAME = stringProperty("strava.session_cookie");
-		DATE_FORMAT = stringProperty("strava.date_format");
-		RATE_LIMIT = integerProperty("strava.rate_limit");
-		RATE_LIMIT_DAILY = integerProperty("strava.rate_limit_daily");
-		WARN_AT_REQUEST_LIMIT_PERCENT = integerProperty("strava.warn_at_request_limit_percent");
-	}
 	/**
 	 * <p>
 	 * Utility method - give it any paging instruction and it will return a list of paging instructions that will work with the Strava API (i.e. that conform to
 	 * maximum page sizes etc.)
 	 * </p>
 	 * 
-	 * @param inputPaging The paging instruction to be converted
+	 * @param inputPaging
+	 *            The paging instruction to be converted
 	 * @return List of Strava paging instructions that can be given to the Strava engine
 	 */
 	public static List<Paging> convertToStravaPaging(final Paging inputPaging) {
@@ -127,29 +121,26 @@ public class Strava {
 
 	}
 
-	private static String stringProperty(final String property) {
-		return PROPERTIES.getProperty(property);
+	public static String stringProperty(final String property) {
+		return RESOURCE_BUNDLE.getString(property);
 	}
-
-	private static Properties loadPropertiesFile(final String propertiesFile) throws IOException {
-		Properties properties = new Properties();
-		URL url = Strava.class.getClassLoader().getResource(PROPERTIES_FILE);
-		properties.load(url.openStream());
-		return properties;	}
 
 	/**
 	 * <p>
 	 * Removes the last ignoreLastN items from the list
 	 * </p>
 	 * 
-	 * @param list List of items
-	 * @param ignoreLastN Number of items to remove
-	 * @param <T> The class of the objects contained in the list
+	 * @param list
+	 *            List of items
+	 * @param ignoreLastN
+	 *            Number of items to remove
+	 * @param <T>
+	 *            The class of the objects contained in the list
 	 * @return The resulting list
 	 */
 	public static <T> List<T> ignoreLastN(final List<T> list, final int ignoreLastN) {
 		if (ignoreLastN < 0) {
-			throw new IllegalArgumentException("Cannot remove " + ignoreLastN + " items from a list!");
+			throw new IllegalArgumentException(Messages.getString("Strava.cannotRemove") + ignoreLastN + Messages.getString("Strava.itemsFromAList")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (list == null) {
 			return null;
@@ -168,14 +159,17 @@ public class Strava {
 	 * Removes the first N items from a list
 	 * </p>
 	 * 
-	 * @param list List of items
-	 * @param ignoreFirstN Number of items to remove
-	 * @param <T> The class of object in the list
+	 * @param list
+	 *            List of items
+	 * @param ignoreFirstN
+	 *            Number of items to remove
+	 * @param <T>
+	 *            The class of object in the list
 	 * @return The resulting list
 	 */
 	public static <T> List<T> ignoreFirstN(final List<T> list, final int ignoreFirstN) {
 		if (ignoreFirstN < 0) {
-			throw new IllegalArgumentException("Cannot remove " + ignoreFirstN + " items from a list!");
+			throw new IllegalArgumentException(Messages.getString("Strava,cannotRemove") + ignoreFirstN + Messages.getString("Strava.itemsFromAList"));  //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (list == null) {
 			return null;
@@ -207,31 +201,42 @@ public class Strava {
 			return;
 		}
 		if (pagingInstruction.getPage() < 0) {
-			throw new IllegalArgumentException("page argument may not be < 0");
+			throw new IllegalArgumentException(Messages.getString("Strava.pageArgumentTooLow")); //$NON-NLS-1$
 		}
 		if (pagingInstruction.getPageSize() < 0) {
-			throw new IllegalArgumentException("perPage argument may not be < 0");
+			throw new IllegalArgumentException(Messages.getString("Strava.perPageArgumentTooLow")); //$NON-NLS-1$
 		}
 		if (pagingInstruction.getIgnoreLastN() > 0 && pagingInstruction.getIgnoreLastN() > pagingInstruction.getPageSize()) {
-			throw new IllegalArgumentException("Cannot ignore more items than the page size");
+			throw new IllegalArgumentException(Messages.getString("Strava.IgnoreTooHigh")); //$NON-NLS-1$
 		}
 		if (pagingInstruction.getIgnoreFirstN() > 0 && pagingInstruction.getIgnoreFirstN() > pagingInstruction.getPageSize()) {
-			throw new IllegalArgumentException("Cannot ignore more items than the page size");
+			throw new IllegalArgumentException(Messages.getString("Strava.IgnoreTooHigh")); //$NON-NLS-1$
 		}
 	}
 
+	/**
+	 * @param class1
+	 *            Class for which log level is to be determined
+	 * @return The appropriate log level for the class
+	 */
 	public static LogLevel logLevel(final Class<?> class1) {
-		String propertyName = "retrofit." + class1.getName() + "log_level";
-		return RestAdapter.LogLevel.valueOf(PROPERTIES.getProperty(propertyName,PROPERTIES.getProperty("retrofit.log_level")));
+		String propertyName = "retrofit." + class1.getName() + "log_level"; //$NON-NLS-1$ //$NON-NLS-2$
+		RestAdapter.LogLevel logLevel = null;
+		try {
+			logLevel = RestAdapter.LogLevel.valueOf(RESOURCE_BUNDLE.getString(propertyName));
+		} catch (MissingResourceException e) {
+			logLevel = RestAdapter.LogLevel.valueOf(RESOURCE_BUNDLE.getString("retrofit.log_level")); //$NON-NLS-1$
+		}
+		return logLevel;
 	}
 
 	/**
 	 * @param key
-	 * @return
+	 *            The name of the property to return
+	 * @return Integer value of the property from the resource bundle
 	 */
-	private static Integer integerProperty(final String key) {
-		return new Integer(PROPERTIES.getProperty(key));
+	private static int integerProperty(final String key) {
+		return new Integer(RESOURCE_BUNDLE.getString(key)).intValue();
 	}
-
 
 }

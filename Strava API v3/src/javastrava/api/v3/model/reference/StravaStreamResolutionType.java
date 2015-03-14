@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaStream;
+import javastrava.config.Messages;
 
 /**
  * <p>
@@ -11,7 +12,10 @@ import javastrava.api.v3.model.StravaStream;
  *
  */
 public enum StravaStreamResolutionType {
-	LOW("low", "low", 100), MEDIUM("medium", "medium", 1000), HIGH("high", "high", 10000), UNKNOWN("UNKNOWN", "Unknown", 0);
+	LOW(Messages.getString("StravaStreamResolutionType.low"), Messages.getString("StravaStreamResolutionType.low.description"), 100), //$NON-NLS-1$ //$NON-NLS-2$
+	MEDIUM(Messages.getString("StravaStreamResolutionType.medium"), Messages.getString("StravaStreamResolutionType.medium.description"), 1000), //$NON-NLS-1$ //$NON-NLS-2$
+	HIGH(Messages.getString("StravaStreamResolutionType.high"), Messages.getString("StravaStreamResolutionType.high.description"), 10000), //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description"), 0); //$NON-NLS-1$ //$NON-NLS-2$ 
 
 	private String id;
 	private String description;

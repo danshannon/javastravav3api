@@ -1,5 +1,7 @@
 package javastrava.api.v3.model.reference;
 
+import javastrava.config.Messages;
+
 /**
  * <p>
  * Data stream types
@@ -9,18 +11,18 @@ package javastrava.api.v3.model.reference;
  *
  */
 public enum StravaStreamType {
-	TIME("time", "Time"),
-	MAPPOINT("latlng", "Latitude/Longitude"),
-	DISTANCE("distance", "Distance"),
-	ALTITUDE("altitude", "Altitude"),
-	VELOCITY("velocity_smooth", "Velocity (smoothed)"),
-	HEARTRATE("heartrate", "Heartrate"),
-	CADENCE("cadence", "Cadence"),
-	POWER("watts", "Watts"),
-	TEMPERATURE("temp", "Temperature"),
-	MOVING("moving", "Moving?"),
-	GRADE("grade_smooth", "Grade % (smoothed)"),
-	UNKNOWN("UNKNOWN", "Unknown");
+	TIME(Messages.getString("StravaStreamType.time"), Messages.getString("StravaStreamType.time.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	MAPPOINT(Messages.getString("StravaStreamType.location"), Messages.getString("StravaStreamType.location.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	DISTANCE(Messages.getString("StravaStreamType.distance"), Messages.getString("StravaStreamType.distance.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	ALTITUDE(Messages.getString("StravaStreamType.altitude"), Messages.getString("StravaStreamType.altitude.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	VELOCITY(Messages.getString("StravaStreamType.velocity"), Messages.getString("StravaStreamType.velocity.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	HEARTRATE(Messages.getString("StravaStreamType.heartrate"), Messages.getString("StravaStreamType.heartrate.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CADENCE(Messages.getString("StravaStreamType.cadence"), Messages.getString("StravaStreamType.cadence.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	POWER(Messages.getString("StravaStreamType.power"), Messages.getString("StravaStreamType.power.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	TEMPERATURE(Messages.getString("StravaStreamType.temperature"), Messages.getString("StravaStreamType.temperature.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	MOVING(Messages.getString("StravaStreamType.moving"), Messages.getString("StravaStreamType.moving.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	GRADE(Messages.getString("StravaStreamType.grade"), Messages.getString("StravaStreamType.grade.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

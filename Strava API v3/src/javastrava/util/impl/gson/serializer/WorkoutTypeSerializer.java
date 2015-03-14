@@ -3,6 +3,7 @@ package javastrava.util.impl.gson.serializer;
 import java.lang.reflect.Type;
 
 import javastrava.api.v3.model.reference.StravaWorkoutType;
+import javastrava.config.Messages;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -26,7 +27,7 @@ public class WorkoutTypeSerializer implements JsonSerializer<StravaWorkoutType>,
 		try {
 			return StravaWorkoutType.create(json.getAsInt());
 		} catch (NumberFormatException e) {
-			throw new JsonParseException("Could not parse '" + json.getAsString() + "' as an integer", e);
+			throw new JsonParseException(String.format(Messages.getString("JsonUtilImpl.couldNotDeserialiseInteger"), json.getAsString()), e); //$NON-NLS-1$
 		}
 	}
 

@@ -22,6 +22,7 @@ import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.config.Messages;
 import javastrava.util.Paging;
 
 /**
@@ -145,7 +146,7 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 			commuteUpdate.setCommute(update.getCommute());
 			response = doUpdateActivity(id, commuteUpdate);
 			if (response.getCommute() != update.getCommute()) { 
-				throw new StravaUnknownAPIException("Failed to update commute flag on activity " + id, null, null);
+				throw new StravaUnknownAPIException(Messages.getString("ActivityServicesImpl.failedToUpdateCommuteFlag") + id, null, null); //$NON-NLS-1$
 			}
 			
 			update.setCommute(null);
@@ -444,12 +445,12 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 	 */
 	@Override
 	public StravaComment createComment(final Integer id, final String text) throws NotFoundException, BadRequestException {
-		if (text == null || text.equals("")) {
-			throw new IllegalArgumentException("Text of a comment cannot be empty");
+		if (text == null || text.equals("")) { //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.getString("ActivityServicesImpl.commentCannotBeEmpty")); //$NON-NLS-1$
 		}
 		// TODO Workaround for issue javastrava-api #30 (https://github.com/danshannon/javastravav3api/issues/30)
 		if (!(getToken().hasWriteAccess())) {
-			throw new UnauthorizedException("Cannot create comments without write access");
+			throw new UnauthorizedException(Messages.getString("ActivityServicesImpl.commentWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
 		return this.restService.createComment(id, text);
@@ -482,7 +483,7 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 	public void giveKudos(final Integer activityId) throws NotFoundException {
 		// TODO Workaround for issue javastrava-api #29 (https://github.com/danshannon/javastravav3api/issues/29)
 		if (!(getToken().hasWriteAccess())) {
-			throw new UnauthorizedException("Cannot give kudos without write access");
+			throw new UnauthorizedException(Messages.getString("ActivityServicesImpl.kudosWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
 		

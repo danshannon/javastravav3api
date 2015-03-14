@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.auth.ref.AuthorisationScope;
+import javastrava.config.Messages;
 
 /**
  * <p>
@@ -16,6 +17,9 @@ import javastrava.api.v3.auth.ref.AuthorisationScope;
  *
  */
 public class TokenManager {
+	/**
+	 * @return Singleton implementation of the TokenManager
+	 */
 	public static TokenManager implementation() {
 		return implementation;
 	}
@@ -29,6 +33,11 @@ public class TokenManager {
 		this.tokens = new HashMap<String, Token>();
 	}
 
+	/**
+	 * <p>
+	 * Removes all tokens from the cache
+	 * </p>
+	 */
 	public void clearTokenCache() {
 		for (final Token token : this.tokens.values()) {
 			revokeToken(token);
@@ -188,17 +197,17 @@ public class TokenManager {
 	public void storeToken(final Token token) {
 		String username = null;
 		if (token == null) {
-			throw new IllegalArgumentException("Cannot store null token");
+			throw new IllegalArgumentException(Messages.getString("TokenManager.0")); //$NON-NLS-1$
 		}
 
 		if (token.getAthlete() == null) {
-			throw new IllegalArgumentException("Cannot store a token if it has no athlete");
+			throw new IllegalArgumentException(Messages.getString("TokenManager.1")); //$NON-NLS-1$
 		}
 		if (token.getAthlete().getEmail() == null) {
-			throw new IllegalArgumentException("Cannot store a token if the athlete has no email");
+			throw new IllegalArgumentException(Messages.getString("TokenManager.2")); //$NON-NLS-1$
 		}
 		if (token.getScopes() == null) {
-			throw new IllegalArgumentException("Cannot store a token with <null> scopes");
+			throw new IllegalArgumentException(Messages.getString("TokenManager.3")); //$NON-NLS-1$
 		}
 		username = token.getAthlete().getEmail();
 		this.tokens.put(username, token);

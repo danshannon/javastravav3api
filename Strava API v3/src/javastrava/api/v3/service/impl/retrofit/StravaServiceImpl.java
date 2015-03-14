@@ -1,8 +1,9 @@
 package javastrava.api.v3.service.impl.retrofit;
 
 import javastrava.api.v3.auth.model.Token;
-import javastrava.api.v3.service.Strava;
 import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.config.Messages;
+import javastrava.config.Strava;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -38,7 +39,7 @@ public abstract class StravaServiceImpl<T> {
 	public static float requestRatePercentage() {
 		float percent = (Strava.RATE_LIMIT == 0 ? 0 : 100 * new Float(requestRate) / new Float(Strava.RATE_LIMIT));
 		if (percent > Strava.WARN_AT_REQUEST_LIMIT_PERCENT) {
-			log.warn("Approaching rate limit - " + requestRate + " of " + Strava.RATE_LIMIT + " requests (" + percent + "%) used");
+			log.warn(String.format(Messages.getString("StravaServiceImpl.approachingRateLimit"), requestRate, Strava.RATE_LIMIT, percent)); //$NON-NLS-1$
 		}
 		return percent;
 	}
@@ -51,7 +52,7 @@ public abstract class StravaServiceImpl<T> {
 	public static float requestRateDailyPercentage() {
 		float percent = (Strava.RATE_LIMIT_DAILY == 0 ? 0 : 100 * new Float(requestRateDaily) / new Float(Strava.RATE_LIMIT_DAILY));
 		if (percent > Strava.WARN_AT_REQUEST_LIMIT_PERCENT) {
-			log.warn("Approaching rate limit - " + requestRateDaily + " of " + Strava.RATE_LIMIT_DAILY + " requests (" + percent + "%) used");
+			log.warn(String.format(Messages.getString("StravaServiceImpl.approachingRateLimit"), requestRate, Strava.RATE_LIMIT_DAILY, percent)); //$NON-NLS-1$
 		}
 		return percent;
 	}

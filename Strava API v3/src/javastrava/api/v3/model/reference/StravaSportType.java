@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaClub;
+import javastrava.config.Messages;
 
 /**
  * <p>
@@ -11,11 +12,11 @@ import javastrava.api.v3.model.StravaClub;
  *
  */
 public enum StravaSportType {
-	CYCLING("cycling", "Cycling"),
-	RUNNING("running", "Running"),
-	TRIATHLON("triathlon", "Triathlon"),
-	OTHER("other", "Other"),
-	UNKNOWN("UNKNOWN", "Unknown");
+	CYCLING(Messages.getString("StravaSportType.cycling"), Messages.getString("StravaSportType.cycling.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	RUNNING(Messages.getString("StravaSportType.running"), Messages.getString("StravaSportType.running.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	TRIATHLON(Messages.getString("StravaSportType.triathlon"), Messages.getString("StravaSportType.triathlon.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	OTHER(Messages.getString("StravaSportType.other"), Messages.getString("StravaSportType.other.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

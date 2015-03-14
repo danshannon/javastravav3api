@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaSegmentLeaderboard;
+import javastrava.config.Messages;
 
 /**
  * <p>
@@ -11,11 +12,11 @@ import javastrava.api.v3.model.StravaSegmentLeaderboard;
  *
  */
 public enum StravaLeaderboardDateRange {
-	THIS_YEAR("this_year", "This year"),
-	THIS_MONTH("this_month", "This month"),
-	THIS_WEEK("this_week", "This week"),
-	TODAY("today", "Today"),
-	UNKNOWN("UNKNOWN", "Unknown");
+	THIS_YEAR(Messages.getString("StravaLeaderboardDateRange.thisYear"), Messages.getString("StravaLeaderboardDateRange.thisYear.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	THIS_MONTH(Messages.getString("StravaLeaderboardDateRange.thisMonth"), Messages.getString("StravaLeaderboardDateRange.thisMonth.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	THIS_WEEK(Messages.getString("StravaLeaderboardDateRange.thisWeek"), Messages.getString("StravaLeaderboardDateRange.thisWeek.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	TODAY(Messages.getString("StravaLeaderboardDateRange.today"), Messages.getString("StravaLeaderboardDateRange.today.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

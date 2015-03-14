@@ -1,6 +1,6 @@
 package javastrava.util;
 
-import javastrava.api.v3.service.Strava;
+import javastrava.config.Strava;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

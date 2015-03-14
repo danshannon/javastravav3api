@@ -1,5 +1,7 @@
 package javastrava.api.v3.model.reference;
 
+import javastrava.config.Messages;
+
 /**
  * <p>
  * Status of an athlete's follower relationship with another athlete
@@ -9,7 +11,10 @@ package javastrava.api.v3.model.reference;
  *
  */
 public enum StravaFollowerState {
-	PENDING("pending", "Pending"), ACCEPTED("accepted", "Accepted"), BLOCKED("blocked", "Blocked"), UNKNOWN("UNKNOWN", "Unknown");
+	PENDING(Messages.getString("StravaFollowerState.pending"), Messages.getString("StravaFollowerState.pending.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	ACCEPTED(Messages.getString("StravaFollowerState.accepted"), Messages.getString("StravaFollowerState.accepted.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	BLOCKED(Messages.getString("StravaFollowerState.blocked"), Messages.getString("StravaFollowerState.blocked.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

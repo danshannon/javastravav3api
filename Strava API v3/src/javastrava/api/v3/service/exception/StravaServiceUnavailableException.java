@@ -16,7 +16,7 @@ public class StravaServiceUnavailableException extends RuntimeException implemen
 	private StravaResponse		response;
 
 	public StravaServiceUnavailableException(final String status, final StravaResponse response, final Throwable cause) {
-		super(status + " : " + (response == null ? null : response.toString()), cause);
+		super(status + " : " + (response == null ? null : response.toString()), cause); //$NON-NLS-1$
 		setResponse(response);
 	}
 

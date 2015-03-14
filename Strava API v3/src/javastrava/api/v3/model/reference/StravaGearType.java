@@ -3,14 +3,16 @@
  */
 package javastrava.api.v3.model.reference;
 
+import javastrava.config.Messages;
+
 /**
  * @author Dan Shannon
  *
  */
 public enum StravaGearType {
-	BIKE("b","Bike"),
-	SHOES("g","Shoes"),
-	UNKNOWN("UNKNOWN","Unknown");
+	BIKE(Messages.getString("StravaGearType.bike"),Messages.getString("StravaGearType.bike.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	SHOES(Messages.getString("StravaGearType.shoes"),Messages.getString("StravaGearType.shoes.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"),Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 	
 	private String	id;
 	private String	description;

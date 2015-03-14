@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaSegment;
+import javastrava.config.Messages;
 
 /**
  * <p>
@@ -11,7 +12,10 @@ import javastrava.api.v3.model.StravaSegment;
  *
  */
 public enum StravaSegmentActivityType {
-	RIDE("Ride", "Ride"), RUN("Run", "Run"), WALK("Walk","Walk"), UNKNOWN("UNKNOWN", "Unknown");
+	RIDE(Messages.getString("StravaSegmentActivityType.ride"), Messages.getString("StravaSegmentActivityType.ride.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	RUN(Messages.getString("StravaSegmentActivityType.run"), Messages.getString("StravaSegmentActivityType.run.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	WALK(Messages.getString("StravaSegmentActivityType.walk"),Messages.getString("StravaSegmentActivityType.walk.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String id;
 	private String description;

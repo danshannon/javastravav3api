@@ -28,7 +28,8 @@ import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import javastrava.api.v3.model.reference.StravaStreamType;
 import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.model.reference.StravaWorkoutType;
-import javastrava.api.v3.service.Strava;
+import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.JsonUtil;
 import javastrava.util.exception.JsonSerialisationException;
 import javastrava.util.impl.gson.serializer.ActivityTypeSerializer;
@@ -127,7 +128,7 @@ public class JsonUtilImpl implements JsonUtil {
 		try {
 			return this.gson.fromJson(is, class1);
 		} catch (JsonParseException e) {
-			throw new JsonSerialisationException("Failed to deserialise string '" + is + "' to " + class1.getName(), e);
+			throw new JsonSerialisationException(String.format(Messages.getString("JsonUtilImpl.failedToDeserialiseString"), is, class1.getName()), e); //$NON-NLS-1$
 		}
 	}
 

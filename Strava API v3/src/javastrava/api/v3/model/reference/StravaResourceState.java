@@ -1,5 +1,7 @@
 package javastrava.api.v3.model.reference;
 
+import javastrava.config.Messages;
+
 /**
  * <p>
  * State of a resource returned from Strava.
@@ -9,7 +11,11 @@ package javastrava.api.v3.model.reference;
  *
  */
 public enum StravaResourceState {
-	UPDATING(-1, "updating"), META(1, "meta"), SUMMARY(2, "summary"), DETAILED(3, "detailed"), UNKNOWN(-2, "Unknown");
+	UPDATING(-1, Messages.getString("StravaResourceState.updating.description")),  //$NON-NLS-1$
+	META(1, Messages.getString("StravaResourceState.meta.description")),  //$NON-NLS-1$
+	SUMMARY(2, Messages.getString("StravaResourceState.summary.description")),  //$NON-NLS-1$
+	DETAILED(3, Messages.getString("StravaResourceState.detailed.description")),  //$NON-NLS-1$
+	UNKNOWN(-2, Messages.getString("Common.unknown.description")); //$NON-NLS-1$
 
 	private Integer	id;
 	private String	description;
