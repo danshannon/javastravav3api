@@ -25,7 +25,7 @@ public class WorkoutTypeSerializer implements JsonSerializer<StravaWorkoutType>,
 	@Override
 	public StravaWorkoutType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 		try {
-			return StravaWorkoutType.create(json.getAsInt());
+			return StravaWorkoutType.create(Integer.valueOf(json.getAsInt()));
 		} catch (NumberFormatException e) {
 			throw new JsonParseException(String.format(Messages.getString("JsonUtilImpl.couldNotDeserialiseInteger"), json.getAsString()), e); //$NON-NLS-1$
 		}

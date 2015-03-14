@@ -4,6 +4,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * <p>
+ * Photo(s) associated with a specific activity
+ * </p>
+ * @see StravaActivity#getPhotos()
+ * @author Dan Shannon
+ *
+ */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode

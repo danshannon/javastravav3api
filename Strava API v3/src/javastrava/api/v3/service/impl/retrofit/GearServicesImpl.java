@@ -18,7 +18,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
 public class GearServicesImpl extends StravaServiceImpl<GearServicesRetrofit> implements GearServices {
 	/**
 	 * <p>
-	 * Private constructor ensures that the only way to get an instance is via the {@link #implementation(String)} method
+	 * Private constructor ensures that the only way to get an instance is via the {@link #implementation(Token)} method
 	 * </p>
 	 * 
 	 * @param token The access token to be used to authenticate to the Strava API

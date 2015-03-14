@@ -96,7 +96,6 @@ public interface SegmentServicesRetrofit {
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 * @param page (optional) Page number to be returned
 	 * @param perPage (optional) Number of entries to return per page
-	 * @return Array of Segment Efforts
 	 * @throws NotFoundException If the segment with the given id doesn't exist
 	 */
 	@GET("/segments/{id}/all_efforts")
@@ -105,7 +104,7 @@ public interface SegmentServicesRetrofit {
 			@Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentServices#getSegmentLeaderboard(Integer, StravaGender, StravaAgeGroup, StravaWeightClass, Boolean, Integer, StravaLeaderboardDateRange, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.SegmentServices#getSegmentLeaderboard(Integer, StravaGender, StravaAgeGroup, StravaWeightClass, Boolean, Integer, StravaLeaderboardDateRange, javastrava.util.Paging, Integer)
 	 * 
 	 * @param id Segment identifier
 	 * @param gender (Optional) Gender to filter the leaderboard by

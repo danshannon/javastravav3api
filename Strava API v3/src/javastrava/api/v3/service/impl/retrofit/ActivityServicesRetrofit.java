@@ -8,6 +8,7 @@ import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaPhoto;
 import javastrava.api.v3.model.StravaResponse;
+import javastrava.api.v3.service.ActivityServices;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import retrofit.http.Body;
@@ -54,7 +55,7 @@ public interface ActivityServicesRetrofit {
 	public StravaActivity createManualActivity(@Body final StravaActivity activity) throws BadRequestException;
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityServices#updateActivity(javastrava.api.v3.model.StravaActivity)
+	 * @see javastrava.api.v3.service.ActivityServices#updateActivity(Integer, StravaActivityUpdate)
 	 * 
 	 * @param id The id of the activity to update
 	 * @param activity The activity details
@@ -168,6 +169,8 @@ public interface ActivityServicesRetrofit {
 			throws NotFoundException;
 
 	/**
+	 * @see ActivityServices#createComment(Integer, String)
+	 * 
 	 * @param id Activity identifier
 	 * @param text Text of the comment to create
 	 * @return The comment as posted
@@ -178,13 +181,23 @@ public interface ActivityServicesRetrofit {
 	public StravaComment createComment(@Path("id") final Integer id, @Query("text") final String text) throws BadRequestException, NotFoundException;
 	
 	/**
+	 * @see ActivityServices#deleteComment(Integer, Integer)
+	 * 
 	 * @param activityId Id of the activity the comment was posted to
 	 * @param commentId Id of the comment
-	 * @return 
+	 * @return Strava response 
+	 * @throws NotFoundException If the comment does not exist
 	 */
 	@DELETE("/activities/{activityId}/comments/{commentId}")
 	public StravaResponse deleteComment(@Path("activityId") final Integer activityId, @Path("commentId") final Integer commentId) throws NotFoundException;
 	
+	/**
+	 * @see ActivityServices#giveKudos(Integer)
+	 * 
+	 * @param activityId Activity to be kudoed
+	 * @return Strava response
+	 * @throws NotFoundException if the activity does not exist
+	 */
 	@POST("/activities/{id}/kudos")
 	public StravaResponse giveKudos(@Path("id") final Integer activityId) throws NotFoundException;
 }

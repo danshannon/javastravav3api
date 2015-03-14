@@ -128,7 +128,7 @@ public class StravaSegment {
 	 */
 	private Integer starCount;
 	/**
-	 * The authenticated athlete's fastest effort on this segment - only returned with {@link SegmentServices#listStarredSegments()}
+	 * The authenticated athlete's fastest effort on this segment - only returned with {@link SegmentServices#listStarredSegments(Integer)}
 	 */
 	private StravaSegmentEffort athletePrEffort;
 	

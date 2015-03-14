@@ -93,11 +93,11 @@ public class StreamServicesImpl extends StravaServiceImpl<StreamServicesRetrofit
 	/**
 	 * Validate that what's being asked for from the service makes any sense
 	 * 
-	 * @param resolution
-	 * @param seriesType
-	 * @param types
+	 * @param resolution Resolution requested
+	 * @param seriesType Downsampling type requested
+	 * @param types Stream types requested
 	 */
-	private void validateArguments(final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+	private static void validateArguments(final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types) {
 		if (resolution == StravaStreamResolutionType.UNKNOWN) {
 			throw new IllegalArgumentException(Messages.getString("StreamServicesImpl.invalidStreamResolutionType") + resolution); //$NON-NLS-1$
@@ -117,10 +117,10 @@ public class StreamServicesImpl extends StravaServiceImpl<StreamServicesRetrofit
 	/**
 	 * convert array of types to a comma-separated string, that's what Strava expects
 	 * 
-	 * @param types
-	 * @return
+	 * @param types Array of stream types to be requested
+	 * @return Types as a comma-separated string
 	 */
-	private String typeString(final StravaStreamType[] types) {
+	private static String typeString(final StravaStreamType[] types) {
 		if (types.length == 0) {
 			return null;
 		}
@@ -186,9 +186,9 @@ public class StreamServicesImpl extends StravaServiceImpl<StreamServicesRetrofit
 	}
 
 	/**
-	 * @return
+	 * @return List of all valid stream types that can be requested
 	 */
-	private StravaStreamType[] getAllStreamTypes() {
+	private static StravaStreamType[] getAllStreamTypes() {
 		List<StravaStreamType> types = Arrays.asList(StravaStreamType.values());
 		List<StravaStreamType> returnList = new ArrayList<StravaStreamType>();
 		for (StravaStreamType type : types) {

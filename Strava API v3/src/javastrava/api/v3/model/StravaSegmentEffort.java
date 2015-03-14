@@ -103,7 +103,7 @@ public class StravaSegmentEffort {
 	 */
 	private Boolean				hidden;
 	/**
-	 * see {@link SegmentServices#starredSegments()}
+	 * @see SegmentServices#listStarredSegments(Integer)
 	 */
 	private Boolean				isKom;
 	

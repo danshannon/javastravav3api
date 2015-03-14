@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.util.impl.gson.serializer.MeasurementMethodSerializer;
 
 /**
  * <p>
@@ -11,8 +12,19 @@ import javastrava.config.Messages;
  *
  */
 public enum StravaMeasurementMethod {
+	/**
+	 * Imperial units
+	 */
 	IMPERIAL(Messages.getString("StravaMeasurementMethod.imperial"), Messages.getString("StravaMeasurementMethod.imperial.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Metric
+	 */
 	METRIC(Messages.getString("StravaMeasurementMethod.metric"), Messages.getString("StravaMeasurementMethod.metric.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * <p>
+	 * Should never occur but may if Strava API behaviour has changed
+	 * </p>
+	 */
 	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
@@ -23,12 +35,20 @@ public enum StravaMeasurementMethod {
 		this.description = description;
 	}
 
-	// @JsonValue
+	/**
+	 * Used by JSON serialisation
+	 * @return The string representation of the {@link StravaMeasurementMethod} to be used with the Strava API
+	 * @see MeasurementMethodSerializer#serialize(StravaMeasurementMethod, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
 	public String getValue() {
 		return this.id;
 	}
 
-	// @JsonCreator
+	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of the {@link StravaMeasurementMethod} returned by the Strava API
+	 * @return The matching {@link StravaMeasurementMethod}, or {@link StravaMeasurementMethod#UNKNOWN} if there is no match
+	 */
 	public static StravaMeasurementMethod create(final String id) {
 		StravaMeasurementMethod[] methods = StravaMeasurementMethod.values();
 		for (StravaMeasurementMethod method : methods) {

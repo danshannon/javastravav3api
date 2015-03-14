@@ -62,6 +62,9 @@ public class StravaGear {
 	
 	private StravaGearType gearType;
 	
+	/**
+	 * @param id The id of the gear
+	 */
 	public void setId(final String id) {
 		this.id = id;
 		if (id != null) {

@@ -93,6 +93,7 @@ public interface UploadServices extends StravaServices {
 	 * @param id
 	 *            Upload id originally returned when the upload was done
 	 * @return Upload response indicating current status of the upload
+	 * @throws UnauthorizedException If the authenticated user does not have write access
 	 */
 	public StravaUploadResponse checkUploadStatus(final Integer id) throws UnauthorizedException;
 }

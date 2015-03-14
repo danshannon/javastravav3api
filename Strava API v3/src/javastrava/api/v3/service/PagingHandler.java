@@ -86,7 +86,7 @@ public class PagingHandler {
 			page++;
 			List<T> currentPage;
 			try {
-				currentPage = callback.getPageOfData(new Paging(page, Strava.MAX_PAGE_SIZE));
+				currentPage = callback.getPageOfData(new Paging(Integer.valueOf(page), Strava.MAX_PAGE_SIZE));
 			} catch (NotFoundException e) {
 				return null;
 			} catch (UnauthorizedException e) {
@@ -96,7 +96,7 @@ public class PagingHandler {
 				return null; // Activity doesn't exist
 			}
 			records.addAll(currentPage);
-			if (currentPage.size() < Strava.MAX_PAGE_SIZE) {
+			if (currentPage.size() < Strava.MAX_PAGE_SIZE.intValue()) {
 				loop = false;
 			}
 		}

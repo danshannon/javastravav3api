@@ -2,7 +2,6 @@ package javastrava.api.v3.auth.ref;
 
 import javastrava.config.Messages;
 
-
 /**
  * <p>
  * Valid authorisation response types
@@ -16,7 +15,18 @@ import javastrava.config.Messages;
  *
  */
 public enum AuthorisationResponseType {
-	CODE(Messages.getString("AuthorisationResponseType.code")), UNKNOWN(Messages.getString("Common.unknown")); //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * <p>
+	 * Currently Strava requires the use of this value when exchanging authorisation via OAuth. This is the only valid value.
+	 * </p>
+	 */
+	CODE(Messages.getString("AuthorisationResponseType.code")), //$NON-NLS-1$
+	/**
+	 * <p>
+	 * Should never occur but may if Strava API behaviour has changed
+	 * </p>
+	 */
+	UNKNOWN(Messages.getString("Common.unknown")); //$NON-NLS-1$
 
 	/**
 	 * Required by GSON serialiser

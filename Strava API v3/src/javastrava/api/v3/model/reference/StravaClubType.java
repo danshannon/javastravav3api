@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.util.impl.gson.serializer.ClubTypeSerializer;
 
 /**
  * <p>
@@ -11,11 +12,31 @@ import javastrava.config.Messages;
  *
  */
 public enum StravaClubType {
+	/**
+	 * Casual
+	 */
 	CASUAL(Messages.getString("StravaClubType.casual"), Messages.getString("StravaClubType.casual.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Racing team
+	 */
 	TEAM(Messages.getString("StravaClubType.racing"), Messages.getString("StravaClubType.racing.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Shop club
+	 */
 	SHOP(Messages.getString("StravaClubType.shop"), Messages.getString("StravaClubType.shop.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Company club
+	 */
 	COMPANY(Messages.getString("StravaClubType.company"), Messages.getString("StravaClubType.company.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Other type of club
+	 */
 	OTHER(Messages.getString("StravaClubType.other"), Messages.getString("StravaClubType.other.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * <p>
+	 * Should never occur but may if Strava API behaviour has changed
+	 * </p>
+	 */
 	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
@@ -26,12 +47,20 @@ public enum StravaClubType {
 		this.description = description;
 	}
 
-	// @JsonValue
+	/**
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaClubType} to be used with the Strava API
+	 * @see ClubTypeSerializer#serialize(StravaClubType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
 	public String getValue() {
 		return this.id;
 	}
 
-	// @JsonCreator
+	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of a {@link StravaClubType} returned by the Strava API
+	 * @return The matching {@link StravaClubType}, or {@link StravaClubType#UNKNOWN} if there is no match
+	 */
 	public static StravaClubType create(final String id) {
 		StravaClubType[] clubTypes = StravaClubType.values();
 		for (StravaClubType clubType : clubTypes) {

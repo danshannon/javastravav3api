@@ -1,6 +1,7 @@
 package javastrava.api.v3.auth.ref;
 
 import javastrava.config.Messages;
+import javastrava.util.impl.gson.serializer.AuthorisationApprovalPromptSerializer;
 
 /**
  * <p>
@@ -19,8 +20,29 @@ import javastrava.config.Messages;
  *
  */
 public enum AuthorisationApprovalPrompt {
-	FORCE(Messages.getString("AuthorisationApprovalPrompt.force")), AUTO(Messages.getString("AuthorisationApprovalPrompt.auto")), UNKNOWN(Messages.getString("Common.unknown")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
+	/**
+	 * <p>
+	 * Forces Strava's authorisation process to show the authorisation prompt page, even if the user has already authorised the application with the requested authorisation scope(s)
+	 * </p>
+	 */
+	FORCE(Messages.getString("AuthorisationApprovalPrompt.force")),  //$NON-NLS-1$
+	/**
+	 * <p>
+	 * Tells Strava's authorisation process not to show the authorisation prompt page if the user hqs already authorised the application with the requested authorisation scope(s)
+	 * </p>
+	 */
+	AUTO(Messages.getString("AuthorisationApprovalPrompt.auto")),  //$NON-NLS-1$
+	/**
+	 * <p>
+	 * Should never occur but may if Strava API behaviour has changed
+	 * </p>
+	 */
+	UNKNOWN(Messages.getString("Common.unknown")); //$NON-NLS-1$
+	/**
+	 * <p>Used by {@link AuthorisationApprovalPromptSerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)} when deserialising JSON returned by the Strava API</p>
+	 * @param id The text representation returned by Strava
+	 * @return The instance of {@link AuthorisationApprovalPrompt} with the correct id
+	 */
 	public static AuthorisationApprovalPrompt create(final String id) {
 		for (final AuthorisationApprovalPrompt prompt : AuthorisationApprovalPrompt.values()) {
 			if (prompt.getId().equals(id)) {
@@ -37,6 +59,9 @@ public enum AuthorisationApprovalPrompt {
 	}
 
 	/**
+	 * <p>
+	 * Note that this is also used by {@link AuthorisationApprovalPromptSerializer#serialize(AuthorisationApprovalPrompt, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)} when serialising to JSON
+	 * </p>
 	 * @return the id
 	 */
 	public String getId() {

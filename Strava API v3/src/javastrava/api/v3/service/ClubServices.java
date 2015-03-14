@@ -216,7 +216,69 @@ public interface ClubServices extends StravaServices {
 	 */
 	public StravaClubMembershipResponse leaveClub(final Integer id);
 	
+	/**
+	 * <p>
+	 * Convenience method for returning ALL of the members of a club
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns ALL the members, regardless of how many there are
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is NOT supported.
+	 * </p>
+	 * 
+	 * <p>
+	 * USE WITH CAUTION - CLUBS WITH MANY MEMBERS WILL REQUIRE MANY CALLS TO THE STRAVA API
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns <code>null</code> if club with the given id does not exist
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns an empty list if the club is private
+	 * </p>
+	 * 
+	 * <p>
+	 * URL GET https://www.strava.com/api/v3/clubs/:id/members
+	 * </p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-members">http://strava.github.io/api/v3/clubs/#get-members</a>
+	 * 
+	 * @param clubId
+	 *            The id of the {@link StravaClub} whose member {@link StravaAthlete athletes} should be returned
+	 * @return Returns an array of {@link StravaAthlete athlete} summary {@link StravaResourceState representations}.
+	 */
 	public List<StravaAthlete> listAllClubMembers(final Integer clubId);
 	
+	/**
+	 * <p>
+	 * Retrieve ALL the recent {@link StravaActivity activities} performed by member {@link StravaAthlete athletes} of a specific {@link StravaClub club}.
+	 * </p>
+	 * 
+	 * <p>
+	 * The authenticated athlete must be a member of the club.
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns <code>null</code> if club with the given id does not exist
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns an empty list if the authorised athlete is not a member of the club
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is supported. However, the results are limited to the last 200 total activities by club members.
+	 * </p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-activities">http://strava.github.io/api/v3/clubs/#get-activities</a>
+	 * 
+	 * @param clubId
+	 *            The id of the {@link StravaClub} for which recent {@link StravaActivity activities} are to be returned.
+	 * @return Returns an array of {@link StravaActivity activity} summary {@link StravaResourceState representations}.
+	 */
 	public List<StravaActivity> listAllRecentClubActivities(final Integer clubId);
 }

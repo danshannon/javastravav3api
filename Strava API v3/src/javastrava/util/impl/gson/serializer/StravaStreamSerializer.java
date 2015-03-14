@@ -48,21 +48,21 @@ public class StravaStreamSerializer implements JsonSerializer<StravaStream>, Jso
 		if (streamType == StravaStreamType.MAPPOINT) {
 			points = new ArrayList<StravaMapPoint>();
 			for (JsonElement arrayElement : array) {
-				Float latitude = arrayElement.getAsJsonArray().get(0).getAsFloat();
-				Float longitude = arrayElement.getAsJsonArray().get(1).getAsFloat();
+				Float latitude = Float.valueOf(arrayElement.getAsJsonArray().get(0).getAsFloat());
+				Float longitude = Float.valueOf(arrayElement.getAsJsonArray().get(1).getAsFloat());
 				StravaMapPoint point = new StravaMapPoint(latitude, longitude);
 				points.add(point);
 			}
 		} else if (streamType == StravaStreamType.MOVING) {
 			moving = new ArrayList<Boolean>();
 			for (JsonElement arrayElement : array) {
-				Boolean bool = arrayElement.getAsBoolean();
+				Boolean bool = Boolean.valueOf(arrayElement.getAsBoolean());
 				moving.add(bool);
 			}
 		} else {
 			data = new ArrayList<Float>();
 			for (JsonElement arrayElement : array) {
-				Float dataElement = arrayElement.getAsFloat();
+				Float dataElement = Float.valueOf(arrayElement.getAsFloat());
 				data.add(dataElement);
 			}
 		}

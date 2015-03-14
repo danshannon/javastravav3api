@@ -807,14 +807,15 @@ public interface ActivityServices extends StravaServices {
 	 * URL POST https://www.strava.com/api/v3/activities/:id/comments
 	 * </p>
 	 * 
-	 * @param id
+	 * @param activityId
 	 *            Activity identifier
 	 * @param text
 	 *            Comment text
+	 * @return The comment as created on Strava
 	 * @throws NotFoundException if the activity does not exist
 	 * @throws BadRequestException if the comment is invalid
 	 */
-	public StravaComment createComment(final Integer id, final String text) throws NotFoundException, BadRequestException;
+	public StravaComment createComment(final Integer activityId, final String text) throws NotFoundException, BadRequestException;
 
 	/**
 	 * <p>
@@ -837,6 +838,7 @@ public interface ActivityServices extends StravaServices {
 	 * 
 	 * @param comment
 	 *            The comment to be deleted
+	 * @throws NotFoundException If the comment does not exist on Strava
 	 */
 	public void deleteComment(final StravaComment comment) throws NotFoundException;
 
@@ -847,6 +849,7 @@ public interface ActivityServices extends StravaServices {
 	 * 
 	 * @param activityId
 	 *            Identifier of the activity to be kudoed.
+	 * @throws NotFoundException If the activity does not exist on Strava
 	 */
 	public void giveKudos(final Integer activityId) throws NotFoundException;
 	

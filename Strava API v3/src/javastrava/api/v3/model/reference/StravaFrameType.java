@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.util.impl.gson.serializer.FrameTypeSerializer;
 
 /**
  * <p>
@@ -11,11 +12,28 @@ import javastrava.config.Messages;
  *
  */
 public enum StravaFrameType {
-	MOUNTAIN_BIKE(1, Messages.getString("StravaFrameType.mountain_bike.description")),  //$NON-NLS-1$
-	CROSS(2, Messages.getString("StravaFrameType.cross.description")),  //$NON-NLS-1$
-	ROAD(3, Messages.getString("StravaFrameType.road.description")),  //$NON-NLS-1$
-	TIME_TRIAL(4, Messages.getString("StravaFrameType.tt.description")),  //$NON-NLS-1$
-	UNKNOWN(-1, Messages.getString("Common.unknown.description")); //$NON-NLS-1$
+	/**
+	 * Mountain bike
+	 */
+	MOUNTAIN_BIKE(Integer.valueOf(1), Messages.getString("StravaFrameType.mountain_bike.description")),  //$NON-NLS-1$
+	/**
+	 * Cross bike
+	 */
+	CROSS(Integer.valueOf(2), Messages.getString("StravaFrameType.cross.description")),  //$NON-NLS-1$
+	/**
+	 * Road bike
+	 */
+	ROAD(Integer.valueOf(3), Messages.getString("StravaFrameType.road.description")),  //$NON-NLS-1$
+	/**
+	 * Time trial bike
+	 */
+	TIME_TRIAL(Integer.valueOf(4), Messages.getString("StravaFrameType.tt.description")),  //$NON-NLS-1$
+	/**
+	 * <p>
+	 * Should never occur but may if Strava API behaviour has changed
+	 * </p>
+	 */
+	UNKNOWN(Integer.valueOf(-1), Messages.getString("Common.unknown.description")); //$NON-NLS-1$
 
 	private Integer	id;
 	private String	description;
@@ -25,12 +43,20 @@ public enum StravaFrameType {
 		this.description = description;
 	}
 
-	// @JsonValue
+	/**
+	 * Used by JSON serialisation
+	 * @return The integer representation of this {@link StravaFrameType} to be used with the Strava API
+	 * @see FrameTypeSerializer#serialize(StravaFrameType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
 	public Integer getValue() {
 		return this.id;
 	}
 
-	// @JsonCreator
+	/**
+	 * Used by JSON deserialisation
+	 * @param id The integer representation of a {@link StravaFrameType} as returned by the Strava API
+	 * @return The matching {@link StravaFrameType}, or {@link StravaFrameType#UNKNOWN} if there is no match
+	 */
 	public static StravaFrameType create(final Integer id) {
 		StravaFrameType[] frameTypes = StravaFrameType.values();
 		for (StravaFrameType frameType : frameTypes) {

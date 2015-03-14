@@ -218,6 +218,9 @@ public class AthleteServicesImpl extends StravaServiceImpl<AthleteServicesRetrof
 		}
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.AthleteServices#listAllAthleteFriends(java.lang.Integer)
+	 */
 	@Override
 	public List<StravaAthlete> listAllAthleteFriends(final Integer athleteId) {
 		return PagingHandler.handleListAll(new PagingCallback<StravaAthlete>() {
@@ -230,6 +233,9 @@ public class AthleteServicesImpl extends StravaServiceImpl<AthleteServicesRetrof
 		});
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.AthleteServices#listAllAuthenticatedAthleteFriends()
+	 */
 	@Override
 	public List<StravaAthlete> listAllAuthenticatedAthleteFriends() {
 		return PagingHandler.handleListAll(new PagingCallback<StravaAthlete>() {
@@ -242,6 +248,9 @@ public class AthleteServicesImpl extends StravaServiceImpl<AthleteServicesRetrof
 		});
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.AthleteServices#listAllAthleteKOMs(java.lang.Integer)
+	 */
 	@Override
 	public List<StravaSegmentEffort> listAllAthleteKOMs(final Integer athleteId) {
 		return PagingHandler.handleListAll(new PagingCallback<StravaSegmentEffort>() {
@@ -254,6 +263,9 @@ public class AthleteServicesImpl extends StravaServiceImpl<AthleteServicesRetrof
 		});
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.AthleteServices#listAllAthletesBothFollowing(java.lang.Integer)
+	 */
 	@Override
 	public List<StravaAthlete> listAllAthletesBothFollowing(final Integer athleteId) {
 		return PagingHandler.handleListAll(new PagingCallback<StravaAthlete>() {

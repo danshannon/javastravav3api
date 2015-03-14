@@ -24,7 +24,7 @@ public class TokenResponse {
 	 */
 	private String accessToken;
 	/**
-	 * The type of token (usually "Bearer" - is used to create the authentication request header - see {@link Retrofit#retrofit(Class, String, retrofit.RestAdapter.LogLevel)}
+	 * The type of token (usually "Bearer" - is used to create the authentication request header - see {@link Retrofit#retrofit(Class, Token)}
 	 */
 	private String tokenType;
 	/**

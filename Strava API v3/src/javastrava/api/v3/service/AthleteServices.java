@@ -75,8 +75,6 @@ public interface AthleteServices extends StravaServices {
 	 *
 	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
 	 * 
-	 * @throws UnauthorizedException
-	 *             If the security token in use is invalid or does not have write access
 	 * @param city The city where the athlete wants Strava to think they live
 	 * @param state The state, county or whatever the athlete wants Strava to think they live
 	 * @param country The country where the athlete wants Strava to think they live
@@ -351,11 +349,122 @@ public interface AthleteServices extends StravaServices {
 	 */
 	public StravaStatistics statistics(final Integer id);
 	
+	/**
+	 * <p>
+	 * Convenience method for returning ALL of an athlete's friends
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns ALL the athlete's friends, regardless of how many there are
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is NOT supported.
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns <code>null</code> if athlete with the given id is not found.
+	 * </p>
+	 * 
+	 * <p>
+	 * USE WITH CAUTION - ATHLETES WITH MANY FRIENDS WILL REQUIRE MANY CALLS TO THE STRAVA API
+	 * </p>
+	 * 
+	 * <p>
+	 * URL GET https://www.strava.com/api/v3/athletes/:id/friends
+	 * </p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
+	 * 
+	 * @param athleteId The athlete whose friends are to be listed
+	 * @return List of athlete's friends, or <code>null</code> if the athlete does not exist
+	 */
 	public List<StravaAthlete> listAllAthleteFriends(final Integer athleteId);
 	
+	/**
+	 * <p>
+	 * Convenience method for returning ALL of the authenticated athlete's friends
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns ALL the authenticated athlete's friends, regardless of how many there are
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is NOT supported.
+	 * </p>
+	 * 
+	 * <p>
+	 * USE WITH CAUTION - ATHLETES WITH MANY FRIENDS WILL REQUIRE MANY CALLS TO THE STRAVA API
+	 * </p>
+	 * 
+	 * <p>
+	 * URL GET https://www.strava.com/api/v3/athletes/friends
+	 * </p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
+	 * 
+	 * @return List of the authenticated athlete's friends
+	 */
 	public List<StravaAthlete> listAllAuthenticatedAthleteFriends();
 	
+	/**
+	 * <p>
+	 * Convenience method for returning ALL of an athlete's KOM's
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns ALL the athlete's KOM's, regardless of how many there are
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is NOT supported.
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns <code>null</code> if athlete with the given id is not found.
+	 * </p>
+	 * 
+	 * <p>
+	 * USE WITH CAUTION - ATHLETES WITH MANY KOMS WILL REQUIRE MANY CALLS TO THE STRAVA API
+	 * </p>
+	 * 
+	 * <p>
+	 * URL GET https://www.strava.com/api/v3/athletes/:id/koms
+	 * </p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
+	 * 
+	 * @param athleteId The athlete whose KOM'ss are to be listed
+	 * @return List of segment efforts for which the athlete is KOM, or <code>null</code> if the athlete does not exist
+	 */
 	public List<StravaSegmentEffort> listAllAthleteKOMs(final Integer athleteId);
 	
+	/**
+	 * <p>
+	 * Convenience method for returning ALL of the athletes that both the authenticated athlete and the given athlete are following
+	 * </p>
+	 * 
+	 * <p>
+	 * Returns ALL the followers, regardless of how many there are
+	 * </p>
+	 * 
+	 * <p>
+	 * Pagination is NOT supported.
+	 * </p>
+	 * 
+	 * <p>
+	 * USE WITH CAUTION - ATHLETES WITH MANY FRIENDS WILL REQUIRE MANY CALLS TO THE STRAVA API
+	 * </p>
+	 * 
+	 * <p>
+	 * URL GET https://www.strava.com/api/v3/athletes/:id/both-following
+	 * </p>
+	 * @param athleteId The athlete who the list is to be generated for
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
+	 * 
+	 * @return List of the authenticated athlete's friends
+	 */
 	public List<StravaAthlete> listAllAthletesBothFollowing(final Integer athleteId);
 }

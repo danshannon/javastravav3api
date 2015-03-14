@@ -16,5 +16,10 @@ import javastrava.util.Paging;
  *
  */
 public interface PagingCallback<T> {
+	/**
+	 * @param thisPage The page of data to be returned
+	 * @return Page of data
+	 * @throws NotFoundException If the thing being paged itself throws a {@link NotFoundException}
+	 */
 	public List<T> getPageOfData(final Paging thisPage) throws NotFoundException;
 }

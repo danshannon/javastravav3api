@@ -2,6 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaSegmentLeaderboard;
 import javastrava.config.Messages;
+import javastrava.util.impl.gson.serializer.AgeGroupSerializer;
 
 /**
  * <p>
@@ -12,12 +13,35 @@ import javastrava.config.Messages;
  *
  */
 public enum StravaAgeGroup {
+	/**
+	 * Age 0-24
+	 */
 	AGE0_24(Messages.getString("StravaAgeGroup.0-24"), Messages.getString("StravaAgeGroup.0-24.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Age 25-34
+	 */
 	AGE25_34(Messages.getString("StravaAgeGroup.25-34"), Messages.getString("StravaAgeGroup.25-34.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Age 35-44
+	 */
 	AGE35_44(Messages.getString("StravaAgeGroup.35-44"), Messages.getString("StravaAgeGroup.35-44.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Age 45-54
+	 */
 	AGE45_54(Messages.getString("StravaAgeGroup.45-54"), Messages.getString("StravaAgeGroup.45-54.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Age 55-64
+	 */
 	AGE55_64(Messages.getString("StravaAgeGroup.55-64"), Messages.getString("StravaAgeGroup.55-64.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Age 65+
+	 */
 	AGE65_PLUS(Messages.getString("StravaAgeGroup.65plus"), Messages.getString("StravaAgeGroup.65plus.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * <p>
+	 * Should never occur but may if Strava API behaviour has changed
+	 * </p>
+	 */
 	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
@@ -28,12 +52,20 @@ public enum StravaAgeGroup {
 		this.description = description;
 	}
 
-	// For use as Jackson @JsonValue
+	/**
+	 * Used by JSON serialisation
+	 * @return The string representation of the {@link StravaAgeGroup} to be used in JSON
+	 * @see AgeGroupSerializer#serialize(StravaAgeGroup, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
 	public String getValue() {
 		return this.id;
 	}
 
-	// For use as Jackson @JsonCreator
+	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of the {@link StravaAgeGroup} returned by the Strava API
+	 * @return The matching {@link StravaAgeGroup}, or {@link StravaAgeGroup#UNKNOWN} if there is no match
+	 */
 	public static StravaAgeGroup create(final String id) {
 		StravaAgeGroup[] ageGroups = StravaAgeGroup.values();
 		for (StravaAgeGroup ageGroup : ageGroups) {

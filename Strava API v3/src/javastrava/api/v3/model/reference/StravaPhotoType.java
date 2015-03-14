@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.util.impl.gson.serializer.PhotoTypeSerializer;
 
 /**
  * <p>
@@ -11,7 +12,15 @@ import javastrava.config.Messages;
  *
  */
 public enum StravaPhotoType {
+	/**
+	 * Instagram photo
+	 */
 	INSTAGRAM(Messages.getString("StravaPhotoType.instagram"), Messages.getString("StravaPhotoType.instagram.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * <p>
+	 * Should never occur but may if Strava API behaviour has changed
+	 * </p>
+	 */
 	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
@@ -22,12 +31,20 @@ public enum StravaPhotoType {
 		this.description = description;
 	}
 
-	// @JsonValue
+	/**
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaPhotoType} to be used with the Strava API
+	 * @see PhotoTypeSerializer#serialize(StravaPhotoType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
 	public String getValue() {
 		return this.id;
 	}
 
-	// @JsonCreator
+	/**
+	 * Used by JSON deserialisation
+	 * @param id The string represenation of a {@link StravaPhotoType} as returned by the Strava API
+	 * @return The matching {@link StravaPhotoType}, or {@link StravaPhotoType#UNKNOWN} if there is no match
+	 */
 	public static StravaPhotoType create(final String id) {
 		StravaPhotoType[] types = StravaPhotoType.values();
 		for (StravaPhotoType type : types) {

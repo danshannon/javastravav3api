@@ -75,11 +75,13 @@ public class JsonUtilImpl implements JsonUtil {
 	private final GsonBuilder gsonBuilder;
 	private final Gson gson;
 
+	/**
+	 * Default constructor
+	 */
 	public JsonUtilImpl() {
 		this.gsonBuilder = new GsonBuilder();
 		this.gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
 		this.gsonBuilder.setDateFormat(Strava.DATE_FORMAT);
-		//this.gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationApprovalPrompt.class, new AuthorisationApprovalPromptSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationResponseType.class, new AuthorisationResponseTypeSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationScope.class, new AuthorisationScopeSerializer());
@@ -140,6 +142,9 @@ public class JsonUtilImpl implements JsonUtil {
 		return this.gson.toJson(object);
 	}
 
+	/**
+	 * @return The GSON
+	 */
 	public Gson getGson() {
 		return this.gson;
 	}

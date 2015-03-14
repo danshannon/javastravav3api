@@ -23,6 +23,9 @@ import com.squareup.okhttp.OkHttpClient;
 @NoArgsConstructor
 public class RetrofitClientResponseInterceptor extends OkClient {
 
+	/**
+	 * @param client The client to use
+	 */
 	public RetrofitClientResponseInterceptor(final OkHttpClient client) {
 		super(client);
 	}

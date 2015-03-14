@@ -14,7 +14,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
 public class SegmentEffortServicesImpl extends StravaServiceImpl<SegmentEffortServicesRetrofit> implements SegmentEffortServices {
 	/**
 	 * <p>
-	 * Private constructor ensures that the only way to get an instance is by using {@link #implementation(String)} with a valid access token.
+	 * Private constructor ensures that the only way to get an instance is by using {@link #implementation(Token)} with a valid access token.
 	 * </p>
 	 * 
 	 * @param token The access token to be used for authentication to the Strava API

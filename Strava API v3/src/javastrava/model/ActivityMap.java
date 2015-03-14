@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class ActivityMap extends AbstractMap {
+	// empty (for now)
 }

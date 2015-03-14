@@ -129,7 +129,7 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityServices#updateActivity(javastrava.api.v3.model.StravaActivityUpdate)
+	 * @see javastrava.api.v3.service.ActivityServices#updateActivity(Integer,javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
 	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) {
@@ -200,15 +200,15 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 	}
 
 	/**
-	 * @param date
+	 * @param date Date for which seconds since the epoch date is to be calculated
 	 * @return Number of seconds after the unix epoch date equivalent to the given date
 	 */
-	private Integer secondsSinceUnixEpoch(final Calendar date) {
+	private static Integer secondsSinceUnixEpoch(final Calendar date) {
 		if (date == null) {
 			return null;
 		}
-		Long timeInSeconds = date.getTimeInMillis() / 1000L;
-		return timeInSeconds.intValue();
+		Long timeInSeconds = Long.valueOf(date.getTimeInMillis() / 1000L);
+		return Integer.valueOf(timeInSeconds.intValue());
 	}
 
 	/**
@@ -535,6 +535,9 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 		});
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.ActivityServices#listAllAuthenticatedAthleteActivities(java.util.Calendar, java.util.Calendar)
+	 */
 	@Override
 	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final Calendar before, final Calendar after) {
 		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
@@ -547,6 +550,9 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 		});
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.ActivityServices#listAllFriendsActivities()
+	 */
 	@Override
 	public List<StravaActivity> listAllFriendsActivities() {
 		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {

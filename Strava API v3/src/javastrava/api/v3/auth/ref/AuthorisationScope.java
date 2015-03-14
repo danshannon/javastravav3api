@@ -1,6 +1,7 @@
 package javastrava.api.v3.auth.ref;
 
 import javastrava.config.Messages;
+import javastrava.util.impl.gson.serializer.AuthorisationScopeSerializer;
 
 /**
  * <p>
@@ -8,11 +9,34 @@ import javastrava.config.Messages;
  * </p>
  *
  * @author Dan Shannon
- *
  */
 public enum AuthorisationScope {
-	VIEW_PRIVATE(Messages.getString("AuthorisationScope.view_private"), Messages.getString("AuthorisationScope.view_private.description")), WRITE(Messages.getString("AuthorisationScope.write"), Messages.getString("AuthorisationScope.write.description")), UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-
+	/**
+	 * <p>
+	 * This authorisation scope allows the Strava API to return data from within the authenticated user's privacy zones
+	 * </p>
+	 */
+	VIEW_PRIVATE(Messages.getString("AuthorisationScope.view_private"), Messages.getString("AuthorisationScope.view_private.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * <p>
+	 * This authorisation scope allows the Strava API to write data - that is to update athlete details, activity details, and to make comments and give kudos to other riders' activities
+	 * </p>
+	 */
+	WRITE(Messages.getString("AuthorisationScope.write"), Messages.getString("AuthorisationScope.write.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * <p>
+	 * Should never occur but may if the Strava API behaviour has changed
+	 * </p>
+	 */
+	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * <p>
+	 * Used when deserialising JSON returned by the Strava API
+	 * </p>
+	 * @see AuthorisationScopeSerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 * @param id String value returned by Strava
+	 * @return Returns the matching instance of {@link AuthorisationScope}, or {@link AuthorisationScope#UNKNOWN} if there is no match
+	 */
 	public static AuthorisationScope create(final String id) {
 		for (final AuthorisationScope scope : AuthorisationScope.values()) {
 			if (scope.getId().equals(id)) {
@@ -39,6 +63,7 @@ public enum AuthorisationScope {
 	}
 
 	/**
+	 * @see AuthorisationScopeSerializer#serialize(AuthorisationScope, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 * @return the id
 	 */
 	public String getId() {

@@ -80,7 +80,7 @@ public class ClubServicesImpl extends StravaServiceImpl<ClubServicesRetrofit> im
 		}
 	}
 
-	private StravaClub privateClubRepresentation(final Integer id) {
+	private static StravaClub privateClubRepresentation(final Integer id) {
 		StravaClub club = new StravaClub();
 		club.setId(id);
 		club.setResourceState(StravaResourceState.META);
@@ -139,10 +139,10 @@ public class ClubServicesImpl extends StravaServiceImpl<ClubServicesRetrofit> im
 		}
 	}
 
-	private StravaClubMembershipResponse failedClubMembershipResponse() {
+	private static StravaClubMembershipResponse failedClubMembershipResponse() {
 		StravaClubMembershipResponse response = new StravaClubMembershipResponse();
-		response.setActive(false);
-		response.setSuccess(false);
+		response.setActive(Boolean.FALSE);
+		response.setSuccess(Boolean.FALSE);
 		return response;
 	}
 
@@ -186,6 +186,9 @@ public class ClubServicesImpl extends StravaServiceImpl<ClubServicesRetrofit> im
 		return activities;
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.ClubServices#listAllClubMembers(java.lang.Integer)
+	 */
 	@Override
 	public List<StravaAthlete> listAllClubMembers(final Integer clubId) {
 		return PagingHandler.handleListAll(new PagingCallback<StravaAthlete>() {
@@ -199,6 +202,9 @@ public class ClubServicesImpl extends StravaServiceImpl<ClubServicesRetrofit> im
 		
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.ClubServices#listAllRecentClubActivities(java.lang.Integer)
+	 */
 	@Override
 	public List<StravaActivity> listAllRecentClubActivities(final Integer clubId) {
 		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {

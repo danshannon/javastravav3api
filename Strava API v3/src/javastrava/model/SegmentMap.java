@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class SegmentMap extends AbstractMap {
-
+	// Empty (for now)
 }

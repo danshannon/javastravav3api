@@ -2,6 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.service.SegmentServices;
 import javastrava.config.Messages;
+import javastrava.util.impl.gson.serializer.SegmentExplorerActivityTypeSerializer;
 
 /**
  * <p>
@@ -14,8 +15,19 @@ import javastrava.config.Messages;
  *
  */
 public enum StravaSegmentExplorerActivityType {
+	/**
+	 * Running
+	 */
 	RUNNING(Messages.getString("StravaSegmentExplorerActivityType.running"), Messages.getString("StravaSegmentExplorerActivityType.running.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Riding
+	 */
 	RIDING(Messages.getString("StravaSegmentExplorerActivityType.riding"), Messages.getString("StravaSegmentExplorerActivityType.riding.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * <p>
+	 * Should never occur but may if Strava API behaviour has changed
+	 * </p>
+	 */
 	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String id;
@@ -26,12 +38,20 @@ public enum StravaSegmentExplorerActivityType {
 		this.description = description;
 	}
 
-	// @JsonValue
+	/**
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaSegmentExplorerActivityType} to be used with the Strava API
+	 * @see SegmentExplorerActivityTypeSerializer#serialize(StravaSegmentExplorerActivityType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
 	public String getValue() {
 		return this.id;
 	}
 
-	// @JsonCreator
+	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of a {@link StravaSegmentExplorerActivityType} as returned by the Strava API
+	 * @return The matching {@link StravaSegmentExplorerActivityType}, or {@link StravaSegmentExplorerActivityType#UNKNOWN} if there is no match
+	 */
 	public static StravaSegmentExplorerActivityType create(final String id) {
 		for (StravaSegmentExplorerActivityType type : StravaSegmentExplorerActivityType.values()) {
 			if (type.getId().equals(id)) {

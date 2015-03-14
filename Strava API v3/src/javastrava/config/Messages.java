@@ -1,8 +1,12 @@
 package javastrava.config;
 
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * Internationalisable messages
+ * @author Dan Shannon
+ *
+ */
 public class Messages {
 	private static final String BUNDLE_NAME = "messages"; //$NON-NLS-1$
 
@@ -11,11 +15,13 @@ public class Messages {
 	private Messages() {
 	}
 
+	/**
+	 * Get the value of a property in the resource bundle
+	 * @param key Name of the property
+	 * @return The value of the property
+	 */
 	public static String getString(final String key) {
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
-			return '!' + key + '!';
-		}
+		return RESOURCE_BUNDLE.getString(key);
+		
 	}
 }
