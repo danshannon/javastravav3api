@@ -2,6 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.WorkoutTypeSerializer;
 
 /**
@@ -16,25 +17,25 @@ public enum StravaWorkoutType {
 	/**
 	 * Default
 	 */
-	DEFAULT(Integer.valueOf(0), Messages.getString("StravaWorkoutType.default.description")),  //$NON-NLS-1$
+	DEFAULT(Strava.integerProperty("StravaWorkoutType.default"), Messages.getString("StravaWorkoutType.default.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Race
 	 */
-	RACE(Integer.valueOf(1), Messages.getString("StravaWorkoutType.race.description")),  //$NON-NLS-1$
+	RACE(Strava.integerProperty("StravaWorkoutType.race"), Messages.getString("StravaWorkoutType.race.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Long run
 	 */
-	LONG_RUN(Integer.valueOf(2), Messages.getString("StravaWorkoutType.longRun.description")),  //$NON-NLS-1$
+	LONG_RUN(Strava.integerProperty("StravaWorkoutType.longRun"), Messages.getString("StravaWorkoutType.longRun.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Intervals
 	 */
-	INTERVALS(Integer.valueOf(3), Messages.getString("StravaWorkoutType.intervals.description")),  //$NON-NLS-1$
+	INTERVALS(Strava.integerProperty("StravaWorkoutType.intervals"), Messages.getString("StravaWorkoutType.intervals.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Integer.valueOf(-1), Messages.getString("Common.unknown.description")); //$NON-NLS-1$
+	UNKNOWN(Strava.integerProperty("Common.unknown.integer"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private Integer	id;
 	private String	description;

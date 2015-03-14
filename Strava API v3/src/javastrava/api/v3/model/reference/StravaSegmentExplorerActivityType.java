@@ -2,6 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.service.SegmentServices;
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.SegmentExplorerActivityTypeSerializer;
 
 /**
@@ -18,17 +19,17 @@ public enum StravaSegmentExplorerActivityType {
 	/**
 	 * Running
 	 */
-	RUNNING(Messages.getString("StravaSegmentExplorerActivityType.running"), Messages.getString("StravaSegmentExplorerActivityType.running.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	RUNNING(Strava.stringProperty("StravaSegmentExplorerActivityType.running"), Messages.getString("StravaSegmentExplorerActivityType.running.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Riding
 	 */
-	RIDING(Messages.getString("StravaSegmentExplorerActivityType.riding"), Messages.getString("StravaSegmentExplorerActivityType.riding.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	RIDING(Strava.stringProperty("StravaSegmentExplorerActivityType.riding"), Messages.getString("StravaSegmentExplorerActivityType.riding.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String id;
 	private String description;

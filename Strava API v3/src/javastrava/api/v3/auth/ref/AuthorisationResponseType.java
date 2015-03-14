@@ -1,6 +1,7 @@
 package javastrava.api.v3.auth.ref;
 
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 
 /**
  * <p>
@@ -20,7 +21,7 @@ public enum AuthorisationResponseType {
 	 * Currently Strava requires the use of this value when exchanging authorisation via OAuth. This is the only valid value.
 	 * </p>
 	 */
-	CODE(Messages.getString("AuthorisationResponseType.code")), //$NON-NLS-1$
+	CODE(Strava.stringProperty("AuthorisationResponseType.code")), //$NON-NLS-1$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed

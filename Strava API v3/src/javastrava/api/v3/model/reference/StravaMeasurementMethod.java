@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.MeasurementMethodSerializer;
 
 /**
@@ -15,17 +16,17 @@ public enum StravaMeasurementMethod {
 	/**
 	 * Imperial units
 	 */
-	IMPERIAL(Messages.getString("StravaMeasurementMethod.imperial"), Messages.getString("StravaMeasurementMethod.imperial.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	IMPERIAL(Strava.stringProperty("StravaMeasurementMethod.imperial"), Messages.getString("StravaMeasurementMethod.imperial.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Metric
 	 */
-	METRIC(Messages.getString("StravaMeasurementMethod.metric"), Messages.getString("StravaMeasurementMethod.metric.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	METRIC(Strava.stringProperty("StravaMeasurementMethod.metric"), Messages.getString("StravaMeasurementMethod.metric.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

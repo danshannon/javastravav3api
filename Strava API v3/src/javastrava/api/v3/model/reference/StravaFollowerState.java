@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.FollowerStateSerializer;
 
 /**
@@ -15,21 +16,21 @@ public enum StravaFollowerState {
 	/**
 	 * Follower has been requested but neither accepted nor blocked at this time
 	 */
-	PENDING(Messages.getString("StravaFollowerState.pending"), Messages.getString("StravaFollowerState.pending.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	PENDING(Strava.stringProperty("StravaFollowerState.pending"), Messages.getString("StravaFollowerState.pending.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Follower has been accepted
 	 */
-	ACCEPTED(Messages.getString("StravaFollowerState.accepted"), Messages.getString("StravaFollowerState.accepted.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	ACCEPTED(Strava.stringProperty("StravaFollowerState.accepted"), Messages.getString("StravaFollowerState.accepted.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Follower has been blocked
 	 */
-	BLOCKED(Messages.getString("StravaFollowerState.blocked"), Messages.getString("StravaFollowerState.blocked.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	BLOCKED(Strava.stringProperty("StravaFollowerState.blocked"), Messages.getString("StravaFollowerState.blocked.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

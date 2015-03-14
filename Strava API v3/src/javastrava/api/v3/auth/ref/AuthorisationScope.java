@@ -1,6 +1,7 @@
 package javastrava.api.v3.auth.ref;
 
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.AuthorisationScopeSerializer;
 
 /**
@@ -16,19 +17,19 @@ public enum AuthorisationScope {
 	 * This authorisation scope allows the Strava API to return data from within the authenticated user's privacy zones
 	 * </p>
 	 */
-	VIEW_PRIVATE(Messages.getString("AuthorisationScope.view_private"), Messages.getString("AuthorisationScope.view_private.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	VIEW_PRIVATE(Strava.stringProperty("AuthorisationScope.view_private"), Messages.getString("AuthorisationScope.view_private.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * This authorisation scope allows the Strava API to write data - that is to update athlete details, activity details, and to make comments and give kudos to other riders' activities
 	 * </p>
 	 */
-	WRITE(Messages.getString("AuthorisationScope.write"), Messages.getString("AuthorisationScope.write.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	WRITE(Strava.stringProperty("AuthorisationScope.write"), Messages.getString("AuthorisationScope.write.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if the Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Used when deserialising JSON returned by the Strava API

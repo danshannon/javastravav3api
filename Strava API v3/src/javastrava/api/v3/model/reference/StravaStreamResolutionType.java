@@ -2,6 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaStream;
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.StreamResolutionTypeSerializer;
 
 /**
@@ -16,21 +17,21 @@ public enum StravaStreamResolutionType {
 	/**
 	 * Low resolution (100 points)
 	 */
-	LOW(Messages.getString("StravaStreamResolutionType.low"), Messages.getString("StravaStreamResolutionType.low.description"), 100), //$NON-NLS-1$ //$NON-NLS-2$
+	LOW(Strava.stringProperty("StravaStreamResolutionType.low"), Messages.getString("StravaStreamResolutionType.low.description"), 100), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Medium resolution (1000 points)
 	 */
-	MEDIUM(Messages.getString("StravaStreamResolutionType.medium"), Messages.getString("StravaStreamResolutionType.medium.description"), 1000), //$NON-NLS-1$ //$NON-NLS-2$
+	MEDIUM(Strava.stringProperty("StravaStreamResolutionType.medium"), Messages.getString("StravaStreamResolutionType.medium.description"), 1000), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * High resolution (10000 points)
 	 */
-	HIGH(Messages.getString("StravaStreamResolutionType.high"), Messages.getString("StravaStreamResolutionType.high.description"), 10000), //$NON-NLS-1$ //$NON-NLS-2$
+	HIGH(Strava.stringProperty("StravaStreamResolutionType.high"), Messages.getString("StravaStreamResolutionType.high.description"), 10000), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description"), 0); //$NON-NLS-1$ //$NON-NLS-2$ 
+	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description"), 0); //$NON-NLS-1$ //$NON-NLS-2$ 
 
 	private String id;
 	private String description;

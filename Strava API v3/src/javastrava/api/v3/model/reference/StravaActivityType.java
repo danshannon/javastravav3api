@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.ActivityTypeSerializer;
 
 /**
@@ -20,73 +21,73 @@ public enum StravaActivityType {
 	/**
 	 * Bike ride
 	 */
-	RIDE(Messages.getString("StravaActivityType.ride"), Messages.getString("StravaActivityType.ride.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	RIDE(Strava.stringProperty("StravaActivityType.ride"), Messages.getString("StravaActivityType.ride.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Run
 	 */
-	RUN(Messages.getString("StravaActivityType.run"), Messages.getString("StravaActivityType.run.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	RUN(Strava.stringProperty("StravaActivityType.run"), Messages.getString("StravaActivityType.run.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Swim
 	 */
-	SWIM(Messages.getString("StravaActivityType.swim"), Messages.getString("StravaActivityType.swim.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	SWIM(Strava.stringProperty("StravaActivityType.swim"), Messages.getString("StravaActivityType.swim.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Workout
 	 */
-	WORKOUT(Messages.getString("StravaActivityType.workout"), Messages.getString("StravaActivityType.workout.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	WORKOUT(Strava.stringProperty("StravaActivityType.workout"), Messages.getString("StravaActivityType.workout.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Hike
 	 */
-	HIKE(Messages.getString("StravaActivityType.hike"), Messages.getString("StravaActivityType.hike.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	HIKE(Strava.stringProperty("StravaActivityType.hike"), Messages.getString("StravaActivityType.hike.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Walk
 	 */
-	WALK(Messages.getString("StravaActivityType.walk"), Messages.getString("StravaActivityType.walk.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	WALK(Strava.stringProperty("StravaActivityType.walk"), Messages.getString("StravaActivityType.walk.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Nordic skiing (telemark)
 	 */
-	NORDIC_SKI(Messages.getString("StravaActivityType.nordicski"), Messages.getString("StravaActivityType.nordicski.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	NORDIC_SKI(Strava.stringProperty("StravaActivityType.nordicski"), Messages.getString("StravaActivityType.nordicski.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Alpine skiing
 	 */
-	ALPINE_SKI(Messages.getString("StravaActivityType.alpineski"), Messages.getString("StravaActivityType.alpineski.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	ALPINE_SKI(Strava.stringProperty("StravaActivityType.alpineski"), Messages.getString("StravaActivityType.alpineski.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Back-country skiing (off piste)
 	 */
-	BACKCOUNTRY_SKI(Messages.getString("StravaActivityType.backcountryski"), Messages.getString("StravaActivityType.backcountryski.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	BACKCOUNTRY_SKI(Strava.stringProperty("StravaActivityType.backcountryski"), Messages.getString("StravaActivityType.backcountryski.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Ice skating
 	 */
-	ICE_SKATE(Messages.getString("StravaActivityType.iceskate"), Messages.getString("StravaActivityType.iceskate.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	ICE_SKATE(Strava.stringProperty("StravaActivityType.iceskate"), Messages.getString("StravaActivityType.iceskate.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Inline skating (rollerblading)
 	 */
-	INLINE_SKATE(Messages.getString("StravaActivityType.inlineskate"), Messages.getString("StravaActivityType.inlineskate.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	INLINE_SKATE(Strava.stringProperty("StravaActivityType.inlineskate"), Messages.getString("StravaActivityType.inlineskate.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Kite surfing
 	 */
-	KITESURF(Messages.getString("StravaActivityType.kitesurf"), Messages.getString("StravaActivityType.kitesurf.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	KITESURF(Strava.stringProperty("StravaActivityType.kitesurf"), Messages.getString("StravaActivityType.kitesurf.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Rollerskiing
 	 */
-	ROLLERSKI(Messages.getString("StravaActivityType.rollerski"), Messages.getString("StravaActivityType.rollerski.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	ROLLERSKI(Strava.stringProperty("StravaActivityType.rollerski"), Messages.getString("StravaActivityType.rollerski.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Windsurfing
 	 */
-	WINDSURF(Messages.getString("StravaActivityType.windsurf"), Messages.getString("StravaActivityType.windsurf.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	WINDSURF(Strava.stringProperty("StravaActivityType.windsurf"), Messages.getString("StravaActivityType.windsurf.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Snowboarding
 	 */
-	SNOWBOARD(Messages.getString("StravaActivityType.snowboard"), Messages.getString("StravaActivityType.snowboard.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	SNOWBOARD(Strava.stringProperty("StravaActivityType.snowboard"), Messages.getString("StravaActivityType.snowboard.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Snowshoeing
 	 */
-	SNOWSHOE(Messages.getString("StravaActivityType.snowshoe"), Messages.getString("StravaActivityType.snowshoe.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	SNOWSHOE(Strava.stringProperty("StravaActivityType.snowshoe"), Messages.getString("StravaActivityType.snowshoe.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

@@ -2,6 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaGear;
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 
 /**
  * Type of {@link StravaGear}
@@ -12,17 +13,17 @@ public enum StravaGearType {
 	/**
 	 * Bike
 	 */
-	BIKE(Messages.getString("StravaGearType.bike"),Messages.getString("StravaGearType.bike.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	BIKE(Strava.stringProperty("StravaGearType.bike"),Messages.getString("StravaGearType.bike.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Running shoes
 	 */
-	SHOES(Messages.getString("StravaGearType.shoes"),Messages.getString("StravaGearType.shoes.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	SHOES(Strava.stringProperty("StravaGearType.shoes"),Messages.getString("StravaGearType.shoes.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"),Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Strava.stringProperty("Common.unknown"),Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 	
 	private String	id;
 	private String	description;

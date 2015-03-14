@@ -2,6 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaSegmentLeaderboard;
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.LeaderboardDateRangeSerializer;
 
 /**
@@ -16,25 +17,25 @@ public enum StravaLeaderboardDateRange {
 	/**
 	 * This calendar year
 	 */
-	THIS_YEAR(Messages.getString("StravaLeaderboardDateRange.thisYear"), Messages.getString("StravaLeaderboardDateRange.thisYear.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	THIS_YEAR(Strava.stringProperty("StravaLeaderboardDateRange.thisYear"), Messages.getString("StravaLeaderboardDateRange.thisYear.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This calendar month
 	 */
-	THIS_MONTH(Messages.getString("StravaLeaderboardDateRange.thisMonth"), Messages.getString("StravaLeaderboardDateRange.thisMonth.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	THIS_MONTH(Strava.stringProperty("StravaLeaderboardDateRange.thisMonth"), Messages.getString("StravaLeaderboardDateRange.thisMonth.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This calendar week
 	 */
-	THIS_WEEK(Messages.getString("StravaLeaderboardDateRange.thisWeek"), Messages.getString("StravaLeaderboardDateRange.thisWeek.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	THIS_WEEK(Strava.stringProperty("StravaLeaderboardDateRange.thisWeek"), Messages.getString("StravaLeaderboardDateRange.thisWeek.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Today
 	 */
-	TODAY(Messages.getString("StravaLeaderboardDateRange.today"), Messages.getString("StravaLeaderboardDateRange.today.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	TODAY(Strava.stringProperty("StravaLeaderboardDateRange.today"), Messages.getString("StravaLeaderboardDateRange.today.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

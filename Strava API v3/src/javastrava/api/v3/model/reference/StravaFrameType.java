@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.FrameTypeSerializer;
 
 /**
@@ -15,25 +16,25 @@ public enum StravaFrameType {
 	/**
 	 * Mountain bike
 	 */
-	MOUNTAIN_BIKE(Integer.valueOf(1), Messages.getString("StravaFrameType.mountain_bike.description")),  //$NON-NLS-1$
+	MOUNTAIN_BIKE(Strava.integerProperty("StravaFrameType.mountain_bike"), Messages.getString("StravaFrameType.mountain_bike.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Cross bike
 	 */
-	CROSS(Integer.valueOf(2), Messages.getString("StravaFrameType.cross.description")),  //$NON-NLS-1$
+	CROSS(Strava.integerProperty("StravaFrameType.cross"), Messages.getString("StravaFrameType.cross.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Road bike
 	 */
-	ROAD(Integer.valueOf(3), Messages.getString("StravaFrameType.road.description")),  //$NON-NLS-1$
+	ROAD(Strava.integerProperty("StravaFrameType.road"), Messages.getString("StravaFrameType.road.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Time trial bike
 	 */
-	TIME_TRIAL(Integer.valueOf(4), Messages.getString("StravaFrameType.tt.description")),  //$NON-NLS-1$
+	TIME_TRIAL(Strava.integerProperty("StravaFrameType.tt"), Messages.getString("StravaFrameType.tt.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Integer.valueOf(-1), Messages.getString("Common.unknown.description")); //$NON-NLS-1$
+	UNKNOWN(Strava.integerProperty("Common.unknown.integer"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private Integer	id;
 	private String	description;

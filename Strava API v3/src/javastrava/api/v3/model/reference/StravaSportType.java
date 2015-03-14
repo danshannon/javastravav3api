@@ -2,6 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaClub;
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.SportTypeSerializer;
 
 /**
@@ -16,25 +17,25 @@ public enum StravaSportType {
 	/**
 	 * Cycling
 	 */
-	CYCLING(Messages.getString("StravaSportType.cycling"), Messages.getString("StravaSportType.cycling.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CYCLING(Strava.stringProperty("StravaSportType.cycling"), Messages.getString("StravaSportType.cycling.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Running
 	 */
-	RUNNING(Messages.getString("StravaSportType.running"), Messages.getString("StravaSportType.running.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	RUNNING(Strava.stringProperty("StravaSportType.running"), Messages.getString("StravaSportType.running.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Triathlon
 	 */
-	TRIATHLON(Messages.getString("StravaSportType.triathlon"), Messages.getString("StravaSportType.triathlon.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	TRIATHLON(Strava.stringProperty("StravaSportType.triathlon"), Messages.getString("StravaSportType.triathlon.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Other sport types
 	 */
-	OTHER(Messages.getString("StravaSportType.other"), Messages.getString("StravaSportType.other.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	OTHER(Strava.stringProperty("StravaSportType.other"), Messages.getString("StravaSportType.other.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

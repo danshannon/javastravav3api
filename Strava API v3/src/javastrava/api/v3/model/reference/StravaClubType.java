@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.ClubTypeSerializer;
 
 /**
@@ -15,7 +16,7 @@ public enum StravaClubType {
 	/**
 	 * Casual
 	 */
-	CASUAL(Messages.getString("StravaClubType.casual"), Messages.getString("StravaClubType.casual.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CASUAL(Strava.stringProperty("StravaClubType.casual"), Messages.getString("StravaClubType.casual.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Racing team
 	 */

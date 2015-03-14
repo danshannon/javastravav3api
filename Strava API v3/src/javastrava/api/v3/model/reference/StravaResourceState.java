@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.ResourceStateSerializer;
 
 /**
@@ -15,25 +16,25 @@ public enum StravaResourceState {
 	/**
 	 * Resource is currently being updated
 	 */
-	UPDATING(Integer.valueOf(-1), Messages.getString("StravaResourceState.updating.description")),  //$NON-NLS-1$
+	UPDATING(Strava.integerProperty("StravaResourceState.updating"), Messages.getString("StravaResourceState.updating.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This is a representation of the resource which contains the id ONLY (other than the resource state)
 	 */
-	META(Integer.valueOf(1), Messages.getString("StravaResourceState.meta.description")),  //$NON-NLS-1$
+	META(Strava.integerProperty("StravaResourceState.meta"), Messages.getString("StravaResourceState.meta.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This is a summary representation of the resource
 	 */
-	SUMMARY(Integer.valueOf(2), Messages.getString("StravaResourceState.summary.description")),  //$NON-NLS-1$
+	SUMMARY(Strava.integerProperty("StravaResourceState.summary"), Messages.getString("StravaResourceState.summary.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This is a detailed representation of the resource
 	 */
-	DETAILED(Integer.valueOf(3), Messages.getString("StravaResourceState.detailed.description")),  //$NON-NLS-1$
+	DETAILED(Strava.integerProperty("StravaResourceState.detailed"), Messages.getString("StravaResourceState.detailed.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Integer.valueOf(-2), Messages.getString("Common.unknown.description")); //$NON-NLS-1$
+	UNKNOWN(Strava.integerProperty("Common.unknown.integer"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private Integer	id;
 	private String	description;

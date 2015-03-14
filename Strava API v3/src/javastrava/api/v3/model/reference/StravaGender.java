@@ -1,6 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
+import javastrava.config.Strava;
 import javastrava.util.impl.gson.serializer.GenderSerializer;
 
 /**
@@ -15,17 +16,17 @@ public enum StravaGender {
 	/**
 	 * Male
 	 */
-	MALE(Messages.getString("StravaGender.male"), Messages.getString("StravaGender.male.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	MALE(Strava.stringProperty("StravaGender.male"), Messages.getString("StravaGender.male.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Female
 	 */
-	FEMALE(Messages.getString("StravaGender.female"), Messages.getString("StravaGender.female.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	FEMALE(Strava.stringProperty("StravaGender.female"), Messages.getString("StravaGender.female.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

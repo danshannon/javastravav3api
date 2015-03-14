@@ -55,16 +55,16 @@ public class Strava {
 	/**
 	 * Request rate limit every 15 minutes (default is 600)
 	 */
-	public static int RATE_LIMIT = integerProperty("strava.rate_limit"); //$NON-NLS-1$
+	public static int RATE_LIMIT = integerProperty("strava.rate_limit").intValue(); //$NON-NLS-1$
 	/**
 	 * Daily request rate limit (default is 30,000)
 	 */
-	public static int RATE_LIMIT_DAILY = integerProperty("strava.rate_limit_daily"); //$NON-NLS-1$
+	public static int RATE_LIMIT_DAILY = integerProperty("strava.rate_limit_daily").intValue(); //$NON-NLS-1$
 
 	/**
 	 * The percentage of request limits that, if exceeded, should log a warning
 	 */
-	public static final int WARN_AT_REQUEST_LIMIT_PERCENT = integerProperty("strava.warn_at_request_limit_percent"); //$NON-NLS-1$
+	public static final int WARN_AT_REQUEST_LIMIT_PERCENT = integerProperty("strava.warn_at_request_limit_percent").intValue(); //$NON-NLS-1$
 
 	/**
 	 * <p>
@@ -174,7 +174,7 @@ public class Strava {
 	 */
 	public static <T> List<T> ignoreFirstN(final List<T> list, final int ignoreFirstN) {
 		if (ignoreFirstN < 0) {
-			throw new IllegalArgumentException(Messages.getString("Strava,cannotRemove") + ignoreFirstN + Messages.getString("Strava.itemsFromAList"));  //$NON-NLS-1$ //$NON-NLS-2$
+			throw new IllegalArgumentException(Messages.getString("Strava.cannotRemove") + ignoreFirstN + Messages.getString("Strava.itemsFromAList"));  //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (list == null) {
 			return null;
@@ -240,8 +240,8 @@ public class Strava {
 	 *            The name of the property to return
 	 * @return Integer value of the property from the resource bundle
 	 */
-	private static int integerProperty(final String key) {
-		return new Integer(RESOURCE_BUNDLE.getString(key)).intValue();
+	public static Integer integerProperty(final String key) {
+		return Integer.valueOf(RESOURCE_BUNDLE.getString(key));
 	}
 
 }
