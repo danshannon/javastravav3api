@@ -1,7 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.impl.gson.serializer.ResourceStateSerializer;
 
 /**
@@ -16,25 +16,25 @@ public enum StravaResourceState {
 	/**
 	 * Resource is currently being updated
 	 */
-	UPDATING(Strava.integerProperty("StravaResourceState.updating"), Messages.getString("StravaResourceState.updating.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	UPDATING(StravaConfig.integer("StravaResourceState.updating"), Messages.string("StravaResourceState.updating.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This is a representation of the resource which contains the id ONLY (other than the resource state)
 	 */
-	META(Strava.integerProperty("StravaResourceState.meta"), Messages.getString("StravaResourceState.meta.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	META(StravaConfig.integer("StravaResourceState.meta"), Messages.string("StravaResourceState.meta.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This is a summary representation of the resource
 	 */
-	SUMMARY(Strava.integerProperty("StravaResourceState.summary"), Messages.getString("StravaResourceState.summary.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	SUMMARY(StravaConfig.integer("StravaResourceState.summary"), Messages.string("StravaResourceState.summary.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This is a detailed representation of the resource
 	 */
-	DETAILED(Strava.integerProperty("StravaResourceState.detailed"), Messages.getString("StravaResourceState.detailed.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	DETAILED(StravaConfig.integer("StravaResourceState.detailed"), Messages.string("StravaResourceState.detailed.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Strava.integerProperty("Common.unknown.integer"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(StravaConfig.integer("Common.unknown.integer"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private Integer	id;
 	private String	description;

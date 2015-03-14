@@ -6,7 +6,7 @@ import java.util.List;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.api.v3.service.impl.retrofit.ActivityServicesImpl;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.Paging;
 
 /**
@@ -40,16 +40,16 @@ public class PagingHandler {
 	 * @return List of strava objects as per the paging instruction
 	 */
 	public static <T> List<T> handlePaging(final Paging pagingInstruction, final PagingCallback<T> callback) {
-		Strava.validatePagingArguments(pagingInstruction);
+		StravaConfig.validatePagingArguments(pagingInstruction);
 		List<T> records = new ArrayList<T>();
 		try {
-			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+			for (Paging paging : StravaConfig.convertToStravaPaging(pagingInstruction)) {
 				List<T> pageOfData = callback.getPageOfData(paging);
 				if (pageOfData.size() == 0) {
 					break;
 				}
-				pageOfData = Strava.ignoreLastN(pageOfData, paging.getIgnoreLastN());
-				pageOfData = Strava.ignoreFirstN(pageOfData, paging.getIgnoreFirstN());
+				pageOfData = StravaConfig.ignoreLastN(pageOfData, paging.getIgnoreLastN());
+				pageOfData = StravaConfig.ignoreFirstN(pageOfData, paging.getIgnoreFirstN());
 				records.addAll(pageOfData);
 			}
 		} catch (NotFoundException e) {
@@ -86,7 +86,7 @@ public class PagingHandler {
 			page++;
 			List<T> currentPage;
 			try {
-				currentPage = callback.getPageOfData(new Paging(Integer.valueOf(page), Strava.MAX_PAGE_SIZE));
+				currentPage = callback.getPageOfData(new Paging(Integer.valueOf(page), StravaConfig.MAX_PAGE_SIZE));
 			} catch (NotFoundException e) {
 				return null;
 			} catch (UnauthorizedException e) {
@@ -96,7 +96,7 @@ public class PagingHandler {
 				return null; // Activity doesn't exist
 			}
 			records.addAll(currentPage);
-			if (currentPage.size() < Strava.MAX_PAGE_SIZE.intValue()) {
+			if (currentPage.size() < StravaConfig.MAX_PAGE_SIZE.intValue()) {
 				loop = false;
 			}
 		}

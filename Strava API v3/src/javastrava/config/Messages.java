@@ -20,7 +20,7 @@ public class Messages {
 	 * @param key Name of the property
 	 * @return The value of the property
 	 */
-	public static String getString(final String key) {
+	public static String string(final String key) {
 		return RESOURCE_BUNDLE.getString(key);
 		
 	}

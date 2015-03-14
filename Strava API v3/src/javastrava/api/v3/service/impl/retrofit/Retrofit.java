@@ -2,7 +2,7 @@ package javastrava.api.v3.service.impl.retrofit;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.impl.gson.JsonUtilImpl;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -38,14 +38,14 @@ public class Retrofit {
 				// Converter is a GSON implementation with custom converters
 				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
 				// Log level is determined per Retrofit service
-				.setLogLevel(Strava.logLevel(class1))
+				.setLogLevel(StravaConfig.logLevel(class1))
 				// Endpoint is the same for all services
-				.setEndpoint(Strava.ENDPOINT)
+				.setEndpoint(StravaConfig.ENDPOINT)
 				// Request interceptor adds the access token into headers for each request
 				.setRequestInterceptor(new RequestInterceptor() {
 					@Override
 					public void intercept(final RequestFacade request) {
-						request.addHeader(Messages.getString("Retrofit.authorizationHeaderName"), Messages.getString("Retrofit.bearer") + token.getToken()); //$NON-NLS-1$ //$NON-NLS-2$
+						request.addHeader(Messages.string("Retrofit.authorizationHeaderName"), Messages.string("Retrofit.bearer") + token.getToken()); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				})
 				// Error handler deals with Strava's implementations of 400, 401, 403, 404 errors etc.

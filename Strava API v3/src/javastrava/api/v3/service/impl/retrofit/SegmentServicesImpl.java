@@ -30,7 +30,7 @@ import javastrava.api.v3.service.SegmentServices;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.Paging;
 
 /**
@@ -69,7 +69,7 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 	 */
 	public static SegmentServices implementation(final Token token) {
 		if (token == null) {
-			throw new IllegalArgumentException(Messages.getString("SegmentServicesImpl.cannotInstantiateWithNullToken")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("SegmentServicesImpl.cannotInstantiateWithNullToken")); //$NON-NLS-1$
 		}
 		Class<SegmentServices> class1 = SegmentServices.class;
 		// Get the service from the token's cache
@@ -181,8 +181,8 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 		final Date startDate = (startDateLocal == null ? null : startDateLocal.getTime());
 		final Date endDate = (endDateLocal == null ? null : endDateLocal.getTime());
 
-		final String start = (startDate == null ? null : new SimpleDateFormat(Strava.DATE_FORMAT).format(startDate));
-		final String end = (endDate == null ? null : new SimpleDateFormat(Strava.DATE_FORMAT).format(endDate));
+		final String start = (startDate == null ? null : new SimpleDateFormat(StravaConfig.DATE_FORMAT).format(startDate));
+		final String end = (endDate == null ? null : new SimpleDateFormat(StravaConfig.DATE_FORMAT).format(endDate));
 		List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
@@ -222,7 +222,7 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final StravaGender gender, final StravaAgeGroup ageGroup,
 			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange,
 			final Paging pagingInstruction, final Integer contextEntries) {
-		Strava.validatePagingArguments(pagingInstruction);
+		StravaConfig.validatePagingArguments(pagingInstruction);
 
 		StravaSegmentLeaderboard leaderboard = null;
 
@@ -243,7 +243,7 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 		// End of workaround
 
 		try {
-			for (Paging paging : Strava.convertToStravaPaging(pagingInstruction)) {
+			for (Paging paging : StravaConfig.convertToStravaPaging(pagingInstruction)) {
 				StravaSegmentLeaderboard current = this.restService.getSegmentLeaderboard(id, gender, ageGroup, weightClass, following, clubId, dateRange,
 						paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
@@ -251,8 +251,8 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 				}
 				current.setAthleteEntries(calculateAthleteEntries(current, paging, contextSize));
 				current.getEntries().removeAll(current.getAthleteEntries());
-				current.setEntries(Strava.ignoreLastN(current.getEntries(), paging.getIgnoreLastN()));
-				current.setEntries(Strava.ignoreFirstN(current.getEntries(), paging.getIgnoreFirstN()));
+				current.setEntries(StravaConfig.ignoreLastN(current.getEntries(), paging.getIgnoreLastN()));
+				current.setEntries(StravaConfig.ignoreFirstN(current.getEntries(), paging.getIgnoreFirstN()));
 				if (leaderboard == null) {
 					leaderboard = current;
 				} else {
@@ -445,14 +445,14 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 			StravaSegmentLeaderboard currentPage;
 			try {
 				currentPage = getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, new Paging(Integer.valueOf(page),
-						Strava.MAX_PAGE_SIZE), Integer.valueOf(2));
+						StravaConfig.MAX_PAGE_SIZE), Integer.valueOf(2));
 			} catch (UnauthorizedException e) {
 				return new StravaSegmentLeaderboard();
 			}
 			if (currentPage == null) {
 				return null; // Activity doesn't exist
 			}
-			if (currentPage.getEntries().size() < Strava.MAX_PAGE_SIZE.intValue()) {
+			if (currentPage.getEntries().size() < StravaConfig.MAX_PAGE_SIZE.intValue()) {
 				loop = false;
 			}
 			if (page == 1) {

@@ -1,7 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.impl.gson.serializer.PhotoTypeSerializer;
 
 /**
@@ -16,13 +16,13 @@ public enum StravaPhotoType {
 	/**
 	 * Instagram photo
 	 */
-	INSTAGRAM(Strava.stringProperty("StravaPhotoType.instagram"), Messages.getString("StravaPhotoType.instagram.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	INSTAGRAM(StravaConfig.string("StravaPhotoType.instagram"), Messages.string("StravaPhotoType.instagram.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

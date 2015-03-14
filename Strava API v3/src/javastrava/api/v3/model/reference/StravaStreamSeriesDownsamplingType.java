@@ -1,7 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 
 /**
  * <p>
@@ -15,17 +15,17 @@ public enum StravaStreamSeriesDownsamplingType {
 	/**
 	 * Downsampling by time
 	 */
-	TIME(Strava.stringProperty("StravaStreamSeriesDownsamplingType.time"), Messages.getString("StravaStreamSeriesDownsamplingType.time.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	TIME(StravaConfig.string("StravaStreamSeriesDownsamplingType.time"), Messages.string("StravaStreamSeriesDownsamplingType.time.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Downsampling by distance
 	 */
-	DISTANCE(Strava.stringProperty("StravaStreamSeriesDownsamplingType.distance"), Messages.getString("StravaStreamSeriesDownsamplingType.distance.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	DISTANCE(StravaConfig.string("StravaStreamSeriesDownsamplingType.distance"), Messages.string("StravaStreamSeriesDownsamplingType.distance.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String id;
 	private String description;

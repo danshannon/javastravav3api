@@ -64,10 +64,10 @@ public class UploadServicesImpl extends StravaServiceImpl<UploadServicesRetrofit
 	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private,
 			final Boolean trainer, final String dataType, final String externalId, final File file) {
 		if (file == null) {
-			throw new IllegalArgumentException(Messages.getString("UploadServicesImpl.cannotUploadNullFile")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("UploadServicesImpl.cannotUploadNullFile")); //$NON-NLS-1$
 		}
 		if (!file.exists() || file.isDirectory()) {
-			throw new IllegalArgumentException(String.format(Messages.getString("UploadServicesImpl.fileDoesNotExist"), file.getName())); //$NON-NLS-1$
+			throw new IllegalArgumentException(String.format(Messages.string("UploadServicesImpl.fileDoesNotExist"), file.getName())); //$NON-NLS-1$
 		}
 		try {
 			return this.restService.upload(activityType, name, description, _private, trainer, dataType, externalId, new TypedFile("text/xml", file)); //$NON-NLS-1$

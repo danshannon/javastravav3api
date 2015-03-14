@@ -2,7 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.impl.gson.serializer.WorkoutTypeSerializer;
 
 /**
@@ -17,25 +17,25 @@ public enum StravaWorkoutType {
 	/**
 	 * Default
 	 */
-	DEFAULT(Strava.integerProperty("StravaWorkoutType.default"), Messages.getString("StravaWorkoutType.default.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	DEFAULT(StravaConfig.integer("StravaWorkoutType.default"), Messages.string("StravaWorkoutType.default.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Race
 	 */
-	RACE(Strava.integerProperty("StravaWorkoutType.race"), Messages.getString("StravaWorkoutType.race.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	RACE(StravaConfig.integer("StravaWorkoutType.race"), Messages.string("StravaWorkoutType.race.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Long run
 	 */
-	LONG_RUN(Strava.integerProperty("StravaWorkoutType.longRun"), Messages.getString("StravaWorkoutType.longRun.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	LONG_RUN(StravaConfig.integer("StravaWorkoutType.longRun"), Messages.string("StravaWorkoutType.longRun.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Intervals
 	 */
-	INTERVALS(Strava.integerProperty("StravaWorkoutType.intervals"), Messages.getString("StravaWorkoutType.intervals.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	INTERVALS(StravaConfig.integer("StravaWorkoutType.intervals"), Messages.string("StravaWorkoutType.intervals.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Strava.integerProperty("Common.unknown.integer"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(StravaConfig.integer("Common.unknown.integer"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private Integer	id;
 	private String	description;

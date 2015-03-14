@@ -2,7 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaSegmentLeaderboard;
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.impl.gson.serializer.AgeGroupSerializer;
 
 /**
@@ -17,33 +17,33 @@ public enum StravaAgeGroup {
 	/**
 	 * Age 0-24
 	 */
-	AGE0_24(Strava.stringProperty("StravaAgeGroup.0-24"), Messages.getString("StravaAgeGroup.0-24.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE0_24(StravaConfig.string("StravaAgeGroup.0-24"), Messages.string("StravaAgeGroup.0-24.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Age 25-34
 	 */
-	AGE25_34(Strava.stringProperty("StravaAgeGroup.25-34"), Messages.getString("StravaAgeGroup.25-34.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE25_34(StravaConfig.string("StravaAgeGroup.25-34"), Messages.string("StravaAgeGroup.25-34.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Age 35-44
 	 */
-	AGE35_44(Strava.stringProperty("StravaAgeGroup.35-44"), Messages.getString("StravaAgeGroup.35-44.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE35_44(StravaConfig.string("StravaAgeGroup.35-44"), Messages.string("StravaAgeGroup.35-44.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Age 45-54
 	 */
-	AGE45_54(Strava.stringProperty("StravaAgeGroup.45-54"), Messages.getString("StravaAgeGroup.45-54.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE45_54(StravaConfig.string("StravaAgeGroup.45-54"), Messages.string("StravaAgeGroup.45-54.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Age 55-64
 	 */
-	AGE55_64(Strava.stringProperty("StravaAgeGroup.55-64"), Messages.getString("StravaAgeGroup.55-64.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE55_64(StravaConfig.string("StravaAgeGroup.55-64"), Messages.string("StravaAgeGroup.55-64.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Age 65+
 	 */
-	AGE65_PLUS(Strava.stringProperty("StravaAgeGroup.65plus"), Messages.getString("StravaAgeGroup.65plus.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	AGE65_PLUS(StravaConfig.string("StravaAgeGroup.65plus"), Messages.string("StravaAgeGroup.65plus.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

@@ -100,15 +100,15 @@ public class StreamServicesImpl extends StravaServiceImpl<StreamServicesRetrofit
 	private static void validateArguments(final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types) {
 		if (resolution == StravaStreamResolutionType.UNKNOWN) {
-			throw new IllegalArgumentException(Messages.getString("StreamServicesImpl.invalidStreamResolutionType") + resolution); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("StreamServicesImpl.invalidStreamResolutionType") + resolution); //$NON-NLS-1$
 		}
 		if (seriesType == StravaStreamSeriesDownsamplingType.UNKNOWN) {
-			throw new IllegalArgumentException(Messages.getString("StreamServicesImpl.invalidStreamSeriesDownsamplingType") + seriesType); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("StreamServicesImpl.invalidStreamSeriesDownsamplingType") + seriesType); //$NON-NLS-1$
 		}
 		if (types != null) {
 			for (StravaStreamType type : types) {
 				if (type == StravaStreamType.UNKNOWN) {
-					throw new IllegalArgumentException(Messages.getString("StreamServicesImpl.invalidStreamType") + type); //$NON-NLS-1$
+					throw new IllegalArgumentException(Messages.string("StreamServicesImpl.invalidStreamType") + type); //$NON-NLS-1$
 				}
 			}
 		}
@@ -163,7 +163,7 @@ public class StreamServicesImpl extends StravaServiceImpl<StreamServicesRetrofit
 		validateArguments(resolution, seriesType, types);
 		StravaStreamType[] typesToGet = types;
 		if (seriesType == StravaStreamSeriesDownsamplingType.TIME) {
-			throw new IllegalArgumentException(Messages.getString("StreamServicesImpl.cannotDownsampleSegmentByTime")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("StreamServicesImpl.cannotDownsampleSegmentByTime")); //$NON-NLS-1$
 		}
 		if (types == null || types.length == 0) {
 			typesToGet = getAllStreamTypes();

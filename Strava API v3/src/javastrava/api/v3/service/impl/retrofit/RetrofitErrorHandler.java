@@ -46,7 +46,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 	public Throwable handleError(final RetrofitError cause) {
 		Response r = cause.getResponse();
 		StravaResponse response = null;
-		String status = (r == null ? Messages.getString("RetrofitErrorHandler.unknownError") : r.getStatus() + " " + r.getReason()); //$NON-NLS-1$ //$NON-NLS-2$
+		String status = (r == null ? Messages.string("RetrofitErrorHandler.unknownError") : r.getStatus() + " " + r.getReason()); //$NON-NLS-1$ //$NON-NLS-2$
 		if (r == null) {
 			throw new StravaUnknownAPIException(status, response, cause);
 		}
@@ -75,7 +75,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		// Handle 403 forbidden error
 		if (r != null && r.getStatus() == 403) {
 			log.error(status + " : " + response); //$NON-NLS-1$
-			if (response.getMessage().equals(Messages.getString("RetrofitErrorHandler.rateLimitExceeded"))) { //$NON-NLS-1$
+			if (response.getMessage().equals(Messages.string("RetrofitErrorHandler.rateLimitExceeded"))) { //$NON-NLS-1$
 				return new StravaAPIRateLimitException(status, response, cause);
 			} else {
 				return new UnauthorizedException(status, response, cause);

@@ -29,7 +29,7 @@ import javastrava.api.v3.model.reference.StravaStreamType;
 import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.model.reference.StravaWorkoutType;
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.JsonUtil;
 import javastrava.util.exception.JsonSerialisationException;
 import javastrava.util.impl.gson.serializer.ActivityTypeSerializer;
@@ -81,7 +81,7 @@ public class JsonUtilImpl implements JsonUtil {
 	public JsonUtilImpl() {
 		this.gsonBuilder = new GsonBuilder();
 		this.gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-		this.gsonBuilder.setDateFormat(Strava.DATE_FORMAT);
+		this.gsonBuilder.setDateFormat(StravaConfig.DATE_FORMAT);
 		this.gsonBuilder.registerTypeAdapter(AuthorisationApprovalPrompt.class, new AuthorisationApprovalPromptSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationResponseType.class, new AuthorisationResponseTypeSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationScope.class, new AuthorisationScopeSerializer());
@@ -130,7 +130,7 @@ public class JsonUtilImpl implements JsonUtil {
 		try {
 			return this.gson.fromJson(is, class1);
 		} catch (JsonParseException e) {
-			throw new JsonSerialisationException(String.format(Messages.getString("JsonUtilImpl.failedToDeserialiseString"), is, class1.getName()), e); //$NON-NLS-1$
+			throw new JsonSerialisationException(String.format(Messages.string("JsonUtilImpl.failedToDeserialiseString"), is, class1.getName()), e); //$NON-NLS-1$
 		}
 	}
 

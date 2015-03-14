@@ -17,7 +17,7 @@ import retrofit.RestAdapter.LogLevel;
  * @author Dan Shannon
  *
  */
-public class Strava {
+public class StravaConfig {
 	private static final String BUNDLE_NAME = "config"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
@@ -35,36 +35,36 @@ public class Strava {
 	 * API endpoint for the Strava data API
 	 * </p>
 	 */
-	public static final String ENDPOINT = stringProperty("strava.endpoint"); //$NON-NLS-1$
+	public static final String ENDPOINT = string("strava.endpoint"); //$NON-NLS-1$
 	/**
 	 * <p>
 	 * API endpoint for the Strava authorisation API
 	 * </p>
 	 */
-	public static final String AUTH_ENDPOINT = stringProperty("strava.auth.endpoint"); //$NON-NLS-1$
+	public static final String AUTH_ENDPOINT = string("strava.auth.endpoint"); //$NON-NLS-1$
 	/**
 	 * Name of the Strava session cookie
 	 */
-	public static final String SESSION_COOKIE_NAME = stringProperty("strava.session_cookie"); //$NON-NLS-1$
+	public static final String SESSION_COOKIE_NAME = string("strava.session_cookie"); //$NON-NLS-1$
 
 	/**
 	 * Date format to use in query parameters and in (de)serialisation of JSON
 	 */
-	public static final String DATE_FORMAT = stringProperty("strava.date_format"); //$NON-NLS-1$
+	public static final String DATE_FORMAT = string("strava.date_format"); //$NON-NLS-1$
 
 	/**
 	 * Request rate limit every 15 minutes (default is 600)
 	 */
-	public static int RATE_LIMIT = integerProperty("strava.rate_limit").intValue(); //$NON-NLS-1$
+	public static int RATE_LIMIT = integer("strava.rate_limit").intValue(); //$NON-NLS-1$
 	/**
 	 * Daily request rate limit (default is 30,000)
 	 */
-	public static int RATE_LIMIT_DAILY = integerProperty("strava.rate_limit_daily").intValue(); //$NON-NLS-1$
+	public static int RATE_LIMIT_DAILY = integer("strava.rate_limit_daily").intValue(); //$NON-NLS-1$
 
 	/**
 	 * The percentage of request limits that, if exceeded, should log a warning
 	 */
-	public static final int WARN_AT_REQUEST_LIMIT_PERCENT = integerProperty("strava.warn_at_request_limit_percent").intValue(); //$NON-NLS-1$
+	public static final int WARN_AT_REQUEST_LIMIT_PERCENT = integer("strava.warn_at_request_limit_percent").intValue(); //$NON-NLS-1$
 
 	/**
 	 * <p>
@@ -102,19 +102,19 @@ public class Strava {
 		int firstElement = ((inputPaging.getPage().intValue() - 1) * inputPaging.getPageSize().intValue()) + inputPaging.getIgnoreFirstN() + 1;
 
 		// If the last element fits in one page, return one page
-		if (lastElement <= Strava.MAX_PAGE_SIZE.intValue()) {
+		if (lastElement <= StravaConfig.MAX_PAGE_SIZE.intValue()) {
 			stravaPaging.add(new Paging(Integer.valueOf(1), Integer.valueOf(lastElement), inputPaging.getIgnoreFirstN(), 0));
 			return stravaPaging;
 		}
 
 		// Otherwise, return a series of pages
 		int currentPage = 0;
-		for (int i = 0; i <= lastElement; i = i + Strava.MAX_PAGE_SIZE.intValue()) {
+		for (int i = 0; i <= lastElement; i = i + StravaConfig.MAX_PAGE_SIZE.intValue()) {
 			currentPage++;
-			if (currentPage * Strava.MAX_PAGE_SIZE.intValue() + 1 >= firstElement) {
-				int ignoreLastN = Math.max(0, (currentPage * Strava.MAX_PAGE_SIZE.intValue()) - lastElement);
-				int ignoreFirstN = Math.max(0, firstElement - ((currentPage - 1) * Strava.MAX_PAGE_SIZE.intValue()) - 1);
-				stravaPaging.add(new Paging(Integer.valueOf(currentPage), Strava.MAX_PAGE_SIZE, ignoreFirstN, ignoreLastN));
+			if (currentPage * StravaConfig.MAX_PAGE_SIZE.intValue() + 1 >= firstElement) {
+				int ignoreLastN = Math.max(0, (currentPage * StravaConfig.MAX_PAGE_SIZE.intValue()) - lastElement);
+				int ignoreFirstN = Math.max(0, firstElement - ((currentPage - 1) * StravaConfig.MAX_PAGE_SIZE.intValue()) - 1);
+				stravaPaging.add(new Paging(Integer.valueOf(currentPage), StravaConfig.MAX_PAGE_SIZE, ignoreFirstN, ignoreLastN));
 			}
 		}
 		return stravaPaging;
@@ -126,7 +126,7 @@ public class Strava {
 	 * @param property The property name
 	 * @return The value of the property
 	 */
-	public static String stringProperty(final String property) {
+	public static String string(final String property) {
 		return RESOURCE_BUNDLE.getString(property);
 	}
 
@@ -145,7 +145,7 @@ public class Strava {
 	 */
 	public static <T> List<T> ignoreLastN(final List<T> list, final int ignoreLastN) {
 		if (ignoreLastN < 0) {
-			throw new IllegalArgumentException(Messages.getString("Strava.cannotRemove") + ignoreLastN + Messages.getString("Strava.itemsFromAList")); //$NON-NLS-1$ //$NON-NLS-2$
+			throw new IllegalArgumentException(Messages.string("Strava.cannotRemove") + ignoreLastN + Messages.string("Strava.itemsFromAList")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (list == null) {
 			return null;
@@ -174,7 +174,7 @@ public class Strava {
 	 */
 	public static <T> List<T> ignoreFirstN(final List<T> list, final int ignoreFirstN) {
 		if (ignoreFirstN < 0) {
-			throw new IllegalArgumentException(Messages.getString("Strava.cannotRemove") + ignoreFirstN + Messages.getString("Strava.itemsFromAList"));  //$NON-NLS-1$ //$NON-NLS-2$
+			throw new IllegalArgumentException(Messages.string("Strava.cannotRemove") + ignoreFirstN + Messages.string("Strava.itemsFromAList"));  //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (list == null) {
 			return null;
@@ -206,16 +206,16 @@ public class Strava {
 			return;
 		}
 		if (pagingInstruction.getPage().intValue() < 0) {
-			throw new IllegalArgumentException(Messages.getString("Strava.pageArgumentTooLow")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("Strava.pageArgumentTooLow")); //$NON-NLS-1$
 		}
 		if (pagingInstruction.getPageSize().intValue() < 0) {
-			throw new IllegalArgumentException(Messages.getString("Strava.perPageArgumentTooLow")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("Strava.perPageArgumentTooLow")); //$NON-NLS-1$
 		}
 		if (pagingInstruction.getIgnoreLastN() > 0 && pagingInstruction.getIgnoreLastN() > pagingInstruction.getPageSize().intValue()) {
-			throw new IllegalArgumentException(Messages.getString("Strava.IgnoreTooHigh")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("Strava.IgnoreTooHigh")); //$NON-NLS-1$
 		}
 		if (pagingInstruction.getIgnoreFirstN() > 0 && pagingInstruction.getIgnoreFirstN() > pagingInstruction.getPageSize().intValue()) {
-			throw new IllegalArgumentException(Messages.getString("Strava.IgnoreTooHigh")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("Strava.IgnoreTooHigh")); //$NON-NLS-1$
 		}
 	}
 
@@ -240,7 +240,7 @@ public class Strava {
 	 *            The name of the property to return
 	 * @return Integer value of the property from the resource bundle
 	 */
-	public static Integer integerProperty(final String key) {
+	public static Integer integer(final String key) {
 		return Integer.valueOf(RESOURCE_BUNDLE.getString(key));
 	}
 

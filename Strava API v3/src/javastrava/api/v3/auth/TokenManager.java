@@ -197,17 +197,17 @@ public class TokenManager {
 	public void storeToken(final Token token) {
 		String username = null;
 		if (token == null) {
-			throw new IllegalArgumentException(Messages.getString("TokenManager.0")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("TokenManager.0")); //$NON-NLS-1$
 		}
 
 		if (token.getAthlete() == null) {
-			throw new IllegalArgumentException(Messages.getString("TokenManager.1")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("TokenManager.1")); //$NON-NLS-1$
 		}
 		if (token.getAthlete().getEmail() == null) {
-			throw new IllegalArgumentException(Messages.getString("TokenManager.2")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("TokenManager.2")); //$NON-NLS-1$
 		}
 		if (token.getScopes() == null) {
-			throw new IllegalArgumentException(Messages.getString("TokenManager.3")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("TokenManager.3")); //$NON-NLS-1$
 		}
 		username = token.getAthlete().getEmail();
 		this.tokens.put(username, token);

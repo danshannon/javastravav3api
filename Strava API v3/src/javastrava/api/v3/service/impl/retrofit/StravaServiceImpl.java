@@ -3,7 +3,7 @@ package javastrava.api.v3.service.impl.retrofit;
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -37,9 +37,9 @@ public abstract class StravaServiceImpl<T> {
 	 * @return Percentage used.
 	 */
 	public static float requestRatePercentage() {
-		float percent = (Strava.RATE_LIMIT == 0 ? 0 : 100 * new Float(requestRate).floatValue() / new Float(Strava.RATE_LIMIT).floatValue());
-		if (percent > Strava.WARN_AT_REQUEST_LIMIT_PERCENT) {
-			log.warn(String.format(Messages.getString("StravaServiceImpl.approachingRateLimit"), Integer.valueOf(requestRate), Integer.valueOf(Strava.RATE_LIMIT), Float.valueOf(percent))); //$NON-NLS-1$
+		float percent = (StravaConfig.RATE_LIMIT == 0 ? 0 : 100 * new Float(requestRate).floatValue() / new Float(StravaConfig.RATE_LIMIT).floatValue());
+		if (percent > StravaConfig.WARN_AT_REQUEST_LIMIT_PERCENT) {
+			log.warn(String.format(Messages.string("StravaServiceImpl.approachingRateLimit"), Integer.valueOf(requestRate), Integer.valueOf(StravaConfig.RATE_LIMIT), Float.valueOf(percent))); //$NON-NLS-1$
 		}
 		return percent;
 	}
@@ -50,9 +50,9 @@ public abstract class StravaServiceImpl<T> {
 	 * @return Percentage used.
 	 */
 	public static float requestRateDailyPercentage() {
-		float percent = (Strava.RATE_LIMIT_DAILY == 0 ? 0 : 100 * new Float(requestRateDaily).floatValue() / new Float(Strava.RATE_LIMIT_DAILY).floatValue());
-		if (percent > Strava.WARN_AT_REQUEST_LIMIT_PERCENT) {
-			log.warn(String.format(Messages.getString("StravaServiceImpl.approachingRateLimit"), Integer.valueOf(requestRate), Integer.valueOf(Strava.RATE_LIMIT_DAILY), Float.valueOf(percent))); //$NON-NLS-1$
+		float percent = (StravaConfig.RATE_LIMIT_DAILY == 0 ? 0 : 100 * new Float(requestRateDaily).floatValue() / new Float(StravaConfig.RATE_LIMIT_DAILY).floatValue());
+		if (percent > StravaConfig.WARN_AT_REQUEST_LIMIT_PERCENT) {
+			log.warn(String.format(Messages.string("StravaServiceImpl.approachingRateLimit"), Integer.valueOf(requestRate), Integer.valueOf(StravaConfig.RATE_LIMIT_DAILY), Float.valueOf(percent))); //$NON-NLS-1$
 		}
 		return percent;
 	}

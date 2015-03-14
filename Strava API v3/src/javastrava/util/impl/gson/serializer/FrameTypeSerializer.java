@@ -27,7 +27,7 @@ public class FrameTypeSerializer implements JsonSerializer<StravaFrameType>, Jso
 		try {
 			return StravaFrameType.create(Integer.valueOf(json.getAsInt()));
 		} catch (NumberFormatException e) {
-			throw new JsonParseException(String.format(Messages.getString("JsonUtilImpl.couldNotDeserialiseInteger"), json.getAsString()), e); //$NON-NLS-1$
+			throw new JsonParseException(String.format(Messages.string("JsonUtilImpl.couldNotDeserialiseInteger"), json.getAsString()), e); //$NON-NLS-1$
 		}
 	}
 

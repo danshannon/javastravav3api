@@ -28,7 +28,7 @@ public class ResourceStateSerializer implements JsonSerializer<StravaResourceSta
 		try {
 			return StravaResourceState.create(Integer.valueOf(json.getAsInt()));
 		} catch (NumberFormatException e) {
-			throw new JsonParseException(String.format(Messages.getString("JsonUtilImpl.couldNotDeserialiseInteger"), json.getAsString()), e); //$NON-NLS-1$
+			throw new JsonParseException(String.format(Messages.string("JsonUtilImpl.couldNotDeserialiseInteger"), json.getAsString()), e); //$NON-NLS-1$
 		}
 	}
 

@@ -1,7 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.impl.gson.serializer.ClubTypeSerializer;
 
 /**
@@ -16,29 +16,29 @@ public enum StravaClubType {
 	/**
 	 * Casual
 	 */
-	CASUAL(Strava.stringProperty("StravaClubType.casual"), Messages.getString("StravaClubType.casual.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CASUAL(StravaConfig.string("StravaClubType.casual"), Messages.string("StravaClubType.casual.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Racing team
 	 */
-	TEAM(Messages.getString("StravaClubType.racing"), Messages.getString("StravaClubType.racing.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	TEAM(StravaConfig.string("StravaClubType.racing"), Messages.string("StravaClubType.racing.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Shop club
 	 */
-	SHOP(Messages.getString("StravaClubType.shop"), Messages.getString("StravaClubType.shop.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	SHOP(StravaConfig.string("StravaClubType.shop"), Messages.string("StravaClubType.shop.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Company club
 	 */
-	COMPANY(Messages.getString("StravaClubType.company"), Messages.getString("StravaClubType.company.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	COMPANY(StravaConfig.string("StravaClubType.company"), Messages.string("StravaClubType.company.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Other type of club
 	 */
-	OTHER(Messages.getString("StravaClubType.other"), Messages.getString("StravaClubType.other.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	OTHER(StravaConfig.string("StravaClubType.other"), Messages.string("StravaClubType.other.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Messages.getString("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

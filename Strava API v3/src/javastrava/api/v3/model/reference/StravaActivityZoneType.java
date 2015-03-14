@@ -2,7 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.service.ActivityServices;
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.impl.gson.serializer.ActivityZoneTypeSerializer;
 
 /**
@@ -17,17 +17,17 @@ public enum StravaActivityZoneType {
 	/**
 	 * Heart rate
 	 */
-	HEARTRATE(Strava.stringProperty("StravaActivityZoneType.heartrate"), Messages.getString("StravaActivityZoneType.heartrate.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	HEARTRATE(StravaConfig.string("StravaActivityZoneType.heartrate"), Messages.string("StravaActivityZoneType.heartrate.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Power
 	 */
-	POWER(Strava.stringProperty("StravaActivityZoneType.power"), Messages.getString("StravaActivityZoneType.power.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	POWER(StravaConfig.string("StravaActivityZoneType.power"), Messages.string("StravaActivityZoneType.power.description")),  //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

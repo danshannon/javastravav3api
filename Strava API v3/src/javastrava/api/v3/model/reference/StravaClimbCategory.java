@@ -2,7 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.impl.gson.serializer.ClimbCategorySerializer;
 
 /**
@@ -17,33 +17,33 @@ public enum StravaClimbCategory {
 	/**
 	 * Hors categorie
 	 */
-	HORS_CATEGORIE(Strava.integerProperty("StravaClimbCategory.hors_categorie"), Messages.getString("StravaClimbCategory.hors_categorie.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	HORS_CATEGORIE(StravaConfig.integer("StravaClimbCategory.hors_categorie"), Messages.string("StravaClimbCategory.hors_categorie.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Category 1
 	 */
-	CATEGORY1(Strava.integerProperty("StravaClimbCategory.cat1"), Messages.getString("StravaClimbCategory.cat1.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CATEGORY1(StravaConfig.integer("StravaClimbCategory.cat1"), Messages.string("StravaClimbCategory.cat1.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Category 2
 	 */
-	CATEGORY2(Strava.integerProperty("StravaClimbCategory.cat2"), Messages.getString("StravaClimbCategory.cat2.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CATEGORY2(StravaConfig.integer("StravaClimbCategory.cat2"), Messages.string("StravaClimbCategory.cat2.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Category 3
 	 */
-	CATEGORY3(Strava.integerProperty("StravaClimbCategory.cat3"), Messages.getString("StravaClimbCategory.cat3.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CATEGORY3(StravaConfig.integer("StravaClimbCategory.cat3"), Messages.string("StravaClimbCategory.cat3.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Category 4
 	 */
-	CATEGORY4(Strava.integerProperty("StraveClimbCategory.cat4"), Messages.getString("StravaClimbCategory.cat4.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CATEGORY4(StravaConfig.integer("StraveClimbCategory.cat4"), Messages.string("StravaClimbCategory.cat4.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Category 5
 	 */
-	FLAT(Strava.integerProperty("StravaClimbCategory.no_category"),Messages.getString("StravaClimbCategory.no_category.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	FLAT(StravaConfig.integer("StravaClimbCategory.no_category"),Messages.string("StravaClimbCategory.no_category.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Strava.integerProperty("Common.unknown.integer"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(StravaConfig.integer("Common.unknown.integer"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private Integer	id;
 	private String	description;

@@ -1,7 +1,7 @@
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import javastrava.util.impl.gson.serializer.StreamTypeSerializer;
 
 /**
@@ -16,53 +16,53 @@ public enum StravaStreamType {
 	/**
 	 * Time
 	 */
-	TIME(Strava.stringProperty("StravaStreamType.time"), Messages.getString("StravaStreamType.time.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	TIME(StravaConfig.string("StravaStreamType.time"), Messages.string("StravaStreamType.time.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Map points (locations)
 	 */
-	MAPPOINT(Strava.stringProperty("StravaStreamType.location"), Messages.getString("StravaStreamType.location.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	MAPPOINT(StravaConfig.string("StravaStreamType.location"), Messages.string("StravaStreamType.location.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Distance
 	 */
-	DISTANCE(Strava.stringProperty("StravaStreamType.distance"), Messages.getString("StravaStreamType.distance.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	DISTANCE(StravaConfig.string("StravaStreamType.distance"), Messages.string("StravaStreamType.distance.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Altitude
 	 */
-	ALTITUDE(Strava.stringProperty("StravaStreamType.altitude"), Messages.getString("StravaStreamType.altitude.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	ALTITUDE(StravaConfig.string("StravaStreamType.altitude"), Messages.string("StravaStreamType.altitude.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Speed
 	 */
-	VELOCITY(Strava.stringProperty("StravaStreamType.velocity"), Messages.getString("StravaStreamType.velocity.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	VELOCITY(StravaConfig.string("StravaStreamType.velocity"), Messages.string("StravaStreamType.velocity.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Heart rate
 	 */
-	HEARTRATE(Strava.stringProperty("StravaStreamType.heartrate"), Messages.getString("StravaStreamType.heartrate.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	HEARTRATE(StravaConfig.string("StravaStreamType.heartrate"), Messages.string("StravaStreamType.heartrate.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Cadence
 	 */
-	CADENCE(Strava.stringProperty("StravaStreamType.cadence"), Messages.getString("StravaStreamType.cadence.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CADENCE(StravaConfig.string("StravaStreamType.cadence"), Messages.string("StravaStreamType.cadence.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Power
 	 */
-	POWER(Strava.stringProperty("StravaStreamType.power"), Messages.getString("StravaStreamType.power.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	POWER(StravaConfig.string("StravaStreamType.power"), Messages.string("StravaStreamType.power.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Temperature
 	 */
-	TEMPERATURE(Strava.stringProperty("StravaStreamType.temperature"), Messages.getString("StravaStreamType.temperature.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	TEMPERATURE(StravaConfig.string("StravaStreamType.temperature"), Messages.string("StravaStreamType.temperature.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Moving (as a series of booleans, indicating whether the athlete was moving or not at each point
 	 */
-	MOVING(Strava.stringProperty("StravaStreamType.moving"), Messages.getString("StravaStreamType.moving.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	MOVING(StravaConfig.string("StravaStreamType.moving"), Messages.string("StravaStreamType.moving.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Grade
 	 */
-	GRADE(Strava.stringProperty("StravaStreamType.grade"), Messages.getString("StravaStreamType.grade.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	GRADE(StravaConfig.string("StravaStreamType.grade"), Messages.string("StravaStreamType.grade.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(Strava.stringProperty("Common.unknown"), Messages.getString("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String	id;
 	private String	description;

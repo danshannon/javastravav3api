@@ -146,7 +146,7 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 			commuteUpdate.setCommute(update.getCommute());
 			response = doUpdateActivity(id, commuteUpdate);
 			if (response.getCommute() != update.getCommute()) { 
-				throw new StravaUnknownAPIException(Messages.getString("ActivityServicesImpl.failedToUpdateCommuteFlag") + id, null, null); //$NON-NLS-1$
+				throw new StravaUnknownAPIException(Messages.string("ActivityServicesImpl.failedToUpdateCommuteFlag") + id, null, null); //$NON-NLS-1$
 			}
 			
 			update.setCommute(null);
@@ -446,11 +446,11 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 	@Override
 	public StravaComment createComment(final Integer id, final String text) throws NotFoundException, BadRequestException {
 		if (text == null || text.equals("")) { //$NON-NLS-1$
-			throw new IllegalArgumentException(Messages.getString("ActivityServicesImpl.commentCannotBeEmpty")); //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("ActivityServicesImpl.commentCannotBeEmpty")); //$NON-NLS-1$
 		}
 		// TODO Workaround for issue javastrava-api #30 (https://github.com/danshannon/javastravav3api/issues/30)
 		if (!(getToken().hasWriteAccess())) {
-			throw new UnauthorizedException(Messages.getString("ActivityServicesImpl.commentWithoutWriteAccess")); //$NON-NLS-1$
+			throw new UnauthorizedException(Messages.string("ActivityServicesImpl.commentWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
 		return this.restService.createComment(id, text);
@@ -483,7 +483,7 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 	public void giveKudos(final Integer activityId) throws NotFoundException {
 		// TODO Workaround for issue javastrava-api #29 (https://github.com/danshannon/javastravav3api/issues/29)
 		if (!(getToken().hasWriteAccess())) {
-			throw new UnauthorizedException(Messages.getString("ActivityServicesImpl.kudosWithoutWriteAccess")); //$NON-NLS-1$
+			throw new UnauthorizedException(Messages.string("ActivityServicesImpl.kudosWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
 		

@@ -1,6 +1,6 @@
 package javastrava.util;
 
-import javastrava.config.Strava;
+import javastrava.config.StravaConfig;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -45,7 +45,7 @@ public class Paging {
 	 */
 	public Paging() {
 		this.page = Integer.valueOf(1);
-		this.pageSize = Strava.DEFAULT_PAGE_SIZE;
+		this.pageSize = StravaConfig.DEFAULT_PAGE_SIZE;
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class Paging {
 	 */
 	private static Integer validatePageSize(final Integer pageSize) {
 		if (pageSize == null || pageSize.intValue() == 0) {
-			return Strava.DEFAULT_PAGE_SIZE;
+			return StravaConfig.DEFAULT_PAGE_SIZE;
 		}
 		return pageSize;
 	}
