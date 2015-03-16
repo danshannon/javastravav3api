@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.danshannon</groupId>
 	<artifactId>javastrava-api</artifactId>
-	<version>0.2.0-ALPHA</version>
+	<version>0.2.1-SNAPSHOT</version>
 	<name>Strava API</name>
 	<description>Java implementation of the Strava API</description>
 	<licenses>
@@ -23,6 +23,15 @@
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<directory>target</directory>
+		<resources>
+	        <resource>
+	            <directory>src/</directory>
+	            <includes>
+	                <include>*.properties</include>
+	                <include>log4j2.xml</include>
+	            </includes>
+	        </resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
