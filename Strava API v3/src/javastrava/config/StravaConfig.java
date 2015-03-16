@@ -225,7 +225,7 @@ public class StravaConfig {
 	 * @return The appropriate log level for the class
 	 */
 	public static LogLevel logLevel(final Class<?> class1) {
-		String propertyName = "retrofit." + class1.getName() + "log_level"; //$NON-NLS-1$ //$NON-NLS-2$
+		String propertyName = "retrofit." + class1.getName() + ".log_level"; //$NON-NLS-1$ //$NON-NLS-2$
 		RestAdapter.LogLevel logLevel = null;
 		try {
 			logLevel = RestAdapter.LogLevel.valueOf(RESOURCE_BUNDLE.getString(propertyName));

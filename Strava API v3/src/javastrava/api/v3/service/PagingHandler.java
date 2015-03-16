@@ -63,7 +63,7 @@ public class PagingHandler {
 
 	/**
 	 * <p>
-	 * Returns ALL the data from a Strava service that would normally only return a page of data, by simply getting pages 1..n until there's no more data to retrieve</p>
+	 * Returns ALL the data from a Strava service that would normally only return a page of data, by simply getting pages 1..n until there's no more data to retrieve
 	 * </p>
 	 * 
 	 * <p>

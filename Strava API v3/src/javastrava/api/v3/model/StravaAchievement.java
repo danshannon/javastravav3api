@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
  * <p>
  * Authenticated user's achievement on a given segment effort
  * </p>
- * @see StravaSegmentEffort#getAchievements()
  * @author Dan Shannon
  *
  */

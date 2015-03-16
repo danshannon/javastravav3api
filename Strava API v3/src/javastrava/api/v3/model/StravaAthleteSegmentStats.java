@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
  * Athlete's statistics for a segment, returned by Strava with a segment effort
  * </p>
  * @author Dan Shannon
- * @see StravaSegmentEffort#getAthleteSegmentStats
  *
  */
 @Data

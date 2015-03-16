@@ -92,6 +92,15 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 			return this.restService.getSegment(id);
 		} catch (NotFoundException e) {
 			return null;
+		} catch (UnauthorizedException e) {
+			if (accessTokenIsValid()) {
+				StravaSegment segment = new StravaSegment();
+				segment.setId(id);
+				segment.setResourceState(StravaResourceState.META);
+				return segment;
+			} else {
+				throw e;
+			}
 		}
 	}
 

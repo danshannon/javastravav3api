@@ -136,4 +136,29 @@ public class StravaSegment {
 	 * Date the athlete starred the segment (only returned when listing starred segments)
 	 */
 	private Date starredDate;
+	
+	/**
+	 * Start latitude
+	 */
+	private Float startLatitude;
+	/**
+	 * Start longitude
+	 */
+	private Float startLongitude;
+	/**
+	 * End latitude
+	 */
+	private Float endLatitude;
+	/**
+	 * End longitude
+	 */
+	private Float endLongitude;
+	/**
+	 * Athlete's best time (returned only when listing starred segments)
+	 */
+	private Integer prTime;
+	/**
+	 * Athlete segment statistics
+	 */
+	private StravaAthleteSegmentStats athleteSegmentStats;
 }

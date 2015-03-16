@@ -62,13 +62,11 @@ public abstract class StravaServiceImpl<T> {
 	 * Protected constructor prevents user from getting a service instance without a valid token
 	 * </p>
 	 * 
+	 * @param class1 The class of the service implementation being created
 	 * @param token The access token to be used to authenticate to the Strava API
 	 */
 	protected StravaServiceImpl(final Class<T> class1, final Token token) {
 		this.token = token;
-//		if (!accessTokenIsValid()) {
-//			throw new UnauthorizedException("Access token " + token.getToken() + " is invalid");
-//		}
 		this.restService = Retrofit.retrofit(class1, token);
 	}
 

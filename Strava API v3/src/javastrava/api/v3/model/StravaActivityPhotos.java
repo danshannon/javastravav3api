@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
  * <p>
  * Photo(s) associated with a specific activity
  * </p>
- * @see StravaActivity#getPhotos()
  * @author Dan Shannon
  *
  */

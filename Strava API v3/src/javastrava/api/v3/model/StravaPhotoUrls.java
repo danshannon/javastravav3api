@@ -11,7 +11,6 @@ import com.google.gson.annotations.SerializedName;
  * URL's for various versions of a specific photo
  * </p>
  * @author Dan Shannon
- * @see StravaPhoto#getUrls()
  *
  */
 @Data
