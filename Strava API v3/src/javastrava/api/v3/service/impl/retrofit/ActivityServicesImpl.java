@@ -20,6 +20,7 @@ import javastrava.api.v3.service.PagingCallback;
 import javastrava.api.v3.service.PagingHandler;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.StravaInternalServerErrorException;
 import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
@@ -126,6 +127,11 @@ public class ActivityServicesImpl extends StravaServiceImpl<ActivityServicesRetr
 		} catch (BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}
+		// TODO Workaround for issue javastrava-api #49 (https://github.com/danshannon/javastravav3api/issues/49)
+		catch (StravaInternalServerErrorException e) {
+			throw new IllegalArgumentException(e);
+		}
+		// End of workaround
 	}
 
 	/**
