@@ -167,6 +167,11 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 			return null;
 		}
 
+		// TODO This is the workaround for issue #45
+		if (segment.getResourceState() == StravaResourceState.META) {
+			return new ArrayList<StravaSegmentEffort>();
+		}
+		
 		// If the segment is hazardous, return an empty list
 		if (segment.getHazardous() == Boolean.TRUE) {
 			return new ArrayList<StravaSegmentEffort>();
@@ -488,14 +493,20 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 	@Override
 	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDate, final Calendar endDate) {
 		// TODO Workaround for issue javastrava-api #33 (https://github.com/danshannon/javastravav3api/issues/33)
+		// TODO Workaround for issue javastrava-api #45 (https://github.com/danshannon/javastravav3api/issues/45)
 		// Check if the segment is flagged as hazardous
 		StravaSegment segment = getSegment(segmentId);
-
+		
 		// If the segment is null it doesn't exist, so return null
 		if (segment == null) {
 			return null;
 		}
 
+		// TODO This is the workaround for issue #45
+		if (segment.getResourceState() == StravaResourceState.META) {
+			return new ArrayList<StravaSegmentEffort>();
+		}
+		
 		// If the segment is hazardous, return an empty list
 		if (segment.getHazardous() == Boolean.TRUE) {
 			return new ArrayList<StravaSegmentEffort>();
