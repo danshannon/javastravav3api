@@ -261,6 +261,10 @@ public class SegmentServicesImpl extends StravaServiceImpl<SegmentServicesRetrof
 				StravaSegmentLeaderboard current = this.restService.getSegmentLeaderboard(id, gender, ageGroup, weightClass, following, clubId, dateRange,
 						paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
+					if (leaderboard == null) {
+						leaderboard = current;
+						current.setAthleteEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
+					}
 					break;
 				}
 				current.setAthleteEntries(calculateAthleteEntries(current, paging, contextSize));
