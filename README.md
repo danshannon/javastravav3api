@@ -3,7 +3,7 @@ javastravav3api
 
 Strava API v3 implementation written in Java v7
 
-JavaStrava is a functionally complete implementation of the Strava API (v3). It includes all the changes made to the API up to Feb 7, 2015.
+JavaStrava is a functionally complete implementation of the Strava API (v3). It includes all the changes made to the API up to March 10, 2015.
 
 Maven
 =====
@@ -13,7 +13,7 @@ javastrava is available on Maven. Just add this to your POM.
 		<dependency>
 			<groupId>com.github.danshannon</groupId>
 			<artifactId>javastrava-api</artifactId>
-			<version>0.1.0-ALPHA</version>
+			<version>0.2.0-ALPHA</version>
 		</dependency>
 ```
 
@@ -55,3 +55,7 @@ To use the paging options, you pass in a stravajava.util.Paging object as the pa
 Leaderboards
 ============
 The Strava API is annoying when it passes your own results along with every page of a leaderboard. We've hacked that out, so that in the stravajava.api.v3.model.StravaSegmentLeaderboard definitions you'll see there are 2 collections of entries - <code>entries</code> is the one that you actually asked for, <code>athleteEntries</code> is the one that relates to the 5 entries around the authenticated athlete / you. Should be *much* simpler to deal with!
+
+Testing
+=======
+There's a test suite at https://github.com/danshannon/javastrava-test
