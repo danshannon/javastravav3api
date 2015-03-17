@@ -63,6 +63,8 @@ public class Token {
 	 * List of service implementations associated with this token
 	 */
 	private HashMap<Class<? extends StravaServices>, StravaServices> services;
+	
+	private String tokenType;
 
 	/**
 	 * <p>
@@ -77,6 +79,7 @@ public class Token {
 	public Token(final TokenResponse tokenResponse, final AuthorisationScope... scopes) {
 		this.athlete = tokenResponse.getAthlete();
 		this.token = tokenResponse.getAccessToken();
+		this.tokenType = tokenResponse.getTokenType();
 		this.scopes = Arrays.asList(scopes);
 		this.services = new HashMap<Class<? extends StravaServices>, StravaServices>();
 	}

@@ -45,7 +45,7 @@ public class Retrofit {
 				.setRequestInterceptor(new RequestInterceptor() {
 					@Override
 					public void intercept(final RequestFacade request) {
-						request.addHeader(Messages.string("Retrofit.authorizationHeaderName"), Messages.string("Retrofit.bearer") + token.getToken()); //$NON-NLS-1$ //$NON-NLS-2$
+						request.addHeader(Messages.string("Retrofit.authorizationHeaderName"), token.getTokenType() + " " + token.getToken()); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				})
 				// Error handler deals with Strava's implementations of 400, 401, 403, 404 errors etc.
