@@ -19,4 +19,8 @@ import com.google.gson.annotations.SerializedName;
 public class StravaPhotoUrls {
 	@SerializedName("0")
 	private String url0;
+	@SerializedName("100")
+	private String url100;
+	@SerializedName("600")
+	private String url600;
 }

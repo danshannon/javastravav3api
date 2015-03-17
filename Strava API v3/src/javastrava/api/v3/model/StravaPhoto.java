@@ -63,4 +63,5 @@ public class StravaPhoto {
 	
 	private Integer source;
 	private StravaPhotoUrls urls;
+	private String uniqueId;
 }
