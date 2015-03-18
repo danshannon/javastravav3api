@@ -6,6 +6,7 @@ Strava API v3 implementation written in Java v7
 Javastrava is a functionally complete implementation of the Strava API (v3). It includes all the changes made to the API up to March 10, 2015.
 
 It consists of 2 layers which implement the API:
+
 1. A raw implementation of the API using Retrofit
 2. An abstracted implementation of the API which simplifies and abstracts the API, as well as adding several useful features and removing some restrictions
 
