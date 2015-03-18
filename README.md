@@ -7,8 +7,8 @@ Javastrava is a functionally complete implementation of the Strava API (v3). It 
 
 It consists of 2 layers which implement the API:
 
-1. A raw implementation of the API using Retrofit
-2. An abstracted implementation of the API which simplifies and abstracts the API, as well as adding several useful features and removing some restrictions
+1. A raw implementation of the API using Retrofit - with this it's up to your code to deal with exceptions, and Strava's foibles
+2. An abstracted implementation of the API which simplifies and abstracts the API, as well as adding several useful features (automatic handling of 404 and 401 errors; dealing with rate limiting; dealing with privacy; and handling a bunch of workarounds where the behaviour of the API is inconsistent) and removing some restrictions (particularly on paging)
 
 Maven
 =====
