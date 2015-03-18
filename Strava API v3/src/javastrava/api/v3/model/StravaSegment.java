@@ -5,8 +5,8 @@ import java.util.Date;
 import javastrava.api.v3.model.reference.StravaClimbCategory;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentActivityType;
-import javastrava.api.v3.service.SegmentServices;
-import javastrava.api.v3.service.StreamServices;
+import javastrava.api.v3.service.SegmentService;
+import javastrava.api.v3.service.StreamService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -108,7 +108,7 @@ public class StravaSegment {
 	 */
 	private Float totalElevationGain;
 	/**
-	 * Map of the segment (as 2 polylines usable with Google maps; if you want GPS coordinates then go take a look at {@link StreamServices#getSegmentStreams(Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType...)})
+	 * Map of the segment (as 2 polylines usable with Google maps; if you want GPS coordinates then go take a look at {@link StreamService#getSegmentStreams(Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType...)})
 	 */
 	private StravaMap map;
 	/**
@@ -128,7 +128,7 @@ public class StravaSegment {
 	 */
 	private Integer starCount;
 	/**
-	 * The authenticated athlete's fastest effort on this segment - only returned with {@link SegmentServices#listStarredSegments(Integer)}
+	 * The authenticated athlete's fastest effort on this segment - only returned with {@link SegmentService#listStarredSegments(Integer)}
 	 */
 	private StravaSegmentEffort athletePrEffort;
 	

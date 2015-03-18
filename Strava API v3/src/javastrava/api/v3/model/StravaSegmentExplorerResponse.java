@@ -2,7 +2,7 @@ package javastrava.api.v3.model;
 
 import java.util.List;
 
-import javastrava.api.v3.service.SegmentServices;
+import javastrava.api.v3.service.SegmentService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  * <p>
  * Returned by the
- * {@link SegmentServices#segmentExplore(StravaMapPoint, StravaMapPoint, javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType, javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory)
+ * {@link SegmentService#segmentExplore(StravaMapPoint, StravaMapPoint, javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType, javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory)
  * segment explorer service}.
  * </p>
  * 

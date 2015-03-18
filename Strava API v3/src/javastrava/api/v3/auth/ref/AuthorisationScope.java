@@ -2,7 +2,7 @@ package javastrava.api.v3.auth.ref;
 
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
-import javastrava.util.impl.gson.serializer.AuthorisationScopeSerializer;
+import javastrava.json.impl.gson.serializer.AuthorisationScopeSerializer;
 
 /**
  * <p>

@@ -6,7 +6,7 @@ import java.util.List;
 import javastrava.api.v3.model.StravaSegmentLeaderboard;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
-import javastrava.util.impl.gson.serializer.WeightClassSerializer;
+import javastrava.json.impl.gson.serializer.WeightClassSerializer;
 
 /**
  * <p>

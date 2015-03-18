@@ -1,6 +1,6 @@
 eclipse.preferences.version=1
-encoding//src/javastrava/api/v3/auth/impl/retrofit/AuthorisationServicesImpl.java=UTF-8
-encoding//src/javastrava/api/v3/auth/impl/retrofit/TokenServicesImpl.java=UTF-8
-encoding//src/javastrava/api/v3/service/ActivityServices.java=UTF-8
+encoding//src/javastrava/api/v3/auth/impl/retrofit/AuthorisationServiceImpl.java=UTF-8
+encoding//src/javastrava/api/v3/auth/impl/retrofit/TokenServiceImpl.java=UTF-8
+encoding//src/javastrava/api/v3/service/ActivityService.java=UTF-8
 encoding/<project>=UTF-8
 encoding/src=UTF-8

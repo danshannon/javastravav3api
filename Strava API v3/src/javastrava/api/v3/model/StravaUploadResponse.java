@@ -1,6 +1,6 @@
 package javastrava.api.v3.model;
 
-import javastrava.api.v3.service.UploadServices;
+import javastrava.api.v3.service.UploadService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * Response to an upload request
  * </p>
  * 
- * @see UploadServices#upload(javastrava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, String, String, java.io.File)
+ * @see UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, String, String, java.io.File)
  * @author Dan Shannon
  *
  */

@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.api.v3.service.SegmentServices;
+import javastrava.api.v3.service.SegmentService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -103,7 +103,7 @@ public class StravaSegmentEffort {
 	 */
 	private Boolean				hidden;
 	/**
-	 * @see SegmentServices#listStarredSegments(Integer)
+	 * @see SegmentService#listStarredSegments(Integer)
 	 */
 	private Boolean				isKom;
 	

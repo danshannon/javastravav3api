@@ -2,7 +2,7 @@ package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
-import javastrava.util.impl.gson.serializer.MeasurementMethodSerializer;
+import javastrava.json.impl.gson.serializer.MeasurementMethodSerializer;
 
 /**
  * <p>

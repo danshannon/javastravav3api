@@ -3,7 +3,7 @@ package javastrava.api.v3.model.reference;
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
-import javastrava.util.impl.gson.serializer.ClimbCategorySerializer;
+import javastrava.json.impl.gson.serializer.ClimbCategorySerializer;
 
 /**
  * <p>

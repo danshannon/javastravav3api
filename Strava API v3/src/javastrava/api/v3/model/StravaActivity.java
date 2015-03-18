@@ -6,8 +6,8 @@ import java.util.List;
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaWorkoutType;
-import javastrava.api.v3.service.ActivityServices;
-import javastrava.api.v3.service.StreamServices;
+import javastrava.api.v3.service.ActivityService;
+import javastrava.api.v3.service.StreamService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -121,7 +121,7 @@ public class StravaActivity {
 	 * 
 	 * <p>
 	 * To get the actual list of athletes who have left kudos, see
-	 * {@link ActivityServices#listActivityKudoers(Integer, javastrava.util.Paging)}
+	 * {@link ActivityService#listActivityKudoers(Integer, javastrava.util.Paging)}
 	 * </p>
 	 */
 	private Integer kudosCount;
@@ -133,7 +133,7 @@ public class StravaActivity {
 	 * 
 	 * <p>
 	 * To get the actual list of comments, see
-	 * {@link ActivityServices#listActivityComments(Integer, Boolean, javastrava.util.Paging)}
+	 * {@link ActivityService#listActivityComments(Integer, Boolean, javastrava.util.Paging)}
 	 * </p>
 	 */
 	private Integer commentCount;
@@ -146,7 +146,7 @@ public class StravaActivity {
 	 * <p>
 	 * To get the list of activities by all the other people who also took part,
 	 * see
-	 * {@link ActivityServices#listRelatedActivities(Integer, javastrava.util.Paging)}
+	 * {@link ActivityService#listRelatedActivities(Integer, javastrava.util.Paging)}
 	 * </p>
 	 */
 	private Integer athleteCount;
@@ -157,7 +157,7 @@ public class StravaActivity {
 	 * 
 	 * <p>
 	 * To get the actual photo details, see
-	 * {@link ActivityServices#listActivityPhotos(Integer)}
+	 * {@link ActivityService#listActivityPhotos(Integer)}
 	 * </p>
 	 */
 	private Integer photoCount;
@@ -170,7 +170,7 @@ public class StravaActivity {
 	 * <p>
 	 * If you want the actual set of GPS coordinates of the activity, then you
 	 * need to use
-	 * {@link StreamServices#getActivityStreams(Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType...)}
+	 * {@link StreamService#getActivityStreams(Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType...)}
 	 * </p>
 	 */
 	private StravaMap map;

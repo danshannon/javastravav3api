@@ -1,13 +1,13 @@
 package javastrava.api.v3.model;
 
-import javastrava.api.v3.service.AthleteServices;
+import javastrava.api.v3.service.AthleteService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * Athlete statistics as returned by {@link AthleteServices#statistics(Integer)}
+ * Athlete statistics as returned by {@link AthleteService#statistics(Integer)}
  * </p>
  * 
  * @author Dan Shannon

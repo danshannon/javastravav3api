@@ -3,7 +3,7 @@ package javastrava.api.v3.model.reference;
 import javastrava.api.v3.model.StravaStream;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
-import javastrava.util.impl.gson.serializer.StreamResolutionTypeSerializer;
+import javastrava.json.impl.gson.serializer.StreamResolutionTypeSerializer;
 
 /**
  * <p>

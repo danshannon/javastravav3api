@@ -1,14 +1,14 @@
 package javastrava.api.v3.model.reference;
 
-import javastrava.api.v3.service.SegmentServices;
+import javastrava.api.v3.service.SegmentService;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
-import javastrava.util.impl.gson.serializer.SegmentExplorerActivityTypeSerializer;
+import javastrava.json.impl.gson.serializer.SegmentExplorerActivityTypeSerializer;
 
 /**
  * <p>
  * The Strava
- * {@link SegmentServices#segmentExplore(javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.StravaMapPoint, StravaSegmentExplorerActivityType, StravaClimbCategory, StravaClimbCategory)
+ * {@link SegmentService#segmentExplore(javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.StravaMapPoint, StravaSegmentExplorerActivityType, StravaClimbCategory, StravaClimbCategory)
  * segment explorer} really <strong>should</strong> return the same activity types as held in {@link StravaSegmentActivityType}. But it doesn't. Hey ho!
  * </p>
  * 

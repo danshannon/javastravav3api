@@ -1,6 +1,6 @@
 package javastrava.api.v3.model;
 
-import javastrava.api.v3.service.ClubServices;
+import javastrava.api.v3.service.ClubService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  * </p>
  * 
  * <p>
- * See {@link ClubServices#joinClub(Integer)} and {@link ClubServices#leaveClub(Integer)}
+ * See {@link ClubService#joinClub(Integer)} and {@link ClubService#leaveClub(Integer)}
  * </p>
  * 
  * @author Dan Shannon

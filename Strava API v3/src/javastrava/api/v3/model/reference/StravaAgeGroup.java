@@ -3,7 +3,7 @@ package javastrava.api.v3.model.reference;
 import javastrava.api.v3.model.StravaSegmentLeaderboard;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
-import javastrava.util.impl.gson.serializer.AgeGroupSerializer;
+import javastrava.json.impl.gson.serializer.AgeGroupSerializer;
 
 /**
  * <p>

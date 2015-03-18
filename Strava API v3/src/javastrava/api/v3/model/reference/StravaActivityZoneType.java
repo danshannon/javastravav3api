@@ -1,13 +1,13 @@
 package javastrava.api.v3.model.reference;
 
-import javastrava.api.v3.service.ActivityServices;
+import javastrava.api.v3.service.ActivityService;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
-import javastrava.util.impl.gson.serializer.ActivityZoneTypeSerializer;
+import javastrava.json.impl.gson.serializer.ActivityZoneTypeSerializer;
 
 /**
  * <p>
- * Type of activity zone - see {@link ActivityServices#listActivityZones(Integer)}
+ * Type of activity zone - see {@link ActivityService#listActivityZones(Integer)}
  * </p>
  * 
  * @author Dan Shannon

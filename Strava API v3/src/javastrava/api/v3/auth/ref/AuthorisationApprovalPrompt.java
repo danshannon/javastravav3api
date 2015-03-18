@@ -1,7 +1,7 @@
 package javastrava.api.v3.auth.ref;
 
 import javastrava.config.StravaConfig;
-import javastrava.util.impl.gson.serializer.AuthorisationApprovalPromptSerializer;
+import javastrava.json.impl.gson.serializer.AuthorisationApprovalPromptSerializer;
 
 /**
  * <p>

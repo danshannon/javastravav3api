@@ -1,7 +1,7 @@
 package javastrava.api.v3.auth.model;
 
 import javastrava.api.v3.model.StravaAthlete;
-import javastrava.api.v3.service.impl.retrofit.Retrofit;
+import javastrava.api.v3.rest.API;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class TokenResponse {
 	 */
 	private String accessToken;
 	/**
-	 * The type of token (usually "Bearer" - is used to create the authentication request header - see {@link Retrofit#retrofit(Class, Token)}
+	 * The type of token (usually "Bearer" - is used to create the authentication request header - see {@link API#instance(Class, Token)}
 	 */
 	private String tokenType;
 	/**

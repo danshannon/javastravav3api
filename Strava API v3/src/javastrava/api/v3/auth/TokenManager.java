@@ -18,13 +18,13 @@ import javastrava.config.Messages;
  */
 public class TokenManager {
 	/**
-	 * @return Singleton implementation of the TokenManager
+	 * @return Singleton instance of the TokenManager
 	 */
-	public static TokenManager implementation() {
-		return implementation;
+	public static TokenManager instance() {
+		return instance;
 	}
 
-	private static TokenManager implementation = new TokenManager();
+	private static TokenManager instance = new TokenManager();
 
 	private final Map<String, Token> tokens;
 

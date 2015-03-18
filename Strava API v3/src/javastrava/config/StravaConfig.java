@@ -1,13 +1,6 @@
 package javastrava.config;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
-import javastrava.util.Paging;
-import retrofit.RestAdapter;
-import retrofit.RestAdapter.LogLevel;
 
 /**
  * <p>
@@ -25,11 +18,11 @@ public class StravaConfig {
 	/**
 	 * Strava's default page size. If you don't specify a size, then this is what you'll get from endpoints that support paging.
 	 */
-	public static final Integer DEFAULT_PAGE_SIZE = Integer.valueOf(50);
+	public static final Integer DEFAULT_PAGE_SIZE = integer("strava.default_page_size"); //$NON-NLS-1$
 	/**
 	 * Maximum page size that is returned by Strava
 	 */
-	public static final Integer MAX_PAGE_SIZE = Integer.valueOf(200);
+	public static final Integer MAX_PAGE_SIZE = integer("strava.max_page_size"); //$NON-NLS-1$
 	/**
 	 * <p>
 	 * API endpoint for the Strava data API
@@ -67,172 +60,12 @@ public class StravaConfig {
 	public static final int WARN_AT_REQUEST_LIMIT_PERCENT = integer("strava.warn_at_request_limit_percent").intValue(); //$NON-NLS-1$
 
 	/**
-	 * <p>
-	 * Utility method - give it any paging instruction and it will return a list of paging instructions that will work with the Strava API (i.e. that conform to
-	 * maximum page sizes etc.)
-	 * </p>
-	 * 
-	 * @param inputPaging
-	 *            The paging instruction to be converted
-	 * @return List of Strava paging instructions that can be given to the Strava engine
-	 */
-	public static List<Paging> convertToStravaPaging(final Paging inputPaging) {
-		validatePagingArguments(inputPaging);
-		List<Paging> stravaPaging = new ArrayList<Paging>();
-		if (inputPaging == null) {
-			stravaPaging.add(new Paging(Integer.valueOf(1), DEFAULT_PAGE_SIZE));
-			return stravaPaging;
-		}
-
-		if (inputPaging.getPage().intValue() == 0) {
-			inputPaging.setPage(Integer.valueOf(1));
-		}
-		if (inputPaging.getPageSize().intValue() == 0) {
-			inputPaging.setPageSize(DEFAULT_PAGE_SIZE);
-		}
-
-		// If it's already valid for Strava purposes, just use that
-		if (inputPaging.getPageSize().intValue() <= MAX_PAGE_SIZE.intValue()) {
-			stravaPaging.add(inputPaging);
-			return stravaPaging;
-		}
-
-		// Calculate the first and last elements to be returned
-		int lastElement = inputPaging.getPage().intValue() * inputPaging.getPageSize().intValue() - inputPaging.getIgnoreLastN();
-		int firstElement = ((inputPaging.getPage().intValue() - 1) * inputPaging.getPageSize().intValue()) + inputPaging.getIgnoreFirstN() + 1;
-
-		// If the last element fits in one page, return one page
-		if (lastElement <= StravaConfig.MAX_PAGE_SIZE.intValue()) {
-			stravaPaging.add(new Paging(Integer.valueOf(1), Integer.valueOf(lastElement), inputPaging.getIgnoreFirstN(), 0));
-			return stravaPaging;
-		}
-
-		// Otherwise, return a series of pages
-		int currentPage = 0;
-		for (int i = 0; i <= lastElement; i = i + StravaConfig.MAX_PAGE_SIZE.intValue()) {
-			currentPage++;
-			if (currentPage * StravaConfig.MAX_PAGE_SIZE.intValue() + 1 >= firstElement) {
-				int ignoreLastN = Math.max(0, (currentPage * StravaConfig.MAX_PAGE_SIZE.intValue()) - lastElement);
-				int ignoreFirstN = Math.max(0, firstElement - ((currentPage - 1) * StravaConfig.MAX_PAGE_SIZE.intValue()) - 1);
-				stravaPaging.add(new Paging(Integer.valueOf(currentPage), StravaConfig.MAX_PAGE_SIZE, ignoreFirstN, ignoreLastN));
-			}
-		}
-		return stravaPaging;
-
-	}
-
-	/**
 	 * Get the value of a String property
 	 * @param property The property name
 	 * @return The value of the property
 	 */
 	public static String string(final String property) {
 		return RESOURCE_BUNDLE.getString(property);
-	}
-
-	/**
-	 * <p>
-	 * Removes the last ignoreLastN items from the list
-	 * </p>
-	 * 
-	 * @param list
-	 *            List of items
-	 * @param ignoreLastN
-	 *            Number of items to remove
-	 * @param <T>
-	 *            The class of the objects contained in the list
-	 * @return The resulting list
-	 */
-	public static <T> List<T> ignoreLastN(final List<T> list, final int ignoreLastN) {
-		if (ignoreLastN < 0) {
-			throw new IllegalArgumentException(Messages.string("Strava.cannotRemove") + ignoreLastN + Messages.string("Strava.itemsFromAList")); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-		if (list == null) {
-			return null;
-		}
-		if (ignoreLastN == 0) {
-			return list;
-		}
-		if (ignoreLastN >= list.size()) {
-			return new ArrayList<T>();
-		}
-		return list.subList(0, list.size() - ignoreLastN);
-	}
-
-	/**
-	 * <p>
-	 * Removes the first N items from a list
-	 * </p>
-	 * 
-	 * @param list
-	 *            List of items
-	 * @param ignoreFirstN
-	 *            Number of items to remove
-	 * @param <T>
-	 *            The class of object in the list
-	 * @return The resulting list
-	 */
-	public static <T> List<T> ignoreFirstN(final List<T> list, final int ignoreFirstN) {
-		if (ignoreFirstN < 0) {
-			throw new IllegalArgumentException(Messages.string("Strava.cannotRemove") + ignoreFirstN + Messages.string("Strava.itemsFromAList"));  //$NON-NLS-1$ //$NON-NLS-2$
-		}
-		if (list == null) {
-			return null;
-		}
-		if (ignoreFirstN == 0) {
-			return list;
-		}
-		if (ignoreFirstN >= list.size()) {
-			return new ArrayList<T>();
-		}
-		// return list.subList(ignoreFirstN, list.size() - 1);
-		ArrayList<T> returnList = new ArrayList<T>();
-		for (int i = ignoreFirstN; i < list.size(); i++) {
-			returnList.add(list.get(i));
-		}
-		return returnList;
-	}
-
-	/**
-	 * <p>
-	 * Throw an IllegalArgumentException if the page or perPage parameters are set but are invalid
-	 * </p>
-	 * 
-	 * @param pagingInstruction
-	 *            The page to be returned
-	 */
-	public static void validatePagingArguments(final Paging pagingInstruction) {
-		if (pagingInstruction == null) {
-			return;
-		}
-		if (pagingInstruction.getPage().intValue() < 0) {
-			throw new IllegalArgumentException(Messages.string("Strava.pageArgumentTooLow")); //$NON-NLS-1$
-		}
-		if (pagingInstruction.getPageSize().intValue() < 0) {
-			throw new IllegalArgumentException(Messages.string("Strava.perPageArgumentTooLow")); //$NON-NLS-1$
-		}
-		if (pagingInstruction.getIgnoreLastN() > 0 && pagingInstruction.getIgnoreLastN() > pagingInstruction.getPageSize().intValue()) {
-			throw new IllegalArgumentException(Messages.string("Strava.IgnoreTooHigh")); //$NON-NLS-1$
-		}
-		if (pagingInstruction.getIgnoreFirstN() > 0 && pagingInstruction.getIgnoreFirstN() > pagingInstruction.getPageSize().intValue()) {
-			throw new IllegalArgumentException(Messages.string("Strava.IgnoreTooHigh")); //$NON-NLS-1$
-		}
-	}
-
-	/**
-	 * @param class1
-	 *            Class for which log level is to be determined
-	 * @return The appropriate log level for the class
-	 */
-	public static LogLevel logLevel(final Class<?> class1) {
-		String propertyName = "retrofit." + class1.getName() + ".log_level"; //$NON-NLS-1$ //$NON-NLS-2$
-		RestAdapter.LogLevel logLevel = null;
-		try {
-			logLevel = RestAdapter.LogLevel.valueOf(RESOURCE_BUNDLE.getString(propertyName));
-		} catch (MissingResourceException e) {
-			logLevel = RestAdapter.LogLevel.valueOf(RESOURCE_BUNDLE.getString("retrofit.log_level")); //$NON-NLS-1$
-		}
-		return logLevel;
 	}
 
 	/**

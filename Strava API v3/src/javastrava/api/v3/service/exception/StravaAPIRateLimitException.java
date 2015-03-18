@@ -9,7 +9,7 @@ import javastrava.api.v3.model.StravaResponse;
  * 
  * @author Dan Shannon
  */
-public class StravaAPIRateLimitException extends Throwable implements StravaAPIException {
+public class StravaAPIRateLimitException extends RuntimeException implements StravaAPIException {
 
 	private static final long	serialVersionUID	= 1L;
 

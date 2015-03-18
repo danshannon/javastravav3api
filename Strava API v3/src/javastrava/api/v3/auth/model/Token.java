@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import javastrava.api.v3.auth.AuthorisationServices;
+import javastrava.api.v3.auth.AuthorisationService;
 import javastrava.api.v3.auth.ref.AuthorisationScope;
 import javastrava.api.v3.model.StravaAthlete;
-import javastrava.api.v3.service.StravaServices;
-import javastrava.api.v3.service.impl.retrofit.StravaServiceImpl;
+import javastrava.api.v3.service.StravaService;
+import javastrava.api.v3.service.impl.StravaServiceImpl;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
  * <p>
  * Tokens are acquired through the OAuth process; this implementation of the API does not provide a purely programmatic way to acquire a token as that would
  * kind of destroy the point(!) - although once a user has given their permission to the application via the OAuth process, you can use
- * {@link AuthorisationServices#tokenExchange(Integer, String, String)} to acquire a token at that point in the process.
+ * {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)} to acquire a token at that point in the process.
  * </p>
  * 
  * <p>
@@ -62,17 +62,17 @@ public class Token {
 	/**
 	 * List of service implementations associated with this token
 	 */
-	private HashMap<Class<? extends StravaServices>, StravaServices> services;
+	private HashMap<Class<? extends StravaService>, StravaService> services;
 	
 	private String tokenType;
 
 	/**
 	 * <p>
-	 * Default constructor is based on the {@link TokenResponse} structure received from {@link AuthorisationServices#tokenExchange(Integer, String, String)}
+	 * Default constructor is based on the {@link TokenResponse} structure received from {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
 	 * </p>
 	 * 
 	 * @param tokenResponse
-	 *            The response as received from {@link AuthorisationServices#tokenExchange(Integer, String, String)}
+	 *            The response as received from {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
 	 * @param scopes
 	 *            The list of authorisation scopes to be associated with the token
 	 */
@@ -81,7 +81,7 @@ public class Token {
 		this.token = tokenResponse.getAccessToken();
 		this.tokenType = tokenResponse.getTokenType();
 		this.scopes = Arrays.asList(scopes);
-		this.services = new HashMap<Class<? extends StravaServices>, StravaServices>();
+		this.services = new HashMap<Class<? extends StravaService>, StravaService>();
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class Token {
 	 * @param service
 	 *            The service implementation
 	 */
-	public void addService(final Class<? extends StravaServices> class1, final StravaServices service) {
+	public void addService(final Class<? extends StravaService> class1, final StravaService service) {
 		this.services.put(class1, service);
 	}
 
@@ -108,7 +108,7 @@ public class Token {
 	 * @return The implementation of the service required
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends StravaServices> T getService(final Class<T> class1) {
+	public <T extends StravaService> T getService(final Class<T> class1) {
 		return (T) this.services.get(class1);
 	}
 
@@ -118,7 +118,7 @@ public class Token {
 	 * </p>
 	 * @param class1 The class of token to be removed
 	 */
-	public void removeService(final Class<? extends StravaServices> class1) {
+	public void removeService(final Class<? extends StravaService> class1) {
 		this.services.remove(class1);
 	}
 
