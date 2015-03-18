@@ -63,7 +63,7 @@ Token Management
 ================
 The `TokenManager` class provides a cache for all active tokens, for all users who have given permission to your application. Token exchange (above) will add each token to the token manager via `TokenManager.instance().storeToken(token)`.
 
-You can then retrieve a token from the TokenManager later on via `TokenManager.instance().retrieveToken(username)`. The username is the username that the user uses (too many 'use's!) to log in to Strava; you can find it with `token.getAthlete().getEmail()`
+You can then retrieve a token from the TokenManager later on via `TokenManager.instance().retrieveToken(username)`. The username is the email address that the user logs in to Strava with; you can find it with `token.getAthlete().getEmail()`
 
 The API doesn't currently cater for permanent storage of tokens or of the token manager; that's up to your application to do.
 
