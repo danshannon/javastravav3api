@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.danshannon</groupId>
 	<artifactId>javastrava-api</artifactId>
-	<version>0.3.3-SNAPSHOT</version>
+	<version>0.3.2-SNAPSHOT</version>
 	<name>Strava API</name>
 	<description>Java implementation of the Strava API</description>
 	<licenses>
