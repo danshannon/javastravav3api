@@ -46,8 +46,8 @@ Use (raw API)
 If you prefer to use the raw API, then a similar approach is required. Again, it's your problem to get through the OAuth process until you've got a code. Then, to get a token:
 
 ```
-AuthorisationAPI api = API.authorisationInstance();
-TokenResponse response = api.tokenExchange({application_client_id}, {client_secret}, code);
+AuthorisationAPI auth = API.authorisationInstance();
+TokenResponse response = auth.tokenExchange({application_client_id}, {client_secret}, code);
 Token token = new Token(response);
 ```
 
