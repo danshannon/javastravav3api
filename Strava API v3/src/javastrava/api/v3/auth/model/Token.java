@@ -7,8 +7,23 @@ import java.util.List;
 import javastrava.api.v3.auth.AuthorisationService;
 import javastrava.api.v3.auth.ref.AuthorisationScope;
 import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.service.ActivityService;
+import javastrava.api.v3.service.AthleteService;
+import javastrava.api.v3.service.ClubService;
+import javastrava.api.v3.service.GearService;
+import javastrava.api.v3.service.SegmentEffortService;
+import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.StravaService;
+import javastrava.api.v3.service.StreamService;
+import javastrava.api.v3.service.UploadService;
+import javastrava.api.v3.service.impl.ActivityServiceImpl;
+import javastrava.api.v3.service.impl.AthleteServiceImpl;
+import javastrava.api.v3.service.impl.ClubServiceImpl;
+import javastrava.api.v3.service.impl.GearServiceImpl;
+import javastrava.api.v3.service.impl.SegmentServiceImpl;
 import javastrava.api.v3.service.impl.StravaServiceImpl;
+import javastrava.api.v3.service.impl.StreamServiceImpl;
+import javastrava.api.v3.service.impl.UploadServiceImpl;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -82,6 +97,16 @@ public class Token {
 		this.tokenType = tokenResponse.getTokenType();
 		this.scopes = Arrays.asList(scopes);
 		this.services = new HashMap<Class<? extends StravaService>, StravaService>();
+		
+		// Get pre-packed instances of all the services
+		this.addService(ActivityService.class, ActivityServiceImpl.instance(this));
+		this.addService(AthleteService.class, AthleteServiceImpl.instance(this));
+		this.addService(ClubService.class, ClubServiceImpl.instance(this));
+		this.addService(GearService.class, GearServiceImpl.instance(this));
+		this.addService(SegmentEffortService.class, GearServiceImpl.instance(this));
+		this.addService(SegmentService.class, SegmentServiceImpl.instance(this));
+		this.addService(StreamService.class, StreamServiceImpl.instance(this));
+		this.addService(UploadService.class, UploadServiceImpl.instance(this));
 	}
 
 	/**
