@@ -79,6 +79,9 @@ public class Token {
 	 */
 	private HashMap<Class<? extends StravaService>, StravaService> services;
 	
+	/**
+	 * Token type used in the authorisation header of requests to the Strava API - usually set to "Bearer"
+	 */
 	private String tokenType;
 
 	/**
