@@ -114,5 +114,6 @@ public class StravaSegmentEffort {
 	/**
 	 * Summary of athlete's statistics on this segment
 	 */
+	@SuppressWarnings("deprecation")
 	private StravaAthleteSegmentStats athleteSegmentStats;
 }

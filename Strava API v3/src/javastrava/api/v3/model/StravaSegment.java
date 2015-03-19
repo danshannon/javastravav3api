@@ -140,25 +140,31 @@ public class StravaSegment {
 	/**
 	 * Start latitude
 	 */
+	@Deprecated
 	private Float startLatitude;
 	/**
 	 * Start longitude
 	 */
+	@Deprecated
 	private Float startLongitude;
 	/**
 	 * End latitude
 	 */
+	@Deprecated
 	private Float endLatitude;
 	/**
 	 * End longitude
 	 */
+	@Deprecated
 	private Float endLongitude;
 	/**
 	 * Athlete's best time (returned only when listing starred segments)
 	 */
+	@Deprecated
 	private Integer prTime;
 	/**
 	 * Athlete segment statistics
 	 */
+	@SuppressWarnings("deprecation")
 	private StravaAthleteSegmentStats athleteSegmentStats;
 }

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
+@Deprecated
 public class StravaAthleteSegmentStats {
 	private Integer effortCount;
 	private Integer prElapsedTime;
