@@ -33,13 +33,13 @@ AuthorisationService service = new AuthorisationServiceImpl();
 Token token = service.tokenExchange({application_client_id}, {client_secret}, code);
 ```
 
-Once you've got an access token, life is pretty simple really. Getting a service implementation (in this case for the athlete service endpoints) looks like this:
+Once you've got an access token, life is pretty simple really. Getting a service implementation looks like this:
 
-`AthleteService service = AthleteServiceImpl.instance(accessToken);`
+`Strava strava = new Strava(token)`
 
 Then, getting an athlete looks like this:
 
-`StravaAthlete athlete = service.getAthlete(id);`
+`StravaAthlete athlete = strava.getAthlete(id);`
 
 Use (raw API)
 =============
@@ -53,7 +53,7 @@ Token token = new Token(response);
 
 Now we can get an API instance:
 
-`AthleteAPI api = api.instance(AthleteAPI.class, token);`
+`API api = new API(token);`
 
 And finally, the athlete:
 
@@ -65,15 +65,15 @@ The `TokenManager` class provides a cache for all active tokens, for all users w
 
 You can then retrieve a token from the TokenManager later on via `TokenManager.instance().retrieveToken(username)`. The username is the email address that the user logs in to Strava with; you can find it with `token.getAthlete().getEmail()`
 
-The API doesn't currently cater for permanent storage of tokens or of the token manager; that's up to your application to do.
+The API doesn't currently cater for persistence of tokens or of the token manager; that's up to your application to do.
 
 Tricks of the trade
 ===================
 The Strava API can be a bit, well, weird when you use it in anger. The interaction between privacy settings, authentication and so on isn't always consistent in the API. What we've done is this:
 
-- If the object you're after doesn't exist, service methods will return <code>null</code>
-- If the object you're after is private, service methods will return an empty object - either a list with no entries, or a model object with only the id populated. We don't worry about this too much from a privacy point of view, because all you get is that an object exists, but you don't get any of the data. Athletes are different - they are returned with a limited view of the athlete, rather than an empty athlete
-- If your token has been revoked, or wasn't valid in the first place, or doesn't have the authorisation scope needed for the operation that you're attempting, you'll see an UnauthorisedException (which is unchecked) get thrown.
+- If the object you're after doesn't exist, service methods will return `null`. API methods will throw a `NotFoundException`
+- If the object you're after is private, service methods will return an empty object - either a list with no entries, or a model object with only the id populated. We don't worry about this too much from a privacy point of view, because all you get is that an object exists, but you don't get any of the data. Athletes are different - they are returned with a limited view of the athlete, rather than an empty athlete. API methods throw an `UnauthorisedException`
+- If your token has been revoked, or wasn't valid in the first place, or doesn't have the authorisation scope needed for the operation that you're attempting, you'll see an `UnauthorisedException` (which is unchecked) get thrown.
 
 Paging
 ======
