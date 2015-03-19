@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import javastrava.api.v3.auth.AuthorisationService;
+import javastrava.api.v3.auth.TokenService;
+import javastrava.api.v3.auth.impl.retrofit.TokenServiceImpl;
 import javastrava.api.v3.auth.ref.AuthorisationScope;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.service.ActivityService;
@@ -110,6 +112,7 @@ public class Token {
 		this.addService(SegmentEffortService.class, SegmentEffortServiceImpl.instance(this));
 		this.addService(SegmentService.class, SegmentServiceImpl.instance(this));
 		this.addService(StreamService.class, StreamServiceImpl.instance(this));
+		this.addService(TokenService.class, TokenServiceImpl.instance(this));
 		this.addService(UploadService.class, UploadServiceImpl.instance(this));
 	}
 
