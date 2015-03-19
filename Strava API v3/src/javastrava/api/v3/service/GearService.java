@@ -39,11 +39,11 @@ public interface GearService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/gear/#show">http://strava.github.io/api/v3/gear/#show</a>
 	 * 
-	 * @param id
+	 * @param gearId
 	 *            The id of the {@link StravaGear} to be retrieved.
 	 * @return Returns a detailed {@link StravaGear} representation.
 	 * @throws UnauthorizedException
 	 *             If service token is invalid
 	 */
-	public StravaGear getGear(final String id);
+	public StravaGear getGear(final String gearId);
 }

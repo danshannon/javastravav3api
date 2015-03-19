@@ -48,13 +48,11 @@ public interface AthleteService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
 	 * 
-	 * @param id
+	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} to be returned
 	 * @return Returns a summary representation of the {@link StravaAthlete athlete} even if the indicated athlete matches the authenticated athlete.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
-	public StravaAthlete getAthlete(final Integer id) throws UnauthorizedException;
+	public StravaAthlete getAthlete(final Integer athleteId);
 
 	/**
 	 * <p>
@@ -107,13 +105,11 @@ public interface AthleteService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
 	 * 
-	 * @param id
+	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} whose KOM's are to be returned
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary representations
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
-	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id);
+	public List<StravaSegmentEffort> listAthleteKOMs(final Integer athleteId);
 
 	/**
 	 * <p>
@@ -138,15 +134,13 @@ public interface AthleteService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a>
 	 * 
-	 * @param id
+	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} whose KOM's are to be returned
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary representations
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
-	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id, final Paging pagingInstruction);
+	public List<StravaSegmentEffort> listAthleteKOMs(final Integer athleteId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -169,8 +163,6 @@ public interface AthleteService extends StravaService {
 	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
 	 * 
 	 * @return Returns an array of {@link StravaAthlete athlete} summary representations.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
 	public List<StravaAthlete> listAuthenticatedAthleteFriends();
 
@@ -197,8 +189,6 @@ public interface AthleteService extends StravaService {
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaAthlete athlete} summary representations.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
 	public List<StravaAthlete> listAuthenticatedAthleteFriends(final Paging pagingInstruction);
 
@@ -225,16 +215,14 @@ public interface AthleteService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
 	 * 
-	 * @param id
+	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} whose friends are to be listed
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
 	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the
 	 *         currently authenticated athlete.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listAthleteFriends(final Integer id, final Paging pagingInstruction);
+	public List<StravaAthlete> listAthleteFriends(final Integer athleteId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -259,14 +247,12 @@ public interface AthleteService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
 	 * 
-	 * @param id
+	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} whose friends are to be listed
 	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the
 	 *         currently authenticated athlete.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listAthleteFriends(final Integer id);
+	public List<StravaAthlete> listAthleteFriends(final Integer athleteId);
 
 	/**
 	 * <p>
@@ -287,13 +273,11 @@ public interface AthleteService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
 	 * 
-	 * @param id
+	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} for whom the list of mutual friends is to be generated
 	 * @return Returns an array of {@link StravaAthlete athlete} summary representations.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listAthletesBothFollowing(final Integer id);
+	public List<StravaAthlete> listAthletesBothFollowing(final Integer athleteId);
 
 	/**
 	 * <p>
@@ -314,15 +298,13 @@ public interface AthleteService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/follow/">http://strava.github.io/api/v3/follow/</a>
 	 * 
-	 * @param id
+	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} for whom the list of mutual friends is to be generated
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaAthlete athlete} summary representations.
-	 * @throws UnauthorizedException
-	 *             If the service's access token is invalid
 	 */
-	public List<StravaAthlete> listAthletesBothFollowing(final Integer id, final Paging pagingInstruction);
+	public List<StravaAthlete> listAthletesBothFollowing(final Integer athleteId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -343,11 +325,11 @@ public interface AthleteService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/athlete/#stats">http://strava.github.io/api/v3/athlete/#stats</a>
 	 * 
-	 * @param id
+	 * @param athleteId
 	 *            The id of the athlete (must match authenticated athlete)
 	 * @return Strava statistics object; values are in seconds and metres.
 	 */
-	public StravaStatistics statistics(final Integer id);
+	public StravaStatistics statistics(final Integer athleteId);
 	
 	/**
 	 * <p>

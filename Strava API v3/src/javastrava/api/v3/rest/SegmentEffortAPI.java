@@ -17,11 +17,11 @@ public interface SegmentEffortAPI {
 	/**
 	 * @see javastrava.api.v3.service.SegmentEffortService#getSegmentEffort(java.lang.Long)
 	 * 
-	 * @param id Effort identifier
+	 * @param segmentEffortId Effort identifier
 	 * @return Effort details
 	 * @throws NotFoundException If the effort with the given id doesn't exist
 	 */
 	@GET("/segment_efforts/{id}")
-	public StravaSegmentEffort getSegmentEffort(@Path("id") final Long id) throws NotFoundException;
+	public StravaSegmentEffort getSegmentEffort(@Path("id") final Long segmentEffortId) throws NotFoundException;
 
 }

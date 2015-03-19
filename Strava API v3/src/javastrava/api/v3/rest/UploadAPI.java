@@ -43,10 +43,10 @@ public interface UploadAPI {
 	/**
 	 * @see javastrava.api.v3.service.UploadService#checkUploadStatus(Integer)
 	 * 
-	 * @param id The upload id as given back in the response to {@link #upload(StravaActivityType, String, String, Boolean, Boolean, String, String, TypedFile)}
+	 * @param uploadId The upload id as given back in the response to {@link #upload(StravaActivityType, String, String, Boolean, Boolean, String, String, TypedFile)}
 	 * @return Upload response containing the upload id and activity id and current status of the upload
 	 */
 	@GET("/uploads/{id}")
-	public StravaUploadResponse checkUploadStatus(@Path("id") final Integer id);
+	public StravaUploadResponse checkUploadStatus(@Path("id") final Integer uploadId);
 
 }

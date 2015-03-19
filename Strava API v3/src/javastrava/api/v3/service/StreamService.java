@@ -52,7 +52,7 @@ public interface StreamService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/streams/#activity">http://strava.github.io/api/v3/streams/#activity</a>
 	 * 
-	 * @param id
+	 * @param activityId
 	 *            The id of the activity for which streams are to be retrieved
 	 * @param types
 	 *            List of types, if the activity does not have that stream it will not be included in the response
@@ -66,7 +66,7 @@ public interface StreamService extends StravaService {
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
 	 */
-	public List<StravaStream> getActivityStreams(final Integer id, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+	public List<StravaStream> getActivityStreams(final Integer activityId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types);
 
 	/**
@@ -100,13 +100,13 @@ public interface StreamService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/streams/#activity">http://strava.github.io/api/v3/streams/#activity</a>
 	 * 
-	 * @param id
+	 * @param activityId
 	 *            The id of the activity for which streams are to be retrieved
 	 * @return Returns an array of unordered stream objects, or <code>null</code> if the activity doesn't exist
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
 	 */
-	public List<StravaStream> getActivityStreams(final Integer id);
+	public List<StravaStream> getActivityStreams(final Integer activityId);
 
 	/**
 	 * <p>
@@ -128,7 +128,7 @@ public interface StreamService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/streams/#effort">http://strava.github.io/api/v3/streams/#effort</a>
 	 * 
-	 * @param id
+	 * @param effortId
 	 *            The id of the segment effort for which streams are to be retrieved
 	 * @param types
 	 *            List of types, if the effort does not have that stream it will not be included in the response
@@ -140,7 +140,7 @@ public interface StreamService extends StravaService {
 	 *            being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getEffortStreams(final Long id, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+	public List<StravaStream> getEffortStreams(final Long effortId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types);
 
 	/**
@@ -163,11 +163,11 @@ public interface StreamService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/streams/#effort">http://strava.github.io/api/v3/streams/#effort</a>
 	 * 
-	 * @param id
+	 * @param effortId
 	 *            The id of the segment effort for which streams are to be retrieved
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getEffortStreams(final Long id);
+	public List<StravaStream> getEffortStreams(final Long effortId);
 
 	/**
 	 * <p>
@@ -184,7 +184,7 @@ public interface StreamService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/streams/#segment">http://strava.github.io/api/v3/streams/#segment</a>
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the segment for which streams are to be retrieved
 	 * @param types
 	 *            List of types, if the segment does not have that stream it will not be included in the response
@@ -196,7 +196,7 @@ public interface StreamService extends StravaService {
 	 *            being reduced
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getSegmentStreams(final Integer id, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+	public List<StravaStream> getSegmentStreams(final Integer segmentId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types);
 
 	/**
@@ -214,10 +214,10 @@ public interface StreamService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/streams/#segment">http://strava.github.io/api/v3/streams/#segment</a>
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the segment for which streams are to be retrieved
 	 * @return Returns an array of unordered stream objects.
 	 */
-	public List<StravaStream> getSegmentStreams(final Integer id);
+	public List<StravaStream> getSegmentStreams(final Integer segmentId);
 
 }

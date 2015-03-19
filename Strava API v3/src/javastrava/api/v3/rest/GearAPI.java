@@ -17,11 +17,11 @@ public interface GearAPI {
 	/**
 	 * @see javastrava.api.v3.service.GearService#getGear(java.lang.String)
 	 * 
-	 * @param id Gear identifier
+	 * @param gearId Gear identifier
 	 * @return Details of the identified gear
 	 * @throws NotFoundException If the gear with the given id doesn't exist
 	 */
 	@GET("/gear/{id}")
-	public StravaGear getGear(@Path("id") final String id) throws NotFoundException;
+	public StravaGear getGear(@Path("id") final String gearId) throws NotFoundException;
 
 }

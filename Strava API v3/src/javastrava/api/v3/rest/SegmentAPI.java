@@ -19,6 +19,7 @@ import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.util.Paging;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -47,14 +48,13 @@ public interface SegmentAPI {
 	
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#getSegment(java.lang.Integer)
-	 */
-	/**
-	 * @param id The unique identifier of the segment
+	 * 
+	 * @param segmentId The unique identifier of the segment
 	 * @return The Segment
 	 * @throws NotFoundException If the segment with the given id does not exist
 	 */
 	@GET("/segments/{id}")
-	public StravaSegment getSegment(@Path("id") final Integer id) throws NotFoundException;
+	public StravaSegment getSegment(@Path("id") final Integer segmentId) throws NotFoundException;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#listAuthenticatedAthleteStarredSegments(javastrava.util.Paging)
@@ -67,10 +67,9 @@ public interface SegmentAPI {
 	public StravaSegment[] listAuthenticatedAthleteStarredSegments(@Query("page") final Integer page, @Query("per_page") final Integer perPage);
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listStarredSegments(java.lang.Integer, java.lang.Integer, java.lang.Integer)
-	 */
-	/**
-	 * @param id The id of the athlete whose starred segments are to be retrieved
+	 * @see javastrava.api.v3.service.SegmentService#listStarredSegments(java.lang.Integer, Paging)
+	 * 
+	 * @param athleteId The id of the athlete whose starred segments are to be retrieved
 	 * @param page (optional) Page number to be returned
 	 * @param perPage (optional) Number of entries to return per page
 	 * @return An array of segments
@@ -78,13 +77,13 @@ public interface SegmentAPI {
 	 * @throws UnauthorizedException If there is a security or privacy violation
 	 */
 	@GET("/athletes/{id}/segments/starred")
-	public StravaSegment[] listStarredSegments(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
+	public StravaSegment[] listStarredSegments(@Path("id") final Integer athleteId, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
 			throws NotFoundException;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(Integer, Integer, java.util.Calendar, java.util.Calendar, javastrava.util.Paging)
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
 	 * @param athleteId
 	 *            (Optional) id of the {@link StravaAthlete} to filter results by
@@ -99,14 +98,14 @@ public interface SegmentAPI {
 	 * @throws NotFoundException If the segment with the given id doesn't exist
 	 */
 	@GET("/segments/{id}/all_efforts")
-	public StravaSegmentEffort[] listSegmentEfforts(@Path("id") final Integer id, @Query("athlete_id") final Integer athleteId,
+	public StravaSegmentEffort[] listSegmentEfforts(@Path("id") final Integer segmentId, @Query("athlete_id") final Integer athleteId,
 			@Query("start_date_local") final String start, @Query("end_date_local") final String end, @Query("page") final Integer page,
 			@Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboard(Integer, StravaGender, StravaAgeGroup, StravaWeightClass, Boolean, Integer, StravaLeaderboardDateRange, javastrava.util.Paging, Integer)
 	 * 
-	 * @param id Segment identifier
+	 * @param segmentId Segment identifier
 	 * @param gender (Optional) Gender to filter the leaderboard by
 	 * @param ageGroup (Optional) Age group to filter the leaderboard by
 	 * @param weightClass (Optional) Weight class to filter the leaderboard by
@@ -120,7 +119,7 @@ public interface SegmentAPI {
 	 * @throws NotFoundException If the segment with the given id doesn't exist
 	 */
 	@GET("/segments/{id}/leaderboard")
-	public StravaSegmentLeaderboard getSegmentLeaderboard(@Path("id") final Integer id, @Query("gender") final StravaGender gender,
+	public StravaSegmentLeaderboard getSegmentLeaderboard(@Path("id") final Integer segmentId, @Query("gender") final StravaGender gender,
 			@Query("age_group") final StravaAgeGroup ageGroup, @Query("weight_class") final StravaWeightClass weightClass, @Query("following") final Boolean following,
 			@Query("club_id") final Integer clubId, @Query("date_range") final StravaLeaderboardDateRange dateRange, @Query("page") final Integer page,
 			@Query("per_page") final Integer perPage, @Query("context_entries") final Integer contextEntries) throws NotFoundException;

@@ -20,6 +20,7 @@ import javastrava.api.v3.service.impl.ActivityServiceImpl;
 import javastrava.api.v3.service.impl.AthleteServiceImpl;
 import javastrava.api.v3.service.impl.ClubServiceImpl;
 import javastrava.api.v3.service.impl.GearServiceImpl;
+import javastrava.api.v3.service.impl.SegmentEffortServiceImpl;
 import javastrava.api.v3.service.impl.SegmentServiceImpl;
 import javastrava.api.v3.service.impl.StravaServiceImpl;
 import javastrava.api.v3.service.impl.StreamServiceImpl;
@@ -106,7 +107,7 @@ public class Token {
 		this.addService(AthleteService.class, AthleteServiceImpl.instance(this));
 		this.addService(ClubService.class, ClubServiceImpl.instance(this));
 		this.addService(GearService.class, GearServiceImpl.instance(this));
-		this.addService(SegmentEffortService.class, GearServiceImpl.instance(this));
+		this.addService(SegmentEffortService.class, SegmentEffortServiceImpl.instance(this));
 		this.addService(SegmentService.class, SegmentServiceImpl.instance(this));
 		this.addService(StreamService.class, StreamServiceImpl.instance(this));
 		this.addService(UploadService.class, UploadServiceImpl.instance(this));

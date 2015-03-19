@@ -50,13 +50,13 @@ public interface SegmentService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#retrieve">http://strava.github.io/api/v3/segments/#retrieve</a>
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the {@link StravaSegment} to be retrieved
 	 * @return Returns a {@link StravaResourceState#DETAILED detailed representation} of the {@link StravaSegment}.
 	 * @throws UnauthorizedException
 	 *             If authorisation fails
 	 */
-	public StravaSegment getSegment(final Integer id);
+	public StravaSegment getSegment(final Integer segmentId);
 
 	/**
 	 * <p>
@@ -122,14 +122,14 @@ public interface SegmentService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#starred">http://strava.github.io/api/v3/segments/#starred</a>
 	 * 
-	 * @param id
+	 * @param athleteId
 	 *            Identifier of the {@link StravaAthlete} for which starred {@link StravaSegment segments} are to be returned
 	 * @param pagingInstruction
 	 *            (Optional) paging instructions
 	 * @return Returns a {@link StravaResourceState#SUMMARY summary representation} of the {@link StravaSegment segments} starred by the identified
 	 *         {@link StravaAthlete}.
 	 */
-	public List<StravaSegment> listStarredSegments(final Integer id, final Paging pagingInstruction);
+	public List<StravaSegment> listStarredSegments(final Integer athleteId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -151,12 +151,12 @@ public interface SegmentService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#starred">http://strava.github.io/api/v3/segments/#starred</a>
 	 * 
-	 * @param id
+	 * @param athleteId
 	 *            Identifier of the {@link StravaAthlete} for which starred {@link StravaSegment segments} are to be returned
 	 * @return Returns a {@link StravaResourceState#SUMMARY summary representation} of the {@link StravaSegment segments} starred by the identified
 	 *         {@link StravaAthlete}.
 	 */
-	public List<StravaSegment> listStarredSegments(final Integer id);
+	public List<StravaSegment> listStarredSegments(final Integer athleteId);
 
 	/**
 	 * <p>
@@ -190,7 +190,7 @@ public interface SegmentService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#efforts">http://strava.github.io/api/v3/segments/#efforts</a>
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
 	 * @param athleteId
 	 *            (Optional) id of the {@link StravaAthlete} to filter results by
@@ -203,7 +203,7 @@ public interface SegmentService extends StravaService {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal,
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal,
 			final Paging pagingInstruction);
 
 	/**
@@ -238,7 +238,7 @@ public interface SegmentService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#efforts">http://strava.github.io/api/v3/segments/#efforts</a>
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
 	 * @param athleteId
 	 *            (Optional) id of the {@link StravaAthlete} to filter results by
@@ -249,7 +249,7 @@ public interface SegmentService extends StravaService {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal);
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal);
 
 	/**
 	 * <p>
@@ -270,14 +270,14 @@ public interface SegmentService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#efforts">http://strava.github.io/api/v3/segments/#efforts</a>
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
 	 * @param pagingInstruction
 	 *            (Optional) paging parameters
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Paging pagingInstruction);
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -298,12 +298,12 @@ public interface SegmentService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#efforts">http://strava.github.io/api/v3/segments/#efforts</a>
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id);
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId);
 
 	/**
 	 * <p>
@@ -328,7 +328,7 @@ public interface SegmentService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#leaderboard">http://strava.github.io/api/v3/segments/#leaderboard</a>
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the segment to return a leaderboard for
 	 * @param gender
 	 *            (Optional) {@link StravaGender StravaGender} to filter results by
@@ -349,7 +349,7 @@ public interface SegmentService extends StravaService {
 	 * @return Returns an array of up to 10, by default, {@link StravaSegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be
 	 *         considered 64-bit integers and effort_count is deprecated, use entry_count instead.
 	 */
-	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final StravaGender gender, final StravaAgeGroup ageGroup,
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
 			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange,
 			final Paging pagingInstruction, final Integer contextEntries);
 
@@ -376,14 +376,14 @@ public interface SegmentService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#leaderboard">http://strava.github.io/api/v3/segments/#leaderboard</a>
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the segment to return a leaderboard for
 	 * @param pagingInstruction
 	 *            (Optional) Page number, Number of results per page (max 200)
 	 * @return Returns an array of up to 10, by default, {@link StravaSegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be
 	 *         considered 64-bit integers and effort_count is deprecated, use entry_count instead.
 	 */
-	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final Paging pagingInstruction);
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -408,12 +408,12 @@ public interface SegmentService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/segments/#leaderboard">http://strava.github.io/api/v3/segments/#leaderboard</a>
 	 * 
-	 * @param id
+	 * @param segmentId
 	 *            The id of the segment to return a leaderboard for
 	 * @return Returns an array of up to 10, by default, {@link StravaSegmentLeaderboardEntry leaderboard entry} objects. Note that effort ids should be
 	 *         considered 64-bit integers and effort_count is deprecated, use entry_count instead.
 	 */
-	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id);
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId);
 
 	/**
 	 * <p>
@@ -496,6 +496,10 @@ public interface SegmentService extends StravaService {
 	/**
 	 * <p>
 	 * {@link StravaSegmentLeaderboard Leaderboards} represent the ranking of {@link StravaAthlete athletes} on specific {@link StravaSegment segments}.
+	 * </p>
+	 * 
+	 * <p>
+	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF ATHLETES ON THE LEADERBOARD, REQUIRING A VERY LARGE NUMBER OF CALLS TO THE STRAVA API
 	 * </p>
 	 * 
 	 * <p>

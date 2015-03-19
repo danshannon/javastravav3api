@@ -49,11 +49,11 @@ public interface ClubService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-details">http://strava.github.io/api/v3/clubs/#get-details</a>
 	 * 
-	 * @param id
+	 * @param clubId
 	 *            The id of the {@link StravaClub} to be retrieved
 	 * @return Returns a detailed club representation.
 	 */
-	public StravaClub getClub(final Integer id);
+	public StravaClub getClub(final Integer clubId);
 
 	/**
 	 * <p>
@@ -97,11 +97,11 @@ public interface ClubService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-members">http://strava.github.io/api/v3/clubs/#get-members</a>
 	 * 
-	 * @param id
+	 * @param clubId
 	 *            The id of the {@link StravaClub} whose member {@link StravaAthlete athletes} should be returned
 	 * @return Returns an array of {@link StravaAthlete athlete} summary {@link StravaResourceState representations}.
 	 */
-	public List<StravaAthlete> listClubMembers(final Integer id);
+	public List<StravaAthlete> listClubMembers(final Integer clubId);
 
 	/**
 	 * <p>
@@ -126,13 +126,13 @@ public interface ClubService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-members">http://strava.github.io/api/v3/clubs/#get-members</a>
 	 * 
-	 * @param id
+	 * @param clubId
 	 *            The id of the {@link StravaClub} whose member {@link StravaAthlete athletes} should be returned
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaAthlete athlete} summary {@link StravaResourceState representations}.
 	 */
-	public List<StravaAthlete> listClubMembers(final Integer id, final Paging pagingInstruction);
+	public List<StravaAthlete> listClubMembers(final Integer clubId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -157,11 +157,11 @@ public interface ClubService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-activities">http://strava.github.io/api/v3/clubs/#get-activities</a>
 	 * 
-	 * @param id
+	 * @param clubId
 	 *            The id of the {@link StravaClub} for which recent {@link StravaActivity activities} are to be returned.
 	 * @return Returns an array of {@link StravaActivity activity} summary {@link StravaResourceState representations}.
 	 */
-	public List<StravaActivity> listRecentClubActivities(final Integer id);
+	public List<StravaActivity> listRecentClubActivities(final Integer clubId);
 
 	/**
 	 * <p>
@@ -186,35 +186,35 @@ public interface ClubService extends StravaService {
 	 * 
 	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-activities">http://strava.github.io/api/v3/clubs/#get-activities</a>
 	 * 
-	 * @param id
+	 * @param clubId
 	 *            The id of the {@link StravaClub} for which recent {@link StravaActivity activities} are to be returned.
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaActivity activity} summary {@link StravaResourceState representations}.
 	 */
-	public List<StravaActivity> listRecentClubActivities(final Integer id, final Paging pagingInstruction);
+	public List<StravaActivity> listRecentClubActivities(final Integer clubId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
 	 * Join a club on behalf of the authenticated user. An access token with write permissions is required.
 	 * </p>
 	 * 
-	 * @param id
+	 * @param clubId
 	 *            ID of the {@link StravaClub} to join
 	 * @return Response detailing whether request was successful and whether the member is active
 	 */
-	public StravaClubMembershipResponse joinClub(final Integer id);
+	public StravaClubMembershipResponse joinClub(final Integer clubId);
 
 	/**
 	 * <p>
 	 * Leave a club on behalf of the authenticated user. An access token with write permissions is required.
 	 * </p>
 	 * 
-	 * @param id
+	 * @param clubId
 	 *            ID of the club to join
 	 * @return Response detailing whether request was successful and whether the member is active
 	 */
-	public StravaClubMembershipResponse leaveClub(final Integer id);
+	public StravaClubMembershipResponse leaveClub(final Integer clubId);
 	
 	/**
 	 * <p>

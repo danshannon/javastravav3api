@@ -2,6 +2,7 @@ package javastrava.api.v3.auth;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.auth.model.TokenResponse;
+import javastrava.api.v3.service.StravaService;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 
 /**
@@ -45,7 +46,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
  * @author Dan Shannon
  *
  */
-public interface TokenService {
+public interface TokenService extends StravaService {
 	/**
 	 * <p>
 	 * Allows an application to revoke its access to an athlete's data.

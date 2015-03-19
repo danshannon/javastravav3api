@@ -37,9 +37,9 @@ public interface SegmentEffortService extends StravaService {
 	 * @see <a href="http://strava.github.io/api/v3/efforts/#retrieve">http://strava.github.io/api/v3/efforts/#retrieve</a>
 	 * 
 	 * 
-	 * @param id
+	 * @param segmentEffortId
 	 *            The id of the segment to be retrieved
 	 * @return Returns a detailed segment effort representation
 	 */
-	public StravaSegmentEffort getSegmentEffort(final Long id);
+	public StravaSegmentEffort getSegmentEffort(final Long segmentEffortId);
 }

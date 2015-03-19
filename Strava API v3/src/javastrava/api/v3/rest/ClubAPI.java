@@ -25,12 +25,12 @@ public interface ClubAPI {
 	/**
 	 * @see javastrava.api.v3.service.ClubService#getClub(java.lang.Integer)
 	 * 
-	 * @param id Club identifier
+	 * @param clubId Club identifier
 	 * @return Club details
 	 * @throws NotFoundException If the club with the given id doesn't exist
 	 */
 	@GET("/clubs/{id}")
-	public StravaClub getClub(@Path("id") final Integer id) throws NotFoundException;
+	public StravaClub getClub(@Path("id") final Integer clubId) throws NotFoundException;
 
 	/**
 	 * @see javastrava.api.v3.service.ClubService#listAuthenticatedAthleteClubs()
@@ -43,45 +43,45 @@ public interface ClubAPI {
 	/**
 	 * @see javastrava.api.v3.service.ClubService#listClubMembers(Integer, javastrava.util.Paging)
 	 * 
-	 * @param id CLub identifier
+	 * @param clubId CLub identifier
 	 * @param page Page number to be returned (default is 1)
 	 * @param perPage Page size to be returned (default is 50)
 	 * @return Array of athletes who are members of the identified club
 	 * @throws NotFoundException If the club with the given id doesn't exist
 	 */
 	@GET("/clubs/{id}/members")
-	public StravaAthlete[] listClubMembers(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage) throws NotFoundException;
+	public StravaAthlete[] listClubMembers(@Path("id") final Integer clubId, @Query("page") final Integer page, @Query("per_page") final Integer perPage) throws NotFoundException;
 
 	/**
 	 * @see javastrava.api.v3.service.ClubService#listRecentClubActivities(Integer, javastrava.util.Paging)
 	 * 
-	 * @param id Club identifier
+	 * @param clubId Club identifier
 	 * @param page Page number to be returned (default is 1)
 	 * @param perPage Page size to be returned (default is 50)
 	 * @return Array of activities recently done by club members (maximum 200 will be returned)
 	 * @throws NotFoundException If the club with the given id doesn't exist
 	 */
 	@GET("/clubs/{id}/activities")
-	public StravaActivity[] listRecentClubActivities(@Path("id") final Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
+	public StravaActivity[] listRecentClubActivities(@Path("id") final Integer clubId, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
 			throws NotFoundException;
 
 	/**
 	 * @see javastrava.api.v3.service.ClubService#joinClub(java.lang.Integer)
 	 * 
-	 * @param id The club the authenticated athlete wishes to join
+	 * @param clubId The club the authenticated athlete wishes to join
 	 * @return Membership response indicating success/failure
 	 * @throws NotFoundException If the club with the given id doesn't exist
 	 */
 	@POST("/clubs/{id}/join")
-	public StravaClubMembershipResponse join(@Path("id") final Integer id) throws NotFoundException;
+	public StravaClubMembershipResponse join(@Path("id") final Integer clubId) throws NotFoundException;
 
 	/**
 	 * @see javastrava.api.v3.service.ClubService#leaveClub(java.lang.Integer)
 	 * 
-	 * @param id The club the authenticated athlete wishes to leave
+	 * @param clubId The club the authenticated athlete wishes to leave
 	 * @return Membership response indicating success/failure
 	 * @throws NotFoundException If the club with the given id doesn't exist
 	 */
 	@POST("/clubs/{id}/leave")
-	public StravaClubMembershipResponse leave(@Path("id") final Integer id) throws NotFoundException;
+	public StravaClubMembershipResponse leave(@Path("id") final Integer clubId) throws NotFoundException;
 }
