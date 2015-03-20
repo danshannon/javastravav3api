@@ -1,7 +1,7 @@
 javastravav3api
 ===============
 
-Strava API v3 implementation written in Java v7
+Strava API v3 implementation written in Java v8
 
 Javastrava is a functionally complete implementation of the Strava API (v3). It includes all the changes made to the API up to March 10, 2015.
 
