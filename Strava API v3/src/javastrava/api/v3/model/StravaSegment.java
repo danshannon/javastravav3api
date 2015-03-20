@@ -165,6 +165,6 @@ public class StravaSegment {
 	/**
 	 * Athlete segment statistics
 	 */
-	@SuppressWarnings("deprecation")
+	@Deprecated
 	private StravaAthleteSegmentStats athleteSegmentStats;
 }
