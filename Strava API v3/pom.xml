@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.danshannon</groupId>
 	<artifactId>javastrava-api</artifactId>
-	<version>0.9.0-BETA</version>
+	<version>0.9.1-SNAPSHOT</version>
 	<name>Strava API</name>
 	<description>Java implementation of the Strava API</description>
 	<licenses>
@@ -43,8 +43,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
