@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Javastravav3api : Strava API v3 implementation written in Java v7">
+    <meta name="description" content="Javastravav3api : Strava API v3 implementation written in Java v8">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/danshannon/javastravav3api">View on GitHub</a>
 
           <h1 id="project_title">Javastravav3api</h1>
-          <h2 id="project_tagline">Strava API v3 implementation written in Java v7</h2>
+          <h2 id="project_tagline">Strava API v3 implementation written in Java v8</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/danshannon/javastravav3api/zipball/master">Download this project as a .zip file</a>
@@ -34,7 +34,7 @@
         <h1>
 <a id="javastravav3api" class="anchor" href="#javastravav3api" aria-hidden="true"><span class="octicon octicon-link"></span></a>javastravav3api</h1>
 
-<p>Strava API v3 implementation written in Java v7</p>
+<p>Strava API v3 implementation written in Java v8</p>
 
 <p>Javastrava is a functionally complete implementation of the Strava API (v3). It includes all the changes made to the API up to March 10, 2015.</p>
 
@@ -53,7 +53,7 @@
 <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;com.github.danshannon&lt;/groupId&gt;
     &lt;artifactId&gt;javastrava-api&lt;/artifactId&gt;
-    &lt;version&gt;0.3.0-ALPHA&lt;/version&gt;
+    &lt;version&gt;0.9.0-BETA&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
 
@@ -68,13 +68,13 @@
 Token token = service.tokenExchange({application_client_id}, {client_secret}, code);
 </code></pre>
 
-<p>Once you've got an access token, life is pretty simple really. Getting a service implementation (in this case for the athlete service endpoints) looks like this:</p>
+<p>Once you've got an access token, life is pretty simple really. Getting a service implementation looks like this:</p>
 
-<p><code>AthleteService service = AthleteServiceImpl.instance(accessToken);</code></p>
+<p><code>Strava strava = new Strava(token)</code></p>
 
 <p>Then, getting an athlete looks like this:</p>
 
-<p><code>StravaAthlete athlete = service.getAthlete(id);</code></p>
+<p><code>StravaAthlete athlete = strava.getAthlete(id);</code></p>
 
 <h1>
 <a id="use-raw-api" class="anchor" href="#use-raw-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use (raw API)</h1>
@@ -86,11 +86,22 @@ TokenResponse response = auth.tokenExchange({application_client_id}, {client_sec
 Token token = new Token(response);
 </code></pre>
 
-<p>Now we can get an API instance:
-<code>AthleteAPI api = api.instance(AthleteAPI.class, token);</code></p>
+<p>Now we can get an API instance:</p>
 
-<p>And finally, the athlete:
-<code>StravaAthlete athlete = api.getAthlete(id);</code></p>
+<p><code>API api = new API(token);</code></p>
+
+<p>And finally, the athlete:</p>
+
+<p><code>StravaAthlete athlete = api.getAthlete(id);</code></p>
+
+<h1>
+<a id="token-management" class="anchor" href="#token-management" aria-hidden="true"><span class="octicon octicon-link"></span></a>Token Management</h1>
+
+<p>The <code>TokenManager</code> class provides a cache for all active tokens, for all users who have given permission to your application. Token exchange (above) will add each token to the token manager via <code>TokenManager.instance().storeToken(token)</code>.</p>
+
+<p>You can then retrieve a token from the TokenManager later on via <code>TokenManager.instance().retrieveToken(username)</code>. The username is the email address that the user logs in to Strava with; you can find it with <code>token.getAthlete().getEmail()</code></p>
+
+<p>The API doesn't currently cater for persistence of tokens or of the token manager; that's up to your application to do.</p>
 
 <h1>
 <a id="tricks-of-the-trade" class="anchor" href="#tricks-of-the-trade" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tricks of the trade</h1>
@@ -98,10 +109,11 @@ Token token = new Token(response);
 <p>The Strava API can be a bit, well, weird when you use it in anger. The interaction between privacy settings, authentication and so on isn't always consistent in the API. What we've done is this:</p>
 
 <ul>
-<li>If the object you're after doesn't exist, service methods will return <code>null</code>
+<li>If the object you're after doesn't exist, service methods will return <code>null</code>. API methods will throw a <code>NotFoundException</code>
 </li>
-<li>If the object you're after is private, service methods will return an empty object - either a list with no entries, or a model object with only the id populated. We don't worry about this too much from a privacy point of view, because all you get is that an object exists, but you don't get any of the data. Athletes are different - they are returned with a limited view of the athlete, rather than an empty athlete</li>
-<li>If your token has been revoked, or wasn't valid in the first place, or doesn't have the authorisation scope needed for the operation that you're attempting, you'll see an UnauthorisedException (which is unchecked) get thrown.</li>
+<li>If the object you're after is private, service methods will return an empty object - either a list with no entries, or a model object with only the id populated. We don't worry about this too much from a privacy point of view, because all you get is that an object exists, but you don't get any of the data. Athletes are different - they are returned with a limited view of the athlete, rather than an empty athlete. API methods throw an <code>UnauthorisedException</code>
+</li>
+<li>If your token has been revoked, or wasn't valid in the first place, or doesn't have the authorisation scope needed for the operation that you're attempting, you'll see an <code>UnauthorisedException</code> (which is unchecked) get thrown.</li>
 </ul>
 
 <h1>
