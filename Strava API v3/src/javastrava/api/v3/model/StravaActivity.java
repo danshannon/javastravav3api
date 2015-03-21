@@ -1,6 +1,7 @@
 package javastrava.api.v3.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import javastrava.api.v3.model.reference.StravaActivityType;
@@ -76,11 +77,11 @@ public class StravaActivity {
 	/**
 	 * Date and time the activity was started
 	 */
-	private Date startDate;
+	private ZonedDateTime startDate;
 	/**
 	 * Date and time the activity was started, in local time zone
 	 */
-	private Date startDateLocal;
+	private LocalDateTime startDateLocal;
 	/**
 	 * Time zone
 	 */

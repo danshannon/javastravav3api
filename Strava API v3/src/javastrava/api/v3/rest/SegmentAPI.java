@@ -3,6 +3,8 @@
  */
 package javastrava.api.v3.rest;
 
+import java.time.LocalDateTime;
+
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaSegment;
@@ -81,7 +83,7 @@ public interface SegmentAPI {
 			throws NotFoundException;
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(Integer, Integer, java.util.Calendar, java.util.Calendar, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(Integer, Integer, LocalDateTime, LocalDateTime, javastrava.util.Paging)
 	 * 
 	 * @param segmentId
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned

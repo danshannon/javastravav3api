@@ -1,6 +1,8 @@
 package javastrava.api.v3.model;
 
-import java.util.Date;
+
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaGender;
 import lombok.Data;
@@ -54,11 +56,11 @@ public class StravaSegmentLeaderboardEntry {
 	/**
 	 * Start date and time for the effort
 	 */
-	private Date startDate;
+	private ZonedDateTime startDate;
 	/**
 	 * Start date and time for the effort, hacked into the local timezone
 	 */
-	private Date startDateLocal;
+	private LocalDateTime startDateLocal;
 	/**
 	 * Identifier of the {@link StravaActivity activity} associated with this entry
 	 */

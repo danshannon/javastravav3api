@@ -1,6 +1,6 @@
 package javastrava.api.v3.model;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
 import lombok.Data;
@@ -42,5 +42,5 @@ public class StravaComment {
 	/**
 	 * Date and time the comment was posted
 	 */
-	private Date createdAt;
+	private ZonedDateTime createdAt;
 }

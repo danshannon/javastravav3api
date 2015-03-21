@@ -1,6 +1,6 @@
 package javastrava.api.v3.model;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaPhotoType;
 import javastrava.api.v3.model.reference.StravaResourceState;
@@ -51,11 +51,11 @@ public class StravaPhoto {
 	/**
 	 * Date and time the photo was uploaded
 	 */
-	private Date				uploadedAt;
+	private ZonedDateTime				uploadedAt;
 	/**
 	 * Date and time the photo was linked with Strava
 	 */
-	private Date				createdAt;
+	private ZonedDateTime				createdAt;
 	/**
 	 * Location of the photo
 	 */

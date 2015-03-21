@@ -47,6 +47,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		Response r = cause.getResponse();
 		StravaResponse response = null;
 		String status = (r == null ? Messages.string("RetrofitErrorHandler.unknownError") : r.getStatus() + " " + r.getReason()); //$NON-NLS-1$ //$NON-NLS-2$
+		
 		if (r == null) {
 			throw new StravaUnknownAPIException(status, response, cause);
 		}

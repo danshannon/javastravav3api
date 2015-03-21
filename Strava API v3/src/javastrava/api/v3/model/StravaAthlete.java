@@ -1,6 +1,6 @@
 package javastrava.api.v3.model;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import javastrava.api.v3.model.reference.StravaFollowerState;
@@ -36,8 +36,8 @@ public class StravaAthlete {
 	private StravaFollowerState friend;
 	private StravaFollowerState follower;
 	private Boolean premium;
-	private Date createdAt;
-	private Date updatedAt;
+	private ZonedDateTime createdAt;
+	private ZonedDateTime updatedAt;
 	private Boolean approveFollowers;
 	private Integer followerCount;
 	private Integer friendCount;

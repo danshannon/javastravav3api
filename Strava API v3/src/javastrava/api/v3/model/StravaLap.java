@@ -1,6 +1,8 @@
 package javastrava.api.v3.model;
 
-import java.util.Date;
+
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
 import lombok.Data;
@@ -48,11 +50,11 @@ public class StravaLap {
 	/**
 	 * Start date and time for this activity
 	 */
-	private Date startDate;
+	private ZonedDateTime startDate;
 	/**
 	 * Start date and time for this activity, hacked to the time zone where the activity started
 	 */
-	private Date startDateLocal;
+	private LocalDateTime startDateLocal;
 	/**
 	 * Distance travelled in metres
 	 */

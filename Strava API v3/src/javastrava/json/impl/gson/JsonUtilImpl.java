@@ -2,6 +2,8 @@ package javastrava.json.impl.gson;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import javastrava.api.v3.auth.ref.AuthorisationApprovalPrompt;
 import javastrava.api.v3.auth.ref.AuthorisationResponseType;
@@ -44,6 +46,7 @@ import javastrava.json.impl.gson.serializer.FollowerStateSerializer;
 import javastrava.json.impl.gson.serializer.FrameTypeSerializer;
 import javastrava.json.impl.gson.serializer.GenderSerializer;
 import javastrava.json.impl.gson.serializer.LeaderboardDateRangeSerializer;
+import javastrava.json.impl.gson.serializer.LocalDateTimeSerializer;
 import javastrava.json.impl.gson.serializer.MapPointSerializer;
 import javastrava.json.impl.gson.serializer.MeasurementMethodSerializer;
 import javastrava.json.impl.gson.serializer.PhotoTypeSerializer;
@@ -57,6 +60,7 @@ import javastrava.json.impl.gson.serializer.StreamSeriesDownsamplingTypeSerializ
 import javastrava.json.impl.gson.serializer.StreamTypeSerializer;
 import javastrava.json.impl.gson.serializer.WeightClassSerializer;
 import javastrava.json.impl.gson.serializer.WorkoutTypeSerializer;
+import javastrava.json.impl.gson.serializer.ZonedDateTimeSerializer;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -82,6 +86,8 @@ public class JsonUtilImpl implements JsonUtil {
 		this.gsonBuilder = new GsonBuilder();
 		this.gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
 		this.gsonBuilder.setDateFormat(StravaConfig.DATE_FORMAT);
+		this.gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
+		this.gsonBuilder.registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationApprovalPrompt.class, new AuthorisationApprovalPromptSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationResponseType.class, new AuthorisationResponseTypeSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationScope.class, new AuthorisationScopeSerializer());

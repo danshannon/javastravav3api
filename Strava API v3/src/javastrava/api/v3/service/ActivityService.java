@@ -1,6 +1,6 @@
 package javastrava.api.v3.service;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javastrava.api.v3.model.StravaActivity;
@@ -222,7 +222,7 @@ public interface ActivityService extends StravaService {
 	 * @param after Return only rides started AFTER this data/time
 	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default.
 	 */
-	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final Calendar before, final Calendar after);
+	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after);
 
 	/**
 	 * <p>
@@ -287,7 +287,7 @@ public interface ActivityService extends StravaService {
 	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after
 	 *         parameter is used.
 	 */
-	public List<StravaActivity> listAuthenticatedAthleteActivities(final Calendar before, final Calendar after);
+	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after);
 
 	/**
 	 * <p>
@@ -317,7 +317,7 @@ public interface ActivityService extends StravaService {
 	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after
 	 *         parameter is used.
 	 */
-	public List<StravaActivity> listAuthenticatedAthleteActivities(final Calendar before, final Calendar after, final Paging pagingInstruction);
+	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after, final Paging pagingInstruction);
 
 	/**
 	 * <p>

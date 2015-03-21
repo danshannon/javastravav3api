@@ -1,6 +1,7 @@
 package javastrava.api.v3.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
 import lombok.Data;
@@ -62,11 +63,11 @@ public class StravaBestRunningEffort {
 	/**
 	 * date and time that the effort started
 	 */
-	private Date startDate;
+	private ZonedDateTime startDate;
 	/**
 	 * local start date for the effort (i.e. in the timezone that it started, shifted to UTC)
 	 */
-	private Date startDateLocal;
+	private LocalDateTime startDateLocal;
 	/**
 	 * distance in metres
 	 */

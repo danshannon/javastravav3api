@@ -1,5 +1,7 @@
 package javastrava.api.v3.rest;
 
+import java.time.LocalDateTime;
+
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
@@ -76,7 +78,7 @@ public interface ActivityAPI {
 	public StravaActivity deleteActivity(@Path("id") final Integer id) throws NotFoundException;
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(java.util.Calendar, java.util.Calendar, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime, javastrava.util.Paging)
 	 * 
 	 * @param before Unix epoch time in seconds - return activities before this time
 	 * @param after Unix epoch time in seconds - return activities after this time

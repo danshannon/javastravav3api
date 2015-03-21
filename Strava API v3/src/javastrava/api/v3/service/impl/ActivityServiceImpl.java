@@ -1,8 +1,9 @@
 package javastrava.api.v3.service.impl;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import javastrava.api.v3.auth.model.Token;
@@ -190,10 +191,10 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(Calendar, Calendar, Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime, Paging)
 	 */
 	@Override
-	public List<StravaActivity> listAuthenticatedAthleteActivities(final Calendar before, final Calendar after, final Paging pagingInstruction) {
+	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after, final Paging pagingInstruction) {
 		final Integer secondsBefore = secondsSinceUnixEpoch(before);
 		final Integer secondsAfter = secondsSinceUnixEpoch(after);
 
@@ -210,11 +211,11 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	 * @param date Date for which seconds since the epoch date is to be calculated
 	 * @return Number of seconds after the unix epoch date equivalent to the given date
 	 */
-	private static Integer secondsSinceUnixEpoch(final Calendar date) {
+	private static Integer secondsSinceUnixEpoch(final LocalDateTime date) {
 		if (date == null) {
 			return null;
 		}
-		Long timeInSeconds = Long.valueOf(date.getTimeInMillis() / 1000L);
+		Long timeInSeconds = Long.valueOf(date.toEpochSecond(ZoneOffset.UTC));
 		return Integer.valueOf(timeInSeconds.intValue());
 	}
 
@@ -355,10 +356,10 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(java.util.Calendar, java.util.Calendar)
+	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime)
 	 */
 	@Override
-	public List<StravaActivity> listAuthenticatedAthleteActivities(final Calendar before, final Calendar after) {
+	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after) {
 		return listAuthenticatedAthleteActivities(before, after, null);
 	}
 
@@ -543,10 +544,10 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAllAuthenticatedAthleteActivities(java.util.Calendar, java.util.Calendar)
+	 * @see javastrava.api.v3.service.ActivityService#listAllAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime)
 	 */
 	@Override
-	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final Calendar before, final Calendar after) {
+	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after) {
 		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
 
 			@Override

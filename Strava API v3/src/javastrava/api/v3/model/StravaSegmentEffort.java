@@ -1,6 +1,7 @@
 package javastrava.api.v3.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
@@ -53,11 +54,11 @@ public class StravaSegmentEffort {
 	/**
 	 * Start date and time for this effort
 	 */
-	private Date				startDate;
+	private ZonedDateTime				startDate;
 	/**
 	 * Start date and time for this effort, hacked to local time zone at the start
 	 */
-	private Date				startDateLocal;
+	private LocalDateTime				startDateLocal;
 	/**
 	 *  the length im metres of the effort as described by the activity, this may be different than the length of the segment
 	 */

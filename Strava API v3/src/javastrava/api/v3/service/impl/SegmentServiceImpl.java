@@ -3,11 +3,10 @@
  */
 package javastrava.api.v3.service.impl;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javastrava.api.v3.auth.model.Token;
@@ -155,11 +154,11 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(Integer, Integer, Calendar, Calendar, Paging)
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(Integer, Integer, LocalDateTime, LocalDateTime, Paging)
 	 */
 	@Override
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocalTZ,
-			final Calendar endDateLocalTZ, final Paging pagingInstruction) {
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final LocalDateTime startDateLocalTZ,
+			final LocalDateTime endDateLocalTZ, final Paging pagingInstruction) {
 		// TODO Workaround for issue javastrava-api #33 (https://github.com/danshannon/javastravav3api/issues/33)
 		// Check if the segment is flagged as hazardous
 		StravaSegment segment = getSegment(id);
@@ -179,26 +178,23 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 			return new ArrayList<StravaSegmentEffort>();
 		}
 		// End of workaround
+		
+		LocalDateTime endDateLocal = endDateLocalTZ;
+		LocalDateTime startDateLocal = startDateLocalTZ;
 
-		Calendar endDateLocal = endDateLocalTZ;
-		Calendar startDateLocal = startDateLocalTZ;
 		// If start date is set, but end date isn't, then Strava likes it to be set to something high
-		if (endDateLocal == null && startDateLocal != null) {
-			endDateLocal = Calendar.getInstance();
-			endDateLocal.set(9999, Calendar.DECEMBER, 31);
+		if (endDateLocalTZ == null && startDateLocalTZ != null) {
+			endDateLocal = LocalDateTime.of(9999, Month.DECEMBER, 31, 23, 59, 59);
 		}
 
 		// Similarly if the end date is set but start date isn't, Strava likes it to be set to something low
-		if (startDateLocal == null && endDateLocal != null) {
-			startDateLocal = Calendar.getInstance();
-			startDateLocal.set(1900, Calendar.JANUARY, 1);
+		if (startDateLocalTZ == null && endDateLocalTZ != null) {
+			startDateLocal = LocalDateTime.of(1900, Month.JANUARY, 1, 0, 0, 0);
 		}
+		
+		final String start = (startDateLocal == null ? null : startDateLocal.toString());
+		final String end = (endDateLocal == null ? null : endDateLocal.toString());
 
-		final Date startDate = (startDateLocal == null ? null : startDateLocal.getTime());
-		final Date endDate = (endDateLocal == null ? null : endDateLocal.getTime());
-
-		final String start = (startDate == null ? null : new SimpleDateFormat(StravaConfig.DATE_FORMAT).format(startDate));
-		final String end = (endDate == null ? null : new SimpleDateFormat(StravaConfig.DATE_FORMAT).format(endDate));
 		List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
@@ -374,10 +370,10 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.util.Calendar, java.util.Calendar)
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime, LocalDateTime)
 	 */
 	@Override
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal) {
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer id, final Integer athleteId, final LocalDateTime startDateLocal, final LocalDateTime endDateLocal) {
 		return listSegmentEfforts(id, athleteId, startDateLocal, endDateLocal, null);
 	}
 
@@ -494,10 +490,10 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEfforts(java.lang.Integer, java.lang.Integer, java.util.Calendar, java.util.Calendar)
+	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime, LocalDateTime)
 	 */
 	@Override
-	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDate, final Calendar endDate) {
+	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final LocalDateTime startDate, final LocalDateTime endDate) {
 		// TODO Workaround for issue javastrava-api #33 (https://github.com/danshannon/javastravav3api/issues/33)
 		// TODO Workaround for issue javastrava-api #45 (https://github.com/danshannon/javastravav3api/issues/45)
 		// Check if the segment is flagged as hazardous

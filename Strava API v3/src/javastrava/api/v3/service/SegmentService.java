@@ -1,6 +1,6 @@
 package javastrava.api.v3.service;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javastrava.api.v3.model.StravaAthlete;
@@ -203,7 +203,7 @@ public interface SegmentService extends StravaService {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal,
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final LocalDateTime startDateLocal, final LocalDateTime endDateLocal,
 			final Paging pagingInstruction);
 
 	/**
@@ -249,7 +249,7 @@ public interface SegmentService extends StravaService {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal);
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final LocalDateTime startDateLocal, final LocalDateTime endDateLocal);
 
 	/**
 	 * <p>
@@ -636,6 +636,6 @@ public interface SegmentService extends StravaService {
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed_time if an athlete_id is provided.
 	 */
-	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDate, final Calendar endDate);
+	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final LocalDateTime startDate, final LocalDateTime endDate);
 
 }

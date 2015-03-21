@@ -1,7 +1,7 @@
 package javastrava.api.v3.service;
 
 import java.io.File;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javastrava.api.v3.auth.TokenService;
@@ -142,9 +142,9 @@ public class Strava {
 	 * @param before Only return activities before this date/time
 	 * @param after Only return activities after this date/time
 	 * @return List of all the authenticated athlete's activities, filtered by dates
-	 * @see javastrava.api.v3.service.ActivityService#listAllAuthenticatedAthleteActivities(java.util.Calendar, java.util.Calendar)
+	 * @see javastrava.api.v3.service.ActivityService#listAllAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime)
 	 */
-	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final Calendar before, final Calendar after) {
+	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after) {
 		return this.activityService.listAllAuthenticatedAthleteActivities(before, after);
 	}
 
@@ -169,9 +169,9 @@ public class Strava {
 	 * @param before Only return activities before this date/time
 	 * @param after Only return activities after this date/time
 	 * @return First page of authenticated athlete's activities, filtered by dates
-	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(java.util.Calendar, java.util.Calendar)
+	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime)
 	 */
-	public List<StravaActivity> listAuthenticatedAthleteActivities(final Calendar before, final Calendar after) {
+	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after) {
 		return this.activityService.listAuthenticatedAthleteActivities(before, after);
 	}
 
@@ -180,9 +180,9 @@ public class Strava {
 	 * @param after Only return activities after this date/time
 	 * @param pagingInstruction Paging instruction
 	 * @return List of authenticated athlete's activities, filtered by dates, according to the paging instruction
-	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(java.util.Calendar, java.util.Calendar, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime, javastrava.util.Paging)
 	 */
-	public List<StravaActivity> listAuthenticatedAthleteActivities(final Calendar before, final Calendar after, final Paging pagingInstruction) {
+	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after, final Paging pagingInstruction) {
 		return this.activityService.listAuthenticatedAthleteActivities(before, after, pagingInstruction);
 	}
 
@@ -726,10 +726,10 @@ public class Strava {
 	 *            (Optional) Paging instruction
 	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed time if an athleteId is provided. If the segment or athlete do not exist, then returns <code>null</code>
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.util.Calendar, java.util.Calendar,
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime, LocalDateTime,
 	 *      javastrava.util.Paging)
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal, final Paging pagingInstruction) {
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final LocalDateTime startDateLocal, final LocalDateTime endDateLocal, final Paging pagingInstruction) {
 		return this.segmentService.listSegmentEfforts(segmentId, athleteId, startDateLocal, endDateLocal, pagingInstruction);
 	}
 
@@ -744,9 +744,9 @@ public class Strava {
 	 *            (Optional) Return only efforts before this date/time
 	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local
 	 *         ascending or by elapsed time if an athleteId is provided. If the segment or athlete do not exist, then returns <code>null</code>
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.util.Calendar, java.util.Calendar)
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime, LocalDateTime)
 	 */
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDateLocal, final Calendar endDateLocal) {
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final LocalDateTime startDateLocal, final LocalDateTime endDateLocal) {
 		return this.segmentService.listSegmentEfforts(segmentId, athleteId, startDateLocal, endDateLocal);
 	}
 
@@ -910,9 +910,9 @@ public class Strava {
 	 * @param startDate (Optional) Do not return activities before this date/time
 	 * @param endDate (Optional) Do not return activities after this date/time
 	 * @return List of ALL efforts on the segment, filtered as required, or <code>null</code> if the segment or athlete do not exist
-	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEfforts(java.lang.Integer, java.lang.Integer, java.util.Calendar, java.util.Calendar)
+	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime, LocalDateTime)
 	 */
-	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final Calendar startDate, final Calendar endDate) {
+	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final LocalDateTime startDate, final LocalDateTime endDate) {
 		return this.segmentService.listAllSegmentEfforts(segmentId, athleteId, startDate, endDate);
 	}
 

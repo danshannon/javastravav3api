@@ -1,6 +1,6 @@
 package javastrava.api.v3.model;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaClimbCategory;
 import javastrava.api.v3.model.reference.StravaResourceState;
@@ -12,6 +12,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import com.google.gson.annotations.SerializedName;
+
+
 
 /**
  * <p>
@@ -98,11 +100,11 @@ public class StravaSegment {
 	/**
 	 * Date and time the segment was created on Strava
 	 */
-	private Date createdAt;
+	private ZonedDateTime createdAt;
 	/**
 	 * Date and time the segment was last updated on Strava
 	 */
-	private Date updatedAt;
+	private ZonedDateTime updatedAt;
 	/**
 	 * total elevation gain in metres
 	 */
@@ -135,7 +137,7 @@ public class StravaSegment {
 	/**
 	 * Date the athlete starred the segment (only returned when listing starred segments)
 	 */
-	private Date starredDate;
+	private ZonedDateTime starredDate;
 	
 	/**
 	 * Start latitude
