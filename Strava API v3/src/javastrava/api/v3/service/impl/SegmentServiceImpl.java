@@ -203,16 +203,6 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 			}
 		});
 
-		// TODO workaround for issue javastrava-api #19 (https://github.com/danshannon/javastravav3api/issues/19)
-		if (efforts != null) {
-			for (StravaSegmentEffort effort : efforts) {
-				if (effort.getActivity().getResourceState() == null) {
-					effort.getActivity().setResourceState(StravaResourceState.META);
-				}
-			}
-		}
-		// End of workaround
-
 		// TODO workaround for issue javastrava-api #20 (https://github.com/danshannon/javastravav3api/issues/20)
 		if (efforts != null) {
 			for (StravaSegmentEffort effort : efforts) {
