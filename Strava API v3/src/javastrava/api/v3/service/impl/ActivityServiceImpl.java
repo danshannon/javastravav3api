@@ -244,13 +244,6 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	public List<StravaLap> listActivityLaps(final Integer id) {
 		try {
 			List<StravaLap> laps = Arrays.asList(this.restService.listActivityLaps(id));
-			
-			for (StravaLap lap : laps) {
-				// TODO This is a workaround for Strava issue javastrava-api #17
-				if (lap.getAverageWatts() != null && lap.getDeviceWatts() == null) {
-					lap.setDeviceWatts(Boolean.FALSE);
-				}
-			}
 			return laps;
 		} catch (NotFoundException e) {
 			return null;
