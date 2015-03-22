@@ -11,7 +11,6 @@ import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaStatistics;
 import javastrava.api.v3.model.reference.StravaGender;
-import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.rest.AthleteAPI;
 import javastrava.api.v3.service.AthleteService;
 import javastrava.api.v3.service.exception.NotFoundException;
@@ -106,16 +105,6 @@ public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements
 				return Arrays.asList(AthleteServiceImpl.this.restService.listAthleteKOMs(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
-
-		// This is a workaround for issue javastrava-api #26 (https://github.com/danshannon/javastravav3api/issues/26)
-		if (efforts != null) {
-    		for (StravaSegmentEffort effort : efforts) {
-    			if (effort != null && effort.getActivity() != null && effort.getActivity().getResourceState() == null) {
-    				effort.getActivity().setResourceState(StravaResourceState.META);
-    			}
-    		}
-		}
-		// End of workaround
 
 		return efforts;
 	}
