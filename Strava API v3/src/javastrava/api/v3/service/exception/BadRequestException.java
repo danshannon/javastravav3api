@@ -10,7 +10,7 @@ import javastrava.api.v3.model.StravaResponse;
  * @author Dan Shannon
  *
  */
-public class BadRequestException extends Throwable implements StravaAPIException {
+public class BadRequestException extends Exception implements StravaAPIException {
 	private StravaResponse response;
 
 	/**

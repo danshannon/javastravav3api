@@ -52,13 +52,21 @@ public class RetrofitErrorHandler implements ErrorHandler {
 			throw new StravaUnknownAPIException(status, response, cause);
 		}
 		try {
+			if (r.getBody() == null) {
+			response = new StravaResponse();
+			response.setMessage(cause.getMessage());
+			} else {
 			response = this.json.deserialise(r.getBody().in(),StravaResponse.class);
+			}
 		} catch (JsonSerialisationException e) {
 			response = new StravaResponse();
 			response.setMessage(r.getBody().toString());
 		} catch (IOException e) {
 			response = new StravaResponse();
 			response.setMessage(r.getBody().toString());
+		} catch (Exception e) {
+			response = new StravaResponse();
+			response.setMessage(cause.toString());
 		}
 
 		// Handle 400 Bad request error

@@ -10,7 +10,7 @@ import javastrava.api.v3.model.StravaResponse;
  * @author Dan Shannon
  *
  */
-public class NotFoundException extends Throwable implements StravaAPIException {
+public class NotFoundException extends Exception implements StravaAPIException {
 	private StravaResponse response;
 
 	/**
