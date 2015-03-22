@@ -14,7 +14,6 @@ import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaPhoto;
-import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.rest.ActivityAPI;
 import javastrava.api.v3.service.ActivityService;
@@ -85,19 +84,6 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 					}
 				} else {
 					loop = false;
-				}
-			}
-			
-			if (stravaResponse.getSegmentEfforts() != null) {
-				for (StravaSegmentEffort effort : stravaResponse.getSegmentEfforts()) {
-					// TODO This is a workaround for a Strava bug (Issue javastrava-api #11)
-					if (effort.getActivity().getResourceState() == null) {
-						effort.getActivity().setResourceState(StravaResourceState.META);
-					}
-					// TODO This is a workaround for a Strava bug (Issue javastrava-api #12)
-					if (effort.getAthlete().getResourceState() == null) {
-						effort.getAthlete().setResourceState(StravaResourceState.META);
-					}
 				}
 			}
 			
