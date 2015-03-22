@@ -246,10 +246,6 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 			List<StravaLap> laps = Arrays.asList(this.restService.listActivityLaps(id));
 			
 			for (StravaLap lap : laps) {
-				// TODO This is a workaround for Strava issue javastrava-api #15
-				if (lap.getActivity().getResourceState() == null) {
-					lap.getActivity().setResourceState(StravaResourceState.META);
-				}
 				// TODO This is a workaround for Strava issue javastrava-api #16
 				if (lap.getAthlete().getResourceState() == null) {
 					lap.getAthlete().setResourceState(StravaResourceState.META);
