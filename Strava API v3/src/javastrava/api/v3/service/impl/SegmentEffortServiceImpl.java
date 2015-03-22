@@ -79,10 +79,6 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl<SegmentEffortAPI
 		}
 		// End of workaround
 		
-		// TODO This is a workaround for issue javastrava-api #27 (https://github.com/danshannon/javastravav3api/issues/27)
-		if (effort != null && effort.getAthlete() != null && effort.getAthlete().getResourceState() == null) {
-			effort.getAthlete().setResourceState(StravaResourceState.META);
-		}
 		
 		return effort;
 	}

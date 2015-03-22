@@ -117,15 +117,6 @@ public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements
 		}
 		// End of workaround
 
-		// This is a workaround for issue javastrava-api #27 (https://github.com/danshannon/javastravav3api/issues/27)
-		if (efforts != null) {
-    		for (StravaSegmentEffort effort : efforts) {
-    			if (effort != null && effort.getAthlete() != null && effort.getAthlete().getResourceState() == null) {
-    				effort.getAthlete().setResourceState(StravaResourceState.META);
-    			}
-    		}
-		}		
-		// End of workaround
 		return efforts;
 	}
 
