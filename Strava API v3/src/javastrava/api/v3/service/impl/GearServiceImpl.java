@@ -2,7 +2,6 @@ package javastrava.api.v3.service.impl;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaGear;
-import javastrava.api.v3.rest.GearAPI;
 import javastrava.api.v3.service.ClubService;
 import javastrava.api.v3.service.GearService;
 import javastrava.api.v3.service.exception.NotFoundException;
@@ -16,7 +15,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
  * @author Dan Shannon
  *
  */
-public class GearServiceImpl extends StravaServiceImpl<GearAPI> implements GearService {
+public class GearServiceImpl extends StravaServiceImpl implements GearService {
 	/**
 	 * <p>
 	 * Private constructor ensures that the only way to get an instance is via the {@link #instance(Token)} method
@@ -25,7 +24,7 @@ public class GearServiceImpl extends StravaServiceImpl<GearAPI> implements GearS
 	 * @param token The access token to be used to authenticate to the Strava API
 	 */
 	private GearServiceImpl(final Token token) {
-		super(GearAPI.class, token);
+		super(token);
 	}
 
 	/**
@@ -61,7 +60,7 @@ public class GearServiceImpl extends StravaServiceImpl<GearAPI> implements GearS
 	@Override
 	public StravaGear getGear(final String id) {
 		try {
-			return this.restService.getGear(id);
+			return this.api.getGear(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {

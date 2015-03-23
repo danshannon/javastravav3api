@@ -23,7 +23,6 @@ import javastrava.api.v3.model.reference.StravaLeaderboardDateRange;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType;
 import javastrava.api.v3.model.reference.StravaWeightClass;
-import javastrava.api.v3.rest.SegmentAPI;
 import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
@@ -42,7 +41,7 @@ import javastrava.util.PagingUtils;
  * @author Dan Shannon
  *
  */
-public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements SegmentService {
+public class SegmentServiceImpl extends StravaServiceImpl implements SegmentService {
 	/**
 	 * <p>
 	 * Private constructor ensures that the only way to get an instance is via {@link #instance(Token)} with a valid access token
@@ -52,7 +51,7 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 	 *            The access token to use for authentication with the Strava API
 	 */
 	private SegmentServiceImpl(final Token token) {
-		super(SegmentAPI.class, token);
+		super(token);
 	}
 
 	/**
@@ -90,7 +89,7 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 	@Override
 	public StravaSegment getSegment(final Integer id) {
 		try {
-			return this.restService.getSegment(id);
+			return this.api.getSegment(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {
@@ -113,7 +112,7 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 		List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
 			@Override
 			public List<StravaSegment> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(SegmentServiceImpl.this.restService.listAuthenticatedAthleteStarredSegments(thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(SegmentServiceImpl.this.api.listAuthenticatedAthleteStarredSegments(thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 
@@ -137,7 +136,7 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 		List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
 			@Override
 			public List<StravaSegment> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(SegmentServiceImpl.this.restService.listStarredSegments(id, thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(SegmentServiceImpl.this.api.listStarredSegments(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 
@@ -198,7 +197,7 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 		List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(SegmentServiceImpl.this.restService.listSegmentEfforts(id, athleteId, start, end, thisPage.getPage(),
+				return Arrays.asList(SegmentServiceImpl.this.api.listSegmentEfforts(id, athleteId, start, end, thisPage.getPage(),
 						thisPage.getPageSize()));
 			}
 		});
@@ -226,7 +225,7 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 		// SegmentAPI
 		if (clubId != null) {
 			try {
-				this.restService.getClub(clubId);
+				this.api.getClub(clubId);
 			} catch (NotFoundException e) {
 				// Club doesn't exist, so return null
 				return null;
@@ -236,7 +235,7 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 
 		try {
 			for (Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
-				StravaSegmentLeaderboard current = this.restService.getSegmentLeaderboard(id, gender, ageGroup, weightClass, following, clubId, dateRange,
+				StravaSegmentLeaderboard current = this.api.getSegmentLeaderboard(id, gender, ageGroup, weightClass, following, clubId, dateRange,
 						paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
 					if (leaderboard == null) {
@@ -330,7 +329,7 @@ public class SegmentServiceImpl extends StravaServiceImpl<SegmentAPI> implements
 			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
 		String bounds = southwestCorner.getLatitude() + "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ northeastCorner.getLongitude();
-		return this.restService.segmentExplore(bounds, activityType, minCat, maxCat);
+		return this.api.segmentExplore(bounds, activityType, minCat, maxCat);
 	}
 
 	/**

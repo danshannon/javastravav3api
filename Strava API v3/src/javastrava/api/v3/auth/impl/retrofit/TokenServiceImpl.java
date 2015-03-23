@@ -1,12 +1,9 @@
 package javastrava.api.v3.auth.impl.retrofit;
 
-import java.util.HashMap;
-
 import javastrava.api.v3.auth.TokenManager;
 import javastrava.api.v3.auth.TokenService;
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.auth.model.TokenResponse;
-import javastrava.api.v3.rest.TokenAPI;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.api.v3.service.impl.StravaServiceImpl;
 
@@ -14,7 +11,7 @@ import javastrava.api.v3.service.impl.StravaServiceImpl;
  * @author Dan Shannon
  *
  */
-public class TokenServiceImpl extends StravaServiceImpl<TokenAPI> implements TokenService {
+public class TokenServiceImpl extends StravaServiceImpl implements TokenService {
 	/**
 	 * <p>
 	 * Returns an instance of {@link TokenService token services}
@@ -31,22 +28,20 @@ public class TokenServiceImpl extends StravaServiceImpl<TokenAPI> implements Tok
 	 *             If the token used to create the service is invalid
 	 */
 	public static TokenService instance(final Token token) throws UnauthorizedException {
-		TokenService restService = restServices.get(token);
+		TokenService restService = token.getService(TokenService.class);
 		if (restService == null) {
 			restService = new TokenServiceImpl(token);
 
-			// Store the token for later retrieval so that there's only one
+			// Store the service for later retrieval so that there's only one
 			// service per token
-			restServices.put(token, restService);
+			token.addService(TokenService.class, restService);
 
 		}
 		return restService;
 	}
 
-	private static HashMap<Token, TokenService> restServices = new HashMap<Token, TokenService>();
-
 	private TokenServiceImpl(final Token token) {
-		super(TokenAPI.class, token);
+		super(token);
 	}
 
 	/**
@@ -54,12 +49,7 @@ public class TokenServiceImpl extends StravaServiceImpl<TokenAPI> implements Tok
 	 */
 	@Override
 	public TokenResponse deauthorise(final Token accessToken) throws UnauthorizedException {
-		// Remove the token / service instance from the cached list as it's no
-		// longer any use
-		restServices.remove(accessToken);
-
-		// Deauthorise
-		final TokenResponse response = this.restService.deauthorise(accessToken.getToken());
+		final TokenResponse response = this.api.deauthorise(accessToken.getToken());
 		TokenManager.instance().revokeToken(accessToken);
 		return response;
 	}

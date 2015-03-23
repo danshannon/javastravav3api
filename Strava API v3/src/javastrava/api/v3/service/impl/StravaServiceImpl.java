@@ -13,11 +13,10 @@ import lombok.extern.log4j.Log4j2;
  * </p>
  * 
  * @author Dan Shannon
- * @param <T> The class of retrofit interface to be created
  *
  */
 @Log4j2
-public abstract class StravaServiceImpl<T> {
+public abstract class StravaServiceImpl {
 //	private final AthleteService athleteService;
 	
 	/**
@@ -30,7 +29,7 @@ public abstract class StravaServiceImpl<T> {
 	public static int requestRateDaily = 0;
 	
 	private final Token token;
-	protected final T restService;
+	protected final API api;
 	
 	/**
 	 * Calculates the percentage of the per-15-minute request limit that has been used, issues a warning if required
@@ -69,12 +68,11 @@ public abstract class StravaServiceImpl<T> {
 	 * Protected constructor prevents user from getting a service instance without a valid token
 	 * </p>
 	 * 
-	 * @param class1 The class of the service implementation being created
 	 * @param token The access token to be used to authenticate to the Strava API
 	 */
-	protected StravaServiceImpl(final Class<T> class1, final Token token) {
+	protected StravaServiceImpl(final Token token) {
 		this.token = token;
-		this.restService = API.instance(class1, token);
+		this.api = new API(token);
 	}
 
 	/**
@@ -86,7 +84,7 @@ public abstract class StravaServiceImpl<T> {
 	 */
 	protected boolean accessTokenIsValid() {
 		try {
-			AthleteServiceImpl.instance(this.token).getAuthenticatedAthlete();
+			this.api.getAuthenticatedAthlete();
 			return true;
 		} catch (UnauthorizedException e) {
 			return false;

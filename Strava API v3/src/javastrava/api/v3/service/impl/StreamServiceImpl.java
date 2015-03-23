@@ -9,7 +9,6 @@ import javastrava.api.v3.model.StravaStream;
 import javastrava.api.v3.model.reference.StravaStreamResolutionType;
 import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import javastrava.api.v3.model.reference.StravaStreamType;
-import javastrava.api.v3.rest.StreamAPI;
 import javastrava.api.v3.service.StreamService;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
@@ -23,7 +22,7 @@ import javastrava.config.Messages;
  * @author Dan Shannon
  *
  */
-public class StreamServiceImpl extends StravaServiceImpl<StreamAPI> implements StreamService {
+public class StreamServiceImpl extends StravaServiceImpl implements StreamService {
 	/**
 	 * <p>
 	 * Private constructor prevents anyone from getting an instance without a valid access token
@@ -32,7 +31,7 @@ public class StreamServiceImpl extends StravaServiceImpl<StreamAPI> implements S
 	 * @param token The access token to be used to authenticate to the Strava API
 	 */
 	private StreamServiceImpl(final Token token) {
-		super(StreamAPI.class, token);
+		super(token);
 	}
 
 	/**
@@ -73,7 +72,7 @@ public class StreamServiceImpl extends StravaServiceImpl<StreamAPI> implements S
 		}
 		List<StravaStream> streams = null;
 		try {
-			streams = Arrays.asList(this.restService.getActivityStreams(id, typeString(typesToGet), resolution, seriesType));
+			streams = Arrays.asList(this.api.getActivityStreams(id, typeString(typesToGet), resolution, seriesType));
 		} catch (NotFoundException e) {
 			return null;
 		} catch (BadRequestException e) {
@@ -147,7 +146,7 @@ public class StreamServiceImpl extends StravaServiceImpl<StreamAPI> implements S
 			typesToGet = getAllStreamTypes();
 		}
 		try {
-			return Arrays.asList(this.restService.getEffortStreams(id, typeString(typesToGet), resolution, seriesType));
+			return Arrays.asList(this.api.getEffortStreams(id, typeString(typesToGet), resolution, seriesType));
 		} catch (NotFoundException e) {
 			return null;
 		} catch (BadRequestException e) {
@@ -170,7 +169,7 @@ public class StreamServiceImpl extends StravaServiceImpl<StreamAPI> implements S
 			typesToGet = getAllStreamTypes();
 		}
 		try {
-			return Arrays.asList(this.restService.getSegmentStreams(id, typeString(typesToGet), resolution, seriesType));
+			return Arrays.asList(this.api.getSegmentStreams(id, typeString(typesToGet), resolution, seriesType));
 		} catch (NotFoundException e) {
 			return null;
 		} catch (BadRequestException e) {

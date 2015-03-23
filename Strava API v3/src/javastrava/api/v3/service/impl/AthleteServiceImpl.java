@@ -11,7 +11,6 @@ import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaStatistics;
 import javastrava.api.v3.model.reference.StravaGender;
-import javastrava.api.v3.rest.AthleteAPI;
 import javastrava.api.v3.service.AthleteService;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
@@ -27,9 +26,9 @@ import javastrava.util.PagingHandler;
  * @author Dan Shannon
  *
  */
-public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements AthleteService {
+public class AthleteServiceImpl extends StravaServiceImpl implements AthleteService {
 	private AthleteServiceImpl(final Token token) {
-		super(AthleteAPI.class, token);
+		super(token);
 	}
 
 	/**
@@ -62,7 +61,7 @@ public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements
 	 */
 	@Override
 	public StravaAthlete getAuthenticatedAthlete() {
-		return this.restService.getAuthenticatedAthlete();
+		return this.api.getAuthenticatedAthlete();
 	}
 
 	/**
@@ -71,7 +70,7 @@ public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements
 	@Override
 	public StravaAthlete getAthlete(final Integer id) {
 		try {
-			return this.restService.getAthlete(id);
+			return this.api.getAthlete(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {
@@ -91,7 +90,7 @@ public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements
 	 */
 	@Override
 	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
-		return this.restService.updateAuthenticatedAthlete(city, state, country, sex, weight);
+		return this.api.updateAuthenticatedAthlete(city, state, country, sex, weight);
 	}
 
 	/**
@@ -102,7 +101,7 @@ public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements
 		List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(AthleteServiceImpl.this.restService.listAthleteKOMs(id, thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(AthleteServiceImpl.this.api.listAthleteKOMs(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 
@@ -118,7 +117,7 @@ public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements
 
 			@Override
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(AthleteServiceImpl.this.restService.listAuthenticatedAthleteFriends(thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(AthleteServiceImpl.this.api.listAuthenticatedAthleteFriends(thisPage.getPage(), thisPage.getPageSize()));
 			}
 
 		});
@@ -132,7 +131,7 @@ public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>() {
 			@Override
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(AthleteServiceImpl.this.restService.listAthleteFriends(id, thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(AthleteServiceImpl.this.api.listAthleteFriends(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -145,7 +144,7 @@ public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>() {
 			@Override
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(AthleteServiceImpl.this.restService.listAthletesBothFollowing(id, thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(AthleteServiceImpl.this.api.listAthletesBothFollowing(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -188,7 +187,7 @@ public class AthleteServiceImpl extends StravaServiceImpl<AthleteAPI> implements
 	@Override
 	public StravaStatistics statistics(final Integer id) {
 		try {
-			return this.restService.statistics(id);
+			return this.api.statistics(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {

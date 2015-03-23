@@ -5,7 +5,6 @@ import java.io.File;
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaUploadResponse;
 import javastrava.api.v3.model.reference.StravaActivityType;
-import javastrava.api.v3.rest.UploadAPI;
 import javastrava.api.v3.service.UploadService;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.config.Messages;
@@ -19,7 +18,7 @@ import retrofit.mime.TypedFile;
  * @author Dan Shannon
  *
  */
-public class UploadServiceImpl extends StravaServiceImpl<UploadAPI> implements UploadService {
+public class UploadServiceImpl extends StravaServiceImpl implements UploadService {
 
 	/**
 	 * <p>
@@ -29,7 +28,7 @@ public class UploadServiceImpl extends StravaServiceImpl<UploadAPI> implements U
 	 * @param token The access token used to authenticate to the Strava API
 	 */
 	private UploadServiceImpl(final Token token) {
-		super(UploadAPI.class, token);
+		super(token);
 	}
 
 	/**
@@ -71,7 +70,7 @@ public class UploadServiceImpl extends StravaServiceImpl<UploadAPI> implements U
 			throw new IllegalArgumentException(String.format(Messages.string("UploadServiceImpl.fileDoesNotExist"), file.getName())); //$NON-NLS-1$
 		}
 		try {
-			return this.restService.upload(activityType, name, description, _private, trainer, dataType, externalId, new TypedFile("text/xml", file)); //$NON-NLS-1$
+			return this.api.upload(activityType, name, description, _private, trainer, dataType, externalId, new TypedFile("text/xml", file)); //$NON-NLS-1$
 		} catch (BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -82,7 +81,7 @@ public class UploadServiceImpl extends StravaServiceImpl<UploadAPI> implements U
 	 */
 	@Override
 	public StravaUploadResponse checkUploadStatus(final Integer id) {
-		return this.restService.checkUploadStatus(id);
+		return this.api.checkUploadStatus(id);
 	}
 
 }

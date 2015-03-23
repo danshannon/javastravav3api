@@ -15,7 +15,6 @@ import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaPhoto;
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.api.v3.rest.ActivityAPI;
 import javastrava.api.v3.service.ActivityService;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
@@ -31,9 +30,9 @@ import javastrava.util.PagingHandler;
  * @author Dan Shannon
  *
  */
-public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implements ActivityService {
+public class ActivityServiceImpl extends StravaServiceImpl implements ActivityService {
 	private ActivityServiceImpl(final Token token) {
-		super(ActivityAPI.class,token);
+		super(token);
 	}
 
 	/**
@@ -73,7 +72,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 			int i = 0;
 			while (loop) {
 				i++;
-				stravaResponse = this.restService.getActivity(id, includeAllEfforts);
+				stravaResponse = this.api.getActivity(id, includeAllEfforts);
 		
 				// If the activity is being updated, wait for the update to complete
 				if (i < 10 && stravaResponse.getResourceState() == StravaResourceState.UPDATING) {
@@ -111,7 +110,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	@Override
 	public StravaActivity createManualActivity(final StravaActivity activity) {
 		try {
-			return this.restService.createManualActivity(activity);
+			return this.api.createManualActivity(activity);
 		} catch (BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -154,7 +153,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	}		
 	private StravaActivity doUpdateActivity(final Integer id, final StravaActivityUpdate update) {
 		try {
-			StravaActivity response = this.restService.updateActivity(id, update);
+			StravaActivity response = this.api.updateActivity(id, update);
 			if (response.getResourceState() == StravaResourceState.UPDATING) {
 				response = getActivity(id);
 			}
@@ -170,7 +169,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	@Override
 	public StravaActivity deleteActivity(final Integer id) {
 		try {
-			return this.restService.deleteActivity(id);
+			return this.api.deleteActivity(id);
 		} catch (NotFoundException e) {
 			return null;
 		}
@@ -187,7 +186,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
 			@Override
 			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ActivityServiceImpl.this.restService.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, thisPage.getPage(),
+				return Arrays.asList(ActivityServiceImpl.this.api.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, thisPage.getPage(),
 						thisPage.getPageSize()));
 			}
 		});
@@ -213,7 +212,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
 			@Override
 			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ActivityServiceImpl.this.restService.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(ActivityServiceImpl.this.api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 		return activities;
@@ -225,7 +224,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	@Override
 	public List<StravaActivityZone> listActivityZones(final Integer id) {
 		try {
-			return Arrays.asList(this.restService.listActivityZones(id));
+			return Arrays.asList(this.api.listActivityZones(id));
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {
@@ -243,7 +242,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	@Override
 	public List<StravaLap> listActivityLaps(final Integer id) {
 		try {
-			List<StravaLap> laps = Arrays.asList(this.restService.listActivityLaps(id));
+			List<StravaLap> laps = Arrays.asList(this.api.listActivityLaps(id));
 			return laps;
 		} catch (NotFoundException e) {
 			return null;
@@ -264,7 +263,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaComment>() {
 			@Override
 			public List<StravaComment> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ActivityServiceImpl.this.restService.listActivityComments(id, markdown, thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(ActivityServiceImpl.this.api.listActivityComments(id, markdown, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -277,7 +276,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>() {
 			@Override
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ActivityServiceImpl.this.restService.listActivityKudoers(id, thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(ActivityServiceImpl.this.api.listActivityKudoers(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 
@@ -289,7 +288,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	@Override
 	public List<StravaPhoto> listActivityPhotos(final Integer id) {
 		try {
-			StravaPhoto[] photos = this.restService.listActivityPhotos(id);
+			StravaPhoto[] photos = this.api.listActivityPhotos(id);
 
 			// This fixes an inconsistency with the listActivityComments API
 			// call on Strava, which returns an empty array, not null
@@ -374,7 +373,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
 			@Override
 			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ActivityServiceImpl.this.restService.listRelatedActivities(id, thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(ActivityServiceImpl.this.api.listRelatedActivities(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -432,7 +431,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.commentWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
-		return this.restService.createComment(id, text);
+		return this.api.createComment(id, text);
 				
 	}
 
@@ -441,7 +440,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	 */
 	@Override
 	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
-		this.restService.deleteComment(activityId, commentId);
+		this.api.deleteComment(activityId, commentId);
 		
 	}
 
@@ -451,7 +450,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 	@Override
 	public void deleteComment(final StravaComment comment) throws NotFoundException {
 		
-		this.restService.deleteComment(comment.getActivityId(), comment.getId());
+		this.api.deleteComment(comment.getActivityId(), comment.getId());
 		
 	}
 
@@ -466,7 +465,7 @@ public class ActivityServiceImpl extends StravaServiceImpl<ActivityAPI> implemen
 		}
 		// End of workaround
 		
-		this.restService.giveKudos(activityId);
+		this.api.giveKudos(activityId);
 		
 	}
 

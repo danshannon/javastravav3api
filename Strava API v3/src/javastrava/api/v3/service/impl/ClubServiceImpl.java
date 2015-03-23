@@ -13,7 +13,6 @@ import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.api.v3.rest.ClubAPI;
 import javastrava.api.v3.service.ClubService;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
@@ -29,9 +28,9 @@ import javastrava.util.PagingHandler;
  * @author Dan Shannon
  *
  */
-public class ClubServiceImpl extends StravaServiceImpl<ClubAPI> implements ClubService {
+public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	private ClubServiceImpl(final Token token) {
-		super(ClubAPI.class,token);
+		super(token);
 	}
 
 	/**
@@ -67,7 +66,7 @@ public class ClubServiceImpl extends StravaServiceImpl<ClubAPI> implements ClubS
 	@Override
 	public StravaClub getClub(final Integer id) {
 		try {
-			return this.restService.getClub(id);
+			return this.api.getClub(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {
@@ -93,7 +92,7 @@ public class ClubServiceImpl extends StravaServiceImpl<ClubAPI> implements ClubS
 	 */
 	@Override
 	public List<StravaClub> listAuthenticatedAthleteClubs() {
-		return Arrays.asList(this.restService.listAuthenticatedAthleteClubs());
+		return Arrays.asList(this.api.listAuthenticatedAthleteClubs());
 	}
 
 	/**
@@ -104,7 +103,7 @@ public class ClubServiceImpl extends StravaServiceImpl<ClubAPI> implements ClubS
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>() {
 			@Override
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ClubServiceImpl.this.restService.listClubMembers(id, thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(ClubServiceImpl.this.api.listClubMembers(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -117,7 +116,7 @@ public class ClubServiceImpl extends StravaServiceImpl<ClubAPI> implements ClubS
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
 			@Override
 			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ClubServiceImpl.this.restService.listRecentClubActivities(id, thisPage.getPage(), thisPage.getPageSize()));
+				return Arrays.asList(ClubServiceImpl.this.api.listRecentClubActivities(id, thisPage.getPage(), thisPage.getPageSize()));
 			}
 		});
 	}
@@ -128,7 +127,7 @@ public class ClubServiceImpl extends StravaServiceImpl<ClubAPI> implements ClubS
 	@Override
 	public StravaClubMembershipResponse joinClub(final Integer id) {
 		try {
-			return this.restService.join(id);
+			return this.api.join(id);
 		} catch (NotFoundException e) {
 			return failedClubMembershipResponse();
 		} catch (UnauthorizedException e) {
@@ -153,7 +152,7 @@ public class ClubServiceImpl extends StravaServiceImpl<ClubAPI> implements ClubS
 	@Override
 	public StravaClubMembershipResponse leaveClub(final Integer id) {
 		try {
-			return this.restService.leave(id);
+			return this.api.leave(id);
 		} catch (UnauthorizedException e) {
 			if (accessTokenIsValid()) {
 				return failedClubMembershipResponse();

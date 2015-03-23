@@ -3,7 +3,6 @@ package javastrava.api.v3.service.impl;
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.api.v3.rest.SegmentEffortAPI;
 import javastrava.api.v3.service.SegmentEffortService;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
@@ -12,7 +11,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
  * @author Dan Shannon
  *
  */
-public class SegmentEffortServiceImpl extends StravaServiceImpl<SegmentEffortAPI> implements SegmentEffortService {
+public class SegmentEffortServiceImpl extends StravaServiceImpl implements SegmentEffortService {
 	/**
 	 * <p>
 	 * Private constructor ensures that the only way to get an instance is by using {@link #instance(Token)} with a valid access token.
@@ -21,7 +20,7 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl<SegmentEffortAPI
 	 * @param token The access token to be used for authentication to the Strava API
 	 */
 	private SegmentEffortServiceImpl(final Token token) {
-		super(SegmentEffortAPI.class, token);
+		super(token);
 	}
 
 	/**
@@ -56,7 +55,7 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl<SegmentEffortAPI
 	public StravaSegmentEffort getSegmentEffort(final Long id) {
 		StravaSegmentEffort effort = null;
 		try {
-			effort = this.restService.getSegmentEffort(id);
+			effort = this.api.getSegmentEffort(id);
 		} catch (NotFoundException e) {
 			// Segment effort doesn't exist
 			return null;
