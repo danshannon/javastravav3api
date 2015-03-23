@@ -116,4 +116,6 @@ public class StravaSegmentEffort {
 	 * Summary of athlete's statistics on this segment
 	 */
 	private StravaAthleteSegmentStats athleteSegmentStats;
+	
+	private Boolean deviceWatts;
 }
