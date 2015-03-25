@@ -440,6 +440,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
+		// TODO Workaround for issue javastrava-api #63 (https://github.com/danshannon/javastravav3api/issues/63)
+		if (!(getToken().hasWriteAccess())) {
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
+		}
+		// End of workaround
 		this.api.deleteComment(activityId, commentId);
 		
 	}
@@ -449,6 +454,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public void deleteComment(final StravaComment comment) throws NotFoundException {
+		// TODO Workaround for issue javastrava-api #63 (https://github.com/danshannon/javastravav3api/issues/63)
+		if (!(getToken().hasWriteAccess())) {
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
+		}
+		// End of workaround
 		
 		this.api.deleteComment(comment.getActivityId(), comment.getId());
 		
