@@ -260,6 +260,13 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaComment> listActivityComments(final Integer id, final Boolean markdown, final Paging pagingInstruction) {
+		// TODO Workaround for issue javastrava-api #67 - see https://github.com/danshannon/javastravav3api/issues/67
+		StravaActivity activity = getActivity(id);
+		if (activity.getResourceState() == StravaResourceState.META) { // is private
+			return new ArrayList<StravaComment>();
+		}
+		// End of workaround
+
 		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaComment>() {
 			@Override
 			public List<StravaComment> getPageOfData(final Paging thisPage) throws NotFoundException {
