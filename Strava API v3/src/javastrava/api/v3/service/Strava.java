@@ -2,11 +2,13 @@ package javastrava.api.v3.service;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import javastrava.api.v3.auth.TokenService;
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.auth.model.TokenResponse;
+import javastrava.api.v3.auth.ref.AuthorisationScope;
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
@@ -56,6 +58,7 @@ public class Strava {
 	 *            the access token to be used with calls to the Strava API
 	 */
 	public Strava(final Token token) {
+		this.token = token;
 		this.activityService = token.getService(ActivityService.class);
 		this.athleteService = token.getService(AthleteService.class);
 		this.clubService = token.getService(ClubService.class);
@@ -76,7 +79,43 @@ public class Strava {
 	private final StreamService streamService;
 	private final TokenService tokenService;
 	private final UploadService uploadService;
+	private final Token token;
 
+	/**
+	 * @param scopes Authorisation scopes to check are in the token
+	 * @return <code>true</code> if the token has all the identified scopes, <code>false</code> otherwise
+	 */
+	public boolean hasAuthorisationScopes(final AuthorisationScope... scopes) {	
+		// Check all the scopes in the list are in the token
+		for (AuthorisationScope scope : scopes) {
+			if (!this.token.getScopes().contains(scope)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * @param scopes Authorisation scopes to check are in the token
+	 * @return <code>true</code> if the token has all the identified scopes AND NO MORE, <code>false</code> otherwise
+	 */
+	public boolean hasExactAuthorisationScopes(final AuthorisationScope... scopes) {
+		if (!hasAuthorisationScopes(scopes)) {
+			return false;
+		}
+		
+		// Check all the scopes in the token are in the list
+		List<AuthorisationScope> scopeList = Arrays.asList(scopes);
+		for (AuthorisationScope scope : this.token.getScopes()) {
+			if (!scopeList.contains(scope)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * @param activityId The activity identifier
 	 * @return The activity, if it exists, or <code>null</code> if it does not.
