@@ -262,6 +262,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	public List<StravaComment> listActivityComments(final Integer id, final Boolean markdown, final Paging pagingInstruction) {
 		// TODO Workaround for issue javastrava-api #67 - see https://github.com/danshannon/javastravav3api/issues/67
 		StravaActivity activity = getActivity(id);
+		if (activity == null) { // doesn't exist
+			return null;
+		}
 		if (activity.getResourceState() == StravaResourceState.META) { // is private
 			return new ArrayList<StravaComment>();
 		}
