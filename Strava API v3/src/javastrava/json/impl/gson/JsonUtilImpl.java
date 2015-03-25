@@ -2,6 +2,7 @@ package javastrava.json.impl.gson;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
@@ -46,6 +47,7 @@ import javastrava.json.impl.gson.serializer.FollowerStateSerializer;
 import javastrava.json.impl.gson.serializer.FrameTypeSerializer;
 import javastrava.json.impl.gson.serializer.GenderSerializer;
 import javastrava.json.impl.gson.serializer.LeaderboardDateRangeSerializer;
+import javastrava.json.impl.gson.serializer.LocalDateSerializer;
 import javastrava.json.impl.gson.serializer.LocalDateTimeSerializer;
 import javastrava.json.impl.gson.serializer.MapPointSerializer;
 import javastrava.json.impl.gson.serializer.MeasurementMethodSerializer;
@@ -87,6 +89,7 @@ public class JsonUtilImpl implements JsonUtil {
 		this.gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
 		this.gsonBuilder.setDateFormat(StravaConfig.DATE_FORMAT);
 		this.gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
+		this.gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
 		this.gsonBuilder.registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationApprovalPrompt.class, new AuthorisationApprovalPromptSerializer());
 		this.gsonBuilder.registerTypeAdapter(AuthorisationResponseType.class, new AuthorisationResponseTypeSerializer());
