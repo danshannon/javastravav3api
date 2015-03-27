@@ -88,13 +88,14 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 */
 	@Override
 	public StravaSegment getSegment(final Integer id) {
+		StravaSegment segment = null;
 		try {
-			return this.api.getSegment(id);
+			segment = this.api.getSegment(id);
 		} catch (NotFoundException e) {
 			return null;
 		} catch (UnauthorizedException e) {
 			if (accessTokenIsValid()) {
-				StravaSegment segment = new StravaSegment();
+				segment = new StravaSegment();
 				segment.setId(id);
 				segment.setResourceState(StravaResourceState.META);
 				return segment;
@@ -102,6 +103,19 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 				throw e;
 			}
 		}
+		
+		// TODO Workaround for javastrava-api #70
+		// If the segment is private and the token doesn't have view_private scope, then return an empty segment
+		if (segment.getPrivateSegment().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
+			segment = new StravaSegment();
+			segment.setId(id);
+			segment.setResourceState(StravaResourceState.META);
+			return segment;			
+		}
+		// End of workaround
+		
+		return segment;
+		
 	}
 
 	/**
