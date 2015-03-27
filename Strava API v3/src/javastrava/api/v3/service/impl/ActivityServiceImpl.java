@@ -538,7 +538,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after) {
-		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
+		final List<StravaActivity> activities = PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
 
 			@Override
 			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
@@ -546,6 +546,20 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			}
 			
 		});
+		
+		// TODO Workaround for Strava issue #69 - see https://github.com/danshannon/javastravav3api/issues/69
+		if (!(this.getToken().hasViewPrivate())) {
+			final List<StravaActivity> returnedActivities = new ArrayList<StravaActivity>();
+			for (StravaActivity activity : activities) {
+				if (activity.getPrivateActivity().equals(Boolean.FALSE)) {
+					returnedActivities.add(activity);
+				}
+			}
+			return returnedActivities;
+		}
+		// End of workaround
+		
+		return activities;
 	}
 
 	/**
