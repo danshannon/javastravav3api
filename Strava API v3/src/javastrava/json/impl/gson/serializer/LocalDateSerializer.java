@@ -13,7 +13,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 /**
- * @author danshannon
+ * @author Dan Shannon
  *
  */
 public class LocalDateSerializer implements JsonDeserializer<LocalDate>, JsonSerializer<LocalDate> {

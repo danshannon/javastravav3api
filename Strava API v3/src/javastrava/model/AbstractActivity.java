@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * @author dshannon
+ * @author Dan Shannon
  *
  */
 @Data

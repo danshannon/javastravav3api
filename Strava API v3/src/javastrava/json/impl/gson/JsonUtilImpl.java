@@ -74,7 +74,7 @@ import com.google.gson.JsonParseException;
  * GSON implementation of JSON utilities
  * </p>
  * 
- * @author DShannon
+ * @author Dan Shannon
  * 
  */
 public class JsonUtilImpl implements JsonUtil {
