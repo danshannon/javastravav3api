@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package javastrava.api.v3.service.impl;
 
@@ -37,7 +37,7 @@ import javastrava.util.PagingUtils;
  * <p>
  * Implementation of {@link SegmentService}
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
@@ -46,7 +46,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 * <p>
 	 * Private constructor ensures that the only way to get an instance is via {@link #instance(Token)} with a valid access token
 	 * </p>
-	 * 
+	 *
 	 * @param token
 	 *            The access token to use for authentication with the Strava API
 	 */
@@ -58,11 +58,11 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 * <p>
 	 * Returns an instance of {@link SegmentService gear services}
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
 	 * </p>
-	 * 
+	 *
 	 * @param token
 	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An instance of the segment services
@@ -71,7 +71,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		if (token == null) {
 			throw new IllegalArgumentException(Messages.string("SegmentServiceImpl.cannotInstantiateWithNullToken")); //$NON-NLS-1$
 		}
-		Class<SegmentService> class1 = SegmentService.class;
+		final Class<SegmentService> class1 = SegmentService.class;
 		// Get the service from the token's cache
 		SegmentService service = token.getService(class1);
 
@@ -90,10 +90,10 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	public StravaSegment getSegment(final Integer id) {
 		StravaSegment segment = null;
 		try {
-			segment = this.api.getSegment(id);
-		} catch (NotFoundException e) {
+			segment = api.getSegment(id);
+		} catch (final NotFoundException e) {
 			return null;
-		} catch (UnauthorizedException e) {
+		} catch (final UnauthorizedException e) {
 			if (accessTokenIsValid()) {
 				segment = new StravaSegment();
 				segment.setId(id);
@@ -103,19 +103,19 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 				throw e;
 			}
 		}
-		
+
 		// TODO Workaround for javastrava-api #70
 		// If the segment is private and the token doesn't have view_private scope, then return an empty segment
 		if (segment.getPrivateSegment().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
 			segment = new StravaSegment();
 			segment.setId(id);
 			segment.setResourceState(StravaResourceState.META);
-			return segment;			
+			return segment;
 		}
 		// End of workaround
-		
+
 		return segment;
-		
+
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 */
 	@Override
 	public List<StravaSegment> listAuthenticatedAthleteStarredSegments(final Paging pagingInstruction) {
-		List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
+		final List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
 			@Override
 			public List<StravaSegment> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(SegmentServiceImpl.this.api.listAuthenticatedAthleteStarredSegments(thisPage.getPage(), thisPage.getPageSize()));
@@ -132,7 +132,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 		// TODO This is a workaround for issue javastrava-api #25 (https://github.com/danshannon/javastravav3api/issues/25)
 		if (segments != null) {
-			for (StravaSegment segment : segments) {
+			for (final StravaSegment segment : segments) {
 				if (segment.getAthletePrEffort() != null && segment.getAthletePrEffort().getResourceState() == null) {
 					segment.getAthletePrEffort().setResourceState(StravaResourceState.SUMMARY);
 				}
@@ -147,7 +147,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 */
 	@Override
 	public List<StravaSegment> listStarredSegments(final Integer id, final Paging pagingInstruction) {
-		List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
+		final List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegment>() {
 			@Override
 			public List<StravaSegment> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(SegmentServiceImpl.this.api.listStarredSegments(id, thisPage.getPage(), thisPage.getPageSize()));
@@ -156,7 +156,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 		// TODO This is a workaround for issue javastrava-api #25 (https://github.com/danshannon/javastravav3api/issues/25)
 		if (segments != null) {
-			for (StravaSegment segment : segments) {
+			for (final StravaSegment segment : segments) {
 				if (segment.getAthletePrEffort() != null && segment.getAthletePrEffort().getResourceState() == null) {
 					segment.getAthletePrEffort().setResourceState(StravaResourceState.SUMMARY);
 				}
@@ -174,7 +174,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			final LocalDateTime endDateLocalTZ, final Paging pagingInstruction) {
 		// TODO Workaround for issue javastrava-api #33 (https://github.com/danshannon/javastravav3api/issues/33)
 		// Check if the segment is flagged as hazardous
-		StravaSegment segment = getSegment(id);
+		final StravaSegment segment = getSegment(id);
 
 		// If the segment is null it doesn't exist, so return null
 		if (segment == null) {
@@ -185,13 +185,13 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		if (segment.getResourceState() == StravaResourceState.META) {
 			return new ArrayList<StravaSegmentEffort>();
 		}
-		
+
 		// If the segment is hazardous, return an empty list
 		if (segment.getHazardous() == Boolean.TRUE) {
 			return new ArrayList<StravaSegmentEffort>();
 		}
 		// End of workaround
-		
+
 		LocalDateTime endDateLocal = endDateLocalTZ;
 		LocalDateTime startDateLocal = startDateLocalTZ;
 
@@ -204,11 +204,11 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		if (startDateLocalTZ == null && endDateLocalTZ != null) {
 			startDateLocal = LocalDateTime.of(1900, Month.JANUARY, 1, 0, 0, 0);
 		}
-		
+
 		final String start = (startDateLocal == null ? null : startDateLocal.toString());
 		final String end = (endDateLocal == null ? null : endDateLocal.toString());
 
-		List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
+		final List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaSegmentEffort>() {
 			@Override
 			public List<StravaSegmentEffort> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(SegmentServiceImpl.this.api.listSegmentEfforts(id, athleteId, start, end, thisPage.getPage(),
@@ -232,15 +232,15 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		StravaSegmentLeaderboard leaderboard = null;
 
 		// If null, then the default value for contextEntries is 2; the max is 15
-		Integer context = (contextEntries == null ? Integer.valueOf(2) : Integer.valueOf(Math.max(0, Math.min(15, contextEntries.intValue()))));
-		Integer contextSize = Integer.valueOf(context.intValue() * 2 + 1);
+		final Integer context = (contextEntries == null ? Integer.valueOf(2) : Integer.valueOf(Math.max(0, Math.min(15, contextEntries.intValue()))));
+		final Integer contextSize = Integer.valueOf(context.intValue() * 2 + 1);
 
 		// TODO This is a workaround for issue javastrava-api #23 (https://github.com/danshannon/javastravav3api/issues/23) - see also the workaround in
 		// SegmentAPI
 		if (clubId != null) {
 			try {
-				this.api.getClub(clubId);
-			} catch (NotFoundException e) {
+				api.getClub(clubId);
+			} catch (final NotFoundException e) {
 				// Club doesn't exist, so return null
 				return null;
 			}
@@ -248,8 +248,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		// End of workaround
 
 		try {
-			for (Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
-				StravaSegmentLeaderboard current = this.api.getSegmentLeaderboard(id, gender, ageGroup, weightClass, following, clubId, dateRange,
+			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
+				final StravaSegmentLeaderboard current = api.getSegmentLeaderboard(id, gender, ageGroup, weightClass, following, clubId, dateRange,
 						paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
 					if (leaderboard == null) {
@@ -269,9 +269,9 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 					leaderboard.getAthleteEntries().addAll(current.getAthleteEntries());
 				}
 			}
-		} catch (NotFoundException e) {
+		} catch (final NotFoundException e) {
 			return null;
-		} catch (UnauthorizedException e) {
+		} catch (final UnauthorizedException e) {
 			return null;
 		}
 		return leaderboard;
@@ -281,11 +281,11 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 * <p>
 	 * Most irritatingly, Strava returns one list of leaderboard entries that is actually two lists
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * This utility method separates them again.
 	 * </p>
-	 * 
+	 *
 	 * @param leaderboard
 	 *            The set of entries to be split out
 	 * @param pagingInstruction
@@ -297,16 +297,16 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	private List<StravaSegmentLeaderboardEntry> calculateAthleteEntries(final StravaSegmentLeaderboard leaderboard, final Paging pagingInstruction,
 			final Integer contextSize) {
 		// Get the entries
-		List<StravaSegmentLeaderboardEntry> entries = leaderboard.getEntries();
+		final List<StravaSegmentLeaderboardEntry> entries = leaderboard.getEntries();
 		if (entries == null) {
 			return null;
 		}
 
-		List<StravaSegmentLeaderboardEntry> athleteEntries = new ArrayList<StravaSegmentLeaderboardEntry>();
+		final List<StravaSegmentLeaderboardEntry> athleteEntries = new ArrayList<StravaSegmentLeaderboardEntry>();
 
 		// If there are two neighbourhoods, then the first is the overall and the second is the athlete bit
 		if (leaderboard.getNeighborhoodCount().intValue() == 2) {
-			for (StravaSegmentLeaderboardEntry entry : entries) {
+			for (final StravaSegmentLeaderboardEntry entry : entries) {
 				if (entry.getNeighborhoodIndex().intValue() == 1) {
 					athleteEntries.add(entry);
 				}
@@ -317,7 +317,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		if (leaderboard.getNeighborhoodCount().intValue() == 1) {
 			if (entries.size() == contextSize.intValue()) {
 				boolean foundAthlete = false;
-				for (StravaSegmentLeaderboardEntry entry : entries) {
+				for (final StravaSegmentLeaderboardEntry entry : entries) {
 					if (entry.getAthleteId().equals(super.getToken().getAthlete().getId())) {
 						foundAthlete = true;
 					}
@@ -341,9 +341,9 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	@Override
 	public StravaSegmentExplorerResponse segmentExplore(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner,
 			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
-		String bounds = southwestCorner.getLatitude() + "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		final String bounds = southwestCorner.getLatitude() + "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ northeastCorner.getLongitude();
-		return this.api.segmentExplore(bounds, activityType, minCat, maxCat);
+		return api.segmentExplore(bounds, activityType, minCat, maxCat);
 	}
 
 	/**
@@ -407,7 +407,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 */
 	@Override
 	public List<StravaSegment> listAllAuthenticatedAthleteStarredSegments() {
-		return PagingHandler.handleListAll(new PagingCallback<StravaSegment>() {
+		final List<StravaSegment> segments = PagingHandler.handleListAll(new PagingCallback<StravaSegment>() {
 
 			@Override
 			public List<StravaSegment> getPageOfData(final Paging thisPage) throws NotFoundException {
@@ -415,6 +415,20 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			}
 
 		});
+
+		// TODO Workaround for issue javastrava-api #71 (see https://github.com/danshannon/javastravav3api/issues/71)
+		if (!this.getToken().hasViewPrivate()) {
+			final List<StravaSegment> filteredSegments = new ArrayList<StravaSegment>();
+			for (final StravaSegment segment : segments) {
+				if (!segment.getPrivateSegment().equals(Boolean.TRUE)) {
+					filteredSegments.add(segment);
+				}
+			}
+			return filteredSegments;
+		}
+		// End of workaround
+
+		return segments;
 	}
 
 	/**
@@ -455,7 +469,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			try {
 				currentPage = getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, new Paging(Integer.valueOf(page),
 						StravaConfig.MAX_PAGE_SIZE), Integer.valueOf(2));
-			} catch (UnauthorizedException e) {
+			} catch (final UnauthorizedException e) {
 				return new StravaSegmentLeaderboard();
 			}
 			if (currentPage == null) {
@@ -490,8 +504,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		// TODO Workaround for issue javastrava-api #33 (https://github.com/danshannon/javastravav3api/issues/33)
 		// TODO Workaround for issue javastrava-api #45 (https://github.com/danshannon/javastravav3api/issues/45)
 		// Check if the segment is flagged as hazardous
-		StravaSegment segment = getSegment(segmentId);
-		
+		final StravaSegment segment = getSegment(segmentId);
+
 		// If the segment is null it doesn't exist, so return null
 		if (segment == null) {
 			return null;
@@ -501,7 +515,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		if (segment.getResourceState() == StravaResourceState.META) {
 			return new ArrayList<StravaSegmentEffort>();
 		}
-		
+
 		// If the segment is hazardous, return an empty list
 		if (segment.getHazardous() == Boolean.TRUE) {
 			return new ArrayList<StravaSegmentEffort>();
