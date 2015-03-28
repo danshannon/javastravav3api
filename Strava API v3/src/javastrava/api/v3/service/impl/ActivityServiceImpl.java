@@ -132,6 +132,14 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 		StravaActivity response = null;
 
+		// TODO Workaround for issue javastrava-api #72 (https://github.com/danshannon/javastravav3api/issues/72)
+		if (!this.getToken().hasViewPrivate()) {
+			final StravaActivity stravaActivity = getActivity(id);
+			if (stravaActivity.getPrivateActivity().equals(Boolean.TRUE)) {
+				throw new UnauthorizedException("Cannot update a private activity without view_private scope");
+			}
+		}
+		// End of workaround
 
 		// TODO Workaround for issue javastrava-api #36 (https://github.com/danshannon/javastravav3api/issues/36)
 		if (update.getCommute() != null) {
@@ -432,16 +440,27 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 * @see javastrava.api.v3.service.ActivityService#createComment(java.lang.Integer, java.lang.String)
 	 */
 	@Override
-	public StravaComment createComment(final Integer id, final String text) throws NotFoundException, BadRequestException {
+	public StravaComment createComment(final Integer activityId, final String text) throws NotFoundException, BadRequestException {
 		if (text == null || text.equals("")) { //$NON-NLS-1$
 			throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
 		}
+
 		// TODO Workaround for issue javastrava-api #30 (https://github.com/danshannon/javastravav3api/issues/30)
 		if (!(getToken().hasWriteAccess())) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.commentWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
-		return api.createComment(id, text);
+
+		// TODO Workaround for issue javastrava-api #74 (https://github.com/danshannon/javastravav3api/issues/74)
+		if (!(getToken().hasViewPrivate())) {
+			final StravaActivity activity = getActivity(activityId);
+			if (activity.getPrivateActivity().equals(Boolean.TRUE)) {
+				throw new UnauthorizedException("Cannot comment on a private activity without view_private scope");
+			}
+		}
+		// End of workaround
+
+		return api.createComment(activityId, text);
 
 	}
 
@@ -453,6 +472,15 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// TODO Workaround for issue javastrava-api #63 (https://github.com/danshannon/javastravav3api/issues/63)
 		if (!(getToken().hasWriteAccess())) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
+		}
+		// End of workaround
+
+		// TODO Workaround for issue javastrava-api #74 (https://github.com/danshannon/javastravav3api/issues/74)
+		if (!(getToken().hasViewPrivate())) {
+			final StravaActivity activity = getActivity(activityId);
+			if (activity.getPrivateActivity().equals(Boolean.TRUE)) {
+				throw new UnauthorizedException("Cannot delete a comment on a private activity without view_private scope");
+			}
 		}
 		// End of workaround
 		api.deleteComment(activityId, commentId);
@@ -469,6 +497,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
+
+		// TODO Workaround for issue javastrava-api #
+		if (!getToken().hasViewPrivate()) {
+
+		}
 
 		api.deleteComment(comment.getActivityId(), comment.getId());
 
