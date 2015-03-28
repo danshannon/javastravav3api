@@ -97,6 +97,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 				final StravaActivity activity = new StravaActivity();
 				activity.setId(id);
 				activity.setResourceState(StravaResourceState.META);
+				activity.setPrivateActivity(Boolean.TRUE);
 				return activity;
 			} else {
 				throw e;
@@ -454,6 +455,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// TODO Workaround for issue javastrava-api #74 (https://github.com/danshannon/javastravav3api/issues/74)
 		if (!(getToken().hasViewPrivate())) {
 			final StravaActivity activity = getActivity(activityId);
+			if (activity == null) {
+				return null;
+			}
 			if (activity.getPrivateActivity().equals(Boolean.TRUE)) {
 				throw new UnauthorizedException("Cannot comment on a private activity without view_private scope");
 			}
@@ -500,7 +504,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 
 		// TODO Workaround for issue javastrava-api #
 		if (!getToken().hasViewPrivate()) {
-
+			final StravaActivity activity = getActivity(comment.getActivityId());
+			if (activity.getPrivateActivity().equals(Boolean.TRUE)) {
+				throw new UnauthorizedException("Cannot delete comment for a private activity");
+			}
 		}
 
 		api.deleteComment(comment.getActivityId(), comment.getId());

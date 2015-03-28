@@ -98,6 +98,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 				segment = new StravaSegment();
 				segment.setId(id);
 				segment.setResourceState(StravaResourceState.META);
+				segment.setPrivateSegment(Boolean.TRUE);
 				return segment;
 			} else {
 				throw e;
@@ -224,12 +225,30 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 *      StravaLeaderboardDateRange, Paging, Integer)
 	 */
 	@Override
-	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer id, final StravaGender gender, final StravaAgeGroup ageGroup,
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
 			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange,
 			final Paging pagingInstruction, final Integer contextEntries) {
 		PagingUtils.validatePagingArguments(pagingInstruction);
 
 		StravaSegmentLeaderboard leaderboard = null;
+
+		// TODO Workaround for issue javastrava-api #73 (https://github.com/danshannon/javastravav3api/issues/73)
+		if (!this.getToken().hasViewPrivate()) {
+			final StravaSegment segment = getSegment(segmentId);
+			if (segment == null) {
+				return null;
+			}
+			if (segment.getPrivateSegment().equals(Boolean.TRUE)) {
+				leaderboard = new StravaSegmentLeaderboard();
+				leaderboard.setNeighborhoodCount(1);
+				leaderboard.setAthleteEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
+				leaderboard.setEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
+				leaderboard.setEffortCount(0);
+				leaderboard.setEntryCount(0);
+				return leaderboard;
+			}
+		}
+		// End of workaround
 
 		// If null, then the default value for contextEntries is 2; the max is 15
 		final Integer context = (contextEntries == null ? Integer.valueOf(2) : Integer.valueOf(Math.max(0, Math.min(15, contextEntries.intValue()))));
@@ -249,7 +268,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 		try {
 			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
-				final StravaSegmentLeaderboard current = api.getSegmentLeaderboard(id, gender, ageGroup, weightClass, following, clubId, dateRange,
+				final StravaSegmentLeaderboard current = api.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange,
 						paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
 					if (leaderboard == null) {
