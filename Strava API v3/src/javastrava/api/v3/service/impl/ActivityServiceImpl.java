@@ -39,11 +39,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 * <p>
 	 * Returns an instance of {@link ActivityService activity services}
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
 	 * </p>
-	 * 
+	 *
 	 * @param token
 	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An instance of the activity services
@@ -51,50 +51,50 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	public static ActivityService instance(final Token token) {
 		// Get the service from the token's cache
 		ActivityService service = token.getService(ActivityService.class);
-		
+
 		// If it's not already there, create a new one and put it in the token
 		if (service == null) {
 			service = new ActivityServiceImpl(token);
 			token.addService(ActivityService.class, service);
 		}
 		return service;
-	}		
-		
+	}
+
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
 	@Override
 	public StravaActivity getActivity(final Integer id, final Boolean includeAllEfforts) {
 		StravaActivity stravaResponse = null;
-		
+
 		try {
 			boolean loop = true;
 			int i = 0;
 			while (loop) {
 				i++;
-				stravaResponse = this.api.getActivity(id, includeAllEfforts);
-		
+				stravaResponse = api.getActivity(id, includeAllEfforts);
+
 				// If the activity is being updated, wait for the update to complete
 				if (i < 10 && stravaResponse.getResourceState() == StravaResourceState.UPDATING) {
 					try {
 						Thread.sleep(1000 + i * 100);
-					} catch (InterruptedException e) {
+					} catch (final InterruptedException e) {
 						// Ignore
 					}
 				} else {
 					loop = false;
 				}
 			}
-			
+
 			return stravaResponse;
 
-		} catch (NotFoundException e) {
+		} catch (final NotFoundException e) {
 			// Activity doesn't exist - return null
 			return null;
-		} catch (UnauthorizedException e) {
+		} catch (final UnauthorizedException e) {
 			if (accessTokenIsValid()) {
 				// Activity is private
-				StravaActivity activity = new StravaActivity();
+				final StravaActivity activity = new StravaActivity();
 				activity.setId(id);
 				activity.setResourceState(StravaResourceState.META);
 				return activity;
@@ -110,12 +110,12 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public StravaActivity createManualActivity(final StravaActivity activity) {
 		try {
-			return this.api.createManualActivity(activity);
-		} catch (BadRequestException e) {
+			return api.createManualActivity(activity);
+		} catch (final BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}
 		// TODO Workaround for issue javastrava-api #49 (https://github.com/danshannon/javastravav3api/issues/49)
-		catch (StravaInternalServerErrorException e) {
+		catch (final StravaInternalServerErrorException e) {
 			throw new IllegalArgumentException(e);
 		}
 		// End of workaround
@@ -126,39 +126,39 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) {
-		StravaActivityUpdate update = activity;
+		final StravaActivityUpdate update = activity;
 		if (activity == null) {
 			return getActivity(id);
 		}
 		StravaActivity response = null;
-		
-		
+
+
 		// TODO Workaround for issue javastrava-api #36 (https://github.com/danshannon/javastravav3api/issues/36)
 		if (update.getCommute() != null) {
-			StravaActivityUpdate commuteUpdate = new StravaActivityUpdate();
+			final StravaActivityUpdate commuteUpdate = new StravaActivityUpdate();
 			commuteUpdate.setCommute(update.getCommute());
 			response = doUpdateActivity(id, commuteUpdate);
-			if (response.getCommute() != update.getCommute()) { 
+			if (response.getCommute() != update.getCommute()) {
 				throw new StravaUnknownAPIException(Messages.string("ActivityServiceImpl.failedToUpdateCommuteFlag") + id, null, null); //$NON-NLS-1$
 			}
-			
+
 			update.setCommute(null);
 		}
 
 		// End of workaround
-		
+
 		response = doUpdateActivity(id, update);
 		return response;
-		
-	}		
+
+	}
 	private StravaActivity doUpdateActivity(final Integer id, final StravaActivityUpdate update) {
 		try {
-			StravaActivity response = this.api.updateActivity(id, update);
+			StravaActivity response = api.updateActivity(id, update);
 			if (response.getResourceState() == StravaResourceState.UPDATING) {
 				response = getActivity(id);
 			}
 			return response;
-		} catch (NotFoundException e) {
+		} catch (final NotFoundException e) {
 			return null;
 		}
 	}
@@ -169,8 +169,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public StravaActivity deleteActivity(final Integer id) {
 		try {
-			return this.api.deleteActivity(id);
-		} catch (NotFoundException e) {
+			return api.deleteActivity(id);
+		} catch (final NotFoundException e) {
 			return null;
 		}
 	}
@@ -200,7 +200,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		if (date == null) {
 			return null;
 		}
-		Long timeInSeconds = Long.valueOf(date.toEpochSecond(ZoneOffset.UTC));
+		final Long timeInSeconds = Long.valueOf(date.toEpochSecond(ZoneOffset.UTC));
 		return Integer.valueOf(timeInSeconds.intValue());
 	}
 
@@ -209,7 +209,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listFriendsActivities(final Paging pagingInstruction) {
-		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
+		final List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
 			@Override
 			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return Arrays.asList(ActivityServiceImpl.this.api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize()));
@@ -224,10 +224,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaActivityZone> listActivityZones(final Integer id) {
 		try {
-			return Arrays.asList(this.api.listActivityZones(id));
-		} catch (NotFoundException e) {
+			return Arrays.asList(api.listActivityZones(id));
+		} catch (final NotFoundException e) {
 			return null;
-		} catch (UnauthorizedException e) {
+		} catch (final UnauthorizedException e) {
 			if (accessTokenIsValid()) {
 				return new ArrayList<StravaActivityZone>();
 			} else {
@@ -242,11 +242,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaLap> listActivityLaps(final Integer id) {
 		try {
-			List<StravaLap> laps = Arrays.asList(this.api.listActivityLaps(id));
+			final List<StravaLap> laps = Arrays.asList(api.listActivityLaps(id));
 			return laps;
-		} catch (NotFoundException e) {
+		} catch (final NotFoundException e) {
 			return null;
-		} catch (UnauthorizedException e) {
+		} catch (final UnauthorizedException e) {
 			if (accessTokenIsValid()) {
 				return new ArrayList<StravaLap>();
 			} else {
@@ -261,7 +261,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaComment> listActivityComments(final Integer id, final Boolean markdown, final Paging pagingInstruction) {
 		// TODO Workaround for issue javastrava-api #67 - see https://github.com/danshannon/javastravav3api/issues/67
-		StravaActivity activity = getActivity(id);
+		final StravaActivity activity = getActivity(id);
 		if (activity == null) { // doesn't exist
 			return null;
 		}
@@ -298,19 +298,19 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaPhoto> listActivityPhotos(final Integer id) {
 		try {
-			StravaPhoto[] photos = this.api.listActivityPhotos(id);
+			final StravaPhoto[] photos = api.listActivityPhotos(id);
 
 			// This fixes an inconsistency with the listActivityComments API
 			// call on Strava, which returns an empty array, not null
 			if (photos == null) {
-				photos = new StravaPhoto[0];
+				return new ArrayList<StravaPhoto>();
 			}
 
 			return Arrays.asList(photos);
 
-		} catch (NotFoundException e) {
+		} catch (final NotFoundException e) {
 			return null;
-		} catch (UnauthorizedException e) {
+		} catch (final UnauthorizedException e) {
 			if (accessTokenIsValid()) {
 				return new ArrayList<StravaPhoto>();
 			} else {
@@ -423,9 +423,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return listAuthenticatedAthleteActivities(thisPage);
 			}
-			
+
 		});
-		
+
 	}
 
 	/**
@@ -441,8 +441,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.commentWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
-		return this.api.createComment(id, text);
-				
+		return api.createComment(id, text);
+
 	}
 
 	/**
@@ -455,8 +455,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
-		this.api.deleteComment(activityId, commentId);
-		
+		api.deleteComment(activityId, commentId);
+
 	}
 
 	/**
@@ -469,9 +469,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
-		
-		this.api.deleteComment(comment.getActivityId(), comment.getId());
-		
+
+		api.deleteComment(comment.getActivityId(), comment.getId());
+
 	}
 
 	/**
@@ -484,9 +484,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.kudosWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
-		
-		this.api.giveKudos(activityId);
-		
+
+		api.giveKudos(activityId);
+
 	}
 
 	/**
@@ -500,7 +500,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			public List<StravaComment> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return listActivityComments(activityId, thisPage);
 			}
-			
+
 		});
 	}
 
@@ -515,7 +515,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return listActivityKudoers(activityId, thisPage);
 			}
-			
+
 		});
 	}
 
@@ -544,13 +544,13 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return listAuthenticatedAthleteActivities(before, after, thisPage);
 			}
-			
+
 		});
-		
+
 		// TODO Workaround for Strava issue #69 - see https://github.com/danshannon/javastravav3api/issues/69
 		if (!(this.getToken().hasViewPrivate())) {
 			final List<StravaActivity> returnedActivities = new ArrayList<StravaActivity>();
-			for (StravaActivity activity : activities) {
+			for (final StravaActivity activity : activities) {
 				if (activity.getPrivateActivity().equals(Boolean.FALSE)) {
 					returnedActivities.add(activity);
 				}
@@ -558,7 +558,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			return returnedActivities;
 		}
 		// End of workaround
-		
+
 		return activities;
 	}
 
@@ -573,7 +573,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
 				return listFriendsActivities(thisPage);
 			}
-			
+
 		});
 	}
 
