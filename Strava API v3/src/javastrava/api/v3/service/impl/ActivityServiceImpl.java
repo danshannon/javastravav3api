@@ -63,7 +63,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
 	@Override
-	public StravaActivity getActivity(final Integer id, final Boolean includeAllEfforts) {
+	public StravaActivity getActivity(final Integer activityId, final Boolean includeAllEfforts) {
 		StravaActivity stravaResponse = null;
 
 		try {
@@ -71,7 +71,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			int i = 0;
 			while (loop) {
 				i++;
-				stravaResponse = this.api.getActivity(id, includeAllEfforts);
+				stravaResponse = this.api.getActivity(activityId, includeAllEfforts);
 
 				// If the activity is being updated, wait for the update to complete
 				if ((i < 10) && (stravaResponse.getResourceState() == StravaResourceState.UPDATING)) {
@@ -91,17 +91,15 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			// Activity doesn't exist - return null
 			return null;
 		} catch (final UnauthorizedException e) {
-			if (accessTokenIsValid()) {
-				// Activity is private
-				final StravaActivity activity = new StravaActivity();
-				activity.setId(id);
-				activity.setResourceState(StravaResourceState.META);
-				activity.setPrivateActivity(Boolean.TRUE);
-				return activity;
-			} else {
-				throw e;
-			}
+			return privateActivity(activityId);
 		}
+	}
+
+	private static StravaActivity privateActivity(final Integer activityId) {
+		final StravaActivity activity = new StravaActivity();
+		activity.setId(activityId);
+		activity.setResourceState(StravaResourceState.PRIVATE);
+		return activity;
 	}
 
 	/**
@@ -109,6 +107,17 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public StravaActivity createManualActivity(final StravaActivity activity) {
+		// Token must have write access
+		if (!getToken().hasWriteAccess()) {
+			throw new UnauthorizedException("Cannot create an activity without write access!");
+		}
+
+		// Token must have view_private to write a private activity
+		if (activity.getPrivateActivity() != null && activity.getPrivateActivity().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
+			throw new UnauthorizedException("Cannot create a private activity without view_private!");
+		}
+
+		// Create the activity
 		try {
 			return this.api.createManualActivity(activity);
 		} catch (final BadRequestException e) {
@@ -122,7 +131,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @throws NotFoundException If the activity with the given id does not exist
+	 * @throws NotFoundException
+	 *             If the activity with the given id does not exist
 	 * @see javastrava.api.v3.service.ActivityService#updateActivity(Integer,javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
@@ -133,17 +143,16 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 		StravaActivity response = null;
 
-		// TODO Workaround for issue javastrava-api #72 (https://github.com/danshannon/javastravav3api/issues/72)
-		if (!this.getToken().hasViewPrivate()) {
-			final StravaActivity stravaActivity = getActivity(id);
-			if (stravaActivity == null) {
-				throw new NotFoundException("Activity does not exist on Strava");
-			}
-			if (stravaActivity.getPrivateActivity().equals(Boolean.TRUE)) {
-				throw new UnauthorizedException("Cannot update a private activity without view_private scope");
-			}
+		// Activity must exist to be updated
+		final StravaActivity stravaActivity = getActivity(id);
+		if (stravaActivity == null) {
+			throw new NotFoundException("Activity does not exist on Strava");
 		}
-		// End of workaround
+
+		// Activity must not be private and inaccessible
+		if (stravaActivity.getResourceState() == StravaResourceState.PRIVATE) {
+			throw new UnauthorizedException("Cannot update a private activity without view_private scope");
+		}
 
 		// TODO Workaround for issue javastrava-api #36 (https://github.com/danshannon/javastravav3api/issues/36)
 		if (update.getCommute() != null) {
@@ -180,7 +189,23 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(java.lang.Integer)
 	 */
 	@Override
-	public StravaActivity deleteActivity(final Integer id) {
+	public StravaActivity deleteActivity(final Integer id) throws NotFoundException {
+		// Token must have write access
+		if (!getToken().hasWriteAccess()) {
+			throw new UnauthorizedException("Cannot delete an activity without write access!");
+		}
+
+		// Activity must exist
+		StravaActivity activity = getActivity(id);
+		if (activity == null) {
+			throw new NotFoundException("Cannot delete an activity that does not exist!");
+		}
+
+		// To delete a private activity, token must have view_private access
+		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
+			throw new UnauthorizedException("Cannot delete a private activity without view_private");
+		}
+
 		try {
 			return this.api.deleteActivity(id);
 		} catch (final NotFoundException e) {
@@ -196,8 +221,37 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		final Integer secondsBefore = secondsSinceUnixEpoch(before);
 		final Integer secondsAfter = secondsSinceUnixEpoch(after);
 
-		return PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listAuthenticatedAthleteActivities(
-				secondsBefore, secondsAfter, thisPage.getPage(), thisPage.getPageSize())));
+		List<StravaActivity> activities = PagingHandler
+				.handlePaging(
+						pagingInstruction,
+						thisPage -> Arrays.asList(this.api.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, thisPage.getPage(),
+								thisPage.getPageSize())));
+
+		// TODO Workaround for Strava issue #69 - see https://github.com/danshannon/javastravav3api/issues/69
+		activities = handlePrivateActivities(activities);
+		// End of workaround
+
+		return activities;
+	}
+
+	private List<StravaActivity> handlePrivateActivities(final List<StravaActivity> activities) {
+		if (activities == null) {
+			return null;
+		}
+		if (this.getToken().hasViewPrivate()) {
+			return activities;
+		} else {
+			final List<StravaActivity> returnedActivities = new ArrayList<StravaActivity>();
+			for (final StravaActivity activity : activities) {
+				if (activity.getPrivateActivity() != null && activity.getPrivateActivity().equals(Boolean.TRUE)) {
+					returnedActivities.add(privateActivity(activity.getId()));
+				} else {
+					returnedActivities.add(activity);
+				}
+			}
+			return returnedActivities;
+		}
+
 	}
 
 	/**
@@ -219,8 +273,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaActivity> listFriendsActivities(final Paging pagingInstruction) {
 		final List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
-				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize())));
-		return activities;
+				thisPage -> Arrays.asList(this.api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize())));
+		return handlePrivateActivities(activities);
 	}
 
 	/**
@@ -228,16 +282,21 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivityZone> listActivityZones(final Integer id) {
+		// If the activity doesn't exist, return null
+		final StravaActivity activity = getActivity(id);
+		if (activity == null) {
+			return null;
+		}
+
+		// If the activity is private and inaccesible, return an empty list
+		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
+			return new ArrayList<StravaActivityZone>();
+		}
+
 		try {
 			return Arrays.asList(this.api.listActivityZones(id));
 		} catch (final NotFoundException e) {
 			return null;
-		} catch (final UnauthorizedException e) {
-			if (accessTokenIsValid()) {
-				return new ArrayList<StravaActivityZone>();
-			} else {
-				throw e;
-			}
 		}
 	}
 
@@ -246,18 +305,23 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaLap> listActivityLaps(final Integer id) {
-		try {
-			final List<StravaLap> laps = Arrays.asList(this.api.listActivityLaps(id));
-			return laps;
-		} catch (final NotFoundException e) {
+		// If the activity doesn't exist, return null
+		final StravaActivity activity = getActivity(id);
+		if (activity == null) {
 			return null;
-		} catch (final UnauthorizedException e) {
-			if (accessTokenIsValid()) {
-				return new ArrayList<StravaLap>();
-			} else {
-				throw e;
-			}
 		}
+
+		// If the activity is private and inaccessible, return an empty list
+		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
+			return new ArrayList<StravaLap>();
+		}
+
+		try {
+			return Arrays.asList(this.api.listActivityLaps(id));
+		} catch (NotFoundException e) {
+			return null;
+		}
+
 	}
 
 	/**
@@ -265,15 +329,16 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaComment> listActivityComments(final Integer id, final Boolean markdown, final Paging pagingInstruction) {
-		// TODO Workaround for issue javastrava-api #67 - see https://github.com/danshannon/javastravav3api/issues/67
+		// If the activity doesn't exist, then neither do the comments
 		final StravaActivity activity = getActivity(id);
 		if (activity == null) { // doesn't exist
 			return null;
 		}
-		if (activity.getResourceState() == StravaResourceState.META) { // is private
+
+		// If the activity is private and not accessible, don't return the comments
+		if (activity.getResourceState() == StravaResourceState.PRIVATE) { // is private
 			return new ArrayList<StravaComment>();
 		}
-		// End of workaround
 
 		return PagingHandler.handlePaging(pagingInstruction,
 				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listActivityComments(id, markdown, thisPage.getPage(), thisPage.getPageSize())));
@@ -284,6 +349,17 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaAthlete> listActivityKudoers(final Integer id, final Paging pagingInstruction) {
+		// If the activity doesn't exist, then neither do the kudoers
+		StravaActivity activity = getActivity(id);
+		if (activity == null) {
+			return null;
+		}
+
+		// If the activity is private and inaccessible, return an empty list
+		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
+			return new ArrayList<StravaAthlete>();
+		}
+
 		return PagingHandler.handlePaging(pagingInstruction,
 				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listActivityKudoers(id, thisPage.getPage(), thisPage.getPageSize())));
 
@@ -294,10 +370,21 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaPhoto> listActivityPhotos(final Integer id) {
+		// If the activity doesn't exist, return null
+		final StravaActivity activity = getActivity(id);
+		if (activity == null) {
+			return null;
+		}
+
+		// If the activity is private and inaccessible, return an empty list
+		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
+			return new ArrayList<StravaPhoto>();
+		}
+
 		try {
 			final StravaPhoto[] photos = this.api.listActivityPhotos(id);
 
-			// This fixes an inconsistency with the listActivityComments API
+			// TODO This fixes an inconsistency with the listActivityComments API (issue #76)
 			// call on Strava, which returns an empty array, not null
 			if (photos == null) {
 				return new ArrayList<StravaPhoto>();
@@ -307,12 +394,6 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 
 		} catch (final NotFoundException e) {
 			return null;
-		} catch (final UnauthorizedException e) {
-			if (accessTokenIsValid()) {
-				return new ArrayList<StravaPhoto>();
-			} else {
-				throw e;
-			}
 		}
 	}
 
@@ -377,8 +458,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listRelatedActivities(final Integer id, final Paging pagingInstruction) {
-		return PagingHandler.handlePaging(pagingInstruction,
+		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
 				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listRelatedActivities(id, thisPage.getPage(), thisPage.getPageSize())));
+		return handlePrivateActivities(activities);
 	}
 
 	/**
@@ -423,24 +505,23 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
 		}
 
-		// TODO Workaround for issue javastrava-api #30 (https://github.com/danshannon/javastravav3api/issues/30)
+		// Token must have write access
 		if (!(getToken().hasWriteAccess())) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.commentWithoutWriteAccess")); //$NON-NLS-1$
 		}
-		// End of workaround
 
-		// TODO Workaround for issue javastrava-api #74 (https://github.com/danshannon/javastravav3api/issues/74)
-		if (!(getToken().hasViewPrivate())) {
-			final StravaActivity activity = getActivity(activityId);
-			if (activity == null) {
-				return null;
-			}
-			if (activity.getPrivateActivity().equals(Boolean.TRUE)) {
-				throw new UnauthorizedException("Cannot comment on a private activity without view_private scope");
-			}
+		// Activity must exist
+		final StravaActivity activity = getActivity(activityId);
+		if (activity == null) {
+			throw new NotFoundException("Cannot comment on an activity that does not exist");
 		}
-		// End of workaround
 
+		// If activity is private and not accessible, cannot be commented on
+		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
+			throw new UnauthorizedException("Cannot comment on a private activity without view_private scope");
+		}
+
+		// Create the comment
 		return this.api.createComment(activityId, text);
 
 	}
@@ -450,19 +531,22 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
-		// TODO Workaround for issue javastrava-api #63 (https://github.com/danshannon/javastravav3api/issues/63)
+		// Token must have write access
 		if (!(getToken().hasWriteAccess())) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
 		}
-		// End of workaround
 
-		// TODO Workaround for issue javastrava-api #74 (https://github.com/danshannon/javastravav3api/issues/74)
-		if (!(getToken().hasViewPrivate())) {
-			final StravaActivity activity = getActivity(activityId);
-			if (activity.getPrivateActivity().equals(Boolean.TRUE)) {
-				throw new UnauthorizedException("Cannot delete a comment on a private activity without view_private scope");
-			}
+		// Activity must exist
+		StravaActivity activity = getActivity(activityId);
+		if (activity == null) {
+			throw new NotFoundException("Cannot delete a comment on an activity that does not exist!");
 		}
+
+		// Token must have view_private to delete a comment on a private activity
+		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
+			throw new UnauthorizedException("Cannot delete a comment on a private activity without view_private scope");
+		}
+
 		// End of workaround
 		this.api.deleteComment(activityId, commentId);
 
@@ -473,22 +557,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public void deleteComment(final StravaComment comment) throws NotFoundException {
-		// TODO Workaround for issue javastrava-api #63 (https://github.com/danshannon/javastravav3api/issues/63)
-		if (!(getToken().hasWriteAccess())) {
-			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
-		}
-		// End of workaround
-
-		// TODO Workaround for issue javastrava-api #
-		if (!getToken().hasViewPrivate()) {
-			final StravaActivity activity = getActivity(comment.getActivityId());
-			if (activity.getPrivateActivity().equals(Boolean.TRUE)) {
-				throw new UnauthorizedException("Cannot delete comment for a private activity");
-			}
-		}
-
-		this.api.deleteComment(comment.getActivityId(), comment.getId());
-
+		deleteComment(comment.getActivityId(), comment.getId());
 	}
 
 	/**
@@ -496,11 +565,21 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public void giveKudos(final Integer activityId) throws NotFoundException {
-		// TODO Workaround for issue javastrava-api #29 (https://github.com/danshannon/javastravav3api/issues/29)
+		// Must have write access to give kudos
 		if (!(getToken().hasWriteAccess())) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.kudosWithoutWriteAccess")); //$NON-NLS-1$
 		}
-		// End of workaround
+
+		// Activity must exist
+		StravaActivity activity = getActivity(activityId);
+		if (activity == null) {
+			throw new NotFoundException("Cannot give kudos to a non-existend activity");
+		}
+
+		// Must have view_private to give kudos to a private activity
+		if (!getToken().hasViewPrivate() && activity.getResourceState() == StravaResourceState.PRIVATE) {
+			throw new UnauthorizedException("Cannot give kudos to a private activity without view_private access!");
+		}
 
 		this.api.giveKudos(activityId);
 
@@ -536,18 +615,6 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after) {
 		final List<StravaActivity> activities = PagingHandler.handleListAll(thisPage -> listAuthenticatedAthleteActivities(before, after, thisPage));
-
-		// TODO Workaround for Strava issue #69 - see https://github.com/danshannon/javastravav3api/issues/69
-		if (!(this.getToken().hasViewPrivate())) {
-			final List<StravaActivity> returnedActivities = new ArrayList<StravaActivity>();
-			for (final StravaActivity activity : activities) {
-				if (activity.getPrivateActivity().equals(Boolean.FALSE)) {
-					returnedActivities.add(activity);
-				}
-			}
-			return returnedActivities;
-		}
-		// End of workaround
 
 		return activities;
 	}
