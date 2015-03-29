@@ -152,9 +152,10 @@ public interface ActivityService extends StravaService {
 	 * @param activity
 	 *            The {@link StravaActivityUpdate} to be updated
 	 * @return Returns a detailed representation of the updated {@link StravaActivity}.
+	 * @throws NotFoundException If the activity with the given id does not exist
 	 * 
 	 */
-	public StravaActivity updateActivity(final Integer activityId, final StravaActivityUpdate activity);
+	public StravaActivity updateActivity(final Integer activityId, final StravaActivityUpdate activity) throws NotFoundException;
 
 	/**
 	 * <p>

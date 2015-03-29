@@ -148,9 +148,10 @@ public class Strava {
 	 * @param activityId Activity identifier
 	 * @param activity Representation of fields to be updated on the activity
 	 * @return The activity as updated on Strava
+	 * @throws NotFoundException If the activity with the given id does not exist
 	 * @see javastrava.api.v3.service.ActivityService#updateActivity(java.lang.Integer, javastrava.api.v3.model.StravaActivityUpdate)
 	 */
-	public StravaActivity updateActivity(final Integer activityId, final StravaActivityUpdate activity) {
+	public StravaActivity updateActivity(final Integer activityId, final StravaActivityUpdate activity) throws NotFoundException {
 		return this.activityService.updateActivity(activityId, activity);
 	}
 

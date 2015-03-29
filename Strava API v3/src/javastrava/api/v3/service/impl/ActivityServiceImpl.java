@@ -23,7 +23,6 @@ import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
 import javastrava.util.Paging;
-import javastrava.util.PagingCallback;
 import javastrava.util.PagingHandler;
 
 /**
@@ -72,12 +71,12 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			int i = 0;
 			while (loop) {
 				i++;
-				stravaResponse = api.getActivity(id, includeAllEfforts);
+				stravaResponse = this.api.getActivity(id, includeAllEfforts);
 
 				// If the activity is being updated, wait for the update to complete
-				if (i < 10 && stravaResponse.getResourceState() == StravaResourceState.UPDATING) {
+				if ((i < 10) && (stravaResponse.getResourceState() == StravaResourceState.UPDATING)) {
 					try {
-						Thread.sleep(1000 + i * 100);
+						Thread.sleep(1000 + (i * 100));
 					} catch (final InterruptedException e) {
 						// Ignore
 					}
@@ -111,7 +110,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public StravaActivity createManualActivity(final StravaActivity activity) {
 		try {
-			return api.createManualActivity(activity);
+			return this.api.createManualActivity(activity);
 		} catch (final BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -123,10 +122,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
+	 * @throws NotFoundException If the activity with the given id does not exist
 	 * @see javastrava.api.v3.service.ActivityService#updateActivity(Integer,javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
-	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) {
+	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) throws NotFoundException {
 		final StravaActivityUpdate update = activity;
 		if (activity == null) {
 			return getActivity(id);
@@ -136,6 +136,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// TODO Workaround for issue javastrava-api #72 (https://github.com/danshannon/javastravav3api/issues/72)
 		if (!this.getToken().hasViewPrivate()) {
 			final StravaActivity stravaActivity = getActivity(id);
+			if (stravaActivity == null) {
+				throw new NotFoundException("Activity does not exist on Strava");
+			}
 			if (stravaActivity.getPrivateActivity().equals(Boolean.TRUE)) {
 				throw new UnauthorizedException("Cannot update a private activity without view_private scope");
 			}
@@ -160,9 +163,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		return response;
 
 	}
+
 	private StravaActivity doUpdateActivity(final Integer id, final StravaActivityUpdate update) {
 		try {
-			StravaActivity response = api.updateActivity(id, update);
+			StravaActivity response = this.api.updateActivity(id, update);
 			if (response.getResourceState() == StravaResourceState.UPDATING) {
 				response = getActivity(id);
 			}
@@ -178,7 +182,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public StravaActivity deleteActivity(final Integer id) {
 		try {
-			return api.deleteActivity(id);
+			return this.api.deleteActivity(id);
 		} catch (final NotFoundException e) {
 			return null;
 		}
@@ -192,17 +196,13 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		final Integer secondsBefore = secondsSinceUnixEpoch(before);
 		final Integer secondsAfter = secondsSinceUnixEpoch(after);
 
-		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
-			@Override
-			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ActivityServiceImpl.this.api.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, thisPage.getPage(),
-						thisPage.getPageSize()));
-			}
-		});
+		return PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listAuthenticatedAthleteActivities(
+				secondsBefore, secondsAfter, thisPage.getPage(), thisPage.getPageSize())));
 	}
 
 	/**
-	 * @param date Date for which seconds since the epoch date is to be calculated
+	 * @param date
+	 *            Date for which seconds since the epoch date is to be calculated
 	 * @return Number of seconds after the unix epoch date equivalent to the given date
 	 */
 	private static Integer secondsSinceUnixEpoch(final LocalDateTime date) {
@@ -218,12 +218,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listFriendsActivities(final Paging pagingInstruction) {
-		final List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
-			@Override
-			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ActivityServiceImpl.this.api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize()));
-			}
-		});
+		final List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
+				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize())));
 		return activities;
 	}
 
@@ -233,7 +229,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaActivityZone> listActivityZones(final Integer id) {
 		try {
-			return Arrays.asList(api.listActivityZones(id));
+			return Arrays.asList(this.api.listActivityZones(id));
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
@@ -251,7 +247,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaLap> listActivityLaps(final Integer id) {
 		try {
-			final List<StravaLap> laps = Arrays.asList(api.listActivityLaps(id));
+			final List<StravaLap> laps = Arrays.asList(this.api.listActivityLaps(id));
 			return laps;
 		} catch (final NotFoundException e) {
 			return null;
@@ -279,12 +275,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 		// End of workaround
 
-		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaComment>() {
-			@Override
-			public List<StravaComment> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ActivityServiceImpl.this.api.listActivityComments(id, markdown, thisPage.getPage(), thisPage.getPageSize()));
-			}
-		});
+		return PagingHandler.handlePaging(pagingInstruction,
+				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listActivityComments(id, markdown, thisPage.getPage(), thisPage.getPageSize())));
 	}
 
 	/**
@@ -292,12 +284,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaAthlete> listActivityKudoers(final Integer id, final Paging pagingInstruction) {
-		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaAthlete>() {
-			@Override
-			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ActivityServiceImpl.this.api.listActivityKudoers(id, thisPage.getPage(), thisPage.getPageSize()));
-			}
-		});
+		return PagingHandler.handlePaging(pagingInstruction,
+				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listActivityKudoers(id, thisPage.getPage(), thisPage.getPageSize())));
 
 	}
 
@@ -307,7 +295,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaPhoto> listActivityPhotos(final Integer id) {
 		try {
-			final StravaPhoto[] photos = api.listActivityPhotos(id);
+			final StravaPhoto[] photos = this.api.listActivityPhotos(id);
 
 			// This fixes an inconsistency with the listActivityComments API
 			// call on Strava, which returns an empty array, not null
@@ -389,12 +377,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listRelatedActivities(final Integer id, final Paging pagingInstruction) {
-		return PagingHandler.handlePaging(pagingInstruction, new PagingCallback<StravaActivity>() {
-			@Override
-			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return Arrays.asList(ActivityServiceImpl.this.api.listRelatedActivities(id, thisPage.getPage(), thisPage.getPageSize()));
-			}
-		});
+		return PagingHandler.handlePaging(pagingInstruction,
+				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listRelatedActivities(id, thisPage.getPage(), thisPage.getPageSize())));
 	}
 
 	/**
@@ -426,14 +410,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listAllAuthenticatedAthleteActivities() {
-		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
-
-			@Override
-			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return listAuthenticatedAthleteActivities(thisPage);
-			}
-
-		});
+		return PagingHandler.handleListAll(thisPage -> listAuthenticatedAthleteActivities(thisPage));
 
 	}
 
@@ -442,7 +419,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public StravaComment createComment(final Integer activityId, final String text) throws NotFoundException, BadRequestException {
-		if (text == null || text.equals("")) { //$NON-NLS-1$
+		if ((text == null) || text.equals("")) { //$NON-NLS-1$
 			throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
 		}
 
@@ -464,7 +441,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 		// End of workaround
 
-		return api.createComment(activityId, text);
+		return this.api.createComment(activityId, text);
 
 	}
 
@@ -487,7 +464,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			}
 		}
 		// End of workaround
-		api.deleteComment(activityId, commentId);
+		this.api.deleteComment(activityId, commentId);
 
 	}
 
@@ -510,7 +487,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			}
 		}
 
-		api.deleteComment(comment.getActivityId(), comment.getId());
+		this.api.deleteComment(comment.getActivityId(), comment.getId());
 
 	}
 
@@ -525,7 +502,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 		// End of workaround
 
-		api.giveKudos(activityId);
+		this.api.giveKudos(activityId);
 
 	}
 
@@ -534,14 +511,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaComment> listAllActivityComments(final Integer activityId) {
-		return PagingHandler.handleListAll(new PagingCallback<StravaComment>() {
-
-			@Override
-			public List<StravaComment> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return listActivityComments(activityId, thisPage);
-			}
-
-		});
+		return PagingHandler.handleListAll(thisPage -> listActivityComments(activityId, thisPage));
 	}
 
 	/**
@@ -549,14 +519,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaAthlete> listAllActivityKudoers(final Integer activityId) {
-		return PagingHandler.handleListAll(new PagingCallback<StravaAthlete>() {
-
-			@Override
-			public List<StravaAthlete> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return listActivityKudoers(activityId, thisPage);
-			}
-
-		});
+		return PagingHandler.handleListAll(thisPage -> listActivityKudoers(activityId, thisPage));
 	}
 
 	/**
@@ -564,13 +527,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listAllRelatedActivities(final Integer activityId) {
-		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
-
-			@Override
-			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return listRelatedActivities(activityId, thisPage);
-			}
-		});
+		return PagingHandler.handleListAll(thisPage -> listRelatedActivities(activityId, thisPage));
 	}
 
 	/**
@@ -578,14 +535,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after) {
-		final List<StravaActivity> activities = PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
-
-			@Override
-			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return listAuthenticatedAthleteActivities(before, after, thisPage);
-			}
-
-		});
+		final List<StravaActivity> activities = PagingHandler.handleListAll(thisPage -> listAuthenticatedAthleteActivities(before, after, thisPage));
 
 		// TODO Workaround for Strava issue #69 - see https://github.com/danshannon/javastravav3api/issues/69
 		if (!(this.getToken().hasViewPrivate())) {
@@ -607,14 +557,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listAllFriendsActivities() {
-		return PagingHandler.handleListAll(new PagingCallback<StravaActivity>() {
-
-			@Override
-			public List<StravaActivity> getPageOfData(final Paging thisPage) throws NotFoundException {
-				return listFriendsActivities(thisPage);
-			}
-
-		});
+		return PagingHandler.handleListAll(thisPage -> listFriendsActivities(thisPage));
 	}
 
 }

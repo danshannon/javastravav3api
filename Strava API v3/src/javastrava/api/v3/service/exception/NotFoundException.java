@@ -26,6 +26,13 @@ public class NotFoundException extends Exception implements StravaAPIException {
 		super((response == null ? null : response.toString()),cause);
 		this.response = response;
 	}
+	
+	/**
+	 * @param reason Reason for the failure
+	 */
+	public NotFoundException(final String reason) {
+		super(reason);
+	}
 
 	/**
 	 * @see javastrava.api.v3.service.exception.StravaAPIException#getResponse()

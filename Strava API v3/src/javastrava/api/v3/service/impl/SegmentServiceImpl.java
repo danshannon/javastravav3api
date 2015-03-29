@@ -90,7 +90,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	public StravaSegment getSegment(final Integer id) {
 		StravaSegment segment = null;
 		try {
-			segment = api.getSegment(id);
+			segment = this.api.getSegment(id);
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
@@ -238,7 +238,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			if (segment == null) {
 				return null;
 			}
-			if (segment.getPrivateSegment().equals(Boolean.TRUE)) {
+			if (segment.getPrivateSegment() != null && segment.getPrivateSegment().equals(Boolean.TRUE)) {
 				leaderboard = new StravaSegmentLeaderboard();
 				leaderboard.setNeighborhoodCount(1);
 				leaderboard.setAthleteEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
@@ -258,7 +258,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		// SegmentAPI
 		if (clubId != null) {
 			try {
-				api.getClub(clubId);
+				this.api.getClub(clubId);
 			} catch (final NotFoundException e) {
 				// Club doesn't exist, so return null
 				return null;
@@ -268,7 +268,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 		try {
 			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
-				final StravaSegmentLeaderboard current = api.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange,
+				final StravaSegmentLeaderboard current = this.api.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange,
 						paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
 					if (leaderboard == null) {
@@ -362,7 +362,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
 		final String bounds = southwestCorner.getLatitude() + "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ northeastCorner.getLongitude();
-		return api.segmentExplore(bounds, activityType, minCat, maxCat);
+		return this.api.segmentExplore(bounds, activityType, minCat, maxCat);
 	}
 
 	/**
