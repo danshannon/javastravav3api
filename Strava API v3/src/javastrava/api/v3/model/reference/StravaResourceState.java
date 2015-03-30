@@ -29,6 +29,16 @@ public enum StravaResourceState {
 	 * This is a detailed representation of the resource
 	 */
 	DETAILED(StravaConfig.integer("StravaResourceState.detailed"), Messages.string("StravaResourceState.detailed.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	
+	/**
+	 * <p>
+	 * Indicates that the resource is flagged as PRIVATE and as a result is not accessible.
+	 * </p>
+	 * <p>
+	 * Will be returned as an empty object with only the id and resourceState set.
+	 * </p>
+	 */
+	PRIVATE(StravaConfig.integer("StravaResourceState.private"), Messages.string("StravaResourceState.private.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed

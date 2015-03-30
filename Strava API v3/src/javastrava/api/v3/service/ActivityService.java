@@ -180,8 +180,9 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} to be deleted.
 	 * 
 	 * @return Should return <code>null</code>
+	 * @throws NotFoundException If the activity does not exist
 	 */
-	public StravaActivity deleteActivity(final Integer activityId);
+	public StravaActivity deleteActivity(final Integer activityId) throws NotFoundException;
 
 	/**
 	 * <p>

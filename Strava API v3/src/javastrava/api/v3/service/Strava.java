@@ -157,10 +157,11 @@ public class Strava {
 
 	/**
 	 * @param activityId The identifier of the activity to be deleted
-	 * @return The activity that was deleted, or <code>null</code> if it does not exist
+	 * @return The activity that was deleted
+	 * @throws NotFoundException If the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(java.lang.Integer)
 	 */
-	public StravaActivity deleteActivity(final Integer activityId) {
+	public StravaActivity deleteActivity(final Integer activityId) throws NotFoundException {
 		return this.activityService.deleteActivity(activityId);
 	}
 

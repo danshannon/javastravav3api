@@ -32,6 +32,7 @@ import javastrava.util.Paging;
 import javastrava.util.PagingCallback;
 import javastrava.util.PagingHandler;
 import javastrava.util.PagingUtils;
+import javastrava.util.PrivacyUtils;
 
 /**
  * <p>
@@ -94,24 +95,13 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
-			if (accessTokenIsValid()) {
-				segment = new StravaSegment();
-				segment.setId(id);
-				segment.setResourceState(StravaResourceState.META);
-				segment.setPrivateSegment(Boolean.TRUE);
-				return segment;
-			} else {
-				throw e;
-			}
+			return PrivacyUtils.privateSegment(id);
 		}
 
 		// TODO Workaround for javastrava-api #70
 		// If the segment is private and the token doesn't have view_private scope, then return an empty segment
 		if (segment.getPrivateSegment().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
-			segment = new StravaSegment();
-			segment.setId(id);
-			segment.setResourceState(StravaResourceState.META);
-			return segment;
+			return PrivacyUtils.privateSegment(id);
 		}
 		// End of workaround
 
@@ -140,7 +130,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			}
 		}
 
-		return segments;
+		return PrivacyUtils.handlePrivateSegments(segments, this.getToken());
 	}
 
 	/**
@@ -164,7 +154,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			}
 		}
 
-		return segments;
+		return PrivacyUtils.handlePrivateSegments(segments, this.getToken());
 	}
 
 	/**
@@ -183,7 +173,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		}
 
 		// TODO This is the workaround for issue #45
-		if (segment.getResourceState() == StravaResourceState.META) {
+		if (segment.getResourceState() == StravaResourceState.PRIVATE) {
 			return new ArrayList<StravaSegmentEffort>();
 		}
 
@@ -217,7 +207,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			}
 		});
 
-		return efforts;
+		return PrivacyUtils.handlePrivateSegmentEfforts(efforts, this.getToken());
 	}
 
 	/**
@@ -228,27 +218,23 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
 			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange,
 			final Paging pagingInstruction, final Integer contextEntries) {
+		// Check that the paging arguments are valid
 		PagingUtils.validatePagingArguments(pagingInstruction);
 
-		StravaSegmentLeaderboard leaderboard = null;
-
-		// TODO Workaround for issue javastrava-api #73 (https://github.com/danshannon/javastravav3api/issues/73)
-		if (!this.getToken().hasViewPrivate()) {
-			final StravaSegment segment = getSegment(segmentId);
-			if (segment == null) {
-				return null;
-			}
-			if (segment.getPrivateSegment() != null && segment.getPrivateSegment().equals(Boolean.TRUE)) {
-				leaderboard = new StravaSegmentLeaderboard();
-				leaderboard.setNeighborhoodCount(1);
-				leaderboard.setAthleteEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
-				leaderboard.setEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
-				leaderboard.setEffortCount(0);
-				leaderboard.setEntryCount(0);
-				return leaderboard;
-			}
+		// Check that the segment is valid
+		StravaSegment segment = getSegment(segmentId);
+		
+		// If the segment doesn't exist, return null
+		if (segment == null) { 
+			return null;
 		}
-		// End of workaround
+		
+		StravaSegmentLeaderboard leaderboard = null;
+		
+		// If the segment is private and inaccessible, then don't return a leaderboard
+		if (segment.getResourceState() == StravaResourceState.PRIVATE) {
+			return PrivacyUtils.privateSegmentLeaderboard();
+		}
 
 		// If null, then the default value for contextEntries is 2; the max is 15
 		final Integer context = (contextEntries == null ? Integer.valueOf(2) : Integer.valueOf(Math.max(0, Math.min(15, contextEntries.intValue()))));
@@ -291,8 +277,9 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
-			return null;
+			return PrivacyUtils.privateSegmentLeaderboard();
 		}
+		leaderboard.setResourceState(StravaResourceState.DETAILED);
 		return leaderboard;
 	}
 
@@ -435,17 +422,17 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 		});
 
-		// TODO Workaround for issue javastrava-api #71 (see https://github.com/danshannon/javastravav3api/issues/71)
-		if (!this.getToken().hasViewPrivate()) {
-			final List<StravaSegment> filteredSegments = new ArrayList<StravaSegment>();
-			for (final StravaSegment segment : segments) {
-				if (!segment.getPrivateSegment().equals(Boolean.TRUE)) {
-					filteredSegments.add(segment);
-				}
-			}
-			return filteredSegments;
-		}
-		// End of workaround
+		//		// TODO Workaround for issue javastrava-api #71 (see https://github.com/danshannon/javastravav3api/issues/71)
+		//		if (!this.getToken().hasViewPrivate()) {
+		//			final List<StravaSegment> filteredSegments = new ArrayList<StravaSegment>();
+		//			for (final StravaSegment segment : segments) {
+		//				if (!segment.getPrivateSegment().equals(Boolean.TRUE)) {
+		//					filteredSegments.add(segment);
+		//				}
+		//			}
+		//			return filteredSegments;
+		//		}
+		//		// End of workaround
 
 		return segments;
 	}
