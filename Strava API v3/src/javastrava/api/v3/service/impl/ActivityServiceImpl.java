@@ -24,6 +24,7 @@ import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
 import javastrava.util.Paging;
 import javastrava.util.PagingHandler;
+import javastrava.util.PrivacyUtils;
 
 /**
  * @author Dan Shannon
@@ -71,7 +72,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			int i = 0;
 			while (loop) {
 				i++;
-				stravaResponse = this.api.getActivity(activityId, includeAllEfforts);
+				stravaResponse = api.getActivity(activityId, includeAllEfforts);
 
 				// If the activity is being updated, wait for the update to complete
 				if ((i < 10) && (stravaResponse.getResourceState() == StravaResourceState.UPDATING)) {
@@ -91,15 +92,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			// Activity doesn't exist - return null
 			return null;
 		} catch (final UnauthorizedException e) {
-			return privateActivity(activityId);
+			return PrivacyUtils.privateActivity(activityId);
 		}
-	}
-
-	private static StravaActivity privateActivity(final Integer activityId) {
-		final StravaActivity activity = new StravaActivity();
-		activity.setId(activityId);
-		activity.setResourceState(StravaResourceState.PRIVATE);
-		return activity;
 	}
 
 	/**
@@ -119,7 +113,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 
 		// Create the activity
 		try {
-			return this.api.createManualActivity(activity);
+			return api.createManualActivity(activity);
 		} catch (final BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -175,7 +169,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 
 	private StravaActivity doUpdateActivity(final Integer id, final StravaActivityUpdate update) {
 		try {
-			StravaActivity response = this.api.updateActivity(id, update);
+			StravaActivity response = api.updateActivity(id, update);
 			if (response.getResourceState() == StravaResourceState.UPDATING) {
 				response = getActivity(id);
 			}
@@ -196,7 +190,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		// Activity must exist
-		StravaActivity activity = getActivity(id);
+		final StravaActivity activity = getActivity(id);
 		if (activity == null) {
 			throw new NotFoundException("Cannot delete an activity that does not exist!");
 		}
@@ -207,7 +201,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		try {
-			return this.api.deleteActivity(id);
+			return api.deleteActivity(id);
 		} catch (final NotFoundException e) {
 			return null;
 		}
@@ -224,34 +218,12 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		List<StravaActivity> activities = PagingHandler
 				.handlePaging(
 						pagingInstruction,
-						thisPage -> Arrays.asList(this.api.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, thisPage.getPage(),
+						thisPage -> Arrays.asList(api.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, thisPage.getPage(),
 								thisPage.getPageSize())));
 
-		// TODO Workaround for Strava issue #69 - see https://github.com/danshannon/javastravav3api/issues/69
-		activities = handlePrivateActivities(activities);
-		// End of workaround
+		activities = PrivacyUtils.handlePrivateActivities(activities, this.getToken());
 
 		return activities;
-	}
-
-	private List<StravaActivity> handlePrivateActivities(final List<StravaActivity> activities) {
-		if (activities == null) {
-			return null;
-		}
-		if (this.getToken().hasViewPrivate()) {
-			return activities;
-		} else {
-			final List<StravaActivity> returnedActivities = new ArrayList<StravaActivity>();
-			for (final StravaActivity activity : activities) {
-				if (activity.getPrivateActivity() != null && activity.getPrivateActivity().equals(Boolean.TRUE)) {
-					returnedActivities.add(privateActivity(activity.getId()));
-				} else {
-					returnedActivities.add(activity);
-				}
-			}
-			return returnedActivities;
-		}
-
 	}
 
 	/**
@@ -273,8 +245,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaActivity> listFriendsActivities(final Paging pagingInstruction) {
 		final List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
-				thisPage -> Arrays.asList(this.api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize())));
-		return handlePrivateActivities(activities);
+				thisPage -> Arrays.asList(api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize())));
+		return PrivacyUtils.handlePrivateActivities(activities, this.getToken());
 	}
 
 	/**
@@ -294,7 +266,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		try {
-			return Arrays.asList(this.api.listActivityZones(id));
+			return Arrays.asList(api.listActivityZones(id));
 		} catch (final NotFoundException e) {
 			return null;
 		}
@@ -317,8 +289,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		try {
-			return Arrays.asList(this.api.listActivityLaps(id));
-		} catch (NotFoundException e) {
+			return Arrays.asList(api.listActivityLaps(id));
+		} catch (final NotFoundException e) {
 			return null;
 		}
 
@@ -350,7 +322,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaAthlete> listActivityKudoers(final Integer id, final Paging pagingInstruction) {
 		// If the activity doesn't exist, then neither do the kudoers
-		StravaActivity activity = getActivity(id);
+		final StravaActivity activity = getActivity(id);
 		if (activity == null) {
 			return null;
 		}
@@ -382,7 +354,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		try {
-			final StravaPhoto[] photos = this.api.listActivityPhotos(id);
+			final StravaPhoto[] photos = api.listActivityPhotos(id);
 
 			// TODO This fixes an inconsistency with the listActivityComments API (issue #76)
 			// call on Strava, which returns an empty array, not null
@@ -458,9 +430,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listRelatedActivities(final Integer id, final Paging pagingInstruction) {
-		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
+		final List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
 				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listRelatedActivities(id, thisPage.getPage(), thisPage.getPageSize())));
-		return handlePrivateActivities(activities);
+		return PrivacyUtils.handlePrivateActivities(activities, this.getToken());
 	}
 
 	/**
@@ -522,7 +494,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		// Create the comment
-		return this.api.createComment(activityId, text);
+		return api.createComment(activityId, text);
 
 	}
 
@@ -537,7 +509,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		// Activity must exist
-		StravaActivity activity = getActivity(activityId);
+		final StravaActivity activity = getActivity(activityId);
 		if (activity == null) {
 			throw new NotFoundException("Cannot delete a comment on an activity that does not exist!");
 		}
@@ -548,7 +520,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		// End of workaround
-		this.api.deleteComment(activityId, commentId);
+		api.deleteComment(activityId, commentId);
 
 	}
 
@@ -571,7 +543,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		// Activity must exist
-		StravaActivity activity = getActivity(activityId);
+		final StravaActivity activity = getActivity(activityId);
 		if (activity == null) {
 			throw new NotFoundException("Cannot give kudos to a non-existend activity");
 		}
@@ -581,7 +553,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException("Cannot give kudos to a private activity without view_private access!");
 		}
 
-		this.api.giveKudos(activityId);
+		api.giveKudos(activityId);
 
 	}
 

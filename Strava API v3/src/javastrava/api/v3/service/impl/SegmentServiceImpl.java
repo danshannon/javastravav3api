@@ -32,6 +32,7 @@ import javastrava.util.Paging;
 import javastrava.util.PagingCallback;
 import javastrava.util.PagingHandler;
 import javastrava.util.PagingUtils;
+import javastrava.util.PrivacyUtils;
 
 /**
  * <p>
@@ -90,16 +91,12 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	public StravaSegment getSegment(final Integer id) {
 		StravaSegment segment = null;
 		try {
-			segment = this.api.getSegment(id);
+			segment = api.getSegment(id);
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
 			if (accessTokenIsValid()) {
-				segment = new StravaSegment();
-				segment.setId(id);
-				segment.setResourceState(StravaResourceState.META);
-				segment.setPrivateSegment(Boolean.TRUE);
-				return segment;
+				return PrivacyUtils.privateSegment(id);
 			} else {
 				throw e;
 			}
@@ -108,10 +105,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		// TODO Workaround for javastrava-api #70
 		// If the segment is private and the token doesn't have view_private scope, then return an empty segment
 		if (segment.getPrivateSegment().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
-			segment = new StravaSegment();
-			segment.setId(id);
-			segment.setResourceState(StravaResourceState.META);
-			return segment;
+			return PrivacyUtils.privateSegment(id);
 		}
 		// End of workaround
 
@@ -140,7 +134,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			}
 		}
 
-		return segments;
+		return PrivacyUtils.handlePrivateSegments(segments, this.getToken());
 	}
 
 	/**
@@ -258,7 +252,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		// SegmentAPI
 		if (clubId != null) {
 			try {
-				this.api.getClub(clubId);
+				api.getClub(clubId);
 			} catch (final NotFoundException e) {
 				// Club doesn't exist, so return null
 				return null;
@@ -268,7 +262,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 		try {
 			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
-				final StravaSegmentLeaderboard current = this.api.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange,
+				final StravaSegmentLeaderboard current = api.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange,
 						paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
 					if (leaderboard == null) {
@@ -362,7 +356,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
 		final String bounds = southwestCorner.getLatitude() + "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ northeastCorner.getLongitude();
-		return this.api.segmentExplore(bounds, activityType, minCat, maxCat);
+		return api.segmentExplore(bounds, activityType, minCat, maxCat);
 	}
 
 	/**
@@ -435,17 +429,17 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 		});
 
-		// TODO Workaround for issue javastrava-api #71 (see https://github.com/danshannon/javastravav3api/issues/71)
-		if (!this.getToken().hasViewPrivate()) {
-			final List<StravaSegment> filteredSegments = new ArrayList<StravaSegment>();
-			for (final StravaSegment segment : segments) {
-				if (!segment.getPrivateSegment().equals(Boolean.TRUE)) {
-					filteredSegments.add(segment);
-				}
-			}
-			return filteredSegments;
-		}
-		// End of workaround
+		//		// TODO Workaround for issue javastrava-api #71 (see https://github.com/danshannon/javastravav3api/issues/71)
+		//		if (!this.getToken().hasViewPrivate()) {
+		//			final List<StravaSegment> filteredSegments = new ArrayList<StravaSegment>();
+		//			for (final StravaSegment segment : segments) {
+		//				if (!segment.getPrivateSegment().equals(Boolean.TRUE)) {
+		//					filteredSegments.add(segment);
+		//				}
+		//			}
+		//			return filteredSegments;
+		//		}
+		//		// End of workaround
 
 		return segments;
 	}
