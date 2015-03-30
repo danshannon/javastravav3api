@@ -1,9 +1,11 @@
 package javastrava.api.v3.service.impl;
 
 import javastrava.api.v3.auth.model.Token;
+import javastrava.api.v3.model.StravaSegment;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.SegmentEffortService;
+import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.util.PrivacyUtils;
@@ -61,15 +63,26 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 	@Override
 	public StravaSegmentEffort getSegmentEffort(final Long id) {
 		StravaSegmentEffort effort = null;
+		
 		try {
-			effort = api.getSegmentEffort(id);
+			effort = this.api.getSegmentEffort(id);
 		} catch (final NotFoundException e) {
 			// Segment effort doesn't exist
 			return null;
 		} catch (final UnauthorizedException e) {
 			return PrivacyUtils.privateSegmentEffort(id);
 		}
-
+		
+		// TODO This is a workaround for issue javastrava-api #78
+		// See https://github.com/danshannon/javastravav3api/issues/78
+		if (effort.getResourceState() == StravaResourceState.DETAILED) {
+			StravaSegment segment = this.getToken().getService(SegmentService.class).getSegment(effort.getSegment().getId());
+			if (segment.getResourceState() == StravaResourceState.PRIVATE) {
+				return PrivacyUtils.privateSegmentEffort(id);
+			}
+		}
+		// End of workaround
+		
 		// TODO This is a workaround for issue javastrava-api #26
 		// (https://github.com/danshannon/javastravav3api/issues/26)
 		if (effort != null && effort.getActivity() != null && effort.getActivity().getResourceState() == null) {

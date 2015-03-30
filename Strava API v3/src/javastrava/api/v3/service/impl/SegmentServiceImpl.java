@@ -91,15 +91,11 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	public StravaSegment getSegment(final Integer id) {
 		StravaSegment segment = null;
 		try {
-			segment = api.getSegment(id);
+			segment = this.api.getSegment(id);
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
-			if (accessTokenIsValid()) {
-				return PrivacyUtils.privateSegment(id);
-			} else {
-				throw e;
-			}
+			return PrivacyUtils.privateSegment(id);
 		}
 
 		// TODO Workaround for javastrava-api #70
@@ -158,7 +154,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			}
 		}
 
-		return segments;
+		return PrivacyUtils.handlePrivateSegments(segments, this.getToken());
 	}
 
 	/**
@@ -177,7 +173,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		}
 
 		// TODO This is the workaround for issue #45
-		if (segment.getResourceState() == StravaResourceState.META) {
+		if (segment.getResourceState() == StravaResourceState.PRIVATE) {
 			return new ArrayList<StravaSegmentEffort>();
 		}
 
@@ -211,7 +207,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			}
 		});
 
-		return efforts;
+		return PrivacyUtils.handlePrivateSegmentEfforts(efforts, this.getToken());
 	}
 
 	/**
@@ -222,27 +218,23 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
 			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange,
 			final Paging pagingInstruction, final Integer contextEntries) {
+		// Check that the paging arguments are valid
 		PagingUtils.validatePagingArguments(pagingInstruction);
 
-		StravaSegmentLeaderboard leaderboard = null;
-
-		// TODO Workaround for issue javastrava-api #73 (https://github.com/danshannon/javastravav3api/issues/73)
-		if (!this.getToken().hasViewPrivate()) {
-			final StravaSegment segment = getSegment(segmentId);
-			if (segment == null) {
-				return null;
-			}
-			if (segment.getPrivateSegment() != null && segment.getPrivateSegment().equals(Boolean.TRUE)) {
-				leaderboard = new StravaSegmentLeaderboard();
-				leaderboard.setNeighborhoodCount(1);
-				leaderboard.setAthleteEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
-				leaderboard.setEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
-				leaderboard.setEffortCount(0);
-				leaderboard.setEntryCount(0);
-				return leaderboard;
-			}
+		// Check that the segment is valid
+		StravaSegment segment = getSegment(segmentId);
+		
+		// If the segment doesn't exist, return null
+		if (segment == null) { 
+			return null;
 		}
-		// End of workaround
+		
+		StravaSegmentLeaderboard leaderboard = null;
+		
+		// If the segment is private and inaccessible, then don't return a leaderboard
+		if (segment.getResourceState() == StravaResourceState.PRIVATE) {
+			return PrivacyUtils.privateSegmentLeaderboard();
+		}
 
 		// If null, then the default value for contextEntries is 2; the max is 15
 		final Integer context = (contextEntries == null ? Integer.valueOf(2) : Integer.valueOf(Math.max(0, Math.min(15, contextEntries.intValue()))));
@@ -252,7 +244,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		// SegmentAPI
 		if (clubId != null) {
 			try {
-				api.getClub(clubId);
+				this.api.getClub(clubId);
 			} catch (final NotFoundException e) {
 				// Club doesn't exist, so return null
 				return null;
@@ -262,7 +254,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 		try {
 			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
-				final StravaSegmentLeaderboard current = api.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange,
+				final StravaSegmentLeaderboard current = this.api.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange,
 						paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
 					if (leaderboard == null) {
@@ -285,8 +277,9 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
-			return null;
+			return PrivacyUtils.privateSegmentLeaderboard();
 		}
+		leaderboard.setResourceState(StravaResourceState.DETAILED);
 		return leaderboard;
 	}
 
@@ -356,7 +349,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
 		final String bounds = southwestCorner.getLatitude() + "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ northeastCorner.getLongitude();
-		return api.segmentExplore(bounds, activityType, minCat, maxCat);
+		return this.api.segmentExplore(bounds, activityType, minCat, maxCat);
 	}
 
 	/**
