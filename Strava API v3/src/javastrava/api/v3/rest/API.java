@@ -389,9 +389,10 @@ public class API {
 	 * @param perPage Page size to be returned (default is 50)
 	 * @return Array of segment efforts which represent the athlete's KOM/QOM's
 	 * @throws NotFoundException If the athlete doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaSegmentEffort[] listAthleteKOMs(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException {
+	public StravaSegmentEffort[] listAthleteKOMs(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return athleteAPI.listAthleteKOMs(athleteId, page, perPage);
 	}
 
@@ -399,9 +400,10 @@ public class API {
 	 * @param page Page number to be returned (default is 1)
 	 * @param perPage Page size to be returned (default is 50)
 	 * @return Array of athletes who the authenticated athlete is following
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaAthlete[] listAuthenticatedAthleteFriends(final Integer page, final Integer perPage) {
+	public StravaAthlete[] listAuthenticatedAthleteFriends(final Integer page, final Integer perPage) throws BadRequestException {
 		return athleteAPI.listAuthenticatedAthleteFriends(page, perPage);
 	}
 
@@ -411,9 +413,10 @@ public class API {
 	 * @param perPage Page size to be returned (default is 50)
 	 * @return Array of athletes who the identified athlete is following
 	 * @throws NotFoundException If the athlete with the given id doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteFriends(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaAthlete[] listAthleteFriends(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException {
+	public StravaAthlete[] listAthleteFriends(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return athleteAPI.listAthleteFriends(athleteId, page, perPage);
 	}
 
@@ -423,9 +426,10 @@ public class API {
 	 * @param perPage Page size to be returned (default is 50)
 	 * @return Array of athletes who both the identified athlete and the authenticated athlete are following
 	 * @throws NotFoundException If the athlete with the given id doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaAthlete[] listAthletesBothFollowing(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException {
+	public StravaAthlete[] listAthletesBothFollowing(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return athleteAPI.listAthletesBothFollowing(athleteId, page, perPage);
 	}
 
@@ -463,9 +467,10 @@ public class API {
 	 * @param perPage Page size to be returned (default is 50)
 	 * @return Array of athletes who are members of the identified club
 	 * @throws NotFoundException If the club with the given id doesn't exist
+	 * @throws BadRequestException  If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ClubAPI#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaAthlete[] listClubMembers(final Integer clubId, final Integer page, final Integer perPage) throws NotFoundException {
+	public StravaAthlete[] listClubMembers(final Integer clubId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return clubAPI.listClubMembers(clubId, page, perPage);
 	}
 
@@ -475,9 +480,10 @@ public class API {
 	 * @param perPage Page size to be returned (default is 50)
 	 * @return Array of activities recently done by club members (maximum 200 will be returned)
 	 * @throws NotFoundException If the club with the given id doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ClubAPI#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaActivity[] listRecentClubActivities(final Integer clubId, final Integer page, final Integer perPage) throws NotFoundException {
+	public StravaActivity[] listRecentClubActivities(final Integer clubId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return clubAPI.listRecentClubActivities(clubId, page, perPage);
 	}
 
@@ -487,7 +493,7 @@ public class API {
 	 * @throws NotFoundException If the club with the given id doesn't exist
 	 * @see javastrava.api.v3.rest.ClubAPI#join(java.lang.Integer)
 	 */
-	public StravaClubMembershipResponse join(final Integer clubId) throws NotFoundException {
+	public StravaClubMembershipResponse joinClub(final Integer clubId) throws NotFoundException {
 		return clubAPI.join(clubId);
 	}
 
@@ -497,7 +503,7 @@ public class API {
 	 * @throws NotFoundException If the club with the given id doesn't exist
 	 * @see javastrava.api.v3.rest.ClubAPI#leave(java.lang.Integer)
 	 */
-	public StravaClubMembershipResponse leave(final Integer clubId) throws NotFoundException {
+	public StravaClubMembershipResponse leaveClub(final Integer clubId) throws NotFoundException {
 		return clubAPI.leave(clubId);
 	}
 
@@ -525,9 +531,10 @@ public class API {
 	 * @param page (optional) Page number to be returned
 	 * @param perPage (optional) Number of entries to return per page
 	 * @return An array of segments
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.SegmentAPI#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaSegment[] listAuthenticatedAthleteStarredSegments(final Integer page, final Integer perPage) {
+	public StravaSegment[] listAuthenticatedAthleteStarredSegments(final Integer page, final Integer perPage) throws BadRequestException {
 		return segmentAPI.listAuthenticatedAthleteStarredSegments(page, perPage);
 	}
 
@@ -538,8 +545,9 @@ public class API {
 	 * @return An array of segments
 	 * @throws NotFoundException If the segment with the given id does not exist
 	 * @throws UnauthorizedException If there is a security or privacy violation
+	 * @throws BadRequestException If the paging instructions are invalid
 	 */
-	public StravaSegment[] listStarredSegments(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException {
+	public StravaSegment[] listStarredSegments(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return segmentAPI.listStarredSegments(athleteId, page, perPage);
 	}
 
@@ -557,11 +565,12 @@ public class API {
 	 * @param page (optional) Page number to be returned
 	 * @param perPage (optional) Number of entries to return per page
 	 * @throws NotFoundException If the segment with the given id doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.SegmentAPI#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer,
 	 *      java.lang.Integer)
 	 */
 	public StravaSegmentEffort[] listSegmentEfforts(final Integer segmentId, final Integer athleteId, final String start, final String end, final Integer page,
-			final Integer perPage) throws NotFoundException {
+			final Integer perPage) throws NotFoundException, BadRequestException {
 		return segmentAPI.listSegmentEfforts(segmentId, athleteId, start, end, page, perPage);
 	}
 

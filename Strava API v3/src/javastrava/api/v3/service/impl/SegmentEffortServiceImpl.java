@@ -17,20 +17,6 @@ import javastrava.util.PrivacyUtils;
 public class SegmentEffortServiceImpl extends StravaServiceImpl implements SegmentEffortService {
 	/**
 	 * <p>
-	 * Private constructor ensures that the only way to get an instance is by
-	 * using {@link #instance(Token)} with a valid access token.
-	 * </p>
-	 *
-	 * @param token
-	 *            The access token to be used for authentication to the Strava
-	 *            API
-	 */
-	private SegmentEffortServiceImpl(final Token token) {
-		super(token);
-	}
-
-	/**
-	 * <p>
 	 * Returns an instance of {@link SegmentEffortService segment effort
 	 * services}
 	 * </p>
@@ -58,12 +44,26 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 	}
 
 	/**
+	 * <p>
+	 * Private constructor ensures that the only way to get an instance is by
+	 * using {@link #instance(Token)} with a valid access token.
+	 * </p>
+	 *
+	 * @param token
+	 *            The access token to be used for authentication to the Strava
+	 *            API
+	 */
+	private SegmentEffortServiceImpl(final Token token) {
+		super(token);
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.SegmentEffortService#getSegmentEffort(Long)
 	 */
 	@Override
 	public StravaSegmentEffort getSegmentEffort(final Long id) {
 		StravaSegmentEffort effort = null;
-		
+
 		try {
 			effort = this.api.getSegmentEffort(id);
 		} catch (final NotFoundException e) {
@@ -72,20 +72,21 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 		} catch (final UnauthorizedException e) {
 			return PrivacyUtils.privateSegmentEffort(id);
 		}
-		
+
 		// TODO This is a workaround for issue javastrava-api #78
 		// See https://github.com/danshannon/javastravav3api/issues/78
 		if (effort.getResourceState() == StravaResourceState.DETAILED) {
-			StravaSegment segment = this.getToken().getService(SegmentService.class).getSegment(effort.getSegment().getId());
+			final StravaSegment segment = this.getToken().getService(SegmentService.class)
+					.getSegment(effort.getSegment().getId());
 			if (segment.getResourceState() == StravaResourceState.PRIVATE) {
 				return PrivacyUtils.privateSegmentEffort(id);
 			}
 		}
 		// End of workaround
-		
+
 		// TODO This is a workaround for issue javastrava-api #26
 		// (https://github.com/danshannon/javastravav3api/issues/26)
-		if (effort != null && effort.getActivity() != null && effort.getActivity().getResourceState() == null) {
+		if ((effort != null) && (effort.getActivity() != null) && (effort.getActivity().getResourceState() == null)) {
 			effort.getActivity().setResourceState(StravaResourceState.META);
 		}
 		// End of workaround

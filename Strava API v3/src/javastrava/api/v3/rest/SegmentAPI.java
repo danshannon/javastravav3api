@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package javastrava.api.v3.rest;
 
@@ -19,6 +19,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType;
 import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.service.SegmentService;
+import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.util.Paging;
@@ -30,7 +31,7 @@ import retrofit.http.Query;
  * <p>
  * API definitions for the {@link SegmentService} Strava endpoints
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
@@ -39,7 +40,7 @@ public interface SegmentAPI {
 	// When the issue is fixed, remove this
 	/**
 	 * @see javastrava.api.v3.service.ClubService#getClub(java.lang.Integer)
-	 * 
+	 *
 	 * @param id Club identifier
 	 * @return Club details
 	 * @throws NotFoundException If the club with the given id doesn't exist
@@ -47,10 +48,10 @@ public interface SegmentAPI {
 	@GET("/clubs/{id}")
 	public StravaClub getClub(@Path("id") final Integer id) throws NotFoundException;
 	// End of workaround
-	
+
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#getSegment(java.lang.Integer)
-	 * 
+	 *
 	 * @param segmentId The unique identifier of the segment
 	 * @return The Segment
 	 * @throws NotFoundException If the segment with the given id does not exist
@@ -60,31 +61,33 @@ public interface SegmentAPI {
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#listAuthenticatedAthleteStarredSegments(javastrava.util.Paging)
-	 * 
+	 *
 	 * @param page (optional) Page number to be returned
 	 * @param perPage (optional) Number of entries to return per page
 	 * @return An array of segments
+	 * @throws BadRequestException If the paging instructions are invalid
 	 */
 	@GET("/segments/starred")
-	public StravaSegment[] listAuthenticatedAthleteStarredSegments(@Query("page") final Integer page, @Query("per_page") final Integer perPage);
+	public StravaSegment[] listAuthenticatedAthleteStarredSegments(@Query("page") final Integer page, @Query("per_page") final Integer perPage) throws BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#listStarredSegments(java.lang.Integer, Paging)
-	 * 
+	 *
 	 * @param athleteId The id of the athlete whose starred segments are to be retrieved
 	 * @param page (optional) Page number to be returned
 	 * @param perPage (optional) Number of entries to return per page
 	 * @return An array of segments
 	 * @throws NotFoundException If the segment with the given id does not exist
 	 * @throws UnauthorizedException If there is a security or privacy violation
+	 * @throws BadRequestException If the paging instructions are invalid
 	 */
 	@GET("/athletes/{id}/segments/starred")
 	public StravaSegment[] listStarredSegments(@Path("id") final Integer athleteId, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
-			throws NotFoundException;
+			throws NotFoundException, BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(Integer, Integer, LocalDateTime, LocalDateTime, javastrava.util.Paging)
-	 * 
+	 *
 	 * @param segmentId
 	 *            The id of the {@link StravaSegment} for which {@link StravaSegmentEffort segment efforts} are to be returned
 	 * @param athleteId
@@ -98,15 +101,16 @@ public interface SegmentAPI {
 	 * @param page (optional) Page number to be returned
 	 * @param perPage (optional) Number of entries to return per page
 	 * @throws NotFoundException If the segment with the given id doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 */
 	@GET("/segments/{id}/all_efforts")
 	public StravaSegmentEffort[] listSegmentEfforts(@Path("id") final Integer segmentId, @Query("athlete_id") final Integer athleteId,
 			@Query("start_date_local") final String start, @Query("end_date_local") final String end, @Query("page") final Integer page,
-			@Query("per_page") final Integer perPage) throws NotFoundException;
+			@Query("per_page") final Integer perPage) throws NotFoundException, BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboard(Integer, StravaGender, StravaAgeGroup, StravaWeightClass, Boolean, Integer, StravaLeaderboardDateRange, javastrava.util.Paging, Integer)
-	 * 
+	 *
 	 * @param segmentId Segment identifier
 	 * @param gender (Optional) Gender to filter the leaderboard by
 	 * @param ageGroup (Optional) Age group to filter the leaderboard by
@@ -128,7 +132,7 @@ public interface SegmentAPI {
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#segmentExplore(javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.StravaMapPoint, StravaSegmentExplorerActivityType, StravaClimbCategory, StravaClimbCategory)
-	 * 
+	 *
 	 * @param bounds Pair of co-ordinates defining a box which is to be searched for segments
 	 * @param activityType (Optional) Activity type to filter by (default is 'ride')
 	 * @param minCategory (Optional) Minimum climb category for which rides should be returned
