@@ -50,27 +50,27 @@ import retrofit.mime.TypedFile;
  * <p>
  * Provides a static method {@link #instance(Class, Token)} which constructs a standard retrofit service with all the required options.
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
 public class API {
 	/**
 	 * Construct an API instance with a given token
-	 * 
+	 *
 	 * @param token
 	 *            The access token to be used with calls to the API
 	 */
 	public API(final Token token) {
-		this.activityAPI = API.instance(ActivityAPI.class, token);
-		this.athleteAPI = API.instance(AthleteAPI.class, token);
-		this.clubAPI = API.instance(ClubAPI.class, token);
-		this.gearAPI = API.instance(GearAPI.class, token);
-		this.segmentAPI = API.instance(SegmentAPI.class, token);
-		this.effortAPI = API.instance(SegmentEffortAPI.class, token);
-		this.streamAPI = API.instance(StreamAPI.class, token);
-		this.tokenAPI = API.instance(TokenAPI.class, token);
-		this.uploadAPI = API.instance(UploadAPI.class, token);
+		activityAPI = API.instance(ActivityAPI.class, token);
+		athleteAPI = API.instance(AthleteAPI.class, token);
+		clubAPI = API.instance(ClubAPI.class, token);
+		gearAPI = API.instance(GearAPI.class, token);
+		segmentAPI = API.instance(SegmentAPI.class, token);
+		effortAPI = API.instance(SegmentEffortAPI.class, token);
+		streamAPI = API.instance(StreamAPI.class, token);
+		tokenAPI = API.instance(TokenAPI.class, token);
+		uploadAPI = API.instance(UploadAPI.class, token);
 	}
 
 	private static AuthorisationAPI authorisationAPI;
@@ -89,7 +89,7 @@ public class API {
 	 * <p>
 	 * Creates and returns a new API RestAdapter instance.
 	 * </p>
-	 * 
+	 *
 	 * @param class1
 	 *            The class to be returned
 	 * @param token
@@ -101,22 +101,22 @@ public class API {
 	public static <T> T instance(final Class<T> class1, final Token token) {
 		return new RestAdapter.Builder()
 		// Client overrides handling of Strava-specific headers in the response, to deal with rate limiting
-				.setClient(new RetrofitClientResponseInterceptor())
-				// Converter is a GSON implementation with custom converters
-				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-				// Log level is determined per API service
-				.setLogLevel(API.logLevel(class1))
-				// Endpoint is the same for all services
-				.setEndpoint(StravaConfig.ENDPOINT)
-				// Request interceptor adds the access token into headers for each request
-				.setRequestInterceptor(new RequestInterceptor() {
-					@Override
-					public void intercept(final RequestFacade request) {
-						request.addHeader(StravaConfig.string("strava.authorization_header_name"), token.getTokenType() + " " + token.getToken()); //$NON-NLS-1$ //$NON-NLS-2$
-					}
-				})
-				// Error handler deals with Strava's implementations of 400, 401, 403, 404 errors etc.
-				.setErrorHandler(new RetrofitErrorHandler()).build().create(class1);
+		.setClient(new RetrofitClientResponseInterceptor())
+		// Converter is a GSON implementation with custom converters
+		.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
+		// Log level is determined per API service
+		.setLogLevel(API.logLevel(class1))
+		// Endpoint is the same for all services
+		.setEndpoint(StravaConfig.ENDPOINT)
+		// Request interceptor adds the access token into headers for each request
+		.setRequestInterceptor(new RequestInterceptor() {
+			@Override
+			public void intercept(final RequestFacade request) {
+				request.addHeader(StravaConfig.string("strava.authorization_header_name"), token.getTokenType() + " " + token.getToken()); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		})
+		// Error handler deals with Strava's implementations of 400, 401, 403, 404 errors etc.
+		.setErrorHandler(new RetrofitErrorHandler()).build().create(class1);
 	}
 
 	/**
@@ -125,11 +125,11 @@ public class API {
 	 * @return The appropriate log level for the class
 	 */
 	public static LogLevel logLevel(final Class<?> class1) {
-		String propertyName = "retrofit." + class1.getName() + ".log_level"; //$NON-NLS-1$ //$NON-NLS-2$
+		final String propertyName = "retrofit." + class1.getName() + ".log_level"; //$NON-NLS-1$ //$NON-NLS-2$
 		RestAdapter.LogLevel logLevel = null;
 		try {
 			logLevel = RestAdapter.LogLevel.valueOf(StravaConfig.string(propertyName));
-		} catch (MissingResourceException e) {
+		} catch (final MissingResourceException e) {
 			logLevel = RestAdapter.LogLevel.valueOf(StravaConfig.string("retrofit.log_level")); //$NON-NLS-1$
 		}
 		return logLevel;
@@ -139,7 +139,7 @@ public class API {
 	 * <p>
 	 * Get an instance of the authorisation API (cached)
 	 * </p>
-	 * 
+	 *
 	 * @return Instance of the authorisation API
 	 */
 	public static AuthorisationAPI authorisationInstance() {
@@ -155,7 +155,7 @@ public class API {
 	 * <p>
 	 * Get details of an activity
 	 * </p>
-	 * 
+	 *
 	 * @param id
 	 *            Activity identifier
 	 * @param includeAllEfforts
@@ -166,14 +166,14 @@ public class API {
 	 * @see javastrava.api.v3.rest.ActivityAPI#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
 	public StravaActivity getActivity(final Integer id, final Boolean includeAllEfforts) throws NotFoundException {
-		return this.activityAPI.getActivity(id, includeAllEfforts);
+		return activityAPI.getActivity(id, includeAllEfforts);
 	}
 
 	/**
 	 * <p>
 	 * Create a manual activity
 	 * </p>
-	 * 
+	 *
 	 * @param activity
 	 *            Activity to create on Strava
 	 * @return The activity as created on Strava, if successful
@@ -182,14 +182,14 @@ public class API {
 	 * @see javastrava.api.v3.rest.ActivityAPI#createManualActivity(javastrava.api.v3.model.StravaActivity)
 	 */
 	public StravaActivity createManualActivity(final StravaActivity activity) throws BadRequestException {
-		return this.activityAPI.createManualActivity(activity);
+		return activityAPI.createManualActivity(activity);
 	}
 
 	/**
 	 * <p>
 	 * Update an activity that already exists on Strava
 	 * </p>
-	 * 
+	 *
 	 * @param id
 	 *            Activity identifier
 	 * @param activity
@@ -200,14 +200,14 @@ public class API {
 	 * @see javastrava.api.v3.rest.ActivityAPI#updateActivity(java.lang.Integer, javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) throws NotFoundException {
-		return this.activityAPI.updateActivity(id, activity);
+		return activityAPI.updateActivity(id, activity);
 	}
 
 	/**
 	 * <p>
 	 * Delete an activity on Strava
 	 * </p>
-	 * 
+	 *
 	 * @param id
 	 *            Activity identifier
 	 * @return The representation of the deleted activity
@@ -216,7 +216,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.ActivityAPI#deleteActivity(java.lang.Integer)
 	 */
 	public StravaActivity deleteActivity(final Integer id) throws NotFoundException {
-		return this.activityAPI.deleteActivity(id);
+		return activityAPI.deleteActivity(id);
 	}
 
 	/**
@@ -229,21 +229,23 @@ public class API {
 	 * @param perPage
 	 *            Number of results to return
 	 * @return Array of activities
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ActivityAPI#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaActivity[] listAuthenticatedAthleteActivities(final Integer before, final Integer after, final Integer page, final Integer perPage) {
-		return this.activityAPI.listAuthenticatedAthleteActivities(before, after, page, perPage);
+	public StravaActivity[] listAuthenticatedAthleteActivities(final Integer before, final Integer after, final Integer page, final Integer perPage) throws BadRequestException {
+		return activityAPI.listAuthenticatedAthleteActivities(before, after, page, perPage);
 	}
 
 	/**
-	 * 
+	 *
 	 * @param page Page number to be returned
 	 * @param perPage Page size to be returned
 	 * @return List of Strava activities belonging to friends of the authenticated athlete
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ActivityAPI#listFriendsActivities(java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaActivity[] listFriendsActivities(final Integer page, final Integer perPage) {
-		return this.activityAPI.listFriendsActivities(page, perPage);
+	public StravaActivity[] listFriendsActivities(final Integer page, final Integer perPage) throws BadRequestException {
+		return activityAPI.listFriendsActivities(page, perPage);
 	}
 
 	/**
@@ -253,7 +255,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityZones(java.lang.Integer)
 	 */
 	public StravaActivityZone[] listActivityZones(final Integer activityId) throws NotFoundException {
-		return this.activityAPI.listActivityZones(activityId);
+		return activityAPI.listActivityZones(activityId);
 	}
 
 	/**
@@ -263,20 +265,21 @@ public class API {
 	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityLaps(java.lang.Integer)
 	 */
 	public StravaLap[] listActivityLaps(final Integer id) throws NotFoundException {
-		return this.activityAPI.listActivityLaps(id);
+		return activityAPI.listActivityLaps(id);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @param markdown Whether or not to return comments including markdown
 	 * @param page Page number to be returned
-	 * @param perPage Page size to be returned 
+	 * @param perPage Page size to be returned
 	 * @return Array of comments belonging to the activity
 	 * @throws NotFoundException If the activity doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityComments(java.lang.Integer, java.lang.Boolean, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaComment[] listActivityComments(final Integer activityId, final Boolean markdown, final Integer page, final Integer perPage) throws NotFoundException {
-		return this.activityAPI.listActivityComments(activityId, markdown, page, perPage);
+	public StravaComment[] listActivityComments(final Integer activityId, final Boolean markdown, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+		return activityAPI.listActivityComments(activityId, markdown, page, perPage);
 	}
 
 	/**
@@ -285,10 +288,11 @@ public class API {
 	 * @param perPage Page size to be returned
 	 * @return Array of athletes who have kudoed the activity
 	 * @throws NotFoundException If the activity doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityKudoers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaAthlete[] listActivityKudoers(final Integer activityId, final Integer page, final Integer perPage) throws NotFoundException {
-		return this.activityAPI.listActivityKudoers(activityId, page, perPage);
+	public StravaAthlete[] listActivityKudoers(final Integer activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+		return activityAPI.listActivityKudoers(activityId, page, perPage);
 	}
 
 	/**
@@ -298,7 +302,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityPhotos(java.lang.Integer)
 	 */
 	public StravaPhoto[] listActivityPhotos(final Integer activityId) throws NotFoundException {
-		return this.activityAPI.listActivityPhotos(activityId);
+		return activityAPI.listActivityPhotos(activityId);
 	}
 
 	/**
@@ -307,10 +311,11 @@ public class API {
 	 * @param perPage Page size to be returned
 	 * @return Array of activities that Strava judges was 'done with' the activity identified by the id
 	 * @throws NotFoundException If the activity doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ActivityAPI#listRelatedActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaActivity[] listRelatedActivities(final Integer activityId, final Integer page, final Integer perPage) throws NotFoundException {
-		return this.activityAPI.listRelatedActivities(activityId, page, perPage);
+	public StravaActivity[] listRelatedActivities(final Integer activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+		return activityAPI.listRelatedActivities(activityId, page, perPage);
 	}
 
 	/**
@@ -322,18 +327,18 @@ public class API {
 	 * @see javastrava.api.v3.rest.ActivityAPI#createComment(java.lang.Integer, java.lang.String)
 	 */
 	public StravaComment createComment(final Integer activityId, final String text) throws BadRequestException, NotFoundException {
-		return this.activityAPI.createComment(activityId, text);
+		return activityAPI.createComment(activityId, text);
 	}
 
 	/**
 	 * @param activityId Id of the activity the comment was posted to
 	 * @param commentId Id of the comment
-	 * @return Strava response 
+	 * @return Strava response
 	 * @throws NotFoundException If the comment does not exist
 	 * @see javastrava.api.v3.rest.ActivityAPI#deleteComment(java.lang.Integer, java.lang.Integer)
 	 */
 	public StravaResponse deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
-		return this.activityAPI.deleteComment(activityId, commentId);
+		return activityAPI.deleteComment(activityId, commentId);
 	}
 
 	/**
@@ -343,7 +348,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.ActivityAPI#giveKudos(java.lang.Integer)
 	 */
 	public StravaResponse giveKudos(final Integer activityId) throws NotFoundException {
-		return this.activityAPI.giveKudos(activityId);
+		return activityAPI.giveKudos(activityId);
 	}
 
 	/**
@@ -351,7 +356,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.AthleteAPI#getAuthenticatedAthlete()
 	 */
 	public StravaAthlete getAuthenticatedAthlete() {
-		return this.athleteAPI.getAuthenticatedAthlete();
+		return athleteAPI.getAuthenticatedAthlete();
 	}
 
 	/**
@@ -361,7 +366,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.AthleteAPI#getAthlete(java.lang.Integer)
 	 */
 	public StravaAthlete getAthlete(final Integer athleteId) throws NotFoundException {
-		return this.athleteAPI.getAthlete(athleteId);
+		return athleteAPI.getAthlete(athleteId);
 	}
 
 	/**
@@ -375,7 +380,7 @@ public class API {
 	 *      javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
 	 */
 	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
-		return this.athleteAPI.updateAuthenticatedAthlete(city, state, country, sex, weight);
+		return athleteAPI.updateAuthenticatedAthlete(city, state, country, sex, weight);
 	}
 
 	/**
@@ -387,7 +392,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	public StravaSegmentEffort[] listAthleteKOMs(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException {
-		return this.athleteAPI.listAthleteKOMs(athleteId, page, perPage);
+		return athleteAPI.listAthleteKOMs(athleteId, page, perPage);
 	}
 
 	/**
@@ -397,7 +402,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer)
 	 */
 	public StravaAthlete[] listAuthenticatedAthleteFriends(final Integer page, final Integer perPage) {
-		return this.athleteAPI.listAuthenticatedAthleteFriends(page, perPage);
+		return athleteAPI.listAuthenticatedAthleteFriends(page, perPage);
 	}
 
 	/**
@@ -409,7 +414,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteFriends(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	public StravaAthlete[] listAthleteFriends(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException {
-		return this.athleteAPI.listAthleteFriends(athleteId, page, perPage);
+		return athleteAPI.listAthleteFriends(athleteId, page, perPage);
 	}
 
 	/**
@@ -421,7 +426,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	public StravaAthlete[] listAthletesBothFollowing(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException {
-		return this.athleteAPI.listAthletesBothFollowing(athleteId, page, perPage);
+		return athleteAPI.listAthletesBothFollowing(athleteId, page, perPage);
 	}
 
 	/**
@@ -431,7 +436,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.AthleteAPI#statistics(java.lang.Integer)
 	 */
 	public StravaStatistics statistics(final Integer athleteId) throws NotFoundException {
-		return this.athleteAPI.statistics(athleteId);
+		return athleteAPI.statistics(athleteId);
 	}
 
 	/**
@@ -441,7 +446,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.ClubAPI#getClub(java.lang.Integer)
 	 */
 	public StravaClub getClub(final Integer clubId) throws NotFoundException {
-		return this.clubAPI.getClub(clubId);
+		return clubAPI.getClub(clubId);
 	}
 
 	/**
@@ -449,7 +454,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.ClubAPI#listAuthenticatedAthleteClubs()
 	 */
 	public StravaClub[] listAuthenticatedAthleteClubs() {
-		return this.clubAPI.listAuthenticatedAthleteClubs();
+		return clubAPI.listAuthenticatedAthleteClubs();
 	}
 
 	/**
@@ -461,7 +466,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.ClubAPI#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	public StravaAthlete[] listClubMembers(final Integer clubId, final Integer page, final Integer perPage) throws NotFoundException {
-		return this.clubAPI.listClubMembers(clubId, page, perPage);
+		return clubAPI.listClubMembers(clubId, page, perPage);
 	}
 
 	/**
@@ -473,7 +478,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.ClubAPI#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	public StravaActivity[] listRecentClubActivities(final Integer clubId, final Integer page, final Integer perPage) throws NotFoundException {
-		return this.clubAPI.listRecentClubActivities(clubId, page, perPage);
+		return clubAPI.listRecentClubActivities(clubId, page, perPage);
 	}
 
 	/**
@@ -483,7 +488,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.ClubAPI#join(java.lang.Integer)
 	 */
 	public StravaClubMembershipResponse join(final Integer clubId) throws NotFoundException {
-		return this.clubAPI.join(clubId);
+		return clubAPI.join(clubId);
 	}
 
 	/**
@@ -493,7 +498,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.ClubAPI#leave(java.lang.Integer)
 	 */
 	public StravaClubMembershipResponse leave(final Integer clubId) throws NotFoundException {
-		return this.clubAPI.leave(clubId);
+		return clubAPI.leave(clubId);
 	}
 
 	/**
@@ -503,7 +508,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.GearAPI#getGear(java.lang.String)
 	 */
 	public StravaGear getGear(final String gearId) throws NotFoundException {
-		return this.gearAPI.getGear(gearId);
+		return gearAPI.getGear(gearId);
 	}
 
 	/**
@@ -513,7 +518,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.SegmentAPI#getSegment(java.lang.Integer)
 	 */
 	public StravaSegment getSegment(final Integer segmentId) throws NotFoundException {
-		return this.segmentAPI.getSegment(segmentId);
+		return segmentAPI.getSegment(segmentId);
 	}
 
 	/**
@@ -523,7 +528,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.SegmentAPI#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)
 	 */
 	public StravaSegment[] listAuthenticatedAthleteStarredSegments(final Integer page, final Integer perPage) {
-		return this.segmentAPI.listAuthenticatedAthleteStarredSegments(page, perPage);
+		return segmentAPI.listAuthenticatedAthleteStarredSegments(page, perPage);
 	}
 
 	/**
@@ -535,7 +540,7 @@ public class API {
 	 * @throws UnauthorizedException If there is a security or privacy violation
 	 */
 	public StravaSegment[] listStarredSegments(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException {
-		return this.segmentAPI.listStarredSegments(athleteId, page, perPage);
+		return segmentAPI.listStarredSegments(athleteId, page, perPage);
 	}
 
 	/**
@@ -557,7 +562,7 @@ public class API {
 	 */
 	public StravaSegmentEffort[] listSegmentEfforts(final Integer segmentId, final Integer athleteId, final String start, final String end, final Integer page,
 			final Integer perPage) throws NotFoundException {
-		return this.segmentAPI.listSegmentEfforts(segmentId, athleteId, start, end, page, perPage);
+		return segmentAPI.listSegmentEfforts(segmentId, athleteId, start, end, page, perPage);
 	}
 
 	/**
@@ -580,7 +585,7 @@ public class API {
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
 			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Integer page,
 			final Integer perPage, final Integer contextEntries) throws NotFoundException {
-		return this.segmentAPI.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, page, perPage, contextEntries);
+		return segmentAPI.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, page, perPage, contextEntries);
 	}
 
 	/**
@@ -594,7 +599,7 @@ public class API {
 	 */
 	public StravaSegmentExplorerResponse segmentExplore(final String bounds, final StravaSegmentExplorerActivityType activityType,
 			final StravaClimbCategory minCategory, final StravaClimbCategory maxCategory) {
-		return this.segmentAPI.segmentExplore(bounds, activityType, minCategory, maxCategory);
+		return segmentAPI.segmentExplore(bounds, activityType, minCategory, maxCategory);
 	}
 
 	/**
@@ -604,7 +609,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.SegmentEffortAPI#getSegmentEffort(java.lang.Long)
 	 */
 	public StravaSegmentEffort getSegmentEffort(final Long segmentEffortId) throws NotFoundException {
-		return this.effortAPI.getSegmentEffort(segmentEffortId);
+		return effortAPI.getSegmentEffort(segmentEffortId);
 	}
 
 	/**
@@ -630,7 +635,7 @@ public class API {
 	 */
 	public StravaStream[] getActivityStreams(final Integer activityId, final String types, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
-		return this.streamAPI.getActivityStreams(activityId, types, resolution, seriesType);
+		return streamAPI.getActivityStreams(activityId, types, resolution, seriesType);
 	}
 
 	/**
@@ -656,7 +661,7 @@ public class API {
 	 */
 	public StravaStream[] getEffortStreams(final Long segmentEffortId, final String types, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
-		return this.streamAPI.getEffortStreams(segmentEffortId, types, resolution, seriesType);
+		return streamAPI.getEffortStreams(segmentEffortId, types, resolution, seriesType);
 	}
 
 	/**
@@ -682,7 +687,7 @@ public class API {
 	 */
 	public StravaStream[] getSegmentStreams(final Integer segmentId, final String types, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
-		return this.streamAPI.getSegmentStreams(segmentId, types, resolution, seriesType);
+		return streamAPI.getSegmentStreams(segmentId, types, resolution, seriesType);
 	}
 
 	/**
@@ -694,7 +699,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.TokenAPI#deauthorise(java.lang.String)
 	 */
 	public TokenResponse deauthorise(final String accessToken) throws UnauthorizedException {
-		return this.tokenAPI.deauthorise(accessToken);
+		return tokenAPI.deauthorise(accessToken);
 	}
 
 	/**
@@ -713,7 +718,7 @@ public class API {
 	 */
 	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private,
 			final Boolean trainer, final String dataType, final String externalId, final TypedFile file) throws BadRequestException {
-		return this.uploadAPI.upload(activityType, name, description, _private, trainer, dataType, externalId, file);
+		return uploadAPI.upload(activityType, name, description, _private, trainer, dataType, externalId, file);
 	}
 
 	/**
@@ -722,7 +727,7 @@ public class API {
 	 * @see javastrava.api.v3.rest.UploadAPI#checkUploadStatus(java.lang.Integer)
 	 */
 	public StravaUploadResponse checkUploadStatus(final Integer uploadId) {
-		return this.uploadAPI.checkUploadStatus(uploadId);
+		return uploadAPI.checkUploadStatus(uploadId);
 	}
 
 }
