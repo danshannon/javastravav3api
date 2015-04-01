@@ -24,12 +24,12 @@ import retrofit.http.Query;
 /**<p>
  * API declarations of activity service endpoints
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
 public interface ActivityAPI {
-	
+
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Integer, java.lang.Boolean)
 	 */
@@ -48,7 +48,7 @@ public interface ActivityAPI {
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#createManualActivity(javastrava.api.v3.model.StravaActivity)
-	 * 
+	 *
 	 * @param activity The activity to be created on Strava
 	 * @return The activity as stored by Strava
 	 * @throws BadRequestException If the activity is malformed and can't be uploaded
@@ -58,7 +58,7 @@ public interface ActivityAPI {
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#updateActivity(Integer, StravaActivityUpdate)
-	 * 
+	 *
 	 * @param id The id of the activity to update
 	 * @param activity The activity details
 	 * @return The activity as stored on Strava
@@ -69,7 +69,7 @@ public interface ActivityAPI {
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(java.lang.Integer)
-	 * 
+	 *
 	 * @param id Activity identifier
 	 * @return Activity that has been successfully deleted from Strava
 	 * @throws NotFoundException If the activity doesn't exist
@@ -79,30 +79,32 @@ public interface ActivityAPI {
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime, javastrava.util.Paging)
-	 * 
+	 *
 	 * @param before Unix epoch time in seconds - return activities before this time
 	 * @param after Unix epoch time in seconds - return activities after this time
 	 * @param page Page number to be returned
 	 * @param perPage Page size to be returned
 	 * @return List of Strava activities in the given time frame
+	 * @throws BadRequestException If paging instructions are invalid
 	 */
 	@GET("/athlete/activities")
 	public StravaActivity[] listAuthenticatedAthleteActivities(@Query("before") final Integer before, @Query("after") final Integer after, @Query("page") final Integer page,
-			@Query("per_page") final Integer perPage);
+			@Query("per_page") final Integer perPage) throws BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#listFriendsActivities(javastrava.util.Paging)
-	 * 
+	 *
 	 * @param page Page number to be returned
 	 * @param perPage Page size to be returned
 	 * @return List of Strava activities belonging to friends of the authenticated athlete
+	 * @throws BadRequestException If the paging instructions are invalid
 	 */
 	@GET("/activities/following")
-	public StravaActivity[] listFriendsActivities(@Query("page") final Integer page, @Query("per_page") final Integer perPage);
+	public StravaActivity[] listFriendsActivities(@Query("page") final Integer page, @Query("per_page") final Integer perPage) throws BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#listActivityZones(java.lang.Integer)
-	 * 
+	 *
 	 * @param activityId The activity identifier
 	 * @return Array of activity zones for the activity
 	 * @throws NotFoundException If the activity doesn't exist
@@ -112,7 +114,7 @@ public interface ActivityAPI {
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#listActivityLaps(java.lang.Integer)
-	 * 
+	 *
 	 * @param activityId The activity identifier
 	 * @return Array of laps belonging to the activity
 	 * @throws NotFoundException If the activity doesn't exist
@@ -122,34 +124,36 @@ public interface ActivityAPI {
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(Integer, Boolean, javastrava.util.Paging)
-	 * 
+	 *
 	 * @param activityId Activity identifier
 	 * @param markdown Whether or not to return comments including markdown
 	 * @param page Page number to be returned
-	 * @param perPage Page size to be returned 
+	 * @param perPage Page size to be returned
 	 * @return Array of comments belonging to the activity
 	 * @throws NotFoundException If the activity doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 */
 	@GET("/activities/{id}/comments")
 	public StravaComment[] listActivityComments(@Path("id") final Integer activityId, @Query("markdown") final Boolean markdown, @Query("page") final Integer page,
-			@Query("per_page") final Integer perPage) throws NotFoundException;
+			@Query("per_page") final Integer perPage) throws NotFoundException, BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(Integer, javastrava.util.Paging)
-	 * 
+	 *
 	 * @param activityId Activity identifier
 	 * @param page Page number to be returned
 	 * @param perPage Page size to be returned
 	 * @return Array of athletes who have kudoed the activity
 	 * @throws NotFoundException If the activity doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 */
 	@GET("/activities/{id}/kudos")
 	public StravaAthlete[] listActivityKudoers(@Path("id") final Integer activityId, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
-			throws NotFoundException;
+			throws NotFoundException, BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#listActivityPhotos(java.lang.Integer)
-	 * 
+	 *
 	 * @param activityId Activity identifier
 	 * @return Array of photos attached to the activity
 	 * @throws NotFoundException If the activity doesn't exist
@@ -159,20 +163,21 @@ public interface ActivityAPI {
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Integer, javastrava.util.Paging)
-	 * 
+	 *
 	 * @param activityId Activity identifier
 	 * @param page Page number to be returned
 	 * @param perPage Page size to be returned
 	 * @return Array of activities that Strava judges was 'done with' the activity identified by the id
 	 * @throws NotFoundException If the activity doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 */
 	@GET("/activities/{id}/related")
 	public StravaActivity[] listRelatedActivities(@Path("id") final Integer activityId, @Query("page") final Integer page, @Query("per_page") final Integer perPage)
-			throws NotFoundException;
+			throws NotFoundException, BadRequestException;
 
 	/**
 	 * @see ActivityService#createComment(Integer, String)
-	 * 
+	 *
 	 * @param activityId Activity identifier
 	 * @param text Text of the comment to create
 	 * @return The comment as posted
@@ -181,21 +186,21 @@ public interface ActivityAPI {
 	 */
 	@POST("/activities/{id}/comments")
 	public StravaComment createComment(@Path("id") final Integer activityId, @Query("text") final String text) throws BadRequestException, NotFoundException;
-	
+
 	/**
 	 * @see ActivityService#deleteComment(Integer, Integer)
-	 * 
+	 *
 	 * @param activityId Id of the activity the comment was posted to
 	 * @param commentId Id of the comment
-	 * @return Strava response 
+	 * @return Strava response
 	 * @throws NotFoundException If the comment does not exist
 	 */
 	@DELETE("/activities/{activityId}/comments/{commentId}")
 	public StravaResponse deleteComment(@Path("activityId") final Integer activityId, @Path("commentId") final Integer commentId) throws NotFoundException;
-	
+
 	/**
 	 * @see ActivityService#giveKudos(Integer)
-	 * 
+	 *
 	 * @param activityId Activity to be kudoed
 	 * @return Strava response
 	 * @throws NotFoundException if the activity does not exist

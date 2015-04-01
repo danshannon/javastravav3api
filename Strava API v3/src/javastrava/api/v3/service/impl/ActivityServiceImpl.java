@@ -1,7 +1,6 @@
 package javastrava.api.v3.service.impl;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +21,7 @@ import javastrava.api.v3.service.exception.StravaInternalServerErrorException;
 import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
+import javastrava.util.StravaDateUtils;
 import javastrava.util.Paging;
 import javastrava.util.PagingHandler;
 import javastrava.util.PrivacyUtils;
@@ -212,8 +212,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after, final Paging pagingInstruction) {
-		final Integer secondsBefore = secondsSinceUnixEpoch(before);
-		final Integer secondsAfter = secondsSinceUnixEpoch(after);
+		final Integer secondsBefore = StravaDateUtils.secondsSinceUnixEpoch(before);
+		final Integer secondsAfter = StravaDateUtils.secondsSinceUnixEpoch(after);
 
 		List<StravaActivity> activities = PagingHandler
 				.handlePaging(
@@ -224,19 +224,6 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		activities = PrivacyUtils.handlePrivateActivities(activities, this.getToken());
 
 		return activities;
-	}
-
-	/**
-	 * @param date
-	 *            Date for which seconds since the epoch date is to be calculated
-	 * @return Number of seconds after the unix epoch date equivalent to the given date
-	 */
-	private static Integer secondsSinceUnixEpoch(final LocalDateTime date) {
-		if (date == null) {
-			return null;
-		}
-		final Long timeInSeconds = Long.valueOf(date.toEpochSecond(ZoneOffset.UTC));
-		return Integer.valueOf(timeInSeconds.intValue());
 	}
 
 	/**
