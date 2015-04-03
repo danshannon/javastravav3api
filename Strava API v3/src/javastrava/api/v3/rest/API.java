@@ -587,13 +587,14 @@ public class API {
 	 * @param contextEntries (Optional) Number of context entries to return either side of the authenticated athlete (default is 2, maximum is 15)
 	 * @return A Strava leaderboard
 	 * @throws NotFoundException If the segment with the given id doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.SegmentAPI#getSegmentLeaderboard(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender,
 	 *      javastrava.api.v3.model.reference.StravaAgeGroup, javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
 	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange, java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
 			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Integer page,
-			final Integer perPage, final Integer contextEntries) throws NotFoundException {
+			final Integer perPage, final Integer contextEntries) throws NotFoundException, BadRequestException {
 		return segmentAPI.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, page, perPage, contextEntries);
 	}
 

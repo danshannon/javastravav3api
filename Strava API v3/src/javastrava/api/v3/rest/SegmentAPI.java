@@ -123,12 +123,13 @@ public interface SegmentAPI {
 	 * @param contextEntries (Optional) Number of context entries to return either side of the authenticated athlete (default is 2, maximum is 15)
 	 * @return A Strava leaderboard
 	 * @throws NotFoundException If the segment with the given id doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
 	 */
 	@GET("/segments/{id}/leaderboard")
 	public StravaSegmentLeaderboard getSegmentLeaderboard(@Path("id") final Integer segmentId, @Query("gender") final StravaGender gender,
 			@Query("age_group") final StravaAgeGroup ageGroup, @Query("weight_class") final StravaWeightClass weightClass, @Query("following") final Boolean following,
 			@Query("club_id") final Integer clubId, @Query("date_range") final StravaLeaderboardDateRange dateRange, @Query("page") final Integer page,
-			@Query("per_page") final Integer perPage, @Query("context_entries") final Integer contextEntries) throws NotFoundException;
+			@Query("per_page") final Integer perPage, @Query("context_entries") final Integer contextEntries) throws NotFoundException, BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#segmentExplore(javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.StravaMapPoint, StravaSegmentExplorerActivityType, StravaClimbCategory, StravaClimbCategory)

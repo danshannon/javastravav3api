@@ -24,6 +24,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType;
 import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.service.SegmentService;
+import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
@@ -205,7 +206,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	public StravaSegment getSegment(final Integer id) {
 		StravaSegment segment = null;
 		try {
-			segment = this.api.getSegment(id);
+			segment = api.getSegment(id);
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
@@ -282,7 +283,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		// SegmentAPI
 		if (clubId != null) {
 			try {
-				this.api.getClub(clubId);
+				api.getClub(clubId);
 			} catch (final NotFoundException e) {
 				// Club doesn't exist, so return null
 				return null;
@@ -292,7 +293,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 		try {
 			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
-				final StravaSegmentLeaderboard current = this.api.getSegmentLeaderboard(segmentId, gender, ageGroup,
+				final StravaSegmentLeaderboard current = api.getSegmentLeaderboard(segmentId, gender, ageGroup,
 						weightClass, following, clubId, dateRange, paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
 					if (leaderboard == null) {
@@ -316,6 +317,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			return null;
 		} catch (final UnauthorizedException e) {
 			return PrivacyUtils.privateSegmentLeaderboard();
+		} catch (final BadRequestException e) {
+			return null;
 		}
 		leaderboard.setResourceState(StravaResourceState.DETAILED);
 		return leaderboard;
@@ -549,7 +552,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		final String bounds = southwestCorner.getLatitude()
 				+ "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ northeastCorner.getLongitude();
-		return this.api.segmentExplore(bounds, activityType, minCat, maxCat);
+		return api.segmentExplore(bounds, activityType, minCat, maxCat);
 	}
 
 }
