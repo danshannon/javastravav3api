@@ -73,10 +73,12 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
 		}
 
+		// TODO This is a workaround for issue #30 - API allows comments to be posted without write access
 		// Token must have write access
 		if (!(getToken().hasWriteAccess())) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.commentWithoutWriteAccess")); //$NON-NLS-1$
 		}
+		// End of workaround
 
 		// Activity must exist
 		final StravaActivity activity = getActivity(activityId);
@@ -158,11 +160,13 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
+		// TODO This is a workaround for issue #63 (can delete comments without write access)
 		// Token must have write access
 		if (!(getToken().hasWriteAccess())) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
 		}
-
+		// End of workaround
+		
 		// Activity must exist
 		final StravaActivity activity = getActivity(activityId);
 		if (activity == null) {

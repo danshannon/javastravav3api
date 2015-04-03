@@ -413,8 +413,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 				thisPage -> Arrays.asList(SegmentServiceImpl.this.api.listAuthenticatedAthleteStarredSegments(
 						thisPage.getPage(), thisPage.getPageSize())));
 
-		// TODO This is a workaround for issue javastrava-api #25
-		// (https://github.com/danshannon/javastravav3api/issues/25)
+		// TODO This is a workaround for issue javastrava-api #81
+		// (https://github.com/danshannon/javastravav3api/issues/81)
 		if (segments != null) {
 			for (final StravaSegment segment : segments) {
 				if ((segment.getAthletePrEffort() != null) && (segment.getAthletePrEffort().getResourceState() == null)) {
