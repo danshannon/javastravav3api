@@ -2,8 +2,10 @@ package javastrava.api.v3.rest.util;
 
 import java.io.IOException;
 
+import javastrava.api.v3.model.StravaAPIError;
 import javastrava.api.v3.model.StravaResponse;
 import javastrava.api.v3.service.exception.BadRequestException;
+import javastrava.api.v3.service.exception.InvalidTokenException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.StravaAPIRateLimitException;
 import javastrava.api.v3.service.exception.StravaInternalServerErrorException;
@@ -77,6 +79,11 @@ public class RetrofitErrorHandler implements ErrorHandler {
 
 		// Handle 401 Unauthorized error
 		if (r != null && r.getStatus() == 401) {
+			if (tokenInvalid(response)) {
+				log.error(status + " : " + response); //$NON-NLS-1$
+				return new InvalidTokenException(status, response, cause);
+			}
+			
 			log.warn(status + " : " + response); //$NON-NLS-1$
 			return new UnauthorizedException(status, response, cause);
 		}
@@ -111,6 +118,18 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		
 		log.error(response);
 		return new StravaUnknownAPIException(status,response,cause);
+	}
+
+	private static boolean tokenInvalid(final StravaResponse response) {
+		if (response == null || response.getErrors() == null || response.getErrors().isEmpty()) {
+			return false;
+		}
+		for (StravaAPIError error : response.getErrors() ) {
+			if (error.getResource().equals("Application") && error.getCode().equals("invalid")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
