@@ -73,7 +73,13 @@ The Strava API can be a bit, well, weird when you use it in anger. The interacti
 
 - If the object you're after doesn't exist, service methods will return `null`. API methods will throw a `NotFoundException`
 - If the object you're after is private, service methods will return an empty object - either a list with no entries, or a model object with only the id populated. We don't worry about this too much from a privacy point of view, because all you get is that an object exists, but you don't get any of the data. Athletes are different - they are returned with a limited view of the athlete, rather than an empty athlete. API methods throw an `UnauthorisedException`
-- If your token has been revoked, or wasn't valid in the first place, or doesn't have the authorisation scope needed for the operation that you're attempting, you'll see an `UnauthorisedException` (which is unchecked) get thrown.
+- If your token has been revoked, or wasn't valid in the first place, you'll see an `InvalidTokenException` (which is unchecked) get thrown
+- If your token doesn't have the authorisation scope needed for the operation that you're attempting, you'll see an `UnauthorisedException` (which is unchecked) get thrown.
+- If you encounter network errors accessing the Strava API, a `StravaAPINetworkException` is thrown.
+- If you exceed your rate limit, then you'll see a `StravaAPIRateLimitException`.
+- If Strava returns a `503 Service Temporarily Unavailable` status, then you'll see a `StravaServiceUnavailableException`.
+- If Strava returns a `500 Internal Server Error`, then you'll get a `StravaInternalServerErrorException`.
+- Other unexpected errors will cause a `StravaUnknownAPIException` to be thrown.
 
 Paging
 ======
