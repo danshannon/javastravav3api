@@ -7,6 +7,7 @@ import javastrava.api.v3.model.StravaResponse;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.InvalidTokenException;
 import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.StravaAPINetworkException;
 import javastrava.api.v3.service.exception.StravaAPIRateLimitException;
 import javastrava.api.v3.service.exception.StravaInternalServerErrorException;
 import javastrava.api.v3.service.exception.StravaServiceUnavailableException;
@@ -19,6 +20,7 @@ import javastrava.json.impl.gson.JsonUtilImpl;
 import lombok.extern.log4j.Log4j2;
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
+import retrofit.RetrofitError.Kind;
 import retrofit.client.Response;
 
 /**
@@ -49,6 +51,11 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		Response r = cause.getResponse();
 		StravaResponse response = null;
 		String status = (r == null ? Messages.string("RetrofitErrorHandler.unknownError") : r.getStatus() + " " + r.getReason()); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		// Handle network errors
+		if (cause.getKind() == Kind.NETWORK) {
+			return new StravaAPINetworkException(null, response, cause);
+		}
 		
 		if (r == null) {
 			throw new StravaUnknownAPIException(status, response, cause);
