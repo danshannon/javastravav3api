@@ -263,7 +263,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// Activity must exist
 		final StravaActivity activity = getActivity(activityId);
 		if (activity == null) {
-			throw new NotFoundException("Cannot give kudos to a non-existend activity");
+			throw new NotFoundException("Cannot give kudos to a non-existent activity");
 		}
 
 		// Must have view_private to give kudos to a private activity
