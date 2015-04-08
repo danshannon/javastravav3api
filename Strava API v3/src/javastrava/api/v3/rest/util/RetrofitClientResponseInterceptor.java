@@ -3,15 +3,14 @@ package javastrava.api.v3.rest.util;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import com.squareup.okhttp.OkHttpClient;
+
 import javastrava.api.v3.service.impl.StravaServiceImpl;
 import javastrava.config.StravaConfig;
-import lombok.NoArgsConstructor;
 import retrofit.client.Header;
 import retrofit.client.OkClient;
 import retrofit.client.Request;
 import retrofit.client.Response;
-
-import com.squareup.okhttp.OkHttpClient;
 
 /**
  * <p>
@@ -21,9 +20,14 @@ import com.squareup.okhttp.OkHttpClient;
  * @author Dan Shannon
  *
  */
-@NoArgsConstructor
 public class RetrofitClientResponseInterceptor extends OkClient {
 
+	/**
+	 * No-args constructor
+	 */
+	public RetrofitClientResponseInterceptor() {
+		super();
+	}
 	/**
 	 * @param client The client to use
 	 */

@@ -27,9 +27,6 @@ import javastrava.api.v3.service.impl.SegmentServiceImpl;
 import javastrava.api.v3.service.impl.StravaServiceImpl;
 import javastrava.api.v3.service.impl.StreamServiceImpl;
 import javastrava.api.v3.service.impl.UploadServiceImpl;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -60,33 +57,42 @@ import lombok.NoArgsConstructor;
  * @author Dan Shannon
  *
  */
-@Data
-@EqualsAndHashCode
-@NoArgsConstructor
 public class Token {
 	/**
 	 * The {@link StravaAthlete athlete} to whom this token is assigned
 	 */
-	private StravaAthlete athlete;
+	private final StravaAthlete athlete;
 	/**
 	 * The value of the access token, which is used in requests issued via the API
 	 */
-	private String token;
+	private final String token;
 	/**
 	 * List of {@link AuthorisationScope authorisation scopes} granted for this token
 	 */
-	private List<AuthorisationScope> scopes;
+	private final List<AuthorisationScope> scopes;
 
 	/**
 	 * List of service implementations associated with this token
 	 */
-	private HashMap<Class<? extends StravaService>, StravaService> services;
+	private final HashMap<Class<? extends StravaService>, StravaService> services;
 	
 	/**
 	 * Token type used in the authorisation header of requests to the Strava API - usually set to "Bearer"
 	 */
-	private String tokenType;
+	private final String tokenType;
 
+	/**
+	 * No-args constructor
+	 */
+	public Token() {
+		super();
+		this.athlete = null;
+		this.scopes = null;
+		this.services = null;
+		this.token = null;
+		this.tokenType = null;
+	}
+	
 	/**
 	 * <p>
 	 * Default constructor is based on the {@link TokenResponse} structure received from {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
@@ -178,6 +184,118 @@ public class Token {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * @return the athlete
+	 */
+	public StravaAthlete getAthlete() {
+		return this.athlete;
+	}
+
+	/**
+	 * @return the token
+	 */
+	public String getToken() {
+		return this.token;
+	}
+
+	/**
+	 * @return the scopes
+	 */
+	public List<AuthorisationScope> getScopes() {
+		return this.scopes;
+	}
+
+	/**
+	 * @return the services
+	 */
+	public HashMap<Class<? extends StravaService>, StravaService> getServices() {
+		return this.services;
+	}
+
+	/**
+	 * @return the tokenType
+	 */
+	public String getTokenType() {
+		return this.tokenType;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.athlete == null) ? 0 : this.athlete.hashCode());
+		result = prime * result + ((this.scopes == null) ? 0 : this.scopes.hashCode());
+		result = prime * result + ((this.services == null) ? 0 : this.services.hashCode());
+		result = prime * result + ((this.token == null) ? 0 : this.token.hashCode());
+		result = prime * result + ((this.tokenType == null) ? 0 : this.tokenType.hashCode());
+		return result;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Token)) {
+			return false;
+		}
+		Token other = (Token) obj;
+		if (this.athlete == null) {
+			if (other.athlete != null) {
+				return false;
+			}
+		} else if (!this.athlete.equals(other.athlete)) {
+			return false;
+		}
+		if (this.scopes == null) {
+			if (other.scopes != null) {
+				return false;
+			}
+		} else if (!this.scopes.equals(other.scopes)) {
+			return false;
+		}
+		if (this.services == null) {
+			if (other.services != null) {
+				return false;
+			}
+		} else if (!this.services.equals(other.services)) {
+			return false;
+		}
+		if (this.token == null) {
+			if (other.token != null) {
+				return false;
+			}
+		} else if (!this.token.equals(other.token)) {
+			return false;
+		}
+		if (this.tokenType == null) {
+			if (other.tokenType != null) {
+				return false;
+			}
+		} else if (!this.tokenType.equals(other.tokenType)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Token [athlete=" + this.athlete + ", token=" + this.token + ", scopes=" + this.scopes + ", services=" + this.services + ", tokenType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.tokenType + "]"; //$NON-NLS-1$
 	}
 
 }

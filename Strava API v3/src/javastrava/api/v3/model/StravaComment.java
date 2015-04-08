@@ -3,9 +3,6 @@ package javastrava.api.v3.model;
 import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -15,9 +12,6 @@ import lombok.NoArgsConstructor;
  * @author Dan Shannon
  *
  */
-@Data
-@EqualsAndHashCode
-@NoArgsConstructor
 public class StravaComment {
 	/**
 	 * Strava's unique identifier for the comment
@@ -43,4 +37,76 @@ public class StravaComment {
 	 * Date and time the comment was posted
 	 */
 	private ZonedDateTime createdAt;
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return this.id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+	/**
+	 * @return the resourceState
+	 */
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+	/**
+	 * @param resourceState the resourceState to set
+	 */
+	public void setResourceState(final StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+	/**
+	 * @return the activityId
+	 */
+	public Integer getActivityId() {
+		return this.activityId;
+	}
+	/**
+	 * @param activityId the activityId to set
+	 */
+	public void setActivityId(final Integer activityId) {
+		this.activityId = activityId;
+	}
+	/**
+	 * @return the text
+	 */
+	public String getText() {
+		return this.text;
+	}
+	/**
+	 * @param text the text to set
+	 */
+	public void setText(final String text) {
+		this.text = text;
+	}
+	/**
+	 * @return the athlete
+	 */
+	public StravaAthlete getAthlete() {
+		return this.athlete;
+	}
+	/**
+	 * @param athlete the athlete to set
+	 */
+	public void setAthlete(final StravaAthlete athlete) {
+		this.athlete = athlete;
+	}
+	/**
+	 * @return the createdAt
+	 */
+	public ZonedDateTime getCreatedAt() {
+		return this.createdAt;
+	}
+	/**
+	 * @param createdAt the createdAt to set
+	 */
+	public void setCreatedAt(final ZonedDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 }

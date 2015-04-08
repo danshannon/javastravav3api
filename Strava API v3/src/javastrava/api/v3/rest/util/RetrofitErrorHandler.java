@@ -2,6 +2,9 @@ package javastrava.api.v3.rest.util;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javastrava.api.v3.model.StravaAPIError;
 import javastrava.api.v3.model.StravaResponse;
 import javastrava.api.v3.service.exception.BadRequestException;
@@ -17,7 +20,6 @@ import javastrava.config.Messages;
 import javastrava.json.JsonUtil;
 import javastrava.json.exception.JsonSerialisationException;
 import javastrava.json.impl.gson.JsonUtilImpl;
-import lombok.extern.log4j.Log4j2;
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
 import retrofit.RetrofitError.Kind;
@@ -39,8 +41,8 @@ import retrofit.client.Response;
  * @author Dan Shannon
  *
  */
-@Log4j2
 public class RetrofitErrorHandler implements ErrorHandler {
+	private static final Logger log = LogManager.getLogger();
 	JsonUtil json = new JsonUtilImpl();
 
 	/**

@@ -1,9 +1,6 @@
 package javastrava.api.v3.model;
 
 import javastrava.api.v3.service.ClubService;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -17,9 +14,6 @@ import lombok.NoArgsConstructor;
  * @author Dan Shannon
  *
  */
-@Data
-@EqualsAndHashCode
-@NoArgsConstructor
 public class StravaClubMembershipResponse {
 	/**
 	 * TODO ???
@@ -29,4 +23,28 @@ public class StravaClubMembershipResponse {
 	 * TODO ???
 	 */
 	private Boolean active;
+	/**
+	 * @return the success
+	 */
+	public Boolean getSuccess() {
+		return this.success;
+	}
+	/**
+	 * @param success the success to set
+	 */
+	public void setSuccess(final Boolean success) {
+		this.success = success;
+	}
+	/**
+	 * @return the active
+	 */
+	public Boolean getActive() {
+		return this.active;
+	}
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(final Boolean active) {
+		this.active = active;
+	}
 }

@@ -3,9 +3,6 @@ package javastrava.api.v3.model;
 import javastrava.api.v3.model.reference.StravaFrameType;
 import javastrava.api.v3.model.reference.StravaGearType;
 import javastrava.api.v3.model.reference.StravaResourceState;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -19,9 +16,6 @@ import lombok.NoArgsConstructor;
  * @author Dan Shannon
  *
  */
-@Data
-@EqualsAndHashCode
-@NoArgsConstructor
 public class StravaGear {
 	/**
 	 * Unique identifier for the gear. Is prefixed with 'b' for bikes when returning via the API
@@ -70,5 +64,138 @@ public class StravaGear {
 		if (id != null) {
 			this.gearType = StravaGearType.create(id.substring(0, 0));
 		}
+	}
+
+	/**
+	 * @return the primary
+	 */
+	public Boolean getPrimary() {
+		return this.primary;
+	}
+
+	/**
+	 * @param primary the primary to set
+	 */
+	public void setPrimary(final Boolean primary) {
+		this.primary = primary;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return this.name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the distance
+	 */
+	public Float getDistance() {
+		return this.distance;
+	}
+
+	/**
+	 * @param distance the distance to set
+	 */
+	public void setDistance(final Float distance) {
+		this.distance = distance;
+	}
+
+	/**
+	 * @return the brandName
+	 */
+	public String getBrandName() {
+		return this.brandName;
+	}
+
+	/**
+	 * @param brandName the brandName to set
+	 */
+	public void setBrandName(final String brandName) {
+		this.brandName = brandName;
+	}
+
+	/**
+	 * @return the modelName
+	 */
+	public String getModelName() {
+		return this.modelName;
+	}
+
+	/**
+	 * @param modelName the modelName to set
+	 */
+	public void setModelName(final String modelName) {
+		this.modelName = modelName;
+	}
+
+	/**
+	 * @return the frameType
+	 */
+	public StravaFrameType getFrameType() {
+		return this.frameType;
+	}
+
+	/**
+	 * @param frameType the frameType to set
+	 */
+	public void setFrameType(final StravaFrameType frameType) {
+		this.frameType = frameType;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return this.description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(final String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the resourceState
+	 */
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+
+	/**
+	 * @param resourceState the resourceState to set
+	 */
+	public void setResourceState(final StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+
+	/**
+	 * @return the gearType
+	 */
+	public StravaGearType getGearType() {
+		return this.gearType;
+	}
+
+	/**
+	 * @param gearType the gearType to set
+	 */
+	public void setGearType(final StravaGearType gearType) {
+		this.gearType = gearType;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return this.id;
 	}
 }

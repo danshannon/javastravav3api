@@ -1,9 +1,6 @@
 package javastrava.api.v3.model;
 
 import javastrava.api.v3.service.ActivityService;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -13,9 +10,6 @@ import lombok.NoArgsConstructor;
  * @author Dan Shannon
  *
  */
-@Data
-@EqualsAndHashCode
-@NoArgsConstructor
 public class StravaSplit {
 	/**
 	 * Total distance in metres
@@ -37,4 +31,64 @@ public class StravaSplit {
 	 * Order of the split within the run
 	 */
 	private Integer split;
+	/**
+	 * @return the distance
+	 */
+	public Float getDistance() {
+		return this.distance;
+	}
+	/**
+	 * @param distance the distance to set
+	 */
+	public void setDistance(final Float distance) {
+		this.distance = distance;
+	}
+	/**
+	 * @return the elapsedTime
+	 */
+	public Integer getElapsedTime() {
+		return this.elapsedTime;
+	}
+	/**
+	 * @param elapsedTime the elapsedTime to set
+	 */
+	public void setElapsedTime(final Integer elapsedTime) {
+		this.elapsedTime = elapsedTime;
+	}
+	/**
+	 * @return the elevationDifference
+	 */
+	public Float getElevationDifference() {
+		return this.elevationDifference;
+	}
+	/**
+	 * @param elevationDifference the elevationDifference to set
+	 */
+	public void setElevationDifference(final Float elevationDifference) {
+		this.elevationDifference = elevationDifference;
+	}
+	/**
+	 * @return the movingTime
+	 */
+	public Integer getMovingTime() {
+		return this.movingTime;
+	}
+	/**
+	 * @param movingTime the movingTime to set
+	 */
+	public void setMovingTime(final Integer movingTime) {
+		this.movingTime = movingTime;
+	}
+	/**
+	 * @return the split
+	 */
+	public Integer getSplit() {
+		return this.split;
+	}
+	/**
+	 * @param split the split to set
+	 */
+	public void setSplit(final Integer split) {
+		this.split = split;
+	}
 }

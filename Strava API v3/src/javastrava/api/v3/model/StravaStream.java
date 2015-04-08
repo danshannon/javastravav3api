@@ -5,9 +5,6 @@ import java.util.List;
 import javastrava.api.v3.model.reference.StravaStreamResolutionType;
 import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import javastrava.api.v3.model.reference.StravaStreamType;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -22,9 +19,6 @@ import lombok.NoArgsConstructor;
  * @author Dan Shannon
  *
  */
-@Data
-@EqualsAndHashCode
-@NoArgsConstructor
 public class StravaStream {
 	/**
 	 * Type of stream data
@@ -55,4 +49,88 @@ public class StravaStream {
 	 * Reduced resolution of this stream representation (if appropriate)
 	 */
 	private StravaStreamResolutionType			resolution;
+	/**
+	 * @return the type
+	 */
+	public StravaStreamType getType() {
+		return this.type;
+	}
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(final StravaStreamType type) {
+		this.type = type;
+	}
+	/**
+	 * @return the data
+	 */
+	public List<Float> getData() {
+		return this.data;
+	}
+	/**
+	 * @param data the data to set
+	 */
+	public void setData(final List<Float> data) {
+		this.data = data;
+	}
+	/**
+	 * @return the mapPoints
+	 */
+	public List<StravaMapPoint> getMapPoints() {
+		return this.mapPoints;
+	}
+	/**
+	 * @param mapPoints the mapPoints to set
+	 */
+	public void setMapPoints(final List<StravaMapPoint> mapPoints) {
+		this.mapPoints = mapPoints;
+	}
+	/**
+	 * @return the moving
+	 */
+	public List<Boolean> getMoving() {
+		return this.moving;
+	}
+	/**
+	 * @param moving the moving to set
+	 */
+	public void setMoving(final List<Boolean> moving) {
+		this.moving = moving;
+	}
+	/**
+	 * @return the seriesType
+	 */
+	public StravaStreamSeriesDownsamplingType getSeriesType() {
+		return this.seriesType;
+	}
+	/**
+	 * @param seriesType the seriesType to set
+	 */
+	public void setSeriesType(final StravaStreamSeriesDownsamplingType seriesType) {
+		this.seriesType = seriesType;
+	}
+	/**
+	 * @return the originalSize
+	 */
+	public Integer getOriginalSize() {
+		return this.originalSize;
+	}
+	/**
+	 * @param originalSize the originalSize to set
+	 */
+	public void setOriginalSize(final Integer originalSize) {
+		this.originalSize = originalSize;
+	}
+	/**
+	 * @return the resolution
+	 */
+	public StravaStreamResolutionType getResolution() {
+		return this.resolution;
+	}
+	/**
+	 * @param resolution the resolution to set
+	 */
+	public void setResolution(final StravaStreamResolutionType resolution) {
+		this.resolution = resolution;
+	}
 }

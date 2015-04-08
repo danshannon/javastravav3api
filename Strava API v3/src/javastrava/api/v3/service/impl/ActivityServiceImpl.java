@@ -315,7 +315,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		return PagingHandler.handlePaging(
 				pagingInstruction,
 				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listActivityComments(id, markdown,
-						thisPage.getPage(), thisPage.getPageSize())));
+						thisPage.getPage(), thisPage.getPageSize()))); 
 	}
 
 	/**

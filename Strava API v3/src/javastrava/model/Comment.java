@@ -1,16 +1,23 @@
 package javastrava.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
 /**
  * @author Dan Shannon
  *
  */
-@Data
-@EqualsAndHashCode
-@NoArgsConstructor
 public class Comment {
 	private Activity activity;
+
+	/**
+	 * @return the activity
+	 */
+	public Activity getActivity() {
+		return this.activity;
+	}
+
+	/**
+	 * @param activity the activity to set
+	 */
+	public void setActivity(final Activity activity) {
+		this.activity = activity;
+	}
 }

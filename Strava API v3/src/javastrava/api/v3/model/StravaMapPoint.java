@@ -1,9 +1,5 @@
 package javastrava.api.v3.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
 /**
  * <p>
  * Representation of a GPS co-ordinate
@@ -11,18 +7,15 @@ import lombok.NoArgsConstructor;
  * @author Dan Shannon
  *
  */
-@Data
-@EqualsAndHashCode
-@NoArgsConstructor
 public class StravaMapPoint {
 	/**
 	 * Latitude. Negative values are south of the equator.
 	 */
-	private Float latitude;
+	private final Float latitude;
 	/**
 	 * Longitude. Negative values are west of the Greenwich meridian.
 	 */
-	private Float longitude;
+	private final Float longitude;
 
 	/**
 	 * Constructor allows creation of a map point by specifying latitude and longitude
@@ -32,6 +25,20 @@ public class StravaMapPoint {
 	public StravaMapPoint(final Float latitude, final Float longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
+	}
+
+	/**
+	 * @return the latitude
+	 */
+	public Float getLatitude() {
+		return this.latitude;
+	}
+
+	/**
+	 * @return the longitude
+	 */
+	public Float getLongitude() {
+		return this.longitude;
 	}
 
 }

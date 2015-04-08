@@ -6,7 +6,7 @@ import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 
 /**
- * <h2>Authentication</h2>
+ * <h2>Authentication</h2> 
  *
  * <p>
  * Strava uses OAuth2 as an authentication protocol. It allows external applications to request authorisation to a user's private data without requiring their

@@ -3,9 +3,6 @@ package javastrava.api.v3.model;
 import java.util.List;
 
 import javastrava.api.v3.service.SegmentService;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -21,12 +18,23 @@ import lombok.NoArgsConstructor;
  * @author Dan Shannon
  *
  */
-@Data
-@EqualsAndHashCode
-@NoArgsConstructor
 public class StravaSegmentExplorerResponse {
 	/**
 	 * List of segments returned by the explorer
 	 */
 	private List<StravaSegmentExplorerResponseSegment> segments;
+
+	/**
+	 * @return the segments
+	 */
+	public List<StravaSegmentExplorerResponseSegment> getSegments() {
+		return this.segments;
+	}
+
+	/**
+	 * @param segments the segments to set
+	 */
+	public void setSegments(final List<StravaSegmentExplorerResponseSegment> segments) {
+		this.segments = segments;
+	}
 }
