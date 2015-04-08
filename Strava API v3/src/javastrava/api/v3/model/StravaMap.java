@@ -36,17 +36,59 @@ public class StravaMap {
 	private StravaResourceState resourceState;
 
 	/**
+	 * No args constructor
+	 */
+	public StravaMap() {
+		super();
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof StravaMap)) {
+			return false;
+		}
+		final StravaMap other = (StravaMap) obj;
+		if (this.id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!this.id.equals(other.id)) {
+			return false;
+		}
+		if (this.polyline == null) {
+			if (other.polyline != null) {
+				return false;
+			}
+		} else if (!this.polyline.equals(other.polyline)) {
+			return false;
+		}
+		if (this.resourceState != other.resourceState) {
+			return false;
+		}
+		if (this.summaryPolyline == null) {
+			if (other.summaryPolyline != null) {
+				return false;
+			}
+		} else if (!this.summaryPolyline.equals(other.summaryPolyline)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * @return the id
 	 */
 	public String getId() {
 		return this.id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(final String id) {
-		this.id = id;
 	}
 
 	/**
@@ -57,10 +99,10 @@ public class StravaMap {
 	}
 
 	/**
-	 * @param polyline the polyline to set
+	 * @return the resourceState
 	 */
-	public void setPolyline(final String polyline) {
-		this.polyline = polyline;
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
 	}
 
 	/**
@@ -71,17 +113,31 @@ public class StravaMap {
 	}
 
 	/**
-	 * @param summaryPolyline the summaryPolyline to set
+	 * @see java.lang.Object#hashCode()
 	 */
-	public void setSummaryPolyline(final String summaryPolyline) {
-		this.summaryPolyline = summaryPolyline;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.polyline == null) ? 0 : this.polyline.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.summaryPolyline == null) ? 0 : this.summaryPolyline.hashCode());
+		return result;
 	}
 
 	/**
-	 * @return the resourceState
+	 * @param id the id to set
 	 */
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param polyline the polyline to set
+	 */
+	public void setPolyline(final String polyline) {
+		this.polyline = polyline;
 	}
 
 	/**
@@ -89,5 +145,21 @@ public class StravaMap {
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
+	}
+
+	/**
+	 * @param summaryPolyline the summaryPolyline to set
+	 */
+	public void setSummaryPolyline(final String summaryPolyline) {
+		this.summaryPolyline = summaryPolyline;
+	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaMap [id=" + this.id + ", polyline=" + this.polyline + ", summaryPolyline=" + this.summaryPolyline + ", resourceState="
+				+ this.resourceState + "]";
 	}
 }

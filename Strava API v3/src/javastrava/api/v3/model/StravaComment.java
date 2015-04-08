@@ -8,7 +8,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * <p>
  * Record of an individual comment made on an activity
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
@@ -38,28 +38,65 @@ public class StravaComment {
 	 */
 	private ZonedDateTime createdAt;
 	/**
-	 * @return the id
+	 * No args constructor
 	 */
-	public Integer getId() {
-		return this.id;
+	public StravaComment() {
+		super();
 	}
 	/**
-	 * @param id the id to set
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public void setId(final Integer id) {
-		this.id = id;
-	}
-	/**
-	 * @return the resourceState
-	 */
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
-	}
-	/**
-	 * @param resourceState the resourceState to set
-	 */
-	public void setResourceState(final StravaResourceState resourceState) {
-		this.resourceState = resourceState;
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof StravaComment)) {
+			return false;
+		}
+		final StravaComment other = (StravaComment) obj;
+		if (this.activityId == null) {
+			if (other.activityId != null) {
+				return false;
+			}
+		} else if (!this.activityId.equals(other.activityId)) {
+			return false;
+		}
+		if (this.athlete == null) {
+			if (other.athlete != null) {
+				return false;
+			}
+		} else if (!this.athlete.equals(other.athlete)) {
+			return false;
+		}
+		if (this.createdAt == null) {
+			if (other.createdAt != null) {
+				return false;
+			}
+		} else if (!this.createdAt.equals(other.createdAt)) {
+			return false;
+		}
+		if (this.id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!this.id.equals(other.id)) {
+			return false;
+		}
+		if (this.resourceState != other.resourceState) {
+			return false;
+		}
+		if (this.text == null) {
+			if (other.text != null) {
+				return false;
+			}
+		} else if (!this.text.equals(other.text)) {
+			return false;
+		}
+		return true;
 	}
 	/**
 	 * @return the activityId
@@ -68,34 +105,10 @@ public class StravaComment {
 		return this.activityId;
 	}
 	/**
-	 * @param activityId the activityId to set
-	 */
-	public void setActivityId(final Integer activityId) {
-		this.activityId = activityId;
-	}
-	/**
-	 * @return the text
-	 */
-	public String getText() {
-		return this.text;
-	}
-	/**
-	 * @param text the text to set
-	 */
-	public void setText(final String text) {
-		this.text = text;
-	}
-	/**
 	 * @return the athlete
 	 */
 	public StravaAthlete getAthlete() {
 		return this.athlete;
-	}
-	/**
-	 * @param athlete the athlete to set
-	 */
-	public void setAthlete(final StravaAthlete athlete) {
-		this.athlete = athlete;
 	}
 	/**
 	 * @return the createdAt
@@ -104,9 +117,80 @@ public class StravaComment {
 		return this.createdAt;
 	}
 	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return this.id;
+	}
+	/**
+	 * @return the resourceState
+	 */
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+	/**
+	 * @return the text
+	 */
+	public String getText() {
+		return this.text;
+	}
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.activityId == null) ? 0 : this.activityId.hashCode());
+		result = (prime * result) + ((this.athlete == null) ? 0 : this.athlete.hashCode());
+		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.text == null) ? 0 : this.text.hashCode());
+		return result;
+	}
+	/**
+	 * @param activityId the activityId to set
+	 */
+	public void setActivityId(final Integer activityId) {
+		this.activityId = activityId;
+	}
+	/**
+	 * @param athlete the athlete to set
+	 */
+	public void setAthlete(final StravaAthlete athlete) {
+		this.athlete = athlete;
+	}
+	/**
 	 * @param createdAt the createdAt to set
 	 */
 	public void setCreatedAt(final ZonedDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+	/**
+	 * @param resourceState the resourceState to set
+	 */
+	public void setResourceState(final StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+	/**
+	 * @param text the text to set
+	 */
+	public void setText(final String text) {
+		this.text = text;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaComment [id=" + this.id + ", resourceState=" + this.resourceState + ", activityId=" + this.activityId + ", text=" + this.text
+				+ ", athlete=" + this.athlete + ", createdAt=" + this.createdAt + "]";
 	}
 }

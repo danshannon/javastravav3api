@@ -5,11 +5,10 @@ import javastrava.api.v3.rest.API;
 
 /**
  * <p>
- * The TokenResponse is returned by authorisation services; it contains user
- * details and the access token which is then used for authentication purposes
- * for all other Strava API access
+ * The TokenResponse is returned by authorisation services; it contains user details and the access token which is then used for authentication purposes for all
+ * other Strava API access
  * </p>
- * 
+ *
  * @author Dan Shannon
  */
 public class TokenResponse {
@@ -29,61 +28,6 @@ public class TokenResponse {
 	private StravaAthlete athlete;
 
 	/**
-	 * @return the accessToken
-	 */
-	public String getAccessToken() {
-		return this.accessToken;
-	}
-
-	/**
-	 * @param accessToken the accessToken to set
-	 */
-	public void setAccessToken(final String accessToken) {
-		this.accessToken = accessToken;
-	}
-
-	/**
-	 * @return the tokenType
-	 */
-	public String getTokenType() {
-		return this.tokenType;
-	}
-
-	/**
-	 * @param tokenType the tokenType to set
-	 */
-	public void setTokenType(final String tokenType) {
-		this.tokenType = tokenType;
-	}
-
-	/**
-	 * @return the athlete
-	 */
-	public StravaAthlete getAthlete() {
-		return this.athlete;
-	}
-
-	/**
-	 * @param athlete the athlete to set
-	 */
-	public void setAthlete(final StravaAthlete athlete) {
-		this.athlete = athlete;
-	}
-
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.accessToken == null) ? 0 : this.accessToken.hashCode());
-		result = prime * result + ((this.athlete == null) ? 0 : this.athlete.hashCode());
-		result = prime * result + ((this.tokenType == null) ? 0 : this.tokenType.hashCode());
-		return result;
-	}
-
-	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -97,7 +41,7 @@ public class TokenResponse {
 		if (!(obj instanceof TokenResponse)) {
 			return false;
 		}
-		TokenResponse other = (TokenResponse) obj;
+		final TokenResponse other = (TokenResponse) obj;
 		if (this.accessToken == null) {
 			if (other.accessToken != null) {
 				return false;
@@ -120,6 +64,64 @@ public class TokenResponse {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return the accessToken
+	 */
+	public String getAccessToken() {
+		return this.accessToken;
+	}
+
+	/**
+	 * @return the athlete
+	 */
+	public StravaAthlete getAthlete() {
+		return this.athlete;
+	}
+
+	/**
+	 * @return the tokenType
+	 */
+	public String getTokenType() {
+		return this.tokenType;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.accessToken == null) ? 0 : this.accessToken.hashCode());
+		result = (prime * result) + ((this.athlete == null) ? 0 : this.athlete.hashCode());
+		result = (prime * result) + ((this.tokenType == null) ? 0 : this.tokenType.hashCode());
+		return result;
+	}
+
+	/**
+	 * @param accessToken
+	 *            the accessToken to set
+	 */
+	public void setAccessToken(final String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	/**
+	 * @param athlete
+	 *            the athlete to set
+	 */
+	public void setAthlete(final StravaAthlete athlete) {
+		this.athlete = athlete;
+	}
+
+	/**
+	 * @param tokenType
+	 *            the tokenType to set
+	 */
+	public void setTokenType(final String tokenType) {
+		this.tokenType = tokenType;
 	}
 
 	/**

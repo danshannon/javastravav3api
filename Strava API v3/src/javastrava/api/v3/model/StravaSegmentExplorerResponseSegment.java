@@ -6,7 +6,7 @@ import javastrava.api.v3.model.reference.StravaClimbCategory;
  * <p>
  * Summary of segment returned by the segment explorer
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
@@ -52,52 +52,93 @@ public class StravaSegmentExplorerResponseSegment {
 	 */
 	private String points;
 	/**
-	 * @return the id
+	 * No args constructor
 	 */
-	public Integer getId() {
-		return this.id;
+	public StravaSegmentExplorerResponseSegment() {
+		super();
 	}
 	/**
-	 * @param id the id to set
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public void setId(final Integer id) {
-		this.id = id;
-	}
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return this.name;
-	}
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(final String name) {
-		this.name = name;
-	}
-	/**
-	 * @return the climbCategory
-	 */
-	public StravaClimbCategory getClimbCategory() {
-		return this.climbCategory;
-	}
-	/**
-	 * @param climbCategory the climbCategory to set
-	 */
-	public void setClimbCategory(final StravaClimbCategory climbCategory) {
-		this.climbCategory = climbCategory;
-	}
-	/**
-	 * @return the climbCategoryDesc
-	 */
-	public String getClimbCategoryDesc() {
-		return this.climbCategoryDesc;
-	}
-	/**
-	 * @param climbCategoryDesc the climbCategoryDesc to set
-	 */
-	public void setClimbCategoryDesc(final String climbCategoryDesc) {
-		this.climbCategoryDesc = climbCategoryDesc;
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof StravaSegmentExplorerResponseSegment)) {
+			return false;
+		}
+		final StravaSegmentExplorerResponseSegment other = (StravaSegmentExplorerResponseSegment) obj;
+		if (this.avgGrade == null) {
+			if (other.avgGrade != null) {
+				return false;
+			}
+		} else if (!this.avgGrade.equals(other.avgGrade)) {
+			return false;
+		}
+		if (this.climbCategory != other.climbCategory) {
+			return false;
+		}
+		if (this.climbCategoryDesc == null) {
+			if (other.climbCategoryDesc != null) {
+				return false;
+			}
+		} else if (!this.climbCategoryDesc.equals(other.climbCategoryDesc)) {
+			return false;
+		}
+		if (this.distance == null) {
+			if (other.distance != null) {
+				return false;
+			}
+		} else if (!this.distance.equals(other.distance)) {
+			return false;
+		}
+		if (this.elevDifference == null) {
+			if (other.elevDifference != null) {
+				return false;
+			}
+		} else if (!this.elevDifference.equals(other.elevDifference)) {
+			return false;
+		}
+		if (this.endLatlng == null) {
+			if (other.endLatlng != null) {
+				return false;
+			}
+		} else if (!this.endLatlng.equals(other.endLatlng)) {
+			return false;
+		}
+		if (this.id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!this.id.equals(other.id)) {
+			return false;
+		}
+		if (this.name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!this.name.equals(other.name)) {
+			return false;
+		}
+		if (this.points == null) {
+			if (other.points != null) {
+				return false;
+			}
+		} else if (!this.points.equals(other.points)) {
+			return false;
+		}
+		if (this.startLatlng == null) {
+			if (other.startLatlng != null) {
+				return false;
+			}
+		} else if (!this.startLatlng.equals(other.startLatlng)) {
+			return false;
+		}
+		return true;
 	}
 	/**
 	 * @return the avgGrade
@@ -106,46 +147,16 @@ public class StravaSegmentExplorerResponseSegment {
 		return this.avgGrade;
 	}
 	/**
-	 * @param avgGrade the avgGrade to set
+	 * @return the climbCategory
 	 */
-	public void setAvgGrade(final Float avgGrade) {
-		this.avgGrade = avgGrade;
+	public StravaClimbCategory getClimbCategory() {
+		return this.climbCategory;
 	}
 	/**
-	 * @return the startLatlng
+	 * @return the climbCategoryDesc
 	 */
-	public StravaMapPoint getStartLatlng() {
-		return this.startLatlng;
-	}
-	/**
-	 * @param startLatlng the startLatlng to set
-	 */
-	public void setStartLatlng(final StravaMapPoint startLatlng) {
-		this.startLatlng = startLatlng;
-	}
-	/**
-	 * @return the endLatlng
-	 */
-	public StravaMapPoint getEndLatlng() {
-		return this.endLatlng;
-	}
-	/**
-	 * @param endLatlng the endLatlng to set
-	 */
-	public void setEndLatlng(final StravaMapPoint endLatlng) {
-		this.endLatlng = endLatlng;
-	}
-	/**
-	 * @return the elevDifference
-	 */
-	public Float getElevDifference() {
-		return this.elevDifference;
-	}
-	/**
-	 * @param elevDifference the elevDifference to set
-	 */
-	public void setElevDifference(final Float elevDifference) {
-		this.elevDifference = elevDifference;
+	public String getClimbCategoryDesc() {
+		return this.climbCategoryDesc;
 	}
 	/**
 	 * @return the distance
@@ -154,10 +165,28 @@ public class StravaSegmentExplorerResponseSegment {
 		return this.distance;
 	}
 	/**
-	 * @param distance the distance to set
+	 * @return the elevDifference
 	 */
-	public void setDistance(final Float distance) {
-		this.distance = distance;
+	public Float getElevDifference() {
+		return this.elevDifference;
+	}
+	/**
+	 * @return the endLatlng
+	 */
+	public StravaMapPoint getEndLatlng() {
+		return this.endLatlng;
+	}
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return this.id;
+	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return this.name;
 	}
 	/**
 	 * @return the points
@@ -166,9 +195,97 @@ public class StravaSegmentExplorerResponseSegment {
 		return this.points;
 	}
 	/**
+	 * @return the startLatlng
+	 */
+	public StravaMapPoint getStartLatlng() {
+		return this.startLatlng;
+	}
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.avgGrade == null) ? 0 : this.avgGrade.hashCode());
+		result = (prime * result) + ((this.climbCategory == null) ? 0 : this.climbCategory.hashCode());
+		result = (prime * result) + ((this.climbCategoryDesc == null) ? 0 : this.climbCategoryDesc.hashCode());
+		result = (prime * result) + ((this.distance == null) ? 0 : this.distance.hashCode());
+		result = (prime * result) + ((this.elevDifference == null) ? 0 : this.elevDifference.hashCode());
+		result = (prime * result) + ((this.endLatlng == null) ? 0 : this.endLatlng.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+		result = (prime * result) + ((this.points == null) ? 0 : this.points.hashCode());
+		result = (prime * result) + ((this.startLatlng == null) ? 0 : this.startLatlng.hashCode());
+		return result;
+	}
+	/**
+	 * @param avgGrade the avgGrade to set
+	 */
+	public void setAvgGrade(final Float avgGrade) {
+		this.avgGrade = avgGrade;
+	}
+	/**
+	 * @param climbCategory the climbCategory to set
+	 */
+	public void setClimbCategory(final StravaClimbCategory climbCategory) {
+		this.climbCategory = climbCategory;
+	}
+	/**
+	 * @param climbCategoryDesc the climbCategoryDesc to set
+	 */
+	public void setClimbCategoryDesc(final String climbCategoryDesc) {
+		this.climbCategoryDesc = climbCategoryDesc;
+	}
+	/**
+	 * @param distance the distance to set
+	 */
+	public void setDistance(final Float distance) {
+		this.distance = distance;
+	}
+	/**
+	 * @param elevDifference the elevDifference to set
+	 */
+	public void setElevDifference(final Float elevDifference) {
+		this.elevDifference = elevDifference;
+	}
+	/**
+	 * @param endLatlng the endLatlng to set
+	 */
+	public void setEndLatlng(final StravaMapPoint endLatlng) {
+		this.endLatlng = endLatlng;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(final String name) {
+		this.name = name;
+	}
+	/**
 	 * @param points the points to set
 	 */
 	public void setPoints(final String points) {
 		this.points = points;
+	}
+	/**
+	 * @param startLatlng the startLatlng to set
+	 */
+	public void setStartLatlng(final StravaMapPoint startLatlng) {
+		this.startLatlng = startLatlng;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaSegmentExplorerResponseSegment [id=" + this.id + ", name=" + this.name + ", climbCategory=" + this.climbCategory + ", climbCategoryDesc="
+				+ this.climbCategoryDesc + ", avgGrade=" + this.avgGrade + ", startLatlng=" + this.startLatlng + ", endLatlng=" + this.endLatlng
+				+ ", elevDifference=" + this.elevDifference + ", distance=" + this.distance + ", points=" + this.points + "]";
 	}
 }

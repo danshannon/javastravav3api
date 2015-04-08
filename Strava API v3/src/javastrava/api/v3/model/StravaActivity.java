@@ -4,29 +4,23 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
-
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaWorkoutType;
 import javastrava.api.v3.service.ActivityService;
 import javastrava.api.v3.service.StreamService;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * <p>
  * A run, ride, or other activity
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
 public class StravaActivity {
-	/**
-	 * No args constructor
-	 */
-	public StravaActivity() {
-		super();
-	}
 	/**
 	 * Strava's unique identifier for the activity
 	 */
@@ -119,7 +113,7 @@ public class StravaActivity {
 	 * Total number of athletes who have left kudos on this activity (returned
 	 * by Strava, not recalculated by javastrava)
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * To get the actual list of athletes who have left kudos, see
 	 * {@link ActivityService#listActivityKudoers(Integer, javastrava.util.Paging)}
@@ -131,7 +125,7 @@ public class StravaActivity {
 	 * Total number of comments left on this activity (returned by Strava, not
 	 * recalculated by javastrava)
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * To get the actual list of comments, see
 	 * {@link ActivityService#listActivityComments(Integer, Boolean, javastrava.util.Paging)}
@@ -143,7 +137,7 @@ public class StravaActivity {
 	 * If Strava thinks this was a group activity, this is the number of
 	 * athletes taking part
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * To get the list of activities by all the other people who also took part,
 	 * see
@@ -155,7 +149,7 @@ public class StravaActivity {
 	 * <p>
 	 * Total number of photos attached to this activity by the athlete
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * To get the actual photo details, see
 	 * {@link ActivityService#listActivityPhotos(Integer)}
@@ -167,7 +161,7 @@ public class StravaActivity {
 	 * Weird map representation returned with the activity, basically contains
 	 * polylines for use on Google maps
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * If you want the actual set of GPS coordinates of the activity, then you
 	 * need to use
@@ -294,761 +288,21 @@ public class StravaActivity {
 	 * Runs only - list of best efforts
 	 */
 	private List<StravaBestRunningEffort> bestEfforts;
-	
 	/**
 	 * Identifier of the original upload
 	 */
 	private String uploadId;
-	
+
 	private Float startLatitude;
+
 	private Float startLongitude;
 	private String instagramPrimaryPhoto;
 	private StravaActivityPhotos photos;
 	/**
-	 * @return the id
+	 * No args constructor
 	 */
-	public Integer getId() {
-		return this.id;
-	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(final Integer id) {
-		this.id = id;
-	}
-	/**
-	 * @return the resourceState
-	 */
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
-	}
-	/**
-	 * @param resourceState the resourceState to set
-	 */
-	public void setResourceState(final StravaResourceState resourceState) {
-		this.resourceState = resourceState;
-	}
-	/**
-	 * @return the externalId
-	 */
-	public String getExternalId() {
-		return this.externalId;
-	}
-	/**
-	 * @param externalId the externalId to set
-	 */
-	public void setExternalId(final String externalId) {
-		this.externalId = externalId;
-	}
-	/**
-	 * @return the athlete
-	 */
-	public StravaAthlete getAthlete() {
-		return this.athlete;
-	}
-	/**
-	 * @param athlete the athlete to set
-	 */
-	public void setAthlete(final StravaAthlete athlete) {
-		this.athlete = athlete;
-	}
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return this.name;
-	}
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(final String name) {
-		this.name = name;
-	}
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return this.description;
-	}
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(final String description) {
-		this.description = description;
-	}
-	/**
-	 * @return the distance
-	 */
-	public Float getDistance() {
-		return this.distance;
-	}
-	/**
-	 * @param distance the distance to set
-	 */
-	public void setDistance(final Float distance) {
-		this.distance = distance;
-	}
-	/**
-	 * @return the movingTime
-	 */
-	public Integer getMovingTime() {
-		return this.movingTime;
-	}
-	/**
-	 * @param movingTime the movingTime to set
-	 */
-	public void setMovingTime(final Integer movingTime) {
-		this.movingTime = movingTime;
-	}
-	/**
-	 * @return the elapsedTime
-	 */
-	public Integer getElapsedTime() {
-		return this.elapsedTime;
-	}
-	/**
-	 * @param elapsedTime the elapsedTime to set
-	 */
-	public void setElapsedTime(final Integer elapsedTime) {
-		this.elapsedTime = elapsedTime;
-	}
-	/**
-	 * @return the totalElevationGain
-	 */
-	public Float getTotalElevationGain() {
-		return this.totalElevationGain;
-	}
-	/**
-	 * @param totalElevationGain the totalElevationGain to set
-	 */
-	public void setTotalElevationGain(final Float totalElevationGain) {
-		this.totalElevationGain = totalElevationGain;
-	}
-	/**
-	 * @return the type
-	 */
-	public StravaActivityType getType() {
-		return this.type;
-	}
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(final StravaActivityType type) {
-		this.type = type;
-	}
-	/**
-	 * @return the startDate
-	 */
-	public ZonedDateTime getStartDate() {
-		return this.startDate;
-	}
-	/**
-	 * @param startDate the startDate to set
-	 */
-	public void setStartDate(final ZonedDateTime startDate) {
-		this.startDate = startDate;
-	}
-	/**
-	 * @return the startDateLocal
-	 */
-	public LocalDateTime getStartDateLocal() {
-		return this.startDateLocal;
-	}
-	/**
-	 * @param startDateLocal the startDateLocal to set
-	 */
-	public void setStartDateLocal(final LocalDateTime startDateLocal) {
-		this.startDateLocal = startDateLocal;
-	}
-	/**
-	 * @return the timezone
-	 */
-	public String getTimezone() {
-		return this.timezone;
-	}
-	/**
-	 * @param timezone the timezone to set
-	 */
-	public void setTimezone(final String timezone) {
-		this.timezone = timezone;
-	}
-	/**
-	 * @return the startLatlng
-	 */
-	public StravaMapPoint getStartLatlng() {
-		return this.startLatlng;
-	}
-	/**
-	 * @param startLatlng the startLatlng to set
-	 */
-	public void setStartLatlng(final StravaMapPoint startLatlng) {
-		this.startLatlng = startLatlng;
-	}
-	/**
-	 * @return the endLatlng
-	 */
-	public StravaMapPoint getEndLatlng() {
-		return this.endLatlng;
-	}
-	/**
-	 * @param endLatlng the endLatlng to set
-	 */
-	public void setEndLatlng(final StravaMapPoint endLatlng) {
-		this.endLatlng = endLatlng;
-	}
-	/**
-	 * @return the locationCity
-	 */
-	public String getLocationCity() {
-		return this.locationCity;
-	}
-	/**
-	 * @param locationCity the locationCity to set
-	 */
-	public void setLocationCity(final String locationCity) {
-		this.locationCity = locationCity;
-	}
-	/**
-	 * @return the locationState
-	 */
-	public String getLocationState() {
-		return this.locationState;
-	}
-	/**
-	 * @param locationState the locationState to set
-	 */
-	public void setLocationState(final String locationState) {
-		this.locationState = locationState;
-	}
-	/**
-	 * @return the locationCountry
-	 */
-	public String getLocationCountry() {
-		return this.locationCountry;
-	}
-	/**
-	 * @param locationCountry the locationCountry to set
-	 */
-	public void setLocationCountry(final String locationCountry) {
-		this.locationCountry = locationCountry;
-	}
-	/**
-	 * @return the achievementCount
-	 */
-	public Integer getAchievementCount() {
-		return this.achievementCount;
-	}
-	/**
-	 * @param achievementCount the achievementCount to set
-	 */
-	public void setAchievementCount(final Integer achievementCount) {
-		this.achievementCount = achievementCount;
-	}
-	/**
-	 * @return the kudosCount
-	 */
-	public Integer getKudosCount() {
-		return this.kudosCount;
-	}
-	/**
-	 * @param kudosCount the kudosCount to set
-	 */
-	public void setKudosCount(final Integer kudosCount) {
-		this.kudosCount = kudosCount;
-	}
-	/**
-	 * @return the commentCount
-	 */
-	public Integer getCommentCount() {
-		return this.commentCount;
-	}
-	/**
-	 * @param commentCount the commentCount to set
-	 */
-	public void setCommentCount(final Integer commentCount) {
-		this.commentCount = commentCount;
-	}
-	/**
-	 * @return the athleteCount
-	 */
-	public Integer getAthleteCount() {
-		return this.athleteCount;
-	}
-	/**
-	 * @param athleteCount the athleteCount to set
-	 */
-	public void setAthleteCount(final Integer athleteCount) {
-		this.athleteCount = athleteCount;
-	}
-	/**
-	 * @return the photoCount
-	 */
-	public Integer getPhotoCount() {
-		return this.photoCount;
-	}
-	/**
-	 * @param photoCount the photoCount to set
-	 */
-	public void setPhotoCount(final Integer photoCount) {
-		this.photoCount = photoCount;
-	}
-	/**
-	 * @return the map
-	 */
-	public StravaMap getMap() {
-		return this.map;
-	}
-	/**
-	 * @param map the map to set
-	 */
-	public void setMap(final StravaMap map) {
-		this.map = map;
-	}
-	/**
-	 * @return the trainer
-	 */
-	public Boolean getTrainer() {
-		return this.trainer;
-	}
-	/**
-	 * @param trainer the trainer to set
-	 */
-	public void setTrainer(final Boolean trainer) {
-		this.trainer = trainer;
-	}
-	/**
-	 * @return the commute
-	 */
-	public Boolean getCommute() {
-		return this.commute;
-	}
-	/**
-	 * @param commute the commute to set
-	 */
-	public void setCommute(final Boolean commute) {
-		this.commute = commute;
-	}
-	/**
-	 * @return the manual
-	 */
-	public Boolean getManual() {
-		return this.manual;
-	}
-	/**
-	 * @param manual the manual to set
-	 */
-	public void setManual(final Boolean manual) {
-		this.manual = manual;
-	}
-	/**
-	 * @return the privateActivity
-	 */
-	public Boolean getPrivateActivity() {
-		return this.privateActivity;
-	}
-	/**
-	 * @param privateActivity the privateActivity to set
-	 */
-	public void setPrivateActivity(final Boolean privateActivity) {
-		this.privateActivity = privateActivity;
-	}
-	/**
-	 * @return the flagged
-	 */
-	public Boolean getFlagged() {
-		return this.flagged;
-	}
-	/**
-	 * @param flagged the flagged to set
-	 */
-	public void setFlagged(final Boolean flagged) {
-		this.flagged = flagged;
-	}
-	/**
-	 * @return the workoutType
-	 */
-	public StravaWorkoutType getWorkoutType() {
-		return this.workoutType;
-	}
-	/**
-	 * @param workoutType the workoutType to set
-	 */
-	public void setWorkoutType(final StravaWorkoutType workoutType) {
-		this.workoutType = workoutType;
-	}
-	/**
-	 * @return the gearId
-	 */
-	public String getGearId() {
-		return this.gearId;
-	}
-	/**
-	 * @param gearId the gearId to set
-	 */
-	public void setGearId(final String gearId) {
-		this.gearId = gearId;
-	}
-	/**
-	 * @return the gear
-	 */
-	public StravaGear getGear() {
-		return this.gear;
-	}
-	/**
-	 * @param gear the gear to set
-	 */
-	public void setGear(final StravaGear gear) {
-		this.gear = gear;
-	}
-	/**
-	 * @return the averageSpeed
-	 */
-	public Float getAverageSpeed() {
-		return this.averageSpeed;
-	}
-	/**
-	 * @param averageSpeed the averageSpeed to set
-	 */
-	public void setAverageSpeed(final Float averageSpeed) {
-		this.averageSpeed = averageSpeed;
-	}
-	/**
-	 * @return the maxSpeed
-	 */
-	public Float getMaxSpeed() {
-		return this.maxSpeed;
-	}
-	/**
-	 * @param maxSpeed the maxSpeed to set
-	 */
-	public void setMaxSpeed(final Float maxSpeed) {
-		this.maxSpeed = maxSpeed;
-	}
-	/**
-	 * @return the averageCadence
-	 */
-	public Float getAverageCadence() {
-		return this.averageCadence;
-	}
-	/**
-	 * @param averageCadence the averageCadence to set
-	 */
-	public void setAverageCadence(final Float averageCadence) {
-		this.averageCadence = averageCadence;
-	}
-	/**
-	 * @return the averageTemp
-	 */
-	public Float getAverageTemp() {
-		return this.averageTemp;
-	}
-	/**
-	 * @param averageTemp the averageTemp to set
-	 */
-	public void setAverageTemp(final Float averageTemp) {
-		this.averageTemp = averageTemp;
-	}
-	/**
-	 * @return the averageWatts
-	 */
-	public Float getAverageWatts() {
-		return this.averageWatts;
-	}
-	/**
-	 * @param averageWatts the averageWatts to set
-	 */
-	public void setAverageWatts(final Float averageWatts) {
-		this.averageWatts = averageWatts;
-	}
-	/**
-	 * @return the weightedAverageWatts
-	 */
-	public Float getWeightedAverageWatts() {
-		return this.weightedAverageWatts;
-	}
-	/**
-	 * @param weightedAverageWatts the weightedAverageWatts to set
-	 */
-	public void setWeightedAverageWatts(final Float weightedAverageWatts) {
-		this.weightedAverageWatts = weightedAverageWatts;
-	}
-	/**
-	 * @return the kilojoules
-	 */
-	public Float getKilojoules() {
-		return this.kilojoules;
-	}
-	/**
-	 * @param kilojoules the kilojoules to set
-	 */
-	public void setKilojoules(final Float kilojoules) {
-		this.kilojoules = kilojoules;
-	}
-	/**
-	 * @return the deviceWatts
-	 */
-	public Boolean getDeviceWatts() {
-		return this.deviceWatts;
-	}
-	/**
-	 * @param deviceWatts the deviceWatts to set
-	 */
-	public void setDeviceWatts(final Boolean deviceWatts) {
-		this.deviceWatts = deviceWatts;
-	}
-	/**
-	 * @return the averageHeartrate
-	 */
-	public Float getAverageHeartrate() {
-		return this.averageHeartrate;
-	}
-	/**
-	 * @param averageHeartrate the averageHeartrate to set
-	 */
-	public void setAverageHeartrate(final Float averageHeartrate) {
-		this.averageHeartrate = averageHeartrate;
-	}
-	/**
-	 * @return the maxHeartrate
-	 */
-	public Integer getMaxHeartrate() {
-		return this.maxHeartrate;
-	}
-	/**
-	 * @param maxHeartrate the maxHeartrate to set
-	 */
-	public void setMaxHeartrate(final Integer maxHeartrate) {
-		this.maxHeartrate = maxHeartrate;
-	}
-	/**
-	 * @return the calories
-	 */
-	public Float getCalories() {
-		return this.calories;
-	}
-	/**
-	 * @param calories the calories to set
-	 */
-	public void setCalories(final Float calories) {
-		this.calories = calories;
-	}
-	/**
-	 * @return the truncated
-	 */
-	public Integer getTruncated() {
-		return this.truncated;
-	}
-	/**
-	 * @param truncated the truncated to set
-	 */
-	public void setTruncated(final Integer truncated) {
-		this.truncated = truncated;
-	}
-	/**
-	 * @return the hasKudoed
-	 */
-	public Boolean getHasKudoed() {
-		return this.hasKudoed;
-	}
-	/**
-	 * @param hasKudoed the hasKudoed to set
-	 */
-	public void setHasKudoed(final Boolean hasKudoed) {
-		this.hasKudoed = hasKudoed;
-	}
-	/**
-	 * @return the segmentEfforts
-	 */
-	public List<StravaSegmentEffort> getSegmentEfforts() {
-		return this.segmentEfforts;
-	}
-	/**
-	 * @param segmentEfforts the segmentEfforts to set
-	 */
-	public void setSegmentEfforts(final List<StravaSegmentEffort> segmentEfforts) {
-		this.segmentEfforts = segmentEfforts;
-	}
-	/**
-	 * @return the splitsMetric
-	 */
-	public List<StravaSplit> getSplitsMetric() {
-		return this.splitsMetric;
-	}
-	/**
-	 * @param splitsMetric the splitsMetric to set
-	 */
-	public void setSplitsMetric(final List<StravaSplit> splitsMetric) {
-		this.splitsMetric = splitsMetric;
-	}
-	/**
-	 * @return the splitsStandard
-	 */
-	public List<StravaSplit> getSplitsStandard() {
-		return this.splitsStandard;
-	}
-	/**
-	 * @param splitsStandard the splitsStandard to set
-	 */
-	public void setSplitsStandard(final List<StravaSplit> splitsStandard) {
-		this.splitsStandard = splitsStandard;
-	}
-	/**
-	 * @return the bestEfforts
-	 */
-	public List<StravaBestRunningEffort> getBestEfforts() {
-		return this.bestEfforts;
-	}
-	/**
-	 * @param bestEfforts the bestEfforts to set
-	 */
-	public void setBestEfforts(final List<StravaBestRunningEffort> bestEfforts) {
-		this.bestEfforts = bestEfforts;
-	}
-	/**
-	 * @return the uploadId
-	 */
-	public String getUploadId() {
-		return this.uploadId;
-	}
-	/**
-	 * @param uploadId the uploadId to set
-	 */
-	public void setUploadId(final String uploadId) {
-		this.uploadId = uploadId;
-	}
-	/**
-	 * @return the startLatitude
-	 */
-	public Float getStartLatitude() {
-		return this.startLatitude;
-	}
-	/**
-	 * @param startLatitude the startLatitude to set
-	 */
-	public void setStartLatitude(final Float startLatitude) {
-		this.startLatitude = startLatitude;
-	}
-	/**
-	 * @return the startLongitude
-	 */
-	public Float getStartLongitude() {
-		return this.startLongitude;
-	}
-	/**
-	 * @param startLongitude the startLongitude to set
-	 */
-	public void setStartLongitude(final Float startLongitude) {
-		this.startLongitude = startLongitude;
-	}
-	/**
-	 * @return the instagramPrimaryPhoto
-	 */
-	public String getInstagramPrimaryPhoto() {
-		return this.instagramPrimaryPhoto;
-	}
-	/**
-	 * @param instagramPrimaryPhoto the instagramPrimaryPhoto to set
-	 */
-	public void setInstagramPrimaryPhoto(final String instagramPrimaryPhoto) {
-		this.instagramPrimaryPhoto = instagramPrimaryPhoto;
-	}
-	/**
-	 * @return the photos
-	 */
-	public StravaActivityPhotos getPhotos() {
-		return this.photos;
-	}
-	/**
-	 * @param photos the photos to set
-	 */
-	public void setPhotos(final StravaActivityPhotos photos) {
-		this.photos = photos;
-	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "StravaActivity [id=" + this.id + ", resourceState=" + this.resourceState + ", externalId=" + this.externalId + ", athlete=" + this.athlete
-				+ ", name=" + this.name + ", description=" + this.description + ", distance=" + this.distance + ", movingTime=" + this.movingTime
-				+ ", elapsedTime=" + this.elapsedTime + ", totalElevationGain=" + this.totalElevationGain + ", type=" + this.type + ", startDate="
-				+ this.startDate + ", startDateLocal=" + this.startDateLocal + ", timezone=" + this.timezone + ", startLatlng=" + this.startLatlng
-				+ ", endLatlng=" + this.endLatlng + ", locationCity=" + this.locationCity + ", locationState=" + this.locationState + ", locationCountry="
-				+ this.locationCountry + ", achievementCount=" + this.achievementCount + ", kudosCount=" + this.kudosCount + ", commentCount="
-				+ this.commentCount + ", athleteCount=" + this.athleteCount + ", photoCount=" + this.photoCount + ", map=" + this.map + ", trainer="
-				+ this.trainer + ", commute=" + this.commute + ", manual=" + this.manual + ", privateActivity=" + this.privateActivity + ", flagged="
-				+ this.flagged + ", workoutType=" + this.workoutType + ", gearId=" + this.gearId + ", gear=" + this.gear + ", averageSpeed=" + this.averageSpeed
-				+ ", maxSpeed=" + this.maxSpeed + ", averageCadence=" + this.averageCadence + ", averageTemp=" + this.averageTemp + ", averageWatts="
-				+ this.averageWatts + ", weightedAverageWatts=" + this.weightedAverageWatts + ", kilojoules=" + this.kilojoules + ", deviceWatts="
-				+ this.deviceWatts + ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", calories=" + this.calories
-				+ ", truncated=" + this.truncated + ", hasKudoed=" + this.hasKudoed + ", segmentEfforts=" + this.segmentEfforts + ", splitsMetric="
-				+ this.splitsMetric + ", splitsStandard=" + this.splitsStandard + ", bestEfforts=" + this.bestEfforts + ", uploadId=" + this.uploadId
-				+ ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", instagramPrimaryPhoto=" + this.instagramPrimaryPhoto
-				+ ", photos=" + this.photos + "]";
-	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.achievementCount == null) ? 0 : this.achievementCount.hashCode());
-		result = prime * result + ((this.athlete == null) ? 0 : this.athlete.hashCode());
-		result = prime * result + ((this.athleteCount == null) ? 0 : this.athleteCount.hashCode());
-		result = prime * result + ((this.averageCadence == null) ? 0 : this.averageCadence.hashCode());
-		result = prime * result + ((this.averageHeartrate == null) ? 0 : this.averageHeartrate.hashCode());
-		result = prime * result + ((this.averageSpeed == null) ? 0 : this.averageSpeed.hashCode());
-		result = prime * result + ((this.averageTemp == null) ? 0 : this.averageTemp.hashCode());
-		result = prime * result + ((this.averageWatts == null) ? 0 : this.averageWatts.hashCode());
-		result = prime * result + ((this.bestEfforts == null) ? 0 : this.bestEfforts.hashCode());
-		result = prime * result + ((this.calories == null) ? 0 : this.calories.hashCode());
-		result = prime * result + ((this.commentCount == null) ? 0 : this.commentCount.hashCode());
-		result = prime * result + ((this.commute == null) ? 0 : this.commute.hashCode());
-		result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
-		result = prime * result + ((this.deviceWatts == null) ? 0 : this.deviceWatts.hashCode());
-		result = prime * result + ((this.distance == null) ? 0 : this.distance.hashCode());
-		result = prime * result + ((this.elapsedTime == null) ? 0 : this.elapsedTime.hashCode());
-		result = prime * result + ((this.endLatlng == null) ? 0 : this.endLatlng.hashCode());
-		result = prime * result + ((this.externalId == null) ? 0 : this.externalId.hashCode());
-		result = prime * result + ((this.flagged == null) ? 0 : this.flagged.hashCode());
-		result = prime * result + ((this.gear == null) ? 0 : this.gear.hashCode());
-		result = prime * result + ((this.gearId == null) ? 0 : this.gearId.hashCode());
-		result = prime * result + ((this.hasKudoed == null) ? 0 : this.hasKudoed.hashCode());
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-		result = prime * result + ((this.instagramPrimaryPhoto == null) ? 0 : this.instagramPrimaryPhoto.hashCode());
-		result = prime * result + ((this.kilojoules == null) ? 0 : this.kilojoules.hashCode());
-		result = prime * result + ((this.kudosCount == null) ? 0 : this.kudosCount.hashCode());
-		result = prime * result + ((this.locationCity == null) ? 0 : this.locationCity.hashCode());
-		result = prime * result + ((this.locationCountry == null) ? 0 : this.locationCountry.hashCode());
-		result = prime * result + ((this.locationState == null) ? 0 : this.locationState.hashCode());
-		result = prime * result + ((this.manual == null) ? 0 : this.manual.hashCode());
-		result = prime * result + ((this.map == null) ? 0 : this.map.hashCode());
-		result = prime * result + ((this.maxHeartrate == null) ? 0 : this.maxHeartrate.hashCode());
-		result = prime * result + ((this.maxSpeed == null) ? 0 : this.maxSpeed.hashCode());
-		result = prime * result + ((this.movingTime == null) ? 0 : this.movingTime.hashCode());
-		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
-		result = prime * result + ((this.photoCount == null) ? 0 : this.photoCount.hashCode());
-		result = prime * result + ((this.photos == null) ? 0 : this.photos.hashCode());
-		result = prime * result + ((this.privateActivity == null) ? 0 : this.privateActivity.hashCode());
-		result = prime * result + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
-		result = prime * result + ((this.segmentEfforts == null) ? 0 : this.segmentEfforts.hashCode());
-		result = prime * result + ((this.splitsMetric == null) ? 0 : this.splitsMetric.hashCode());
-		result = prime * result + ((this.splitsStandard == null) ? 0 : this.splitsStandard.hashCode());
-		result = prime * result + ((this.startDate == null) ? 0 : this.startDate.hashCode());
-		result = prime * result + ((this.startDateLocal == null) ? 0 : this.startDateLocal.hashCode());
-		result = prime * result + ((this.startLatitude == null) ? 0 : this.startLatitude.hashCode());
-		result = prime * result + ((this.startLatlng == null) ? 0 : this.startLatlng.hashCode());
-		result = prime * result + ((this.startLongitude == null) ? 0 : this.startLongitude.hashCode());
-		result = prime * result + ((this.timezone == null) ? 0 : this.timezone.hashCode());
-		result = prime * result + ((this.totalElevationGain == null) ? 0 : this.totalElevationGain.hashCode());
-		result = prime * result + ((this.trainer == null) ? 0 : this.trainer.hashCode());
-		result = prime * result + ((this.truncated == null) ? 0 : this.truncated.hashCode());
-		result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
-		result = prime * result + ((this.uploadId == null) ? 0 : this.uploadId.hashCode());
-		result = prime * result + ((this.weightedAverageWatts == null) ? 0 : this.weightedAverageWatts.hashCode());
-		result = prime * result + ((this.workoutType == null) ? 0 : this.workoutType.hashCode());
-		return result;
+	public StravaActivity() {
+		super();
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -1064,7 +318,7 @@ public class StravaActivity {
 		if (!(obj instanceof StravaActivity)) {
 			return false;
 		}
-		StravaActivity other = (StravaActivity) obj;
+		final StravaActivity other = (StravaActivity) obj;
 		if (this.achievementCount == null) {
 			if (other.achievementCount != null) {
 				return false;
@@ -1439,6 +693,752 @@ public class StravaActivity {
 			return false;
 		}
 		return true;
+	}
+	/**
+	 * @return the achievementCount
+	 */
+	public Integer getAchievementCount() {
+		return this.achievementCount;
+	}
+	/**
+	 * @return the athlete
+	 */
+	public StravaAthlete getAthlete() {
+		return this.athlete;
+	}
+	/**
+	 * @return the athleteCount
+	 */
+	public Integer getAthleteCount() {
+		return this.athleteCount;
+	}
+	/**
+	 * @return the averageCadence
+	 */
+	public Float getAverageCadence() {
+		return this.averageCadence;
+	}
+	/**
+	 * @return the averageHeartrate
+	 */
+	public Float getAverageHeartrate() {
+		return this.averageHeartrate;
+	}
+	/**
+	 * @return the averageSpeed
+	 */
+	public Float getAverageSpeed() {
+		return this.averageSpeed;
+	}
+	/**
+	 * @return the averageTemp
+	 */
+	public Float getAverageTemp() {
+		return this.averageTemp;
+	}
+	/**
+	 * @return the averageWatts
+	 */
+	public Float getAverageWatts() {
+		return this.averageWatts;
+	}
+	/**
+	 * @return the bestEfforts
+	 */
+	public List<StravaBestRunningEffort> getBestEfforts() {
+		return this.bestEfforts;
+	}
+	/**
+	 * @return the calories
+	 */
+	public Float getCalories() {
+		return this.calories;
+	}
+	/**
+	 * @return the commentCount
+	 */
+	public Integer getCommentCount() {
+		return this.commentCount;
+	}
+	/**
+	 * @return the commute
+	 */
+	public Boolean getCommute() {
+		return this.commute;
+	}
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return this.description;
+	}
+	/**
+	 * @return the deviceWatts
+	 */
+	public Boolean getDeviceWatts() {
+		return this.deviceWatts;
+	}
+	/**
+	 * @return the distance
+	 */
+	public Float getDistance() {
+		return this.distance;
+	}
+	/**
+	 * @return the elapsedTime
+	 */
+	public Integer getElapsedTime() {
+		return this.elapsedTime;
+	}
+	/**
+	 * @return the endLatlng
+	 */
+	public StravaMapPoint getEndLatlng() {
+		return this.endLatlng;
+	}
+	/**
+	 * @return the externalId
+	 */
+	public String getExternalId() {
+		return this.externalId;
+	}
+	/**
+	 * @return the flagged
+	 */
+	public Boolean getFlagged() {
+		return this.flagged;
+	}
+	/**
+	 * @return the gear
+	 */
+	public StravaGear getGear() {
+		return this.gear;
+	}
+	/**
+	 * @return the gearId
+	 */
+	public String getGearId() {
+		return this.gearId;
+	}
+	/**
+	 * @return the hasKudoed
+	 */
+	public Boolean getHasKudoed() {
+		return this.hasKudoed;
+	}
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return this.id;
+	}
+	/**
+	 * @return the instagramPrimaryPhoto
+	 */
+	public String getInstagramPrimaryPhoto() {
+		return this.instagramPrimaryPhoto;
+	}
+	/**
+	 * @return the kilojoules
+	 */
+	public Float getKilojoules() {
+		return this.kilojoules;
+	}
+	/**
+	 * @return the kudosCount
+	 */
+	public Integer getKudosCount() {
+		return this.kudosCount;
+	}
+	/**
+	 * @return the locationCity
+	 */
+	public String getLocationCity() {
+		return this.locationCity;
+	}
+	/**
+	 * @return the locationCountry
+	 */
+	public String getLocationCountry() {
+		return this.locationCountry;
+	}
+	/**
+	 * @return the locationState
+	 */
+	public String getLocationState() {
+		return this.locationState;
+	}
+	/**
+	 * @return the manual
+	 */
+	public Boolean getManual() {
+		return this.manual;
+	}
+	/**
+	 * @return the map
+	 */
+	public StravaMap getMap() {
+		return this.map;
+	}
+	/**
+	 * @return the maxHeartrate
+	 */
+	public Integer getMaxHeartrate() {
+		return this.maxHeartrate;
+	}
+	/**
+	 * @return the maxSpeed
+	 */
+	public Float getMaxSpeed() {
+		return this.maxSpeed;
+	}
+	/**
+	 * @return the movingTime
+	 */
+	public Integer getMovingTime() {
+		return this.movingTime;
+	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return this.name;
+	}
+	/**
+	 * @return the photoCount
+	 */
+	public Integer getPhotoCount() {
+		return this.photoCount;
+	}
+	/**
+	 * @return the photos
+	 */
+	public StravaActivityPhotos getPhotos() {
+		return this.photos;
+	}
+	/**
+	 * @return the privateActivity
+	 */
+	public Boolean getPrivateActivity() {
+		return this.privateActivity;
+	}
+	/**
+	 * @return the resourceState
+	 */
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+	/**
+	 * @return the segmentEfforts
+	 */
+	public List<StravaSegmentEffort> getSegmentEfforts() {
+		return this.segmentEfforts;
+	}
+	/**
+	 * @return the splitsMetric
+	 */
+	public List<StravaSplit> getSplitsMetric() {
+		return this.splitsMetric;
+	}
+	/**
+	 * @return the splitsStandard
+	 */
+	public List<StravaSplit> getSplitsStandard() {
+		return this.splitsStandard;
+	}
+	/**
+	 * @return the startDate
+	 */
+	public ZonedDateTime getStartDate() {
+		return this.startDate;
+	}
+	/**
+	 * @return the startDateLocal
+	 */
+	public LocalDateTime getStartDateLocal() {
+		return this.startDateLocal;
+	}
+	/**
+	 * @return the startLatitude
+	 */
+	public Float getStartLatitude() {
+		return this.startLatitude;
+	}
+	/**
+	 * @return the startLatlng
+	 */
+	public StravaMapPoint getStartLatlng() {
+		return this.startLatlng;
+	}
+	/**
+	 * @return the startLongitude
+	 */
+	public Float getStartLongitude() {
+		return this.startLongitude;
+	}
+	/**
+	 * @return the timezone
+	 */
+	public String getTimezone() {
+		return this.timezone;
+	}
+	/**
+	 * @return the totalElevationGain
+	 */
+	public Float getTotalElevationGain() {
+		return this.totalElevationGain;
+	}
+	/**
+	 * @return the trainer
+	 */
+	public Boolean getTrainer() {
+		return this.trainer;
+	}
+	/**
+	 * @return the truncated
+	 */
+	public Integer getTruncated() {
+		return this.truncated;
+	}
+	/**
+	 * @return the type
+	 */
+	public StravaActivityType getType() {
+		return this.type;
+	}
+	/**
+	 * @return the uploadId
+	 */
+	public String getUploadId() {
+		return this.uploadId;
+	}
+	/**
+	 * @return the weightedAverageWatts
+	 */
+	public Float getWeightedAverageWatts() {
+		return this.weightedAverageWatts;
+	}
+	/**
+	 * @return the workoutType
+	 */
+	public StravaWorkoutType getWorkoutType() {
+		return this.workoutType;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.achievementCount == null) ? 0 : this.achievementCount.hashCode());
+		result = (prime * result) + ((this.athlete == null) ? 0 : this.athlete.hashCode());
+		result = (prime * result) + ((this.athleteCount == null) ? 0 : this.athleteCount.hashCode());
+		result = (prime * result) + ((this.averageCadence == null) ? 0 : this.averageCadence.hashCode());
+		result = (prime * result) + ((this.averageHeartrate == null) ? 0 : this.averageHeartrate.hashCode());
+		result = (prime * result) + ((this.averageSpeed == null) ? 0 : this.averageSpeed.hashCode());
+		result = (prime * result) + ((this.averageTemp == null) ? 0 : this.averageTemp.hashCode());
+		result = (prime * result) + ((this.averageWatts == null) ? 0 : this.averageWatts.hashCode());
+		result = (prime * result) + ((this.bestEfforts == null) ? 0 : this.bestEfforts.hashCode());
+		result = (prime * result) + ((this.calories == null) ? 0 : this.calories.hashCode());
+		result = (prime * result) + ((this.commentCount == null) ? 0 : this.commentCount.hashCode());
+		result = (prime * result) + ((this.commute == null) ? 0 : this.commute.hashCode());
+		result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
+		result = (prime * result) + ((this.deviceWatts == null) ? 0 : this.deviceWatts.hashCode());
+		result = (prime * result) + ((this.distance == null) ? 0 : this.distance.hashCode());
+		result = (prime * result) + ((this.elapsedTime == null) ? 0 : this.elapsedTime.hashCode());
+		result = (prime * result) + ((this.endLatlng == null) ? 0 : this.endLatlng.hashCode());
+		result = (prime * result) + ((this.externalId == null) ? 0 : this.externalId.hashCode());
+		result = (prime * result) + ((this.flagged == null) ? 0 : this.flagged.hashCode());
+		result = (prime * result) + ((this.gear == null) ? 0 : this.gear.hashCode());
+		result = (prime * result) + ((this.gearId == null) ? 0 : this.gearId.hashCode());
+		result = (prime * result) + ((this.hasKudoed == null) ? 0 : this.hasKudoed.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.instagramPrimaryPhoto == null) ? 0 : this.instagramPrimaryPhoto.hashCode());
+		result = (prime * result) + ((this.kilojoules == null) ? 0 : this.kilojoules.hashCode());
+		result = (prime * result) + ((this.kudosCount == null) ? 0 : this.kudosCount.hashCode());
+		result = (prime * result) + ((this.locationCity == null) ? 0 : this.locationCity.hashCode());
+		result = (prime * result) + ((this.locationCountry == null) ? 0 : this.locationCountry.hashCode());
+		result = (prime * result) + ((this.locationState == null) ? 0 : this.locationState.hashCode());
+		result = (prime * result) + ((this.manual == null) ? 0 : this.manual.hashCode());
+		result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());
+		result = (prime * result) + ((this.maxHeartrate == null) ? 0 : this.maxHeartrate.hashCode());
+		result = (prime * result) + ((this.maxSpeed == null) ? 0 : this.maxSpeed.hashCode());
+		result = (prime * result) + ((this.movingTime == null) ? 0 : this.movingTime.hashCode());
+		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+		result = (prime * result) + ((this.photoCount == null) ? 0 : this.photoCount.hashCode());
+		result = (prime * result) + ((this.photos == null) ? 0 : this.photos.hashCode());
+		result = (prime * result) + ((this.privateActivity == null) ? 0 : this.privateActivity.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.segmentEfforts == null) ? 0 : this.segmentEfforts.hashCode());
+		result = (prime * result) + ((this.splitsMetric == null) ? 0 : this.splitsMetric.hashCode());
+		result = (prime * result) + ((this.splitsStandard == null) ? 0 : this.splitsStandard.hashCode());
+		result = (prime * result) + ((this.startDate == null) ? 0 : this.startDate.hashCode());
+		result = (prime * result) + ((this.startDateLocal == null) ? 0 : this.startDateLocal.hashCode());
+		result = (prime * result) + ((this.startLatitude == null) ? 0 : this.startLatitude.hashCode());
+		result = (prime * result) + ((this.startLatlng == null) ? 0 : this.startLatlng.hashCode());
+		result = (prime * result) + ((this.startLongitude == null) ? 0 : this.startLongitude.hashCode());
+		result = (prime * result) + ((this.timezone == null) ? 0 : this.timezone.hashCode());
+		result = (prime * result) + ((this.totalElevationGain == null) ? 0 : this.totalElevationGain.hashCode());
+		result = (prime * result) + ((this.trainer == null) ? 0 : this.trainer.hashCode());
+		result = (prime * result) + ((this.truncated == null) ? 0 : this.truncated.hashCode());
+		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+		result = (prime * result) + ((this.uploadId == null) ? 0 : this.uploadId.hashCode());
+		result = (prime * result) + ((this.weightedAverageWatts == null) ? 0 : this.weightedAverageWatts.hashCode());
+		result = (prime * result) + ((this.workoutType == null) ? 0 : this.workoutType.hashCode());
+		return result;
+	}
+	/**
+	 * @param achievementCount the achievementCount to set
+	 */
+	public void setAchievementCount(final Integer achievementCount) {
+		this.achievementCount = achievementCount;
+	}
+	/**
+	 * @param athlete the athlete to set
+	 */
+	public void setAthlete(final StravaAthlete athlete) {
+		this.athlete = athlete;
+	}
+	/**
+	 * @param athleteCount the athleteCount to set
+	 */
+	public void setAthleteCount(final Integer athleteCount) {
+		this.athleteCount = athleteCount;
+	}
+	/**
+	 * @param averageCadence the averageCadence to set
+	 */
+	public void setAverageCadence(final Float averageCadence) {
+		this.averageCadence = averageCadence;
+	}
+	/**
+	 * @param averageHeartrate the averageHeartrate to set
+	 */
+	public void setAverageHeartrate(final Float averageHeartrate) {
+		this.averageHeartrate = averageHeartrate;
+	}
+	/**
+	 * @param averageSpeed the averageSpeed to set
+	 */
+	public void setAverageSpeed(final Float averageSpeed) {
+		this.averageSpeed = averageSpeed;
+	}
+	/**
+	 * @param averageTemp the averageTemp to set
+	 */
+	public void setAverageTemp(final Float averageTemp) {
+		this.averageTemp = averageTemp;
+	}
+	/**
+	 * @param averageWatts the averageWatts to set
+	 */
+	public void setAverageWatts(final Float averageWatts) {
+		this.averageWatts = averageWatts;
+	}
+	/**
+	 * @param bestEfforts the bestEfforts to set
+	 */
+	public void setBestEfforts(final List<StravaBestRunningEffort> bestEfforts) {
+		this.bestEfforts = bestEfforts;
+	}
+	/**
+	 * @param calories the calories to set
+	 */
+	public void setCalories(final Float calories) {
+		this.calories = calories;
+	}
+	/**
+	 * @param commentCount the commentCount to set
+	 */
+	public void setCommentCount(final Integer commentCount) {
+		this.commentCount = commentCount;
+	}
+	/**
+	 * @param commute the commute to set
+	 */
+	public void setCommute(final Boolean commute) {
+		this.commute = commute;
+	}
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(final String description) {
+		this.description = description;
+	}
+	/**
+	 * @param deviceWatts the deviceWatts to set
+	 */
+	public void setDeviceWatts(final Boolean deviceWatts) {
+		this.deviceWatts = deviceWatts;
+	}
+	/**
+	 * @param distance the distance to set
+	 */
+	public void setDistance(final Float distance) {
+		this.distance = distance;
+	}
+	/**
+	 * @param elapsedTime the elapsedTime to set
+	 */
+	public void setElapsedTime(final Integer elapsedTime) {
+		this.elapsedTime = elapsedTime;
+	}
+	/**
+	 * @param endLatlng the endLatlng to set
+	 */
+	public void setEndLatlng(final StravaMapPoint endLatlng) {
+		this.endLatlng = endLatlng;
+	}
+	/**
+	 * @param externalId the externalId to set
+	 */
+	public void setExternalId(final String externalId) {
+		this.externalId = externalId;
+	}
+	/**
+	 * @param flagged the flagged to set
+	 */
+	public void setFlagged(final Boolean flagged) {
+		this.flagged = flagged;
+	}
+	/**
+	 * @param gear the gear to set
+	 */
+	public void setGear(final StravaGear gear) {
+		this.gear = gear;
+	}
+	/**
+	 * @param gearId the gearId to set
+	 */
+	public void setGearId(final String gearId) {
+		this.gearId = gearId;
+	}
+	/**
+	 * @param hasKudoed the hasKudoed to set
+	 */
+	public void setHasKudoed(final Boolean hasKudoed) {
+		this.hasKudoed = hasKudoed;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+	/**
+	 * @param instagramPrimaryPhoto the instagramPrimaryPhoto to set
+	 */
+	public void setInstagramPrimaryPhoto(final String instagramPrimaryPhoto) {
+		this.instagramPrimaryPhoto = instagramPrimaryPhoto;
+	}
+	/**
+	 * @param kilojoules the kilojoules to set
+	 */
+	public void setKilojoules(final Float kilojoules) {
+		this.kilojoules = kilojoules;
+	}
+	/**
+	 * @param kudosCount the kudosCount to set
+	 */
+	public void setKudosCount(final Integer kudosCount) {
+		this.kudosCount = kudosCount;
+	}
+	/**
+	 * @param locationCity the locationCity to set
+	 */
+	public void setLocationCity(final String locationCity) {
+		this.locationCity = locationCity;
+	}
+	/**
+	 * @param locationCountry the locationCountry to set
+	 */
+	public void setLocationCountry(final String locationCountry) {
+		this.locationCountry = locationCountry;
+	}
+	/**
+	 * @param locationState the locationState to set
+	 */
+	public void setLocationState(final String locationState) {
+		this.locationState = locationState;
+	}
+	/**
+	 * @param manual the manual to set
+	 */
+	public void setManual(final Boolean manual) {
+		this.manual = manual;
+	}
+	/**
+	 * @param map the map to set
+	 */
+	public void setMap(final StravaMap map) {
+		this.map = map;
+	}
+	/**
+	 * @param maxHeartrate the maxHeartrate to set
+	 */
+	public void setMaxHeartrate(final Integer maxHeartrate) {
+		this.maxHeartrate = maxHeartrate;
+	}
+	/**
+	 * @param maxSpeed the maxSpeed to set
+	 */
+	public void setMaxSpeed(final Float maxSpeed) {
+		this.maxSpeed = maxSpeed;
+	}
+	/**
+	 * @param movingTime the movingTime to set
+	 */
+	public void setMovingTime(final Integer movingTime) {
+		this.movingTime = movingTime;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(final String name) {
+		this.name = name;
+	}
+	/**
+	 * @param photoCount the photoCount to set
+	 */
+	public void setPhotoCount(final Integer photoCount) {
+		this.photoCount = photoCount;
+	}
+	/**
+	 * @param photos the photos to set
+	 */
+	public void setPhotos(final StravaActivityPhotos photos) {
+		this.photos = photos;
+	}
+	/**
+	 * @param privateActivity the privateActivity to set
+	 */
+	public void setPrivateActivity(final Boolean privateActivity) {
+		this.privateActivity = privateActivity;
+	}
+	/**
+	 * @param resourceState the resourceState to set
+	 */
+	public void setResourceState(final StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+	/**
+	 * @param segmentEfforts the segmentEfforts to set
+	 */
+	public void setSegmentEfforts(final List<StravaSegmentEffort> segmentEfforts) {
+		this.segmentEfforts = segmentEfforts;
+	}
+	/**
+	 * @param splitsMetric the splitsMetric to set
+	 */
+	public void setSplitsMetric(final List<StravaSplit> splitsMetric) {
+		this.splitsMetric = splitsMetric;
+	}
+	/**
+	 * @param splitsStandard the splitsStandard to set
+	 */
+	public void setSplitsStandard(final List<StravaSplit> splitsStandard) {
+		this.splitsStandard = splitsStandard;
+	}
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(final ZonedDateTime startDate) {
+		this.startDate = startDate;
+	}
+	/**
+	 * @param startDateLocal the startDateLocal to set
+	 */
+	public void setStartDateLocal(final LocalDateTime startDateLocal) {
+		this.startDateLocal = startDateLocal;
+	}
+	/**
+	 * @param startLatitude the startLatitude to set
+	 */
+	public void setStartLatitude(final Float startLatitude) {
+		this.startLatitude = startLatitude;
+	}
+	/**
+	 * @param startLatlng the startLatlng to set
+	 */
+	public void setStartLatlng(final StravaMapPoint startLatlng) {
+		this.startLatlng = startLatlng;
+	}
+	/**
+	 * @param startLongitude the startLongitude to set
+	 */
+	public void setStartLongitude(final Float startLongitude) {
+		this.startLongitude = startLongitude;
+	}
+	/**
+	 * @param timezone the timezone to set
+	 */
+	public void setTimezone(final String timezone) {
+		this.timezone = timezone;
+	}
+	/**
+	 * @param totalElevationGain the totalElevationGain to set
+	 */
+	public void setTotalElevationGain(final Float totalElevationGain) {
+		this.totalElevationGain = totalElevationGain;
+	}
+	/**
+	 * @param trainer the trainer to set
+	 */
+	public void setTrainer(final Boolean trainer) {
+		this.trainer = trainer;
+	}
+	/**
+	 * @param truncated the truncated to set
+	 */
+	public void setTruncated(final Integer truncated) {
+		this.truncated = truncated;
+	}
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(final StravaActivityType type) {
+		this.type = type;
+	}
+	/**
+	 * @param uploadId the uploadId to set
+	 */
+	public void setUploadId(final String uploadId) {
+		this.uploadId = uploadId;
+	}
+	/**
+	 * @param weightedAverageWatts the weightedAverageWatts to set
+	 */
+	public void setWeightedAverageWatts(final Float weightedAverageWatts) {
+		this.weightedAverageWatts = weightedAverageWatts;
+	}
+	/**
+	 * @param workoutType the workoutType to set
+	 */
+	public void setWorkoutType(final StravaWorkoutType workoutType) {
+		this.workoutType = workoutType;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaActivity [id=" + this.id + ", resourceState=" + this.resourceState + ", externalId=" + this.externalId + ", athlete=" + this.athlete //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", name=" + this.name + ", description=" + this.description + ", distance=" + this.distance + ", movingTime=" + this.movingTime //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", elapsedTime=" + this.elapsedTime + ", totalElevationGain=" + this.totalElevationGain + ", type=" + this.type + ", startDate=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.startDate + ", startDateLocal=" + this.startDateLocal + ", timezone=" + this.timezone + ", startLatlng=" + this.startLatlng //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", endLatlng=" + this.endLatlng + ", locationCity=" + this.locationCity + ", locationState=" + this.locationState + ", locationCountry=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.locationCountry + ", achievementCount=" + this.achievementCount + ", kudosCount=" + this.kudosCount + ", commentCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.commentCount + ", athleteCount=" + this.athleteCount + ", photoCount=" + this.photoCount + ", map=" + this.map + ", trainer=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.trainer + ", commute=" + this.commute + ", manual=" + this.manual + ", privateActivity=" + this.privateActivity + ", flagged=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.flagged + ", workoutType=" + this.workoutType + ", gearId=" + this.gearId + ", gear=" + this.gear + ", averageSpeed=" + this.averageSpeed //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", maxSpeed=" + this.maxSpeed + ", averageCadence=" + this.averageCadence + ", averageTemp=" + this.averageTemp + ", averageWatts=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.averageWatts + ", weightedAverageWatts=" + this.weightedAverageWatts + ", kilojoules=" + this.kilojoules + ", deviceWatts=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.deviceWatts + ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", calories=" + this.calories //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", truncated=" + this.truncated + ", hasKudoed=" + this.hasKudoed + ", segmentEfforts=" + this.segmentEfforts + ", splitsMetric=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.splitsMetric + ", splitsStandard=" + this.splitsStandard + ", bestEfforts=" + this.bestEfforts + ", uploadId=" + this.uploadId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", instagramPrimaryPhoto=" + this.instagramPrimaryPhoto //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", photos=" + this.photos + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 }

@@ -2,20 +2,20 @@ package javastrava.api.v3.model;
 
 import java.time.ZonedDateTime;
 
-import com.google.gson.annotations.SerializedName;
-
 import javastrava.api.v3.model.reference.StravaClimbCategory;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentActivityType;
 import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.StreamService;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * <p>
  * {@link StravaSegment Segments} are specific sections of road. {@link StravaAthlete Athletes}' {@link StravaSegmentEffort efforts} are compared on these
  * segments and leaderboards are created.
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
@@ -195,45 +195,205 @@ public class StravaSegment {
 	private StravaAthleteSegmentStats athleteSegmentStats;
 
 	/**
-	 * @return the id
+	 * No args constructor
 	 */
-	public Integer getId() {
-		return this.id;
+	public StravaSegment() {
+		super();
 	}
 
 	/**
-	 * @param id the id to set
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public void setId(final Integer id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the resourceState
-	 */
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
-	}
-
-	/**
-	 * @param resourceState the resourceState to set
-	 */
-	public void setResourceState(final StravaResourceState resourceState) {
-		this.resourceState = resourceState;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(final String name) {
-		this.name = name;
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof StravaSegment)) {
+			return false;
+		}
+		final StravaSegment other = (StravaSegment) obj;
+		if (this.activityType != other.activityType) {
+			return false;
+		}
+		if (this.athleteCount == null) {
+			if (other.athleteCount != null) {
+				return false;
+			}
+		} else if (!this.athleteCount.equals(other.athleteCount)) {
+			return false;
+		}
+		if (this.athletePrEffort == null) {
+			if (other.athletePrEffort != null) {
+				return false;
+			}
+		} else if (!this.athletePrEffort.equals(other.athletePrEffort)) {
+			return false;
+		}
+		if (this.averageGrade == null) {
+			if (other.averageGrade != null) {
+				return false;
+			}
+		} else if (!this.averageGrade.equals(other.averageGrade)) {
+			return false;
+		}
+		if (this.city == null) {
+			if (other.city != null) {
+				return false;
+			}
+		} else if (!this.city.equals(other.city)) {
+			return false;
+		}
+		if (this.climbCategory != other.climbCategory) {
+			return false;
+		}
+		if (this.country == null) {
+			if (other.country != null) {
+				return false;
+			}
+		} else if (!this.country.equals(other.country)) {
+			return false;
+		}
+		if (this.createdAt == null) {
+			if (other.createdAt != null) {
+				return false;
+			}
+		} else if (!this.createdAt.equals(other.createdAt)) {
+			return false;
+		}
+		if (this.distance == null) {
+			if (other.distance != null) {
+				return false;
+			}
+		} else if (!this.distance.equals(other.distance)) {
+			return false;
+		}
+		if (this.effortCount == null) {
+			if (other.effortCount != null) {
+				return false;
+			}
+		} else if (!this.effortCount.equals(other.effortCount)) {
+			return false;
+		}
+		if (this.elevationHigh == null) {
+			if (other.elevationHigh != null) {
+				return false;
+			}
+		} else if (!this.elevationHigh.equals(other.elevationHigh)) {
+			return false;
+		}
+		if (this.elevationLow == null) {
+			if (other.elevationLow != null) {
+				return false;
+			}
+		} else if (!this.elevationLow.equals(other.elevationLow)) {
+			return false;
+		}
+		if (this.endLatlng == null) {
+			if (other.endLatlng != null) {
+				return false;
+			}
+		} else if (!this.endLatlng.equals(other.endLatlng)) {
+			return false;
+		}
+		if (this.hazardous == null) {
+			if (other.hazardous != null) {
+				return false;
+			}
+		} else if (!this.hazardous.equals(other.hazardous)) {
+			return false;
+		}
+		if (this.id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!this.id.equals(other.id)) {
+			return false;
+		}
+		if (this.map == null) {
+			if (other.map != null) {
+				return false;
+			}
+		} else if (!this.map.equals(other.map)) {
+			return false;
+		}
+		if (this.maximumGrade == null) {
+			if (other.maximumGrade != null) {
+				return false;
+			}
+		} else if (!this.maximumGrade.equals(other.maximumGrade)) {
+			return false;
+		}
+		if (this.name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!this.name.equals(other.name)) {
+			return false;
+		}
+		if (this.privateSegment == null) {
+			if (other.privateSegment != null) {
+				return false;
+			}
+		} else if (!this.privateSegment.equals(other.privateSegment)) {
+			return false;
+		}
+		if (this.resourceState != other.resourceState) {
+			return false;
+		}
+		if (this.starCount == null) {
+			if (other.starCount != null) {
+				return false;
+			}
+		} else if (!this.starCount.equals(other.starCount)) {
+			return false;
+		}
+		if (this.starred == null) {
+			if (other.starred != null) {
+				return false;
+			}
+		} else if (!this.starred.equals(other.starred)) {
+			return false;
+		}
+		if (this.starredDate == null) {
+			if (other.starredDate != null) {
+				return false;
+			}
+		} else if (!this.starredDate.equals(other.starredDate)) {
+			return false;
+		}
+		if (this.startLatlng == null) {
+			if (other.startLatlng != null) {
+				return false;
+			}
+		} else if (!this.startLatlng.equals(other.startLatlng)) {
+			return false;
+		}
+		if (this.state == null) {
+			if (other.state != null) {
+				return false;
+			}
+		} else if (!this.state.equals(other.state)) {
+			return false;
+		}
+		if (this.totalElevationGain == null) {
+			if (other.totalElevationGain != null) {
+				return false;
+			}
+		} else if (!this.totalElevationGain.equals(other.totalElevationGain)) {
+			return false;
+		}
+		if (this.updatedAt == null) {
+			if (other.updatedAt != null) {
+				return false;
+			}
+		} else if (!this.updatedAt.equals(other.updatedAt)) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -244,265 +404,6 @@ public class StravaSegment {
 	}
 
 	/**
-	 * @param activityType the activityType to set
-	 */
-	public void setActivityType(final StravaSegmentActivityType activityType) {
-		this.activityType = activityType;
-	}
-
-	/**
-	 * @return the distance
-	 */
-	public Float getDistance() {
-		return this.distance;
-	}
-
-	/**
-	 * @param distance the distance to set
-	 */
-	public void setDistance(final Float distance) {
-		this.distance = distance;
-	}
-
-	/**
-	 * @return the averageGrade
-	 */
-	public Float getAverageGrade() {
-		return this.averageGrade;
-	}
-
-	/**
-	 * @param averageGrade the averageGrade to set
-	 */
-	public void setAverageGrade(final Float averageGrade) {
-		this.averageGrade = averageGrade;
-	}
-
-	/**
-	 * @return the maximumGrade
-	 */
-	public Float getMaximumGrade() {
-		return this.maximumGrade;
-	}
-
-	/**
-	 * @param maximumGrade the maximumGrade to set
-	 */
-	public void setMaximumGrade(final Float maximumGrade) {
-		this.maximumGrade = maximumGrade;
-	}
-
-	/**
-	 * @return the elevationHigh
-	 */
-	public Float getElevationHigh() {
-		return this.elevationHigh;
-	}
-
-	/**
-	 * @param elevationHigh the elevationHigh to set
-	 */
-	public void setElevationHigh(final Float elevationHigh) {
-		this.elevationHigh = elevationHigh;
-	}
-
-	/**
-	 * @return the elevationLow
-	 */
-	public Float getElevationLow() {
-		return this.elevationLow;
-	}
-
-	/**
-	 * @param elevationLow the elevationLow to set
-	 */
-	public void setElevationLow(final Float elevationLow) {
-		this.elevationLow = elevationLow;
-	}
-
-	/**
-	 * @return the startLatlng
-	 */
-	public StravaMapPoint getStartLatlng() {
-		return this.startLatlng;
-	}
-
-	/**
-	 * @param startLatlng the startLatlng to set
-	 */
-	public void setStartLatlng(final StravaMapPoint startLatlng) {
-		this.startLatlng = startLatlng;
-	}
-
-	/**
-	 * @return the endLatlng
-	 */
-	public StravaMapPoint getEndLatlng() {
-		return this.endLatlng;
-	}
-
-	/**
-	 * @param endLatlng the endLatlng to set
-	 */
-	public void setEndLatlng(final StravaMapPoint endLatlng) {
-		this.endLatlng = endLatlng;
-	}
-
-	/**
-	 * @return the climbCategory
-	 */
-	public StravaClimbCategory getClimbCategory() {
-		return this.climbCategory;
-	}
-
-	/**
-	 * @param climbCategory the climbCategory to set
-	 */
-	public void setClimbCategory(final StravaClimbCategory climbCategory) {
-		this.climbCategory = climbCategory;
-	}
-
-	/**
-	 * @return the city
-	 */
-	public String getCity() {
-		return this.city;
-	}
-
-	/**
-	 * @param city the city to set
-	 */
-	public void setCity(final String city) {
-		this.city = city;
-	}
-
-	/**
-	 * @return the state
-	 */
-	public String getState() {
-		return this.state;
-	}
-
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(final String state) {
-		this.state = state;
-	}
-
-	/**
-	 * @return the country
-	 */
-	public String getCountry() {
-		return this.country;
-	}
-
-	/**
-	 * @param country the country to set
-	 */
-	public void setCountry(final String country) {
-		this.country = country;
-	}
-
-	/**
-	 * @return the privateSegment
-	 */
-	public Boolean getPrivateSegment() {
-		return this.privateSegment;
-	}
-
-	/**
-	 * @param privateSegment the privateSegment to set
-	 */
-	public void setPrivateSegment(final Boolean privateSegment) {
-		this.privateSegment = privateSegment;
-	}
-
-	/**
-	 * @return the starred
-	 */
-	public Boolean getStarred() {
-		return this.starred;
-	}
-
-	/**
-	 * @param starred the starred to set
-	 */
-	public void setStarred(final Boolean starred) {
-		this.starred = starred;
-	}
-
-	/**
-	 * @return the createdAt
-	 */
-	public ZonedDateTime getCreatedAt() {
-		return this.createdAt;
-	}
-
-	/**
-	 * @param createdAt the createdAt to set
-	 */
-	public void setCreatedAt(final ZonedDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	/**
-	 * @return the updatedAt
-	 */
-	public ZonedDateTime getUpdatedAt() {
-		return this.updatedAt;
-	}
-
-	/**
-	 * @param updatedAt the updatedAt to set
-	 */
-	public void setUpdatedAt(final ZonedDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	/**
-	 * @return the totalElevationGain
-	 */
-	public Float getTotalElevationGain() {
-		return this.totalElevationGain;
-	}
-
-	/**
-	 * @param totalElevationGain the totalElevationGain to set
-	 */
-	public void setTotalElevationGain(final Float totalElevationGain) {
-		this.totalElevationGain = totalElevationGain;
-	}
-
-	/**
-	 * @return the map
-	 */
-	public StravaMap getMap() {
-		return this.map;
-	}
-
-	/**
-	 * @param map the map to set
-	 */
-	public void setMap(final StravaMap map) {
-		this.map = map;
-	}
-
-	/**
-	 * @return the effortCount
-	 */
-	public Integer getEffortCount() {
-		return this.effortCount;
-	}
-
-	/**
-	 * @param effortCount the effortCount to set
-	 */
-	public void setEffortCount(final Integer effortCount) {
-		this.effortCount = effortCount;
-	}
-
-	/**
 	 * @return the athleteCount
 	 */
 	public Integer getAthleteCount() {
@@ -510,146 +411,10 @@ public class StravaSegment {
 	}
 
 	/**
-	 * @param athleteCount the athleteCount to set
-	 */
-	public void setAthleteCount(final Integer athleteCount) {
-		this.athleteCount = athleteCount;
-	}
-
-	/**
-	 * @return the hazardous
-	 */
-	public Boolean getHazardous() {
-		return this.hazardous;
-	}
-
-	/**
-	 * @param hazardous the hazardous to set
-	 */
-	public void setHazardous(final Boolean hazardous) {
-		this.hazardous = hazardous;
-	}
-
-	/**
-	 * @return the starCount
-	 */
-	public Integer getStarCount() {
-		return this.starCount;
-	}
-
-	/**
-	 * @param starCount the starCount to set
-	 */
-	public void setStarCount(final Integer starCount) {
-		this.starCount = starCount;
-	}
-
-	/**
 	 * @return the athletePrEffort
 	 */
 	public StravaSegmentEffort getAthletePrEffort() {
 		return this.athletePrEffort;
-	}
-
-	/**
-	 * @param athletePrEffort the athletePrEffort to set
-	 */
-	public void setAthletePrEffort(final StravaSegmentEffort athletePrEffort) {
-		this.athletePrEffort = athletePrEffort;
-	}
-
-	/**
-	 * @return the starredDate
-	 */
-	public ZonedDateTime getStarredDate() {
-		return this.starredDate;
-	}
-
-	/**
-	 * @param starredDate the starredDate to set
-	 */
-	public void setStarredDate(final ZonedDateTime starredDate) {
-		this.starredDate = starredDate;
-	}
-
-	/**
-	 * @return the startLatitude
-	 */
-	@Deprecated
-	public Float getStartLatitude() {
-		return this.startLatitude;
-	}
-
-	/**
-	 * @param startLatitude the startLatitude to set
-	 */
-	@Deprecated
-	public void setStartLatitude(final Float startLatitude) {
-		this.startLatitude = startLatitude;
-	}
-
-	/**
-	 * @return the startLongitude
-	 */
-	@Deprecated
-	public Float getStartLongitude() {
-		return this.startLongitude;
-	}
-
-	/**
-	 * @param startLongitude the startLongitude to set
-	 */
-	@Deprecated
-	public void setStartLongitude(final Float startLongitude) {
-		this.startLongitude = startLongitude;
-	}
-
-	/**
-	 * @return the endLatitude
-	 */
-	@Deprecated
-	public Float getEndLatitude() {
-		return this.endLatitude;
-	}
-
-	/**
-	 * @param endLatitude the endLatitude to set
-	 */
-	@Deprecated
-	public void setEndLatitude(final Float endLatitude) {
-		this.endLatitude = endLatitude;
-	}
-
-	/**
-	 * @return the endLongitude
-	 */
-	@Deprecated
-	public Float getEndLongitude() {
-		return this.endLongitude;
-	}
-
-	/**
-	 * @param endLongitude the endLongitude to set
-	 */
-	@Deprecated
-	public void setEndLongitude(final Float endLongitude) {
-		this.endLongitude = endLongitude;
-	}
-
-	/**
-	 * @return the prTime
-	 */
-	@Deprecated
-	public Integer getPrTime() {
-		return this.prTime;
-	}
-
-	/**
-	 * @param prTime the prTime to set
-	 */
-	@Deprecated
-	public void setPrTime(final Integer prTime) {
-		this.prTime = prTime;
 	}
 
 	/**
@@ -661,10 +426,501 @@ public class StravaSegment {
 	}
 
 	/**
+	 * @return the averageGrade
+	 */
+	public Float getAverageGrade() {
+		return this.averageGrade;
+	}
+
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return this.city;
+	}
+
+	/**
+	 * @return the climbCategory
+	 */
+	public StravaClimbCategory getClimbCategory() {
+		return this.climbCategory;
+	}
+
+	/**
+	 * @return the country
+	 */
+	public String getCountry() {
+		return this.country;
+	}
+
+	/**
+	 * @return the createdAt
+	 */
+	public ZonedDateTime getCreatedAt() {
+		return this.createdAt;
+	}
+
+	/**
+	 * @return the distance
+	 */
+	public Float getDistance() {
+		return this.distance;
+	}
+
+	/**
+	 * @return the effortCount
+	 */
+	public Integer getEffortCount() {
+		return this.effortCount;
+	}
+
+	/**
+	 * @return the elevationHigh
+	 */
+	public Float getElevationHigh() {
+		return this.elevationHigh;
+	}
+
+	/**
+	 * @return the elevationLow
+	 */
+	public Float getElevationLow() {
+		return this.elevationLow;
+	}
+
+	/**
+	 * @return the endLatitude
+	 */
+	@Deprecated
+	public Float getEndLatitude() {
+		return this.endLatitude;
+	}
+
+	/**
+	 * @return the endLatlng
+	 */
+	public StravaMapPoint getEndLatlng() {
+		return this.endLatlng;
+	}
+
+	/**
+	 * @return the endLongitude
+	 */
+	@Deprecated
+	public Float getEndLongitude() {
+		return this.endLongitude;
+	}
+
+	/**
+	 * @return the hazardous
+	 */
+	public Boolean getHazardous() {
+		return this.hazardous;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return this.id;
+	}
+
+	/**
+	 * @return the map
+	 */
+	public StravaMap getMap() {
+		return this.map;
+	}
+
+	/**
+	 * @return the maximumGrade
+	 */
+	public Float getMaximumGrade() {
+		return this.maximumGrade;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return this.name;
+	}
+
+	/**
+	 * @return the privateSegment
+	 */
+	public Boolean getPrivateSegment() {
+		return this.privateSegment;
+	}
+
+	/**
+	 * @return the prTime
+	 */
+	@Deprecated
+	public Integer getPrTime() {
+		return this.prTime;
+	}
+
+	/**
+	 * @return the resourceState
+	 */
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+
+	/**
+	 * @return the starCount
+	 */
+	public Integer getStarCount() {
+		return this.starCount;
+	}
+
+	/**
+	 * @return the starred
+	 */
+	public Boolean getStarred() {
+		return this.starred;
+	}
+
+	/**
+	 * @return the starredDate
+	 */
+	public ZonedDateTime getStarredDate() {
+		return this.starredDate;
+	}
+
+	/**
+	 * @return the startLatitude
+	 */
+	@Deprecated
+	public Float getStartLatitude() {
+		return this.startLatitude;
+	}
+
+	/**
+	 * @return the startLatlng
+	 */
+	public StravaMapPoint getStartLatlng() {
+		return this.startLatlng;
+	}
+
+	/**
+	 * @return the startLongitude
+	 */
+	@Deprecated
+	public Float getStartLongitude() {
+		return this.startLongitude;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public String getState() {
+		return this.state;
+	}
+
+	/**
+	 * @return the totalElevationGain
+	 */
+	public Float getTotalElevationGain() {
+		return this.totalElevationGain;
+	}
+
+	/**
+	 * @return the updatedAt
+	 */
+	public ZonedDateTime getUpdatedAt() {
+		return this.updatedAt;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.activityType == null) ? 0 : this.activityType.hashCode());
+		result = (prime * result) + ((this.athleteCount == null) ? 0 : this.athleteCount.hashCode());
+		result = (prime * result) + ((this.athletePrEffort == null) ? 0 : this.athletePrEffort.hashCode());
+		result = (prime * result) + ((this.averageGrade == null) ? 0 : this.averageGrade.hashCode());
+		result = (prime * result) + ((this.city == null) ? 0 : this.city.hashCode());
+		result = (prime * result) + ((this.climbCategory == null) ? 0 : this.climbCategory.hashCode());
+		result = (prime * result) + ((this.country == null) ? 0 : this.country.hashCode());
+		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
+		result = (prime * result) + ((this.distance == null) ? 0 : this.distance.hashCode());
+		result = (prime * result) + ((this.effortCount == null) ? 0 : this.effortCount.hashCode());
+		result = (prime * result) + ((this.elevationHigh == null) ? 0 : this.elevationHigh.hashCode());
+		result = (prime * result) + ((this.elevationLow == null) ? 0 : this.elevationLow.hashCode());
+		result = (prime * result) + ((this.endLatlng == null) ? 0 : this.endLatlng.hashCode());
+		result = (prime * result) + ((this.hazardous == null) ? 0 : this.hazardous.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());
+		result = (prime * result) + ((this.maximumGrade == null) ? 0 : this.maximumGrade.hashCode());
+		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+		result = (prime * result) + ((this.privateSegment == null) ? 0 : this.privateSegment.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.starCount == null) ? 0 : this.starCount.hashCode());
+		result = (prime * result) + ((this.starred == null) ? 0 : this.starred.hashCode());
+		result = (prime * result) + ((this.starredDate == null) ? 0 : this.starredDate.hashCode());
+		result = (prime * result) + ((this.startLatlng == null) ? 0 : this.startLatlng.hashCode());
+		result = (prime * result) + ((this.state == null) ? 0 : this.state.hashCode());
+		result = (prime * result) + ((this.totalElevationGain == null) ? 0 : this.totalElevationGain.hashCode());
+		result = (prime * result) + ((this.updatedAt == null) ? 0 : this.updatedAt.hashCode());
+		return result;
+	}
+
+	/**
+	 * @param activityType the activityType to set
+	 */
+	public void setActivityType(final StravaSegmentActivityType activityType) {
+		this.activityType = activityType;
+	}
+
+	/**
+	 * @param athleteCount the athleteCount to set
+	 */
+	public void setAthleteCount(final Integer athleteCount) {
+		this.athleteCount = athleteCount;
+	}
+
+	/**
+	 * @param athletePrEffort the athletePrEffort to set
+	 */
+	public void setAthletePrEffort(final StravaSegmentEffort athletePrEffort) {
+		this.athletePrEffort = athletePrEffort;
+	}
+
+	/**
 	 * @param athleteSegmentStats the athleteSegmentStats to set
 	 */
 	@Deprecated
 	public void setAthleteSegmentStats(final StravaAthleteSegmentStats athleteSegmentStats) {
 		this.athleteSegmentStats = athleteSegmentStats;
+	}
+
+	/**
+	 * @param averageGrade the averageGrade to set
+	 */
+	public void setAverageGrade(final Float averageGrade) {
+		this.averageGrade = averageGrade;
+	}
+
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(final String city) {
+		this.city = city;
+	}
+
+	/**
+	 * @param climbCategory the climbCategory to set
+	 */
+	public void setClimbCategory(final StravaClimbCategory climbCategory) {
+		this.climbCategory = climbCategory;
+	}
+
+	/**
+	 * @param country the country to set
+	 */
+	public void setCountry(final String country) {
+		this.country = country;
+	}
+
+	/**
+	 * @param createdAt the createdAt to set
+	 */
+	public void setCreatedAt(final ZonedDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	/**
+	 * @param distance the distance to set
+	 */
+	public void setDistance(final Float distance) {
+		this.distance = distance;
+	}
+
+	/**
+	 * @param effortCount the effortCount to set
+	 */
+	public void setEffortCount(final Integer effortCount) {
+		this.effortCount = effortCount;
+	}
+
+	/**
+	 * @param elevationHigh the elevationHigh to set
+	 */
+	public void setElevationHigh(final Float elevationHigh) {
+		this.elevationHigh = elevationHigh;
+	}
+
+	/**
+	 * @param elevationLow the elevationLow to set
+	 */
+	public void setElevationLow(final Float elevationLow) {
+		this.elevationLow = elevationLow;
+	}
+
+	/**
+	 * @param endLatitude the endLatitude to set
+	 */
+	@Deprecated
+	public void setEndLatitude(final Float endLatitude) {
+		this.endLatitude = endLatitude;
+	}
+
+	/**
+	 * @param endLatlng the endLatlng to set
+	 */
+	public void setEndLatlng(final StravaMapPoint endLatlng) {
+		this.endLatlng = endLatlng;
+	}
+
+	/**
+	 * @param endLongitude the endLongitude to set
+	 */
+	@Deprecated
+	public void setEndLongitude(final Float endLongitude) {
+		this.endLongitude = endLongitude;
+	}
+
+	/**
+	 * @param hazardous the hazardous to set
+	 */
+	public void setHazardous(final Boolean hazardous) {
+		this.hazardous = hazardous;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param map the map to set
+	 */
+	public void setMap(final StravaMap map) {
+		this.map = map;
+	}
+
+	/**
+	 * @param maximumGrade the maximumGrade to set
+	 */
+	public void setMaximumGrade(final Float maximumGrade) {
+		this.maximumGrade = maximumGrade;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @param privateSegment the privateSegment to set
+	 */
+	public void setPrivateSegment(final Boolean privateSegment) {
+		this.privateSegment = privateSegment;
+	}
+
+	/**
+	 * @param prTime the prTime to set
+	 */
+	@Deprecated
+	public void setPrTime(final Integer prTime) {
+		this.prTime = prTime;
+	}
+
+	/**
+	 * @param resourceState the resourceState to set
+	 */
+	public void setResourceState(final StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+
+	/**
+	 * @param starCount the starCount to set
+	 */
+	public void setStarCount(final Integer starCount) {
+		this.starCount = starCount;
+	}
+
+	/**
+	 * @param starred the starred to set
+	 */
+	public void setStarred(final Boolean starred) {
+		this.starred = starred;
+	}
+
+	/**
+	 * @param starredDate the starredDate to set
+	 */
+	public void setStarredDate(final ZonedDateTime starredDate) {
+		this.starredDate = starredDate;
+	}
+
+	/**
+	 * @param startLatitude the startLatitude to set
+	 */
+	@Deprecated
+	public void setStartLatitude(final Float startLatitude) {
+		this.startLatitude = startLatitude;
+	}
+
+	/**
+	 * @param startLatlng the startLatlng to set
+	 */
+	public void setStartLatlng(final StravaMapPoint startLatlng) {
+		this.startLatlng = startLatlng;
+	}
+
+	/**
+	 * @param startLongitude the startLongitude to set
+	 */
+	@Deprecated
+	public void setStartLongitude(final Float startLongitude) {
+		this.startLongitude = startLongitude;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(final String state) {
+		this.state = state;
+	}
+
+	/**
+	 * @param totalElevationGain the totalElevationGain to set
+	 */
+	public void setTotalElevationGain(final Float totalElevationGain) {
+		this.totalElevationGain = totalElevationGain;
+	}
+
+	/**
+	 * @param updatedAt the updatedAt to set
+	 */
+	public void setUpdatedAt(final ZonedDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaSegment [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activityType=" + this.activityType
+				+ ", distance=" + this.distance + ", averageGrade=" + this.averageGrade + ", maximumGrade=" + this.maximumGrade + ", elevationHigh="
+				+ this.elevationHigh + ", elevationLow=" + this.elevationLow + ", startLatlng=" + this.startLatlng + ", endLatlng=" + this.endLatlng
+				+ ", climbCategory=" + this.climbCategory + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", privateSegment="
+				+ this.privateSegment + ", starred=" + this.starred + ", createdAt=" + this.createdAt + ", updatedAt=" + this.updatedAt
+				+ ", totalElevationGain=" + this.totalElevationGain + ", map=" + this.map + ", effortCount=" + this.effortCount + ", athleteCount="
+				+ this.athleteCount + ", hazardous=" + this.hazardous + ", starCount=" + this.starCount + ", athletePrEffort=" + this.athletePrEffort
+				+ ", starredDate=" + this.starredDate + ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", endLatitude="
+				+ this.endLatitude + ", endLongitude=" + this.endLongitude + ", prTime=" + this.prTime + ", athleteSegmentStats=" + this.athleteSegmentStats
+				+ "]";
 	}
 }

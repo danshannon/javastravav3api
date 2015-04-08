@@ -32,28 +32,28 @@ import javastrava.api.v3.service.impl.UploadServiceImpl;
  * <p>
  * The token acts as the bearer of authentication within each request to the Strava API.
  * </p>
- * 
+ *
  * <p>
  * A token is used to acquire an implementation of each of the service objects that sub-class {@link StravaServiceImpl}
  * </p>
- * 
+ *
  * <p>
  * Tokens are acquired through the OAuth process; this implementation of the API does not provide a purely programmatic way to acquire a token as that would
  * kind of destroy the point(!) - although once a user has given their permission to the application via the OAuth process, you can use
  * {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)} to acquire a token at that point in the process.
  * </p>
- * 
+ *
  * <p>
  * The application will now be able to make requests on the user’s behalf using the access_token query string parameter (GET) or POST/PUT body, or the
  * Authorization header. This is done auto-magically by javastrava.
  * </p>
- * 
+ *
  * <p>
  * Applications should check for a 401 Unauthorized response. Access for those tokens has been revoked by the user.
  * </p>
- * 
+ *
  * @see <a href="http://strava.github.io/api/v3/oauth/">http://strava.github.io/api/v3/oauth/</a>
- * 
+ *
  * @author Dan Shannon
  *
  */
@@ -61,43 +61,41 @@ public class Token {
 	/**
 	 * The {@link StravaAthlete athlete} to whom this token is assigned
 	 */
-	private final StravaAthlete athlete;
+	private StravaAthlete athlete;
+
 	/**
 	 * The value of the access token, which is used in requests issued via the API
 	 */
-	private final String token;
+	private String token;
+
 	/**
 	 * List of {@link AuthorisationScope authorisation scopes} granted for this token
 	 */
-	private final List<AuthorisationScope> scopes;
+	private List<AuthorisationScope> scopes;
 
 	/**
 	 * List of service implementations associated with this token
 	 */
-	private final HashMap<Class<? extends StravaService>, StravaService> services;
-	
+	private HashMap<Class<? extends StravaService>, StravaService> services;
+
 	/**
 	 * Token type used in the authorisation header of requests to the Strava API - usually set to "Bearer"
 	 */
-	private final String tokenType;
+	private String tokenType;
 
 	/**
 	 * No-args constructor
 	 */
 	public Token() {
 		super();
-		this.athlete = null;
-		this.scopes = null;
-		this.services = null;
-		this.token = null;
-		this.tokenType = null;
 	}
-	
+
 	/**
 	 * <p>
-	 * Default constructor is based on the {@link TokenResponse} structure received from {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
+	 * Default constructor is based on the {@link TokenResponse} structure received from
+	 * {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
 	 * </p>
-	 * 
+	 *
 	 * @param tokenResponse
 	 *            The response as received from {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
 	 * @param scopes
@@ -109,7 +107,7 @@ public class Token {
 		this.tokenType = tokenResponse.getTokenType();
 		this.scopes = Arrays.asList(scopes);
 		this.services = new HashMap<Class<? extends StravaService>, StravaService>();
-		
+
 		// Get pre-packed instances of all the services
 		this.addService(ActivityService.class, ActivityServiceImpl.instance(this));
 		this.addService(AthleteService.class, AthleteServiceImpl.instance(this));
@@ -126,7 +124,7 @@ public class Token {
 	 * <p>
 	 * Adds a service implementation into the Token's store
 	 * </p>
-	 * 
+	 *
 	 * @param class1
 	 *            The class of the service implementation
 	 * @param service
@@ -134,106 +132,6 @@ public class Token {
 	 */
 	public void addService(final Class<? extends StravaService> class1, final StravaService service) {
 		this.services.put(class1, service);
-	}
-
-	/**
-	 * <p>
-	 * Gets the service implementation of the required class from the token
-	 * </p>
-	 * 
-	 * @param <T> The class being returned
-	 * @param class1 The class to return
-	 * @return The implementation of the service required
-	 */
-	@SuppressWarnings("unchecked")
-	public <T extends StravaService> T getService(final Class<T> class1) {
-		return (T) this.services.get(class1);
-	}
-
-	/**
-	 * <p>
-	 * Removes the service from the Token's store
-	 * </p>
-	 * @param class1 The class of token to be removed
-	 */
-	public void removeService(final Class<? extends StravaService> class1) {
-		this.services.remove(class1);
-	}
-
-	/**
-	 * <p>
-	 * Validates that the token has write access (according to the scopes that it was granted on creation at least; it is quite possible that permissions have subsequently been revoked by the user)
-	 * </p>
-	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#WRITE}
-	 */
-	public boolean hasWriteAccess() {
-		if (this.scopes != null && this.scopes.contains(AuthorisationScope.WRITE)) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * <p>
-	 * Validates that the toke has view private access (according to the scopes that it was granted on creation at least; it is quite possible that permissions have subsequently been revoked by the user)
-	 * </p>
-	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#VIEW_PRIVATE}
-	 */
-	public boolean hasViewPrivate() {
-		if (this.scopes != null && this.scopes.contains(AuthorisationScope.VIEW_PRIVATE)) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @return the athlete
-	 */
-	public StravaAthlete getAthlete() {
-		return this.athlete;
-	}
-
-	/**
-	 * @return the token
-	 */
-	public String getToken() {
-		return this.token;
-	}
-
-	/**
-	 * @return the scopes
-	 */
-	public List<AuthorisationScope> getScopes() {
-		return this.scopes;
-	}
-
-	/**
-	 * @return the services
-	 */
-	public HashMap<Class<? extends StravaService>, StravaService> getServices() {
-		return this.services;
-	}
-
-	/**
-	 * @return the tokenType
-	 */
-	public String getTokenType() {
-		return this.tokenType;
-	}
-
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.athlete == null) ? 0 : this.athlete.hashCode());
-		result = prime * result + ((this.scopes == null) ? 0 : this.scopes.hashCode());
-		result = prime * result + ((this.services == null) ? 0 : this.services.hashCode());
-		result = prime * result + ((this.token == null) ? 0 : this.token.hashCode());
-		result = prime * result + ((this.tokenType == null) ? 0 : this.tokenType.hashCode());
-		return result;
 	}
 
 	/**
@@ -250,7 +148,7 @@ public class Token {
 		if (!(obj instanceof Token)) {
 			return false;
 		}
-		Token other = (Token) obj;
+		final Token other = (Token) obj;
 		if (this.athlete == null) {
 			if (other.athlete != null) {
 				return false;
@@ -287,6 +185,154 @@ public class Token {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return the athlete
+	 */
+	public StravaAthlete getAthlete() {
+		return this.athlete;
+	}
+
+	/**
+	 * @return the scopes
+	 */
+	public List<AuthorisationScope> getScopes() {
+		return this.scopes;
+	}
+
+	/**
+	 * <p>
+	 * Gets the service implementation of the required class from the token
+	 * </p>
+	 *
+	 * @param <T>
+	 *            The class being returned
+	 * @param class1
+	 *            The class to return
+	 * @return The implementation of the service required
+	 */
+	@SuppressWarnings("unchecked")
+	public <T extends StravaService> T getService(final Class<T> class1) {
+		return (T) this.services.get(class1);
+	}
+
+	/**
+	 * @return the services
+	 */
+	public HashMap<Class<? extends StravaService>, StravaService> getServices() {
+		return this.services;
+	}
+
+	/**
+	 * @return the token
+	 */
+	public String getToken() {
+		return this.token;
+	}
+
+	/**
+	 * @return the tokenType
+	 */
+	public String getTokenType() {
+		return this.tokenType;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.athlete == null) ? 0 : this.athlete.hashCode());
+		result = (prime * result) + ((this.scopes == null) ? 0 : this.scopes.hashCode());
+		result = (prime * result) + ((this.services == null) ? 0 : this.services.hashCode());
+		result = (prime * result) + ((this.token == null) ? 0 : this.token.hashCode());
+		result = (prime * result) + ((this.tokenType == null) ? 0 : this.tokenType.hashCode());
+		return result;
+	}
+
+	/**
+	 * <p>
+	 * Validates that the toke has view private access (according to the scopes that it was granted on creation at least; it is quite possible that permissions
+	 * have subsequently been revoked by the user)
+	 * </p>
+	 * 
+	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#VIEW_PRIVATE}
+	 */
+	public boolean hasViewPrivate() {
+		if ((this.scopes != null) && this.scopes.contains(AuthorisationScope.VIEW_PRIVATE)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * <p>
+	 * Validates that the token has write access (according to the scopes that it was granted on creation at least; it is quite possible that permissions have
+	 * subsequently been revoked by the user)
+	 * </p>
+	 * 
+	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#WRITE}
+	 */
+	public boolean hasWriteAccess() {
+		if ((this.scopes != null) && this.scopes.contains(AuthorisationScope.WRITE)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * <p>
+	 * Removes the service from the Token's store
+	 * </p>
+	 * 
+	 * @param class1
+	 *            The class of token to be removed
+	 */
+	public void removeService(final Class<? extends StravaService> class1) {
+		this.services.remove(class1);
+	}
+
+	/**
+	 * @param athlete
+	 *            the athlete to set
+	 */
+	public void setAthlete(final StravaAthlete athlete) {
+		this.athlete = athlete;
+	}
+
+	/**
+	 * @param scopes
+	 *            the scopes to set
+	 */
+	public void setScopes(final List<AuthorisationScope> scopes) {
+		this.scopes = scopes;
+	}
+
+	/**
+	 * @param services
+	 *            the services to set
+	 */
+	public void setServices(final HashMap<Class<? extends StravaService>, StravaService> services) {
+		this.services = services;
+	}
+
+	/**
+	 * @param token
+	 *            the token to set
+	 */
+	public void setToken(final String token) {
+		this.token = token;
+	}
+
+	/**
+	 * @param tokenType
+	 *            the tokenType to set
+	 */
+	public void setTokenType(final String tokenType) {
+		this.tokenType = tokenType;
 	}
 
 	/**

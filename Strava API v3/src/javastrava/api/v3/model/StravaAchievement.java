@@ -4,67 +4,22 @@ package javastrava.api.v3.model;
  * <p>
  * Authenticated user's achievement on a given segment effort
  * </p>
+ *
  * @author Dan Shannon
  *
  */
 public class StravaAchievement {
+	private Integer typeId;
+
+	private String type;
+	private Integer rank;
 	/**
 	 * No-args constructor
 	 */
 	public StravaAchievement() {
 		super();
 	}
-	private Integer typeId;
-	private String type;
-	private Integer rank;
-	/**
-	 * @return the typeId
-	 */
-	public Integer getTypeId() {
-		return this.typeId;
-	}
-	/**
-	 * @param typeId the typeId to set
-	 */
-	public void setTypeId(final Integer typeId) {
-		this.typeId = typeId;
-	}
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return this.type;
-	}
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(final String type) {
-		this.type = type;
-	}
-	/**
-	 * @return the rank
-	 */
-	public Integer getRank() {
-		return this.rank;
-	}
-	/**
-	 * @param rank the rank to set
-	 */
-	public void setRank(final Integer rank) {
-		this.rank = rank;
-	}
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.rank == null) ? 0 : this.rank.hashCode());
-		result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
-		result = prime * result + ((this.typeId == null) ? 0 : this.typeId.hashCode());
-		return result;
-	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -79,7 +34,7 @@ public class StravaAchievement {
 		if (!(obj instanceof StravaAchievement)) {
 			return false;
 		}
-		StravaAchievement other = (StravaAchievement) obj;
+		final StravaAchievement other = (StravaAchievement) obj;
 		if (this.rank == null) {
 			if (other.rank != null) {
 				return false;
@@ -103,6 +58,65 @@ public class StravaAchievement {
 		}
 		return true;
 	}
+
+	/**
+	 * @return the rank
+	 */
+	public Integer getRank() {
+		return this.rank;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return this.type;
+	}
+
+	/**
+	 * @return the typeId
+	 */
+	public Integer getTypeId() {
+		return this.typeId;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.rank == null) ? 0 : this.rank.hashCode());
+		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+		result = (prime * result) + ((this.typeId == null) ? 0 : this.typeId.hashCode());
+		return result;
+	}
+
+	/**
+	 * @param rank
+	 *            the rank to set
+	 */
+	public void setRank(final Integer rank) {
+		this.rank = rank;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(final String type) {
+		this.type = type;
+	}
+
+	/**
+	 * @param typeId
+	 *            the typeId to set
+	 */
+	public void setTypeId(final Integer typeId) {
+		this.typeId = typeId;
+	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

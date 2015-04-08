@@ -68,7 +68,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public StravaComment createComment(final Integer activityId, final String text) throws NotFoundException,
-			BadRequestException {
+	BadRequestException {
 		if ((text == null) || text.equals("")) { //$NON-NLS-1$
 			throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
 		}
@@ -166,7 +166,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
-		
+
 		// Activity must exist
 		final StravaActivity activity = getActivity(activityId);
 		if (activity == null) {
@@ -315,7 +315,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		return PagingHandler.handlePaging(
 				pagingInstruction,
 				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listActivityComments(id, markdown,
-						thisPage.getPage(), thisPage.getPageSize()))); 
+						thisPage.getPage(), thisPage.getPageSize())));
 	}
 
 	/**

@@ -5,7 +5,9 @@ import javastrava.api.v3.rest.API;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
-import lombok.extern.log4j.Log4j2;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * <p>
@@ -15,9 +17,8 @@ import lombok.extern.log4j.Log4j2;
  * @author Dan Shannon
  *
  */
-@Log4j2
 public abstract class StravaServiceImpl {
-	// private final AthleteService athleteService;
+	private static Logger log = LogManager.getLogger();
 
 	/**
 	 * Current request rate over the last 15 minutes
@@ -37,7 +38,7 @@ public abstract class StravaServiceImpl {
 	public static float requestRateDailyPercentage() {
 		final float percent = (StravaConfig.RATE_LIMIT_DAILY == 0 ? 0
 				: (100 * new Float(requestRateDaily).floatValue())
-						/ new Float(StravaConfig.RATE_LIMIT_DAILY).floatValue());
+				/ new Float(StravaConfig.RATE_LIMIT_DAILY).floatValue());
 		if (percent > 100) {
 			log.error(String.format(
 					Messages.string("StravaServiceImpl.exceededRateLimitDaily"), Integer.valueOf(requestRateDaily), Integer.valueOf(StravaConfig.RATE_LIMIT_DAILY), Float.valueOf(percent))); //$NON-NLS-1$
