@@ -214,7 +214,7 @@ public class StravaStream {
 	 */
 	@Override
 	public String toString() {
-		return "StravaStream [type=" + this.type + ", data=" + this.data + ", mapPoints=" + this.mapPoints + ", moving=" + this.moving + ", seriesType="
-				+ this.seriesType + ", originalSize=" + this.originalSize + ", resolution=" + this.resolution + "]";
+		return "StravaStream [type=" + this.type + ", data=" + this.data + ", mapPoints=" + this.mapPoints + ", moving=" + this.moving + ", seriesType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.seriesType + ", originalSize=" + this.originalSize + ", resolution=" + this.resolution + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }

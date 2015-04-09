@@ -134,7 +134,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 			return false;
 		}
 		for (StravaAPIError error : response.getErrors() ) {
-			if (error.getResource().equals("Application") && error.getCode().equals("invalid")) {
+			if (error.getResource().equals("Application") && error.getCode().equals("invalid")) { //$NON-NLS-1$ //$NON-NLS-2$
 				return true;
 			}
 		}

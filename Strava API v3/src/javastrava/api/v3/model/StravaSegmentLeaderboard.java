@@ -199,8 +199,8 @@ public class StravaSegmentLeaderboard {
 	 */
 	@Override
 	public String toString() {
-		return "StravaSegmentLeaderboard [entryCount=" + this.entryCount + ", effortCount=" + this.effortCount + ", neighborhoodCount="
-				+ this.neighborhoodCount + ", komType=" + this.komType + ", resourceState=" + this.resourceState + ", entries=" + this.entries
-				+ ", athleteEntries=" + this.athleteEntries + "]";
+		return "StravaSegmentLeaderboard [entryCount=" + this.entryCount + ", effortCount=" + this.effortCount + ", neighborhoodCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.neighborhoodCount + ", komType=" + this.komType + ", resourceState=" + this.resourceState + ", entries=" + this.entries //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", athleteEntries=" + this.athleteEntries + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

@@ -168,7 +168,7 @@ public class StravaSplit {
 	 */
 	@Override
 	public String toString() {
-		return "StravaSplit [distance=" + this.distance + ", elapsedTime=" + this.elapsedTime + ", elevationDifference=" + this.elevationDifference
-				+ ", movingTime=" + this.movingTime + ", split=" + this.split + "]";
+		return "StravaSplit [distance=" + this.distance + ", elapsedTime=" + this.elapsedTime + ", elevationDifference=" + this.elevationDifference //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", movingTime=" + this.movingTime + ", split=" + this.split + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }

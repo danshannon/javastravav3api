@@ -55,14 +55,14 @@ public class StravaAthleteSegmentStats {
 	private Integer effortCount;
 	private Integer prElapsedTime;
 	private LocalDate prDate;
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StravaAthleteSegmentStats [effortCount=" + this.effortCount + ", prElapsedTime=" + this.prElapsedTime + ", prDate=" + this.prDate + "]";
+		return "StravaAthleteSegmentStats [effortCount=" + this.effortCount + ", prElapsedTime=" + this.prElapsedTime + ", prDate=" + this.prDate + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -74,7 +74,7 @@ public class StravaAthleteSegmentStats {
 		result = prime * result + ((this.prElapsedTime == null) ? 0 : this.prElapsedTime.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

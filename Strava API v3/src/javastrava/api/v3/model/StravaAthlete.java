@@ -387,20 +387,20 @@ public class StravaAthlete {
 	public void setBadgeTypeId(final Integer badgeTypeId) {
 		this.badgeTypeId = badgeTypeId;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StravaAthlete [id=" + this.id + ", resourceState=" + this.resourceState + ", firstname=" + this.firstname + ", lastname=" + this.lastname
-				+ ", profileMedium=" + this.profileMedium + ", profile=" + this.profile + ", city=" + this.city + ", state=" + this.state + ", country="
-				+ this.country + ", sex=" + this.sex + ", friend=" + this.friend + ", follower=" + this.follower + ", premium=" + this.premium + ", createdAt="
-				+ this.createdAt + ", updatedAt=" + this.updatedAt + ", approveFollowers=" + this.approveFollowers + ", followerCount=" + this.followerCount
-				+ ", friendCount=" + this.friendCount + ", mutualFriendCount=" + this.mutualFriendCount + ", datePreference=" + this.datePreference
-				+ ", measurementPreference=" + this.measurementPreference + ", email=" + this.email + ", ftp=" + this.ftp + ", clubs=" + this.clubs + ", bikes="
-				+ this.bikes + ", shoes=" + this.shoes + ", weight=" + this.weight + ", badgeTypeId=" + this.badgeTypeId + "]";
+		return "StravaAthlete [id=" + this.id + ", resourceState=" + this.resourceState + ", firstname=" + this.firstname + ", lastname=" + this.lastname //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", profileMedium=" + this.profileMedium + ", profile=" + this.profile + ", city=" + this.city + ", state=" + this.state + ", country=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.country + ", sex=" + this.sex + ", friend=" + this.friend + ", follower=" + this.follower + ", premium=" + this.premium + ", createdAt=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.createdAt + ", updatedAt=" + this.updatedAt + ", approveFollowers=" + this.approveFollowers + ", followerCount=" + this.followerCount //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", friendCount=" + this.friendCount + ", mutualFriendCount=" + this.mutualFriendCount + ", datePreference=" + this.datePreference //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", measurementPreference=" + this.measurementPreference + ", email=" + this.email + ", ftp=" + this.ftp + ", clubs=" + this.clubs + ", bikes=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.bikes + ", shoes=" + this.shoes + ", weight=" + this.weight + ", badgeTypeId=" + this.badgeTypeId + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -437,7 +437,7 @@ public class StravaAthlete {
 		result = prime * result + ((this.weight == null) ? 0 : this.weight.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaWorkoutType;
 import javastrava.api.v3.service.ActivityService;
 import javastrava.api.v3.service.StreamService;
-
-import com.google.gson.annotations.SerializedName;
 
 /**
  * <p>
@@ -304,7 +304,7 @@ public class StravaActivity {
 	public StravaActivity() {
 		super();
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -1024,7 +1024,7 @@ public class StravaActivity {
 	public StravaWorkoutType getWorkoutType() {
 		return this.workoutType;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -1418,7 +1418,7 @@ public class StravaActivity {
 	public void setWorkoutType(final StravaWorkoutType workoutType) {
 		this.workoutType = workoutType;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

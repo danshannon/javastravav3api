@@ -284,8 +284,8 @@ public class StravaSegmentExplorerResponseSegment {
 	 */
 	@Override
 	public String toString() {
-		return "StravaSegmentExplorerResponseSegment [id=" + this.id + ", name=" + this.name + ", climbCategory=" + this.climbCategory + ", climbCategoryDesc="
-				+ this.climbCategoryDesc + ", avgGrade=" + this.avgGrade + ", startLatlng=" + this.startLatlng + ", endLatlng=" + this.endLatlng
-				+ ", elevDifference=" + this.elevDifference + ", distance=" + this.distance + ", points=" + this.points + "]";
+		return "StravaSegmentExplorerResponseSegment [id=" + this.id + ", name=" + this.name + ", climbCategory=" + this.climbCategory + ", climbCategoryDesc=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.climbCategoryDesc + ", avgGrade=" + this.avgGrade + ", startLatlng=" + this.startLatlng + ", endLatlng=" + this.endLatlng //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", elevDifference=" + this.elevDifference + ", distance=" + this.distance + ", points=" + this.points + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

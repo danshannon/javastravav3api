@@ -40,14 +40,14 @@ public class StravaActivityPhotos {
 	public void setCount(final Integer count) {
 		this.count = count;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StravaActivityPhotos [primary=" + this.primary + ", count=" + this.count + "]";
+		return "StravaActivityPhotos [primary=" + this.primary + ", count=" + this.count + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -58,7 +58,7 @@ public class StravaActivityPhotos {
 		result = prime * result + ((this.primary == null) ? 0 : this.primary.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

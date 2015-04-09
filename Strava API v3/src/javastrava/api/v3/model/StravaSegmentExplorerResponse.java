@@ -86,6 +86,6 @@ public class StravaSegmentExplorerResponse {
 	 */
 	@Override
 	public String toString() {
-		return "StravaSegmentExplorerResponse [segments=" + this.segments + "]";
+		return "StravaSegmentExplorerResponse [segments=" + this.segments + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

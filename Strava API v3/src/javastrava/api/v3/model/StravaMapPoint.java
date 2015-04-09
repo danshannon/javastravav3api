@@ -112,7 +112,7 @@ public class StravaMapPoint {
 	 */
 	@Override
 	public String toString() {
-		return "StravaMapPoint [latitude=" + this.latitude + ", longitude=" + this.longitude + "]";
+		return "StravaMapPoint [latitude=" + this.latitude + ", longitude=" + this.longitude + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 }

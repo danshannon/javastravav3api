@@ -307,8 +307,8 @@ public class StravaGear {
 	 */
 	@Override
 	public String toString() {
-		return "StravaGear [id=" + this.id + ", primary=" + this.primary + ", name=" + this.name + ", distance=" + this.distance + ", brandName="
-				+ this.brandName + ", modelName=" + this.modelName + ", frameType=" + this.frameType + ", description=" + this.description + ", resourceState="
-				+ this.resourceState + ", gearType=" + this.gearType + "]";
+		return "StravaGear [id=" + this.id + ", primary=" + this.primary + ", name=" + this.name + ", distance=" + this.distance + ", brandName=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.brandName + ", modelName=" + this.modelName + ", frameType=" + this.frameType + ", description=" + this.description + ", resourceState=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.resourceState + ", gearType=" + this.gearType + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

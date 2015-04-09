@@ -677,12 +677,12 @@ public class StravaSegmentEffort {
 	 */
 	@Override
 	public String toString() {
-		return "StravaSegmentEffort [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activity=" + this.activity
-				+ ", athlete=" + this.athlete + ", elapsedTime=" + this.elapsedTime + ", movingTime=" + this.movingTime + ", startDate=" + this.startDate
-				+ ", startDateLocal=" + this.startDateLocal + ", distance=" + this.distance + ", startIndex=" + this.startIndex + ", endIndex=" + this.endIndex
-				+ ", averageCadence=" + this.averageCadence + ", averageWatts=" + this.averageWatts + ", averageHeartrate=" + this.averageHeartrate
-				+ ", maxHeartrate=" + this.maxHeartrate + ", segment=" + this.segment + ", komRank=" + this.komRank + ", prRank=" + this.prRank + ", hidden="
-				+ this.hidden + ", isKom=" + this.isKom + ", achievements=" + this.achievements + ", athleteSegmentStats=" + this.athleteSegmentStats
-				+ ", deviceWatts=" + this.deviceWatts + "]";
+		return "StravaSegmentEffort [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activity=" + this.activity //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", athlete=" + this.athlete + ", elapsedTime=" + this.elapsedTime + ", movingTime=" + this.movingTime + ", startDate=" + this.startDate //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", startDateLocal=" + this.startDateLocal + ", distance=" + this.distance + ", startIndex=" + this.startIndex + ", endIndex=" + this.endIndex //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", averageCadence=" + this.averageCadence + ", averageWatts=" + this.averageWatts + ", averageHeartrate=" + this.averageHeartrate //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", maxHeartrate=" + this.maxHeartrate + ", segment=" + this.segment + ", komRank=" + this.komRank + ", prRank=" + this.prRank + ", hidden=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.hidden + ", isKom=" + this.isKom + ", achievements=" + this.achievements + ", athleteSegmentStats=" + this.athleteSegmentStats //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", deviceWatts=" + this.deviceWatts + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

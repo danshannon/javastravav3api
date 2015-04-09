@@ -179,7 +179,7 @@ public class StravaUploadResponse {
 	 */
 	@Override
 	public String toString() {
-		return "StravaUploadResponse [id=" + this.id + ", externalId=" + this.externalId + ", error=" + this.error + ", status=" + this.status
-				+ ", activityId=" + this.activityId + "]";
+		return "StravaUploadResponse [id=" + this.id + ", externalId=" + this.externalId + ", error=" + this.error + ", status=" + this.status //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", activityId=" + this.activityId + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

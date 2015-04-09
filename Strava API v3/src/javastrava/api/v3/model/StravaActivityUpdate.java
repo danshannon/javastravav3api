@@ -1,10 +1,10 @@
 package javastrava.api.v3.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.rest.ActivityAPI;
 import javastrava.api.v3.service.ActivityService;
-
-import com.google.gson.annotations.SerializedName;
 
 /**
  * <p>
@@ -212,8 +212,8 @@ public class StravaActivityUpdate {
 	 */
 	@Override
 	public String toString() {
-		return "StravaActivityUpdate [name=" + this.name + ", type=" + this.type + ", privateActivity=" + this.privateActivity + ", commute=" + this.commute
-				+ ", trainer=" + this.trainer + ", gearId=" + this.gearId + ", description=" + this.description + "]";
+		return "StravaActivityUpdate [name=" + this.name + ", type=" + this.type + ", privateActivity=" + this.privateActivity + ", commute=" + this.commute //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", trainer=" + this.trainer + ", gearId=" + this.gearId + ", description=" + this.description + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 }

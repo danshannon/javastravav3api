@@ -59,14 +59,14 @@ public class StravaActivityZoneDistributionBucket {
 	 * Total time in seconds spent in this zone
 	 */
 	private Integer time;
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StravaActivityZoneDistributionBucket [max=" + this.max + ", min=" + this.min + ", time=" + this.time + "]";
+		return "StravaActivityZoneDistributionBucket [max=" + this.max + ", min=" + this.min + ", time=" + this.time + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -78,7 +78,7 @@ public class StravaActivityZoneDistributionBucket {
 		result = prime * result + ((this.time == null) ? 0 : this.time.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

@@ -240,8 +240,8 @@ public class StravaStatistics {
 	 */
 	@Override
 	public String toString() {
-		return "StravaStatistics [biggestRideDistance=" + this.biggestRideDistance + ", biggestClimbElevationGain=" + this.biggestClimbElevationGain
-				+ ", recentRideTotals=" + this.recentRideTotals + ", recentRunTotals=" + this.recentRunTotals + ", ytdRideTotals=" + this.ytdRideTotals
-				+ ", ytdRunTotals=" + this.ytdRunTotals + ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals + "]";
+		return "StravaStatistics [biggestRideDistance=" + this.biggestRideDistance + ", biggestClimbElevationGain=" + this.biggestClimbElevationGain //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", recentRideTotals=" + this.recentRideTotals + ", recentRunTotals=" + this.recentRunTotals + ", ytdRideTotals=" + this.ytdRideTotals //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", ytdRunTotals=" + this.ytdRunTotals + ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

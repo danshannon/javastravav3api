@@ -1,10 +1,10 @@
 package javastrava.api.v3.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import javastrava.api.v3.model.reference.StravaClubType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSportType;
-
-import com.google.gson.annotations.SerializedName;
 
 /**
  * <p>
@@ -354,9 +354,9 @@ public class StravaClub {
 	 */
 	@Override
 	public String toString() {
-		return "StravaClub [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", profileMedium=" + this.profileMedium
-				+ ", profile=" + this.profile + ", description=" + this.description + ", clubType=" + this.clubType + ", sportType=" + this.sportType
-				+ ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", privateClub=" + this.privateClub + ", memberCount="
-				+ this.memberCount + "]";
+		return "StravaClub [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", profileMedium=" + this.profileMedium //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", profile=" + this.profile + ", description=" + this.description + ", clubType=" + this.clubType + ", sportType=" + this.sportType //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", privateClub=" + this.privateClub + ", memberCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.memberCount + "]"; //$NON-NLS-1$
 	}
 }

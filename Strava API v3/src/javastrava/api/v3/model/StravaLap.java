@@ -639,11 +639,11 @@ public class StravaLap {
 	 */
 	@Override
 	public String toString() {
-		return "StravaLap [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activity=" + this.activity + ", athlete="
-				+ this.athlete + ", elapsedTime=" + this.elapsedTime + ", movingTime=" + this.movingTime + ", startDate=" + this.startDate
-				+ ", startDateLocal=" + this.startDateLocal + ", distance=" + this.distance + ", startIndex=" + this.startIndex + ", endIndex=" + this.endIndex
-				+ ", totalElevationGain=" + this.totalElevationGain + ", averageSpeed=" + this.averageSpeed + ", maxSpeed=" + this.maxSpeed
-				+ ", averageCadence=" + this.averageCadence + ", averageWatts=" + this.averageWatts + ", deviceWatts=" + this.deviceWatts
-				+ ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", lapIndex=" + this.lapIndex + "]";
+		return "StravaLap [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activity=" + this.activity + ", athlete=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.athlete + ", elapsedTime=" + this.elapsedTime + ", movingTime=" + this.movingTime + ", startDate=" + this.startDate //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", startDateLocal=" + this.startDateLocal + ", distance=" + this.distance + ", startIndex=" + this.startIndex + ", endIndex=" + this.endIndex //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", totalElevationGain=" + this.totalElevationGain + ", averageSpeed=" + this.averageSpeed + ", maxSpeed=" + this.maxSpeed //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", averageCadence=" + this.averageCadence + ", averageWatts=" + this.averageWatts + ", deviceWatts=" + this.deviceWatts //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", lapIndex=" + this.lapIndex + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

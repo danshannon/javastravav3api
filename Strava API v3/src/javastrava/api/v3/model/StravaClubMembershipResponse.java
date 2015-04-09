@@ -100,6 +100,6 @@ public class StravaClubMembershipResponse {
 	 */
 	@Override
 	public String toString() {
-		return "StravaClubMembershipResponse [success=" + this.success + ", active=" + this.active + "]";
+		return "StravaClubMembershipResponse [success=" + this.success + ", active=" + this.active + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }

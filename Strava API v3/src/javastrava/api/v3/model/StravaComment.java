@@ -190,7 +190,7 @@ public class StravaComment {
 	 */
 	@Override
 	public String toString() {
-		return "StravaComment [id=" + this.id + ", resourceState=" + this.resourceState + ", activityId=" + this.activityId + ", text=" + this.text
-				+ ", athlete=" + this.athlete + ", createdAt=" + this.createdAt + "]";
+		return "StravaComment [id=" + this.id + ", resourceState=" + this.resourceState + ", activityId=" + this.activityId + ", text=" + this.text //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", athlete=" + this.athlete + ", createdAt=" + this.createdAt + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }

@@ -97,6 +97,6 @@ public class StravaResponse {
 	 */
 	@Override
 	public String toString() {
-		return "StravaResponse [message=" + this.message + ", errors=" + this.errors + "]";
+		return "StravaResponse [message=" + this.message + ", errors=" + this.errors + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }

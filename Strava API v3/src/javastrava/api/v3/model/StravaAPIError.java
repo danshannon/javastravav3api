@@ -52,14 +52,14 @@ public class StravaAPIError {
 	public void setCode(final String code) {
 		this.code = code;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StravaAPIError [resource=" + this.resource + ", field=" + this.field + ", code=" + this.code + "]";
+		return "StravaAPIError [resource=" + this.resource + ", field=" + this.field + ", code=" + this.code + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -71,7 +71,7 @@ public class StravaAPIError {
 		result = prime * result + ((this.resource == null) ? 0 : this.resource.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

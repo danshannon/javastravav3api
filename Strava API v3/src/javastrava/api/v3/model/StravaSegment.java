@@ -2,13 +2,13 @@ package javastrava.api.v3.model;
 
 import java.time.ZonedDateTime;
 
+import com.google.gson.annotations.SerializedName;
+
 import javastrava.api.v3.model.reference.StravaClimbCategory;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentActivityType;
 import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.StreamService;
-
-import com.google.gson.annotations.SerializedName;
 
 /**
  * <p>
@@ -912,15 +912,15 @@ public class StravaSegment {
 	 */
 	@Override
 	public String toString() {
-		return "StravaSegment [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activityType=" + this.activityType
-				+ ", distance=" + this.distance + ", averageGrade=" + this.averageGrade + ", maximumGrade=" + this.maximumGrade + ", elevationHigh="
-				+ this.elevationHigh + ", elevationLow=" + this.elevationLow + ", startLatlng=" + this.startLatlng + ", endLatlng=" + this.endLatlng
-				+ ", climbCategory=" + this.climbCategory + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", privateSegment="
-				+ this.privateSegment + ", starred=" + this.starred + ", createdAt=" + this.createdAt + ", updatedAt=" + this.updatedAt
-				+ ", totalElevationGain=" + this.totalElevationGain + ", map=" + this.map + ", effortCount=" + this.effortCount + ", athleteCount="
-				+ this.athleteCount + ", hazardous=" + this.hazardous + ", starCount=" + this.starCount + ", athletePrEffort=" + this.athletePrEffort
-				+ ", starredDate=" + this.starredDate + ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", endLatitude="
-				+ this.endLatitude + ", endLongitude=" + this.endLongitude + ", prTime=" + this.prTime + ", athleteSegmentStats=" + this.athleteSegmentStats
-				+ "]";
+		return "StravaSegment [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activityType=" + this.activityType //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", distance=" + this.distance + ", averageGrade=" + this.averageGrade + ", maximumGrade=" + this.maximumGrade + ", elevationHigh=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.elevationHigh + ", elevationLow=" + this.elevationLow + ", startLatlng=" + this.startLatlng + ", endLatlng=" + this.endLatlng //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", climbCategory=" + this.climbCategory + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", privateSegment=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.privateSegment + ", starred=" + this.starred + ", createdAt=" + this.createdAt + ", updatedAt=" + this.updatedAt //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", totalElevationGain=" + this.totalElevationGain + ", map=" + this.map + ", effortCount=" + this.effortCount + ", athleteCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.athleteCount + ", hazardous=" + this.hazardous + ", starCount=" + this.starCount + ", athletePrEffort=" + this.athletePrEffort //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", starredDate=" + this.starredDate + ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", endLatitude=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.endLatitude + ", endLongitude=" + this.endLongitude + ", prTime=" + this.prTime + ", athleteSegmentStats=" + this.athleteSegmentStats //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ "]"; //$NON-NLS-1$
 	}
 }

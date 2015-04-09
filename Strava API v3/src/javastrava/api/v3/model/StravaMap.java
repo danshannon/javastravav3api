@@ -159,7 +159,7 @@ public class StravaMap {
 	 */
 	@Override
 	public String toString() {
-		return "StravaMap [id=" + this.id + ", polyline=" + this.polyline + ", summaryPolyline=" + this.summaryPolyline + ", resourceState="
-				+ this.resourceState + "]";
+		return "StravaMap [id=" + this.id + ", polyline=" + this.polyline + ", summaryPolyline=" + this.summaryPolyline + ", resourceState=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.resourceState + "]"; //$NON-NLS-1$
 	}
 }

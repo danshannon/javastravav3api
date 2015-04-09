@@ -359,9 +359,9 @@ public class StravaBestRunningEffort {
 	 */
 	@Override
 	public String toString() {
-		return "StravaBestRunningEffort [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", segment=" + this.segment
-				+ ", activity=" + this.activity + ", athlete=" + this.athlete + ", komRank=" + this.komRank + ", prRank=" + this.prRank + ", elapsedTime="
-				+ this.elapsedTime + ", movingTime=" + this.movingTime + ", startDate=" + this.startDate + ", startDateLocal=" + this.startDateLocal
-				+ ", distance=" + this.distance + "]";
+		return "StravaBestRunningEffort [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", segment=" + this.segment //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", activity=" + this.activity + ", athlete=" + this.athlete + ", komRank=" + this.komRank + ", prRank=" + this.prRank + ", elapsedTime=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.elapsedTime + ", movingTime=" + this.movingTime + ", startDate=" + this.startDate + ", startDateLocal=" + this.startDateLocal //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", distance=" + this.distance + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

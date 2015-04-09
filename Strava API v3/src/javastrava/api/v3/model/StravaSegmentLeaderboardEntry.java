@@ -408,10 +408,10 @@ public class StravaSegmentLeaderboardEntry {
 	 */
 	@Override
 	public String toString() {
-		return "StravaSegmentLeaderboardEntry [athleteName=" + this.athleteName + ", athleteId=" + this.athleteId + ", athleteGender=" + this.athleteGender
-				+ ", averageHr=" + this.averageHr + ", averageWatts=" + this.averageWatts + ", distance=" + this.distance + ", elapsedTime=" + this.elapsedTime
-				+ ", movingTime=" + this.movingTime + ", startDate=" + this.startDate + ", startDateLocal=" + this.startDateLocal + ", activityId="
-				+ this.activityId + ", effortId=" + this.effortId + ", rank=" + this.rank + ", athleteProfile=" + this.athleteProfile + ", neighborhoodIndex="
-				+ this.neighborhoodIndex + "]";
+		return "StravaSegmentLeaderboardEntry [athleteName=" + this.athleteName + ", athleteId=" + this.athleteId + ", athleteGender=" + this.athleteGender //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", averageHr=" + this.averageHr + ", averageWatts=" + this.averageWatts + ", distance=" + this.distance + ", elapsedTime=" + this.elapsedTime //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", movingTime=" + this.movingTime + ", startDate=" + this.startDate + ", startDateLocal=" + this.startDateLocal + ", activityId=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.activityId + ", effortId=" + this.effortId + ", rank=" + this.rank + ", athleteProfile=" + this.athleteProfile + ", neighborhoodIndex=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.neighborhoodIndex + "]"; //$NON-NLS-1$
 	}
 }
