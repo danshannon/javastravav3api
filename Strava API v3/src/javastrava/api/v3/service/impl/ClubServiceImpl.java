@@ -11,6 +11,7 @@ import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
+import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.service.ClubService;
 import javastrava.api.v3.service.exception.NotFoundException;
@@ -159,7 +160,7 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	public List<StravaAthlete> listClubMembers(final Integer id, final Paging pagingInstruction) {
 		return PagingHandler.handlePaging(
 				pagingInstruction,
-				thisPage -> Arrays.asList(ClubServiceImpl.this.api.listClubMembers(id, thisPage.getPage(),
+				thisPage -> Arrays.asList(this.api.listClubMembers(id, thisPage.getPage(),
 						thisPage.getPageSize())));
 	}
 
@@ -188,6 +189,22 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 						thisPage.getPageSize())));
 
 		return PrivacyUtils.handlePrivateActivities(activities, this.getToken());
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubAnnouncements(java.lang.Integer)
+	 */
+	@Override
+	public List<StravaClubAnnouncement> listClubAnnouncements(final Integer clubId) {
+		List<StravaClubAnnouncement> announcements;
+		try {
+			announcements = Arrays.asList(this.api.listClubAnnouncements(clubId));
+		} catch (NotFoundException e) {
+			return null;
+		} catch (UnauthorizedException e) {
+			return new ArrayList<StravaClubAnnouncement>();
+		}
+		return announcements;
 	}
 
 }

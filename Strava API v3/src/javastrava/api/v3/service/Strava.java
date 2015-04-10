@@ -14,6 +14,7 @@ import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
+import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaGear;
@@ -1083,5 +1084,15 @@ public class Strava {
 	 */
 	public StravaUploadResponse checkUploadStatus(final Integer uploadId) {
 		return this.uploadService.checkUploadStatus(uploadId);
+	}
+
+	/**
+	 * @param clubId The club id for which announcements should be returned
+	 * @return Array of {@link StravaClubAnnouncement} for the given {@link StravaClub club}
+	 * @see javastrava.api.v3.service.ClubService#listClubAnnouncements(java.lang.Integer)
+	 */
+	public List<StravaClubAnnouncement> listClubAnnouncements(final Integer clubId) {
+		return this.clubService.listClubAnnouncements(clubId);
+		
 	}
 }

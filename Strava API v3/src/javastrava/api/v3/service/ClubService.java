@@ -5,6 +5,7 @@ import java.util.List;
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
+import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.util.Paging;
@@ -281,4 +282,24 @@ public interface ClubService extends StravaService {
 	 * @return Returns an array of {@link StravaActivity activity} summary {@link StravaResourceState representations}.
 	 */
 	public List<StravaActivity> listAllRecentClubActivities(final Integer clubId);
+	
+	/**
+	 * <p>Announcements are posts sent by Club Admins or Owners to the members of a club.</p>
+	 * 
+	 * <p>Only members of private clubs can access their announcements. </p>
+	 * 
+	 * <p>The objects are returned in summary representation.</p>
+	 * 
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 * 
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club</p>
+	 * 
+	 * <p>Pagination is not supported</p>
+	 * 
+	 * @see <a href="http://strava.github.io/api/v3/clubs/#get-announcements">http://strava.github.io/api/v3/clubs/#get-announcements</a>
+	 * 
+	 * @param clubId The id of the {@link StravaClub} for which announcements should be returned.
+	 * @return Returns a list of {@link StravaClubAnnouncement announcements}
+	 */
+	public List<StravaClubAnnouncement> listClubAnnouncements(final Integer clubId);
 }

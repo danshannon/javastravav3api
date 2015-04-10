@@ -6,6 +6,7 @@ package javastrava.api.v3.rest;
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
+import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
@@ -87,4 +88,12 @@ public interface ClubAPI {
 	 */
 	@POST("/clubs/{id}/leave")
 	public StravaClubMembershipResponse leave(@Path("id") final Integer clubId) throws NotFoundException;
+	
+	/**
+	 * @param clubId The club for which to list announcements
+	 * @return Array of {@link StravaClubAnnouncement}s
+	 * @throws NotFoundException If the club does not exist
+	 */
+	@GET("/clubs/{id}/announcements")
+	public StravaClubAnnouncement[] listClubAnnouncements(@Path("id") final Integer clubId) throws NotFoundException;
 }

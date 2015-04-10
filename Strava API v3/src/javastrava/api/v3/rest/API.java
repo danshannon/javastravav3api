@@ -10,6 +10,7 @@ import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
+import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaGear;
@@ -738,6 +739,16 @@ public class API {
 	 */
 	public StravaUploadResponse checkUploadStatus(final Integer uploadId) {
 		return this.uploadAPI.checkUploadStatus(uploadId);
+	}
+
+	/**
+	 * @param clubId The club id for which announcements should be returned
+	 * @return Array of {@link StravaClubAnnouncement} for the given {@link StravaClub club}
+	 * @throws NotFoundException If the club with the given id does not exist
+	 * @see ClubAPI#listClubAnnouncements(Integer)
+	 */
+	public StravaClubAnnouncement[] listClubAnnouncements(final Integer clubId) throws NotFoundException {
+		return this.clubAPI.listClubAnnouncements(clubId);
 	}
 
 }
