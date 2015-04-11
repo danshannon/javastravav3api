@@ -4,7 +4,9 @@
 package javastrava.util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaActivity;
@@ -15,9 +17,11 @@ import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaSegmentLeaderboard;
 import javastrava.api.v3.model.StravaSegmentLeaderboardEntry;
 import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.api.v3.service.ActivityService;
+import javastrava.api.v3.service.SegmentService;
 
 /**
- * @author danshannon
+ * @author Dan Shannon
  *
  */
 public class PrivacyUtils {
@@ -197,6 +201,9 @@ public class PrivacyUtils {
 	}
 
 	/**
+	 * <p>
+	 * Returns the list of segments with any that should be flagged as private having their data cleared and resource state set to {@link StravaResourceState#PRIVATE}
+	 * </p>
 	 * @param efforts List of efforts to be 'privatised'
 	 * @param token The access token in use
 	 * @return Modified list of efforts
@@ -205,8 +212,46 @@ public class PrivacyUtils {
 		if (efforts == null) {
 			return null;
 		}
-		// TODO Issue #93 improve this!
-		return efforts;
+		
+		// Build a set of segments and activities to check for privacy
+		Set<StravaActivity> activities = new HashSet<StravaActivity>();
+		Set<StravaSegment> segments = new HashSet<StravaSegment>();
+		for (StravaSegmentEffort effort : efforts) {
+			activities.add(effort.getActivity());
+			segments.add(effort.getSegment());
+		}
+		
+		// Now make a list of the activities that are private
+		Set<StravaActivity> privateActivities = new HashSet<StravaActivity>();
+		for (StravaActivity activity : activities) {
+			StravaActivity stravaActivity = token.getService(ActivityService.class).getActivity(activity.getId());
+			if (stravaActivity.getResourceState() == StravaResourceState.PRIVATE) {
+				privateActivities.add(activity);
+			}
+		}
+		
+		// Now make a list of the segments that are private
+		Set<StravaSegment> privateSegments = new HashSet<StravaSegment>();
+		for (StravaSegment segment : segments) {
+			StravaSegment stravaSegment = token.getService(SegmentService.class).getSegment(segment.getId());
+			if (stravaSegment.getResourceState() == StravaResourceState.PRIVATE) {
+				privateSegments.add(segment);
+			}
+		}
+		
+		// Now run through all the efforts and fix the ones for private segments/activities
+		List<StravaSegmentEffort> returnedEfforts = new ArrayList<StravaSegmentEffort>();
+		for (StravaSegmentEffort effort : efforts) {
+			if (privateActivities.contains(effort.getActivity()) || privateSegments.contains(effort.getSegment())) {
+				returnedEfforts.add(privateSegmentEffort(effort.getId()));
+			} else {
+				returnedEfforts.add(effort);
+			}
+		}
+		
+		// That's it
+		return returnedEfforts;
+		
 	}
 
 }
