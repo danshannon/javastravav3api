@@ -9,54 +9,18 @@ package javastrava.api.v3.model;
  */
 public class StravaActivityPhotos {
 	/**
-	 * 
+	 * Primary photo
+	 */
+	private StravaPhoto primary;
+	/**
+	 * Total number of photos (instagram + native)
+	 */
+	private Integer count;
+	/**
+	 *
 	 */
 	public StravaActivityPhotos() {
 		super();
-	}
-	private StravaPhoto primary;
-	private Integer count;
-	/**
-	 * @return the primary
-	 */
-	public StravaPhoto getPrimary() {
-		return this.primary;
-	}
-	/**
-	 * @param primary the primary to set
-	 */
-	public void setPrimary(final StravaPhoto primary) {
-		this.primary = primary;
-	}
-	/**
-	 * @return the count
-	 */
-	public Integer getCount() {
-		return this.count;
-	}
-	/**
-	 * @param count the count to set
-	 */
-	public void setCount(final Integer count) {
-		this.count = count;
-	}
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "StravaActivityPhotos [primary=" + this.primary + ", count=" + this.count + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.count == null) ? 0 : this.count.hashCode());
-		result = prime * result + ((this.primary == null) ? 0 : this.primary.hashCode());
-		return result;
 	}
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -72,7 +36,7 @@ public class StravaActivityPhotos {
 		if (!(obj instanceof StravaActivityPhotos)) {
 			return false;
 		}
-		StravaActivityPhotos other = (StravaActivityPhotos) obj;
+		final StravaActivityPhotos other = (StravaActivityPhotos) obj;
 		if (this.count == null) {
 			if (other.count != null) {
 				return false;
@@ -88,6 +52,48 @@ public class StravaActivityPhotos {
 			return false;
 		}
 		return true;
+	}
+	/**
+	 * @return the count
+	 */
+	public Integer getCount() {
+		return this.count;
+	}
+	/**
+	 * @return the primary
+	 */
+	public StravaPhoto getPrimary() {
+		return this.primary;
+	}
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.count == null) ? 0 : this.count.hashCode());
+		result = (prime * result) + ((this.primary == null) ? 0 : this.primary.hashCode());
+		return result;
+	}
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(final Integer count) {
+		this.count = count;
+	}
+	/**
+	 * @param primary the primary to set
+	 */
+	public void setPrimary(final StravaPhoto primary) {
+		this.primary = primary;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaActivityPhotos [primary=" + this.primary + ", count=" + this.count + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 }

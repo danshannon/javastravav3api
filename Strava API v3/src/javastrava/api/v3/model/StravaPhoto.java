@@ -2,6 +2,7 @@ package javastrava.api.v3.model;
 
 import java.time.ZonedDateTime;
 
+import javastrava.api.v3.model.reference.StravaPhotoSource;
 import javastrava.api.v3.model.reference.StravaPhotoType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 
@@ -54,7 +55,7 @@ public class StravaPhoto {
 	 * Location of the photo
 	 */
 	private StravaMapPoint		location;
-	private Integer source;
+	private StravaPhotoSource source;
 
 	private StravaPhotoUrls urls;
 	private String uniqueId;
@@ -124,11 +125,7 @@ public class StravaPhoto {
 		if (this.resourceState != other.resourceState) {
 			return false;
 		}
-		if (this.source == null) {
-			if (other.source != null) {
-				return false;
-			}
-		} else if (!this.source.equals(other.source)) {
+		if (this.source != other.source) {
 			return false;
 		}
 		if (this.type != other.type) {
@@ -209,7 +206,7 @@ public class StravaPhoto {
 	/**
 	 * @return the source
 	 */
-	public Integer getSource() {
+	public StravaPhotoSource getSource() {
 		return this.source;
 	}
 	/**
@@ -309,7 +306,7 @@ public class StravaPhoto {
 	/**
 	 * @param source the source to set
 	 */
-	public void setSource(final Integer source) {
+	public void setSource(final StravaPhotoSource source) {
 		this.source = source;
 	}
 	/**

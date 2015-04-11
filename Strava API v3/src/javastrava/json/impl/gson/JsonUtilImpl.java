@@ -21,6 +21,7 @@ import javastrava.api.v3.model.reference.StravaFrameType;
 import javastrava.api.v3.model.reference.StravaGender;
 import javastrava.api.v3.model.reference.StravaLeaderboardDateRange;
 import javastrava.api.v3.model.reference.StravaMeasurementMethod;
+import javastrava.api.v3.model.reference.StravaPhotoSource;
 import javastrava.api.v3.model.reference.StravaPhotoType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentActivityType;
@@ -56,6 +57,7 @@ import javastrava.json.impl.gson.serializer.ResourceStateSerializer;
 import javastrava.json.impl.gson.serializer.SegmentActivityTypeSerializer;
 import javastrava.json.impl.gson.serializer.SegmentExplorerActivityTypeSerializer;
 import javastrava.json.impl.gson.serializer.SportTypeSerializer;
+import javastrava.json.impl.gson.serializer.StravaPhotoSourceSerializer;
 import javastrava.json.impl.gson.serializer.StravaStreamSerializer;
 import javastrava.json.impl.gson.serializer.StreamResolutionTypeSerializer;
 import javastrava.json.impl.gson.serializer.StreamSeriesDownsamplingTypeSerializer;
@@ -73,9 +75,9 @@ import com.google.gson.JsonParseException;
  * <p>
  * GSON implementation of JSON utilities
  * </p>
- * 
+ *
  * @author Dan Shannon
- * 
+ *
  */
 public class JsonUtilImpl implements JsonUtil {
 	private final GsonBuilder gsonBuilder;
@@ -105,6 +107,7 @@ public class JsonUtilImpl implements JsonUtil {
 		this.gsonBuilder.registerTypeAdapter(StravaLeaderboardDateRange.class, new LeaderboardDateRangeSerializer());
 		this.gsonBuilder.registerTypeAdapter(StravaMapPoint.class, new MapPointSerializer());
 		this.gsonBuilder.registerTypeAdapter(StravaMeasurementMethod.class, new MeasurementMethodSerializer());
+		this.gsonBuilder.registerTypeAdapter(StravaPhotoSource.class, new StravaPhotoSourceSerializer());
 		this.gsonBuilder.registerTypeAdapter(StravaPhotoType.class, new PhotoTypeSerializer());
 		this.gsonBuilder.registerTypeAdapter(StravaResourceState.class, new ResourceStateSerializer());
 		this.gsonBuilder.registerTypeAdapter(StravaSegmentActivityType.class, new SegmentActivityTypeSerializer());
@@ -138,9 +141,16 @@ public class JsonUtilImpl implements JsonUtil {
 	public <T> T deserialise(final String is, final Class<T> class1) throws JsonSerialisationException {
 		try {
 			return this.gson.fromJson(is, class1);
-		} catch (JsonParseException e) {
+		} catch (final JsonParseException e) {
 			throw new JsonSerialisationException(String.format(Messages.string("JsonUtilImpl.failedToDeserialiseString"), is, class1.getName()), e); //$NON-NLS-1$
 		}
+	}
+
+	/**
+	 * @return The GSON
+	 */
+	public Gson getGson() {
+		return this.gson;
 	}
 
 	/**
@@ -149,12 +159,5 @@ public class JsonUtilImpl implements JsonUtil {
 	@Override
 	public <T> String serialise(final T object) throws JsonSerialisationException {
 		return this.gson.toJson(object);
-	}
-
-	/**
-	 * @return The GSON
-	 */
-	public Gson getGson() {
-		return this.gson;
 	}
 }
