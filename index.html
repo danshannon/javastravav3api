@@ -36,7 +36,7 @@
 
 <p>Strava API v3 implementation written in Java v8</p>
 
-<p>Javastrava is a functionally complete implementation of the Strava API (v3). It includes all the changes made to the API up to March 10, 2015.</p>
+<p>Javastrava is a functionally complete implementation of the Strava API (v3). It includes all the changes made to the API up to April 7, 2015.</p>
 
 <p>It consists of 2 layers which implement the API:</p>
 
@@ -53,7 +53,7 @@
 <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;com.github.danshannon&lt;/groupId&gt;
     &lt;artifactId&gt;javastrava-api&lt;/artifactId&gt;
-    &lt;version&gt;0.9.0-BETA&lt;/version&gt;
+    &lt;version&gt;0.9.1-BETA&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
 
@@ -141,8 +141,8 @@ Token token = new Token(response);
 <a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h1>
 
 <ul>
-<li>We use Lombok for simplicity of bean code; if you want to modify or compile the project, you'll need the appropriate plugin for your chosen IDE from lombok.org</li>
 <li>The REST client is written using Retrofit, because it makes life ridiculously easy</li>
+<li>JSON (de)serialisation uses GSON</li>
 </ul>
       </section>
     </div>
