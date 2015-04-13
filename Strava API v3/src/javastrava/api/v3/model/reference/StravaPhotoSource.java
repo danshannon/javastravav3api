@@ -8,18 +8,19 @@ import javastrava.config.StravaConfig;
 import javastrava.json.impl.gson.serializer.ClimbCategorySerializer;
 
 /**
- * @author danshannon
+ * <p>Identifies the source of a photo which has been attached to an activity</p>
+ * @author Dan Shannon
  *
  */
 public enum StravaPhotoSource {
 	/**
 	 * Photo uploaded directly to Strava
 	 */
-	STRAVA(Integer.valueOf(1),"Strava"),
+	STRAVA(StravaConfig.integer("StravaPhotoSource.strava"),Messages.string("StravaPhotoSource.strava.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Photo from Instagram
 	 */
-	INSTAGRAM(Integer.valueOf(2),"Instagram"),
+	INSTAGRAM(StravaConfig.integer("StravaPhotoSource.instagram"),Messages.string("StravaPhotoSource.instagram.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Unknown
 	 */

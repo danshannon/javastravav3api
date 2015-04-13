@@ -83,12 +83,12 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// Activity must exist
 		final StravaActivity activity = getActivity(activityId);
 		if (activity == null) {
-			throw new NotFoundException("Cannot comment on an activity that does not exist");
+			throw new NotFoundException(Messages.string("ActivityServiceImpl.commentOnInvalidActivity")); //$NON-NLS-1$
 		}
 
 		// If activity is private and not accessible, cannot be commented on
 		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
-			throw new UnauthorizedException("Cannot comment on a private activity without view_private scope");
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.commentOnPrivateActivity")); //$NON-NLS-1$
 		}
 
 		// Create the comment
@@ -103,13 +103,13 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	public StravaActivity createManualActivity(final StravaActivity activity) {
 		// Token must have write access
 		if (!getToken().hasWriteAccess()) {
-			throw new UnauthorizedException("Cannot create an activity without write access!");
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.createActivityWithoutWriteAccess")); //$NON-NLS-1$
 		}
 
 		// Token must have view_private to write a private activity
 		if ((activity.getPrivateActivity() != null) && activity.getPrivateActivity().equals(Boolean.TRUE)
 				&& !getToken().hasViewPrivate()) {
-			throw new UnauthorizedException("Cannot create a private activity without view_private!");
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.createPrivateActivityWithoutViewPrivate")); //$NON-NLS-1$
 		}
 
 		// Create the activity
@@ -133,18 +133,18 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	public StravaActivity deleteActivity(final Integer id) throws NotFoundException {
 		// Token must have write access
 		if (!getToken().hasWriteAccess()) {
-			throw new UnauthorizedException("Cannot delete an activity without write access!");
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteActivityWithoutWriteAccess")); //$NON-NLS-1$
 		}
 
 		// Activity must exist
 		final StravaActivity activity = getActivity(id);
 		if (activity == null) {
-			throw new NotFoundException("Cannot delete an activity that does not exist!");
+			throw new NotFoundException(Messages.string("ActivityServiceImpl.deleteInvalidActivity")); //$NON-NLS-1$
 		}
 
 		// To delete a private activity, token must have view_private access
 		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
-			throw new UnauthorizedException("Cannot delete a private activity without view_private");
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deletePrivateActivityWithoutViewPrivate")); //$NON-NLS-1$
 		}
 
 		try {
@@ -170,13 +170,13 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// Activity must exist
 		final StravaActivity activity = getActivity(activityId);
 		if (activity == null) {
-			throw new NotFoundException("Cannot delete a comment on an activity that does not exist!");
+			throw new NotFoundException(Messages.string("ActivityServiceImpl.deleteCommentOnInvalidActivity")); //$NON-NLS-1$
 		}
 
 		// Token must have view_private to delete a comment on a private
 		// activity
 		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
-			throw new UnauthorizedException("Cannot delete a comment on a private activity without view_private scope");
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentOnPrivateActivity")); //$NON-NLS-1$
 		}
 
 		// End of workaround
@@ -263,12 +263,12 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// Activity must exist
 		final StravaActivity activity = getActivity(activityId);
 		if (activity == null) {
-			throw new NotFoundException("Cannot give kudos to a non-existent activity");
+			throw new NotFoundException(Messages.string("ActivityServiceImpl.kudosInvalidActivity")); //$NON-NLS-1$
 		}
 
 		// Must have view_private to give kudos to a private activity
 		if (!getToken().hasViewPrivate() && (activity.getResourceState() == StravaResourceState.PRIVATE)) {
-			throw new UnauthorizedException("Cannot give kudos to a private activity without view_private access!");
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.kudosPrivateActivityWithoutViewPrivate")); //$NON-NLS-1$
 		}
 
 		this.api.giveKudos(activityId);
@@ -590,12 +590,12 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// Activity must exist to be updated
 		final StravaActivity stravaActivity = getActivity(id);
 		if (stravaActivity == null) {
-			throw new NotFoundException("Activity does not exist on Strava");
+			throw new NotFoundException(Messages.string("ActivityServiceImpl.updateInvalidActivity")); //$NON-NLS-1$
 		}
 
 		// Activity must not be private and inaccessible
 		if (stravaActivity.getResourceState() == StravaResourceState.PRIVATE) {
-			throw new UnauthorizedException("Cannot update a private activity without view_private scope");
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.updatePrivateActivity")); //$NON-NLS-1$
 		}
 
 		// TODO Workaround for issue javastrava-api #36
