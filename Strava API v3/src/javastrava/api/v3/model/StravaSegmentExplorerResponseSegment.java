@@ -1,6 +1,7 @@
 package javastrava.api.v3.model;
 
 import javastrava.api.v3.model.reference.StravaClimbCategory;
+import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -10,7 +11,7 @@ import javastrava.api.v3.model.reference.StravaClimbCategory;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentExplorerResponseSegment {
+public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Integer> {
 	/**
 	 * Strava's unique identifier of the {@link StravaSegment segment}
 	 */
@@ -179,6 +180,7 @@ public class StravaSegmentExplorerResponseSegment {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}

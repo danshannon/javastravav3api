@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import javastrava.api.v3.model.reference.StravaPhotoSource;
 import javastrava.api.v3.model.reference.StravaPhotoType;
 import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -14,7 +15,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaPhoto {
+public class StravaPhoto implements StravaCacheable<Integer> {
 	/**
 	 * Strava's unique identifier for the photo
 	 */
@@ -182,6 +183,7 @@ public class StravaPhoto {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}

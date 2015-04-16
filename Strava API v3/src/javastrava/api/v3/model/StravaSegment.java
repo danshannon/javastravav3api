@@ -9,6 +9,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentActivityType;
 import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.StreamService;
+import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -19,7 +20,7 @@ import javastrava.api.v3.service.StreamService;
  * @author Dan Shannon
  *
  */
-public class StravaSegment {
+public class StravaSegment implements StravaCacheable<Integer> {
 	/**
 	 * Strava's unique identifier for a segment
 	 */
@@ -521,6 +522,7 @@ public class StravaSegment {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}

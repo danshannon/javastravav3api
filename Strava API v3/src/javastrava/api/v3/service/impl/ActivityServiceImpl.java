@@ -12,6 +12,7 @@ import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaLap;
+import javastrava.api.v3.model.StravaMap;
 import javastrava.api.v3.model.StravaPhoto;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.ActivityService;
@@ -20,6 +21,7 @@ import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.StravaInternalServerErrorException;
 import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.cache.StravaCacheImpl;
 import javastrava.config.Messages;
 import javastrava.util.Paging;
 import javastrava.util.PagingHandler;
@@ -58,8 +60,19 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		return service;
 	}
 
+	private final StravaCacheImpl<StravaActivity, Integer> activityCache;
+	private final StravaCacheImpl<StravaComment, Integer> commentCache;
+	private final StravaCacheImpl<StravaLap, Integer> lapCache;
+	private final StravaCacheImpl<StravaMap, String> mapCache;
+	private final StravaCacheImpl<StravaPhoto, Integer> photoCache;
+
 	private ActivityServiceImpl(final Token token) {
 		super(token);
+		this.activityCache = new StravaCacheImpl<StravaActivity, Integer>(StravaActivity.class, token);
+		this.commentCache = new StravaCacheImpl<StravaComment, Integer>(StravaComment.class, token);
+		this.lapCache = new StravaCacheImpl<StravaLap, Integer>(StravaLap.class, token);
+		this.mapCache = new StravaCacheImpl<StravaMap, String>(StravaMap.class, token);
+		this.photoCache = new StravaCacheImpl<StravaPhoto, Integer>(StravaPhoto.class, token);
 	}
 
 	/**
@@ -218,36 +231,20 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public StravaActivity getActivity(final Integer activityId, final Boolean includeAllEfforts) {
+		// Attempt to get the activity from cache
+		// TODO THIS IS THE BIT THAT NEEDS DOING
+		
 		StravaActivity stravaResponse = null;
 
 		try {
-			boolean loop = true;
-			int i = 0;
-			while (loop) {
-				i++;
 				stravaResponse = this.api.getActivity(activityId, includeAllEfforts);
-
-				// If the activity is being updated, wait for the update to
-				// complete
-				if ((i < 10) && (stravaResponse.getResourceState() == StravaResourceState.UPDATING)) {
-					try {
-						Thread.sleep(1000 + (i * 100));
-					} catch (final InterruptedException e) {
-						// Ignore
-					}
-				} else {
-					loop = false;
-				}
-			}
-
-			return stravaResponse;
-
 		} catch (final NotFoundException e) {
 			// Activity doesn't exist - return null
 			return null;
 		} catch (final UnauthorizedException e) {
 			return PrivacyUtils.privateActivity(activityId);
 		}
+		return stravaResponse;
 	}
 
 	/**

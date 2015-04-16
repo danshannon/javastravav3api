@@ -1,6 +1,7 @@
 package javastrava.api.v3.model;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -14,7 +15,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaMap {
+public class StravaMap implements StravaCacheable<String> {
 	/**
 	 * Strava's unique identifier for the map
 	 */
@@ -87,6 +88,7 @@ public class StravaMap {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
 		return this.id;
 	}

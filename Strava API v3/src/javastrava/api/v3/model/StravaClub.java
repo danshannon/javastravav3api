@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import javastrava.api.v3.model.reference.StravaClubType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSportType;
+import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -15,7 +16,7 @@ import javastrava.api.v3.model.reference.StravaSportType;
  * @author Dan Shannon
  *
  */
-public class StravaClub {
+public class StravaClub implements StravaCacheable<Integer>{
 	/**
 	 * Strava's unique identifier for this club
 	 */
@@ -198,6 +199,7 @@ public class StravaClub {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}

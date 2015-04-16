@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -14,9 +15,9 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaLap {
+public class StravaLap implements StravaCacheable<Integer> {
 	/**
-	 * Strava's uniique identifier for this lap
+	 * Strava's unique identifier for this lap
 	 */
 	private Integer id;
 
@@ -361,6 +362,7 @@ public class StravaLap {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
