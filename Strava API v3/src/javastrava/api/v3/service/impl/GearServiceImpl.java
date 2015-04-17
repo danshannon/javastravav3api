@@ -2,10 +2,13 @@ package javastrava.api.v3.service.impl;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaGear;
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.ClubService;
 import javastrava.api.v3.service.GearService;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.cache.StravaCache;
+import javastrava.cache.impl.StravaCacheImpl;
 import javastrava.util.PrivacyUtils;
 
 /**
@@ -57,20 +60,42 @@ public class GearServiceImpl extends StravaServiceImpl implements GearService {
 	 */
 	private GearServiceImpl(final Token token) {
 		super(token);
+		this.gearCache = new StravaCacheImpl<StravaGear, String>(StravaGear.class, token);
 	}
+	
+	private final StravaCache<StravaGear, String> gearCache;
 
 	/**
 	 * @see javastrava.api.v3.service.GearService#getGear(java.lang.String)
 	 */
 	@Override
 	public StravaGear getGear(final String id) {
+		// Attempt to get the gear from cache
+		StravaGear gear = this.gearCache.get(id);
+		if (gear != null && gear.getResourceState() != StravaResourceState.META) {
+			return gear;
+		}
+		
+		// If it wasn't in cache, try to get it from the API
 		try {
-			return this.api.getGear(id);
+			gear = this.api.getGear(id);
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
-			return PrivacyUtils.privateGear(id);
+			gear = PrivacyUtils.privateGear(id);
 		}
+		
+		// Put the gear in cache and return it
+		this.gearCache.put(gear);
+		return gear;
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		this.gearCache.removeAll();
 	}
 
 }

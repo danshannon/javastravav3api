@@ -8,6 +8,8 @@ import javastrava.api.v3.service.SegmentEffortService;
 import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.cache.StravaCache;
+import javastrava.cache.impl.StravaCacheImpl;
 import javastrava.util.PrivacyUtils;
 
 /**
@@ -55,22 +57,30 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 	 */
 	private SegmentEffortServiceImpl(final Token token) {
 		super(token);
+		this.effortCache = new StravaCacheImpl<StravaSegmentEffort, Long>(StravaSegmentEffort.class, token);
 	}
+	
+	private final StravaCache<StravaSegmentEffort, Long> effortCache;
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentEffortService#getSegmentEffort(Long)
 	 */
 	@Override
 	public StravaSegmentEffort getSegmentEffort(final Long id) {
-		StravaSegmentEffort effort = null;
+		// Try to get the effort from cache
+		StravaSegmentEffort effort = this.effortCache.get(id);
+		if (effort != null && effort.getResourceState() != StravaResourceState.META) {
+			return effort;
+		}
 
+		// If it wasn't in cache, get it from the API
 		try {
 			effort = this.api.getSegmentEffort(id);
 		} catch (final NotFoundException e) {
 			// Segment effort doesn't exist
 			return null;
 		} catch (final UnauthorizedException e) {
-			return PrivacyUtils.privateSegmentEffort(id);
+			effort = PrivacyUtils.privateSegmentEffort(id);
 		}
 
 		// TODO This is a workaround for issue javastrava-api #78
@@ -79,7 +89,7 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 			final StravaSegment segment = this.getToken().getService(SegmentService.class)
 					.getSegment(effort.getSegment().getId());
 			if (segment.getResourceState() == StravaResourceState.PRIVATE) {
-				return PrivacyUtils.privateSegmentEffort(id);
+				effort = PrivacyUtils.privateSegmentEffort(id);
 			}
 		}
 		// End of workaround
@@ -91,7 +101,17 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 		}
 		// End of workaround
 
+		// Put the effort into cache and return it
+		this.effortCache.put(effort);
 		return effort;
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		this.effortCache.removeAll();
 	}
 
 }

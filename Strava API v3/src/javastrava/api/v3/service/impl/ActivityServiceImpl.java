@@ -12,7 +12,6 @@ import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaLap;
-import javastrava.api.v3.model.StravaMap;
 import javastrava.api.v3.model.StravaPhoto;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.ActivityService;
@@ -21,7 +20,8 @@ import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.StravaInternalServerErrorException;
 import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
-import javastrava.cache.StravaCacheImpl;
+import javastrava.cache.StravaCache;
+import javastrava.cache.impl.StravaCacheImpl;
 import javastrava.config.Messages;
 import javastrava.util.Paging;
 import javastrava.util.PagingHandler;
@@ -60,19 +60,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		return service;
 	}
 
-	private final StravaCacheImpl<StravaActivity, Integer> activityCache;
-	private final StravaCacheImpl<StravaComment, Integer> commentCache;
-	private final StravaCacheImpl<StravaLap, Integer> lapCache;
-	private final StravaCacheImpl<StravaMap, String> mapCache;
-	private final StravaCacheImpl<StravaPhoto, Integer> photoCache;
+	private final StravaCache<StravaActivity, Integer> activityCache;
 
 	private ActivityServiceImpl(final Token token) {
 		super(token);
 		this.activityCache = new StravaCacheImpl<StravaActivity, Integer>(StravaActivity.class, token);
-		this.commentCache = new StravaCacheImpl<StravaComment, Integer>(StravaComment.class, token);
-		this.lapCache = new StravaCacheImpl<StravaLap, Integer>(StravaLap.class, token);
-		this.mapCache = new StravaCacheImpl<StravaMap, String>(StravaMap.class, token);
-		this.photoCache = new StravaCacheImpl<StravaPhoto, Integer>(StravaPhoto.class, token);
 	}
 
 	/**
@@ -150,7 +142,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		// Activity must exist
-		final StravaActivity activity = getActivity(id);
+		StravaActivity activity = getActivity(id);
 		if (activity == null) {
 			throw new NotFoundException(Messages.string("ActivityServiceImpl.deleteInvalidActivity")); //$NON-NLS-1$
 		}
@@ -161,10 +153,12 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		try {
-			return this.api.deleteActivity(id);
+			activity = this.api.deleteActivity(id);
 		} catch (final NotFoundException e) {
 			return null;
 		}
+		this.activityCache.remove(id);
+		return activity;
 	}
 
 	/**
@@ -232,18 +226,27 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public StravaActivity getActivity(final Integer activityId, final Boolean includeAllEfforts) {
 		// Attempt to get the activity from cache
-		// TODO THIS IS THE BIT THAT NEEDS DOING
-		
-		StravaActivity stravaResponse = null;
+		StravaActivity stravaResponse = this.activityCache.get(activityId);
+		if (stravaResponse != null && stravaResponse.getResourceState() != StravaResourceState.META) {
+			return stravaResponse;
+		}
 
+		// If it wasn't in cache, then get it from the API
 		try {
-				stravaResponse = this.api.getActivity(activityId, includeAllEfforts);
+			stravaResponse = this.api.getActivity(activityId, includeAllEfforts);
 		} catch (final NotFoundException e) {
 			// Activity doesn't exist - return null
 			return null;
 		} catch (final UnauthorizedException e) {
-			return PrivacyUtils.privateActivity(activityId);
+			stravaResponse = PrivacyUtils.privateActivity(activityId);
 		}
+		
+		// Put the activity in cache unless it's UPDATING
+		if (stravaResponse.getResourceState() != StravaResourceState.UPDATING) {
+			this.activityCache.put(stravaResponse);
+		}
+		
+		// And return it
 		return stravaResponse;
 	}
 
@@ -614,6 +617,14 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		response = doUpdateActivity(id, update);
 		return response;
 
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		this.activityCache.removeAll();	
 	}
 
 }

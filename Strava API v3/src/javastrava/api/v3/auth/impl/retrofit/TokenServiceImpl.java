@@ -4,6 +4,7 @@ import javastrava.api.v3.auth.TokenManager;
 import javastrava.api.v3.auth.TokenService;
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.auth.model.TokenResponse;
+import javastrava.api.v3.service.StravaService;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.api.v3.service.impl.StravaServiceImpl;
 
@@ -48,10 +49,21 @@ public class TokenServiceImpl extends StravaServiceImpl implements TokenService 
 	 * @see TokenService#deauthorise(Token)
 	 */
 	@Override
-	public TokenResponse deauthorise(final Token accessToken) throws UnauthorizedException {
-		final TokenResponse response = this.api.deauthorise(accessToken.getToken());
-		TokenManager.instance().revokeToken(accessToken);
+	public TokenResponse deauthorise(final Token token) throws UnauthorizedException {
+		final TokenResponse response = this.api.deauthorise(token.getToken());
+		for (StravaService service : token.getServices().values()) {
+			service.clearCache();
+		}
+		TokenManager.instance().revokeToken(token);
 		return response;
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		// Nothing to do - there is no cache
 	}
 
 }

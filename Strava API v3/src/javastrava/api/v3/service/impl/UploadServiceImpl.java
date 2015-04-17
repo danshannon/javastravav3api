@@ -92,4 +92,12 @@ public class UploadServiceImpl extends StravaServiceImpl implements UploadServic
 		}
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		// Nothing to do - there is no cache
+	}
+
 }

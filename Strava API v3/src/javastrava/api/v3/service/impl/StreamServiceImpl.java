@@ -284,4 +284,12 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 		}
 	}
 
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		// Nothing to do - there is no cache
+	}
+
 }

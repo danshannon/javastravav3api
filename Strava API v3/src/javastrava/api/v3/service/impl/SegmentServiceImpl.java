@@ -27,6 +27,8 @@ import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.cache.StravaCache;
+import javastrava.cache.impl.StravaCacheImpl;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
 import javastrava.util.Paging;
@@ -85,7 +87,10 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 */
 	private SegmentServiceImpl(final Token token) {
 		super(token);
+		this.segmentCache = new StravaCacheImpl<StravaSegment, Integer>(StravaSegment.class, token);
 	}
+	
+	private final StravaCache<StravaSegment, Integer> segmentCache;
 
 	/**
 	 * <p>
@@ -204,23 +209,30 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 */
 	@Override
 	public StravaSegment getSegment(final Integer id) {
-		StravaSegment segment = null;
+		// Try to get the segment from cache
+		StravaSegment segment = this.segmentCache.get(id);
+		if (segment != null && segment.getResourceState() != StravaResourceState.META) {
+			return segment;
+		}
+		
 		try {
 			segment = this.api.getSegment(id);
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
-			return PrivacyUtils.privateSegment(id);
+			segment = PrivacyUtils.privateSegment(id);
 		}
 
 		// TODO Workaround for javastrava-api #70
 		// If the segment is private and the token doesn't have view_private
 		// scope, then return an empty segment
-		if (segment.getPrivateSegment().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
-			return PrivacyUtils.privateSegment(id);
+		if (segment.getResourceState() != StravaResourceState.PRIVATE && segment.getPrivateSegment().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
+			segment = PrivacyUtils.privateSegment(id);
 		}
 		// End of workaround
 
+		// Put the segment in cache and return it
+		this.segmentCache.put(segment);
 		return segment;
 
 	}
@@ -553,6 +565,14 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 				+ "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ northeastCorner.getLongitude();
 		return this.api.segmentExplore(bounds, activityType, minCat, maxCat);
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		this.segmentCache.removeAll();
 	}
 
 }
