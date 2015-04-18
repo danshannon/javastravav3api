@@ -6,17 +6,20 @@ import javastrava.api.v3.model.StravaResponse;
  * <p>
  * Thrown when Strava API returns an HTTP status of 400
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
 public class BadRequestException extends Exception implements StravaAPIException {
-	private StravaResponse response;
-
 	/**
 	 * Default
 	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Response received from Strava API which caused this exception
+	 */
+	private StravaResponse response;
 
 	/**
 	 * @param status Status string
@@ -42,7 +45,7 @@ public class BadRequestException extends Exception implements StravaAPIException
 	@Override
 	public void setResponse(final StravaResponse response) {
 		this.response = response;
-		
+
 	}
 
 }

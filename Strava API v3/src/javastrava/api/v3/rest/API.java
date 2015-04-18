@@ -41,7 +41,6 @@ import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.StravaConfig;
 import javastrava.json.impl.gson.JsonUtilImpl;
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RestAdapter.LogLevel;
 import retrofit.converter.GsonConverter;
@@ -57,34 +56,25 @@ import retrofit.mime.TypedFile;
  */
 public class API {
 	/**
-	 * Construct an API instance with a given token
-	 *
-	 * @param token
-	 *            The access token to be used with calls to the API
+	 * Instance of authorisation API which is used for token exchange
 	 */
-	public API(final Token token) {
-		this.activityAPI = API.instance(ActivityAPI.class, token);
-		this.athleteAPI = API.instance(AthleteAPI.class, token);
-		this.clubAPI = API.instance(ClubAPI.class, token);
-		this.gearAPI = API.instance(GearAPI.class, token);
-		this.segmentAPI = API.instance(SegmentAPI.class, token);
-		this.effortAPI = API.instance(SegmentEffortAPI.class, token);
-		this.streamAPI = API.instance(StreamAPI.class, token);
-		this.tokenAPI = API.instance(TokenAPI.class, token);
-		this.uploadAPI = API.instance(UploadAPI.class, token);
-	}
-
 	private static AuthorisationAPI authorisationAPI;
 
-	private final ActivityAPI activityAPI;
-	private final AthleteAPI athleteAPI;
-	private final ClubAPI clubAPI;
-	private final GearAPI gearAPI;
-	private final SegmentAPI segmentAPI;
-	private final SegmentEffortAPI effortAPI;
-	private final StreamAPI streamAPI;
-	private final TokenAPI tokenAPI;
-	private final UploadAPI uploadAPI;
+	/**
+	 * <p>
+	 * Get an instance of the authorisation API (cached)
+	 * </p>
+	 *
+	 * @return Instance of the authorisation API
+	 */
+	public static AuthorisationAPI authorisationInstance() {
+		if (authorisationAPI == null) {
+			authorisationAPI = new RestAdapter.Builder().setClient(new RetrofitClientResponseInterceptor())
+					.setConverter(new GsonConverter(new JsonUtilImpl().getGson())).setLogLevel(API.logLevel(AuthorisationServiceImpl.class))
+					.setEndpoint(StravaConfig.AUTH_ENDPOINT).setErrorHandler(new RetrofitErrorHandler()).build().create(AuthorisationAPI.class);
+		}
+		return authorisationAPI;
+	}
 
 	/**
 	 * <p>
@@ -110,16 +100,10 @@ public class API {
 		// Endpoint is the same for all services
 		.setEndpoint(StravaConfig.ENDPOINT)
 		// Request interceptor adds the access token into headers for each request
-		.setRequestInterceptor(new RequestInterceptor() {
-			@Override
-			public void intercept(final RequestFacade request) {
-				request.addHeader(StravaConfig.string("strava.authorization_header_name"), token.getTokenType() + " " + token.getToken()); //$NON-NLS-1$ //$NON-NLS-2$
-			}
-		})
+		.setRequestInterceptor(request -> request.addHeader(StravaConfig.string("strava.authorization_header_name"), token.getTokenType() + " " + token.getToken())) //$NON-NLS-1$ //$NON-NLS-2$
 		// Error handler deals with Strava's implementations of 400, 401, 403, 404 errors etc.
 		.setErrorHandler(new RetrofitErrorHandler()).build().create(class1);
 	}
-
 	/**
 	 * @param class1
 	 *            Class for which log level is to be determined
@@ -135,21 +119,137 @@ public class API {
 		}
 		return logLevel;
 	}
+	/**
+	 * API instance for access to activity data
+	 */
+	private final ActivityAPI activityAPI;
+	/**
+	 * API instance for access to athlete data
+	 */
+	private final AthleteAPI athleteAPI;
+	/**
+	 * API instance for access to club data
+	 */
+	private final ClubAPI clubAPI;
+	/**
+	 * API instance for access to gear data
+	 */
+	private final GearAPI gearAPI;
+	/**
+	 * API instance for access to segment data
+	 */
+	private final SegmentAPI segmentAPI;
+	/**
+	 * API instance for access to segment effort data
+	 */
+	private final SegmentEffortAPI effortAPI;
+	/**
+	 * API instance for access to streams data
+	 */
+	private final StreamAPI streamAPI;
+
+	/**
+	 * API instance for access to token deauthorisation
+	 */
+	private final TokenAPI tokenAPI;
+
+	/**
+	 * API instance for access to activity upload functionality
+	 */
+	private final UploadAPI uploadAPI;
+
+	/**
+	 * Construct an API instance with a given token
+	 *
+	 * @param token
+	 *            The access token to be used with calls to the API
+	 */
+	public API(final Token token) {
+		this.activityAPI = API.instance(ActivityAPI.class, token);
+		this.athleteAPI = API.instance(AthleteAPI.class, token);
+		this.clubAPI = API.instance(ClubAPI.class, token);
+		this.gearAPI = API.instance(GearAPI.class, token);
+		this.segmentAPI = API.instance(SegmentAPI.class, token);
+		this.effortAPI = API.instance(SegmentEffortAPI.class, token);
+		this.streamAPI = API.instance(StreamAPI.class, token);
+		this.tokenAPI = API.instance(TokenAPI.class, token);
+		this.uploadAPI = API.instance(UploadAPI.class, token);
+	}
+
+	/**
+	 * @param uploadId The upload id as given back in the response to {@link #upload(StravaActivityType, String, String, Boolean, Boolean, String, String, TypedFile)}
+	 * @return Upload response containing the upload id and activity id and current status of the upload
+	 * @see javastrava.api.v3.rest.UploadAPI#checkUploadStatus(java.lang.Integer)
+	 */
+	public StravaUploadResponse checkUploadStatus(final Integer uploadId) {
+		return this.uploadAPI.checkUploadStatus(uploadId);
+	}
+
+	/**
+	 * @param activityId Activity identifier
+	 * @param text Text of the comment to create
+	 * @return The comment as posted
+	 * @throws NotFoundException If the activity does not exist
+	 * @throws BadRequestException If the comment text is null or the empty string
+	 * @see javastrava.api.v3.rest.ActivityAPI#createComment(java.lang.Integer, java.lang.String)
+	 */
+	public StravaComment createComment(final Integer activityId, final String text) throws BadRequestException, NotFoundException {
+		return this.activityAPI.createComment(activityId, text);
+	}
 
 	/**
 	 * <p>
-	 * Get an instance of the authorisation API (cached)
+	 * Create a manual activity
 	 * </p>
 	 *
-	 * @return Instance of the authorisation API
+	 * @param activity
+	 *            Activity to create on Strava
+	 * @return The activity as created on Strava, if successful
+	 * @throws BadRequestException
+	 *             If the request is invalid in some way
+	 * @see javastrava.api.v3.rest.ActivityAPI#createManualActivity(javastrava.api.v3.model.StravaActivity)
 	 */
-	public static AuthorisationAPI authorisationInstance() {
-		if (authorisationAPI == null) {
-			authorisationAPI = new RestAdapter.Builder().setClient(new RetrofitClientResponseInterceptor())
-					.setConverter(new GsonConverter(new JsonUtilImpl().getGson())).setLogLevel(API.logLevel(AuthorisationServiceImpl.class))
-					.setEndpoint(StravaConfig.AUTH_ENDPOINT).setErrorHandler(new RetrofitErrorHandler()).build().create(AuthorisationAPI.class);
-		}
-		return authorisationAPI;
+	public StravaActivity createManualActivity(final StravaActivity activity) throws BadRequestException {
+		return this.activityAPI.createManualActivity(activity);
+	}
+
+	/**
+	 * @param accessToken
+	 *            The access token for which the application is revoking its access.
+	 * @return Responds with the access token submitted with the request.
+	 * @throws UnauthorizedException
+	 *             if the token is not allowed to be deauthorised
+	 * @see javastrava.api.v3.rest.TokenAPI#deauthorise(java.lang.String)
+	 */
+	public TokenResponse deauthorise(final String accessToken) throws UnauthorizedException {
+		return this.tokenAPI.deauthorise(accessToken);
+	}
+
+	/**
+	 * <p>
+	 * Delete an activity on Strava
+	 * </p>
+	 *
+	 * @param id
+	 *            Activity identifier
+	 * @return The representation of the deleted activity
+	 * @throws NotFoundException
+	 *             If the identified activity does not exist
+	 * @see javastrava.api.v3.rest.ActivityAPI#deleteActivity(java.lang.Integer)
+	 */
+	public StravaActivity deleteActivity(final Integer id) throws NotFoundException {
+		return this.activityAPI.deleteActivity(id);
+	}
+
+	/**
+	 * @param activityId Id of the activity the comment was posted to
+	 * @param commentId Id of the comment
+	 * @return Strava response
+	 * @throws NotFoundException If the comment does not exist
+	 * @see javastrava.api.v3.rest.ActivityAPI#deleteComment(java.lang.Integer, java.lang.Integer)
+	 */
+	public StravaResponse deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
+		return this.activityAPI.deleteComment(activityId, commentId);
 	}
 
 	/**
@@ -171,102 +271,193 @@ public class API {
 	}
 
 	/**
-	 * <p>
-	 * Create a manual activity
-	 * </p>
-	 *
-	 * @param activity
-	 *            Activity to create on Strava
-	 * @return The activity as created on Strava, if successful
+	 * @param activityId
+	 *            The id of the activity for which streams are to be retrieved
+	 * @param types
+	 *            List of types, if the activity does not have that stream it will not be included in the response
+	 * @param resolution
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
+	 *            streams will only be down sampled
+	 * @param seriesType
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
+	 *            the streams if the stream is being reduced
+	 * @return Returns an array of unordered stream objects, or <code>null</code> if the activity doesn't exist
+	 * @throws UnauthorizedException
+	 *             If there is a security exception
+	 * @throws NotFoundException
+	 *             If the activity does not exist
 	 * @throws BadRequestException
-	 *             If the request is invalid in some way
-	 * @see javastrava.api.v3.rest.ActivityAPI#createManualActivity(javastrava.api.v3.model.StravaActivity)
+	 *             If the request is malformed
+	 * @see javastrava.api.v3.rest.StreamAPI#getActivityStreams(java.lang.Integer, java.lang.String,
+	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
-	public StravaActivity createManualActivity(final StravaActivity activity) throws BadRequestException {
-		return this.activityAPI.createManualActivity(activity);
+	public StravaStream[] getActivityStreams(final Integer activityId, final String types, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
+		return this.streamAPI.getActivityStreams(activityId, types, resolution, seriesType);
 	}
 
 	/**
-	 * <p>
-	 * Update an activity that already exists on Strava
-	 * </p>
-	 *
-	 * @param id
-	 *            Activity identifier
-	 * @param activity
-	 *            Update representation
-	 * @return The activity as updated on Strava
+	 * @param athleteId Athlete identifier
+	 * @return Details of the athlete, will be somewhat anonymised if the athlete is private
+	 * @throws NotFoundException If the athlete doesn't exist
+	 * @see javastrava.api.v3.rest.AthleteAPI#getAthlete(java.lang.Integer)
+	 */
+	public StravaAthlete getAthlete(final Integer athleteId) throws NotFoundException {
+		return this.athleteAPI.getAthlete(athleteId);
+	}
+
+	/**
+	 * @return Full details of the authenticated athlete
+	 * @see javastrava.api.v3.rest.AthleteAPI#getAuthenticatedAthlete()
+	 */
+	public StravaAthlete getAuthenticatedAthlete() {
+		return this.athleteAPI.getAuthenticatedAthlete();
+	}
+
+	/**
+	 * @param clubId Club identifier
+	 * @return Club details
+	 * @throws NotFoundException If the club with the given id doesn't exist
+	 * @see javastrava.api.v3.rest.ClubAPI#getClub(java.lang.Integer)
+	 */
+	public StravaClub getClub(final Integer clubId) throws NotFoundException {
+		return this.clubAPI.getClub(clubId);
+	}
+
+	/**
+	 * @param segmentEffortId
+	 *            The id of the segment effort for which streams are to be retrieved
+	 * @param types
+	 *            List of types, if the effort does not have that stream it will not be included in the response
+	 * @param resolution
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
+	 *            streams will only be down sampled
+	 * @param seriesType
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
+	 *            the streams if the stream is being reduced
+	 * @return Returns an array of unordered stream objects.
+	 * @throws UnauthorizedException
+	 *             If the security token is not valid or the effort is flagged as private
 	 * @throws NotFoundException
-	 *             If the activity with the given id does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#updateActivity(java.lang.Integer, javastrava.api.v3.model.StravaActivityUpdate)
+	 *             If the effort does not exist
+	 * @throws BadRequestException
+	 *             If the request is malformed
+	 * @see javastrava.api.v3.rest.StreamAPI#getEffortStreams(java.lang.Long, java.lang.String, javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
-	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) throws NotFoundException {
-		return this.activityAPI.updateActivity(id, activity);
+	public StravaStream[] getEffortStreams(final Long segmentEffortId, final String types, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
+		return this.streamAPI.getEffortStreams(segmentEffortId, types, resolution, seriesType);
 	}
 
 	/**
-	 * <p>
-	 * Delete an activity on Strava
-	 * </p>
-	 *
-	 * @param id
-	 *            Activity identifier
-	 * @return The representation of the deleted activity
+	 * @param gearId Gear identifier
+	 * @return Details of the identified gear
+	 * @throws NotFoundException If the gear with the given id doesn't exist
+	 * @see javastrava.api.v3.rest.GearAPI#getGear(java.lang.String)
+	 */
+	public StravaGear getGear(final String gearId) throws NotFoundException {
+		return this.gearAPI.getGear(gearId);
+	}
+
+	/**
+	 * @param segmentId The unique identifier of the segment
+	 * @return The Segment
+	 * @throws NotFoundException If the segment with the given id does not exist
+	 * @see javastrava.api.v3.rest.SegmentAPI#getSegment(java.lang.Integer)
+	 */
+	public StravaSegment getSegment(final Integer segmentId) throws NotFoundException {
+		return this.segmentAPI.getSegment(segmentId);
+	}
+
+	/**
+	 * @param segmentEffortId Effort identifier
+	 * @return Effort details
+	 * @throws NotFoundException If the effort with the given id doesn't exist
+	 * @see javastrava.api.v3.rest.SegmentEffortAPI#getSegmentEffort(java.lang.Long)
+	 */
+	public StravaSegmentEffort getSegmentEffort(final Long segmentEffortId) throws NotFoundException {
+		return this.effortAPI.getSegmentEffort(segmentEffortId);
+	}
+
+	/**
+	 * @param segmentId Segment identifier
+	 * @param gender (Optional) Gender to filter the leaderboard by
+	 * @param ageGroup (Optional) Age group to filter the leaderboard by
+	 * @param weightClass (Optional) Weight class to filter the leaderboard by
+	 * @param following (Optional) If <code>true</code> then filter leaderboard by athletes the authenticated athlete is following
+	 * @param clubId (Optional) Club to filter the leaderboard by
+	 * @param dateRange (Optional) Date range (this year, this month etc.) to filter the leaderboard by
+	 * @param page (Optional) Page number to return (default is 1)
+	 * @param perPage (Optional) Page size to return (default is 50)
+	 * @param contextEntries (Optional) Number of context entries to return either side of the authenticated athlete (default is 2, maximum is 15)
+	 * @return A Strava leaderboard
+	 * @throws NotFoundException If the segment with the given id doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
+	 * @see javastrava.api.v3.rest.SegmentAPI#getSegmentLeaderboard(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender,
+	 *      javastrava.api.v3.model.reference.StravaAgeGroup, javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
+	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange, java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 */
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
+			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Integer page,
+			final Integer perPage, final Integer contextEntries) throws NotFoundException, BadRequestException {
+		return this.segmentAPI.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, page, perPage, contextEntries);
+	}
+
+	/**
+	 * @param segmentId
+	 *            The id of the segment for which streams are to be retrieved
+	 * @param types
+	 *            List of types, if the segment does not have that stream it will not be included in the response
+	 * @param resolution
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
+	 *            streams will only be down sampled
+	 * @param seriesType
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
+	 *            the streams if the stream is being reduced
+	 * @return Returns an array of unordered stream objects.
+	 * @throws UnauthorizedException
+	 *             If there is a security exception
 	 * @throws NotFoundException
-	 *             If the identified activity does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#deleteActivity(java.lang.Integer)
+	 *             If the segment does not exist
+	 * @throws BadRequestException
+	 *             If the request is malformed
+	 * @see javastrava.api.v3.rest.StreamAPI#getSegmentStreams(java.lang.Integer, java.lang.String,
+	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
-	public StravaActivity deleteActivity(final Integer id) throws NotFoundException {
-		return this.activityAPI.deleteActivity(id);
+	public StravaStream[] getSegmentStreams(final Integer segmentId, final String types, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
+		return this.streamAPI.getSegmentStreams(segmentId, types, resolution, seriesType);
 	}
 
 	/**
-	 * @param before
-	 *            Time in milliseconds since the UNIX epoch date - only return activities commenced before this time
-	 * @param after
-	 *            Time in milliseconds since the UNIX epoch date - only return activities commenced after this time
-	 * @param page
-	 *            Page number to return
-	 * @param perPage
-	 *            Number of results to return
-	 * @return Array of activities
-	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @param activityId Activity to be kudoed
+	 * @return Strava response
+	 * @throws NotFoundException if the activity does not exist
+	 * @see javastrava.api.v3.rest.ActivityAPI#giveKudos(java.lang.Integer)
 	 */
-	public StravaActivity[] listAuthenticatedAthleteActivities(final Integer before, final Integer after, final Integer page, final Integer perPage) throws BadRequestException {
-		return this.activityAPI.listAuthenticatedAthleteActivities(before, after, page, perPage);
+	public StravaResponse giveKudos(final Integer activityId) throws NotFoundException {
+		return this.activityAPI.giveKudos(activityId);
 	}
 
 	/**
-	 *
-	 * @param page Page number to be returned
-	 * @param perPage Page size to be returned
-	 * @return List of Strava activities belonging to friends of the authenticated athlete
-	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listFriendsActivities(java.lang.Integer, java.lang.Integer)
+	 * @param clubId The club the authenticated athlete wishes to join
+	 * @return Membership response indicating success/failure
+	 * @throws NotFoundException If the club with the given id doesn't exist
+	 * @see javastrava.api.v3.rest.ClubAPI#join(java.lang.Integer)
 	 */
-	public StravaActivity[] listFriendsActivities(final Integer page, final Integer perPage) throws BadRequestException {
-		return this.activityAPI.listFriendsActivities(page, perPage);
+	public StravaClubMembershipResponse joinClub(final Integer clubId) throws NotFoundException {
+		return this.clubAPI.join(clubId);
 	}
 
 	/**
-	 * @param activityId The activity identifier
-	 * @return Array of activity zones for the activity
-	 * @throws NotFoundException If the activity doesn't exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityZones(java.lang.Integer)
+	 * @param clubId The club the authenticated athlete wishes to leave
+	 * @return Membership response indicating success/failure
+	 * @throws NotFoundException If the club with the given id doesn't exist
+	 * @see javastrava.api.v3.rest.ClubAPI#leave(java.lang.Integer)
 	 */
-	public StravaActivityZone[] listActivityZones(final Integer activityId) throws NotFoundException {
-		return this.activityAPI.listActivityZones(activityId);
-	}
-
-	/**
-	 * @param id The activity identifier
-	 * @return Array of laps belonging to the activity
-	 * @throws NotFoundException If the activity doesn't exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityLaps(java.lang.Integer)
-	 */
-	public StravaLap[] listActivityLaps(final Integer id) throws NotFoundException {
-		return this.activityAPI.listActivityLaps(id);
+	public StravaClubMembershipResponse leaveClub(final Integer clubId) throws NotFoundException {
+		return this.clubAPI.leave(clubId);
 	}
 
 	/**
@@ -297,6 +488,16 @@ public class API {
 	}
 
 	/**
+	 * @param id The activity identifier
+	 * @return Array of laps belonging to the activity
+	 * @throws NotFoundException If the activity doesn't exist
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityLaps(java.lang.Integer)
+	 */
+	public StravaLap[] listActivityLaps(final Integer id) throws NotFoundException {
+		return this.activityAPI.listActivityLaps(id);
+	}
+
+	/**
 	 * @param activityId Activity identifier
 	 * @return Array of photos attached to the activity
 	 * @throws NotFoundException If the activity doesn't exist
@@ -307,105 +508,13 @@ public class API {
 	}
 
 	/**
-	 * @param activityId Activity identifier
-	 * @param page Page number to be returned
-	 * @param perPage Page size to be returned
-	 * @return Array of activities that Strava judges was 'done with' the activity identified by the id
+	 * @param activityId The activity identifier
+	 * @return Array of activity zones for the activity
 	 * @throws NotFoundException If the activity doesn't exist
-	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listRelatedActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityZones(java.lang.Integer)
 	 */
-	public StravaActivity[] listRelatedActivities(final Integer activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
-		return this.activityAPI.listRelatedActivities(activityId, page, perPage);
-	}
-
-	/**
-	 * @param activityId Activity identifier
-	 * @param text Text of the comment to create
-	 * @return The comment as posted
-	 * @throws NotFoundException If the activity does not exist
-	 * @throws BadRequestException If the comment text is null or the empty string
-	 * @see javastrava.api.v3.rest.ActivityAPI#createComment(java.lang.Integer, java.lang.String)
-	 */
-	public StravaComment createComment(final Integer activityId, final String text) throws BadRequestException, NotFoundException {
-		return this.activityAPI.createComment(activityId, text);
-	}
-
-	/**
-	 * @param activityId Id of the activity the comment was posted to
-	 * @param commentId Id of the comment
-	 * @return Strava response
-	 * @throws NotFoundException If the comment does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#deleteComment(java.lang.Integer, java.lang.Integer)
-	 */
-	public StravaResponse deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
-		return this.activityAPI.deleteComment(activityId, commentId);
-	}
-
-	/**
-	 * @param activityId Activity to be kudoed
-	 * @return Strava response
-	 * @throws NotFoundException if the activity does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#giveKudos(java.lang.Integer)
-	 */
-	public StravaResponse giveKudos(final Integer activityId) throws NotFoundException {
-		return this.activityAPI.giveKudos(activityId);
-	}
-
-	/**
-	 * @return Full details of the authenticated athlete
-	 * @see javastrava.api.v3.rest.AthleteAPI#getAuthenticatedAthlete()
-	 */
-	public StravaAthlete getAuthenticatedAthlete() {
-		return this.athleteAPI.getAuthenticatedAthlete();
-	}
-
-	/**
-	 * @param athleteId Athlete identifier
-	 * @return Details of the athlete, will be somewhat anonymised if the athlete is private
-	 * @throws NotFoundException If the athlete doesn't exist
-	 * @see javastrava.api.v3.rest.AthleteAPI#getAthlete(java.lang.Integer)
-	 */
-	public StravaAthlete getAthlete(final Integer athleteId) throws NotFoundException {
-		return this.athleteAPI.getAthlete(athleteId);
-	}
-
-	/**
-	 * @param city City the athlete is from
-	 * @param state State/county/territory/canton/departement/whatever the athlete is from
-	 * @param country Country the athlete is from
-	 * @param sex Gender of the athlete
-	 * @param weight Weight in kilograms
-	 * @return Athlete details as updated on Strava
-	 * @see javastrava.api.v3.rest.AthleteAPI#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
-	 */
-	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
-		return this.athleteAPI.updateAuthenticatedAthlete(city, state, country, sex, weight);
-	}
-
-	/**
-	 * @param athleteId Athlete identifier
-	 * @param page Page number to be returned (default is 1)
-	 * @param perPage Page size to be returned (default is 50)
-	 * @return Array of segment efforts which represent the athlete's KOM/QOM's
-	 * @throws NotFoundException If the athlete doesn't exist
-	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
-	 */
-	public StravaSegmentEffort[] listAthleteKOMs(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
-		return this.athleteAPI.listAthleteKOMs(athleteId, page, perPage);
-	}
-
-	/**
-	 * @param page Page number to be returned (default is 1)
-	 * @param perPage Page size to be returned (default is 50)
-	 * @return Array of athletes who the authenticated athlete is following
-	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.AthleteAPI#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer)
-	 */
-	public StravaAthlete[] listAuthenticatedAthleteFriends(final Integer page, final Integer perPage) throws BadRequestException {
-		return this.athleteAPI.listAuthenticatedAthleteFriends(page, perPage);
+	public StravaActivityZone[] listActivityZones(final Integer activityId) throws NotFoundException {
+		return this.activityAPI.listActivityZones(activityId);
 	}
 
 	/**
@@ -425,6 +534,19 @@ public class API {
 	 * @param athleteId Athlete identifier
 	 * @param page Page number to be returned (default is 1)
 	 * @param perPage Page size to be returned (default is 50)
+	 * @return Array of segment efforts which represent the athlete's KOM/QOM's
+	 * @throws NotFoundException If the athlete doesn't exist
+	 * @throws BadRequestException If the paging instructions are invalid
+	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 */
+	public StravaSegmentEffort[] listAthleteKOMs(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+		return this.athleteAPI.listAthleteKOMs(athleteId, page, perPage);
+	}
+
+	/**
+	 * @param athleteId Athlete identifier
+	 * @param page Page number to be returned (default is 1)
+	 * @param perPage Page size to be returned (default is 50)
 	 * @return Array of athletes who both the identified athlete and the authenticated athlete are following
 	 * @throws NotFoundException If the athlete with the given id doesn't exist
 	 * @throws BadRequestException If the paging instructions are invalid
@@ -435,23 +557,20 @@ public class API {
 	}
 
 	/**
-	 * @param athleteId Athlete identifier
-	 * @return Statistics summary for the identified athlete
-	 * @throws NotFoundException If the identified athlete doesn't exist
-	 * @see javastrava.api.v3.rest.AthleteAPI#statistics(java.lang.Integer)
+	 * @param before
+	 *            Time in milliseconds since the UNIX epoch date - only return activities commenced before this time
+	 * @param after
+	 *            Time in milliseconds since the UNIX epoch date - only return activities commenced after this time
+	 * @param page
+	 *            Page number to return
+	 * @param perPage
+	 *            Number of results to return
+	 * @return Array of activities
+	 * @throws BadRequestException If the paging instructions are invalid
+	 * @see javastrava.api.v3.rest.ActivityAPI#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaStatistics statistics(final Integer athleteId) throws NotFoundException {
-		return this.athleteAPI.statistics(athleteId);
-	}
-
-	/**
-	 * @param clubId Club identifier
-	 * @return Club details
-	 * @throws NotFoundException If the club with the given id doesn't exist
-	 * @see javastrava.api.v3.rest.ClubAPI#getClub(java.lang.Integer)
-	 */
-	public StravaClub getClub(final Integer clubId) throws NotFoundException {
-		return this.clubAPI.getClub(clubId);
+	public StravaActivity[] listAuthenticatedAthleteActivities(final Integer before, final Integer after, final Integer page, final Integer perPage) throws BadRequestException {
+		return this.activityAPI.listAuthenticatedAthleteActivities(before, after, page, perPage);
 	}
 
 	/**
@@ -460,6 +579,38 @@ public class API {
 	 */
 	public StravaClub[] listAuthenticatedAthleteClubs() {
 		return this.clubAPI.listAuthenticatedAthleteClubs();
+	}
+
+	/**
+	 * @param page Page number to be returned (default is 1)
+	 * @param perPage Page size to be returned (default is 50)
+	 * @return Array of athletes who the authenticated athlete is following
+	 * @throws BadRequestException If the paging instructions are invalid
+	 * @see javastrava.api.v3.rest.AthleteAPI#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer)
+	 */
+	public StravaAthlete[] listAuthenticatedAthleteFriends(final Integer page, final Integer perPage) throws BadRequestException {
+		return this.athleteAPI.listAuthenticatedAthleteFriends(page, perPage);
+	}
+
+	/**
+	 * @param page (optional) Page number to be returned
+	 * @param perPage (optional) Number of entries to return per page
+	 * @return An array of segments
+	 * @throws BadRequestException If the paging instructions are invalid
+	 * @see javastrava.api.v3.rest.SegmentAPI#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)
+	 */
+	public StravaSegment[] listAuthenticatedAthleteStarredSegments(final Integer page, final Integer perPage) throws BadRequestException {
+		return this.segmentAPI.listAuthenticatedAthleteStarredSegments(page, perPage);
+	}
+
+	/**
+	 * @param clubId The club id for which announcements should be returned
+	 * @return Array of {@link StravaClubAnnouncement} for the given {@link StravaClub club}
+	 * @throws NotFoundException If the club with the given id does not exist
+	 * @see ClubAPI#listClubAnnouncements(Integer)
+	 */
+	public StravaClubAnnouncement[] listClubAnnouncements(final Integer clubId) throws NotFoundException {
+		return this.clubAPI.listClubAnnouncements(clubId);
 	}
 
 	/**
@@ -476,6 +627,18 @@ public class API {
 	}
 
 	/**
+	 *
+	 * @param page Page number to be returned
+	 * @param perPage Page size to be returned
+	 * @return List of Strava activities belonging to friends of the authenticated athlete
+	 * @throws BadRequestException If the paging instructions are invalid
+	 * @see javastrava.api.v3.rest.ActivityAPI#listFriendsActivities(java.lang.Integer, java.lang.Integer)
+	 */
+	public StravaActivity[] listFriendsActivities(final Integer page, final Integer perPage) throws BadRequestException {
+		return this.activityAPI.listFriendsActivities(page, perPage);
+	}
+
+	/**
 	 * @param clubId Club identifier
 	 * @param page Page number to be returned (default is 1)
 	 * @param perPage Page size to be returned (default is 50)
@@ -489,67 +652,16 @@ public class API {
 	}
 
 	/**
-	 * @param clubId The club the authenticated athlete wishes to join
-	 * @return Membership response indicating success/failure
-	 * @throws NotFoundException If the club with the given id doesn't exist
-	 * @see javastrava.api.v3.rest.ClubAPI#join(java.lang.Integer)
-	 */
-	public StravaClubMembershipResponse joinClub(final Integer clubId) throws NotFoundException {
-		return this.clubAPI.join(clubId);
-	}
-
-	/**
-	 * @param clubId The club the authenticated athlete wishes to leave
-	 * @return Membership response indicating success/failure
-	 * @throws NotFoundException If the club with the given id doesn't exist
-	 * @see javastrava.api.v3.rest.ClubAPI#leave(java.lang.Integer)
-	 */
-	public StravaClubMembershipResponse leaveClub(final Integer clubId) throws NotFoundException {
-		return this.clubAPI.leave(clubId);
-	}
-
-	/**
-	 * @param gearId Gear identifier
-	 * @return Details of the identified gear
-	 * @throws NotFoundException If the gear with the given id doesn't exist
-	 * @see javastrava.api.v3.rest.GearAPI#getGear(java.lang.String)
-	 */
-	public StravaGear getGear(final String gearId) throws NotFoundException {
-		return this.gearAPI.getGear(gearId);
-	}
-
-	/**
-	 * @param segmentId The unique identifier of the segment
-	 * @return The Segment
-	 * @throws NotFoundException If the segment with the given id does not exist
-	 * @see javastrava.api.v3.rest.SegmentAPI#getSegment(java.lang.Integer)
-	 */
-	public StravaSegment getSegment(final Integer segmentId) throws NotFoundException {
-		return this.segmentAPI.getSegment(segmentId);
-	}
-
-	/**
-	 * @param page (optional) Page number to be returned
-	 * @param perPage (optional) Number of entries to return per page
-	 * @return An array of segments
+	 * @param activityId Activity identifier
+	 * @param page Page number to be returned
+	 * @param perPage Page size to be returned
+	 * @return Array of activities that Strava judges was 'done with' the activity identified by the id
+	 * @throws NotFoundException If the activity doesn't exist
 	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.SegmentAPI#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listRelatedActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaSegment[] listAuthenticatedAthleteStarredSegments(final Integer page, final Integer perPage) throws BadRequestException {
-		return this.segmentAPI.listAuthenticatedAthleteStarredSegments(page, perPage);
-	}
-
-	/**
-	 * @param athleteId The id of the athlete whose starred segments are to be retrieved
-	 * @param page (optional) Page number to be returned
-	 * @param perPage (optional) Number of entries to return per page
-	 * @return An array of segments
-	 * @throws NotFoundException If the segment with the given id does not exist
-	 * @throws UnauthorizedException If there is a security or privacy violation
-	 * @throws BadRequestException If the paging instructions are invalid
-	 */
-	public StravaSegment[] listStarredSegments(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
-		return this.segmentAPI.listStarredSegments(athleteId, page, perPage);
+	public StravaActivity[] listRelatedActivities(final Integer activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+		return this.activityAPI.listRelatedActivities(activityId, page, perPage);
 	}
 
 	/**
@@ -576,27 +688,16 @@ public class API {
 	}
 
 	/**
-	 * @param segmentId Segment identifier
-	 * @param gender (Optional) Gender to filter the leaderboard by
-	 * @param ageGroup (Optional) Age group to filter the leaderboard by
-	 * @param weightClass (Optional) Weight class to filter the leaderboard by
-	 * @param following (Optional) If <code>true</code> then filter leaderboard by athletes the authenticated athlete is following
-	 * @param clubId (Optional) Club to filter the leaderboard by
-	 * @param dateRange (Optional) Date range (this year, this month etc.) to filter the leaderboard by
-	 * @param page (Optional) Page number to return (default is 1)
-	 * @param perPage (Optional) Page size to return (default is 50)
-	 * @param contextEntries (Optional) Number of context entries to return either side of the authenticated athlete (default is 2, maximum is 15)
-	 * @return A Strava leaderboard
-	 * @throws NotFoundException If the segment with the given id doesn't exist
+	 * @param athleteId The id of the athlete whose starred segments are to be retrieved
+	 * @param page (optional) Page number to be returned
+	 * @param perPage (optional) Number of entries to return per page
+	 * @return An array of segments
+	 * @throws NotFoundException If the segment with the given id does not exist
+	 * @throws UnauthorizedException If there is a security or privacy violation
 	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.SegmentAPI#getSegmentLeaderboard(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender,
-	 *      javastrava.api.v3.model.reference.StravaAgeGroup, javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange, java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
-			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Integer page,
-			final Integer perPage, final Integer contextEntries) throws NotFoundException, BadRequestException {
-		return this.segmentAPI.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, page, perPage, contextEntries);
+	public StravaSegment[] listStarredSegments(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+		return this.segmentAPI.listStarredSegments(athleteId, page, perPage);
 	}
 
 	/**
@@ -614,103 +715,45 @@ public class API {
 	}
 
 	/**
-	 * @param segmentEffortId Effort identifier
-	 * @return Effort details
-	 * @throws NotFoundException If the effort with the given id doesn't exist
-	 * @see javastrava.api.v3.rest.SegmentEffortAPI#getSegmentEffort(java.lang.Long)
+	 * @param athleteId Athlete identifier
+	 * @return Statistics summary for the identified athlete
+	 * @throws NotFoundException If the identified athlete doesn't exist
+	 * @see javastrava.api.v3.rest.AthleteAPI#statistics(java.lang.Integer)
 	 */
-	public StravaSegmentEffort getSegmentEffort(final Long segmentEffortId) throws NotFoundException {
-		return this.effortAPI.getSegmentEffort(segmentEffortId);
+	public StravaStatistics statistics(final Integer athleteId) throws NotFoundException {
+		return this.athleteAPI.statistics(athleteId);
 	}
 
 	/**
-	 * @param activityId
-	 *            The id of the activity for which streams are to be retrieved
-	 * @param types
-	 *            List of types, if the activity does not have that stream it will not be included in the response
-	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
-	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
-	 * @return Returns an array of unordered stream objects, or <code>null</code> if the activity doesn't exist
-	 * @throws UnauthorizedException
-	 *             If there is a security exception
+	 * <p>
+	 * Update an activity that already exists on Strava
+	 * </p>
+	 *
+	 * @param id
+	 *            Activity identifier
+	 * @param activity
+	 *            Update representation
+	 * @return The activity as updated on Strava
 	 * @throws NotFoundException
-	 *             If the activity does not exist
-	 * @throws BadRequestException
-	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getActivityStreams(java.lang.Integer, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
+	 *             If the activity with the given id does not exist
+	 * @see javastrava.api.v3.rest.ActivityAPI#updateActivity(java.lang.Integer, javastrava.api.v3.model.StravaActivityUpdate)
 	 */
-	public StravaStream[] getActivityStreams(final Integer activityId, final String types, final StravaStreamResolutionType resolution,
-			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
-		return this.streamAPI.getActivityStreams(activityId, types, resolution, seriesType);
+	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) throws NotFoundException {
+		return this.activityAPI.updateActivity(id, activity);
 	}
 
 	/**
-	 * @param segmentEffortId
-	 *            The id of the segment effort for which streams are to be retrieved
-	 * @param types
-	 *            List of types, if the effort does not have that stream it will not be included in the response
-	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
-	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
-	 * @return Returns an array of unordered stream objects.
-	 * @throws UnauthorizedException
-	 *             If the security token is not valid or the effort is flagged as private
-	 * @throws NotFoundException
-	 *             If the effort does not exist
-	 * @throws BadRequestException
-	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getEffortStreams(java.lang.Long, java.lang.String, javastrava.api.v3.model.reference.StravaStreamResolutionType,
-	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
+	 * @param city City the athlete is from
+	 * @param state State/county/territory/canton/departement/whatever the athlete is from
+	 * @param country Country the athlete is from
+	 * @param sex Gender of the athlete
+	 * @param weight Weight in kilograms
+	 * @return Athlete details as updated on Strava
+	 * @see javastrava.api.v3.rest.AthleteAPI#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String,
+	 *      javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
 	 */
-	public StravaStream[] getEffortStreams(final Long segmentEffortId, final String types, final StravaStreamResolutionType resolution,
-			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
-		return this.streamAPI.getEffortStreams(segmentEffortId, types, resolution, seriesType);
-	}
-
-	/**
-	 * @param segmentId
-	 *            The id of the segment for which streams are to be retrieved
-	 * @param types
-	 *            List of types, if the segment does not have that stream it will not be included in the response
-	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
-	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
-	 * @return Returns an array of unordered stream objects.
-	 * @throws UnauthorizedException
-	 *             If there is a security exception
-	 * @throws NotFoundException
-	 *             If the segment does not exist
-	 * @throws BadRequestException
-	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getSegmentStreams(java.lang.Integer, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
-	 */
-	public StravaStream[] getSegmentStreams(final Integer segmentId, final String types, final StravaStreamResolutionType resolution,
-			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
-		return this.streamAPI.getSegmentStreams(segmentId, types, resolution, seriesType);
-	}
-
-	/**
-	 * @param accessToken
-	 *            The access token for which the application is revoking its access.
-	 * @return Responds with the access token submitted with the request.
-	 * @throws UnauthorizedException
-	 *             if the token is not allowed to be deauthorised
-	 * @see javastrava.api.v3.rest.TokenAPI#deauthorise(java.lang.String)
-	 */
-	public TokenResponse deauthorise(final String accessToken) throws UnauthorizedException {
-		return this.tokenAPI.deauthorise(accessToken);
+	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
+		return this.athleteAPI.updateAuthenticatedAthlete(city, state, country, sex, weight);
 	}
 
 	/**
@@ -730,25 +773,6 @@ public class API {
 	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private,
 			final Boolean trainer, final String dataType, final String externalId, final TypedFile file) throws BadRequestException {
 		return this.uploadAPI.upload(activityType, name, description, _private, trainer, dataType, externalId, file);
-	}
-
-	/**
-	 * @param uploadId The upload id as given back in the response to {@link #upload(StravaActivityType, String, String, Boolean, Boolean, String, String, TypedFile)}
-	 * @return Upload response containing the upload id and activity id and current status of the upload
-	 * @see javastrava.api.v3.rest.UploadAPI#checkUploadStatus(java.lang.Integer)
-	 */
-	public StravaUploadResponse checkUploadStatus(final Integer uploadId) {
-		return this.uploadAPI.checkUploadStatus(uploadId);
-	}
-
-	/**
-	 * @param clubId The club id for which announcements should be returned
-	 * @return Array of {@link StravaClubAnnouncement} for the given {@link StravaClub club}
-	 * @throws NotFoundException If the club with the given id does not exist
-	 * @see ClubAPI#listClubAnnouncements(Integer)
-	 */
-	public StravaClubAnnouncement[] listClubAnnouncements(final Integer clubId) throws NotFoundException {
-		return this.clubAPI.listClubAnnouncements(clubId);
 	}
 
 }

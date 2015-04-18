@@ -1,10 +1,10 @@
 package javastrava.api.v3.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.rest.ActivityAPI;
 import javastrava.api.v3.service.ActivityService;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * <p>
@@ -16,17 +16,38 @@ import javastrava.api.v3.service.ActivityService;
  *
  */
 public class StravaActivityUpdate {
+	/**
+	 * Activity name
+	 */
 	private String name;
+	/**
+	 * Activity type
+	 */
 	private StravaActivityType type;
 
+	/**
+	 * Whether the activity has been flagged by the athlete as private
+	 */
 	@SerializedName("private")
 	private Boolean privateActivity;
+	/**
+	 * Whether the activity has been flagged by the athlete as a commute
+	 */
 	private Boolean commute;
+	/**
+	 * Whether the activity has been flagged by the athlete as being done on a stationary trainer
+	 */
 	private Boolean trainer;
+	/**
+	 * Identifier of the gear (i.e. bike or shoes) used for the activity
+	 */
 	private String gearId;
+	/**
+	 * Description of the activity
+	 */
 	private String description;
 	/**
-	 * No aargs constructor
+	 * No args constructor
 	 */
 	public StravaActivityUpdate() {
 		super();

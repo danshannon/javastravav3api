@@ -27,6 +27,7 @@ public class PrivacyUtils {
 	 * Check that an activity belongs to the authenticated user
 	 * </p>
 	 * @param activity The activity to check
+	 * @param token The access token in use
 	 * @return <code>true</code> if the activity belongs to the authenticated user, <code>false</code> otherwise
 	 */
 	private static boolean activityBelongsToAuthenticatedUser(final StravaActivity activity, final Token token) {

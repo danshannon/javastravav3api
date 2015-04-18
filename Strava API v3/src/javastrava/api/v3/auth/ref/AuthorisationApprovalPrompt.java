@@ -52,8 +52,17 @@ public enum AuthorisationApprovalPrompt {
 		return AuthorisationApprovalPrompt.UNKNOWN;
 	}
 
+	/**
+	 * Identifier
+	 */
 	private String id;
 
+	/**
+	 * <p>
+	 * Private constructor - this is an enum
+	 * </p>
+	 * @param id The identifier of the approval prompt
+	 */
 	private AuthorisationApprovalPrompt(final String id) {
 		this.id = id;
 	}

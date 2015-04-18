@@ -4,14 +4,14 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
-
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaWorkoutType;
 import javastrava.api.v3.service.ActivityService;
 import javastrava.api.v3.service.StreamService;
 import javastrava.cache.StravaCacheable;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * <p>
@@ -294,10 +294,22 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 */
 	private String uploadId;
 
+	/**
+	 * Latitude of the start point of the activity
+	 */
 	private Float startLatitude;
 
+	/**
+	 * Longitude of the start point of the activity
+	 */
 	private Float startLongitude;
+	/**
+	 * Instagram primary photo
+	 */
 	private String instagramPrimaryPhoto;
+	/**
+	 * Slightly weird summaries of the photos associated with the activity
+	 */
 	private StravaActivityPhotos photos;
 	/**
 	 * No args constructor

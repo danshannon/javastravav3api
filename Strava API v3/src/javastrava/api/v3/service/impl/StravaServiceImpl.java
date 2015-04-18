@@ -1,13 +1,13 @@
 package javastrava.api.v3.service.impl;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.rest.API;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * <p>
@@ -18,6 +18,9 @@ import javastrava.config.StravaConfig;
  *
  */
 public abstract class StravaServiceImpl {
+	/**
+	 * Logger
+	 */
 	private static Logger log = LogManager.getLogger();
 
 	/**
@@ -68,8 +71,14 @@ public abstract class StravaServiceImpl {
 		return percent;
 	}
 
+	/**
+	 * The Strava access token in use
+	 */
 	private final Token token;
 
+	/**
+	 * API instance in use
+	 */
 	protected final API api;
 
 	/**
@@ -103,6 +112,10 @@ public abstract class StravaServiceImpl {
 		}
 	}
 
+	/**
+	 * Get the Strava access token associated with this service
+	 * @return The token
+	 */
 	protected final Token getToken() {
 		return this.token;
 	}

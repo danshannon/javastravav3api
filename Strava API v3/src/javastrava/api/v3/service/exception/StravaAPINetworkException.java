@@ -6,13 +6,19 @@ import javastrava.api.v3.model.StravaResponse;
  * <p>
  * Thrown when the Strava API falls over because of a network error
  * </p>
- * 
+ *
  * @author Dan Shannon
  */
 public class StravaAPINetworkException extends RuntimeException implements StravaAPIException {
 
+	/**
+	 * Boring implementation
+	 */
 	private static final long	serialVersionUID	= 1L;
 
+	/**
+	 * Strava response that caused this error
+	 */
 	private StravaResponse		response;
 
 	/**

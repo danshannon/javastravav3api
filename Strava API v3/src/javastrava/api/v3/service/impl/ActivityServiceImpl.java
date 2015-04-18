@@ -60,11 +60,29 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		return service;
 	}
 
+	/**
+	 * Cache of activities
+	 */
 	private final StravaCache<StravaActivity, Integer> activityCache;
 
+	/**
+	 * <p>
+	 * Private constructor requires a valid access token
+	 * </p>
+	 *
+	 * @param token Access token from Strava OAuth process
+	 */
 	private ActivityServiceImpl(final Token token) {
 		super(token);
 		this.activityCache = new StravaCacheImpl<StravaActivity, Integer>(StravaActivity.class, token);
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		this.activityCache.removeAll();
 	}
 
 	/**
@@ -199,12 +217,15 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		deleteComment(comment.getActivityId(), comment.getId());
 	}
 
+	/**
+	 * Update the given activity
+	 * @param id Activity identifier
+	 * @param update Updates to be made to the activity
+	 * @return Activity returned from Strava as a result of the update
+	 */
 	private StravaActivity doUpdateActivity(final Integer id, final StravaActivityUpdate update) {
 		try {
-			StravaActivity response = this.api.updateActivity(id, update);
-			if (response.getResourceState() == StravaResourceState.UPDATING) {
-				response = getActivity(id);
-			}
+			final StravaActivity response = this.api.updateActivity(id, update);
 			return response;
 		} catch (final NotFoundException e) {
 			return null;
@@ -227,7 +248,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	public StravaActivity getActivity(final Integer activityId, final Boolean includeAllEfforts) {
 		// Attempt to get the activity from cache
 		StravaActivity stravaResponse = this.activityCache.get(activityId);
-		if (stravaResponse != null && stravaResponse.getResourceState() != StravaResourceState.META) {
+		if ((stravaResponse != null) && (stravaResponse.getResourceState() != StravaResourceState.META)) {
 			return stravaResponse;
 		}
 
@@ -240,12 +261,12 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		} catch (final UnauthorizedException e) {
 			stravaResponse = PrivacyUtils.privateActivity(activityId);
 		}
-		
+
 		// Put the activity in cache unless it's UPDATING
 		if (stravaResponse.getResourceState() != StravaResourceState.UPDATING) {
 			this.activityCache.put(stravaResponse);
 		}
-		
+
 		// And return it
 		return stravaResponse;
 	}
@@ -617,14 +638,6 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		response = doUpdateActivity(id, update);
 		return response;
 
-	}
-
-	/**
-	 * @see javastrava.api.v3.service.StravaService#clearCache()
-	 */
-	@Override
-	public void clearCache() {
-		this.activityCache.removeAll();	
 	}
 
 }

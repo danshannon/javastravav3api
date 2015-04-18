@@ -77,6 +77,11 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
+	 * Cache of segment data
+	 */
+	private final StravaCache<StravaSegment, Integer> segmentCache;
+
+	/**
 	 * <p>
 	 * Private constructor ensures that the only way to get an instance is via
 	 * {@link #instance(Token)} with a valid access token
@@ -89,8 +94,6 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		super(token);
 		this.segmentCache = new StravaCacheImpl<StravaSegment, Integer>(StravaSegment.class, token);
 	}
-	
-	private final StravaCache<StravaSegment, Integer> segmentCache;
 
 	/**
 	 * <p>
@@ -156,6 +159,14 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		this.segmentCache.removeAll();
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.SegmentService#getAllSegmentLeaderboard(java.lang.Integer)
 	 */
 	@Override
@@ -176,7 +187,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following,
 			final Integer clubId, final StravaLeaderboardDateRange dateRange) {
 		boolean loop = true;
-		StravaSegmentLeaderboard leaderboard = null;
+		StravaSegmentLeaderboard leaderboard = new StravaSegmentLeaderboard();
 
 		int page = 0;
 		while (loop) {
@@ -211,10 +222,10 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	public StravaSegment getSegment(final Integer id) {
 		// Try to get the segment from cache
 		StravaSegment segment = this.segmentCache.get(id);
-		if (segment != null && segment.getResourceState() != StravaResourceState.META) {
+		if ((segment != null) && (segment.getResourceState() != StravaResourceState.META)) {
 			return segment;
 		}
-		
+
 		try {
 			segment = this.api.getSegment(id);
 		} catch (final NotFoundException e) {
@@ -226,7 +237,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		// TODO Workaround for javastrava-api #70
 		// If the segment is private and the token doesn't have view_private
 		// scope, then return an empty segment
-		if (segment.getResourceState() != StravaResourceState.PRIVATE && segment.getPrivateSegment().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
+		if ((segment.getResourceState() != StravaResourceState.PRIVATE) && segment.getPrivateSegment().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
 			segment = PrivacyUtils.privateSegment(id);
 		}
 		// End of workaround
@@ -275,7 +286,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			return null;
 		}
 
-		StravaSegmentLeaderboard leaderboard = null;
+		StravaSegmentLeaderboard leaderboard = new StravaSegmentLeaderboard();
 
 		// If the segment is private and inaccessible, then don't return a
 		// leaderboard
@@ -308,17 +319,14 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 				final StravaSegmentLeaderboard current = this.api.getSegmentLeaderboard(segmentId, gender, ageGroup,
 						weightClass, following, clubId, dateRange, paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
-					if (leaderboard == null) {
-						leaderboard = current;
-						current.setAthleteEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
-					}
+					current.setAthleteEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
 					break;
 				}
 				current.setAthleteEntries(calculateAthleteEntries(current, paging, contextSize));
 				current.getEntries().removeAll(current.getAthleteEntries());
 				current.setEntries(PagingUtils.ignoreLastN(current.getEntries(), paging.getIgnoreLastN()));
 				current.setEntries(PagingUtils.ignoreFirstN(current.getEntries(), paging.getIgnoreFirstN()));
-				if (leaderboard == null) {
+				if (leaderboard.getEntries() == null) {
 					leaderboard = current;
 				} else {
 					leaderboard.getEntries().addAll(current.getEntries());
@@ -565,14 +573,6 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 				+ "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ northeastCorner.getLongitude();
 		return this.api.segmentExplore(bounds, activityType, minCat, maxCat);
-	}
-
-	/**
-	 * @see javastrava.api.v3.service.StravaService#clearCache()
-	 */
-	@Override
-	public void clearCache() {
-		this.segmentCache.removeAll();
 	}
 
 }

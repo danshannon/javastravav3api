@@ -9,9 +9,18 @@ package javastrava.api.v3.model;
  *
  */
 public class StravaAchievement {
+	/**
+	 * Identifier of the achievement type
+	 */
 	private Integer typeId;
 
+	/**
+	 * Type
+	 */
 	private String type;
+	/**
+	 * Rank (1-10 for trophies, 1-3 for PR's)
+	 */
 	private Integer rank;
 	/**
 	 * No-args constructor

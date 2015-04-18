@@ -17,7 +17,10 @@ import retrofit.RestAdapter;
  */
 public class AuthorisationServiceImpl implements AuthorisationService {
 
-	private final AuthorisationAPI restService;
+	/**
+	 * Authorisation API instance
+	 */
+	private final AuthorisationAPI api;
 
 	/**
 	 * <p>
@@ -25,7 +28,7 @@ public class AuthorisationServiceImpl implements AuthorisationService {
 	 * </p>
 	 */
 	public AuthorisationServiceImpl() {
-		this.restService = API.authorisationInstance();
+		this.api = API.authorisationInstance();
 	}
 
 	/**
@@ -33,8 +36,8 @@ public class AuthorisationServiceImpl implements AuthorisationService {
 	 */
 	@Override
 	public Token tokenExchange(final Integer clientId, final String clientSecret, final String code, final AuthorisationScope... scopes) throws BadRequestException, UnauthorizedException {
-		TokenResponse response = this.restService.tokenExchange(clientId, clientSecret, code);
-		Token token = new Token(response, scopes);
+		final TokenResponse response = this.api.tokenExchange(clientId, clientSecret, code);
+		final Token token = new Token(response, scopes);
 		TokenManager.instance().storeToken(token);
 		return token;
 	}

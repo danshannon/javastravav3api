@@ -46,6 +46,11 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 	}
 
 	/**
+	 * Cache of segment efforts
+	 */
+	private final StravaCache<StravaSegmentEffort, Long> effortCache;
+
+	/**
 	 * <p>
 	 * Private constructor ensures that the only way to get an instance is by
 	 * using {@link #instance(Token)} with a valid access token.
@@ -59,8 +64,14 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 		super(token);
 		this.effortCache = new StravaCacheImpl<StravaSegmentEffort, Long>(StravaSegmentEffort.class, token);
 	}
-	
-	private final StravaCache<StravaSegmentEffort, Long> effortCache;
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		this.effortCache.removeAll();
+	}
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentEffortService#getSegmentEffort(Long)
@@ -69,7 +80,7 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 	public StravaSegmentEffort getSegmentEffort(final Long id) {
 		// Try to get the effort from cache
 		StravaSegmentEffort effort = this.effortCache.get(id);
-		if (effort != null && effort.getResourceState() != StravaResourceState.META) {
+		if ((effort != null) && (effort.getResourceState() != StravaResourceState.META)) {
 			return effort;
 		}
 
@@ -104,14 +115,6 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 		// Put the effort into cache and return it
 		this.effortCache.put(effort);
 		return effort;
-	}
-
-	/**
-	 * @see javastrava.api.v3.service.StravaService#clearCache()
-	 */
-	@Override
-	public void clearCache() {
-		this.effortCache.removeAll();
 	}
 
 }

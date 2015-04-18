@@ -17,11 +17,11 @@ public class TokenServiceImpl extends StravaServiceImpl implements TokenService 
 	 * <p>
 	 * Returns an instance of {@link TokenService token services}
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
 	 * </p>
-	 * 
+	 *
 	 * @param token
 	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An instance of the token services
@@ -41,21 +41,14 @@ public class TokenServiceImpl extends StravaServiceImpl implements TokenService 
 		return restService;
 	}
 
+	/**
+	 * <p>
+	 * Private constructor allows for the {@link #instance} method to only be given access to a single instance per {@link Token}
+	 * </p>
+	 * @param token The token to use for this token service
+	 */
 	private TokenServiceImpl(final Token token) {
 		super(token);
-	}
-
-	/**
-	 * @see TokenService#deauthorise(Token)
-	 */
-	@Override
-	public TokenResponse deauthorise(final Token token) throws UnauthorizedException {
-		final TokenResponse response = this.api.deauthorise(token.getToken());
-		for (StravaService service : token.getServices().values()) {
-			service.clearCache();
-		}
-		TokenManager.instance().revokeToken(token);
-		return response;
 	}
 
 	/**
@@ -64,6 +57,19 @@ public class TokenServiceImpl extends StravaServiceImpl implements TokenService 
 	@Override
 	public void clearCache() {
 		// Nothing to do - there is no cache
+	}
+
+	/**
+	 * @see TokenService#deauthorise(Token)
+	 */
+	@Override
+	public TokenResponse deauthorise(final Token token) throws UnauthorizedException {
+		final TokenResponse response = this.api.deauthorise(token.getToken());
+		for (final StravaService service : token.getServices().values()) {
+			service.clearCache();
+		}
+		TokenManager.instance().revokeToken(token);
+		return response;
 	}
 
 }

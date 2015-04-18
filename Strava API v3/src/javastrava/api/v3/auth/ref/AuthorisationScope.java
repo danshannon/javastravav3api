@@ -47,10 +47,24 @@ public enum AuthorisationScope {
 		return AuthorisationScope.UNKNOWN;
 	}
 
+	/**
+	 * Identifier
+	 */
 	private String id;
 
+	/**
+	 * Description of the auth scope
+	 */
 	private String description;
 
+	/**
+	 * <p>
+	 * Private constructor because this is, after all, an enum
+	 * </p>
+	 *
+	 * @param id Identifier
+	 * @param description Description
+	 */
 	private AuthorisationScope(final String id, final String description) {
 		this.id = id;
 		this.description = description;

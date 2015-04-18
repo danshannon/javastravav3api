@@ -10,7 +10,7 @@ import javastrava.config.StravaConfig;
  * <p>
  * As of Strava API v3.0, this value must be set to {@link #CODE}
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
@@ -30,7 +30,7 @@ public enum AuthorisationResponseType {
 
 	/**
 	 * Required by GSON serialiser
-	 * 
+	 *
 	 * @param id
 	 *            The String value of the id
 	 * @return An instance of {@link AuthorisationResponseType} corresponding to the id, or {@link #UNKNOWN} if no such instance is available.
@@ -44,8 +44,19 @@ public enum AuthorisationResponseType {
 		return AuthorisationResponseType.UNKNOWN;
 	}
 
+	/**
+	 * <p>
+	 * Identifier
+	 * </p>
+	 */
 	private final String id;
 
+	/**
+	 * <p>
+	 * Private constructor - this is an enum, so we can't be running round having public constructors, can we
+	 * </p>
+	 * @param id The identifier of the response type
+	 */
 	private AuthorisationResponseType(final String id) {
 		this.id = id;
 	}

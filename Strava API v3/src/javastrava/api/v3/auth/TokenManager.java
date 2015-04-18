@@ -18,16 +18,29 @@ import javastrava.config.Messages;
  */
 public class TokenManager {
 	/**
+	 * <p>
+	 * The singleton instance of {@link TokenManager}
+	 * </p>
+	 */
+	private static TokenManager instance = new TokenManager();
+
+	/**
 	 * @return Singleton instance of the TokenManager
 	 */
 	public static TokenManager instance() {
 		return instance;
 	}
 
-	private static TokenManager instance = new TokenManager();
-
+	/**
+	 * Cached tokens, mapped by username
+	 */
 	private final Map<String, Token> tokens;
 
+	/**
+	 * <p>
+	 * Private constructor allows only for instantiation as a singleton via {@link #instance}
+	 * </p>
+	 */
 	private TokenManager() {
 		// Initialise as a singleton
 		this.tokens = new HashMap<String, Token>();
@@ -49,7 +62,7 @@ public class TokenManager {
 	 * Retrieve a cached token which has <strong>exactly</strong> the given set
 	 * of scopes
 	 * </p>
-	 * 
+	 *
 	 * @param username
 	 *            The username
 	 * @param requiredScopes
@@ -95,7 +108,7 @@ public class TokenManager {
 	 * Retrieve a cached token which has <strong>exactly</strong> the given set
 	 * of scopes
 	 * </p>
-	 * 
+	 *
 	 * @param username The user to look up for a cached token
 	 * @param scopes The set of scopes the token must have
 	 * @return The matching token from the cache, or <code>null</code> if there is no matching token
@@ -116,7 +129,7 @@ public class TokenManager {
 	 * Retrieve a token which has <strong>at least</strong> the given set of
 	 * scopes.
 	 * </p>
-	 * 
+	 *
 	 * @param username
 	 *            The username
 	 * @param scopes
@@ -154,7 +167,7 @@ public class TokenManager {
 	 * Retrieve a token which has <strong>at least</strong> the given set of
 	 * scopes.
 	 * </p>
-	 * 
+	 *
 	 * @param username
 	 *            The username
 	 * @param scopes
@@ -179,7 +192,7 @@ public class TokenManager {
 	 * <p>
 	 * Revoke an access token - that is, remove it from the cache of tokens.
 	 * </p>
-	 * 
+	 *
 	 * @param token The token to be removed from the cache
 	 */
 	public void revokeToken(final Token token) {
@@ -190,9 +203,9 @@ public class TokenManager {
 	 * <p>
 	 * Place a token in the cache
 	 * </p>
-	 * 
-	 * @param token The token to be stored in the cache. 
-	 * @throws IllegalArgumentException If the token is null, or the athlete contained in it is null or has a null email, or there are no authorisation scopes, then 
+	 *
+	 * @param token The token to be stored in the cache.
+	 * @throws IllegalArgumentException If the token is null, or the athlete contained in it is null or has a null email, or there are no authorisation scopes, then
 	 */
 	public void storeToken(final Token token) {
 		String username = null;

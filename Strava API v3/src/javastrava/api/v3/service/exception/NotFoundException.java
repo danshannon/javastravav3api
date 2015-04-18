@@ -6,17 +6,20 @@ import javastrava.api.v3.model.StravaResponse;
  * <p>
  * Thrown when Strava API returns an HTTP status of 404
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
 public class NotFoundException extends Exception implements StravaAPIException {
-	private StravaResponse response;
-
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Response from Strava which caused the exception
+	 */
+	private StravaResponse response;
 
 	/**
 	 * @param response Response received from Strava containing error details
@@ -26,7 +29,7 @@ public class NotFoundException extends Exception implements StravaAPIException {
 		super((response == null ? null : response.toString()),cause);
 		this.response = response;
 	}
-	
+
 	/**
 	 * @param reason Reason for the failure
 	 */

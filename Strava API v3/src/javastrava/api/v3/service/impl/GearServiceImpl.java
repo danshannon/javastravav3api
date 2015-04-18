@@ -50,6 +50,11 @@ public class GearServiceImpl extends StravaServiceImpl implements GearService {
 	}
 
 	/**
+	 * Cache of gear information
+	 */
+	private final StravaCache<StravaGear, String> gearCache;
+
+	/**
 	 * <p>
 	 * Private constructor ensures that the only way to get an instance is via
 	 * the {@link #instance(Token)} method
@@ -62,8 +67,14 @@ public class GearServiceImpl extends StravaServiceImpl implements GearService {
 		super(token);
 		this.gearCache = new StravaCacheImpl<StravaGear, String>(StravaGear.class, token);
 	}
-	
-	private final StravaCache<StravaGear, String> gearCache;
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		this.gearCache.removeAll();
+	}
 
 	/**
 	 * @see javastrava.api.v3.service.GearService#getGear(java.lang.String)
@@ -72,10 +83,10 @@ public class GearServiceImpl extends StravaServiceImpl implements GearService {
 	public StravaGear getGear(final String id) {
 		// Attempt to get the gear from cache
 		StravaGear gear = this.gearCache.get(id);
-		if (gear != null && gear.getResourceState() != StravaResourceState.META) {
+		if ((gear != null) && (gear.getResourceState() != StravaResourceState.META)) {
 			return gear;
 		}
-		
+
 		// If it wasn't in cache, try to get it from the API
 		try {
 			gear = this.api.getGear(id);
@@ -84,18 +95,10 @@ public class GearServiceImpl extends StravaServiceImpl implements GearService {
 		} catch (final UnauthorizedException e) {
 			gear = PrivacyUtils.privateGear(id);
 		}
-		
+
 		// Put the gear in cache and return it
 		this.gearCache.put(gear);
 		return gear;
-	}
-
-	/**
-	 * @see javastrava.api.v3.service.StravaService#clearCache()
-	 */
-	@Override
-	public void clearCache() {
-		this.gearCache.removeAll();
 	}
 
 }

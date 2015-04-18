@@ -32,6 +32,11 @@ import javastrava.util.PrivacyUtils;
  *
  */
 public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
+	/**
+	 * Generates a response indicating that the club membership activity (either a {@link ClubService#joinClub(Integer)} or a {@link ClubService#leaveClub(Integer)}) failed
+	 *
+	 * @return The response
+	 */
 	private static StravaClubMembershipResponse failedClubMembershipResponse() {
 		final StravaClubMembershipResponse response = new StravaClubMembershipResponse();
 		response.setActive(Boolean.FALSE);
@@ -68,12 +73,27 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 		return service;
 	}
 
+	/**
+	 * Cached club instances
+	 */
+	private final StravaCache<StravaClub, Integer> clubCache;
+
+	/**
+	 * Private constructor requires a valid access token; see {@link #instance(Token)}
+	 * @param token A valid token from the Strava OAuth process
+	 */
 	private ClubServiceImpl(final Token token) {
 		super(token);
 		this.clubCache = new StravaCacheImpl<StravaClub, Integer>(StravaClub.class, token);
 	}
-	
-	private final StravaCache<StravaClub, Integer> clubCache;
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		this.clubCache.removeAll();
+	}
 
 	/**
 	 * @see javastrava.api.v3.service.ClubService#getClub(java.lang.Integer)
@@ -82,10 +102,10 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	public StravaClub getClub(final Integer id) {
 		// Attempt to get the club from the cache
 		StravaClub club = this.clubCache.get(id);
-		if (club != null && club.getResourceState() != StravaResourceState.META) {
+		if ((club != null) && (club.getResourceState() != StravaResourceState.META)) {
 			return club;
 		}
-		
+
 		// If it wasn't in cache, get it from Strava
 		try {
 			club = this.api.getClub(id);
@@ -94,7 +114,7 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 		} catch (final UnauthorizedException e) {
 			club = PrivacyUtils.privateClubRepresentation(id);
 		}
-		
+
 		// Put it in the cache and return it
 		this.clubCache.put(club);
 		return club;
@@ -112,9 +132,8 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 		} catch (final UnauthorizedException e) {
 			if (accessTokenIsValid()) {
 				return failedClubMembershipResponse();
-			} else {
-				throw e;
 			}
+			throw e;
 		}
 	}
 
@@ -128,9 +147,8 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 		} catch (final UnauthorizedException e) {
 			if (accessTokenIsValid()) {
 				return failedClubMembershipResponse();
-			} else {
-				throw e;
 			}
+			throw e;
 		} catch (final NotFoundException e) {
 			return failedClubMembershipResponse();
 		}
@@ -159,6 +177,22 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	@Override
 	public List<StravaClub> listAuthenticatedAthleteClubs() {
 		return Arrays.asList(this.api.listAuthenticatedAthleteClubs());
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubAnnouncements(java.lang.Integer)
+	 */
+	@Override
+	public List<StravaClubAnnouncement> listClubAnnouncements(final Integer clubId) {
+		List<StravaClubAnnouncement> announcements;
+		try {
+			announcements = Arrays.asList(this.api.listClubAnnouncements(clubId));
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaClubAnnouncement>();
+		}
+		return announcements;
 	}
 
 	/**
@@ -206,30 +240,6 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 						thisPage.getPageSize())));
 
 		return PrivacyUtils.handlePrivateActivities(activities, this.getToken());
-	}
-
-	/**
-	 * @see javastrava.api.v3.service.ClubService#listClubAnnouncements(java.lang.Integer)
-	 */
-	@Override
-	public List<StravaClubAnnouncement> listClubAnnouncements(final Integer clubId) {
-		List<StravaClubAnnouncement> announcements;
-		try {
-			announcements = Arrays.asList(this.api.listClubAnnouncements(clubId));
-		} catch (NotFoundException e) {
-			return null;
-		} catch (UnauthorizedException e) {
-			return new ArrayList<StravaClubAnnouncement>();
-		}
-		return announcements;
-	}
-
-	/**
-	 * @see javastrava.api.v3.service.StravaService#clearCache()
-	 */
-	@Override
-	public void clearCache() {
-		this.clubCache.removeAll();
 	}
 
 }

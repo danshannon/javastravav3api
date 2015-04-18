@@ -56,12 +56,29 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 		return service;
 	}
 
+	/**
+	 * Cache of athletes
+	 */
+	private final StravaCache<StravaAthlete, Integer> athleteCache;
+
+	/**
+	 * <p>
+	 * Private constructor requires a valid token to instantiate, see {@link AthleteServiceImpl#instance}
+	 * </p>
+	 * @param token A valid access token returned by Strava's OAuth process
+	 */
 	private AthleteServiceImpl(final Token token) {
 		super(token);
 		this.athleteCache = new StravaCacheImpl<StravaAthlete, Integer>(StravaAthlete.class, token);
 	}
-	
-	private final StravaCache<StravaAthlete, Integer> athleteCache;
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		this.athleteCache.removeAll();
+	}
 
 	/**
 	 * @see javastrava.api.v3.service.AthleteService#getAthlete(java.lang.Integer)
@@ -70,10 +87,10 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	public StravaAthlete getAthlete(final Integer id) {
 		// Attempt to get the athlete from the cache
 		StravaAthlete athlete = this.athleteCache.get(id);
-		if (athlete != null && athlete.getResourceState() != StravaResourceState.META) {
+		if ((athlete != null) && (athlete.getResourceState() != StravaResourceState.META)) {
 			return athlete;
 		}
-		
+
 		// Attempt to get the athlete from the API if it's not in cache
 		try {
 			athlete = this.api.getAthlete(id);
@@ -84,11 +101,10 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 				athlete = new StravaAthlete();
 				athlete.setId(id);
 				return athlete;
-			} else {
-				throw e;
 			}
+			throw e;
 		}
-		
+
 		// Put the athlete in the cache
 		this.athleteCache.put(athlete);
 		return athlete;
@@ -104,10 +120,10 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 		if (athlete != null) {
 			return athlete;
 		}
-		
+
 		// Now get it via the API
 		athlete = this.api.getAuthenticatedAthlete();
-		
+
 		// Put it in the cache and return
 		this.athleteCache.put(athlete);
 		return athlete;
@@ -249,14 +265,6 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country,
 			final StravaGender sex, final Float weight) {
 		return this.api.updateAuthenticatedAthlete(city, state, country, sex, weight);
-	}
-
-	/**
-	 * @see javastrava.api.v3.service.StravaService#clearCache()
-	 */
-	@Override
-	public void clearCache() {
-		this.athleteCache.removeAll();		
 	}
 
 }

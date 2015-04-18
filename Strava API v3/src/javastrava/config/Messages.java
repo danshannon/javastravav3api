@@ -8,12 +8,15 @@ import java.util.ResourceBundle;
  *
  */
 public class Messages {
+	/**
+	 * Bundle name
+	 */
 	private static final String BUNDLE_NAME = "messages"; //$NON-NLS-1$
 
+	/**
+	 * The resource bundle itseld
+	 */
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
-
-	private Messages() {
-	}
 
 	/**
 	 * Get the value of a property in the resource bundle
@@ -22,6 +25,12 @@ public class Messages {
 	 */
 	public static String string(final String key) {
 		return RESOURCE_BUNDLE.getString(key);
-		
+
+	}
+
+	/**
+	 * no args constructor
+	 */
+	private Messages() {
 	}
 }
