@@ -6,7 +6,6 @@ package javastrava.api.v3.rest;
 import java.time.LocalDateTime;
 
 import javastrava.api.v3.model.StravaAthlete;
-import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaSegmentExplorerResponse;
@@ -36,19 +35,6 @@ import retrofit.http.Query;
  *
  */
 public interface SegmentAPI {
-	// TODO This is a workaround for issue javastrava-api #23 (https://github.com/danshannon/javastravav3api/issues/23)
-	// When the issue is fixed, remove this
-	/**
-	 * @see javastrava.api.v3.service.ClubService#getClub(java.lang.Integer)
-	 *
-	 * @param id Club identifier
-	 * @return Club details
-	 * @throws NotFoundException If the club with the given id doesn't exist
-	 */
-	@GET("/clubs/{id}")
-	public StravaClub getClub(@Path("id") final Integer id) throws NotFoundException;
-	// End of workaround
-
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#getSegment(java.lang.Integer)
 	 *

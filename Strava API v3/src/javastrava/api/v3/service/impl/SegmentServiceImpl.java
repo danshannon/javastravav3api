@@ -300,20 +300,6 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 				Math.min(15, contextEntries.intValue()))));
 		final Integer contextSize = Integer.valueOf((context.intValue() * 2) + 1);
 
-		// TODO This is a workaround for issue javastrava-api #23
-		// (https://github.com/danshannon/javastravav3api/issues/23) - see also
-		// the workaround in
-		// SegmentAPI
-		if (clubId != null) {
-			try {
-				this.api.getClub(clubId);
-			} catch (final NotFoundException e) {
-				// Club doesn't exist, so return null
-				return null;
-			}
-		}
-		// End of workaround
-
 		try {
 			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
 				final StravaSegmentLeaderboard current = this.api.getSegmentLeaderboard(segmentId, gender, ageGroup,
