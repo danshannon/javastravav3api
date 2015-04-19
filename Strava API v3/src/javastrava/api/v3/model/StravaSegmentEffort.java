@@ -440,6 +440,7 @@ public class StravaSegmentEffort implements StravaCacheable<Long>{
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}

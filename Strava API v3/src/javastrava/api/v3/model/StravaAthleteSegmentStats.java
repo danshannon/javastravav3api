@@ -11,68 +11,22 @@ import java.time.LocalDate;
  */
 public class StravaAthleteSegmentStats {
 	/**
+	 * Number of efforts by the authenticated athlete on the segment
+	 */
+	private Integer effortCount;
+	/**
+	 * Elapsed time of the athlete's personal record for this segment
+	 */
+	private Integer prElapsedTime;
+	/**
+	 * Date on which the athlete's personal record was set
+	 */
+	private LocalDate prDate;
+	/**
 	 * No args constructor
 	 */
 	public StravaAthleteSegmentStats() {
 		super();
-	}
-	/**
-	 * @return the effortCount
-	 */
-	public Integer getEffortCount() {
-		return this.effortCount;
-	}
-	/**
-	 * @param effortCount the effortCount to set
-	 */
-	public void setEffortCount(final Integer effortCount) {
-		this.effortCount = effortCount;
-	}
-	/**
-	 * @return the prElapsedTime
-	 */
-	public Integer getPrElapsedTime() {
-		return this.prElapsedTime;
-	}
-	/**
-	 * @param prElapsedTime the prElapsedTime to set
-	 */
-	public void setPrElapsedTime(final Integer prElapsedTime) {
-		this.prElapsedTime = prElapsedTime;
-	}
-	/**
-	 * @return the prDate
-	 */
-	public LocalDate getPrDate() {
-		return this.prDate;
-	}
-	/**
-	 * @param prDate the prDate to set
-	 */
-	public void setPrDate(final LocalDate prDate) {
-		this.prDate = prDate;
-	}
-	private Integer effortCount;
-	private Integer prElapsedTime;
-	private LocalDate prDate;
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "StravaAthleteSegmentStats [effortCount=" + this.effortCount + ", prElapsedTime=" + this.prElapsedTime + ", prDate=" + this.prDate + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.effortCount == null) ? 0 : this.effortCount.hashCode());
-		result = prime * result + ((this.prDate == null) ? 0 : this.prDate.hashCode());
-		result = prime * result + ((this.prElapsedTime == null) ? 0 : this.prElapsedTime.hashCode());
-		return result;
 	}
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -88,7 +42,7 @@ public class StravaAthleteSegmentStats {
 		if (!(obj instanceof StravaAthleteSegmentStats)) {
 			return false;
 		}
-		StravaAthleteSegmentStats other = (StravaAthleteSegmentStats) obj;
+		final StravaAthleteSegmentStats other = (StravaAthleteSegmentStats) obj;
 		if (this.effortCount == null) {
 			if (other.effortCount != null) {
 				return false;
@@ -111,5 +65,60 @@ public class StravaAthleteSegmentStats {
 			return false;
 		}
 		return true;
+	}
+	/**
+	 * @return the effortCount
+	 */
+	public Integer getEffortCount() {
+		return this.effortCount;
+	}
+	/**
+	 * @return the prDate
+	 */
+	public LocalDate getPrDate() {
+		return this.prDate;
+	}
+	/**
+	 * @return the prElapsedTime
+	 */
+	public Integer getPrElapsedTime() {
+		return this.prElapsedTime;
+	}
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.effortCount == null) ? 0 : this.effortCount.hashCode());
+		result = (prime * result) + ((this.prDate == null) ? 0 : this.prDate.hashCode());
+		result = (prime * result) + ((this.prElapsedTime == null) ? 0 : this.prElapsedTime.hashCode());
+		return result;
+	}
+	/**
+	 * @param effortCount the effortCount to set
+	 */
+	public void setEffortCount(final Integer effortCount) {
+		this.effortCount = effortCount;
+	}
+	/**
+	 * @param prDate the prDate to set
+	 */
+	public void setPrDate(final LocalDate prDate) {
+		this.prDate = prDate;
+	}
+	/**
+	 * @param prElapsedTime the prElapsedTime to set
+	 */
+	public void setPrElapsedTime(final Integer prElapsedTime) {
+		this.prElapsedTime = prElapsedTime;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaAthleteSegmentStats [effortCount=" + this.effortCount + ", prElapsedTime=" + this.prElapsedTime + ", prDate=" + this.prDate + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

@@ -1,6 +1,7 @@
 package javastrava.api.v3.model;
 
 import javastrava.api.v3.model.reference.StravaClimbCategory;
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.cache.StravaCacheable;
 
 /**
@@ -52,6 +53,10 @@ public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Int
 	 * Polyline for rendering with Google maps
 	 */
 	private String points;
+	/**
+	 * Resource state - not returned by Strava API but is set at the service layer instead
+	 */
+	private StravaResourceState resourceState;
 	/**
 	 * No args constructor
 	 */
@@ -197,6 +202,13 @@ public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Int
 		return this.points;
 	}
 	/**
+	 * @see javastrava.cache.StravaCacheable#getResourceState()
+	 */
+	@Override
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+	/**
 	 * @return the startLatlng
 	 */
 	public StravaMapPoint getStartLatlng() {
@@ -274,6 +286,13 @@ public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Int
 	 */
 	public void setPoints(final String points) {
 		this.points = points;
+	}
+	/**
+	 * @param resourceState The resourceState to set
+	 */
+	public void setResourceState(final StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+
 	}
 	/**
 	 * @param startLatlng the startLatlng to set

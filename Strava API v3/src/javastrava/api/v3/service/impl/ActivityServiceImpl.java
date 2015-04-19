@@ -66,6 +66,21 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	private final StravaCache<StravaActivity, Integer> activityCache;
 
 	/**
+	 * Cache of comments
+	 */
+	private final StravaCache<StravaComment, Integer> commentCache;
+
+	/**
+	 * Cache of laps
+	 */
+	private final StravaCache<StravaLap, Integer> lapCache;
+
+	/**
+	 * Cache of photos
+	 */
+	private final StravaCache<StravaPhoto, Integer> photoCache;
+
+	/**
 	 * <p>
 	 * Private constructor requires a valid access token
 	 * </p>
@@ -75,6 +90,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	private ActivityServiceImpl(final Token token) {
 		super(token);
 		this.activityCache = new StravaCacheImpl<StravaActivity, Integer>(StravaActivity.class, token);
+		this.commentCache = new StravaCacheImpl<StravaComment, Integer>(StravaComment.class, token);
+		this.lapCache = new StravaCacheImpl<StravaLap, Integer>(StravaLap.class, token);
+		this.photoCache = new StravaCacheImpl<StravaPhoto, Integer>(StravaPhoto.class, token);
 	}
 
 	/**
@@ -83,6 +101,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public void clearCache() {
 		this.activityCache.removeAll();
+		this.commentCache.removeAll();
+		this.lapCache.removeAll();
+		this.photoCache.removeAll();
 	}
 
 	/**
@@ -115,8 +136,13 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		// Create the comment
-		return this.api.createComment(activityId, text);
+		final StravaComment comment = this.api.createComment(activityId, text);
 
+		// Put the comment in cache
+		this.commentCache.put(comment);
+
+		// Return the comment
+		return comment;
 	}
 
 	/**
@@ -136,8 +162,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		// Create the activity
+		StravaActivity stravaResponse = null;
 		try {
-			return this.api.createManualActivity(activity);
+			stravaResponse = this.api.createManualActivity(activity);
 		} catch (final BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -147,6 +174,14 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new IllegalArgumentException(e);
 		}
 		// End of workaround
+
+		// Put the activity in cache
+		if (stravaResponse.getResourceState() != StravaResourceState.UPDATING) {
+			this.activityCache.put(stravaResponse);
+		}
+
+		// Return the activity
+		return stravaResponse;
 	}
 
 	/**
@@ -170,12 +205,17 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deletePrivateActivityWithoutViewPrivate")); //$NON-NLS-1$
 		}
 
+		// Now we can do the delete
 		try {
 			activity = this.api.deleteActivity(id);
 		} catch (final NotFoundException e) {
 			return null;
 		}
+
+		// If the delete worked, also remove it from the cache
 		this.activityCache.remove(id);
+
+		// And finally, return it
 		return activity;
 	}
 
@@ -203,9 +243,13 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentOnPrivateActivity")); //$NON-NLS-1$
 		}
-
 		// End of workaround
+
+		// Delete the comment
 		this.api.deleteComment(activityId, commentId);
+
+		// Remove it from the cache
+		this.commentCache.remove(commentId);
 
 	}
 
@@ -226,6 +270,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	private StravaActivity doUpdateActivity(final Integer id, final StravaActivityUpdate update) {
 		try {
 			final StravaActivity response = this.api.updateActivity(id, update);
+			this.activityCache.put(response);
 			return response;
 		} catch (final NotFoundException e) {
 			return null;
@@ -333,10 +378,17 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			return new ArrayList<StravaComment>();
 		}
 
-		return PagingHandler.handlePaging(
+		// Get the comments from Strava
+		final List<StravaComment> comments = PagingHandler.handlePaging(
 				pagingInstruction,
 				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listActivityComments(id, markdown,
 						thisPage.getPage(), thisPage.getPageSize())));
+
+		// And put them in the cache
+		this.commentCache.putAll(comments);
+
+		// Finally, return the list
+		return comments;
 	}
 
 	/**
@@ -394,11 +446,30 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			return new ArrayList<StravaLap>();
 		}
 
+		// Try to get the laps from cache
+		final List<StravaLap> cachedLaps = this.lapCache.list();
+		List<StravaLap> laps = new ArrayList<StravaLap>();
+		for (final StravaLap lap : cachedLaps) {
+			if (lap.getActivity().getId().equals(id)) {
+				laps.add(lap);
+			}
+		}
+		if (!laps.isEmpty()) {
+			return laps;
+		}
+
+		// Get the laps from Strava
 		try {
-			return Arrays.asList(this.api.listActivityLaps(id));
+			laps = Arrays.asList(this.api.listActivityLaps(id));
 		} catch (final NotFoundException e) {
 			return null;
 		}
+
+		// Put them all in the cache
+		this.lapCache.putAll(laps);
+
+		// Finally, return the laps
+		return laps;
 
 	}
 
@@ -418,21 +489,37 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			return new ArrayList<StravaPhoto>();
 		}
 
+		// Try to get the photos from cache
+		final List<StravaPhoto> cachedPhotos = this.photoCache.list();
+		List<StravaPhoto> photos = new ArrayList<StravaPhoto>();
+		for (final StravaPhoto photo : cachedPhotos) {
+			if (photo.getActivityId().equals(id)) {
+				photos.add(photo);
+			}
+		}
+
+		// Attempt to get the photos from Strava
 		try {
-			final StravaPhoto[] photos = this.api.listActivityPhotos(id);
+			final StravaPhoto[] photoArray = this.api.listActivityPhotos(id);
 
 			// TODO This fixes an inconsistency with the listActivityComments
 			// API (issue #76)
 			// call on Strava, which returns an empty array, not null
-			if (photos == null) {
-				return new ArrayList<StravaPhoto>();
+			if (photoArray == null) {
+				photos = new ArrayList<StravaPhoto>();
+			} else {
+				photos = Arrays.asList(photoArray);
 			}
-
-			return Arrays.asList(photos);
 
 		} catch (final NotFoundException e) {
 			return null;
 		}
+
+		// Put all the photos in cache
+		this.photoCache.putAll(photos);
+
+		// Return the photos
+		return photos;
 	}
 
 	/**
@@ -539,12 +626,18 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		final Integer secondsBefore = StravaDateUtils.secondsSinceUnixEpoch(before);
 		final Integer secondsAfter = StravaDateUtils.secondsSinceUnixEpoch(after);
 
+		// Get the activities from Strava
 		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
 				.asList(this.api.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, thisPage.getPage(),
 						thisPage.getPageSize())));
 
+		// Handle Strava's slight weirdnesses with privacy
 		activities = PrivacyUtils.handlePrivateActivities(activities, this.getToken());
 
+		// Put the activities in the cache
+		this.activityCache.putAll(activities);
+
+		// Return them
 		return activities;
 	}
 
@@ -569,9 +662,18 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listFriendsActivities(final Paging pagingInstruction) {
-		final List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
+		// Attempt to get the activities from Strava
+		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
 				thisPage -> Arrays.asList(this.api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize())));
-		return PrivacyUtils.handlePrivateActivities(activities, this.getToken());
+
+		// Handle any privacy errors
+		activities = PrivacyUtils.handlePrivateActivities(activities, this.getToken());
+
+		// Put the activities in the cache
+		this.activityCache.putAll(activities);
+
+		// Return the activities
+		return activities;
 	}
 
 	/**
@@ -588,10 +690,19 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listRelatedActivities(final Integer id, final Paging pagingInstruction) {
-		final List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
+		// Attempt to get the activities from Strava
+		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
 				.asList(ActivityServiceImpl.this.api.listRelatedActivities(id, thisPage.getPage(),
 						thisPage.getPageSize())));
-		return PrivacyUtils.handlePrivateActivities(activities, this.getToken());
+
+		// Handle any privacy errors
+		activities = PrivacyUtils.handlePrivateActivities(activities, this.getToken());
+
+		// Put all the activities in cache
+		this.activityCache.putAll(activities);
+
+		// Return the activities
+		return activities;
 	}
 
 	/**
@@ -635,7 +746,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 
 		// End of workaround
 
+		// Perform the update on Strava (this will also update the cache)
 		response = doUpdateActivity(id, update);
+
+		// Return the updated activity
 		return response;
 
 	}

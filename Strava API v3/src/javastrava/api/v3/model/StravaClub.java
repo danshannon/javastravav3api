@@ -1,11 +1,11 @@
 package javastrava.api.v3.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import javastrava.api.v3.model.reference.StravaClubType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSportType;
 import javastrava.cache.StravaCacheable;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * <p>
@@ -236,6 +236,7 @@ public class StravaClub implements StravaCacheable<Integer>{
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}

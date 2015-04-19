@@ -14,6 +14,7 @@ import javastrava.api.v3.model.StravaMapPoint;
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaSegmentExplorerResponse;
+import javastrava.api.v3.model.StravaSegmentExplorerResponseSegment;
 import javastrava.api.v3.model.StravaSegmentLeaderboard;
 import javastrava.api.v3.model.StravaSegmentLeaderboardEntry;
 import javastrava.api.v3.model.reference.StravaAgeGroup;
@@ -558,7 +559,11 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		final String bounds = southwestCorner.getLatitude()
 				+ "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ northeastCorner.getLongitude();
-		return this.api.segmentExplore(bounds, activityType, minCat, maxCat);
+		final StravaSegmentExplorerResponse response = this.api.segmentExplore(bounds, activityType, minCat, maxCat);
+		for (final StravaSegmentExplorerResponseSegment segment : response.getSegments()) {
+			segment.setResourceState(StravaResourceState.SUMMARY);
+		}
+		return response;
 	}
 
 }

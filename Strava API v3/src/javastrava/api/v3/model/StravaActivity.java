@@ -939,6 +939,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}

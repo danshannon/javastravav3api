@@ -11,19 +11,13 @@ import javastrava.cache.StravaCacheable;
 
 /**
  * Detailed representation of an StravaAthlete
- * 
+ *
  * See http://strava.github.io/api/v3/athlete/
- * 
+ *
  * @author Dan Shannon
  *
  */
 public class StravaAthlete implements StravaCacheable<Integer>{
-	/**
-	 * no args constructor
-	 */
-	public StravaAthlete() {
-		super();
-	}
 	private Integer id;
 	private StravaResourceState resourceState;
 	private String firstname;
@@ -53,391 +47,10 @@ public class StravaAthlete implements StravaCacheable<Integer>{
 	private Float weight;
 	private Integer badgeTypeId;
 	/**
-	 * @return the id
+	 * no args constructor
 	 */
-	@Override
-	public Integer getId() {
-		return this.id;
-	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(final Integer id) {
-		this.id = id;
-	}
-	/**
-	 * @return the resourceState
-	 */
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
-	}
-	/**
-	 * @param resourceState the resourceState to set
-	 */
-	public void setResourceState(final StravaResourceState resourceState) {
-		this.resourceState = resourceState;
-	}
-	/**
-	 * @return the firstname
-	 */
-	public String getFirstname() {
-		return this.firstname;
-	}
-	/**
-	 * @param firstname the firstname to set
-	 */
-	public void setFirstname(final String firstname) {
-		this.firstname = firstname;
-	}
-	/**
-	 * @return the lastname
-	 */
-	public String getLastname() {
-		return this.lastname;
-	}
-	/**
-	 * @param lastname the lastname to set
-	 */
-	public void setLastname(final String lastname) {
-		this.lastname = lastname;
-	}
-	/**
-	 * @return the profileMedium
-	 */
-	public String getProfileMedium() {
-		return this.profileMedium;
-	}
-	/**
-	 * @param profileMedium the profileMedium to set
-	 */
-	public void setProfileMedium(final String profileMedium) {
-		this.profileMedium = profileMedium;
-	}
-	/**
-	 * @return the profile
-	 */
-	public String getProfile() {
-		return this.profile;
-	}
-	/**
-	 * @param profile the profile to set
-	 */
-	public void setProfile(final String profile) {
-		this.profile = profile;
-	}
-	/**
-	 * @return the city
-	 */
-	public String getCity() {
-		return this.city;
-	}
-	/**
-	 * @param city the city to set
-	 */
-	public void setCity(final String city) {
-		this.city = city;
-	}
-	/**
-	 * @return the state
-	 */
-	public String getState() {
-		return this.state;
-	}
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(final String state) {
-		this.state = state;
-	}
-	/**
-	 * @return the country
-	 */
-	public String getCountry() {
-		return this.country;
-	}
-	/**
-	 * @param country the country to set
-	 */
-	public void setCountry(final String country) {
-		this.country = country;
-	}
-	/**
-	 * @return the sex
-	 */
-	public StravaGender getSex() {
-		return this.sex;
-	}
-	/**
-	 * @param sex the sex to set
-	 */
-	public void setSex(final StravaGender sex) {
-		this.sex = sex;
-	}
-	/**
-	 * @return the friend
-	 */
-	public StravaFollowerState getFriend() {
-		return this.friend;
-	}
-	/**
-	 * @param friend the friend to set
-	 */
-	public void setFriend(final StravaFollowerState friend) {
-		this.friend = friend;
-	}
-	/**
-	 * @return the follower
-	 */
-	public StravaFollowerState getFollower() {
-		return this.follower;
-	}
-	/**
-	 * @param follower the follower to set
-	 */
-	public void setFollower(final StravaFollowerState follower) {
-		this.follower = follower;
-	}
-	/**
-	 * @return the premium
-	 */
-	public Boolean getPremium() {
-		return this.premium;
-	}
-	/**
-	 * @param premium the premium to set
-	 */
-	public void setPremium(final Boolean premium) {
-		this.premium = premium;
-	}
-	/**
-	 * @return the createdAt
-	 */
-	public ZonedDateTime getCreatedAt() {
-		return this.createdAt;
-	}
-	/**
-	 * @param createdAt the createdAt to set
-	 */
-	public void setCreatedAt(final ZonedDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-	/**
-	 * @return the updatedAt
-	 */
-	public ZonedDateTime getUpdatedAt() {
-		return this.updatedAt;
-	}
-	/**
-	 * @param updatedAt the updatedAt to set
-	 */
-	public void setUpdatedAt(final ZonedDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-	/**
-	 * @return the approveFollowers
-	 */
-	public Boolean getApproveFollowers() {
-		return this.approveFollowers;
-	}
-	/**
-	 * @param approveFollowers the approveFollowers to set
-	 */
-	public void setApproveFollowers(final Boolean approveFollowers) {
-		this.approveFollowers = approveFollowers;
-	}
-	/**
-	 * @return the followerCount
-	 */
-	public Integer getFollowerCount() {
-		return this.followerCount;
-	}
-	/**
-	 * @param followerCount the followerCount to set
-	 */
-	public void setFollowerCount(final Integer followerCount) {
-		this.followerCount = followerCount;
-	}
-	/**
-	 * @return the friendCount
-	 */
-	public Integer getFriendCount() {
-		return this.friendCount;
-	}
-	/**
-	 * @param friendCount the friendCount to set
-	 */
-	public void setFriendCount(final Integer friendCount) {
-		this.friendCount = friendCount;
-	}
-	/**
-	 * @return the mutualFriendCount
-	 */
-	public Integer getMutualFriendCount() {
-		return this.mutualFriendCount;
-	}
-	/**
-	 * @param mutualFriendCount the mutualFriendCount to set
-	 */
-	public void setMutualFriendCount(final Integer mutualFriendCount) {
-		this.mutualFriendCount = mutualFriendCount;
-	}
-	/**
-	 * @return the datePreference
-	 */
-	public String getDatePreference() {
-		return this.datePreference;
-	}
-	/**
-	 * @param datePreference the datePreference to set
-	 */
-	public void setDatePreference(final String datePreference) {
-		this.datePreference = datePreference;
-	}
-	/**
-	 * @return the measurementPreference
-	 */
-	public StravaMeasurementMethod getMeasurementPreference() {
-		return this.measurementPreference;
-	}
-	/**
-	 * @param measurementPreference the measurementPreference to set
-	 */
-	public void setMeasurementPreference(final StravaMeasurementMethod measurementPreference) {
-		this.measurementPreference = measurementPreference;
-	}
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return this.email;
-	}
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(final String email) {
-		this.email = email;
-	}
-	/**
-	 * @return the ftp
-	 */
-	public Integer getFtp() {
-		return this.ftp;
-	}
-	/**
-	 * @param ftp the ftp to set
-	 */
-	public void setFtp(final Integer ftp) {
-		this.ftp = ftp;
-	}
-	/**
-	 * @return the clubs
-	 */
-	public List<StravaClub> getClubs() {
-		return this.clubs;
-	}
-	/**
-	 * @param clubs the clubs to set
-	 */
-	public void setClubs(final List<StravaClub> clubs) {
-		this.clubs = clubs;
-	}
-	/**
-	 * @return the bikes
-	 */
-	public List<StravaGear> getBikes() {
-		return this.bikes;
-	}
-	/**
-	 * @param bikes the bikes to set
-	 */
-	public void setBikes(final List<StravaGear> bikes) {
-		this.bikes = bikes;
-	}
-	/**
-	 * @return the shoes
-	 */
-	public List<StravaGear> getShoes() {
-		return this.shoes;
-	}
-	/**
-	 * @param shoes the shoes to set
-	 */
-	public void setShoes(final List<StravaGear> shoes) {
-		this.shoes = shoes;
-	}
-	/**
-	 * @return the weight
-	 */
-	public Float getWeight() {
-		return this.weight;
-	}
-	/**
-	 * @param weight the weight to set
-	 */
-	public void setWeight(final Float weight) {
-		this.weight = weight;
-	}
-	/**
-	 * @return the badgeTypeId
-	 */
-	public Integer getBadgeTypeId() {
-		return this.badgeTypeId;
-	}
-	/**
-	 * @param badgeTypeId the badgeTypeId to set
-	 */
-	public void setBadgeTypeId(final Integer badgeTypeId) {
-		this.badgeTypeId = badgeTypeId;
-	}
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "StravaAthlete [id=" + this.id + ", resourceState=" + this.resourceState + ", firstname=" + this.firstname + ", lastname=" + this.lastname //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", profileMedium=" + this.profileMedium + ", profile=" + this.profile + ", city=" + this.city + ", state=" + this.state + ", country=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.country + ", sex=" + this.sex + ", friend=" + this.friend + ", follower=" + this.follower + ", premium=" + this.premium + ", createdAt=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.createdAt + ", updatedAt=" + this.updatedAt + ", approveFollowers=" + this.approveFollowers + ", followerCount=" + this.followerCount //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", friendCount=" + this.friendCount + ", mutualFriendCount=" + this.mutualFriendCount + ", datePreference=" + this.datePreference //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", measurementPreference=" + this.measurementPreference + ", email=" + this.email + ", ftp=" + this.ftp + ", clubs=" + this.clubs + ", bikes=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.bikes + ", shoes=" + this.shoes + ", weight=" + this.weight + ", badgeTypeId=" + this.badgeTypeId + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.approveFollowers == null) ? 0 : this.approveFollowers.hashCode());
-		result = prime * result + ((this.badgeTypeId == null) ? 0 : this.badgeTypeId.hashCode());
-		result = prime * result + ((this.bikes == null) ? 0 : this.bikes.hashCode());
-		result = prime * result + ((this.city == null) ? 0 : this.city.hashCode());
-		result = prime * result + ((this.clubs == null) ? 0 : this.clubs.hashCode());
-		result = prime * result + ((this.country == null) ? 0 : this.country.hashCode());
-		result = prime * result + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
-		result = prime * result + ((this.datePreference == null) ? 0 : this.datePreference.hashCode());
-		result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
-		result = prime * result + ((this.firstname == null) ? 0 : this.firstname.hashCode());
-		result = prime * result + ((this.follower == null) ? 0 : this.follower.hashCode());
-		result = prime * result + ((this.followerCount == null) ? 0 : this.followerCount.hashCode());
-		result = prime * result + ((this.friend == null) ? 0 : this.friend.hashCode());
-		result = prime * result + ((this.friendCount == null) ? 0 : this.friendCount.hashCode());
-		result = prime * result + ((this.ftp == null) ? 0 : this.ftp.hashCode());
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-		result = prime * result + ((this.lastname == null) ? 0 : this.lastname.hashCode());
-		result = prime * result + ((this.measurementPreference == null) ? 0 : this.measurementPreference.hashCode());
-		result = prime * result + ((this.mutualFriendCount == null) ? 0 : this.mutualFriendCount.hashCode());
-		result = prime * result + ((this.premium == null) ? 0 : this.premium.hashCode());
-		result = prime * result + ((this.profile == null) ? 0 : this.profile.hashCode());
-		result = prime * result + ((this.profileMedium == null) ? 0 : this.profileMedium.hashCode());
-		result = prime * result + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
-		result = prime * result + ((this.sex == null) ? 0 : this.sex.hashCode());
-		result = prime * result + ((this.shoes == null) ? 0 : this.shoes.hashCode());
-		result = prime * result + ((this.state == null) ? 0 : this.state.hashCode());
-		result = prime * result + ((this.updatedAt == null) ? 0 : this.updatedAt.hashCode());
-		result = prime * result + ((this.weight == null) ? 0 : this.weight.hashCode());
-		return result;
+	public StravaAthlete() {
+		super();
 	}
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -453,7 +66,7 @@ public class StravaAthlete implements StravaCacheable<Integer>{
 		if (!(obj instanceof StravaAthlete)) {
 			return false;
 		}
-		StravaAthlete other = (StravaAthlete) obj;
+		final StravaAthlete other = (StravaAthlete) obj;
 		if (this.approveFollowers == null) {
 			if (other.approveFollowers != null) {
 				return false;
@@ -631,5 +244,393 @@ public class StravaAthlete implements StravaCacheable<Integer>{
 			return false;
 		}
 		return true;
+	}
+	/**
+	 * @return the approveFollowers
+	 */
+	public Boolean getApproveFollowers() {
+		return this.approveFollowers;
+	}
+	/**
+	 * @return the badgeTypeId
+	 */
+	public Integer getBadgeTypeId() {
+		return this.badgeTypeId;
+	}
+	/**
+	 * @return the bikes
+	 */
+	public List<StravaGear> getBikes() {
+		return this.bikes;
+	}
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return this.city;
+	}
+	/**
+	 * @return the clubs
+	 */
+	public List<StravaClub> getClubs() {
+		return this.clubs;
+	}
+	/**
+	 * @return the country
+	 */
+	public String getCountry() {
+		return this.country;
+	}
+	/**
+	 * @return the createdAt
+	 */
+	public ZonedDateTime getCreatedAt() {
+		return this.createdAt;
+	}
+	/**
+	 * @return the datePreference
+	 */
+	public String getDatePreference() {
+		return this.datePreference;
+	}
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return this.email;
+	}
+	/**
+	 * @return the firstname
+	 */
+	public String getFirstname() {
+		return this.firstname;
+	}
+	/**
+	 * @return the follower
+	 */
+	public StravaFollowerState getFollower() {
+		return this.follower;
+	}
+	/**
+	 * @return the followerCount
+	 */
+	public Integer getFollowerCount() {
+		return this.followerCount;
+	}
+	/**
+	 * @return the friend
+	 */
+	public StravaFollowerState getFriend() {
+		return this.friend;
+	}
+	/**
+	 * @return the friendCount
+	 */
+	public Integer getFriendCount() {
+		return this.friendCount;
+	}
+	/**
+	 * @return the ftp
+	 */
+	public Integer getFtp() {
+		return this.ftp;
+	}
+	/**
+	 * @return the id
+	 */
+	@Override
+	public Integer getId() {
+		return this.id;
+	}
+	/**
+	 * @return the lastname
+	 */
+	public String getLastname() {
+		return this.lastname;
+	}
+	/**
+	 * @return the measurementPreference
+	 */
+	public StravaMeasurementMethod getMeasurementPreference() {
+		return this.measurementPreference;
+	}
+	/**
+	 * @return the mutualFriendCount
+	 */
+	public Integer getMutualFriendCount() {
+		return this.mutualFriendCount;
+	}
+	/**
+	 * @return the premium
+	 */
+	public Boolean getPremium() {
+		return this.premium;
+	}
+	/**
+	 * @return the profile
+	 */
+	public String getProfile() {
+		return this.profile;
+	}
+	/**
+	 * @return the profileMedium
+	 */
+	public String getProfileMedium() {
+		return this.profileMedium;
+	}
+	/**
+	 * @return the resourceState
+	 */
+	@Override
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+	/**
+	 * @return the sex
+	 */
+	public StravaGender getSex() {
+		return this.sex;
+	}
+	/**
+	 * @return the shoes
+	 */
+	public List<StravaGear> getShoes() {
+		return this.shoes;
+	}
+	/**
+	 * @return the state
+	 */
+	public String getState() {
+		return this.state;
+	}
+	/**
+	 * @return the updatedAt
+	 */
+	public ZonedDateTime getUpdatedAt() {
+		return this.updatedAt;
+	}
+	/**
+	 * @return the weight
+	 */
+	public Float getWeight() {
+		return this.weight;
+	}
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.approveFollowers == null) ? 0 : this.approveFollowers.hashCode());
+		result = (prime * result) + ((this.badgeTypeId == null) ? 0 : this.badgeTypeId.hashCode());
+		result = (prime * result) + ((this.bikes == null) ? 0 : this.bikes.hashCode());
+		result = (prime * result) + ((this.city == null) ? 0 : this.city.hashCode());
+		result = (prime * result) + ((this.clubs == null) ? 0 : this.clubs.hashCode());
+		result = (prime * result) + ((this.country == null) ? 0 : this.country.hashCode());
+		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
+		result = (prime * result) + ((this.datePreference == null) ? 0 : this.datePreference.hashCode());
+		result = (prime * result) + ((this.email == null) ? 0 : this.email.hashCode());
+		result = (prime * result) + ((this.firstname == null) ? 0 : this.firstname.hashCode());
+		result = (prime * result) + ((this.follower == null) ? 0 : this.follower.hashCode());
+		result = (prime * result) + ((this.followerCount == null) ? 0 : this.followerCount.hashCode());
+		result = (prime * result) + ((this.friend == null) ? 0 : this.friend.hashCode());
+		result = (prime * result) + ((this.friendCount == null) ? 0 : this.friendCount.hashCode());
+		result = (prime * result) + ((this.ftp == null) ? 0 : this.ftp.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.lastname == null) ? 0 : this.lastname.hashCode());
+		result = (prime * result) + ((this.measurementPreference == null) ? 0 : this.measurementPreference.hashCode());
+		result = (prime * result) + ((this.mutualFriendCount == null) ? 0 : this.mutualFriendCount.hashCode());
+		result = (prime * result) + ((this.premium == null) ? 0 : this.premium.hashCode());
+		result = (prime * result) + ((this.profile == null) ? 0 : this.profile.hashCode());
+		result = (prime * result) + ((this.profileMedium == null) ? 0 : this.profileMedium.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.sex == null) ? 0 : this.sex.hashCode());
+		result = (prime * result) + ((this.shoes == null) ? 0 : this.shoes.hashCode());
+		result = (prime * result) + ((this.state == null) ? 0 : this.state.hashCode());
+		result = (prime * result) + ((this.updatedAt == null) ? 0 : this.updatedAt.hashCode());
+		result = (prime * result) + ((this.weight == null) ? 0 : this.weight.hashCode());
+		return result;
+	}
+	/**
+	 * @param approveFollowers the approveFollowers to set
+	 */
+	public void setApproveFollowers(final Boolean approveFollowers) {
+		this.approveFollowers = approveFollowers;
+	}
+	/**
+	 * @param badgeTypeId the badgeTypeId to set
+	 */
+	public void setBadgeTypeId(final Integer badgeTypeId) {
+		this.badgeTypeId = badgeTypeId;
+	}
+	/**
+	 * @param bikes the bikes to set
+	 */
+	public void setBikes(final List<StravaGear> bikes) {
+		this.bikes = bikes;
+	}
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(final String city) {
+		this.city = city;
+	}
+	/**
+	 * @param clubs the clubs to set
+	 */
+	public void setClubs(final List<StravaClub> clubs) {
+		this.clubs = clubs;
+	}
+	/**
+	 * @param country the country to set
+	 */
+	public void setCountry(final String country) {
+		this.country = country;
+	}
+	/**
+	 * @param createdAt the createdAt to set
+	 */
+	public void setCreatedAt(final ZonedDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+	/**
+	 * @param datePreference the datePreference to set
+	 */
+	public void setDatePreference(final String datePreference) {
+		this.datePreference = datePreference;
+	}
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(final String email) {
+		this.email = email;
+	}
+	/**
+	 * @param firstname the firstname to set
+	 */
+	public void setFirstname(final String firstname) {
+		this.firstname = firstname;
+	}
+	/**
+	 * @param follower the follower to set
+	 */
+	public void setFollower(final StravaFollowerState follower) {
+		this.follower = follower;
+	}
+	/**
+	 * @param followerCount the followerCount to set
+	 */
+	public void setFollowerCount(final Integer followerCount) {
+		this.followerCount = followerCount;
+	}
+	/**
+	 * @param friend the friend to set
+	 */
+	public void setFriend(final StravaFollowerState friend) {
+		this.friend = friend;
+	}
+	/**
+	 * @param friendCount the friendCount to set
+	 */
+	public void setFriendCount(final Integer friendCount) {
+		this.friendCount = friendCount;
+	}
+	/**
+	 * @param ftp the ftp to set
+	 */
+	public void setFtp(final Integer ftp) {
+		this.ftp = ftp;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+	/**
+	 * @param lastname the lastname to set
+	 */
+	public void setLastname(final String lastname) {
+		this.lastname = lastname;
+	}
+	/**
+	 * @param measurementPreference the measurementPreference to set
+	 */
+	public void setMeasurementPreference(final StravaMeasurementMethod measurementPreference) {
+		this.measurementPreference = measurementPreference;
+	}
+	/**
+	 * @param mutualFriendCount the mutualFriendCount to set
+	 */
+	public void setMutualFriendCount(final Integer mutualFriendCount) {
+		this.mutualFriendCount = mutualFriendCount;
+	}
+	/**
+	 * @param premium the premium to set
+	 */
+	public void setPremium(final Boolean premium) {
+		this.premium = premium;
+	}
+	/**
+	 * @param profile the profile to set
+	 */
+	public void setProfile(final String profile) {
+		this.profile = profile;
+	}
+	/**
+	 * @param profileMedium the profileMedium to set
+	 */
+	public void setProfileMedium(final String profileMedium) {
+		this.profileMedium = profileMedium;
+	}
+	/**
+	 * @param resourceState the resourceState to set
+	 */
+	public void setResourceState(final StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+	/**
+	 * @param sex the sex to set
+	 */
+	public void setSex(final StravaGender sex) {
+		this.sex = sex;
+	}
+	/**
+	 * @param shoes the shoes to set
+	 */
+	public void setShoes(final List<StravaGear> shoes) {
+		this.shoes = shoes;
+	}
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(final String state) {
+		this.state = state;
+	}
+	/**
+	 * @param updatedAt the updatedAt to set
+	 */
+	public void setUpdatedAt(final ZonedDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	/**
+	 * @param weight the weight to set
+	 */
+	public void setWeight(final Float weight) {
+		this.weight = weight;
+	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaAthlete [id=" + this.id + ", resourceState=" + this.resourceState + ", firstname=" + this.firstname + ", lastname=" + this.lastname //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", profileMedium=" + this.profileMedium + ", profile=" + this.profile + ", city=" + this.city + ", state=" + this.state + ", country=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.country + ", sex=" + this.sex + ", friend=" + this.friend + ", follower=" + this.follower + ", premium=" + this.premium + ", createdAt=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.createdAt + ", updatedAt=" + this.updatedAt + ", approveFollowers=" + this.approveFollowers + ", followerCount=" + this.followerCount //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", friendCount=" + this.friendCount + ", mutualFriendCount=" + this.mutualFriendCount + ", datePreference=" + this.datePreference //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", measurementPreference=" + this.measurementPreference + ", email=" + this.email + ", ftp=" + this.ftp + ", clubs=" + this.clubs + ", bikes=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.bikes + ", shoes=" + this.shoes + ", weight=" + this.weight + ", badgeTypeId=" + this.badgeTypeId + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

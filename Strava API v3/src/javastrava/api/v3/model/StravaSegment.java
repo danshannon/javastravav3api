@@ -2,14 +2,14 @@ package javastrava.api.v3.model;
 
 import java.time.ZonedDateTime;
 
-import com.google.gson.annotations.SerializedName;
-
 import javastrava.api.v3.model.reference.StravaClimbCategory;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentActivityType;
 import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.StreamService;
 import javastrava.cache.StravaCacheable;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * <p>
@@ -566,6 +566,7 @@ public class StravaSegment implements StravaCacheable<Integer> {
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}

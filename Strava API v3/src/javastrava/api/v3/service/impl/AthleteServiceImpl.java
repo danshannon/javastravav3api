@@ -62,6 +62,11 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	private final StravaCache<StravaAthlete, Integer> athleteCache;
 
 	/**
+	 * Cache of segment efforts
+	 */
+	private final StravaCache<StravaSegmentEffort, Long> effortCache;
+
+	/**
 	 * <p>
 	 * Private constructor requires a valid token to instantiate, see {@link AthleteServiceImpl#instance}
 	 * </p>
@@ -70,6 +75,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	private AthleteServiceImpl(final Token token) {
 		super(token);
 		this.athleteCache = new StravaCacheImpl<StravaAthlete, Integer>(StravaAthlete.class, token);
+		this.effortCache = new StravaCacheImpl<StravaSegmentEffort, Long>(StravaSegmentEffort.class, token);
 	}
 
 	/**
@@ -78,6 +84,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	@Override
 	public void clearCache() {
 		this.athleteCache.removeAll();
+		this.effortCache.removeAll();
 	}
 
 	/**
@@ -134,7 +141,11 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public List<StravaAthlete> listAllAthleteFriends(final Integer athleteId) {
-		return PagingHandler.handleListAll(thisPage -> listAthleteFriends(athleteId, thisPage));
+		// Always get from Strava, not from cache, as there's no way to be sure the cache is up to date
+		final List<StravaAthlete> athletes = PagingHandler.handleListAll(thisPage -> listAthleteFriends(athleteId, thisPage));
+
+		// Return them
+		return athletes;
 	}
 
 	/**
@@ -176,8 +187,14 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public List<StravaAthlete> listAthleteFriends(final Integer id, final Paging pagingInstruction) {
-		return PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(AthleteServiceImpl.this.api
+		final List<StravaAthlete> athletes = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(AthleteServiceImpl.this.api
 				.listAthleteFriends(id, thisPage.getPage(), thisPage.getPageSize())));
+
+		// Put them in the cache so they can be read back later
+		this.athleteCache.putAll(athletes);
+
+		// Return them
+		return athletes;
 	}
 
 	/**
@@ -199,6 +216,8 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 				thisPage -> Arrays.asList(AthleteServiceImpl.this.api.listAthleteKOMs(id, thisPage.getPage(),
 						thisPage.getPageSize())));
 
+		this.effortCache.putAll(efforts);
+
 		return efforts;
 	}
 
@@ -216,8 +235,12 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public List<StravaAthlete> listAthletesBothFollowing(final Integer id, final Paging pagingInstruction) {
-		return PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(AthleteServiceImpl.this.api
+		final List<StravaAthlete> athletes = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(AthleteServiceImpl.this.api
 				.listAthletesBothFollowing(id, thisPage.getPage(), thisPage.getPageSize())));
+
+		this.athleteCache.putAll(athletes);
+
+		return athletes;
 	}
 
 	/**
@@ -233,10 +256,14 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public List<StravaAthlete> listAuthenticatedAthleteFriends(final Paging pagingInstruction) {
-		return PagingHandler.handlePaging(
+		final List<StravaAthlete> athletes = PagingHandler.handlePaging(
 				pagingInstruction,
 				thisPage -> Arrays.asList(AthleteServiceImpl.this.api.listAuthenticatedAthleteFriends(
 						thisPage.getPage(), thisPage.getPageSize())));
+
+		this.athleteCache.putAll(athletes);
+
+		return athletes;
 	}
 
 	/**
@@ -264,7 +291,11 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	@Override
 	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country,
 			final StravaGender sex, final Float weight) {
-		return this.api.updateAuthenticatedAthlete(city, state, country, sex, weight);
+		final StravaAthlete athlete = this.api.updateAuthenticatedAthlete(city, state, country, sex, weight);
+
+		this.athleteCache.put(athlete);
+
+		return athlete;
 	}
 
 }

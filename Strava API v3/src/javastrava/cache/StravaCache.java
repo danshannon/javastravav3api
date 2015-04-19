@@ -11,36 +11,52 @@ import java.util.List;
 public interface StravaCache<T extends StravaCacheable<U>, U> {
 	/**
 	 * <p>
+	 * Retrieves the object from the cache.
+	 * </p>
+	 *
+	 * @param key The key
+	 * @return the object, or <code>null</code> if not in cache
+	 */
+	public T get(U key);
+
+	/**
+	 * <p>
+	 * Returns a list of the objects in the cache
+	 * </p>
+	 * @return List of the objects in the cache
+	 */
+	public List<T> list();
+
+	/**
+	 * <p>
 	 * Stores the given object in the cache
 	 * </p>
-	 * 
+	 *
 	 * @param object Object
 	 */
 	public void put(T object);
 
 	/**
 	 * <p>
-	 * Retrieves the object from the cache.
+	 * Puts all the contents of the list in the cache
 	 * </p>
-	 * 
-	 * @param key The key
-	 * @return the object, or <code>null</code> if not in cache
+	 * @param list List of objects to be stored in cache
 	 */
-	public T get(U key);
-	
+	public void putAll(List<T> list);
+
 	/**
 	 * <p>
 	 * Removes the object identified by the key from the cache
 	 * </p>
-	 * 
+	 *
 	 * @param key The key of the object to be removed
 	 */
 	public void remove(U key);
-	
+
 	/**
 	 * <p>
 	 * Removes all elements from the cache that are associated with the token
-	 * </p> 
+	 * </p>
 	 */
 	public void removeAll();
 
@@ -51,12 +67,4 @@ public interface StravaCache<T extends StravaCacheable<U>, U> {
 	 * @return Number of objects in the cache
 	 */
 	public int size();
-	
-	/**
-	 * <p>
-	 * Returns a list of the objects in the cache
-	 * </p>
-	 * @return List of the objects in the cache
-	 */
-	public List<T> list();
 }

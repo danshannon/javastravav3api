@@ -103,6 +103,7 @@ public class StravaMap implements StravaCacheable<String> {
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
