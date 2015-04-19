@@ -1,13 +1,15 @@
 package javastrava.cache.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.jcs.JCS;
+import org.apache.commons.jcs.access.GroupCacheAccess;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.cache.StravaCache;
 import javastrava.cache.StravaCacheable;
-
-import org.apache.commons.jcs.JCS;
-import org.apache.commons.jcs.access.GroupCacheAccess;
 
 /**
  * @author Dan Shannon
@@ -37,7 +39,7 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 		this.token = token;
 		this.cache = JCS.getGroupCacheInstance("default"); //$NON-NLS-1$
 		this.class1 = class1;
-
+		removeAll();
 	}
 
 	/**
@@ -73,6 +75,9 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 	 */
 	@Override
 	public void put(final T object) {
+		if (object == null) {
+			return;
+		}
 		final StravaCacheKey<U,T> key = new StravaCacheKey<U,T>(object.getId(), this.token, this.class1);
 		this.cache.putInGroup(key, groupName(), object);
 	}
@@ -90,12 +95,27 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 	 */
 	@Override
 	public void removeAll() {
-		final Set<StravaCacheKey<U,T>> elements = this.cache.getGroupKeys(groupName());
-		for (final StravaCacheKey<U,T> key : elements) {
-			if (key.getToken().equals(this.token) && key.getClass1().equals(this.class1)) {
-				this.cache.removeFromGroup(key, groupName());
-			}
-		}
+		this.cache.invalidateGroup(groupName());
+	}
 
+	/**
+	 * @see javastrava.cache.StravaCache#size()
+	 */
+	@Override
+	public int size() {
+		return this.cache.getGroupKeys(groupName()).size();
+	}
+
+	/**
+	 * @see javastrava.cache.StravaCache#list()
+	 */
+	@Override
+	public List<T> list() {
+		Set<StravaCacheKey<U,T>> keys = this.cache.getGroupKeys(groupName());
+		List<T> list = new ArrayList<T>();
+		for (StravaCacheKey<U,T> key : keys) {
+			list.add(this.cache.getFromGroup(key, groupName()));
+		}
+		return list;
 	}
 }

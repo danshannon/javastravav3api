@@ -1,5 +1,7 @@
 package javastrava.cache;
 
+import java.util.List;
+
 /**
  * @author Dan Shannon
  *
@@ -41,4 +43,20 @@ public interface StravaCache<T extends StravaCacheable<U>, U> {
 	 * </p> 
 	 */
 	public void removeAll();
+
+	/**
+	 * <p>
+	 * Returns the number of objects in the cache
+	 * </p>
+	 * @return Number of objects in the cache
+	 */
+	public int size();
+	
+	/**
+	 * <p>
+	 * Returns a list of the objects in the cache
+	 * </p>
+	 * @return List of the objects in the cache
+	 */
+	public List<T> list();
 }
