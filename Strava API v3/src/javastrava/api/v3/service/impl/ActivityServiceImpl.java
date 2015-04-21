@@ -269,8 +269,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	private StravaActivity doUpdateActivity(final Integer id, final StravaActivityUpdate update) {
 		try {
+			this.activityCache.remove(id);
 			final StravaActivity response = this.api.updateActivity(id, update);
-			this.activityCache.put(response);
 			return response;
 		} catch (final NotFoundException e) {
 			return null;
@@ -711,16 +711,16 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 * @see javastrava.api.v3.service.ActivityService#updateActivity(Integer,javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
-	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity)
+	public StravaActivity updateActivity(final Integer activityId, final StravaActivityUpdate activity)
 			throws NotFoundException {
 		final StravaActivityUpdate update = activity;
 		if (activity == null) {
-			return getActivity(id);
+			return getActivity(activityId);
 		}
 		StravaActivity response = null;
 
 		// Activity must exist to be updated
-		final StravaActivity stravaActivity = getActivity(id);
+		final StravaActivity stravaActivity = getActivity(activityId);
 		if (stravaActivity == null) {
 			throw new NotFoundException(Messages.string("ActivityServiceImpl.updateInvalidActivity")); //$NON-NLS-1$
 		}
@@ -735,10 +735,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		if (update.getCommute() != null) {
 			final StravaActivityUpdate commuteUpdate = new StravaActivityUpdate();
 			commuteUpdate.setCommute(update.getCommute());
-			response = doUpdateActivity(id, commuteUpdate);
+			response = doUpdateActivity(activityId, commuteUpdate);
 			if (response.getCommute() != update.getCommute()) {
 				throw new StravaUnknownAPIException(
-						Messages.string("ActivityServiceImpl.failedToUpdateCommuteFlag") + id, null, null); //$NON-NLS-1$
+						Messages.string("ActivityServiceImpl.failedToUpdateCommuteFlag") + activityId, null, null); //$NON-NLS-1$
 			}
 
 			update.setCommute(null);
@@ -746,8 +746,13 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 
 		// End of workaround
 
-		// Perform the update on Strava (this will also update the cache)
-		response = doUpdateActivity(id, update);
+		// Perform the update on Strava
+		response = doUpdateActivity(activityId, update);
+		
+		// Put it back in the cache, unless it's UPDATING
+		if (response.getResourceState() != StravaResourceState.UPDATING) {
+			this.activityCache.put(response);
+		}
 
 		// Return the updated activity
 		return response;
