@@ -45,9 +45,20 @@ public enum StravaClimbCategory {
 	 */
 	UNKNOWN(StravaConfig.integer("Common.unknown.integer"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
+	/**
+	 * Identifier
+	 */
 	private Integer	id;
+	/**
+	 * Description
+	 */
 	private String	description;
 
+	/**
+	 * Private constructor used by declarations
+	 * @param id Identifier - also used when serialising/deserialising to JSON
+	 * @param description Description
+	 */
 	private StravaClimbCategory(final Integer id, final String description) {
 		this.id = id;
 		this.description = description;

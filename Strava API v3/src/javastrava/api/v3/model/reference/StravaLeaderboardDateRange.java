@@ -37,9 +37,20 @@ public enum StravaLeaderboardDateRange {
 	 */
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
+	/**
+	 * Identifier
+	 */
 	private String	id;
+	/**
+	 * Human-readable description
+	 */
 	private String	description;
 
+	/**
+	 * Private constructor for the enum declarations
+	 * @param id Identifier
+	 * @param description Text description
+	 */
 	private StravaLeaderboardDateRange(final String id, final String description) {
 		this.id = id;
 		this.description = description;

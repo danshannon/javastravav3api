@@ -18,33 +18,117 @@ import javastrava.cache.StravaCacheable;
  *
  */
 public class StravaAthlete implements StravaCacheable<Integer>{
+	/**
+	 * Unique id of the athlete
+	 */
 	private Integer id;
+	/**
+	 * State of this representation
+	 */
 	private StravaResourceState resourceState;
+	/**
+	 * Athlete's first name
+	 */
 	private String firstname;
+	/**
+	 * Athlete's last name
+	 */
 	private String lastname;
+	/**
+	 * Profile photo (medium size)
+	 */
 	private String profileMedium;
+	/**
+	 * Profile photo (full size)
+	 */
 	private String profile;
+	/**
+	 * City the athlete lives in 
+	 */
 	private String city;
+	/**
+	 * State, county, canton etc that the athlete lives in
+	 */
 	private String state;
+	/**
+	 * Country the athlete lives in
+	 */
 	private String country;
+	/**
+	 * Athlete's gender
+	 */
 	private StravaGender sex;
+	/**
+	 * Is this athlete a friend of the authenticated athlete on Strava? (That is, does the authenticated athlete follow this athlete)
+	 */
 	private StravaFollowerState friend;
+	/**
+	 * Is this athlete following the authenticated athlete on Strava?
+	 */
 	private StravaFollowerState follower;
+	/**
+	 * Is this athlete a premium Strava customer?
+	 */
 	private Boolean premium;
+	/**
+	 * Date and time the athlete's account was created on Strava
+	 */
 	private ZonedDateTime createdAt;
+	/**
+	 * Date and time the athlete's account was last updated on Strava
+	 */
 	private ZonedDateTime updatedAt;
+	/**
+	 * Does the athlete require approval of other athletes who have requested to follow them?
+	 */
 	private Boolean approveFollowers;
+	/**
+	 * Number of athletes following this athlete on Strava
+	 */
 	private Integer followerCount;
+	/**
+	 * Number of athletes this athlete is following on Strava
+	 */
 	private Integer friendCount;
+	/**
+	 * Number of athletes being followed by both this athlete and the authenticated athlete
+	 */
 	private Integer mutualFriendCount;
+	/**
+	 * Date format preference
+	 */
 	private String datePreference;
+	/**
+	 * Measurement preference (metric or imperial)
+	 */
 	private StravaMeasurementMethod measurementPreference;
+	/**
+	 * Athlete's email address (and username)
+	 */
 	private String email;
+	/**
+	 * Functional Threshold Power (in watts)
+	 */
 	private Integer ftp;
+	/**
+	 * Clubs the athlete belongs to
+	 */
 	private List<StravaClub> clubs;
+	/**
+	 * Bikes the athlete has used on activities
+	 */
 	private List<StravaGear> bikes;
+	/**
+	 * Shoes the athlete has used on runs
+	 */
 	private List<StravaGear> shoes;
+	/**
+	 * Athlete's weight (in kilograms)
+	 */
 	private Float weight;
+	/**
+	 * ???
+	 */
 	private Integer badgeTypeId;
 	/**
 	 * no args constructor

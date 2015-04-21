@@ -11,8 +11,14 @@ import java.util.ResourceBundle;
  *
  */
 public class StravaConfig {
+	/**
+	 * Name of the configuration file
+	 */
 	private static final String BUNDLE_NAME = "config"; //$NON-NLS-1$
 
+	/**
+	 * Resource bundle containing configuration properties
+	 */
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
 	/**

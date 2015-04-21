@@ -41,10 +41,21 @@ public enum StravaPhotoSource {
 		}
 		return StravaPhotoSource.UNKNOWN;
 	}
+	/**
+	 * Identifier
+	 */
 	private Integer id;
 
+	/**
+	 * Description
+	 */
 	private String description;
 
+	/**
+	 * Private constructor used by declarations
+	 * @param id Identifier - also used when serialising/deserialising to JSON
+	 * @param description Description
+	 */
 	private StravaPhotoSource(final Integer id, final String description) {
 		this.id = id;
 		this.description = description;

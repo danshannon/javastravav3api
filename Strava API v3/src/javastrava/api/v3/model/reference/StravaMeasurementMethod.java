@@ -28,9 +28,20 @@ public enum StravaMeasurementMethod {
 	 */
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
+	/**
+	 * Identifier
+	 */
 	private String	id;
+	/**
+	 * Description
+	 */
 	private String	description;
 
+	/**
+	 * Private constructor used by declarations
+	 * @param id Identifier - also used when serialising/deserialising to JSON
+	 * @param description Description
+	 */
 	private StravaMeasurementMethod(final String id, final String description) {
 		this.id = id;
 		this.description = description;

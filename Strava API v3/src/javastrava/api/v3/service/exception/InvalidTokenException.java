@@ -11,6 +11,9 @@ import javastrava.api.v3.model.StravaResponse;
  *
  */
 public class InvalidTokenException extends RuntimeException implements StravaAPIException {
+	/**
+	 * Response from Strava API containing error details
+	 */
 	private StravaResponse response;
 
 	/**

@@ -112,6 +112,9 @@ public class StravaSegmentEffort implements StravaCacheable<Long>{
 	 * Summary of athlete's statistics on this segment
 	 */
 	private StravaAthleteSegmentStats athleteSegmentStats;
+	/**
+	 * Was the power data on this effort from a device (i.e. a power meter of some kind)
+	 */
 	private Boolean deviceWatts;
 
 	/**

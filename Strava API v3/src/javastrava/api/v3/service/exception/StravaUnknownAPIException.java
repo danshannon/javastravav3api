@@ -11,8 +11,14 @@ import javastrava.api.v3.model.StravaResponse;
  */
 public class StravaUnknownAPIException extends RuntimeException implements StravaAPIException {
 
+	/**
+	 * Default
+	 */
 	private static final long	serialVersionUID	= 1L;
 
+	/**
+	 * Response from Strava API containing error details
+	 */
 	private StravaResponse		response;
 
 	/**

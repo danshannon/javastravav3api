@@ -55,6 +55,9 @@ public class StravaGear implements StravaCacheable<String> {
 	 * State of this resource on Strava
 	 */
 	private StravaResourceState	resourceState;
+	/**
+	 * Type of gear (bike or shoes)
+	 */
 	private StravaGearType gearType;
 
 	/**

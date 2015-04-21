@@ -10,10 +10,19 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 public class StravaPhotoUrls {
+	/**
+	 * URL of full-size photo
+	 */
 	@SerializedName("0")
 	private String url0;
+	/**
+	 * URL for thumbnail
+	 */
 	@SerializedName("100")
 	private String url100;
+	/**
+	 * URL for medium-size rendering
+	 */
 	@SerializedName("600")
 	private String url600;
 	/**

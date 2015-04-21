@@ -33,10 +33,25 @@ public enum StravaStreamResolutionType {
 	 */
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description"), 0); //$NON-NLS-1$ //$NON-NLS-2$ 
 
+	/**
+	 * Identifier
+	 */
 	private String id;
+	/**
+	 * Description
+	 */
 	private String description;
+	/**
+	 * Maximum size (number of entries) in a stream with this resolution
+	 */
 	private int size;
 
+	/**
+	 * Private constructor used by declarations
+	 * @param id Identifier - also used when serialising/deserialising to JSON
+	 * @param description Description
+	 * @param size Maximum size in a stream with this resolution
+	 */
 	private StravaStreamResolutionType(final String id, final String description, final int size) {
 		this.id = id;
 		this.description = description;

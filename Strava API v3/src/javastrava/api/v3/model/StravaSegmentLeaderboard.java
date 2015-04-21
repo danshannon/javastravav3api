@@ -2,6 +2,7 @@ package javastrava.api.v3.model;
 
 import java.util.List;
 
+import javastrava.api.v3.model.reference.StravaLeaderboardDateRange;
 import javastrava.api.v3.model.reference.StravaResourceState;
 
 /**
@@ -13,10 +14,25 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  *
  */
 public class StravaSegmentLeaderboard {
+	/**
+	 * Number of entries in the leaderboard as a whole (i.e. the number of athletes)
+	 */
 	private Integer entryCount;
+	/**
+	 * Number of efforts altogether on this segment
+	 */
 	private Integer effortCount;
+	/**
+	 * How many 'neighbourhoods' there are in this leaderboard - 1 if only returning leaderboard or only returning athlete context entries, 2 if returning both
+	 */
 	private Integer neighborhoodCount;
-	private String komType;
+	/**
+	 * KOM type as requested
+	 */
+	private StravaLeaderboardDateRange komType;
+	/**
+	 * Resource state
+	 */
 	private StravaResourceState resourceState;
 	/**
 	 * The entries that were actually asked for
@@ -121,7 +137,7 @@ public class StravaSegmentLeaderboard {
 	/**
 	 * @return the komType
 	 */
-	public String getKomType() {
+	public StravaLeaderboardDateRange getKomType() {
 		return this.komType;
 	}
 	/**
@@ -179,7 +195,7 @@ public class StravaSegmentLeaderboard {
 	/**
 	 * @param komType the komType to set
 	 */
-	public void setKomType(final String komType) {
+	public void setKomType(final StravaLeaderboardDateRange komType) {
 		this.komType = komType;
 	}
 	/**

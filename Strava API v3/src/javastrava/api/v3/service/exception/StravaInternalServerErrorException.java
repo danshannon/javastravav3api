@@ -9,10 +9,20 @@ import javastrava.api.v3.model.StravaResponse;
  * 
  * @author Dan Shannon
  */
+/**
+ * @author dshannon
+ *
+ */
 public class StravaInternalServerErrorException extends RuntimeException implements StravaAPIException {
 
+	/**
+	 * Default
+	 */
 	private static final long	serialVersionUID	= 1L;
 
+	/**
+	 * Response from Strava API containing error details
+	 */
 	private StravaResponse		response;
 
 	/**

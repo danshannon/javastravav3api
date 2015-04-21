@@ -53,12 +53,21 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	 */
 	private ZonedDateTime				createdAt;
 	/**
-	 * Location of the photo
+	 * Geographical location of the photo
 	 */
 	private StravaMapPoint		location;
+	/**
+	 * Source of the photo (Instagram or Strava)
+	 */
 	private StravaPhotoSource source;
 
+	/**
+	 * URL's to use to access the photo
+	 */
 	private StravaPhotoUrls urls;
+	/**
+	 * Unique id given to the photo by Instagram / Strava
+	 */
 	private String uniqueId;
 	/**
 	 * no args constructor

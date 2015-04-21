@@ -3,6 +3,7 @@ package javastrava.api.v3.model;
 import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -13,22 +14,41 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaClubAnnouncement {
+public class StravaClubAnnouncement implements StravaCacheable<Integer> {
+	/**
+	 * Unique identifier of the announcement
+	 */
 	private Integer id;
 
+	/**
+	 * State indicating level of detail of this representation of an announcement
+	 */
 	private StravaResourceState resourceState;
 
+	/**
+	 * Club identifier the announcement relates to
+	 */
 	private Integer clubId;
 
+	/**
+	 * Athlete making the announcement
+	 */
 	private StravaAthlete athlete;
 
+	/**
+	 * Date and time the announcement was posted on Strava
+	 */
 	private ZonedDateTime createdAt;
 
+	/**
+	 * Text of the announcement
+	 */
 	private String message;
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -43,6 +63,7 @@ public class StravaClubAnnouncement {
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
