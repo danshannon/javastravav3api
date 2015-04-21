@@ -3,6 +3,14 @@ package javastrava.cache;
 import java.util.List;
 
 /**
+ * <p>
+ * The caching mechanism caches data temporarily in memory
+ * </p>
+ * 
+ * <p>
+ * Data is cached <strong>per unique token</strong> and cannot be read by a session with an access token different to the one that stored data
+ * </p>
+ * 
  * @author Dan Shannon
  *
  * @param <T> Class of object to be stored in cache
