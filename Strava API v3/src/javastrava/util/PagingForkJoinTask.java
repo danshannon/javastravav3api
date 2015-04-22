@@ -63,8 +63,15 @@ public class PagingForkJoinTask<T> extends RecursiveTask<List<T>> {
 		List<T> leftResult = leftTask.join();
 		
 		List<T> result = new ArrayList<>();
-		result.addAll(leftResult);
-		result.addAll(rightResult);		
+		if (leftResult == null && rightResult == null) {
+			return null;
+		}
+		if (leftResult != null) {
+			result.addAll(leftResult);
+		}
+		if (rightResult != null) {
+			result.addAll(rightResult);		
+		}
 		return result;
 	}
 

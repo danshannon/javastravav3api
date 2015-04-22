@@ -66,6 +66,11 @@ public class StravaConfig {
 	public static final int WARN_AT_REQUEST_LIMIT_PERCENT = integer("strava.warn_at_request_limit_percent").intValue(); //$NON-NLS-1$
 
 	/**
+	 * The number of parallel pages to request simultaneously when running a listAll method
+	 */
+	public static final int PAGING_LIST_ALL_PARALLELISM = integer("strava.paging_list_all_parallelism").intValue(); //$NON-NLS-1$
+
+	/**
 	 * Get the value of a String property
 	 * @param property The property name
 	 * @return The value of the property

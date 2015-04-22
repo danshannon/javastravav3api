@@ -23,6 +23,9 @@ import javastrava.config.StravaConfig;
  *
  */
 public class PagingHandler {
+	/**
+	 * A ForkJoinPool used for parallel processing of large paging requests
+	 */
 	private static ForkJoinPool pool = new ForkJoinPool();
 	/**
 	 * <p>
@@ -90,11 +93,14 @@ public class PagingHandler {
 		boolean loop = true;
 		final List<T> records = new ArrayList<T>();
 		int page = 0;
+		Integer pageSize = Integer.valueOf(StravaConfig.MAX_PAGE_SIZE.intValue() * StravaConfig.PAGING_LIST_ALL_PARALLELISM);
+	
 		while (loop) {
 			page++;
 			List<T> currentPage;
 			try {
-				currentPage = callback.getPageOfData(new Paging(Integer.valueOf(page), StravaConfig.MAX_PAGE_SIZE));
+				// currentPage = callback.getPageOfData(new Paging(Integer.valueOf(page), StravaConfig.MAX_PAGE_SIZE));
+				currentPage = handlePaging(new Paging(Integer.valueOf(page), pageSize), callback);
 			} catch (final NotFoundException e) {
 				return null;
 			} catch (final UnauthorizedException e) {
@@ -106,7 +112,7 @@ public class PagingHandler {
 				return null; // Activity doesn't exist
 			}
 			records.addAll(currentPage);
-			if (currentPage.size() < StravaConfig.MAX_PAGE_SIZE.intValue()) {
+			if (currentPage.size() < pageSize.intValue()) {
 				loop = false;
 			}
 		}
