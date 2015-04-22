@@ -46,16 +46,18 @@ public class PagingHandler {
 		List<T> records = new ArrayList<>();
 		try {
 			List<Paging> pages = PagingUtils.convertToStravaPaging(pagingInstruction);
+			
+			// If there's only the one page to get, don't bother going all parallel!
+			if (pages.size() == 1) {
+				Paging paging = pages.get(0);
+				records = callback.getPageOfData(paging);
+				records = PagingUtils.ignoreLastN(records, paging.getIgnoreLastN());
+				records = PagingUtils.ignoreFirstN(records, paging.getIgnoreFirstN());
+				return records;
+			}
+			
+			// But if there is more than one, get them in parallel
 			records = pool.invoke(new PagingForkJoinTask<T>(callback, pages));
-//			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
-//				List<T> pageOfData = callback.getPageOfData(paging);
-//				if (pageOfData.size() == 0) {
-//					break;
-//				}
-//				pageOfData = PagingUtils.ignoreLastN(pageOfData, paging.getIgnoreLastN());
-//				pageOfData = PagingUtils.ignoreFirstN(pageOfData, paging.getIgnoreFirstN());
-//				records.addAll(pageOfData);
-//			}
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
