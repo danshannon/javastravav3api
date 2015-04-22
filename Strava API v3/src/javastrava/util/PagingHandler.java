@@ -2,6 +2,7 @@ package javastrava.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ForkJoinPool;
 
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
@@ -22,6 +23,7 @@ import javastrava.config.StravaConfig;
  *
  */
 public class PagingHandler {
+	private static ForkJoinPool pool = new ForkJoinPool();
 	/**
 	 * <p>
 	 * Validates paging instructions and converts them to Strava-compatible paging instructions, then gets the whole lot for you
@@ -41,17 +43,19 @@ public class PagingHandler {
 	 */
 	public static <T> List<T> handlePaging(final Paging pagingInstruction, final PagingCallback<T> callback) {
 		PagingUtils.validatePagingArguments(pagingInstruction);
-		final List<T> records = new ArrayList<T>();
+		List<T> records = new ArrayList<>();
 		try {
-			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
-				List<T> pageOfData = callback.getPageOfData(paging);
-				if (pageOfData.size() == 0) {
-					break;
-				}
-				pageOfData = PagingUtils.ignoreLastN(pageOfData, paging.getIgnoreLastN());
-				pageOfData = PagingUtils.ignoreFirstN(pageOfData, paging.getIgnoreFirstN());
-				records.addAll(pageOfData);
-			}
+			List<Paging> pages = PagingUtils.convertToStravaPaging(pagingInstruction);
+			records = pool.invoke(new PagingForkJoinTask<T>(callback, pages));
+//			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
+//				List<T> pageOfData = callback.getPageOfData(paging);
+//				if (pageOfData.size() == 0) {
+//					break;
+//				}
+//				pageOfData = PagingUtils.ignoreLastN(pageOfData, paging.getIgnoreLastN());
+//				pageOfData = PagingUtils.ignoreFirstN(pageOfData, paging.getIgnoreFirstN());
+//				records.addAll(pageOfData);
+//			}
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
