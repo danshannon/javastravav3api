@@ -18,7 +18,7 @@ javastrava is available on Maven. Just add this to your POM:
 <dependency>
 	<groupId>com.github.danshannon</groupId>
 	<artifactId>javastrava-api</artifactId>
-	<version>1.0.0-RC1</version>
+	<version>1.0.0-RC2</version>
 </dependency>
 ```
 
@@ -58,6 +58,12 @@ Now we can get an API instance:
 And finally, the athlete:
 
 `StravaAthlete athlete = api.getAthlete(id);`
+
+Caching
+=======
+The full implementation provides a caching mechanism to reduce the overall number of calls to the Strava API. The caching mechanism uses Apache JCS and your application will need to provide a cache.ccf configuration file to make use of it.
+
+The raw API does not cache data.
 
 Token Management
 ================
