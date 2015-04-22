@@ -15,15 +15,21 @@ import javastrava.api.v3.service.exception.NotFoundException;
 public class PagingForkJoinTask<T> extends RecursiveTask<List<T>> {
 
 	/**
-	 * 
+	 * Default
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Callback which returns a page of data from the Strava API
+	 */
 	private final PagingCallback<T> callback;
+	/**
+	 * List of pages to get from the Strava API
+	 */
 	private final List<Paging> pages;
 
 	/**
-	 * @param callback
-	 * @param pages
+	 * @param callback The callback which will be used to get a page of data from the Strava API
+	 * @param pages The list of paging instructions
 	 */
 	public PagingForkJoinTask(final PagingCallback<T> callback, final List<Paging> pages) {
 		this.callback = callback;
@@ -40,37 +46,37 @@ public class PagingForkJoinTask<T> extends RecursiveTask<List<T>> {
 		}
 		if (this.pages.size() == 1) {
 			try {
-				Paging pagingInstruction = this.pages.get(0);
+				final Paging pagingInstruction = this.pages.get(0);
 				List<T> pageOfData = this.callback.getPageOfData(pagingInstruction);
 				pageOfData = PagingUtils.ignoreLastN(pageOfData, pagingInstruction.getIgnoreLastN());
 				pageOfData = PagingUtils.ignoreFirstN(pageOfData, pagingInstruction.getIgnoreFirstN());
 				return pageOfData;
-			} catch (NotFoundException e) {
+			} catch (final NotFoundException e) {
 				return null;
-			} catch (BadRequestException e) {
+			} catch (final BadRequestException e) {
 				return null;
 			}
 		}
-		
-		List<Paging> leftPages = this.pages.subList(0, 1);
-		PagingForkJoinTask<T> leftTask = new PagingForkJoinTask<T>(this.callback, leftPages);
-		leftTask.fork();
-		
-		List<Paging> rightPages = this.pages.subList(1, this.pages.size());
-		PagingForkJoinTask<T> rightTask = new PagingForkJoinTask<T>(this.callback, rightPages);
-		List<T> rightResult = rightTask.compute();
 
-		List<T> leftResult = leftTask.join();
-		
-		List<T> result = new ArrayList<>();
-		if (leftResult == null && rightResult == null) {
+		final List<Paging> leftPages = this.pages.subList(0, 1);
+		final PagingForkJoinTask<T> leftTask = new PagingForkJoinTask<T>(this.callback, leftPages);
+		leftTask.fork();
+
+		final List<Paging> rightPages = this.pages.subList(1, this.pages.size());
+		final PagingForkJoinTask<T> rightTask = new PagingForkJoinTask<T>(this.callback, rightPages);
+		final List<T> rightResult = rightTask.compute();
+
+		final List<T> leftResult = leftTask.join();
+
+		final List<T> result = new ArrayList<>();
+		if ((leftResult == null) && (rightResult == null)) {
 			return null;
 		}
 		if (leftResult != null) {
 			result.addAll(leftResult);
 		}
 		if (rightResult != null) {
-			result.addAll(rightResult);		
+			result.addAll(rightResult);
 		}
 		return result;
 	}

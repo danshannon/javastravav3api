@@ -108,13 +108,13 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		}
 
 		// Handle 400 Bad request error
-		if ((r != null) && (r.getStatus() == 400)) {
+		if (r.getStatus() == 400) {
 			log.warn(status + " : " + response); //$NON-NLS-1$
 			return new BadRequestException(status,response, cause);
 		}
 
 		// Handle 401 Unauthorized error
-		if ((r != null) && (r.getStatus() == 401)) {
+		if (r.getStatus() == 401) {
 			if (tokenInvalid(response)) {
 				log.error(status + " : " + response); //$NON-NLS-1$
 				return new InvalidTokenException(status, response, cause);
@@ -125,29 +125,28 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		}
 
 		// Handle 403 forbidden error
-		if ((r != null) && (r.getStatus() == 403)) {
+		if (r.getStatus() == 403) {
 			log.error(status + " : " + response); //$NON-NLS-1$
 			if (response.getMessage().equals(Messages.string("RetrofitErrorHandler.rateLimitExceeded"))) { //$NON-NLS-1$
 				return new StravaAPIRateLimitException(status, response, cause);
-			} else {
-				return new UnauthorizedException(status, response, cause);
 			}
+			return new UnauthorizedException(status, response, cause);
 		}
 
 		// Handle 404 Not Found error
-		if ((r != null) && (r.getStatus() == 404)) {
+		if (r.getStatus() == 404) {
 			log.info(status + " : " + response); //$NON-NLS-1$
 			return new NotFoundException(response,cause);
 		}
 
 		// Handle 500 Internal Server error
-		if ((r != null) && (r.getStatus() == 500)) {
+		if (r.getStatus() == 500) {
 			log.error(status + " : " + response); //$NON-NLS-1$
 			return new StravaInternalServerErrorException(status, response, cause);
 		}
 
 		// Handle 503 Service Unavailable error
-		if ((r != null) && (r.getStatus() == 503)) {
+		if (r.getStatus() == 503) {
 			log.error(status + " : " + response); //$NON-NLS-1$
 			return new StravaServiceUnavailableException(status, response, cause);
 		}
