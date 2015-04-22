@@ -109,3 +109,4 @@ Dependencies
 ============
 - The REST client is written using Retrofit, because it makes life ridiculously easy
 - JSON serialisation uses GSON
+- Caching is implemented with Apache JCS
