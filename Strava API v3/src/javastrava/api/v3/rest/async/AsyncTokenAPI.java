@@ -1,4 +1,4 @@
-package javastrava.api.v3.rest;
+package javastrava.api.v3.rest.async;
 
 import javastrava.api.v3.auth.TokenService;
 import javastrava.api.v3.auth.model.TokenResponse;
@@ -15,18 +15,18 @@ import retrofit.http.POST;
  * @author Dan Shannon
  *
  */
-public interface TokenAPI {
+public interface AsyncTokenAPI {
 	/**
 	 * @see TokenService#deauthorise(javastrava.api.v3.auth.model.Token)
-	 * 
+	 *
 	 * @param accessToken
 	 *            The access token for which the application is revoking its access.
-	 * @return Responds with the access token submitted with the request.
+	 * @param callback The callback to execute on completion
 	 * @throws UnauthorizedException
 	 *             if the token is not allowed to be deauthorised
 	 */
 	@FormUrlEncoded
 	@POST("/oauth/deauthorize")
-	public TokenResponse deauthoriseToken(@Field("access_token") final String accessToken) throws UnauthorizedException;
+	public void deauthorise(@Field("access_token") final String accessToken, final StravaAPICallback<TokenResponse> callback) throws UnauthorizedException;
 
 }

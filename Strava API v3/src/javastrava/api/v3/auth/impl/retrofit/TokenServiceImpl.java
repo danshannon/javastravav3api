@@ -64,7 +64,7 @@ public class TokenServiceImpl extends StravaServiceImpl implements TokenService 
 	 */
 	@Override
 	public TokenResponse deauthorise(final Token token) throws UnauthorizedException {
-		final TokenResponse response = this.api.deauthorise(token.getToken());
+		final TokenResponse response = this.api.deauthoriseToken(token.getToken());
 		for (final StravaService service : token.getServices().values()) {
 			service.clearCache();
 		}

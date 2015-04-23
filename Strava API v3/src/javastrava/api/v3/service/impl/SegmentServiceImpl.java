@@ -377,11 +377,14 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		// (https://github.com/danshannon/javastravav3api/issues/45)
 		// Check if the segment is flagged as hazardous
 		final StravaSegment segment = getSegment(segmentId);
+		System.out.println(segment);
 
 		// If the segment is null it doesn't exist, so return null
 		if (segment == null) {
 			return null;
 		}
+
+		final int parallelism = StravaConfig.PAGING_LIST_ALL_PARALLELISM;
 
 		// TODO This is the workaround for issue #45
 		if (segment.getResourceState() == StravaResourceState.META) {
@@ -394,7 +397,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		}
 		// End of workaround
 		return PagingHandler.handleListAll(thisPage -> listSegmentEfforts(segmentId, athleteId, startDate, endDate,
-				thisPage));
+				thisPage), parallelism);
 	}
 
 	/**

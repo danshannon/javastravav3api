@@ -104,6 +104,7 @@ public class API {
 		// Error handler deals with Strava's implementations of 400, 401, 403, 404 errors etc.
 		.setErrorHandler(new RetrofitErrorHandler()).build().create(class1);
 	}
+
 	/**
 	 * @param class1
 	 *            Class for which log level is to be determined
@@ -219,10 +220,10 @@ public class API {
 	 * @return Responds with the access token submitted with the request.
 	 * @throws UnauthorizedException
 	 *             if the token is not allowed to be deauthorised
-	 * @see javastrava.api.v3.rest.TokenAPI#deauthorise(java.lang.String)
+	 * @see javastrava.api.v3.rest.TokenAPI#deauthoriseToken(java.lang.String)
 	 */
-	public TokenResponse deauthorise(final String accessToken) throws UnauthorizedException {
-		return this.tokenAPI.deauthorise(accessToken);
+	public TokenResponse deauthoriseToken(final String accessToken) throws UnauthorizedException {
+		return this.tokenAPI.deauthoriseToken(accessToken);
 	}
 
 	/**
@@ -444,20 +445,20 @@ public class API {
 	 * @param clubId The club the authenticated athlete wishes to join
 	 * @return Membership response indicating success/failure
 	 * @throws NotFoundException If the club with the given id doesn't exist
-	 * @see javastrava.api.v3.rest.ClubAPI#join(java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ClubAPI#joinClub(java.lang.Integer)
 	 */
 	public StravaClubMembershipResponse joinClub(final Integer clubId) throws NotFoundException {
-		return this.clubAPI.join(clubId);
+		return this.clubAPI.joinClub(clubId);
 	}
 
 	/**
 	 * @param clubId The club the authenticated athlete wishes to leave
 	 * @return Membership response indicating success/failure
 	 * @throws NotFoundException If the club with the given id doesn't exist
-	 * @see javastrava.api.v3.rest.ClubAPI#leave(java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ClubAPI#leaveClub(java.lang.Integer)
 	 */
 	public StravaClubMembershipResponse leaveClub(final Integer clubId) throws NotFoundException {
-		return this.clubAPI.leave(clubId);
+		return this.clubAPI.leaveClub(clubId);
 	}
 
 	/**
@@ -488,13 +489,13 @@ public class API {
 	}
 
 	/**
-	 * @param id The activity identifier
+	 * @param activityId The activity identifier
 	 * @return Array of laps belonging to the activity
 	 * @throws NotFoundException If the activity doesn't exist
 	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityLaps(java.lang.Integer)
 	 */
-	public StravaLap[] listActivityLaps(final Integer id) throws NotFoundException {
-		return this.activityAPI.listActivityLaps(id);
+	public StravaLap[] listActivityLaps(final Integer activityId) throws NotFoundException {
+		return this.activityAPI.listActivityLaps(activityId);
 	}
 
 	/**

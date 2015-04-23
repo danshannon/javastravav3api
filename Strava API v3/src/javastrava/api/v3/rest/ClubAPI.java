@@ -77,7 +77,7 @@ public interface ClubAPI {
 	 * @throws NotFoundException If the club with the given id doesn't exist
 	 */
 	@POST("/clubs/{id}/join")
-	public StravaClubMembershipResponse join(@Path("id") final Integer clubId) throws NotFoundException;
+	public StravaClubMembershipResponse joinClub(@Path("id") final Integer clubId) throws NotFoundException;
 
 	/**
 	 * @see javastrava.api.v3.service.ClubService#leaveClub(java.lang.Integer)
@@ -87,7 +87,7 @@ public interface ClubAPI {
 	 * @throws NotFoundException If the club with the given id doesn't exist
 	 */
 	@POST("/clubs/{id}/leave")
-	public StravaClubMembershipResponse leave(@Path("id") final Integer clubId) throws NotFoundException;
+	public StravaClubMembershipResponse leaveClub(@Path("id") final Integer clubId) throws NotFoundException;
 	
 	/**
 	 * @param clubId The club for which to list announcements
