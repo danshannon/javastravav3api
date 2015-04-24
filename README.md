@@ -41,7 +41,7 @@ Then, getting an athlete looks like this:
 
 `StravaAthlete athlete = strava.getAthlete(id);`
 
-Use (raw API)
+Use (raw synchronous API)
 =============
 If you prefer to use the raw API, then a similar approach is required. Again, it's your problem to get through the OAuth process until you've got a code. Then, to get a token:
 
@@ -58,6 +58,37 @@ Now we can get an API instance:
 And finally, the athlete:
 
 `StravaAthlete athlete = api.getAthlete(id);`
+
+Use (raw asynchronous API) - COMING SOON
+==========================
+We've also implemented an asynchronous version of the API. Its use is very similar to using the synchronous version of the API, but instead it uses Retrofit's asynchronous HTTP calls to execute the calls to the Strava API, leaving your application free to do other work whilst it's waiting for a (sometimes slow) response.
+
+The process of getting a token is identical to the process for the synchronous API:
+
+```
+AuthorisationAPI auth = API.authorisationInstance();
+TokenResponse response = auth.tokenExchange({application_client_id}, {client_secret}, code);
+Token token = new Token(response);
+```
+
+Now, using the token we can get an `AsyncAPI` instance:
+
+`AsyncAPI api = new AsyncAPI(token);`
+
+To get the athlete, we use Java 8's `CompletableFuture` concurrency feature:
+
+```
+CompletableFuture<StravaAthlete> future = new CompletableFuture<>();
+
+// Fires off an asynchronous call to the API
+api.getAthlete(athleteId, future);
+
+// You can do something else now
+... do lots of other interesting stuff until...
+
+// And when you're ready (and it's ready), retrieve the athlete from the future
+StravaAthlete athlete = future.get();
+```
 
 Caching
 =======
