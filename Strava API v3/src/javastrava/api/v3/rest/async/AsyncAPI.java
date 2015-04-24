@@ -60,6 +60,7 @@ import retrofit.mime.TypedFile;
 public class AsyncAPI {
 	/**
 	 * Generates a callback for the API, based on a {@link CompletableFuture}. {@link CompletableFuture#complete(Object)} will be called when the asynchronous call to the API is complete
+	 * @param <T> The type of object which will be returned to the caller
 	 * @param completableFuture The future
 	 * @return The callback
 	 */

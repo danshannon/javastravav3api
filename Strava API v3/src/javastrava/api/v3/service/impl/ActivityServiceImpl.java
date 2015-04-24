@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaActivity;
@@ -757,6 +758,203 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// Return the updated activity
 		return response;
 
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ActivityService#getActivityAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<StravaActivity> getActivityAsync(final Integer activityId) {
+		return StravaServiceImpl.future(() -> {
+			return getActivity(activityId);
+		});
+	}
+	
+	@Override
+	public CompletableFuture<StravaActivity> getActivityAsync(final Integer activityId, final Boolean includeAllEfforts) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<StravaActivity> createManualActivityAsync(final StravaActivity activity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<StravaActivity> updateActivityAsync(final Integer activityId, final StravaActivityUpdate activity) throws NotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<StravaActivity> deleteActivityAsync(final Integer activityId) throws NotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listAllAuthenticatedAthleteActivitiesAsync() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listAllAuthenticatedAthleteActivitiesAsync(final LocalDateTime before, final LocalDateTime after) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final Paging pagingInstruction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final LocalDateTime before, final LocalDateTime after) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final LocalDateTime before, final LocalDateTime after,
+			final Paging pagingInstruction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listFriendsActivitiesAsync(final Paging pagingInstruction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listFriendsActivitiesAsync() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listAllFriendsActivitiesAsync() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivityZone>> listActivityZonesAsync(final Integer activityId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaLap>> listActivityLapsAsync(final Integer activityId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Boolean markdown) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Paging pagingInstruction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Boolean markdown, final Paging pagingInstruction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Integer activityId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Integer activityId, final Paging pagingInstruction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaPhoto>> listActivityPhotosAsync(final Integer activityId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Integer id, final Paging pagingInstruction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<StravaComment> createCommentAsync(final Integer activityId, final String text) throws NotFoundException, BadRequestException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<Void> deleteCommentAsync(final Integer activityId, final Integer commentId) throws NotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<Void> deleteCommentAsync(final StravaComment comment) throws NotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<Void> giveKudosAsync(final Integer activityId) throws NotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaComment>> listAllActivityCommentsAsync(final Integer activityId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listAllActivityKudoersAsync(final Integer activityId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<List<StravaActivity>> listAllRelatedActivitiesAsync(final Integer activityId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

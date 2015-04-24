@@ -1,13 +1,18 @@
 package javastrava.api.v3.service.impl;
 
-import javastrava.api.v3.auth.model.Token;
-import javastrava.api.v3.rest.API;
-import javastrava.api.v3.service.exception.UnauthorizedException;
-import javastrava.config.Messages;
-import javastrava.config.StravaConfig;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javastrava.api.v3.auth.model.Token;
+import javastrava.api.v3.rest.API;
+import javastrava.api.v3.rest.async.AsyncAPI;
+import javastrava.api.v3.service.async.AsyncCallback;
+import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.config.Messages;
+import javastrava.config.StravaConfig;
 
 /**
  * <p>
@@ -80,6 +85,11 @@ public abstract class StravaServiceImpl {
 	 * API instance in use
 	 */
 	protected final API api;
+	
+	/**
+	 * Asynchronous API instance in use
+	 */
+	protected final AsyncAPI asyncAPI;
 
 	/**
 	 * <p>
@@ -93,6 +103,7 @@ public abstract class StravaServiceImpl {
 	protected StravaServiceImpl(final Token token) {
 		this.token = token;
 		this.api = new API(token);
+		this.asyncAPI = new AsyncAPI(token);
 	}
 
 	/**
@@ -118,6 +129,21 @@ public abstract class StravaServiceImpl {
 	 */
 	protected final Token getToken() {
 		return this.token;
+	}
+
+	/**
+	 * @param <T> Type which will be returned by the future
+	 * @param callback Callback with code to be executed
+	 * @return A {@link CompletableFuture}
+	 */
+	protected static <T> CompletableFuture<T> future(final AsyncCallback<T> callback) {
+		CompletableFuture<T> future = CompletableFuture.supplyAsync(new Supplier<T>() {
+			@Override
+			public T get() {
+				return callback.run();
+			}
+		});
+		return future;
 	}
 
 }
