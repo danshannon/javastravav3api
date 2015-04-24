@@ -124,7 +124,9 @@ We've provided a stack of alternate method signatures for all the API endpoints,
 
 The methods that do not include paging instructions will return only the first page from the Strava API, *not* everything. There are methods that *do* return everything, they're typically called `listAll*`. Be careful using these...
 
-The methods that do include paging instructions are built to override the Strava paging limits. If you really want, you can ask for 10,000 or more activities at once, not Strava's artificial limit of 200 per page. Be aware, though, that internally we're still bound by the Strava limits, so asking for 10,000 activities will result in 500 calls to the API! That's going to exhaust your throttling limits (by default 600 calls every 15 minutes) pretty fast...
+The methods that do include paging instructions are built to override the Strava paging limits. If you really want, you can ask for 10,000 or more activities at once, not Strava's artificial limit of 200 per page. Be aware, though, that internally we're still bound by the Strava limits, so asking for 10,000 activities will result in 50 calls to the API! That's going to exhaust your throttling limits (by default 600 calls every 15 minutes) pretty fast...
+
+Obviously doing many sequential calls to the API to return all of something would be extremely slow, so the calls to the API are executed in parallel. See `javastrava.util.PagingHandler` for details of how this is done.
 
 To use the paging options, you pass in a stravajava.util.Paging object as the pagingInstruction parameter. Have a look; it's amazimgly flexible!
 
