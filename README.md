@@ -88,10 +88,8 @@ AsyncAPI api = new AsyncAPI(token);
 To get the athlete, we use Java 8's `CompletableFuture` concurrency feature:
 
 ```java
-CompletableFuture<StravaAthlete> future = new CompletableFuture<>();
-
 // Fires off an asynchronous call to the API
-api.getAthlete(athleteId, future);
+CompletableFuture<StravaAthlete> future = api.getAthlete(athleteId);
 
 // You can do something else now
 ... do lots of other interesting stuff until...
