@@ -1,12 +1,14 @@
 package javastrava.api.v3.service.impl;
 
 import java.io.File;
+import java.util.concurrent.CompletableFuture;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaUploadResponse;
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.service.UploadService;
 import javastrava.api.v3.service.exception.BadRequestException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
 import retrofit.mime.TypedFile;
 
@@ -69,6 +71,24 @@ public class UploadServiceImpl extends StravaServiceImpl implements UploadServic
 	}
 
 	/**
+	 * @see javastrava.api.v3.service.UploadService#checkUploadStatusAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<StravaUploadResponse> checkUploadStatusAsync(final Integer uploadId) throws UnauthorizedException {
+		return StravaServiceImpl.future(() -> {
+			return checkUploadStatus(uploadId);
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		// Nothing to do - there is no cache
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType,
 	 *      java.lang.String, java.lang.String, java.lang.Boolean,
 	 *      java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
@@ -93,11 +113,14 @@ public class UploadServiceImpl extends StravaServiceImpl implements UploadServic
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 * @see javastrava.api.v3.service.UploadService#uploadAsync(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
 	 */
 	@Override
-	public void clearCache() {
-		// Nothing to do - there is no cache
+	public CompletableFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name, final String description, final Boolean _private,
+			final Boolean trainer, final String dataType, final String externalId, final File file) {
+		return StravaServiceImpl.future(() -> {
+			return upload(activityType, name, description, _private, trainer, dataType, externalId, file);
+		});
 	}
 
 }

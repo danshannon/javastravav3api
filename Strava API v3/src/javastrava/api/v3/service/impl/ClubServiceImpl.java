@@ -6,6 +6,7 @@ package javastrava.api.v3.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaActivity;
@@ -121,6 +122,16 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	}
 
 	/**
+	 * @see javastrava.api.v3.service.ClubService#getClubAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<StravaClub> getClubAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return getClub(clubId);
+		});
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.ClubService#joinClub(java.lang.Integer)
 	 */
 	@Override
@@ -135,6 +146,16 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 			}
 			throw e;
 		}
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#joinClubAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<StravaClubMembershipResponse> joinClubAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return joinClub(clubId);
+		});
 	}
 
 	/**
@@ -155,12 +176,32 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	}
 
 	/**
+	 * @see javastrava.api.v3.service.ClubService#leaveClubAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<StravaClubMembershipResponse> leaveClubAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return leaveClub(clubId);
+		});
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.ClubService#listAllClubMembers(java.lang.Integer)
 	 */
 	@Override
 	public List<StravaAthlete> listAllClubMembers(final Integer clubId) {
 		return PagingHandler.handleListAll(thisPage -> listClubMembers(clubId, thisPage));
 
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listAllClubMembersAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listAllClubMembersAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return listAllClubMembers(clubId);
+		});
 	}
 
 	/**
@@ -172,11 +213,31 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	}
 
 	/**
+	 * @see javastrava.api.v3.service.ClubService#listAllRecentClubActivitiesAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<List<StravaActivity>> listAllRecentClubActivitiesAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return listAllRecentClubActivities(clubId);
+		});
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.ClubService#listAuthenticatedAthleteClubs()
 	 */
 	@Override
 	public List<StravaClub> listAuthenticatedAthleteClubs() {
 		return Arrays.asList(this.api.listAuthenticatedAthleteClubs());
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listAuthenticatedAthleteClubsAsync()
+	 */
+	@Override
+	public CompletableFuture<List<StravaClub>> listAuthenticatedAthleteClubsAsync() {
+		return StravaServiceImpl.future(() -> {
+			return listAuthenticatedAthleteClubs();
+		});
 	}
 
 	/**
@@ -193,6 +254,16 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 			return new ArrayList<StravaClubAnnouncement>();
 		}
 		return announcements;
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubAnnouncementsAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<List<StravaClubAnnouncement>> listClubAnnouncementsAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return listClubAnnouncements(clubId);
+		});
 	}
 
 	/**
@@ -213,6 +284,27 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 				pagingInstruction,
 				thisPage -> Arrays.asList(this.api.listClubMembers(id, thisPage.getPage(),
 						thisPage.getPageSize())));
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubMembersAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listClubMembersAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return listClubMembers(clubId);
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubMembersAsync(java.lang.Integer, javastrava.util.Paging)
+	 */
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listClubMembersAsync(final Integer clubId, final Paging pagingInstruction) {
+		return StravaServiceImpl.future(() -> {
+			return listClubMembers(clubId, pagingInstruction);
+		});
+
 	}
 
 	/**
@@ -240,6 +332,26 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 						thisPage.getPageSize())));
 
 		return PrivacyUtils.handlePrivateActivities(activities, this.getToken());
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listRecentClubActivitiesAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<List<StravaActivity>> listRecentClubActivitiesAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return listRecentClubActivities(clubId);
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listRecentClubActivitiesAsync(java.lang.Integer, javastrava.util.Paging)
+	 */
+	@Override
+	public CompletableFuture<List<StravaActivity>> listRecentClubActivitiesAsync(final Integer clubId, final Paging pagingInstruction) {
+		return StravaServiceImpl.future(() -> {
+			return listRecentClubActivities(clubId, pagingInstruction);
+		});
 	}
 
 }

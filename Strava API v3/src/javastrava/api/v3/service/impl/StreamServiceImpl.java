@@ -3,6 +3,7 @@ package javastrava.api.v3.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaActivity;
@@ -136,11 +137,19 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	}
 
 	/**
+	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		// Nothing to do - there is no cache
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(java.lang.Integer)
 	 */
 	@Override
-	public List<StravaStream> getActivityStreams(final Integer id) {
-		return getActivityStreams(id, null, null, getAllStreamTypes());
+	public List<StravaStream> getActivityStreams(final Integer activityId) {
+		return getActivityStreams(activityId, null, null, getAllStreamTypes());
 	}
 
 	/**
@@ -193,11 +202,32 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	}
 
 	/**
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Integer activityId) {
+		return StravaServiceImpl.future(() -> {
+			return getActivityStreams(activityId);
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
+	 */
+	@Override
+	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Integer activityId, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
+		return StravaServiceImpl.future(() -> {
+			return getActivityStreams(activityId, resolution, seriesType, types);
+		});
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.StreamService#getEffortStreams(java.lang.Long)
 	 */
 	@Override
-	public List<StravaStream> getEffortStreams(final Long id) {
-		return getEffortStreams(id, null, null, getAllStreamTypes());
+	public List<StravaStream> getEffortStreams(final Long effortId) {
+		return getEffortStreams(effortId, null, null, getAllStreamTypes());
 	}
 
 	/**
@@ -238,11 +268,32 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	}
 
 	/**
+	 * @see javastrava.api.v3.service.StreamService#getEffortStreamsAsync(java.lang.Long)
+	 */
+	@Override
+	public CompletableFuture<List<StravaStream>> getEffortStreamsAsync(final Long effortId) {
+		return StravaServiceImpl.future(() -> {
+			return getEffortStreams(effortId);
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.StreamService#getEffortStreamsAsync(java.lang.Long, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
+	 */
+	@Override
+	public CompletableFuture<List<StravaStream>> getEffortStreamsAsync(final Long effortId, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
+		return StravaServiceImpl.future(() -> {
+			return getEffortStreams(effortId, resolution, seriesType, types);
+		});
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.StreamService#getSegmentStreams(java.lang.Integer)
 	 */
 	@Override
-	public List<StravaStream> getSegmentStreams(final Integer id) {
-		return getSegmentStreams(id, null, null, getAllStreamTypes());
+	public List<StravaStream> getSegmentStreams(final Integer segmentId) {
+		return getSegmentStreams(segmentId, null, null, getAllStreamTypes());
 	}
 
 	/**
@@ -285,11 +336,24 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.StravaService#clearCache()
+	 * @see javastrava.api.v3.service.StreamService#getSegmentStreamsAsync(java.lang.Integer)
 	 */
 	@Override
-	public void clearCache() {
-		// Nothing to do - there is no cache
+	public CompletableFuture<List<StravaStream>> getSegmentStreamsAsync(final Integer segmentId) {
+		return StravaServiceImpl.future(() -> {
+			return getSegmentStreams(segmentId);
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.StreamService#getSegmentStreamsAsync(java.lang.Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
+	 */
+	@Override
+	public CompletableFuture<List<StravaStream>> getSegmentStreamsAsync(final Integer segmentId, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
+		return StravaServiceImpl.future(() -> {
+			return getSegmentStreams(segmentId, resolution, seriesType, types);
+		});
 	}
 
 }

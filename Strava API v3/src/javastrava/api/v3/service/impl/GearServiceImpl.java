@@ -1,5 +1,7 @@
 package javastrava.api.v3.service.impl;
 
+import java.util.concurrent.CompletableFuture;
+
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaGear;
 import javastrava.api.v3.model.reference.StravaResourceState;
@@ -80,25 +82,35 @@ public class GearServiceImpl extends StravaServiceImpl implements GearService {
 	 * @see javastrava.api.v3.service.GearService#getGear(java.lang.String)
 	 */
 	@Override
-	public StravaGear getGear(final String id) {
+	public StravaGear getGear(final String gearId) {
 		// Attempt to get the gear from cache
-		StravaGear gear = this.gearCache.get(id);
+		StravaGear gear = this.gearCache.get(gearId);
 		if ((gear != null) && (gear.getResourceState() != StravaResourceState.META)) {
 			return gear;
 		}
 
 		// If it wasn't in cache, try to get it from the API
 		try {
-			gear = this.api.getGear(id);
+			gear = this.api.getGear(gearId);
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
-			gear = PrivacyUtils.privateGear(id);
+			gear = PrivacyUtils.privateGear(gearId);
 		}
 
 		// Put the gear in cache and return it
 		this.gearCache.put(gear);
 		return gear;
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.GearService#getGearAsync(java.lang.String)
+	 */
+	@Override
+	public CompletableFuture<StravaGear> getGearAsync(final String gearId) {
+		return StravaServiceImpl.future(() -> {
+			return getGear(gearId);
+		});
 	}
 
 }

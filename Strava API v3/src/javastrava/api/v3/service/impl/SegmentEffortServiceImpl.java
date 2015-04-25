@@ -1,5 +1,7 @@
 package javastrava.api.v3.service.impl;
 
+import java.util.concurrent.CompletableFuture;
+
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.api.v3.model.StravaSegmentEffort;
@@ -77,21 +79,21 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 	 * @see javastrava.api.v3.service.SegmentEffortService#getSegmentEffort(Long)
 	 */
 	@Override
-	public StravaSegmentEffort getSegmentEffort(final Long id) {
+	public StravaSegmentEffort getSegmentEffort(final Long segmentEffortId) {
 		// Try to get the effort from cache
-		StravaSegmentEffort effort = this.effortCache.get(id);
+		StravaSegmentEffort effort = this.effortCache.get(segmentEffortId);
 		if ((effort != null) && (effort.getResourceState() != StravaResourceState.META)) {
 			return effort;
 		}
 
 		// If it wasn't in cache, get it from the API
 		try {
-			effort = this.api.getSegmentEffort(id);
+			effort = this.api.getSegmentEffort(segmentEffortId);
 		} catch (final NotFoundException e) {
 			// Segment effort doesn't exist
 			return null;
 		} catch (final UnauthorizedException e) {
-			effort = PrivacyUtils.privateSegmentEffort(id);
+			effort = PrivacyUtils.privateSegmentEffort(segmentEffortId);
 		}
 
 		// TODO This is a workaround for issue javastrava-api #78
@@ -100,7 +102,7 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 			final StravaSegment segment = this.getToken().getService(SegmentService.class)
 					.getSegment(effort.getSegment().getId());
 			if (segment.getResourceState() == StravaResourceState.PRIVATE) {
-				effort = PrivacyUtils.privateSegmentEffort(id);
+				effort = PrivacyUtils.privateSegmentEffort(segmentEffortId);
 			}
 		}
 		// End of workaround
@@ -115,6 +117,16 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 		// Put the effort into cache and return it
 		this.effortCache.put(effort);
 		return effort;
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.SegmentEffortService#getSegmentEffortAsync(java.lang.Long)
+	 */
+	@Override
+	public CompletableFuture<StravaSegmentEffort> getSegmentEffortAsync(final Long segmentEffortId) {
+		return StravaServiceImpl.future(() -> {
+			return getSegmentEffort(segmentEffortId);
+		});
 	}
 
 }
