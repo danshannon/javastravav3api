@@ -203,7 +203,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			if (currentPage == null) {
 				return null; // Activity doesn't exist
 			}
-			if (currentPage.getEntries().size() < StravaConfig.MAX_PAGE_SIZE.intValue()) {
+			if (currentPage.getEntries() == null || currentPage.getEntries().size() < StravaConfig.MAX_PAGE_SIZE.intValue()) {
 				loop = false;
 			}
 			if (page == 1) {
