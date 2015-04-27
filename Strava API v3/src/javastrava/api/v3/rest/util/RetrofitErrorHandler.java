@@ -87,7 +87,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		}
 
 		if (r == null) {
-			throw new StravaUnknownAPIException(status, response, cause);
+			return new StravaUnknownAPIException(status, response, cause);
 		}
 		try {
 			if (r.getBody() == null) {

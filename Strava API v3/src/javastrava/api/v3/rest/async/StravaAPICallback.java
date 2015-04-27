@@ -3,9 +3,6 @@
  */
 package javastrava.api.v3.rest.async;
 
-import java.util.concurrent.CompletableFuture;
-
-import javastrava.api.v3.rest.util.RetrofitErrorHandler;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -17,18 +14,14 @@ import retrofit.client.Response;
  */
 public class StravaAPICallback<T> implements Callback<T> {
 	/**
-	 * Error handler
-	 */
-	private static RetrofitErrorHandler errorHandler = new RetrofitErrorHandler();
-	/**
 	 * A Future which will be completed when the call to the API is complete
 	 */
-	private final CompletableFuture<T> future;
+	private final StravaAPIFuture<T> future;
 
 	/**
 	 * @param completableFuture A Future which will be completed when the call to the API is complete
 	 */
-	public StravaAPICallback(final CompletableFuture<T> completableFuture) {
+	public StravaAPICallback(final StravaAPIFuture<T> completableFuture) {
 		this.future = completableFuture;
 	}
 
@@ -37,8 +30,8 @@ public class StravaAPICallback<T> implements Callback<T> {
 	 */
 	@Override
 	public void failure(final RetrofitError error) {
-		final RuntimeException exception = (RuntimeException) errorHandler.handleError(error);
-		throw exception;
+		// final RuntimeException exception = (RuntimeException) errorHandler.handleError(error);
+		this.future.completeExceptionally(error.getCause());
 	}
 
 	/**
