@@ -49,15 +49,16 @@ public class StravaAPIFuture<T> {
 	/**
 	 * Wrapper for the {@link CompletableFuture#get()} method handles exceptions and maps to javastrava exceptions
 	 * @return The object asked for
-	 * @throws Exception if something went wrong
 	 */
-	public T get() throws Exception {
+	public T get() {
 		T result = null;
 		try {
 			result = this.future.get();
 		} catch (final ExecutionException e) {
-			throw (Exception) e.getCause();
+			throw (RuntimeException) e.getCause();
 		} catch (final CancellationException e) {
+			throw new StravaUnknownAPIException(null, null, e);
+		} catch (InterruptedException e) {
 			throw new StravaUnknownAPIException(null, null, e);
 		}
 		return result;
