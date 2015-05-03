@@ -16,6 +16,7 @@ import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
+import javastrava.api.v3.model.StravaClubEvent;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaGear;
@@ -40,6 +41,7 @@ import javastrava.api.v3.model.reference.StravaStreamResolutionType;
 import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import javastrava.api.v3.model.reference.StravaStreamType;
 import javastrava.api.v3.model.reference.StravaWeightClass;
+import javastrava.api.v3.model.webhook.StravaEventSubscription;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.util.Paging;
@@ -52,7 +54,7 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class Strava implements ActivityService, AthleteService, ClubService, GearService, SegmentEffortService, SegmentService, StreamService, UploadService {
+public class Strava implements ActivityService, AthleteService, ClubService, GearService, SegmentEffortService, SegmentService, StreamService, UploadService, WebhookService {
 	/**
 	 * Instance used for access to activity data
 	 */
@@ -91,6 +93,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 */
 	private final UploadService uploadService;
 	/**
+	 * instance used for management of webhook subscriptions
+	 */
+	private final WebhookService webhookService;
+	/**
 	 * the access token associated with this implementation of the Strava functionality
 	 */
 	private final Token token;
@@ -111,6 +117,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 		this.streamService = token.getService(StreamService.class);
 		this.tokenService = token.getService(TokenService.class);
 		this.uploadService = token.getService(UploadService.class);
+		this.webhookService = token.getService(WebhookService.class);
 	}
 
 	/**
@@ -196,6 +203,92 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
+	 * <p>
+	 * Creates a subscription to an allowed event
+	 * </p>
+	 *
+	 * <p>
+	 * The application must have permission to make use of the webhook API. Access can be requested by contacting developers -at- strava.com.
+	 * </p>
+	 *
+	 * <p>
+	 * The above request will send a GET request to callback url to verify existence: http://your-callback.com/url/?hub.mode=subscribe&hub.challenge=15f7d1a91c1f40f8a748fd134752feb3&hub.verify_token=STRAVA
+	 * </p>
+	 *
+	 * <p>
+	 * Your response to this GET request must contain the hub.challenge token, ie. 15f7d1a91c1f40f8a748fd134752feb3 and have a response code of 200.
+	 * </p>
+	 *
+	 * <p>
+	 * On callback verification we respond to the original POST with the created subscription. If there is an error, a response containing the reason for failure will be returned.
+	 * </p>
+	 *
+	 * <p>
+	 * When an event occurs that corresponds to a push subscription, a POST request will be made to the callback url defined in the subscription. The payload will contain the object and aspect types affected, as well as information about the object and its owner if applicable.
+	 * </p>
+	 *
+	 * <p>
+	 * You should acknowledge the POST within a 2 second timeout–if you need to do more processing of the received information, you can do so in an asynchronous task.
+	 * </p>
+	 *
+	 * <p>
+	 * Additional metadata about the object is not included, and an application must decide how or if it wants to fetch updated data. For example, you may decide only to fetch new data for specific users, or after a certain number of activities have been uploaded.
+	 * </p>
+	 *
+	 * @param subscription The subscription to create on Strava
+	 * @param verifyToken The verification token Strava should use when validating your endpoint
+	 * @return Details as stored on Strava
+	 * @see javastrava.api.v3.service.WebhookService#createSubscription(javastrava.api.v3.model.webhook.StravaEventSubscription, String)
+	 */
+	@Override
+	public StravaEventSubscription createSubscription(final StravaEventSubscription subscription, final String verifyToken) {
+		return this.webhookService.createSubscription(subscription, verifyToken);
+	}
+
+	/**
+	 * <p>
+	 * Creates a subscription to an allowed event
+	 * </p>
+	 *
+	 * <p>
+	 * The application must have permission to make use of the webhook API. Access can be requested by contacting developers -at- strava.com.
+	 * </p>
+	 *
+	 * <p>
+	 * The above request will send a GET request to callback url to verify existence: http://your-callback.com/url/?hub.mode=subscribe&hub.challenge=15f7d1a91c1f40f8a748fd134752feb3&hub.verify_token=STRAVA
+	 * </p>
+	 *
+	 * <p>
+	 * Your response to this GET request must contain the hub.challenge token, ie. 15f7d1a91c1f40f8a748fd134752feb3 and have a response code of 200.
+	 * </p>
+	 *
+	 * <p>
+	 * On callback verification we respond to the original POST with the created subscription. If there is an error, a response containing the reason for failure will be returned.
+	 * </p>
+	 *
+	 * <p>
+	 * When an event occurs that corresponds to a push subscription, a POST request will be made to the callback url defined in the subscription. The payload will contain the object and aspect types affected, as well as information about the object and its owner if applicable.
+	 * </p>
+	 *
+	 * <p>
+	 * You should acknowledge the POST within a 2 second timeout–if you need to do more processing of the received information, you can do so in an asynchronous task.
+	 * </p>
+	 *
+	 * <p>
+	 * Additional metadata about the object is not included, and an application must decide how or if it wants to fetch updated data. For example, you may decide only to fetch new data for specific users, or after a certain number of activities have been uploaded.
+	 * </p>
+	 *
+	 * @param subscription The subscription to create on Strava
+	 * @param verifyToken The verification token Strava should use when validating your endpoint
+	 * @return Details as stored on Strava
+	 * @see javastrava.api.v3.service.WebhookService#createSubscriptionAsync(javastrava.api.v3.model.webhook.StravaEventSubscription, String)
+	 */
+	@Override
+	public CompletableFuture<StravaEventSubscription> createSubscriptionAsync(final StravaEventSubscription subscription, final String verifyToken) {
+		return this.webhookService.createSubscriptionAsync(subscription, verifyToken);
+	}
+
+	/**
 	 * @param accessToken token to be deauthorised
 	 * @return Response from Strava
 	 * @see javastrava.api.v3.auth.TokenService#deauthorise(javastrava.api.v3.auth.model.Token)
@@ -266,6 +359,37 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	@Override
 	public CompletableFuture<Void> deleteCommentAsync(final StravaComment comment) throws NotFoundException {
 		return this.activityService.deleteCommentAsync(comment);
+	}
+
+	/**
+	 * <p>
+	 * This request is used to unsubscribe from events.
+	 * </p>
+	 *
+	 * <p>
+	 * If the delete is successful, a 204 will be returned. Otherwise, an error will be returned containing the reason for a failure.
+	 * </p>
+	 * @param id Unique identifier of the subscription to be deleted
+	 */
+	@Override
+	public void deleteSubscription(final Integer id) {
+		this.webhookService.deleteSubscription(id);
+	}
+
+	/**
+	 * <p>
+	 * This request is used to unsubscribe from events.
+	 * </p>
+	 *
+	 * <p>
+	 * If the delete is successful, a 204 will be returned. Otherwise, an error will be returned containing the reason for a failure.
+	 * </p>
+	 * @param id Unique identifier of the subscription to be deleted
+	 * @return Future to call get() on when ready
+	 */
+	@Override
+	public CompletableFuture<Void> deleteSubscriptionAsync(final Integer id) {
+		return this.webhookService.deleteSubscriptionAsync(id);
 	}
 
 	/**
@@ -1794,6 +1918,58 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
+	 * <p>
+	 * Group Events are optionally recurring events for club members.
+	 * </p>
+	 * <p>
+	 * Only club members can access private club events.
+	 * </p>
+	 * <p>
+	 * The objects are returned in summary representation.
+	 * </p>
+	 *
+	 * <p>
+	 * Pagination is NOT supported
+	 * </p>
+	 *
+	 * @see <a href="http://strava.github.io/api/partner/v3/clubs/#get-group-events">http://strava.github.io/api/partner/v3/clubs/#get-group-events</a>
+	 * @param clubId Club identifier
+	 * @return List of all club events
+	 *
+	 * @see javastrava.api.v3.service.ClubService#listClubGroupEvents(java.lang.Integer)
+	 */
+	@Override
+	public List<StravaClubEvent> listClubGroupEvents(final Integer clubId) {
+		return this.clubService.listClubGroupEvents(clubId);
+	}
+
+	/**
+	 * <p>
+	 * Group Events are optionally recurring events for club members.
+	 * </p>
+	 * <p>
+	 * Only club members can access private club events.
+	 * </p>
+	 * <p>
+	 * The objects are returned in summary representation.
+	 * </p>
+	 *
+	 * <p>
+	 * Pagination is NOT supported
+	 * </p>
+	 *
+	 * @see <a href="http://strava.github.io/api/partner/v3/clubs/#get-group-events">http://strava.github.io/api/partner/v3/clubs/#get-group-events</a>
+	 * @param clubId Club identifier
+	 * @return List of all club events
+	 *
+	 * @see javastrava.api.v3.service.ClubService#listClubGroupEvents(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<List<StravaClubEvent>> listClubGroupEventsAsync(final Integer clubId) {
+		return this.clubService.listClubGroupEventsAsync(clubId);
+	}
+
+	/**
 	 * @param clubId Club identifier
 	 * @return List of athletes who are members of the club, first page only, or <code>null</code> if the club does not exist
 	 * @see javastrava.api.v3.service.ClubService#listClubMembers(java.lang.Integer)
@@ -2122,6 +2298,32 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	@Override
 	public CompletableFuture<List<StravaSegment>> listStarredSegmentsAsync(final Integer athleteId, final Paging pagingInstruction) {
 		return this.segmentService.listStarredSegmentsAsync(athleteId, pagingInstruction);
+	}
+
+	/**
+	 * <p>
+	 * This request is used to retrieve the summary representations of the subscriptions in place for the current application.
+	 * </p>
+	 *
+	 * @return List of current subscriptions for this application
+	 * @see javastrava.api.v3.service.WebhookService#listSubscriptions()
+	 */
+	@Override
+	public List<StravaEventSubscription> listSubscriptions() {
+		return this.webhookService.listSubscriptions();
+	}
+
+	/**
+	 * <p>
+	 * This request is used to retrieve the summary representations of the subscriptions in place for the current application.
+	 * </p>
+	 *
+	 * @return List of current subscriptions for this application
+	 * @see javastrava.api.v3.service.WebhookService#listSubscriptionsAsync()
+	 */
+	@Override
+	public CompletableFuture<List<StravaEventSubscription>> listSubscriptionsAsync() {
+		return this.webhookService.listSubscriptionsAsync();
 	}
 
 	/**

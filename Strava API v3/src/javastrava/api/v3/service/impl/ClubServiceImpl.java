@@ -13,6 +13,7 @@ import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
+import javastrava.api.v3.model.StravaClubEvent;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.ClubService;
@@ -263,6 +264,24 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	public CompletableFuture<List<StravaClubAnnouncement>> listClubAnnouncementsAsync(final Integer clubId) {
 		return StravaServiceImpl.future(() -> {
 			return listClubAnnouncements(clubId);
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubGroupEvents(java.lang.Integer)
+	 */
+	@Override
+	public List<StravaClubEvent> listClubGroupEvents(final Integer clubId) {
+		return Arrays.asList(this.api.listClubGroupEvents(clubId));
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubGroupEventsAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<List<StravaClubEvent>> listClubGroupEventsAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return Arrays.asList(this.api.listClubGroupEvents(clubId));
 		});
 	}
 

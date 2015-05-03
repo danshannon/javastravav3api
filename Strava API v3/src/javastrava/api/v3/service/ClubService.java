@@ -7,6 +7,7 @@ import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
+import javastrava.api.v3.model.StravaClubEvent;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.util.Paging;
@@ -335,6 +336,48 @@ public interface ClubService extends StravaService {
 	 * @return Returns a list of {@link StravaClubAnnouncement announcements}
 	 */
 	public CompletableFuture<List<StravaClubAnnouncement>> listClubAnnouncementsAsync(final Integer clubId);
+
+	/**
+	 * <p>
+	 * Group Events are optionally recurring events for club members.
+	 * </p>
+	 * <p>
+	 * Only club members can access private club events.
+	 * </p>
+	 * <p>
+	 * The objects are returned in summary representation.
+	 * </p>
+	 *
+	 * <p>
+	 * Pagination is NOT supported
+	 * </p>
+	 *
+	 * @see <a href="http://strava.github.io/api/partner/v3/clubs/#get-group-events">http://strava.github.io/api/partner/v3/clubs/#get-group-events</a>
+	 * @param clubId Club identifier
+	 * @return List of all club events
+	 */
+	public List<StravaClubEvent> listClubGroupEvents(final Integer clubId);
+
+	/**
+	 * <p>
+	 * Group Events are optionally recurring events for club members.
+	 * </p>
+	 * <p>
+	 * Only club members can access private club events.
+	 * </p>
+	 * <p>
+	 * The objects are returned in summary representation.
+	 * </p>
+	 *
+	 * <p>
+	 * Pagination is NOT supported
+	 * </p>
+	 *
+	 * @see <a href="http://strava.github.io/api/partner/v3/clubs/#get-group-events">http://strava.github.io/api/partner/v3/clubs/#get-group-events</a>
+	 * @param clubId Club identifier
+	 * @return List of all club events (to retrieve call {@link CompletableFuture#get()})
+	 */
+	public CompletableFuture<List<StravaClubEvent>> listClubGroupEventsAsync(final Integer clubId);
 
 	/**
 	 * <p>

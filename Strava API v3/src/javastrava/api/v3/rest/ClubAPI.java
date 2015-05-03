@@ -7,6 +7,7 @@ import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
+import javastrava.api.v3.model.StravaClubEvent;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.rest.async.StravaAPICallback;
 import javastrava.api.v3.service.exception.BadRequestException;
@@ -116,6 +117,20 @@ public interface ClubAPI {
 	 */
 	@GET("/clubs/{id}/announcements")
 	public void listClubAnnouncements(@Path("id") final Integer clubId, StravaAPICallback<StravaClubAnnouncement[]> callback) throws NotFoundException;
+
+	/**
+	 * @param clubId Unique id of the club whose events should be listed
+	 * @return Array of summary events
+	 */
+	@GET("/clubs/{id}/group_events")
+	public StravaClubEvent[] listClubGroupEvents(@Path("id") final Integer clubId);
+
+	/**
+	 * @param clubId Unique id of the club whose events should be listed
+	 * @param callback The callback to execute on completion
+	 */
+	@GET("/clubs/{id}/group_events")
+	public void listClubGroupEvents(@Path("id") final Integer clubId, final StravaAPICallback<StravaClubEvent[]> callback);
 
 	/**
 	 * @see javastrava.api.v3.service.ClubService#listClubMembers(Integer, javastrava.util.Paging)

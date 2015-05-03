@@ -12,6 +12,7 @@ import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
+import javastrava.api.v3.model.StravaClubEvent;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaGear;
@@ -35,6 +36,9 @@ import javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType;
 import javastrava.api.v3.model.reference.StravaStreamResolutionType;
 import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import javastrava.api.v3.model.reference.StravaWeightClass;
+import javastrava.api.v3.model.webhook.StravaEventSubscription;
+import javastrava.api.v3.model.webhook.reference.StravaSubscriptionAspectType;
+import javastrava.api.v3.model.webhook.reference.StravaSubscriptionObjectType;
 import javastrava.api.v3.rest.async.StravaAPICallback;
 import javastrava.api.v3.rest.async.StravaAPIFuture;
 import javastrava.api.v3.rest.util.RetrofitClientResponseInterceptor;
@@ -174,6 +178,11 @@ public class API {
 	private final UploadAPI uploadAPI;
 
 	/**
+	 * API instance for access to webhook subscriptions
+	 */
+	private final WebhookAPI webhookAPI;
+
+	/**
 	 * Construct an API instance with a given token
 	 *
 	 * @param token
@@ -189,6 +198,7 @@ public class API {
 		this.streamAPI = API.instance(StreamAPI.class, token);
 		this.tokenAPI = API.instance(TokenAPI.class, token);
 		this.uploadAPI = API.instance(UploadAPI.class, token);
+		this.webhookAPI = API.instance(WebhookAPI.class, token);
 	}
 
 	/**
@@ -261,6 +271,34 @@ public class API {
 	public StravaAPIFuture<StravaActivity> createManualActivityAsync(final StravaActivity activity) throws BadRequestException {
 		final StravaAPIFuture<StravaActivity> future = new StravaAPIFuture<StravaActivity>();
 		this.activityAPI.createManualActivity(activity, callback(future));
+		return future;
+	}
+
+	/**
+	 * @param clientId Application's id, as obtained during registration with Strava
+	 * @param clientSecret Application's secret, as obtained during Strava registration
+	 * @param objectType The type of object being subscribed to
+	 * @param aspectType The aspect being subscribed to
+	 * @param callbackURL (Max 255 characters) URL which Strava will callback with an HTTP GET to verify the existence of the webhook endpoint, then subsequently will POST to with subscribed events
+	 * @param verifyToken The token's value will be included in the GET callback request when verifying the endpoint
+	 * @return Details of the event subscription
+	 */
+	public StravaEventSubscription createSubscription(final Integer clientId, final String clientSecret, final StravaSubscriptionObjectType objectType, final StravaSubscriptionAspectType aspectType, final String callbackURL, final String verifyToken) {
+		return this.webhookAPI.createSubscription(clientId, clientSecret, objectType, aspectType, callbackURL, verifyToken);
+	}
+
+	/**
+	 * @param clientId Application's id, as obtained during registration with Strava
+	 * @param clientSecret Application's secret, as obtained during Strava registration
+	 * @param objectType The type of object being subscribed to
+	 * @param aspectType The aspect being subscribed to
+	 * @param callbackURL (Max 255 characters) URL which Strava will callback with an HTTP GET to verify the existence of the webhook endpoint, then subsequently will POST to with subscribed events
+	 * @param verifyToken The token's value will be included in the GET callback request when verifying the endpoint
+	 * @return Details of the event subscription
+	 */
+	public StravaAPIFuture<StravaEventSubscription> createSubscriptionAsync(final Integer clientId, final String clientSecret, final StravaSubscriptionObjectType objectType, final StravaSubscriptionAspectType aspectType, final String callbackURL, final String verifyToken) {
+		final StravaAPIFuture<StravaEventSubscription> future = new StravaAPIFuture<StravaEventSubscription>();
+		this.webhookAPI.createSubscription(clientId, clientSecret, objectType, aspectType, callbackURL, verifyToken, callback(future));
 		return future;
 	}
 
@@ -345,6 +383,30 @@ public class API {
 	public StravaAPIFuture<StravaResponse> deleteCommentAsync(final Integer activityId, final Integer commentId) throws NotFoundException {
 		final StravaAPIFuture<StravaResponse> future = new StravaAPIFuture<StravaResponse>();
 		this.activityAPI.deleteComment(activityId, commentId, callback(future));
+		return future;
+	}
+
+	/**
+	 * @param subscriptionId The id of the subscription to be deleted
+	 * @param clientId Application's id, as obtained during registration with Strava
+	 * @param clientSecret Application's secret, as obtained during Strava registration
+	 * @return Returns nothing on success
+	 * @see javastrava.api.v3.rest.WebhookAPI#deleteSubscription(java.lang.Integer, java.lang.Integer, java.lang.String)
+	 */
+	public StravaResponse deleteSubscription(final Integer subscriptionId, final Integer clientId, final String clientSecret) {
+		return this.webhookAPI.deleteSubscription(subscriptionId, clientId, clientSecret);
+	}
+
+	/**
+	 * @param subscriptionId The id of the subscription to be deleted
+	 * @param clientId Application's id, as obtained during registration with Strava
+	 * @param clientSecret Application's secret, as obtained during Strava registration
+	 * @return Returns nothing on success
+	 * @see javastrava.api.v3.rest.WebhookAPI#deleteSubscription(java.lang.Integer, java.lang.Integer, java.lang.String)
+	 */
+	public StravaAPIFuture<StravaResponse> deleteSubscriptionAsync(final Integer subscriptionId, final Integer clientId, final String clientSecret) {
+		final StravaAPIFuture<StravaResponse> future = new StravaAPIFuture<StravaResponse>();
+		this.webhookAPI.deleteSubscription(subscriptionId, clientId, clientSecret, callback(future));
 		return future;
 	}
 
@@ -1099,6 +1161,7 @@ public class API {
 		return future;
 	}
 
+
 	/**
 	 * @param clubId The club id for which announcements should be returned
 	 * @return Array of {@link StravaClubAnnouncement} for the given {@link StravaClub club}
@@ -1118,6 +1181,24 @@ public class API {
 	public StravaAPIFuture<StravaClubAnnouncement[]> listClubAnnouncementsAsync(final Integer clubId) throws NotFoundException {
 		final StravaAPIFuture<StravaClubAnnouncement[]> future = new StravaAPIFuture<StravaClubAnnouncement[]>();
 		this.clubAPI.listClubAnnouncements(clubId, callback(future));
+		return future;
+	}
+
+	/**
+	 * @param clubId Unique id of the club whose events should be listed
+	 * @return Array of summary events
+	 */
+	public StravaClubEvent[] listClubGroupEvents(final Integer clubId) {
+		return this.clubAPI.listClubGroupEvents(clubId);
+	}
+
+	/**
+	 * @param clubId Unique id of the club whose events should be listed
+	 * @return The {@link CompletableFuture} on which to call future.complete() when the API call returns.
+	 */
+	public StravaAPIFuture<StravaClubEvent[]> listClubGroupEventsAsync(final Integer clubId) {
+		final StravaAPIFuture<StravaClubEvent[]> future = new StravaAPIFuture<>();
+		this.clubAPI.listClubGroupEvents(clubId, callback(future));
 		return future;
 	}
 
@@ -1305,6 +1386,28 @@ public class API {
 			throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaSegment[]> future = new StravaAPIFuture<StravaSegment[]>();
 		this.segmentAPI.listStarredSegments(athleteId, page, perPage, callback(future));
+		return future;
+	}
+
+	/**
+	 * @param clientId Application's id, as obtained during registration with Strava
+	 * @param clientSecret Application's secret, as obtained during Strava registration
+	 * @return Returns an array of summary representations of the application's current subscriptions
+	 * @see javastrava.api.v3.rest.WebhookAPI#listSubscriptions(java.lang.Integer, java.lang.String)
+	 */
+	public StravaEventSubscription[] listSubscriptions(final Integer clientId, final String clientSecret) {
+		return this.webhookAPI.listSubscriptions(clientId, clientSecret);
+	}
+
+	/**
+	 * @param clientId Application's id, as obtained during registration with Strava
+	 * @param clientSecret Application's secret, as obtained during Strava registration
+	 * @return Returns an array of summary representations of the application's current subscriptions
+	 * @see javastrava.api.v3.rest.WebhookAPI#listSubscriptions(java.lang.Integer, java.lang.String)
+	 */
+	public StravaAPIFuture<StravaEventSubscription[]> listSubscriptionsAsync(final Integer clientId, final String clientSecret) {
+		final StravaAPIFuture<StravaEventSubscription[]> future = new StravaAPIFuture<StravaEventSubscription[]>();
+		this.webhookAPI.listSubscriptions(clientId, clientSecret, callback(future));
 		return future;
 	}
 
