@@ -18,6 +18,7 @@ import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.StravaService;
 import javastrava.api.v3.service.StreamService;
 import javastrava.api.v3.service.UploadService;
+import javastrava.api.v3.service.WebhookService;
 import javastrava.api.v3.service.impl.ActivityServiceImpl;
 import javastrava.api.v3.service.impl.AthleteServiceImpl;
 import javastrava.api.v3.service.impl.ClubServiceImpl;
@@ -27,6 +28,7 @@ import javastrava.api.v3.service.impl.SegmentServiceImpl;
 import javastrava.api.v3.service.impl.StravaServiceImpl;
 import javastrava.api.v3.service.impl.StreamServiceImpl;
 import javastrava.api.v3.service.impl.UploadServiceImpl;
+import javastrava.api.v3.service.impl.WebhookServiceImpl;
 
 /**
  * <p>
@@ -118,6 +120,7 @@ public class Token {
 		this.addService(StreamService.class, StreamServiceImpl.instance(this));
 		this.addService(TokenService.class, TokenServiceImpl.instance(this));
 		this.addService(UploadService.class, UploadServiceImpl.instance(this));
+		this.addService(WebhookService.class, WebhookServiceImpl.instance(this));
 	}
 
 	/**
@@ -258,7 +261,7 @@ public class Token {
 	 * Validates that the toke has view private access (according to the scopes that it was granted on creation at least; it is quite possible that permissions
 	 * have subsequently been revoked by the user)
 	 * </p>
-	 * 
+	 *
 	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#VIEW_PRIVATE}
 	 */
 	public boolean hasViewPrivate() {
@@ -273,7 +276,7 @@ public class Token {
 	 * Validates that the token has write access (according to the scopes that it was granted on creation at least; it is quite possible that permissions have
 	 * subsequently been revoked by the user)
 	 * </p>
-	 * 
+	 *
 	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#WRITE}
 	 */
 	public boolean hasWriteAccess() {
@@ -287,7 +290,7 @@ public class Token {
 	 * <p>
 	 * Removes the service from the Token's store
 	 * </p>
-	 * 
+	 *
 	 * @param class1
 	 *            The class of token to be removed
 	 */
