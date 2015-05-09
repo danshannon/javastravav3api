@@ -311,6 +311,11 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 * Slightly weird summaries of the photos associated with the activity
 	 */
 	private StravaActivityPhotos photos;
+
+	/**
+	 * Seems to be the video used when doing the activity
+	 */
+	private StravaVideo video;
 	/**
 	 * No args constructor
 	 */
@@ -695,6 +700,13 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		} else if (!this.uploadId.equals(other.uploadId)) {
 			return false;
 		}
+		if (this.video == null) {
+			if (other.video != null) {
+				return false;
+			}
+		} else if (!this.video.equals(other.video)) {
+			return false;
+		}
 		if (this.weightedAverageWatts == null) {
 			if (other.weightedAverageWatts != null) {
 				return false;
@@ -1028,6 +1040,12 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		return this.uploadId;
 	}
 	/**
+	 * @return the video
+	 */
+	public StravaVideo getVideo() {
+		return this.video;
+	}
+	/**
 	 * @return the weightedAverageWatts
 	 */
 	public Float getWeightedAverageWatts() {
@@ -1099,6 +1117,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		result = (prime * result) + ((this.truncated == null) ? 0 : this.truncated.hashCode());
 		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
 		result = (prime * result) + ((this.uploadId == null) ? 0 : this.uploadId.hashCode());
+		result = (prime * result) + ((this.video == null) ? 0 : this.video.hashCode());
 		result = (prime * result) + ((this.weightedAverageWatts == null) ? 0 : this.weightedAverageWatts.hashCode());
 		result = (prime * result) + ((this.workoutType == null) ? 0 : this.workoutType.hashCode());
 		return result;
@@ -1422,6 +1441,12 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		this.uploadId = uploadId;
 	}
 	/**
+	 * @param video the video to set
+	 */
+	public void setVideo(final StravaVideo video) {
+		this.video = video;
+	}
+	/**
 	 * @param weightedAverageWatts the weightedAverageWatts to set
 	 */
 	public void setWeightedAverageWatts(final Float weightedAverageWatts) {
@@ -1446,14 +1471,13 @@ public class StravaActivity implements StravaCacheable<Integer>{
 				+ this.locationCountry + ", achievementCount=" + this.achievementCount + ", kudosCount=" + this.kudosCount + ", commentCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ this.commentCount + ", athleteCount=" + this.athleteCount + ", photoCount=" + this.photoCount + ", map=" + this.map + ", trainer=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.trainer + ", commute=" + this.commute + ", manual=" + this.manual + ", privateActivity=" + this.privateActivity + ", flagged=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.flagged + ", workoutType=" + this.workoutType + ", gearId=" + this.gearId + ", gear=" + this.gear + ", averageSpeed=" + this.averageSpeed //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", maxSpeed=" + this.maxSpeed + ", averageCadence=" + this.averageCadence + ", averageTemp=" + this.averageTemp + ", averageWatts=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.averageWatts + ", weightedAverageWatts=" + this.weightedAverageWatts + ", kilojoules=" + this.kilojoules + ", deviceWatts=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.deviceWatts + ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", calories=" + this.calories //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", truncated=" + this.truncated + ", hasKudoed=" + this.hasKudoed + ", segmentEfforts=" + this.segmentEfforts + ", splitsMetric=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.splitsMetric + ", splitsStandard=" + this.splitsStandard + ", bestEfforts=" + this.bestEfforts + ", uploadId=" + this.uploadId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", instagramPrimaryPhoto=" + this.instagramPrimaryPhoto //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", photos=" + this.photos + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+				+ this.flagged + ", workoutType=" + this.workoutType + ", gearId=" + this.gearId + ", gear=" + this.gear + ", averageSpeed=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.averageSpeed + ", maxSpeed=" + this.maxSpeed + ", averageCadence=" + this.averageCadence + ", averageTemp=" + this.averageTemp //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", averageWatts=" + this.averageWatts + ", weightedAverageWatts=" + this.weightedAverageWatts + ", kilojoules=" + this.kilojoules //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", deviceWatts=" + this.deviceWatts + ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", calories=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.calories + ", truncated=" + this.truncated + ", hasKudoed=" + this.hasKudoed + ", segmentEfforts=" + this.segmentEfforts //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", splitsMetric=" + this.splitsMetric + ", splitsStandard=" + this.splitsStandard + ", bestEfforts=" + this.bestEfforts + ", uploadId=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.uploadId + ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", instagramPrimaryPhoto=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.instagramPrimaryPhoto + ", photos=" + this.photos + ", video=" + this.video + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
-
 }
