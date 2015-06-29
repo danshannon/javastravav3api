@@ -11,7 +11,7 @@ public class Messages {
 	/**
 	 * Bundle name
 	 */
-	private static final String BUNDLE_NAME = "messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "java-strava-messages"; //$NON-NLS-1$
 
 	/**
 	 * The resource bundle itseld
