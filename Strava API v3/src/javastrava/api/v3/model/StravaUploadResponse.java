@@ -7,7 +7,7 @@ import javastrava.api.v3.service.UploadService;
  * Response to an upload request
  * </p>
  *
- * @see UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, String, String, java.io.File)
+ * @see UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, Boolean, String, String, java.io.File)
  * @author Dan Shannon
  *
  */

@@ -9,11 +9,11 @@ import javastrava.json.impl.gson.serializer.ActivityTypeSerializer;
  * Possible values: ride, run, swim, workout, hike, walk, nordicski, alpineski, backcountryski, iceskate, inlineskate, kitesurf,
  * rollerski, windsurf, workout, snowboard, snowshoe
  * </p>
- * 
+ *
  * <p>
  * Type detected from file upload overrides, uses athlete's default type if not specified
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
@@ -31,10 +31,6 @@ public enum StravaActivityType {
 	 */
 	SWIM(StravaConfig.string("StravaActivityType.swim"), Messages.string("StravaActivityType.swim.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
-	 * Workout
-	 */
-	WORKOUT(StravaConfig.string("StravaActivityType.workout"), Messages.string("StravaActivityType.workout.description")), //$NON-NLS-1$ //$NON-NLS-2$
-	/**
 	 * Hike
 	 */
 	HIKE(StravaConfig.string("StravaActivityType.hike"), Messages.string("StravaActivityType.hike.description")), //$NON-NLS-1$ //$NON-NLS-2$
@@ -42,10 +38,6 @@ public enum StravaActivityType {
 	 * Walk
 	 */
 	WALK(StravaConfig.string("StravaActivityType.walk"), Messages.string("StravaActivityType.walk.description")), //$NON-NLS-1$ //$NON-NLS-2$
-	/**
-	 * Nordic skiing (telemark)
-	 */
-	NORDIC_SKI(StravaConfig.string("StravaActivityType.nordicski"), Messages.string("StravaActivityType.nordicski.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Alpine skiing
 	 */
@@ -55,6 +47,22 @@ public enum StravaActivityType {
 	 */
 	BACKCOUNTRY_SKI(StravaConfig.string("StravaActivityType.backcountryski"), Messages.string("StravaActivityType.backcountryski.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
+	 * Canoeing
+	 */
+	CANOEING(StravaConfig.string("StravaActivityType.canoeing"), Messages.string("StravaActivityType.canoeing.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Crossfit
+	 */
+	CROSSFIT(StravaConfig.string("StravaActivityType.crossfit"), Messages.string("StravaActivityType.crossfit.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * E-Bike Ride
+	 */
+	EBIKE_RIDE(StravaConfig.string("StravaActivityType.ebikeride"), Messages.string("StravaActivityType.ebikeride.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Elliptical Trainer
+	 */
+	ELLIPTICAL(StravaConfig.string("StravaActivityType.elliptical"), Messages.string("StravaActivityType.elliptical.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
 	 * Ice skating
 	 */
 	ICE_SKATE(StravaConfig.string("StravaActivityType.iceskate"), Messages.string("StravaActivityType.iceskate.description")), //$NON-NLS-1$ //$NON-NLS-2$
@@ -63,17 +71,29 @@ public enum StravaActivityType {
 	 */
 	INLINE_SKATE(StravaConfig.string("StravaActivityType.inlineskate"), Messages.string("StravaActivityType.inlineskate.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
+	 * Kayaking
+	 */
+	KAYAKING(StravaConfig.string("StravaActivityType.kayaking"), Messages.string("StravaActivityType.kayaking.description")),	 //$NON-NLS-1$ //$NON-NLS-2$
+	/**
 	 * Kite surfing
 	 */
 	KITESURF(StravaConfig.string("StravaActivityType.kitesurf"), Messages.string("StravaActivityType.kitesurf.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Nordic skiing (telemark)
+	 */
+	NORDIC_SKI(StravaConfig.string("StravaActivityType.nordicski"), Messages.string("StravaActivityType.nordicski.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Rock climbing
+	 */
+	ROCK_CLIMBING(StravaConfig.string("StravaActivityType.rockclimbing"), Messages.string("StravaActivityType.rockclimbing.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Rollerskiing
 	 */
 	ROLLERSKI(StravaConfig.string("StravaActivityType.rollerski"), Messages.string("StravaActivityType.rollerski.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
-	 * Windsurfing
+	 * Rowing
 	 */
-	WINDSURF(StravaConfig.string("StravaActivityType.windsurf"), Messages.string("StravaActivityType.windsurf.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	ROWING(StravaConfig.string("StravaActivityType.rowing"), Messages.string("StravaActivityType.rowing.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Snowboarding
 	 */
@@ -83,6 +103,38 @@ public enum StravaActivityType {
 	 */
 	SNOWSHOE(StravaConfig.string("StravaActivityType.snowshoe"), Messages.string("StravaActivityType.snowshoe.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
+	 * Stair stepper
+	 */
+	STAIR_STEPPER(StravaConfig.string("StravaActivityType.stairstepper"), Messages.string("StravaActivityType.stairstepper.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Stand-up Paddling
+	 */
+	STAND_UP_PADDLING(StravaConfig.string("StravaActivityType.standuppaddling"), Messages.string("StravaActivityType.standuppaddling.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Surfing
+	 */
+	SURFING(StravaConfig.string("StravaActivityType.surfing"), Messages.string("StravaActivityType.surfing.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Virtual ride
+	 */
+	VIRTUAL_RIDE(StravaConfig.string("StravaActivityType.virtualride"), Messages.string("StravaActivityType.virtualride.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Weight training
+	 */
+	WEIGHT_TRAINING(StravaConfig.string("StravaActivityType.weighttraining"), Messages.string("StravaActivityType.weighttraining.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Windsurfing
+	 */
+	WINDSURF(StravaConfig.string("StravaActivityType.windsurf"), Messages.string("StravaActivityType.windsurf.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Workout
+	 */
+	WORKOUT(StravaConfig.string("StravaActivityType.workout"), Messages.string("StravaActivityType.workout.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Yoga
+	 */
+	YOGA(StravaConfig.string("StravaActivityType.yoga"), Messages.string("StravaActivityType.yoga.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
@@ -90,9 +142,23 @@ public enum StravaActivityType {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * @param id The string representation of the activity type as returned by the Strava API
+	 * @return The {@link StravaActivityType} with the matching id, or {@link StravaActivityType#UNKNOWN} if there is no match
+	 * @see ActivityTypeSerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 */
+	public static StravaActivityType create(final String id) {
+		for (final StravaActivityType type : StravaActivityType.values()) {
+			if (type.getId().equalsIgnoreCase(id)) {
+				return type;
+			}
+		}
+		return UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private String	id;
+
 	/**
 	 * Description
 	 */
@@ -109,24 +175,10 @@ public enum StravaActivityType {
 	}
 
 	/**
-	 * @return The id
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * @param id The string representation of the activity type as returned by the Strava API
-	 * @return The {@link StravaActivityType} with the matching id, or {@link StravaActivityType#UNKNOWN} if there is no match
-	 * @see ActivityTypeSerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
-	 */
-	public static StravaActivityType create(final String id) {
-		for (StravaActivityType type : StravaActivityType.values()) {
-			if (type.getId().equalsIgnoreCase(id)) {
-				return type;
-			}
-		}
-		return UNKNOWN;
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
@@ -138,10 +190,10 @@ public enum StravaActivityType {
 	}
 
 	/**
-	 * @return the description
+	 * @return The id
 	 */
-	public String getDescription() {
-		return this.description;
+	public String getValue() {
+		return this.id;
 	}
 
 	/**

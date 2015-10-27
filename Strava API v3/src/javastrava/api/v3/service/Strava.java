@@ -2442,6 +2442,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            (Optional) set to 1 to mark the resulting activity as private, 'view_private' permissions will be necessary to view the activity
 	 * @param trainer
 	 *            (Optional) activities without lat/lng info in the file are auto marked as stationary, set to 1 to force
+	 * @param commute
+	 * 	          (Optional) set to 1 to mark as commute
 	 * @param dataType
 	 *            possible values: fit, fit.gz, tcx, tcx.gz, gpx, gpx.gz
 	 * @param externalId
@@ -2450,12 +2452,12 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            the actual activity data, if gzipped the data_type must end with .gz
 	 * @return Returns an Upload response object which includes the status of the upload and the upload id
 	 * @see javastrava.api.v3.service.UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String,
-	 *      java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
+	 *      java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
 	 */
 	@Override
-	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer, final String dataType,
+	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer, final Boolean commute, final String dataType,
 			final String externalId, final File file) {
-		return this.uploadService.upload(activityType, name, description, _private, trainer, dataType, externalId, file);
+		return this.uploadService.upload(activityType, name, description, _private, trainer, commute, dataType, externalId, file);
 	}
 
 	/**
@@ -2469,6 +2471,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            (Optional) set to 1 to mark the resulting activity as private, 'view_private' permissions will be necessary to view the activity
 	 * @param trainer
 	 *            (Optional) activities without lat/lng info in the file are auto marked as stationary, set to 1 to force
+	 * @param commute
+	 * 	          (Optional) set to 1 to mark as commute
 	 * @param dataType
 	 *            possible values: fit, fit.gz, tcx, tcx.gz, gpx, gpx.gz
 	 * @param externalId
@@ -2476,11 +2480,11 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param file
 	 *            the actual activity data, if gzipped the data_type must end with .gz
 	 * @return Returns an Upload response object which includes the status of the upload and the upload id
-	 * @see javastrava.api.v3.service.UploadService#uploadAsync(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
+	 * @see javastrava.api.v3.service.UploadService#uploadAsync(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
 	 */
 	@Override
 	public CompletableFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name, final String description, final Boolean _private,
-			final Boolean trainer, final String dataType, final String externalId, final File file) {
-		return this.uploadService.uploadAsync(activityType, name, description, _private, trainer, dataType, externalId, file);
+			final Boolean trainer, final Boolean commute, final String dataType, final String externalId, final File file) {
+		return this.uploadService.uploadAsync(activityType, name, description, _private, trainer, commute, dataType, externalId, file);
 	}
 }

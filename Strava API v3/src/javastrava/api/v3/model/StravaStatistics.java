@@ -28,6 +28,10 @@ public class StravaStatistics {
 	 */
 	private StravaStatisticsEntry recentRunTotals;
 	/**
+	 * Statistics for last 28 days' swims
+	 */
+	private StravaStatisticsEntry recentSwimTotals;
+	/**
 	 * Year to date ride statistics
 	 */
 	private StravaStatisticsEntry ytdRideTotals;
@@ -36,6 +40,10 @@ public class StravaStatistics {
 	 */
 	private StravaStatisticsEntry ytdRunTotals;
 	/**
+	 * Year to date swim statistics
+	 */
+	private StravaStatisticsEntry ytdSwimTotals;
+	/**
 	 * All time ride statistics
 	 */
 	private StravaStatisticsEntry allRideTotals;
@@ -43,6 +51,10 @@ public class StravaStatistics {
 	 * All time run statistics
 	 */
 	private StravaStatisticsEntry allRunTotals;
+	/**
+	 * All time swim statistics
+	 */
+	private StravaStatisticsEntry allSwimTotals;
 	/**
 	 * No args constructor
 	 */
@@ -135,6 +147,12 @@ public class StravaStatistics {
 		return this.allRunTotals;
 	}
 	/**
+	 * @return the allSwimTotals
+	 */
+	public StravaStatisticsEntry getAllSwimTotals() {
+		return this.allSwimTotals;
+	}
+	/**
 	 * @return the biggestClimbElevationGain
 	 */
 	public Float getBiggestClimbElevationGain() {
@@ -159,6 +177,12 @@ public class StravaStatistics {
 		return this.recentRunTotals;
 	}
 	/**
+	 * @return the recentSwimTotals
+	 */
+	public StravaStatisticsEntry getRecentSwimTotals() {
+		return this.recentSwimTotals;
+	}
+	/**
 	 * @return the ytdRideTotals
 	 */
 	public StravaStatisticsEntry getYtdRideTotals() {
@@ -169,6 +193,12 @@ public class StravaStatistics {
 	 */
 	public StravaStatisticsEntry getYtdRunTotals() {
 		return this.ytdRunTotals;
+	}
+	/**
+	 * @return the ytdSwimTotals
+	 */
+	public StravaStatisticsEntry getYtdSwimTotals() {
+		return this.ytdSwimTotals;
 	}
 	/**
 	 * @see java.lang.Object#hashCode()
@@ -200,6 +230,12 @@ public class StravaStatistics {
 		this.allRunTotals = allRunTotals;
 	}
 	/**
+	 * @param allSwimTotals the allSwimTotals to set
+	 */
+	public void setAllSwimTotals(final StravaStatisticsEntry allSwimTotals) {
+		this.allSwimTotals = allSwimTotals;
+	}
+	/**
 	 * @param biggestClimbElevationGain the biggestClimbElevationGain to set
 	 */
 	public void setBiggestClimbElevationGain(final Float biggestClimbElevationGain) {
@@ -224,6 +260,12 @@ public class StravaStatistics {
 		this.recentRunTotals = recentRunTotals;
 	}
 	/**
+	 * @param recentSwimTotals the recentSwimTotals to set
+	 */
+	public void setRecentSwimTotals(final StravaStatisticsEntry recentSwimTotals) {
+		this.recentSwimTotals = recentSwimTotals;
+	}
+	/**
 	 * @param ytdRideTotals the ytdRideTotals to set
 	 */
 	public void setYtdRideTotals(final StravaStatisticsEntry ytdRideTotals) {
@@ -236,12 +278,19 @@ public class StravaStatistics {
 		this.ytdRunTotals = ytdRunTotals;
 	}
 	/**
+	 * @param ytdSwimTotals the ytdSwimTotals to set
+	 */
+	public void setYtdSwimTotals(final StravaStatisticsEntry ytdSwimTotals) {
+		this.ytdSwimTotals = ytdSwimTotals;
+	}
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "StravaStatistics [biggestRideDistance=" + this.biggestRideDistance + ", biggestClimbElevationGain=" + this.biggestClimbElevationGain //$NON-NLS-1$ //$NON-NLS-2$
-				+ ", recentRideTotals=" + this.recentRideTotals + ", recentRunTotals=" + this.recentRunTotals + ", ytdRideTotals=" + this.ytdRideTotals //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", ytdRunTotals=" + this.ytdRunTotals + ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", recentRideTotals=" + this.recentRideTotals + ", recentRunTotals=" + this.recentRunTotals + ", recentSwimTotals=" + this.recentSwimTotals //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", ytdRideTotals=" + this.ytdRideTotals + ", ytdRunTotals=" + this.ytdRunTotals + ", ytdSwimTotals=" + this.ytdSwimTotals //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals + ", allSwimTotals=" + this.allSwimTotals + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

@@ -148,7 +148,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	private Integer athleteCount;
 	/**
 	 * <p>
-	 * Total number of photos attached to this activity by the athlete
+	 * Total number of photos attached to this activity by the athlete on Instagram
 	 * </p>
 	 *
 	 * <p>
@@ -157,6 +157,18 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 * </p>
 	 */
 	private Integer photoCount;
+
+	/**
+	 * <p>
+	 * Total number of photos attached to this activity by the athlete on Instagram <b>and</b> Strava
+	 * </p>
+	 *
+	 * <p>
+	 * To get the actual photo details, see
+	 * {@link ActivityService#listActivityPhotos(Integer)}
+	 * </p>
+	 */
+	private Integer totalPhotoCount;
 	/**
 	 * <p>
 	 * Weird map representation returned with the activity, basically contains
@@ -262,11 +274,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 * Kilocalories expended (calculated by Strava)
 	 */
 	private Float calories;
-	/**
-	 * Only present if activity is owned by authenticated athlete, returns 0 if
-	 * not truncated by privacy zones
-	 */
-	private Integer truncated;
+
 	/**
 	 * Is set to <code>true</code> if the currently authenticated athlete has
 	 * kudoed this activity
@@ -292,7 +300,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * Identifier of the original upload
 	 */
-	private String uploadId;
+	private Integer uploadId;
 
 	/**
 	 * Latitude of the start point of the activity
@@ -316,6 +324,11 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 * Seems to be the video used when doing the activity
 	 */
 	private StravaVideo video;
+
+	/**
+	 * ???
+	 */
+	private String embedToken;
 	/**
 	 * No args constructor
 	 */
@@ -447,6 +460,13 @@ public class StravaActivity implements StravaCacheable<Integer>{
 				return false;
 			}
 		} else if (!this.elapsedTime.equals(other.elapsedTime)) {
+			return false;
+		}
+		if (this.embedToken == null) {
+			if (other.embedToken != null) {
+				return false;
+			}
+		} else if (!this.embedToken.equals(other.embedToken)) {
 			return false;
 		}
 		if (this.endLatlng == null) {
@@ -676,18 +696,18 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		} else if (!this.totalElevationGain.equals(other.totalElevationGain)) {
 			return false;
 		}
+		if (this.totalPhotoCount == null) {
+			if (other.totalPhotoCount != null) {
+				return false;
+			}
+		} else if (!this.totalPhotoCount.equals(other.totalPhotoCount)) {
+			return false;
+		}
 		if (this.trainer == null) {
 			if (other.trainer != null) {
 				return false;
 			}
 		} else if (!this.trainer.equals(other.trainer)) {
-			return false;
-		}
-		if (this.truncated == null) {
-			if (other.truncated != null) {
-				return false;
-			}
-		} else if (!this.truncated.equals(other.truncated)) {
 			return false;
 		}
 		if (this.type != other.type) {
@@ -814,6 +834,12 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 */
 	public Integer getElapsedTime() {
 		return this.elapsedTime;
+	}
+	/**
+	 * @return the embedToken
+	 */
+	public String getEmbedToken() {
+		return this.embedToken;
 	}
 	/**
 	 * @return the endLatlng
@@ -1016,16 +1042,16 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		return this.totalElevationGain;
 	}
 	/**
+	 * @return the totalPhotoCount
+	 */
+	public Integer getTotalPhotoCount() {
+		return this.totalPhotoCount;
+	}
+	/**
 	 * @return the trainer
 	 */
 	public Boolean getTrainer() {
 		return this.trainer;
-	}
-	/**
-	 * @return the truncated
-	 */
-	public Integer getTruncated() {
-		return this.truncated;
 	}
 	/**
 	 * @return the type
@@ -1036,7 +1062,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * @return the uploadId
 	 */
-	public String getUploadId() {
+	public Integer getUploadId() {
 		return this.uploadId;
 	}
 	/**
@@ -1080,6 +1106,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		result = (prime * result) + ((this.deviceWatts == null) ? 0 : this.deviceWatts.hashCode());
 		result = (prime * result) + ((this.distance == null) ? 0 : this.distance.hashCode());
 		result = (prime * result) + ((this.elapsedTime == null) ? 0 : this.elapsedTime.hashCode());
+		result = (prime * result) + ((this.embedToken == null) ? 0 : this.embedToken.hashCode());
 		result = (prime * result) + ((this.endLatlng == null) ? 0 : this.endLatlng.hashCode());
 		result = (prime * result) + ((this.externalId == null) ? 0 : this.externalId.hashCode());
 		result = (prime * result) + ((this.flagged == null) ? 0 : this.flagged.hashCode());
@@ -1113,8 +1140,8 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		result = (prime * result) + ((this.startLongitude == null) ? 0 : this.startLongitude.hashCode());
 		result = (prime * result) + ((this.timezone == null) ? 0 : this.timezone.hashCode());
 		result = (prime * result) + ((this.totalElevationGain == null) ? 0 : this.totalElevationGain.hashCode());
+		result = (prime * result) + ((this.totalPhotoCount == null) ? 0 : this.totalPhotoCount.hashCode());
 		result = (prime * result) + ((this.trainer == null) ? 0 : this.trainer.hashCode());
-		result = (prime * result) + ((this.truncated == null) ? 0 : this.truncated.hashCode());
 		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
 		result = (prime * result) + ((this.uploadId == null) ? 0 : this.uploadId.hashCode());
 		result = (prime * result) + ((this.video == null) ? 0 : this.video.hashCode());
@@ -1217,6 +1244,12 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 */
 	public void setElapsedTime(final Integer elapsedTime) {
 		this.elapsedTime = elapsedTime;
+	}
+	/**
+	 * @param embedToken the embedToken to set
+	 */
+	public void setEmbedToken(final String embedToken) {
+		this.embedToken = embedToken;
 	}
 	/**
 	 * @param endLatlng the endLatlng to set
@@ -1417,16 +1450,16 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		this.totalElevationGain = totalElevationGain;
 	}
 	/**
+	 * @param totalPhotoCount the totalPhotoCount to set
+	 */
+	public void setTotalPhotoCount(final Integer totalPhotoCount) {
+		this.totalPhotoCount = totalPhotoCount;
+	}
+	/**
 	 * @param trainer the trainer to set
 	 */
 	public void setTrainer(final Boolean trainer) {
 		this.trainer = trainer;
-	}
-	/**
-	 * @param truncated the truncated to set
-	 */
-	public void setTruncated(final Integer truncated) {
-		this.truncated = truncated;
 	}
 	/**
 	 * @param type the type to set
@@ -1437,7 +1470,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * @param uploadId the uploadId to set
 	 */
-	public void setUploadId(final String uploadId) {
+	public void setUploadId(final Integer uploadId) {
 		this.uploadId = uploadId;
 	}
 	/**
@@ -1469,15 +1502,15 @@ public class StravaActivity implements StravaCacheable<Integer>{
 				+ this.startDate + ", startDateLocal=" + this.startDateLocal + ", timezone=" + this.timezone + ", startLatlng=" + this.startLatlng //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ ", endLatlng=" + this.endLatlng + ", locationCity=" + this.locationCity + ", locationState=" + this.locationState + ", locationCountry=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.locationCountry + ", achievementCount=" + this.achievementCount + ", kudosCount=" + this.kudosCount + ", commentCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.commentCount + ", athleteCount=" + this.athleteCount + ", photoCount=" + this.photoCount + ", map=" + this.map + ", trainer=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.trainer + ", commute=" + this.commute + ", manual=" + this.manual + ", privateActivity=" + this.privateActivity + ", flagged=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.flagged + ", workoutType=" + this.workoutType + ", gearId=" + this.gearId + ", gear=" + this.gear + ", averageSpeed=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.averageSpeed + ", maxSpeed=" + this.maxSpeed + ", averageCadence=" + this.averageCadence + ", averageTemp=" + this.averageTemp //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", averageWatts=" + this.averageWatts + ", weightedAverageWatts=" + this.weightedAverageWatts + ", kilojoules=" + this.kilojoules //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", deviceWatts=" + this.deviceWatts + ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", calories=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.calories + ", truncated=" + this.truncated + ", hasKudoed=" + this.hasKudoed + ", segmentEfforts=" + this.segmentEfforts //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", splitsMetric=" + this.splitsMetric + ", splitsStandard=" + this.splitsStandard + ", bestEfforts=" + this.bestEfforts + ", uploadId=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.uploadId + ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", instagramPrimaryPhoto=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.instagramPrimaryPhoto + ", photos=" + this.photos + ", video=" + this.video + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.commentCount + ", athleteCount=" + this.athleteCount + ", photoCount=" + this.photoCount + ", totalPhotoCount=" + this.totalPhotoCount //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", map=" + this.map + ", trainer=" + this.trainer + ", commute=" + this.commute + ", manual=" + this.manual + ", privateActivity=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.privateActivity + ", flagged=" + this.flagged + ", workoutType=" + this.workoutType + ", gearId=" + this.gearId + ", gear=" + this.gear //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", averageSpeed=" + this.averageSpeed + ", maxSpeed=" + this.maxSpeed + ", averageCadence=" + this.averageCadence + ", averageTemp=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.averageTemp + ", averageWatts=" + this.averageWatts + ", weightedAverageWatts=" + this.weightedAverageWatts + ", kilojoules=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.kilojoules + ", deviceWatts=" + this.deviceWatts + ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", calories=" + this.calories + ", hasKudoed=" + this.hasKudoed + ", segmentEfforts=" + this.segmentEfforts + ", splitsMetric=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.splitsMetric + ", splitsStandard=" + this.splitsStandard + ", bestEfforts=" + this.bestEfforts + ", uploadId=" + this.uploadId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", instagramPrimaryPhoto=" + this.instagramPrimaryPhoto //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", photos=" + this.photos + ", video=" + this.video + ", embedToken=" + this.embedToken + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

@@ -1,5 +1,6 @@
 package javastrava.api.v3.model;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaPhotoSource;
@@ -69,6 +70,26 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	 * Unique id given to the photo by Instagram / Strava
 	 */
 	private String uniqueId;
+
+	/**
+	 * Use as primary photo
+	 */
+	private Boolean usePrimaryPhoto;
+
+	/**
+	 * Photo sizes
+	 */
+	private StravaPhotoSizes sizes;
+
+	/**
+	 * Activity name - returned by listActivityPhotos endpoint
+	 */
+	private String activityName;
+
+	/**
+	 * Local time the photo was created at (no time zone)
+	 */
+	private LocalDateTime createdAtLocal;
 	/**
 	 * no args constructor
 	 */
@@ -97,6 +118,13 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 		} else if (!this.activityId.equals(other.activityId)) {
 			return false;
 		}
+		if (this.activityName == null) {
+			if (other.activityName != null) {
+				return false;
+			}
+		} else if (!this.activityName.equals(other.activityName)) {
+			return false;
+		}
 		if (this.caption == null) {
 			if (other.caption != null) {
 				return false;
@@ -109,6 +137,13 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 				return false;
 			}
 		} else if (!this.createdAt.equals(other.createdAt)) {
+			return false;
+		}
+		if (this.createdAtLocal == null) {
+			if (other.createdAtLocal != null) {
+				return false;
+			}
+		} else if (!this.createdAtLocal.equals(other.createdAtLocal)) {
 			return false;
 		}
 		if (this.id == null) {
@@ -133,6 +168,13 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 			return false;
 		}
 		if (this.resourceState != other.resourceState) {
+			return false;
+		}
+		if (this.sizes == null) {
+			if (other.sizes != null) {
+				return false;
+			}
+		} else if (!this.sizes.equals(other.sizes)) {
 			return false;
 		}
 		if (this.source != other.source) {
@@ -169,6 +211,13 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 		} else if (!this.urls.equals(other.urls)) {
 			return false;
 		}
+		if (this.usePrimaryPhoto == null) {
+			if (other.usePrimaryPhoto != null) {
+				return false;
+			}
+		} else if (!this.usePrimaryPhoto.equals(other.usePrimaryPhoto)) {
+			return false;
+		}
 		return true;
 	}
 	/**
@@ -176,6 +225,12 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	 */
 	public Integer getActivityId() {
 		return this.activityId;
+	}
+	/**
+	 * @return the activityName
+	 */
+	public String getActivityName() {
+		return this.activityName;
 	}
 	/**
 	 * @return the caption
@@ -188,6 +243,12 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	 */
 	public ZonedDateTime getCreatedAt() {
 		return this.createdAt;
+	}
+	/**
+	 * @return the createdAtLocal
+	 */
+	public LocalDateTime getCreatedAtLocal() {
+		return this.createdAtLocal;
 	}
 	/**
 	 * @return the id
@@ -252,6 +313,12 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 		return this.urls;
 	}
 	/**
+	 * @return the usePrimaryPhoto
+	 */
+	public Boolean getUsePrimaryPhoto() {
+		return this.usePrimaryPhoto;
+	}
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -259,18 +326,22 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 		final int prime = 31;
 		int result = 1;
 		result = (prime * result) + ((this.activityId == null) ? 0 : this.activityId.hashCode());
+		result = (prime * result) + ((this.activityName == null) ? 0 : this.activityName.hashCode());
 		result = (prime * result) + ((this.caption == null) ? 0 : this.caption.hashCode());
 		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
+		result = (prime * result) + ((this.createdAtLocal == null) ? 0 : this.createdAtLocal.hashCode());
 		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
 		result = (prime * result) + ((this.location == null) ? 0 : this.location.hashCode());
 		result = (prime * result) + ((this.ref == null) ? 0 : this.ref.hashCode());
 		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.sizes == null) ? 0 : this.sizes.hashCode());
 		result = (prime * result) + ((this.source == null) ? 0 : this.source.hashCode());
 		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
 		result = (prime * result) + ((this.uid == null) ? 0 : this.uid.hashCode());
 		result = (prime * result) + ((this.uniqueId == null) ? 0 : this.uniqueId.hashCode());
 		result = (prime * result) + ((this.uploadedAt == null) ? 0 : this.uploadedAt.hashCode());
 		result = (prime * result) + ((this.urls == null) ? 0 : this.urls.hashCode());
+		result = (prime * result) + ((this.usePrimaryPhoto == null) ? 0 : this.usePrimaryPhoto.hashCode());
 		return result;
 	}
 	/**
@@ -278,6 +349,12 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	 */
 	public void setActivityId(final Integer activityId) {
 		this.activityId = activityId;
+	}
+	/**
+	 * @param activityName the activityName to set
+	 */
+	public void setActivityName(final String activityName) {
+		this.activityName = activityName;
 	}
 	/**
 	 * @param caption the caption to set
@@ -290,6 +367,12 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	 */
 	public void setCreatedAt(final ZonedDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+	/**
+	 * @param createdAtLocal the createdAtLocal to set
+	 */
+	public void setCreatedAtLocal(final LocalDateTime createdAtLocal) {
+		this.createdAtLocal = createdAtLocal;
 	}
 	/**
 	 * @param id the id to set
@@ -352,12 +435,19 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 		this.urls = urls;
 	}
 	/**
+	 * @param usePrimaryPhoto the usePrimaryPhoto to set
+	 */
+	public void setUsePrimaryPhoto(final Boolean usePrimaryPhoto) {
+		this.usePrimaryPhoto = usePrimaryPhoto;
+	}
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "StravaPhoto [id=" + this.id + ", activityId=" + this.activityId + ", resourceState=" + this.resourceState + ", ref=" + this.ref + ", uid=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 				+ this.uid + ", caption=" + this.caption + ", type=" + this.type + ", uploadedAt=" + this.uploadedAt + ", createdAt=" + this.createdAt //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", location=" + this.location + ", source=" + this.source + ", urls=" + this.urls + ", uniqueId=" + this.uniqueId + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", location=" + this.location + ", source=" + this.source + ", urls=" + this.urls + ", uniqueId=" + this.uniqueId + ", usePrimaryPhoto=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.usePrimaryPhoto + ", sizes=" + this.sizes + ", activityName=" + this.activityName + ", createdAtLocal=" + this.createdAtLocal + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

@@ -104,6 +104,8 @@ public interface UploadService extends StravaService {
 	 *            (Optional) set to 1 to mark the resulting activity as private, 'view_private' permissions will be necessary to view the activity
 	 * @param trainer
 	 *            (Optional) activities without lat/lng info in the file are auto marked as stationary, set to 1 to force
+	 * @param commute
+	 * 	          (Optional) set to 1 to mark as commute
 	 * @param dataType
 	 *            possible values: fit, fit.gz, tcx, tcx.gz, gpx, gpx.gz
 	 * @param externalId
@@ -114,7 +116,7 @@ public interface UploadService extends StravaService {
 	 *         If there was an error, it will describe the error, potentially containing HTML. Upon a successful submission the request will return 201 Created.
 	 *         If there was an error the request will return 400 Bad Request.
 	 */
-	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer, final String dataType,
+	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer, final Boolean commute, final String dataType,
 			final String externalId, final File file);
 
 	/**
@@ -142,6 +144,8 @@ public interface UploadService extends StravaService {
 	 *            (Optional) set to 1 to mark the resulting activity as private, 'view_private' permissions will be necessary to view the activity
 	 * @param trainer
 	 *            (Optional) activities without lat/lng info in the file are auto marked as stationary, set to 1 to force
+	 * @param commute
+	 * 	          (Optional) set to 1 to mark as commute
 	 * @param dataType
 	 *            possible values: fit, fit.gz, tcx, tcx.gz, gpx, gpx.gz
 	 * @param externalId
@@ -152,6 +156,6 @@ public interface UploadService extends StravaService {
 	 *         If there was an error, it will describe the error, potentially containing HTML. Upon a successful submission the request will return 201 Created.
 	 *         If there was an error the request will return 400 Bad Request.
 	 */
-	public CompletableFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer, final String dataType,
+	public CompletableFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer, final Boolean commute, final String dataType,
 			final String externalId, final File file);
 }

@@ -3,6 +3,7 @@ package javastrava.api.v3.model;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import javastrava.api.v3.model.reference.StravaAthleteType;
 import javastrava.api.v3.model.reference.StravaFollowerState;
 import javastrava.api.v3.model.reference.StravaGender;
 import javastrava.api.v3.model.reference.StravaMeasurementMethod;
@@ -43,7 +44,7 @@ public class StravaAthlete implements StravaCacheable<Integer>{
 	 */
 	private String profile;
 	/**
-	 * City the athlete lives in 
+	 * City the athlete lives in
 	 */
 	private String city;
 	/**
@@ -130,6 +131,11 @@ public class StravaAthlete implements StravaCacheable<Integer>{
 	 * ???
 	 */
 	private Integer badgeTypeId;
+
+	/**
+	 * Athlete's default sport type
+	 */
+	private StravaAthleteType athleteType;
 	/**
 	 * no args constructor
 	 */
@@ -156,6 +162,9 @@ public class StravaAthlete implements StravaCacheable<Integer>{
 				return false;
 			}
 		} else if (!this.approveFollowers.equals(other.approveFollowers)) {
+			return false;
+		}
+		if (this.athleteType != other.athleteType) {
 			return false;
 		}
 		if (this.badgeTypeId == null) {
@@ -336,6 +345,12 @@ public class StravaAthlete implements StravaCacheable<Integer>{
 		return this.approveFollowers;
 	}
 	/**
+	 * @return the athleteType
+	 */
+	public StravaAthleteType getAthleteType() {
+		return this.athleteType;
+	}
+	/**
 	 * @return the badgeTypeId
 	 */
 	public Integer getBadgeTypeId() {
@@ -507,6 +522,7 @@ public class StravaAthlete implements StravaCacheable<Integer>{
 		final int prime = 31;
 		int result = 1;
 		result = (prime * result) + ((this.approveFollowers == null) ? 0 : this.approveFollowers.hashCode());
+		result = (prime * result) + ((this.athleteType == null) ? 0 : this.athleteType.hashCode());
 		result = (prime * result) + ((this.badgeTypeId == null) ? 0 : this.badgeTypeId.hashCode());
 		result = (prime * result) + ((this.bikes == null) ? 0 : this.bikes.hashCode());
 		result = (prime * result) + ((this.city == null) ? 0 : this.city.hashCode());
@@ -541,6 +557,12 @@ public class StravaAthlete implements StravaCacheable<Integer>{
 	 */
 	public void setApproveFollowers(final Boolean approveFollowers) {
 		this.approveFollowers = approveFollowers;
+	}
+	/**
+	 * @param athleteType the athleteType to set
+	 */
+	public void setAthleteType(final StravaAthleteType athleteType) {
+		this.athleteType = athleteType;
 	}
 	/**
 	 * @param badgeTypeId the badgeTypeId to set
@@ -714,7 +736,8 @@ public class StravaAthlete implements StravaCacheable<Integer>{
 				+ this.country + ", sex=" + this.sex + ", friend=" + this.friend + ", follower=" + this.follower + ", premium=" + this.premium + ", createdAt=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 				+ this.createdAt + ", updatedAt=" + this.updatedAt + ", approveFollowers=" + this.approveFollowers + ", followerCount=" + this.followerCount //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ ", friendCount=" + this.friendCount + ", mutualFriendCount=" + this.mutualFriendCount + ", datePreference=" + this.datePreference //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", measurementPreference=" + this.measurementPreference + ", email=" + this.email + ", ftp=" + this.ftp + ", clubs=" + this.clubs + ", bikes=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.bikes + ", shoes=" + this.shoes + ", weight=" + this.weight + ", badgeTypeId=" + this.badgeTypeId + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", measurementPreference=" + this.measurementPreference + ", email=" + this.email + ", ftp=" + this.ftp + ", clubs=" + this.clubs //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", bikes=" + this.bikes + ", shoes=" + this.shoes + ", weight=" + this.weight + ", badgeTypeId=" + this.badgeTypeId + ", athleteType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.athleteType + "]"; //$NON-NLS-1$
 	}
 }
