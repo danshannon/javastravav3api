@@ -339,6 +339,9 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 						weightClass, following, clubId, dateRange, paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
 					current.setAthleteEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
+					if (leaderboard.getEntries() == null) {
+						leaderboard = current;
+					}
 					break;
 				}
 				current.setAthleteEntries(calculateAthleteEntries(current, paging, contextSize));
