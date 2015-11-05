@@ -67,7 +67,7 @@ And finally, the athlete:
 StravaAthlete athlete = api.getAthlete(id);
 ```
 
-Use (raw asynchronous API) - COMING SOON
+Use (raw asynchronous API)
 ==========================
 We've also implemented an asynchronous version of the API. 
 
