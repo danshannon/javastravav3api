@@ -40,7 +40,7 @@ public interface WebhookService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The above request will send a GET request to callback url to verify existence: http://your-callback.com/url/?hub.mode=subscribe&hub.challenge=15f7d1a91c1f40f8a748fd134752feb3&hub.verify_token=STRAVA
+	 * The above request will send a GET request to callback url to verify existence
 	 * </p>
 	 *
 	 * <p>
@@ -79,7 +79,7 @@ public interface WebhookService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The above request will send a GET request to callback url to verify existence: http://your-callback.com/url/?hub.mode=subscribe&hub.challenge=15f7d1a91c1f40f8a748fd134752feb3&hub.verify_token=STRAVA
+	 * The above request will send a GET request to callback url to verify existence
 	 * </p>
 	 *
 	 * <p>
