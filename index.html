@@ -36,12 +36,12 @@
 
 <p>Strava API v3 implementation written in Java v8</p>
 
-<p>Javastrava is a functionally complete implementation of the Strava API (v3). It includes all the changes made to the API up to April 7, 2015.</p>
+<p>Javastrava is a functionally complete implementation of the <a href="http://strava.github.io/api/">Strava API (v3)</a>. It includes all the changes made to the API up to October 8, 2015.</p>
 
 <p>It consists of 2 layers which implement the API:</p>
 
 <ol>
-<li>A raw implementation of the API using Retrofit - with this it's up to your code to deal with exceptions, and Strava's foibles</li>
+<li>A raw implementation of the API using <a href="http://square.github.io/retrofit/">Retrofit</a> - with this it's up to your code to deal with exceptions, and Strava's foibles</li>
 <li>An abstracted implementation of the API which simplifies and abstracts the API, as well as adding several useful features (automatic handling of 404 and 401 errors; dealing with rate limiting; dealing with privacy; and handling a bunch of workarounds where the behaviour of the API is inconsistent) and removing some restrictions (particularly on paging)</li>
 </ol>
 
@@ -50,49 +50,69 @@
 
 <p>javastrava is available on Maven. Just add this to your POM:</p>
 
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;com.github.danshannon&lt;/groupId&gt;
-    &lt;artifactId&gt;javastrava-api&lt;/artifactId&gt;
-    &lt;version&gt;1.0.0-RC1&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;com.github.danshannon&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;javastrava-api&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;1.0.1&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
 
 <h1>
 <a id="use-full-implementation" class="anchor" href="#use-full-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use (full implementation)</h1>
 
-<p>To use Javastrava, all you really need is an access token. Javastrava doesn't provide a mechanism for acquiring one via OAuth - it's a vanilla, headless implementation of the API. You will need to register with Strava for an API key, and you will get an API key (access token) automatically when you register your app. There is a hack which gets tokens through the OAuth process on the Strava website built into the test suite, see test.utils.TestUtils.getValidToken(), but remember that it's a hack!</p>
+<p>To use Javastrava, all you really need is an access token. Javastrava doesn't provide a mechanism for acquiring one via OAuth - it's a vanilla, headless implementation of the API. You will need to register with Strava for an API key, and you will get an API key (access token) automatically when you register your app. There is a hack which gets tokens through the OAuth process on the Strava website built into the test suite, see <code>test.utils.TestUtils.getValidToken()</code>, but remember that it's a hack!</p>
 
 <p>Basically, once you've gone through the OAuth validation process, Strava returns a one-off code. You then need to exchange that code for a token:</p>
 
-<pre><code>AuthorisationService service = new AuthorisationServiceImpl();
-Token token = service.tokenExchange({application_client_id}, {client_secret}, code);
-</code></pre>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">AuthorisationService</span> service <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">AuthorisationServiceImpl</span>();
+<span class="pl-smi">Token</span> token <span class="pl-k">=</span> service<span class="pl-k">.</span>tokenExchange({application_client_id}, {client_secret}, code);</pre></div>
 
 <p>Once you've got an access token, life is pretty simple really. Getting a service implementation looks like this:</p>
 
-<p><code>Strava strava = new Strava(token)</code></p>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">Strava</span> strava <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Strava</span>(token);</pre></div>
 
 <p>Then, getting an athlete looks like this:</p>
 
-<p><code>StravaAthlete athlete = strava.getAthlete(id);</code></p>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">StravaAthlete</span> athlete <span class="pl-k">=</span> strava<span class="pl-k">.</span>getAthlete(id);</pre></div>
 
 <h1>
-<a id="use-raw-api" class="anchor" href="#use-raw-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use (raw API)</h1>
+<a id="use-raw-synchronous-api" class="anchor" href="#use-raw-synchronous-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use (raw synchronous API)</h1>
 
 <p>If you prefer to use the raw API, then a similar approach is required. Again, it's your problem to get through the OAuth process until you've got a code. Then, to get a token:</p>
 
-<pre><code>AuthorisationAPI auth = API.authorisationInstance();
-TokenResponse response = auth.tokenExchange({application_client_id}, {client_secret}, code);
-Token token = new Token(response);
-</code></pre>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">AuthorisationAPI</span> auth <span class="pl-k">=</span> <span class="pl-c1">API</span><span class="pl-k">.</span>authorisationInstance();
+<span class="pl-smi">TokenResponse</span> response <span class="pl-k">=</span> auth<span class="pl-k">.</span>tokenExchange({application_client_id}, {client_secret}, code);
+<span class="pl-smi">Token</span> token <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Token</span>(response);</pre></div>
 
 <p>Now we can get an API instance:</p>
 
-<p><code>API api = new API(token);</code></p>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">API</span> api <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">API</span>(token);</pre></div>
 
 <p>And finally, the athlete:</p>
 
-<p><code>StravaAthlete athlete = api.getAthlete(id);</code></p>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">StravaAthlete</span> athlete <span class="pl-k">=</span> api<span class="pl-k">.</span>getAthlete(id);</pre></div>
+
+<h1>
+<a id="use-raw-asynchronous-api" class="anchor" href="#use-raw-asynchronous-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use (raw asynchronous API)</h1>
+
+<p>We've also implemented an asynchronous version of the API. </p>
+
+<p>Its use is very similar to the synchronous API, but instead the asynchronous methods return a <code>CompletableFuture</code> that you can call later to retrieve the results, after doing something else</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">API</span> api <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">API</span>(token)
+<span class="pl-k">CompletableFuture&lt;<span class="pl-smi">StravaAthlete</span>&gt;</span> future <span class="pl-k">=</span> api<span class="pl-k">.</span>getAthleteAsync(id);
+
+<span class="pl-c">// Now you can do something else while you wait for the result</span>
+doSomethingInterestingInsteadOfWaiting();
+
+<span class="pl-c">// And when you're ready, get the athlete from the future...</span>
+<span class="pl-smi">StravaAthlete</span> athlete <span class="pl-k">=</span> future<span class="pl-k">.</span>complete();</pre></div>
+
+<h1>
+<a id="caching" class="anchor" href="#caching" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caching</h1>
+
+<p>The full implementation provides a caching mechanism to reduce the overall number of calls to the Strava API. The caching mechanism uses <a href="https://commons.apache.org/proper/commons-jcs/">Apache JCS</a> and your application will need to provide a cache.ccf configuration file to make use of it.</p>
+
+<p>The raw API does not cache data.</p>
 
 <h1>
 <a id="token-management" class="anchor" href="#token-management" aria-hidden="true"><span class="octicon octicon-link"></span></a>Token Management</h1>
@@ -113,7 +133,13 @@ Token token = new Token(response);
 </li>
 <li>If the object you're after is private, service methods will return an empty object - either a list with no entries, or a model object with only the id populated. We don't worry about this too much from a privacy point of view, because all you get is that an object exists, but you don't get any of the data. Athletes are different - they are returned with a limited view of the athlete, rather than an empty athlete. API methods throw an <code>UnauthorisedException</code>
 </li>
-<li>If your token has been revoked, or wasn't valid in the first place, or doesn't have the authorisation scope needed for the operation that you're attempting, you'll see an <code>UnauthorisedException</code> (which is unchecked) get thrown.</li>
+<li>If your token has been revoked, or wasn't valid in the first place, you'll see an <code>InvalidTokenException</code> (which is unchecked) get thrown</li>
+<li>If your token doesn't have the authorisation scope needed for the operation that you're attempting, you'll see an <code>UnauthorisedException</code> (which is unchecked) get thrown.</li>
+<li>If you encounter network errors accessing the Strava API, a <code>StravaAPINetworkException</code> is thrown.</li>
+<li>If you exceed your rate limit, then you'll see a <code>StravaAPIRateLimitException</code>.</li>
+<li>If Strava returns a <code>503 Service Temporarily Unavailable</code> status, then you'll see a <code>StravaServiceUnavailableException</code>.</li>
+<li>If Strava returns a <code>500 Internal Server Error</code>, then you'll get a <code>StravaInternalServerErrorException</code>.</li>
+<li>Other unexpected errors will cause a <code>StravaUnknownAPIException</code> to be thrown.</li>
 </ul>
 
 <h1>
@@ -123,14 +149,16 @@ Token token = new Token(response);
 
 <p>The methods that do not include paging instructions will return only the first page from the Strava API, <em>not</em> everything. There are methods that <em>do</em> return everything, they're typically called <code>listAll*</code>. Be careful using these...</p>
 
-<p>The methods that do include paging instructions are built to override the Strava paging limits. If you really want, you can ask for 10,000 or more activities at once, not Strava's artificial limit of 200 per page. Be aware, though, that internally we're still bound by the Strava limits, so asking for 10,000 activities will result in 500 calls to the API! That's going to exhaust your throttling limits (by default 600 calls every 15 minutes) pretty fast...</p>
+<p>The methods that do include paging instructions are built to override the Strava paging limits. If you really want, you can ask for 10,000 or more activities at once, not Strava's artificial limit of 200 per page. Be aware, though, that internally we're still bound by the Strava limits, so asking for 10,000 activities will result in 50 calls to the API! That's going to exhaust your throttling limits (by default 600 calls every 15 minutes) pretty fast...</p>
+
+<p>Obviously doing many sequential calls to the API to return all of something would be extremely slow, so the calls to the API are executed in parallel. See <code>javastrava.util.PagingHandler</code> for details of how this is done.</p>
 
 <p>To use the paging options, you pass in a stravajava.util.Paging object as the pagingInstruction parameter. Have a look; it's amazimgly flexible!</p>
 
 <h1>
 <a id="leaderboards" class="anchor" href="#leaderboards" aria-hidden="true"><span class="octicon octicon-link"></span></a>Leaderboards</h1>
 
-<p>The Strava API is annoying when it passes your own results along with every page of a leaderboard. We've hacked that out, so that in the stravajava.api.v3.model.StravaSegmentLeaderboard definitions you'll see there are 2 collections of entries - <code>entries</code> is the one that you actually asked for, <code>athleteEntries</code> is the one that relates to the 5 entries around the authenticated athlete / you. Should be <em>much</em> simpler to deal with!</p>
+<p>The Strava API is annoying when it passes your own results along with every page of a leaderboard. We've hacked that out, so that in the <code>stravajava.api.v3.model.StravaSegmentLeaderboard</code> definitions you'll see there are 2 collections of entries - <code>entries</code> is the one that you actually asked for, <code>athleteEntries</code> is the one that relates to the 5 entries around the authenticated athlete / you. Should be <em>much</em> simpler to deal with!</p>
 
 <h1>
 <a id="testing" class="anchor" href="#testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing</h1>
@@ -141,8 +169,11 @@ Token token = new Token(response);
 <a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h1>
 
 <ul>
-<li>The REST client is written using Retrofit, because it makes life ridiculously easy</li>
-<li>JSON (de)serialisation uses GSON</li>
+<li>The REST client is written using <a href="http://square.github.io/retrofit/">Retrofit</a>, because it makes life ridiculously easy</li>
+<li>JSON serialisation uses <a href="https://code.google.com/p/google-gson/">GSON</a>
+</li>
+<li>Caching is implemented with <a href="https://commons.apache.org/proper/commons-jcs/">Apache JCS</a>
+</li>
 </ul>
       </section>
     </div>
