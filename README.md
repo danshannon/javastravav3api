@@ -18,7 +18,7 @@ javastrava is available on Maven. Just add this to your POM:
 <dependency>
 	<groupId>com.github.danshannon</groupId>
 	<artifactId>javastrava-api</artifactId>
-	<version>1.0.0-RC2</version>
+	<version>1.0.1</version>
 </dependency>
 ```
 
