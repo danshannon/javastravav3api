@@ -326,7 +326,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	private StravaVideo video;
 
 	/**
-	 * ???
+	 * The token used to construct an embed URL in the form <a href="https://www.strava.com/activities/[ACTIVITY_ID]/embed/[embedId]">https://www.strava.com/activities/[ACTIVITY_ID]/embed/[embedId]</a>
 	 */
 	private String embedToken;
 	/**
