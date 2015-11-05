@@ -69,33 +69,19 @@ StravaAthlete athlete = api.getAthlete(id);
 
 Use (raw asynchronous API) - COMING SOON
 ==========================
-We've also implemented an asynchronous version of the API (coded and merged into master, but not yet fully tested). Its use is very similar to using the synchronous version of the API, but instead it uses [Retrofit's asynchronous HTTP calls](http://square.github.io/retrofit/) to execute the calls to the Strava API, leaving your application free to do other work whilst it's waiting for a (occasionally quite slow) response.
+We've also implemented an asynchronous version of the API. 
 
-The process of getting a token is identical to the process for the synchronous API:
-
-```java
-AuthorisationAPI auth = API.authorisationInstance();
-TokenResponse response = auth.tokenExchange({application_client_id}, {client_secret}, code);
-Token token = new Token(response);
-```
-
-Now, using the token we can get an `AsyncAPI` instance:
+Its use is very similar to the synchronous API, but instead the asynchronous methods return a `CompletableFuture` that you can call later to retrieve the results, after doing something else
 
 ```java
-AsyncAPI api = new AsyncAPI(token);
-```
+API api = new API(token)
+CompletableFuture<StravaAthlete> future = api.getAthleteAsync(id);
 
-To get the athlete, we use Java 8's `CompletableFuture` concurrency feature:
+// Now you can do something else while you wait for the result
+doSomethingInterestingInsteadOfWaiting();
 
-```java
-// Fires off an asynchronous call to the API
-CompletableFuture<StravaAthlete> future = api.getAthlete(athleteId);
-
-// You can do something else now
-... do lots of other interesting stuff until...
-
-// And when you're ready (and it's ready), retrieve the athlete from the future
-StravaAthlete athlete = future.get();
+// And when you're ready, get the athlete from the future...
+StravaAthlete athlete = future.complete();
 ```
 
 Caching
