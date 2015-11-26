@@ -9,11 +9,11 @@ import javastrava.json.impl.gson.serializer.StreamResolutionTypeSerializer;
  * <p>
  * Resolution type for requested/returned {@link StravaStream streams}
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaStreamResolutionType {
+public enum StravaStreamResolutionType implements StravaReferenceType<String> {
 	/**
 	 * Low resolution (100 points)
 	 */
@@ -31,8 +31,22 @@ public enum StravaStreamResolutionType {
 	 * Should never occur but may if Strava API behaviour has changed
 	 * </p>
 	 */
-	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description"), 0); //$NON-NLS-1$ //$NON-NLS-2$ 
+	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description"), 0); //$NON-NLS-1$ //$NON-NLS-2$
 
+	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of a {@link StravaStreamResolutionType} returned by the Strava API
+	 * @return The matching {@link StravaStreamResolutionType}, or {@link StravaStreamResolutionType#UNKNOWN} if there is no match
+	 */
+	public static StravaStreamResolutionType create(final String id) {
+		final StravaStreamResolutionType[] types = StravaStreamResolutionType.values();
+		for (final StravaStreamResolutionType type : types) {
+			if (type.getId().equals(id)) {
+				return type;
+			}
+		}
+		return StravaStreamResolutionType.UNKNOWN;
+	}
 	/**
 	 * Identifier
 	 */
@@ -41,6 +55,7 @@ public enum StravaStreamResolutionType {
 	 * Description
 	 */
 	private String description;
+
 	/**
 	 * Maximum size (number of entries) in a stream with this resolution
 	 */
@@ -59,33 +74,35 @@ public enum StravaStreamResolutionType {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of this {@link StravaStreamResolutionType} to be used with the Strava API
-	 * @see StreamResolutionTypeSerializer#serialize(StravaStreamResolutionType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of a {@link StravaStreamResolutionType} returned by the Strava API
-	 * @return The matching {@link StravaStreamResolutionType}, or {@link StravaStreamResolutionType#UNKNOWN} if there is no match
-	 */
-	public static StravaStreamResolutionType create(final String id) {
-		StravaStreamResolutionType[] types = StravaStreamResolutionType.values();
-		for (StravaStreamResolutionType type : types) {
-			if (type.getId().equals(id)) {
-				return type;
-			}
-		}
-		return StravaStreamResolutionType.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
+		return this.id;
+	}
+
+	/**
+	 * @return the size
+	 */
+	public int getSize() {
+		return this.size;
+	}
+
+	/**
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaStreamResolutionType} to be used with the Strava API
+	 * @see StreamResolutionTypeSerializer#serialize(StravaStreamResolutionType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
+	@Override
+	public String getValue() {
 		return this.id;
 	}
 
@@ -95,19 +112,5 @@ public enum StravaStreamResolutionType {
 	@Override
 	public String toString() {
 		return this.id;
-	}
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return this.description;
-	}
-
-	/**
-	 * @return the size
-	 */
-	public int getSize() {
-		return this.size;
 	}
 }

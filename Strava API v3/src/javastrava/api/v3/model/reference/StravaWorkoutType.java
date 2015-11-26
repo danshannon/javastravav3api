@@ -9,11 +9,11 @@ import javastrava.json.impl.gson.serializer.WorkoutTypeSerializer;
  * <p>
  * Workout types associated with {@link StravaActivity activities}
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaWorkoutType {
+public enum StravaWorkoutType implements StravaReferenceType<Integer> {
 	/**
 	 * Default
 	 */
@@ -38,9 +38,25 @@ public enum StravaWorkoutType {
 	UNKNOWN(StravaConfig.integer("Common.unknown.integer"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The integer representation of a {@link StravaWorkoutType} as returned by the Strava API
+	 * @return The matching {@link StravaWorkoutType}, or {@link StravaWorkoutType#UNKNOWN} if there is no match
+	 * @see WorkoutTypeSerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 */
+	public static StravaWorkoutType create(final Integer id) {
+		final StravaWorkoutType[] workoutTypes = StravaWorkoutType.values();
+		for (final StravaWorkoutType workoutType : workoutTypes) {
+			if (workoutType.getId().equals(id)) {
+				return workoutType;
+			}
+		}
+		return StravaWorkoutType.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private Integer	id;
+
 	/**
 	 * Description
 	 */
@@ -57,42 +73,29 @@ public enum StravaWorkoutType {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The integer representation of this {@link StravaWorkoutType} to be used with the Strava API
-	 * @see WorkoutTypeSerializer#serialize(StravaWorkoutType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public Integer getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The integer representation of a {@link StravaWorkoutType} as returned by the Strava API
-	 * @return The matching {@link StravaWorkoutType}, or {@link StravaWorkoutType#UNKNOWN} if there is no match
-	 * @see WorkoutTypeSerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
-	 */
-	public static StravaWorkoutType create(final Integer id) {
-		StravaWorkoutType[] workoutTypes = StravaWorkoutType.values();
-		for (StravaWorkoutType workoutType : workoutTypes) {
-			if (workoutType.getId().equals(id)) {
-				return workoutType;
-			}
-		}
-		return StravaWorkoutType.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
 
 	/**
-	 * @return the description
+	 * Used by JSON serialisation
+	 * @return The integer representation of this {@link StravaWorkoutType} to be used with the Strava API
+	 * @see WorkoutTypeSerializer#serialize(StravaWorkoutType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
-	public String getDescription() {
-		return this.description;
+	@Override
+	public Integer getValue() {
+		return this.id;
 	}
 
 	/**

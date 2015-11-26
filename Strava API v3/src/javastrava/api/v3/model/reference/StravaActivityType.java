@@ -17,7 +17,7 @@ import javastrava.json.impl.gson.serializer.ActivityTypeSerializer;
  * @author Dan Shannon
  *
  */
-public enum StravaActivityType {
+public enum StravaActivityType implements StravaReferenceType<String> {
 	/**
 	 * Bike ride
 	 */
@@ -177,6 +177,7 @@ public enum StravaActivityType {
 	/**
 	 * @return the description
 	 */
+	@Override
 	public String getDescription() {
 		return this.description;
 	}
@@ -185,6 +186,7 @@ public enum StravaActivityType {
 	 * @return the id
 	 * @see ActivityTypeSerializer#serialize(StravaActivityType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
+	@Override
 	public String getId() {
 		return this.id;
 	}
@@ -192,6 +194,7 @@ public enum StravaActivityType {
 	/**
 	 * @return The id
 	 */
+	@Override
 	public String getValue() {
 		return this.id;
 	}

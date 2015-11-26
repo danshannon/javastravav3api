@@ -12,11 +12,11 @@ import javastrava.json.impl.gson.serializer.WeightClassSerializer;
  * <p>
  * Weight classes used to filter {@link StravaSegmentLeaderboard segment leaderboards}.
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaWeightClass {
+public enum StravaWeightClass implements StravaReferenceType<String> {
 	/**
 	 * Up to 124 pounds
 	 */
@@ -73,13 +73,46 @@ public enum StravaWeightClass {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description"), StravaMeasurementMethod.UNKNOWN); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of a {@link StravaWeightClass} as returned by the Strava API
+	 * @return The matching {@link StravaWeightClass}, or {@link StravaWeightClass#UNKNOWN} if there is no match
+	 */
+	public static StravaWeightClass create(final String id) {
+		final StravaWeightClass[] weightClasses = StravaWeightClass.values();
+		for (final StravaWeightClass weightClass : weightClasses) {
+			if (weightClass.getId().equals(id)) {
+				return weightClass;
+			}
+		}
+		return UNKNOWN;
+	}
+	/**
+	 * Returns a list of all {@link StravaWeightClass weight classes} for the given {@link StravaMeasurementMethod}
+	 * @param measurementMethod The measurement method for which weight classes are to be returned
+	 * @return The matching weight classes
+	 */
+	public static List<StravaWeightClass> listByMeasurementMethod(final StravaMeasurementMethod measurementMethod) {
+		final List<StravaWeightClass> weightClasses = new ArrayList<StravaWeightClass>();
+		if (measurementMethod == StravaMeasurementMethod.UNKNOWN) {
+			return weightClasses;
+		}
+		for (final StravaWeightClass weightClass : StravaWeightClass.values()) {
+			if (weightClass.getMeasurementMethod() == measurementMethod) {
+				weightClasses.add(weightClass);
+			}
+		}
+		return weightClasses;
+	}
+	/**
 	 * Identifier
 	 */
 	private String					id;
+
 	/**
 	 * Description
 	 */
 	private String					description;
+
 	/**
 	 * Metric or imperial
 	 */
@@ -98,59 +131,19 @@ public enum StravaWeightClass {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of this {@link StravaWeightClass} to be used with the Strava API
-	 * @see WeightClassSerializer#serialize(StravaWeightClass, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of a {@link StravaWeightClass} as returned by the Strava API
-	 * @return The matching {@link StravaWeightClass}, or {@link StravaWeightClass#UNKNOWN} if there is no match
-	 */
-	public static StravaWeightClass create(final String id) {
-		StravaWeightClass[] weightClasses = StravaWeightClass.values();
-		for (StravaWeightClass weightClass : weightClasses) {
-			if (weightClass.getId().equals(id)) {
-				return weightClass;
-			}
-		}
-		return UNKNOWN;
-	}
-
-	/**
-	 * Returns a list of all {@link StravaWeightClass weight classes} for the given {@link StravaMeasurementMethod}
-	 * @param measurementMethod The measurement method for which weight classes are to be returned
-	 * @return The matching weight classes
-	 */
-	public static List<StravaWeightClass> listByMeasurementMethod(final StravaMeasurementMethod measurementMethod) {
-		List<StravaWeightClass> weightClasses = new ArrayList<StravaWeightClass>();
-		if (measurementMethod == StravaMeasurementMethod.UNKNOWN) {
-			return weightClasses;
-		}
-		for (StravaWeightClass weightClass : StravaWeightClass.values()) {
-			if (weightClass.getMeasurementMethod() == measurementMethod) {
-				weightClasses.add(weightClass);
-			}
-		}
-		return weightClasses;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
 		return this.id;
-	}
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return this.description;
 	}
 
 	/**
@@ -158,6 +151,16 @@ public enum StravaWeightClass {
 	 */
 	public StravaMeasurementMethod getMeasurementMethod() {
 		return this.measurementMethod;
+	}
+
+	/**
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaWeightClass} to be used with the Strava API
+	 * @see WeightClassSerializer#serialize(StravaWeightClass, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
+	@Override
+	public String getValue() {
+		return this.id;
 	}
 
 	/**

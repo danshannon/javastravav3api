@@ -3,6 +3,7 @@
  */
 package javastrava.api.v3.model.webhook.reference;
 
+import javastrava.api.v3.model.reference.StravaReferenceType;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
 
@@ -10,7 +11,7 @@ import javastrava.config.StravaConfig;
  * @author Dan Shannon
  *
  */
-public enum StravaSubscriptionAspectType {
+public enum StravaSubscriptionAspectType implements StravaReferenceType<Integer> {
 	/**
 	 * Creation of an object (e.g.for activities, event is triggered when an activity is uploaded or manually created
 	 */
@@ -55,6 +56,7 @@ public enum StravaSubscriptionAspectType {
 	/**
 	 * @return the description
 	 */
+	@Override
 	public String getDescription() {
 		return this.description;
 	}
@@ -62,6 +64,7 @@ public enum StravaSubscriptionAspectType {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -70,6 +73,7 @@ public enum StravaSubscriptionAspectType {
 	 * Used by JSON serialisation
 	 * @return The identifier
 	 */
+	@Override
 	public Integer getValue() {
 		return this.id;
 	}

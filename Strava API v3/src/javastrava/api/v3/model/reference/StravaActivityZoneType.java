@@ -9,11 +9,11 @@ import javastrava.json.impl.gson.serializer.ActivityZoneTypeSerializer;
  * <p>
  * Type of activity zone - see {@link ActivityService#listActivityZones(Integer)}
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaActivityZoneType {
+public enum StravaActivityZoneType implements StravaReferenceType<String> {
 	/**
 	 * Heart rate
 	 */
@@ -30,9 +30,24 @@ public enum StravaActivityZoneType {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of the {@link StravaActivityZoneType} as returned by the Strava API
+	 * @return The matching {@link StravaActivityZoneType}, or {@link StravaActivityZoneType#UNKNOWN} if there is no match
+	 */
+	public static StravaActivityZoneType create(final String id) {
+		final StravaActivityZoneType[] types = StravaActivityZoneType.values();
+		for (final StravaActivityZoneType type : types) {
+			if (type.getId().equals(id)) {
+				return type;
+			}
+		}
+		return UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private String	id;
+
 	/**
 	 * Description
 	 */
@@ -49,41 +64,29 @@ public enum StravaActivityZoneType {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of this {@link StravaActivityZoneType}
-	 * @see ActivityZoneTypeSerializer#serialize(StravaActivityZoneType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of the {@link StravaActivityZoneType} as returned by the Strava API
-	 * @return The matching {@link StravaActivityZoneType}, or {@link StravaActivityZoneType#UNKNOWN} if there is no match
-	 */
-	public static StravaActivityZoneType create(final String id) {
-		StravaActivityZoneType[] types = StravaActivityZoneType.values();
-		for (StravaActivityZoneType type : types) {
-			if (type.getId().equals(id)) {
-				return type;
-			}
-		}
-		return UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
 		return this.id;
 	}
 
 	/**
-	 * @return the description
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaActivityZoneType}
+	 * @see ActivityZoneTypeSerializer#serialize(StravaActivityZoneType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
-	public String getDescription() {
-		return this.description;
+	@Override
+	public String getValue() {
+		return this.id;
 	}
 
 	/**

@@ -9,11 +9,11 @@ import javastrava.json.impl.gson.serializer.SportTypeSerializer;
  * <p>
  * Strava sport type associated with {@link StravaClub clubs}
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaSportType {
+public enum StravaSportType implements StravaReferenceType<String> {
 	/**
 	 * Cycling
 	 */
@@ -38,9 +38,25 @@ public enum StravaSportType {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of a {@link StravaSportType} as returned by the Strava API
+	 * @return The matching {@link StravaSportType}, or {@link StravaSportType#UNKNOWN} if there is no match
+	 * @see SportTypeSerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 */
+	public static StravaSportType create(final String id) {
+		final StravaSportType[] sportTypes = StravaSportType.values();
+		for (final StravaSportType sportType : sportTypes) {
+			if (sportType.getId().equals(id)) {
+				return sportType;
+			}
+		}
+		return StravaSportType.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private String	id;
+
 	/**
 	 * description
 	 */
@@ -57,42 +73,29 @@ public enum StravaSportType {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of this {@link StravaSportType} to be used with the Strava API
-	 * @see SportTypeSerializer#serialize(StravaSportType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of a {@link StravaSportType} as returned by the Strava API
-	 * @return The matching {@link StravaSportType}, or {@link StravaSportType#UNKNOWN} if there is no match
-	 * @see SportTypeSerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
-	 */
-	public static StravaSportType create(final String id) {
-		StravaSportType[] sportTypes = StravaSportType.values();
-		for (StravaSportType sportType : sportTypes) {
-			if (sportType.getId().equals(id)) {
-				return sportType;
-			}
-		}
-		return StravaSportType.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
 		return this.id;
 	}
 
 	/**
-	 * @return the description
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaSportType} to be used with the Strava API
+	 * @see SportTypeSerializer#serialize(StravaSportType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
-	public String getDescription() {
-		return this.description;
+	@Override
+	public String getValue() {
+		return this.id;
 	}
 
 	/**

@@ -9,11 +9,11 @@ import javastrava.json.impl.gson.serializer.ClimbCategorySerializer;
  * <p>
  * Strava climb categories as applied to {@link StravaSegment segments}
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaClimbCategory {
+public enum StravaClimbCategory implements StravaReferenceType<Integer> {
 	/**
 	 * Hors categorie
 	 */
@@ -46,9 +46,25 @@ public enum StravaClimbCategory {
 	UNKNOWN(StravaConfig.integer("Common.unknown.integer"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The integer representation of the {@link StravaClimbCategory} as returned by the Strava API
+	 * @return The matching {@link StravaClimbCategory}, or {@link StravaClimbCategory#UNKNOWN} if there is no match
+	 * @see ClimbCategorySerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 */
+	public static StravaClimbCategory create(final Integer id) {
+		final StravaClimbCategory[] categories = StravaClimbCategory.values();
+		for (final StravaClimbCategory category : categories) {
+			if (category.getId().equals(id)) {
+				return category;
+			}
+		}
+		return StravaClimbCategory.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private Integer	id;
+
 	/**
 	 * Description
 	 */
@@ -65,42 +81,29 @@ public enum StravaClimbCategory {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The integer value to be used with the Strava API
-	 * @see ClimbCategorySerializer#serialize(StravaClimbCategory, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public Integer getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The integer representation of the {@link StravaClimbCategory} as returned by the Strava API
-	 * @return The matching {@link StravaClimbCategory}, or {@link StravaClimbCategory#UNKNOWN} if there is no match
-	 * @see ClimbCategorySerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
-	 */
-	public static StravaClimbCategory create(final Integer id) {
-		StravaClimbCategory[] categories = StravaClimbCategory.values();
-		for (StravaClimbCategory category : categories) {
-			if (category.getId().equals(id)) {
-				return category;
-			}
-		}
-		return StravaClimbCategory.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
 
 	/**
-	 * @return the description
+	 * Used by JSON serialisation
+	 * @return The integer value to be used with the Strava API
+	 * @see ClimbCategorySerializer#serialize(StravaClimbCategory, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
-	public String getDescription() {
-		return this.description;
+	@Override
+	public Integer getValue() {
+		return this.id;
 	}
 
 	/**

@@ -8,11 +8,11 @@ import javastrava.json.impl.gson.serializer.GenderSerializer;
  * <p>
  * Athlete gender
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaGender {
+public enum StravaGender implements StravaReferenceType<String> {
 	/**
 	 * Male
 	 */
@@ -29,9 +29,24 @@ public enum StravaGender {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of the {@link StravaGender} returned by the Strava API
+	 * @return The matching {@link StravaGender}, or {@link StravaGender#UNKNOWN} if there is no match
+	 */
+	public static StravaGender create(final String id) {
+		final StravaGender[] genders = StravaGender.values();
+		for (final StravaGender gender : genders) {
+			if (gender.getId().equals(id)) {
+				return gender;
+			}
+		}
+		return StravaGender.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private String	id;
+
 	/**
 	 * Description
 	 */
@@ -48,41 +63,29 @@ public enum StravaGender {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of this {@link StravaGender} to be used with the Strava API
-	 * @see GenderSerializer#serialize(StravaGender, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of the {@link StravaGender} returned by the Strava API
-	 * @return The matching {@link StravaGender}, or {@link StravaGender#UNKNOWN} if there is no match
-	 */
-	public static StravaGender create(final String id) {
-		StravaGender[] genders = StravaGender.values();
-		for (StravaGender gender : genders) {
-			if (gender.getId().equals(id)) {
-				return gender;
-			}
-		}
-		return StravaGender.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
 		return this.id;
 	}
 
 	/**
-	 * @return the description
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaGender} to be used with the Strava API
+	 * @see GenderSerializer#serialize(StravaGender, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
-	public String getDescription() {
-		return this.description;
+	@Override
+	public String getValue() {
+		return this.id;
 	}
 
 	/**

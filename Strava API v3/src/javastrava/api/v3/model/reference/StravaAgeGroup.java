@@ -9,11 +9,11 @@ import javastrava.json.impl.gson.serializer.AgeGroupSerializer;
  * <p>
  * Age group ranges used to generate filtered {@link StravaSegmentLeaderboard segment leaderboards}
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaAgeGroup {
+public enum StravaAgeGroup implements StravaReferenceType<String> {
 	/**
 	 * Age 0-24
 	 */
@@ -46,9 +46,24 @@ public enum StravaAgeGroup {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of the {@link StravaAgeGroup} returned by the Strava API
+	 * @return The matching {@link StravaAgeGroup}, or {@link StravaAgeGroup#UNKNOWN} if there is no match
+	 */
+	public static StravaAgeGroup create(final String id) {
+		final StravaAgeGroup[] ageGroups = StravaAgeGroup.values();
+		for (final StravaAgeGroup ageGroup : ageGroups) {
+			if (ageGroup.getId().equals(id)) {
+				return ageGroup;
+			}
+		}
+		return StravaAgeGroup.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private String	id;
+
 	/**
 	 * Description
 	 */
@@ -65,41 +80,29 @@ public enum StravaAgeGroup {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of the {@link StravaAgeGroup} to be used in JSON
-	 * @see AgeGroupSerializer#serialize(StravaAgeGroup, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of the {@link StravaAgeGroup} returned by the Strava API
-	 * @return The matching {@link StravaAgeGroup}, or {@link StravaAgeGroup#UNKNOWN} if there is no match
-	 */
-	public static StravaAgeGroup create(final String id) {
-		StravaAgeGroup[] ageGroups = StravaAgeGroup.values();
-		for (StravaAgeGroup ageGroup : ageGroups) {
-			if (ageGroup.getId().equals(id)) {
-				return ageGroup;
-			}
-		}
-		return StravaAgeGroup.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
 		return this.id;
 	}
 
 	/**
-	 * @return the description
+	 * Used by JSON serialisation
+	 * @return The string representation of the {@link StravaAgeGroup} to be used in JSON
+	 * @see AgeGroupSerializer#serialize(StravaAgeGroup, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
-	public String getDescription() {
-		return this.description;
+	@Override
+	public String getValue() {
+		return this.id;
 	}
 
 	/**

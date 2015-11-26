@@ -8,11 +8,11 @@ import javastrava.json.impl.gson.serializer.ResourceStateSerializer;
  * <p>
  * State of a resource returned from Strava.
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaResourceState {
+public enum StravaResourceState implements StravaReferenceType<Integer> {
 	/**
 	 * Resource is currently being updated
 	 */
@@ -29,7 +29,7 @@ public enum StravaResourceState {
 	 * This is a detailed representation of the resource
 	 */
 	DETAILED(StravaConfig.integer("StravaResourceState.detailed"), Messages.string("StravaResourceState.detailed.description")),  //$NON-NLS-1$ //$NON-NLS-2$
-	
+
 	/**
 	 * <p>
 	 * Indicates that the resource is flagged as PRIVATE and as a result is not accessible.
@@ -47,22 +47,28 @@ public enum StravaResourceState {
 	UNKNOWN(StravaConfig.integer("Common.unknown.integer"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The integer representation of this {@link StravaResourceState} as returned by the Strava API
+	 * @return The matching {@link StravaResourceState}, or {@link StravaResourceState#UNKNOWN} if there is no match
+	 */
+	public static StravaResourceState create(final Integer id) {
+		final StravaResourceState[] states = StravaResourceState.values();
+		for (final StravaResourceState state : states) {
+			if ((state.getValue() != null) && state.getValue().equals(id)) {
+				return state;
+			}
+		}
+		return StravaResourceState.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private Integer	id;
+
 	/**
 	 * Description
 	 */
 	private String	description;
-
-	/**
-	 * Used by JSON serialisation
-	 * @return The integer representation of this {@link StravaResourceState} to be used with the Strava API
-	 * @see ResourceStateSerializer#serialize(StravaResourceState, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
-	 */
-	public Integer getValue() {
-		return this.id;
-	}
 
 	/**
 	 * Private constructor used by declarations
@@ -75,32 +81,29 @@ public enum StravaResourceState {
 	}
 
 	/**
-	 * Used by JSON deserialisation
-	 * @param id The integer representation of this {@link StravaResourceState} as returned by the Strava API
-	 * @return The matching {@link StravaResourceState}, or {@link StravaResourceState#UNKNOWN} if there is no match
+	 * @return the description
 	 */
-	public static StravaResourceState create(final Integer id) {
-		StravaResourceState[] states = StravaResourceState.values();
-		for (StravaResourceState state : states) {
-			if (state.getValue() != null && state.getValue().equals(id)) {
-				return state;
-			}
-		}
-		return StravaResourceState.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
 
 	/**
-	 * @return the description
+	 * Used by JSON serialisation
+	 * @return The integer representation of this {@link StravaResourceState} to be used with the Strava API
+	 * @see ResourceStateSerializer#serialize(StravaResourceState, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
-	public String getDescription() {
-		return this.description;
+	@Override
+	public Integer getValue() {
+		return this.id;
 	}
 
 	/**

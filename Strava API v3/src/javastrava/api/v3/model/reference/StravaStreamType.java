@@ -8,11 +8,11 @@ import javastrava.json.impl.gson.serializer.StreamTypeSerializer;
  * <p>
  * Data stream types
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaStreamType {
+public enum StravaStreamType implements StravaReferenceType<String> {
 	/**
 	 * Time
 	 */
@@ -65,9 +65,24 @@ public enum StravaStreamType {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of a {@link StravaStreamType} as returned by the Strava API
+	 * @return The matching {@link StravaStreamType}, or {@link StravaStreamType#UNKNOWN} if there is no match
+	 */
+	public static StravaStreamType create(final String id) {
+		final StravaStreamType[] streamTypes = StravaStreamType.values();
+		for (final StravaStreamType streamType : streamTypes) {
+			if (streamType.getId().equals(id)) {
+				return streamType;
+			}
+		}
+		return StravaStreamType.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private String	id;
+
 	/**
 	 * Description
 	 */
@@ -84,41 +99,29 @@ public enum StravaStreamType {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of this {@link StravaStreamType} to be used with the Strava API
-	 * @see StreamTypeSerializer#serialize(StravaStreamType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of a {@link StravaStreamType} as returned by the Strava API
-	 * @return The matching {@link StravaStreamType}, or {@link StravaStreamType#UNKNOWN} if there is no match
-	 */
-	public static StravaStreamType create(final String id) {
-		StravaStreamType[] streamTypes = StravaStreamType.values();
-		for (StravaStreamType streamType : streamTypes) {
-			if (streamType.getId().equals(id)) {
-				return streamType;
-			}
-		}
-		return StravaStreamType.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
 		return this.id;
 	}
 
 	/**
-	 * @return the description
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaStreamType} to be used with the Strava API
+	 * @see StreamTypeSerializer#serialize(StravaStreamType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
-	public String getDescription() {
-		return this.description;
+	@Override
+	public String getValue() {
+		return this.id;
 	}
 
 	/**

@@ -8,11 +8,11 @@ import javastrava.json.impl.gson.serializer.MeasurementMethodSerializer;
  * <p>
  * Preferred measurement system for an athlete. Those of you living in the 19th century will prefer {@link #IMPERIAL}
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaMeasurementMethod {
+public enum StravaMeasurementMethod implements StravaReferenceType<String> {
 	/**
 	 * Imperial units
 	 */
@@ -29,9 +29,24 @@ public enum StravaMeasurementMethod {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of the {@link StravaMeasurementMethod} returned by the Strava API
+	 * @return The matching {@link StravaMeasurementMethod}, or {@link StravaMeasurementMethod#UNKNOWN} if there is no match
+	 */
+	public static StravaMeasurementMethod create(final String id) {
+		final StravaMeasurementMethod[] methods = StravaMeasurementMethod.values();
+		for (final StravaMeasurementMethod method : methods) {
+			if (method.getId().equals(id)) {
+				return method;
+			}
+		}
+		return StravaMeasurementMethod.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private String	id;
+
 	/**
 	 * Description
 	 */
@@ -48,33 +63,28 @@ public enum StravaMeasurementMethod {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of the {@link StravaMeasurementMethod} to be used with the Strava API
-	 * @see MeasurementMethodSerializer#serialize(StravaMeasurementMethod, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of the {@link StravaMeasurementMethod} returned by the Strava API
-	 * @return The matching {@link StravaMeasurementMethod}, or {@link StravaMeasurementMethod#UNKNOWN} if there is no match
-	 */
-	public static StravaMeasurementMethod create(final String id) {
-		StravaMeasurementMethod[] methods = StravaMeasurementMethod.values();
-		for (StravaMeasurementMethod method : methods) {
-			if (method.getId().equals(id)) {
-				return method;
-			}
-		}
-		return StravaMeasurementMethod.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
+		return this.id;
+	}
+
+	/**
+	 * Used by JSON serialisation
+	 * @return The string representation of the {@link StravaMeasurementMethod} to be used with the Strava API
+	 * @see MeasurementMethodSerializer#serialize(StravaMeasurementMethod, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
+	@Override
+	public String getValue() {
 		return this.id;
 	}
 
@@ -84,13 +94,6 @@ public enum StravaMeasurementMethod {
 	@Override
 	public String toString() {
 		return this.id;
-	}
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return this.description;
 	}
 
 }

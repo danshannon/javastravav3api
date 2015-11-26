@@ -9,11 +9,11 @@ import javastrava.json.impl.gson.serializer.SegmentActivityTypeSerializer;
  * <p>
  * Activity type associated with a {@link StravaSegment}
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaSegmentActivityType {
+public enum StravaSegmentActivityType implements StravaReferenceType<String> {
 	/**
 	 * Bike ride
 	 */
@@ -34,9 +34,24 @@ public enum StravaSegmentActivityType {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of the {@link StravaSegmentActivityType} as returned by the Strava API
+	 * @return The matching {@link StravaSegmentActivityType}, or {@link StravaSegmentActivityType#UNKNOWN} if there is no match
+	 */
+	public static StravaSegmentActivityType create(final String id) {
+		final StravaSegmentActivityType[] activityTypes = StravaSegmentActivityType.values();
+		for (final StravaSegmentActivityType activityType : activityTypes) {
+			if (activityType.getId().equals(id)) {
+				return activityType;
+			}
+		}
+		return StravaSegmentActivityType.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private String id;
+
 	/**
 	 * Description
 	 */
@@ -53,33 +68,28 @@ public enum StravaSegmentActivityType {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of the {@link StravaSegmentActivityType} to be used with the Strava API
-	 * @see SegmentActivityTypeSerializer#serialize(StravaSegmentActivityType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of the {@link StravaSegmentActivityType} as returned by the Strava API
-	 * @return The matching {@link StravaSegmentActivityType}, or {@link StravaSegmentActivityType#UNKNOWN} if there is no match
-	 */
-	public static StravaSegmentActivityType create(final String id) {
-		StravaSegmentActivityType[] activityTypes = StravaSegmentActivityType.values();
-		for (StravaSegmentActivityType activityType : activityTypes) {
-			if (activityType.getId().equals(id)) {
-				return activityType;
-			}
-		}
-		return StravaSegmentActivityType.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
+		return this.id;
+	}
+
+	/**
+	 * Used by JSON serialisation
+	 * @return The string representation of the {@link StravaSegmentActivityType} to be used with the Strava API
+	 * @see SegmentActivityTypeSerializer#serialize(StravaSegmentActivityType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
+	@Override
+	public String getValue() {
 		return this.id;
 	}
 
@@ -89,13 +99,6 @@ public enum StravaSegmentActivityType {
 	@Override
 	public String toString() {
 		return this.id;
-	}
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return this.description;
 	}
 
 }

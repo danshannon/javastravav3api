@@ -9,7 +9,7 @@ import javastrava.config.StravaConfig;
  * @author Dan Shannon
  *
  */
-public enum StravaGearType {
+public enum StravaGearType implements StravaReferenceType<String> {
 	/**
 	 * Bike
 	 */
@@ -24,11 +24,25 @@ public enum StravaGearType {
 	 * </p>
 	 */
 	UNKNOWN(StravaConfig.string("Common.unknown"),Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
-	
+
+	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of the {@link StravaGearType} returned by the Strava API
+	 * @return The matching {@link StravaGearType}, or {@link StravaGearType#UNKNOWN} if there is no match
+	 */
+	public static StravaGearType create(final String id) {
+		for (final StravaGearType type : StravaGearType.values()) {
+			if (type.getId().toLowerCase().equals(id.toLowerCase())) {
+				return type;
+			}
+		}
+		return UNKNOWN;
+	}
 	/**
 	 * Identifier
 	 */
 	private String	id;
+
 	/**
 	 * Description
 	 */
@@ -45,39 +59,28 @@ public enum StravaGearType {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of this {@link StravaGearType} to be used with the Strava API
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of the {@link StravaGearType} returned by the Strava API
-	 * @return The matching {@link StravaGearType}, or {@link StravaGearType#UNKNOWN} if there is no match
-	 */
-	public static StravaGearType create(final String id) {
-		for (StravaGearType type : StravaGearType.values()) {
-			if (type.getId().toLowerCase().equals(id.toLowerCase())) {
-				return type;
-			}
-		}
-		return UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
 		return this.id;
 	}
 
 	/**
-	 * @return the description
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaGearType} to be used with the Strava API
 	 */
-	public String getDescription() {
-		return this.description;
+	@Override
+	public String getValue() {
+		return this.id;
 	}
 
 	/**
@@ -89,5 +92,5 @@ public enum StravaGearType {
 	}
 
 
-	
+
 }

@@ -114,9 +114,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public StravaComment createComment(final Integer activityId, final String text) throws NotFoundException,
 	BadRequestException {
-		if ((text == null) || text.equals("")) { //$NON-NLS-1$
-			throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
-		}
+		//		if ((text == null) || text.equals("")) { //$NON-NLS-1$
+		//			throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
+		//		}
 
 		// TODO This is a workaround for issue #30 - API allows comments to be posted without write access
 		// Token must have write access
@@ -657,14 +657,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		try {
 			final StravaPhoto[] photoArray = this.api.listActivityPhotos(id);
 
-			// TODO This fixes an inconsistency with the listActivityComments
-			// API (issue #76)
-			// call on Strava, which returns an empty array, not null
-			if (photoArray == null) {
-				photos = new ArrayList<StravaPhoto>();
-			} else {
-				photos = Arrays.asList(photoArray);
-			}
+			photos = Arrays.asList(photoArray);
 
 		} catch (final NotFoundException e) {
 			return null;

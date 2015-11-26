@@ -10,7 +10,7 @@ import javastrava.config.StravaConfig;
  * @author danshannon
  *
  */
-public enum StravaTerrainType {
+public enum StravaTerrainType implements StravaReferenceType<Integer> {
 	/**
 	 * Mostly flat
 	 */
@@ -65,6 +65,7 @@ public enum StravaTerrainType {
 	/**
 	 * @return the description
 	 */
+	@Override
 	public String getDescription() {
 		return this.description;
 	}
@@ -72,6 +73,7 @@ public enum StravaTerrainType {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -80,6 +82,7 @@ public enum StravaTerrainType {
 	 * Used by JSON serialisation
 	 * @return The identifier
 	 */
+	@Override
 	public Integer getValue() {
 		return this.id;
 	}

@@ -15,7 +15,7 @@ import javastrava.json.impl.gson.serializer.AthleteTypeSerializer;
  * @author Dan Shannon
  *
  */
-public enum StravaAthleteType {
+public enum StravaAthleteType implements StravaReferenceType<Integer> {
 	/**
 	 * Cyclist
 	 */
@@ -66,6 +66,7 @@ public enum StravaAthleteType {
 	/**
 	 * @return the description
 	 */
+	@Override
 	public String getDescription() {
 		return this.description;
 	}
@@ -73,6 +74,7 @@ public enum StravaAthleteType {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -82,6 +84,7 @@ public enum StravaAthleteType {
 	 * @return The integer value to be used with the Strava API
 	 * @see AthleteTypeSerializer#serialize(StravaAthleteType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
+	@Override
 	public Integer getValue() {
 		return this.id;
 	}

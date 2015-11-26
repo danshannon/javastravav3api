@@ -12,7 +12,7 @@ import javastrava.json.impl.gson.serializer.ClimbCategorySerializer;
  * @author Dan Shannon
  *
  */
-public enum StravaPhotoSource {
+public enum StravaPhotoSource implements StravaReferenceType<Integer>{
 	/**
 	 * Photo uploaded directly to Strava
 	 */
@@ -64,6 +64,7 @@ public enum StravaPhotoSource {
 	/**
 	 * @return the description
 	 */
+	@Override
 	public String getDescription() {
 		return this.description;
 	}
@@ -71,6 +72,7 @@ public enum StravaPhotoSource {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -80,6 +82,7 @@ public enum StravaPhotoSource {
 	 * @return The integer value to be used with the Strava API
 	 * @see ClimbCategorySerializer#serialize(StravaClimbCategory, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
+	@Override
 	public Integer getValue() {
 		return this.id;
 	}

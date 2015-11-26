@@ -8,11 +8,11 @@ import javastrava.json.impl.gson.serializer.FollowerStateSerializer;
  * <p>
  * Status of an athlete's follower relationship with another athlete
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaFollowerState {
+public enum StravaFollowerState implements StravaReferenceType<String> {
 	/**
 	 * Follower has been requested but neither accepted nor blocked at this time
 	 */
@@ -33,9 +33,24 @@ public enum StravaFollowerState {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of a {@link StravaFollowerState} as returned by the Strava API
+	 * @return The matching {@link StravaFollowerState}, or {@link StravaFollowerState#UNKNOWN} if there is no match
+	 */
+	public static StravaFollowerState create(final String id) {
+		final StravaFollowerState[] followerStates = StravaFollowerState.values();
+		for (final StravaFollowerState followerState : followerStates) {
+			if (followerState.getId().equals(id)) {
+				return followerState;
+			}
+		}
+		return StravaFollowerState.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private String	id;
+
 	/**
 	 * Description
 	 */
@@ -52,33 +67,28 @@ public enum StravaFollowerState {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of this {@link StravaFollowerState} to be used with the Strava API
-	 * @see FollowerStateSerializer#serialize(StravaFollowerState, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of a {@link StravaFollowerState} as returned by the Strava API
-	 * @return The matching {@link StravaFollowerState}, or {@link StravaFollowerState#UNKNOWN} if there is no match
-	 */
-	public static StravaFollowerState create(final String id) {
-		StravaFollowerState[] followerStates = StravaFollowerState.values();
-		for (StravaFollowerState followerState : followerStates) {
-			if (followerState.getId().equals(id)) {
-				return followerState;
-			}
-		}
-		return StravaFollowerState.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
+		return this.id;
+	}
+
+	/**
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaFollowerState} to be used with the Strava API
+	 * @see FollowerStateSerializer#serialize(StravaFollowerState, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
+	@Override
+	public String getValue() {
 		return this.id;
 	}
 
@@ -88,12 +98,5 @@ public enum StravaFollowerState {
 	@Override
 	public String toString() {
 		return this.id;
-	}
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return this.description;
 	}
 }

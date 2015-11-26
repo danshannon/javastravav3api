@@ -8,11 +8,11 @@ import javastrava.json.impl.gson.serializer.ClubTypeSerializer;
  * <p>
  * Strava club type
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public enum StravaClubType {
+public enum StravaClubType implements StravaReferenceType<String> {
 	/**
 	 * Casual
 	 */
@@ -41,9 +41,24 @@ public enum StravaClubType {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Used by JSON deserialisation
+	 * @param id The string representation of a {@link StravaClubType} returned by the Strava API
+	 * @return The matching {@link StravaClubType}, or {@link StravaClubType#UNKNOWN} if there is no match
+	 */
+	public static StravaClubType create(final String id) {
+		final StravaClubType[] clubTypes = StravaClubType.values();
+		for (final StravaClubType clubType : clubTypes) {
+			if (clubType.getId().equals(id)) {
+				return clubType;
+			}
+		}
+		return StravaClubType.UNKNOWN;
+	}
+	/**
 	 * Identifier
 	 */
 	private String	id;
+
 	/**
 	 * Description
 	 */
@@ -60,41 +75,29 @@ public enum StravaClubType {
 	}
 
 	/**
-	 * Used by JSON serialisation
-	 * @return The string representation of this {@link StravaClubType} to be used with the Strava API
-	 * @see ClubTypeSerializer#serialize(StravaClubType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 * @return the description
 	 */
-	public String getValue() {
-		return this.id;
-	}
-
-	/**
-	 * Used by JSON deserialisation
-	 * @param id The string representation of a {@link StravaClubType} returned by the Strava API
-	 * @return The matching {@link StravaClubType}, or {@link StravaClubType#UNKNOWN} if there is no match
-	 */
-	public static StravaClubType create(final String id) {
-		StravaClubType[] clubTypes = StravaClubType.values();
-		for (StravaClubType clubType : clubTypes) {
-			if (clubType.getId().equals(id)) {
-				return clubType;
-			}
-		}
-		return StravaClubType.UNKNOWN;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public String getId() {
 		return this.id;
 	}
 
 	/**
-	 * @return the description
+	 * Used by JSON serialisation
+	 * @return The string representation of this {@link StravaClubType} to be used with the Strava API
+	 * @see ClubTypeSerializer#serialize(StravaClubType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
-	public String getDescription() {
-		return this.description;
+	@Override
+	public String getValue() {
+		return this.id;
 	}
 
 	/**

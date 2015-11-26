@@ -10,7 +10,7 @@ import javastrava.config.StravaConfig;
  * @author Dan Shannon
  *
  */
-public enum StravaSkillLevel {
+public enum StravaSkillLevel implements StravaReferenceType<Integer> {
 	/**
 	 * Casual
 	 */
@@ -67,6 +67,7 @@ public enum StravaSkillLevel {
 	/**
 	 * @return the description
 	 */
+	@Override
 	public String getDescription() {
 		return this.description;
 	}
@@ -74,6 +75,7 @@ public enum StravaSkillLevel {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -83,6 +85,7 @@ public enum StravaSkillLevel {
 	 *
 	 * @return The id
 	 */
+	@Override
 	public Integer getValue() {
 		return this.id;
 	}
