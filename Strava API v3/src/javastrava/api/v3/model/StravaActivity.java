@@ -92,15 +92,18 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * City the activity started in
 	 */
+	@Deprecated
 	private String locationCity;
 	/**
 	 * State or county or canton or whatever other thing that the activity
 	 * started in
 	 */
+	@Deprecated
 	private String locationState;
 	/**
 	 * Country that the activity started in
 	 */
+	@Deprecated
 	private String locationCountry;
 	/**
 	 * <p>
@@ -905,18 +908,21 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * @return the locationCity
 	 */
+	@Deprecated
 	public String getLocationCity() {
 		return this.locationCity;
 	}
 	/**
 	 * @return the locationCountry
 	 */
+	@Deprecated
 	public String getLocationCountry() {
 		return this.locationCountry;
 	}
 	/**
 	 * @return the locationState
 	 */
+	@Deprecated
 	public String getLocationState() {
 		return this.locationState;
 	}
@@ -1314,18 +1320,21 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * @param locationCity the locationCity to set
 	 */
+	@Deprecated
 	public void setLocationCity(final String locationCity) {
 		this.locationCity = locationCity;
 	}
 	/**
 	 * @param locationCountry the locationCountry to set
 	 */
+	@Deprecated
 	public void setLocationCountry(final String locationCountry) {
 		this.locationCountry = locationCountry;
 	}
 	/**
 	 * @param locationState the locationState to set
 	 */
+	@Deprecated
 	public void setLocationState(final String locationState) {
 		this.locationState = locationState;
 	}
