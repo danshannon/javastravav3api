@@ -2487,4 +2487,34 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 			final Boolean trainer, final Boolean commute, final String dataType, final String externalId, final File file) {
 		return this.uploadService.uploadAsync(activityType, name, description, _private, trainer, commute, dataType, externalId, file);
 	}
+
+	@Override
+	public List<StravaAthlete> listClubAdmins(Integer clubId) {
+		return this.clubService.listClubAdmins(clubId);
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(Integer clubId) {
+		return this.clubService.listClubAdminsAsync(clubId);
+	}
+
+	@Override
+	public List<StravaAthlete> listClubAdmins(Integer clubId, Paging paging) {
+		return this.clubService.listClubAdmins(clubId, paging);
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(Integer clubId, Paging paging) {
+		return this.clubService.listClubAdminsAsync(clubId, paging);
+	}
+
+	@Override
+	public List<StravaAthlete> listAllClubAdmins(Integer clubId) {
+		return this.clubService.listAllClubAdmins(clubId);
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listAllClubAdminsAsync(Integer clubId) {
+		return this.clubService.listAllClubAdminsAsync(clubId);
+	}
 }

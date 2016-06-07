@@ -1,5 +1,6 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaClubMembershipStatus;
 import javastrava.api.v3.service.ClubService;
 
 /**
@@ -24,40 +25,36 @@ public class StravaClubMembershipResponse {
 	 */
 	private Boolean active;
 	/**
+	 * Membership status
+	 */
+	private StravaClubMembershipStatus membership;
+	/**
 	 * No args constructor
 	 */
 	public StravaClubMembershipResponse() {
 		super();
 	}
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (!(obj instanceof StravaClubMembershipResponse)) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
-		final StravaClubMembershipResponse other = (StravaClubMembershipResponse) obj;
-		if (this.active == null) {
-			if (other.active != null) {
+		StravaClubMembershipResponse other = (StravaClubMembershipResponse) obj;
+		if (active == null) {
+			if (other.active != null)
 				return false;
-			}
-		} else if (!this.active.equals(other.active)) {
+		} else if (!active.equals(other.active))
 			return false;
-		}
-		if (this.success == null) {
-			if (other.success != null) {
+		if (membership != other.membership)
+			return false;
+		if (success == null) {
+			if (other.success != null)
 				return false;
-			}
-		} else if (!this.success.equals(other.success)) {
+		} else if (!success.equals(other.success))
 			return false;
-		}
 		return true;
 	}
 	/**
@@ -72,15 +69,13 @@ public class StravaClubMembershipResponse {
 	public Boolean getSuccess() {
 		return this.success;
 	}
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + ((this.active == null) ? 0 : this.active.hashCode());
-		result = (prime * result) + ((this.success == null) ? 0 : this.success.hashCode());
+		result = prime * result + ((active == null) ? 0 : active.hashCode());
+		result = prime * result + ((membership == null) ? 0 : membership.hashCode());
+		result = prime * result + ((success == null) ? 0 : success.hashCode());
 		return result;
 	}
 	/**
@@ -95,11 +90,15 @@ public class StravaClubMembershipResponse {
 	public void setSuccess(final Boolean success) {
 		this.success = success;
 	}
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "StravaClubMembershipResponse [success=" + this.success + ", active=" + this.active + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return "StravaClubMembershipResponse [success=" + success + ", active=" + active + ", membership=" + membership
+				+ "]";
+	}
+	public StravaClubMembershipStatus getMembership() {
+		return membership;
+	}
+	public void setMembership(StravaClubMembershipStatus membership) {
+		this.membership = membership;
 	}
 }

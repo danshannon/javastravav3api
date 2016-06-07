@@ -296,6 +296,18 @@ public interface ClubService extends StravaService {
 	 * @return Returns a list of {@link StravaClub club} {@link StravaResourceState summary} representations.
 	 */
 	public CompletableFuture<List<StravaClub>> listAuthenticatedAthleteClubsAsync();
+	
+	public List<StravaAthlete> listClubAdmins(final Integer clubId);
+	
+	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(final Integer clubId);
+	
+	public List<StravaAthlete> listClubAdmins(final Integer clubId, final Paging paging);
+	
+	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(final Integer clubId, final Paging paging);
+	
+	public List<StravaAthlete> listAllClubAdmins(final Integer clubId);
+	
+	public CompletableFuture<List<StravaAthlete>> listAllClubAdminsAsync(final Integer clubId);
 
 	/**
 	 * <p>Announcements are posts sent by Club Admins or Owners to the members of a club.</p>

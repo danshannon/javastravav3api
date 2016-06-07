@@ -1568,4 +1568,8 @@ public class API {
 		this.uploadAPI.upload(activityType, name, description, _private, trainer, commute, dataType, externalId, file, callback(future));
 		return future;
 	}
+
+	public StravaAthlete[] listClubAdmins(final Integer clubId, final Integer page, final Integer perPage) {
+		return this.clubAPI.listClubAdmins(clubId, page, perPage);
+	}
 }
