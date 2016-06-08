@@ -149,7 +149,8 @@ public interface ClubAPI {
 	 *            Page number to be returned (default is 1)
 	 * @param perPage
 	 *            Page size to be returned (default is 50)
-	 * @return Array of {@link StravaAthlete}s
+	 * @param callback 
+	 *            Callback used to return the athletes
 	 * @throws NotFoundException
 	 *             if club id is invalid
 	 */
