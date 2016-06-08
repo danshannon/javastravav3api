@@ -3,7 +3,7 @@ javastravav3api
 
 Strava API v3 implementation written in Java v8
 
-Javastrava is a functionally complete implementation of the [Strava API (v3)](http://strava.github.io/api/). It includes all the changes made to the API up to October 8, 2015.
+Javastrava is a functionally complete implementation of the [Strava API (v3)](http://strava.github.io/api/). It includes all the changes made to the API up to May 13, 2016.
 
 It consists of 2 layers which implement the API:
 
@@ -18,7 +18,7 @@ javastrava is available on Maven. Just add this to your POM:
 <dependency>
 	<groupId>com.github.danshannon</groupId>
 	<artifactId>javastrava-api</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.3</version>
 </dependency>
 ```
 
@@ -137,3 +137,7 @@ Dependencies
 - The REST client is written using [Retrofit](http://square.github.io/retrofit/), because it makes life ridiculously easy
 - JSON serialisation uses [GSON](https://code.google.com/p/google-gson/)
 - Caching is implemented with [Apache JCS](https://commons.apache.org/proper/commons-jcs/)
+
+Java
+====
+The Stravajava API is dependent on Java 8 runtime as it uses the new asynchronous processing model (specifically, CompletableFuture). It won't compile on Java 7 or below and at this stage there's no intention to backport it (although if you want to, feel free - should only need to remove all the asynchronous bits).
