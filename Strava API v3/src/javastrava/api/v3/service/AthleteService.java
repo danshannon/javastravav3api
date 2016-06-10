@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaAthleteZones;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaStatistics;
 import javastrava.api.v3.model.reference.StravaGender;
@@ -883,4 +884,18 @@ public interface AthleteService extends StravaService {
 	 * @return Detailed representation of the updated athlete
 	 */
 	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state, final String country, final StravaGender sex, final Float weight);
+	
+	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * 
+	 * @return The athlete zones object
+	 */
+	public StravaAthleteZones getAuthenticatedAthleteZones();
+	
+	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * 
+	 * @return The athlete zones object (via a {@link CompletableFuture})
+	 */
+	public CompletableFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync();
 }

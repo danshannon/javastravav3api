@@ -1,6 +1,7 @@
 package javastrava.api.v3.rest;
 
 import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaAthleteZones;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaStatistics;
 import javastrava.api.v3.model.reference.StravaGender;
@@ -210,4 +211,19 @@ public interface AthleteAPI {
 	public void updateAuthenticatedAthlete(@Query("city") final String city, @Query("state") final String state, @Query("country") final String country,
 			@Query("sex") final StravaGender sex, @Query("weight") final Float weight, final StravaAPICallback<StravaAthlete> callback);
 
+	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * 
+	 * @return The athlete zones object
+	 */
+	@GET("/athlete/zones")
+	public StravaAthleteZones getAuthenticatedAthleteZones();
+	
+	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * 
+	 * @param callback The callback used to return the asynchronous result
+	 */
+	@GET("/athlete/zones")
+	public void getAuthenticatedAthleteZones(StravaAPICallback<StravaAthleteZones> callback);
 }

@@ -14,6 +14,7 @@ import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaAthleteZones;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubEvent;
@@ -2516,5 +2517,15 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAllClubAdminsAsync(Integer clubId) {
 		return this.clubService.listAllClubAdminsAsync(clubId);
+	}
+
+	@Override
+	public StravaAthleteZones getAuthenticatedAthleteZones() {
+		return this.athleteService.getAuthenticatedAthleteZones();
+	}
+
+	@Override
+	public CompletableFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
+		return this.athleteService.getAuthenticatedAthleteZonesAsync();
 	}
 }

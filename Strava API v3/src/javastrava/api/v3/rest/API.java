@@ -10,6 +10,7 @@ import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaAthleteZones;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubEvent;
@@ -51,6 +52,7 @@ import javastrava.json.impl.gson.JsonUtilImpl;
 import retrofit.RestAdapter;
 import retrofit.RestAdapter.LogLevel;
 import retrofit.converter.GsonConverter;
+import retrofit.http.GET;
 import retrofit.mime.TypedFile;
 
 /**
@@ -1572,4 +1574,27 @@ public class API {
 	public StravaAthlete[] listClubAdmins(final Integer clubId, final Integer page, final Integer perPage) {
 		return this.clubAPI.listClubAdmins(clubId, page, perPage);
 	}
+	
+	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * 
+	 * @return The athlete zones object
+	 */
+	@GET("/athlete/zones")
+	public StravaAthleteZones getAuthenticatedAthleteZones() {
+		return this.athleteAPI.getAuthenticatedAthleteZones();
+	}
+	
+	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * 
+	 * @param callback The callback used to return the asynchronous result
+	 */
+	@GET("/athlete/zones")
+	public StravaAPIFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
+		StravaAPIFuture<StravaAthleteZones> future = new StravaAPIFuture<StravaAthleteZones>();
+		this.athleteAPI.getAuthenticatedAthleteZones(callback(future));
+		return future;
+	}
+
 }

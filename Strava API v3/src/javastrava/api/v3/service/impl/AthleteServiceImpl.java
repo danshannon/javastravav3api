@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaAthleteZones;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaStatistics;
 import javastrava.api.v3.model.reference.StravaGender;
@@ -453,6 +454,18 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
 		return StravaServiceImpl.future(() -> {
 			return updateAuthenticatedAthlete(city, state, country, sex, weight);
+		});
+	}
+
+	@Override
+	public StravaAthleteZones getAuthenticatedAthleteZones() {
+		return this.api.getAuthenticatedAthleteZones();
+	}
+
+	@Override
+	public CompletableFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
+		return StravaServiceImpl.future(() -> {
+			return getAuthenticatedAthleteZones();
 		});
 	}
 
