@@ -1588,7 +1588,7 @@ public class API {
 	/**
 	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
 	 * 
-	 * @param callback The callback used to return the asynchronous result
+	 * @return The athlete zones object (via a future)
 	 */
 	@GET("/athlete/zones")
 	public StravaAPIFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
