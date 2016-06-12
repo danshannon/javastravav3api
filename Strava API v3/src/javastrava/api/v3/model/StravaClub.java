@@ -71,28 +71,28 @@ public class StravaClub implements StravaCacheable<Integer>{
 	 * Number of club members (calculated by Strava, not checked or re-calculated by javastrava)
 	 */
 	private Integer memberCount;
-	
+
 	/**
 	 * NOT DOCUMENTED
 	 */
 	private Boolean featured;
-	
+
 	/**
-	 * Membership status of the requesting athlete: 
+	 * Membership status of the requesting athlete:
 	 * "member", "pending", null (not a member and have not requested join)
 	 */
 	private StravaClubMembershipStatus membership;
-	
+
 	/**
 	 * Is <code>true</code> if the requesting user is an admin of the club
 	 */
 	private Boolean admin;
-	
+
 	/**
 	 * Is <code>true</code> if the requesting athlete is the owner of the club
 	 */
 	private Boolean owner;
-	
+
 	/**
 	 * total number of members the authenticated user is currently following
 	 */
@@ -103,94 +103,138 @@ public class StravaClub implements StravaCacheable<Integer>{
 	public StravaClub() {
 		super();
 	}
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		StravaClub other = (StravaClub) obj;
-		if (admin == null) {
-			if (other.admin != null)
+		}
+		final StravaClub other = (StravaClub) obj;
+		if (this.admin == null) {
+			if (other.admin != null) {
 				return false;
-		} else if (!admin.equals(other.admin))
+			}
+		} else if (!this.admin.equals(other.admin)) {
 			return false;
-		if (city == null) {
-			if (other.city != null)
+		}
+		if (this.city == null) {
+			if (other.city != null) {
 				return false;
-		} else if (!city.equals(other.city))
+			}
+		} else if (!this.city.equals(other.city)) {
 			return false;
-		if (clubType != other.clubType)
+		}
+		if (this.clubType != other.clubType) {
 			return false;
-		if (country == null) {
-			if (other.country != null)
+		}
+		if (this.country == null) {
+			if (other.country != null) {
 				return false;
-		} else if (!country.equals(other.country))
+			}
+		} else if (!this.country.equals(other.country)) {
 			return false;
-		if (description == null) {
-			if (other.description != null)
+		}
+		if (this.description == null) {
+			if (other.description != null) {
 				return false;
-		} else if (!description.equals(other.description))
+			}
+		} else if (!this.description.equals(other.description)) {
 			return false;
-		if (featured == null) {
-			if (other.featured != null)
+		}
+		if (this.featured == null) {
+			if (other.featured != null) {
 				return false;
-		} else if (!featured.equals(other.featured))
+			}
+		} else if (!this.featured.equals(other.featured)) {
 			return false;
-		if (followingCount == null) {
-			if (other.followingCount != null)
+		}
+		if (this.followingCount == null) {
+			if (other.followingCount != null) {
 				return false;
-		} else if (!followingCount.equals(other.followingCount))
+			}
+		} else if (!this.followingCount.equals(other.followingCount)) {
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		}
+		if (this.id == null) {
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!this.id.equals(other.id)) {
 			return false;
-		if (memberCount == null) {
-			if (other.memberCount != null)
+		}
+		if (this.memberCount == null) {
+			if (other.memberCount != null) {
 				return false;
-		} else if (!memberCount.equals(other.memberCount))
+			}
+		} else if (!this.memberCount.equals(other.memberCount)) {
 			return false;
-		if (membership != other.membership)
+		}
+		if (this.membership != other.membership) {
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		}
+		if (this.name == null) {
+			if (other.name != null) {
 				return false;
-		} else if (!name.equals(other.name))
+			}
+		} else if (!this.name.equals(other.name)) {
 			return false;
-		if (owner == null) {
-			if (other.owner != null)
+		}
+		if (this.owner == null) {
+			if (other.owner != null) {
 				return false;
-		} else if (!owner.equals(other.owner))
+			}
+		} else if (!this.owner.equals(other.owner)) {
 			return false;
-		if (privateClub == null) {
-			if (other.privateClub != null)
+		}
+		if (this.privateClub == null) {
+			if (other.privateClub != null) {
 				return false;
-		} else if (!privateClub.equals(other.privateClub))
+			}
+		} else if (!this.privateClub.equals(other.privateClub)) {
 			return false;
-		if (profile == null) {
-			if (other.profile != null)
+		}
+		if (this.profile == null) {
+			if (other.profile != null) {
 				return false;
-		} else if (!profile.equals(other.profile))
+			}
+		} else if (!this.profile.equals(other.profile)) {
 			return false;
-		if (profileMedium == null) {
-			if (other.profileMedium != null)
+		}
+		if (this.profileMedium == null) {
+			if (other.profileMedium != null) {
 				return false;
-		} else if (!profileMedium.equals(other.profileMedium))
+			}
+		} else if (!this.profileMedium.equals(other.profileMedium)) {
 			return false;
-		if (resourceState != other.resourceState)
+		}
+		if (this.resourceState != other.resourceState) {
 			return false;
-		if (sportType != other.sportType)
+		}
+		if (this.sportType != other.sportType) {
 			return false;
-		if (state == null) {
-			if (other.state != null)
+		}
+		if (this.state == null) {
+			if (other.state != null) {
 				return false;
-		} else if (!state.equals(other.state))
+			}
+		} else if (!this.state.equals(other.state)) {
 			return false;
+		}
 		return true;
+	}
+	/**
+	 * @return the admin status of the authenticated athlete
+	 */
+	public Boolean getAdmin() {
+		return this.admin;
 	}
 	/**
 	 * @return the city
@@ -217,6 +261,18 @@ public class StravaClub implements StravaCacheable<Integer>{
 		return this.description;
 	}
 	/**
+	 * @return the featured flag
+	 */
+	public Boolean getFeatured() {
+		return this.featured;
+	}
+	/**
+	 * @return follower count
+	 */
+	public Integer getFollowingCount() {
+		return this.followingCount;
+	}
+	/**
 	 * @return the id
 	 */
 	@Override
@@ -230,10 +286,22 @@ public class StravaClub implements StravaCacheable<Integer>{
 		return this.memberCount;
 	}
 	/**
+	 * @return the membership status of the authenticated athlete
+	 */
+	public StravaClubMembershipStatus getMembership() {
+		return this.membership;
+	}
+	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return this.name;
+	}
+	/**
+	 * @return true if the authenticated athlete is the owner of the club
+	 */
+	public Boolean getOwner() {
+		return this.owner;
 	}
 	/**
 	 * @return the privateClub
@@ -272,29 +340,38 @@ public class StravaClub implements StravaCacheable<Integer>{
 	public String getState() {
 		return this.state;
 	}
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((admin == null) ? 0 : admin.hashCode());
-		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((clubType == null) ? 0 : clubType.hashCode());
-		result = prime * result + ((country == null) ? 0 : country.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((featured == null) ? 0 : featured.hashCode());
-		result = prime * result + ((followingCount == null) ? 0 : followingCount.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((memberCount == null) ? 0 : memberCount.hashCode());
-		result = prime * result + ((membership == null) ? 0 : membership.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + ((privateClub == null) ? 0 : privateClub.hashCode());
-		result = prime * result + ((profile == null) ? 0 : profile.hashCode());
-		result = prime * result + ((profileMedium == null) ? 0 : profileMedium.hashCode());
-		result = prime * result + ((resourceState == null) ? 0 : resourceState.hashCode());
-		result = prime * result + ((sportType == null) ? 0 : sportType.hashCode());
-		result = prime * result + ((state == null) ? 0 : state.hashCode());
+		result = (prime * result) + ((this.admin == null) ? 0 : this.admin.hashCode());
+		result = (prime * result) + ((this.city == null) ? 0 : this.city.hashCode());
+		result = (prime * result) + ((this.clubType == null) ? 0 : this.clubType.hashCode());
+		result = (prime * result) + ((this.country == null) ? 0 : this.country.hashCode());
+		result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
+		result = (prime * result) + ((this.featured == null) ? 0 : this.featured.hashCode());
+		result = (prime * result) + ((this.followingCount == null) ? 0 : this.followingCount.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.memberCount == null) ? 0 : this.memberCount.hashCode());
+		result = (prime * result) + ((this.membership == null) ? 0 : this.membership.hashCode());
+		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+		result = (prime * result) + ((this.owner == null) ? 0 : this.owner.hashCode());
+		result = (prime * result) + ((this.privateClub == null) ? 0 : this.privateClub.hashCode());
+		result = (prime * result) + ((this.profile == null) ? 0 : this.profile.hashCode());
+		result = (prime * result) + ((this.profileMedium == null) ? 0 : this.profileMedium.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.sportType == null) ? 0 : this.sportType.hashCode());
+		result = (prime * result) + ((this.state == null) ? 0 : this.state.hashCode());
 		return result;
+	}
+	/**
+	 * @param admin the admin status of the authenticated athlete
+	 */
+	public void setAdmin(final Boolean admin) {
+		this.admin = admin;
 	}
 	/**
 	 * @param city the city to set
@@ -321,6 +398,18 @@ public class StravaClub implements StravaCacheable<Integer>{
 		this.description = description;
 	}
 	/**
+	 * @param featured the featured flag
+	 */
+	public void setFeatured(final Boolean featured) {
+		this.featured = featured;
+	}
+	/**
+	 * @param followingCount follower count
+	 */
+	public void setFollowingCount(final Integer followingCount) {
+		this.followingCount = followingCount;
+	}
+	/**
 	 * @param id the id to set
 	 */
 	public void setId(final Integer id) {
@@ -333,10 +422,22 @@ public class StravaClub implements StravaCacheable<Integer>{
 		this.memberCount = memberCount;
 	}
 	/**
+	 * @param membership the membership status
+	 */
+	public void setMembership(final StravaClubMembershipStatus membership) {
+		this.membership = membership;
+	}
+	/**
 	 * @param name the name to set
 	 */
 	public void setName(final String name) {
 		this.name = name;
+	}
+	/**
+	 * @param owner true if the authenticated athlete is the owner of the club
+	 */
+	public void setOwner(final Boolean owner) {
+		this.owner = owner;
 	}
 	/**
 	 * @param privateClub the privateClub to set
@@ -374,43 +475,16 @@ public class StravaClub implements StravaCacheable<Integer>{
 	public void setState(final String state) {
 		this.state = state;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "StravaClub [id=" + id + ", resourceState=" + resourceState + ", name=" + name + ", profileMedium="
-				+ profileMedium + ", profile=" + profile + ", description=" + description + ", clubType=" + clubType
-				+ ", sportType=" + sportType + ", city=" + city + ", state=" + state + ", country=" + country
-				+ ", privateClub=" + privateClub + ", memberCount=" + memberCount + ", featured=" + featured
-				+ ", membership=" + membership + ", admin=" + admin + ", owner=" + owner + ", followingCount="
-				+ followingCount + "]";
-	}
-	public Boolean getFeatured() {
-		return featured;
-	}
-	public void setFeatured(Boolean featured) {
-		this.featured = featured;
-	}
-	public StravaClubMembershipStatus getMembership() {
-		return membership;
-	}
-	public void setMembership(StravaClubMembershipStatus membership) {
-		this.membership = membership;
-	}
-	public Boolean getAdmin() {
-		return admin;
-	}
-	public void setAdmin(Boolean admin) {
-		this.admin = admin;
-	}
-	public Boolean getOwner() {
-		return owner;
-	}
-	public void setOwner(Boolean owner) {
-		this.owner = owner;
-	}
-	public Integer getFollowingCount() {
-		return followingCount;
-	}
-	public void setFollowingCount(Integer followingCount) {
-		this.followingCount = followingCount;
+		return "StravaClub [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", profileMedium=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.profileMedium + ", profile=" + this.profile + ", description=" + this.description + ", clubType=" + this.clubType //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", sportType=" + this.sportType + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", privateClub=" + this.privateClub + ", memberCount=" + this.memberCount + ", featured=" + this.featured //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", membership=" + this.membership + ", admin=" + this.admin + ", owner=" + this.owner + ", followingCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.followingCount + "]"; //$NON-NLS-1$
 	}
 }

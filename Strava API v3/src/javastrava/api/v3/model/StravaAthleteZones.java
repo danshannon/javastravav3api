@@ -1,6 +1,15 @@
 package javastrava.api.v3.model;
 
+/**
+ * Athlete zones to support the athlete zones endpoint
+ *
+ * @author Dan Shannon
+ *
+ */
 public class StravaAthleteZones {
+	/**
+	 * Set of heart-rate zones for the athlet
+	 */
 	private StravaHeartRateZones heartRate;
 	/**
 	 * No-args constructor
@@ -12,7 +21,7 @@ public class StravaAthleteZones {
 	 * @return the heartRate
 	 */
 	public StravaHeartRateZones getHeartRate() {
-		return heartRate;
+		return this.heartRate;
 	}
 	/**
 	 * @param heartRate the heartRate to set

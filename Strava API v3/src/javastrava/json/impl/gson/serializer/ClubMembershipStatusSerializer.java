@@ -11,18 +11,30 @@ import com.google.gson.JsonSerializer;
 
 import javastrava.api.v3.model.reference.StravaClubMembershipStatus;
 
+/**
+ * Serialiser / deserialiser
+ *
+ * @author Dan Shannon
+ *
+ */
 public class ClubMembershipStatusSerializer
-		implements JsonSerializer<StravaClubMembershipStatus>, JsonDeserializer<StravaClubMembershipStatus> {
+implements JsonSerializer<StravaClubMembershipStatus>, JsonDeserializer<StravaClubMembershipStatus> {
 
+	/**
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 */
 	@Override
-	public StravaClubMembershipStatus deserialize(JsonElement json, Type type, JsonDeserializationContext context)
+	public StravaClubMembershipStatus deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
 			throws JsonParseException {
-		StravaClubMembershipStatus status = StravaClubMembershipStatus.create(json.getAsString());
+		final StravaClubMembershipStatus status = StravaClubMembershipStatus.create(json.getAsString());
 		return status;
 	}
 
+	/**
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+	 */
 	@Override
-	public JsonElement serialize(StravaClubMembershipStatus status, Type type, JsonSerializationContext context) {
+	public JsonElement serialize(final StravaClubMembershipStatus status, final Type type, final JsonSerializationContext context) {
 		return context.serialize(status.getValue());
 	}
 

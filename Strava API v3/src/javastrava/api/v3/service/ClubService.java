@@ -129,6 +129,42 @@ public interface ClubService extends StravaService {
 
 	/**
 	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is NOT supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @return List of administrators
+	 */
+	public List<StravaAthlete> listAllClubAdmins(final Integer clubId);
+
+	/**
+	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is NOT supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @return List of administrators - call {@link CompletableFuture#complete(Object)} when ready.
+	 */
+	public CompletableFuture<List<StravaAthlete>> listAllClubAdminsAsync(final Integer clubId);
+
+	/**
+	 * <p>
 	 * Convenience method for returning ALL of the members of a club
 	 * </p>
 	 *
@@ -296,18 +332,80 @@ public interface ClubService extends StravaService {
 	 * @return Returns a list of {@link StravaClub club} {@link StravaResourceState summary} representations.
 	 */
 	public CompletableFuture<List<StravaClub>> listAuthenticatedAthleteClubsAsync();
-	
+
+	/**
+	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is NOT supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @return List of administrators
+	 */
 	public List<StravaAthlete> listClubAdmins(final Integer clubId);
-	
-	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(final Integer clubId);
-	
+
+	/**
+	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @param paging Paging instruction
+	 * @return List of administrators
+	 */
 	public List<StravaAthlete> listClubAdmins(final Integer clubId, final Paging paging);
-	
+
+	/**
+	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is NOT supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @return {@link CompletableFuture} which will return the List of administrators
+	 */
+	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(final Integer clubId);
+
+	/**
+	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @param paging Paging instruction
+	 * @return {@link CompletableFuture} which will return the List of administrators
+	 */
 	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(final Integer clubId, final Paging paging);
-	
-	public List<StravaAthlete> listAllClubAdmins(final Integer clubId);
-	
-	public CompletableFuture<List<StravaAthlete>> listAllClubAdminsAsync(final Integer clubId);
 
 	/**
 	 * <p>Announcements are posts sent by Club Admins or Owners to the members of a club.</p>

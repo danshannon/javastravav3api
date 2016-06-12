@@ -110,18 +110,18 @@ public class API {
 	 */
 	public static <T> T instance(final Class<T> class1, final Token token) {
 		return new RestAdapter.Builder()
-		// Client overrides handling of Strava-specific headers in the response, to deal with rate limiting
-		.setClient(new RetrofitClientResponseInterceptor())
-		// Converter is a GSON implementation with custom converters
-		.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-		// Log level is determined per API service
-		.setLogLevel(API.logLevel(class1))
-		// Endpoint is the same for all services
-		.setEndpoint(StravaConfig.ENDPOINT)
-		// Request interceptor adds the access token into headers for each request
-		.setRequestInterceptor(request -> request.addHeader(StravaConfig.string("strava.authorization_header_name"), token.getTokenType() + " " + token.getToken())) //$NON-NLS-1$ //$NON-NLS-2$
-		// Error handler deals with Strava's implementations of 400, 401, 403, 404 errors etc.
-		.setErrorHandler(new RetrofitErrorHandler()).build().create(class1);
+				// Client overrides handling of Strava-specific headers in the response, to deal with rate limiting
+				.setClient(new RetrofitClientResponseInterceptor())
+				// Converter is a GSON implementation with custom converters
+				.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
+				// Log level is determined per API service
+				.setLogLevel(API.logLevel(class1))
+				// Endpoint is the same for all services
+				.setEndpoint(StravaConfig.ENDPOINT)
+				// Request interceptor adds the access token into headers for each request
+				.setRequestInterceptor(request -> request.addHeader(StravaConfig.string("strava.authorization_header_name"), token.getTokenType() + " " + token.getToken())) //$NON-NLS-1$ //$NON-NLS-2$
+				// Error handler deals with Strava's implementations of 400, 401, 403, 404 errors etc.
+				.setErrorHandler(new RetrofitErrorHandler()).build().create(class1);
 	}
 
 	/**
@@ -543,6 +543,28 @@ public class API {
 	}
 
 	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 *
+	 * @return The athlete zones object
+	 */
+	@GET("/athlete/zones")
+	public StravaAthleteZones getAuthenticatedAthleteZones() {
+		return this.athleteAPI.getAuthenticatedAthleteZones();
+	}
+
+	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 *
+	 * @return The athlete zones object (via a future)
+	 */
+	@GET("/athlete/zones")
+	public StravaAPIFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
+		final StravaAPIFuture<StravaAthleteZones> future = new StravaAPIFuture<StravaAthleteZones>();
+		this.athleteAPI.getAuthenticatedAthleteZones(callback(future));
+		return future;
+	}
+
+	/**
 	 * @param clubId Club identifier
 	 * @return Club details
 	 * @throws NotFoundException If the club with the given id doesn't exist
@@ -550,6 +572,21 @@ public class API {
 	 */
 	public StravaClub getClub(final Integer clubId) throws NotFoundException {
 		return this.clubAPI.getClub(clubId);
+	}
+
+	/**
+	 * <p>List the administrators of a club</club>
+	 *
+	 * @param clubId Identifier of the club whose admins should be listed
+	 * @param page Page number to be returned (default is 1)
+	 * @param perPage Page size to be returned (default is 50)
+	 * @return The {@link StravaAPIFuture} on which to call complete when ready; this will return the array of {@link StravaAthlete}s.
+	 */
+	public StravaAPIFuture<StravaAthlete[]> getClubAdminsAsync(final Integer clubId, final Integer page, final Integer perPage) {
+		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<StravaAthlete[]>();
+		this.clubAPI.listClubAdmins(clubId, page, perPage, callback(future));
+		return future;
+
 	}
 
 	/**
@@ -1126,6 +1163,7 @@ public class API {
 		return this.athleteAPI.listAuthenticatedAthleteFriends(page, perPage);
 	}
 
+
 	/**
 	 * @param page Page number to be returned (default is 1)
 	 * @param perPage Page size to be returned (default is 50)
@@ -1163,6 +1201,17 @@ public class API {
 		return future;
 	}
 
+	/**
+	 * <p>List the administrators of a club</club>
+	 *
+	 * @param clubId Identifier of the club whose admins should be listed
+	 * @param page Page number to be returned (default is 1)
+	 * @param perPage Page size to be returned (default is 50)
+	 * @return Array of {@link StravaAthlete}s who are admins of the club
+	 */
+	public StravaAthlete[] listClubAdmins(final Integer clubId, final Integer page, final Integer perPage) {
+		return this.clubAPI.listClubAdmins(clubId, page, perPage);
+	}
 
 	/**
 	 * @param clubId The club id for which announcements should be returned
@@ -1531,6 +1580,8 @@ public class API {
 	}
 
 	/**
+	 * Upload an activity
+	 *
 	 * @param activityType Type of activity being uploaded
 	 * @param name Name of the activity
 	 * @param description (Optional) Description of the activity
@@ -1551,6 +1602,8 @@ public class API {
 	}
 
 	/**
+	 * Upload an activity
+	 *
 	 * @param activityType Type of activity being uploaded
 	 * @param name Name of the activity
 	 * @param description (Optional) Description of the activity
@@ -1568,32 +1621,6 @@ public class API {
 			final TypedFile file) throws BadRequestException {
 		final StravaAPIFuture<StravaUploadResponse> future = new StravaAPIFuture<StravaUploadResponse>();
 		this.uploadAPI.upload(activityType, name, description, _private, trainer, commute, dataType, externalId, file, callback(future));
-		return future;
-	}
-
-	public StravaAthlete[] listClubAdmins(final Integer clubId, final Integer page, final Integer perPage) {
-		return this.clubAPI.listClubAdmins(clubId, page, perPage);
-	}
-	
-	/**
-	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
-	 * 
-	 * @return The athlete zones object
-	 */
-	@GET("/athlete/zones")
-	public StravaAthleteZones getAuthenticatedAthleteZones() {
-		return this.athleteAPI.getAuthenticatedAthleteZones();
-	}
-	
-	/**
-	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
-	 * 
-	 * @return The athlete zones object (via a future)
-	 */
-	@GET("/athlete/zones")
-	public StravaAPIFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
-		StravaAPIFuture<StravaAthleteZones> future = new StravaAPIFuture<StravaAthleteZones>();
-		this.athleteAPI.getAuthenticatedAthleteZones(callback(future));
 		return future;
 	}
 

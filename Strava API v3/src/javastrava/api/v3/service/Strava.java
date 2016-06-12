@@ -617,6 +617,26 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 *
+	 * @return The athlete zones object
+	 */
+	@Override
+	public StravaAthleteZones getAuthenticatedAthleteZones() {
+		return this.athleteService.getAuthenticatedAthleteZones();
+	}
+
+	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 *
+	 * @return The athlete zones object (via a {@link CompletableFuture})
+	 */
+	@Override
+	public CompletableFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
+		return this.athleteService.getAuthenticatedAthleteZonesAsync();
+	}
+
+	/**
 	 * @param clubId Club identifier
 	 * @return Club details, or <code>null</code> if the club does not exist
 	 * @see javastrava.api.v3.service.ClubService#getClub(java.lang.Integer)
@@ -1425,6 +1445,48 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 
 	/**
 	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is NOT supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @return List of administrators
+	 */
+	@Override
+	public List<StravaAthlete> listAllClubAdmins(final Integer clubId) {
+		return this.clubService.listAllClubAdmins(clubId);
+	}
+
+	/**
+	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is NOT supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @return List of administrators - call {@link CompletableFuture#complete(Object)} when ready.
+	 */
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listAllClubAdminsAsync(final Integer clubId) {
+		return this.clubService.listAllClubAdminsAsync(clubId);
+	}
+
+	/**
+	 * <p>
 	 * USE WITH CAUTION - CLUBS WITH MANY MEMBERS WILL REQUIRE MANY CALLS TO THE STRAVA API
 	 * </p>
 	 * @param clubId Club identifier
@@ -1895,6 +1957,92 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	@Override
 	public CompletableFuture<List<StravaSegment>> listAuthenticatedAthleteStarredSegmentsAsync(final Paging pagingInstruction) {
 		return this.segmentService.listAuthenticatedAthleteStarredSegmentsAsync(pagingInstruction);
+	}
+
+	/**
+	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is NOT supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @return List of administrators
+	 */
+	@Override
+	public List<StravaAthlete> listClubAdmins(final Integer clubId) {
+		return this.clubService.listClubAdmins(clubId);
+	}
+
+	/**
+	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @param paging Paging instruction
+	 * @return List of administrators
+	 */
+	@Override
+	public List<StravaAthlete> listClubAdmins(final Integer clubId, final Paging paging) {
+		return this.clubService.listClubAdmins(clubId, paging);
+	}
+
+	/**
+	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is NOT supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @return {@link CompletableFuture} which will return the List of administrators
+	 */
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(final Integer clubId) {
+		return this.clubService.listClubAdminsAsync(clubId);
+	}
+
+	/**
+	 * <p>
+	 * List the {@link StravaAthlete}s who are administrators of a club.
+	 * </p>
+	 *
+	 * <p>The athletes are returned in summary representation</p>
+	 *
+	 * <p>Returns <code>null</code> if the club with the given id does not exist.</p>
+	 *
+	 * <p>Returns an empty list if the club is private and the authorised athlete is not a member of the club.</p>
+	 *
+	 * <p>Pagination is supported</p>
+	 *
+	 * @param clubId The club whose administrators should be listed
+	 * @param paging Paging instruction
+	 * @return {@link CompletableFuture} which will return the List of administrators
+	 */
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(final Integer clubId, final Paging paging) {
+		return this.clubService.listClubAdminsAsync(clubId, paging);
 	}
 
 	/**
@@ -2487,45 +2635,5 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	public CompletableFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name, final String description, final Boolean _private,
 			final Boolean trainer, final Boolean commute, final String dataType, final String externalId, final File file) {
 		return this.uploadService.uploadAsync(activityType, name, description, _private, trainer, commute, dataType, externalId, file);
-	}
-
-	@Override
-	public List<StravaAthlete> listClubAdmins(Integer clubId) {
-		return this.clubService.listClubAdmins(clubId);
-	}
-
-	@Override
-	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(Integer clubId) {
-		return this.clubService.listClubAdminsAsync(clubId);
-	}
-
-	@Override
-	public List<StravaAthlete> listClubAdmins(Integer clubId, Paging paging) {
-		return this.clubService.listClubAdmins(clubId, paging);
-	}
-
-	@Override
-	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(Integer clubId, Paging paging) {
-		return this.clubService.listClubAdminsAsync(clubId, paging);
-	}
-
-	@Override
-	public List<StravaAthlete> listAllClubAdmins(Integer clubId) {
-		return this.clubService.listAllClubAdmins(clubId);
-	}
-
-	@Override
-	public CompletableFuture<List<StravaAthlete>> listAllClubAdminsAsync(Integer clubId) {
-		return this.clubService.listAllClubAdminsAsync(clubId);
-	}
-
-	@Override
-	public StravaAthleteZones getAuthenticatedAthleteZones() {
-		return this.athleteService.getAuthenticatedAthleteZones();
-	}
-
-	@Override
-	public CompletableFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
-		return this.athleteService.getAuthenticatedAthleteZonesAsync();
 	}
 }

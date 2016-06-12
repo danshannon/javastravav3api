@@ -85,7 +85,7 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	/**
 	 * Private constructor requires a valid access token; see
 	 * {@link #instance(Token)}
-	 * 
+	 *
 	 * @param token
 	 *            A valid token from the Strava OAuth process
 	 */
@@ -192,6 +192,24 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	}
 
 	/**
+	 * @see javastrava.api.v3.service.ClubService#listAllClubAdmins(java.lang.Integer)
+	 */
+	@Override
+	public List<StravaAthlete> listAllClubAdmins(final Integer clubId) {
+		return PagingHandler.handleListAll(thisPage -> listClubAdmins(clubId, thisPage));
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listAllClubAdminsAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listAllClubAdminsAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return listAllClubAdmins(clubId);
+		});
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.ClubService#listAllClubMembers(java.lang.Integer)
 	 */
 	@Override
@@ -243,6 +261,43 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	public CompletableFuture<List<StravaClub>> listAuthenticatedAthleteClubsAsync() {
 		return StravaServiceImpl.future(() -> {
 			return listAuthenticatedAthleteClubs();
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubAdmins(java.lang.Integer)
+	 */
+	@Override
+	public List<StravaAthlete> listClubAdmins(final Integer clubId) {
+		return listClubAdmins(clubId, null);
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubAdmins(java.lang.Integer, javastrava.util.Paging)
+	 */
+	@Override
+	public List<StravaAthlete> listClubAdmins(final Integer clubId, final Paging paging) {
+		return PagingHandler.handlePaging(paging,
+				thisPage -> Arrays.asList(this.api.listClubAdmins(clubId, paging.getPage(), paging.getPageSize())));
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubAdminsAsync(java.lang.Integer)
+	 */
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(final Integer clubId) {
+		return StravaServiceImpl.future(() -> {
+			return listClubAdmins(clubId);
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ClubService#listClubAdminsAsync(java.lang.Integer, javastrava.util.Paging)
+	 */
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(final Integer clubId, final Paging paging) {
+		return StravaServiceImpl.future(() -> {
+			return listClubAdmins(clubId, paging);
 		});
 	}
 
@@ -376,43 +431,6 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 			final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return listRecentClubActivities(clubId, pagingInstruction);
-		});
-	}
-
-	@Override
-	public List<StravaAthlete> listClubAdmins(Integer clubId) {
-		return listClubAdmins(clubId, null);
-	}
-
-	@Override
-	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(Integer clubId) {
-		return StravaServiceImpl.future(() -> {
-			return listClubAdmins(clubId);
-		});
-	}
-
-	@Override
-	public List<StravaAthlete> listClubAdmins(Integer clubId, Paging paging) {
-		return PagingHandler.handlePaging(paging,
-				thisPage -> Arrays.asList(this.api.listClubAdmins(clubId, paging.getPage(), paging.getPageSize())));
-	}
-
-	@Override
-	public CompletableFuture<List<StravaAthlete>> listClubAdminsAsync(Integer clubId, Paging paging) {
-		return StravaServiceImpl.future(() -> {
-			return listClubAdmins(clubId, paging);
-		});
-	}
-
-	@Override
-	public List<StravaAthlete> listAllClubAdmins(Integer clubId) {
-		return PagingHandler.handleListAll(thisPage -> listClubAdmins(clubId, thisPage));
-	}
-
-	@Override
-	public CompletableFuture<List<StravaAthlete>> listAllClubAdminsAsync(Integer clubId) {
-		return StravaServiceImpl.future(() -> {
-			return listAllClubAdmins(clubId);
 		});
 	}
 

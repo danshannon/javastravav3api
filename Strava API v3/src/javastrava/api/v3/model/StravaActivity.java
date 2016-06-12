@@ -4,14 +4,14 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaWorkoutType;
 import javastrava.api.v3.service.ActivityService;
 import javastrava.api.v3.service.StreamService;
 import javastrava.cache.StravaCacheable;
-
-import com.google.gson.annotations.SerializedName;
 
 /**
  * <p>
@@ -263,7 +263,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 * upload
 	 */
 	private Boolean deviceWatts;
-	
+
 	/**
 	 * Is set to <code>true</code> if the activity was recorded with heartrate
 	 */
@@ -337,7 +337,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 * The token used to construct an embed URL in the form <a href="https://www.strava.com/activities/[ACTIVITY_ID]/embed/[embedId]">https://www.strava.com/activities/[ACTIVITY_ID]/embed/[embedId]</a>
 	 */
 	private String embedToken;
-	
+
 	/**
 	 * The name of the device used to record the activity
 	 */
@@ -348,301 +348,422 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	public StravaActivity() {
 		super();
 	}
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		StravaActivity other = (StravaActivity) obj;
-		if (achievementCount == null) {
-			if (other.achievementCount != null)
+		}
+		final StravaActivity other = (StravaActivity) obj;
+		if (this.achievementCount == null) {
+			if (other.achievementCount != null) {
 				return false;
-		} else if (!achievementCount.equals(other.achievementCount))
+			}
+		} else if (!this.achievementCount.equals(other.achievementCount)) {
 			return false;
-		if (athlete == null) {
-			if (other.athlete != null)
+		}
+		if (this.athlete == null) {
+			if (other.athlete != null) {
 				return false;
-		} else if (!athlete.equals(other.athlete))
+			}
+		} else if (!this.athlete.equals(other.athlete)) {
 			return false;
-		if (athleteCount == null) {
-			if (other.athleteCount != null)
+		}
+		if (this.athleteCount == null) {
+			if (other.athleteCount != null) {
 				return false;
-		} else if (!athleteCount.equals(other.athleteCount))
+			}
+		} else if (!this.athleteCount.equals(other.athleteCount)) {
 			return false;
-		if (averageCadence == null) {
-			if (other.averageCadence != null)
+		}
+		if (this.averageCadence == null) {
+			if (other.averageCadence != null) {
 				return false;
-		} else if (!averageCadence.equals(other.averageCadence))
+			}
+		} else if (!this.averageCadence.equals(other.averageCadence)) {
 			return false;
-		if (averageHeartrate == null) {
-			if (other.averageHeartrate != null)
+		}
+		if (this.averageHeartrate == null) {
+			if (other.averageHeartrate != null) {
 				return false;
-		} else if (!averageHeartrate.equals(other.averageHeartrate))
+			}
+		} else if (!this.averageHeartrate.equals(other.averageHeartrate)) {
 			return false;
-		if (averageSpeed == null) {
-			if (other.averageSpeed != null)
+		}
+		if (this.averageSpeed == null) {
+			if (other.averageSpeed != null) {
 				return false;
-		} else if (!averageSpeed.equals(other.averageSpeed))
+			}
+		} else if (!this.averageSpeed.equals(other.averageSpeed)) {
 			return false;
-		if (averageTemp == null) {
-			if (other.averageTemp != null)
+		}
+		if (this.averageTemp == null) {
+			if (other.averageTemp != null) {
 				return false;
-		} else if (!averageTemp.equals(other.averageTemp))
+			}
+		} else if (!this.averageTemp.equals(other.averageTemp)) {
 			return false;
-		if (averageWatts == null) {
-			if (other.averageWatts != null)
+		}
+		if (this.averageWatts == null) {
+			if (other.averageWatts != null) {
 				return false;
-		} else if (!averageWatts.equals(other.averageWatts))
+			}
+		} else if (!this.averageWatts.equals(other.averageWatts)) {
 			return false;
-		if (bestEfforts == null) {
-			if (other.bestEfforts != null)
+		}
+		if (this.bestEfforts == null) {
+			if (other.bestEfforts != null) {
 				return false;
-		} else if (!bestEfforts.equals(other.bestEfforts))
+			}
+		} else if (!this.bestEfforts.equals(other.bestEfforts)) {
 			return false;
-		if (calories == null) {
-			if (other.calories != null)
+		}
+		if (this.calories == null) {
+			if (other.calories != null) {
 				return false;
-		} else if (!calories.equals(other.calories))
+			}
+		} else if (!this.calories.equals(other.calories)) {
 			return false;
-		if (commentCount == null) {
-			if (other.commentCount != null)
+		}
+		if (this.commentCount == null) {
+			if (other.commentCount != null) {
 				return false;
-		} else if (!commentCount.equals(other.commentCount))
+			}
+		} else if (!this.commentCount.equals(other.commentCount)) {
 			return false;
-		if (commute == null) {
-			if (other.commute != null)
+		}
+		if (this.commute == null) {
+			if (other.commute != null) {
 				return false;
-		} else if (!commute.equals(other.commute))
+			}
+		} else if (!this.commute.equals(other.commute)) {
 			return false;
-		if (description == null) {
-			if (other.description != null)
+		}
+		if (this.description == null) {
+			if (other.description != null) {
 				return false;
-		} else if (!description.equals(other.description))
+			}
+		} else if (!this.description.equals(other.description)) {
 			return false;
-		if (deviceName == null) {
-			if (other.deviceName != null)
+		}
+		if (this.deviceName == null) {
+			if (other.deviceName != null) {
 				return false;
-		} else if (!deviceName.equals(other.deviceName))
+			}
+		} else if (!this.deviceName.equals(other.deviceName)) {
 			return false;
-		if (deviceWatts == null) {
-			if (other.deviceWatts != null)
+		}
+		if (this.deviceWatts == null) {
+			if (other.deviceWatts != null) {
 				return false;
-		} else if (!deviceWatts.equals(other.deviceWatts))
+			}
+		} else if (!this.deviceWatts.equals(other.deviceWatts)) {
 			return false;
-		if (distance == null) {
-			if (other.distance != null)
+		}
+		if (this.distance == null) {
+			if (other.distance != null) {
 				return false;
-		} else if (!distance.equals(other.distance))
+			}
+		} else if (!this.distance.equals(other.distance)) {
 			return false;
-		if (elapsedTime == null) {
-			if (other.elapsedTime != null)
+		}
+		if (this.elapsedTime == null) {
+			if (other.elapsedTime != null) {
 				return false;
-		} else if (!elapsedTime.equals(other.elapsedTime))
+			}
+		} else if (!this.elapsedTime.equals(other.elapsedTime)) {
 			return false;
-		if (embedToken == null) {
-			if (other.embedToken != null)
+		}
+		if (this.embedToken == null) {
+			if (other.embedToken != null) {
 				return false;
-		} else if (!embedToken.equals(other.embedToken))
+			}
+		} else if (!this.embedToken.equals(other.embedToken)) {
 			return false;
-		if (endLatlng == null) {
-			if (other.endLatlng != null)
+		}
+		if (this.endLatlng == null) {
+			if (other.endLatlng != null) {
 				return false;
-		} else if (!endLatlng.equals(other.endLatlng))
+			}
+		} else if (!this.endLatlng.equals(other.endLatlng)) {
 			return false;
-		if (externalId == null) {
-			if (other.externalId != null)
+		}
+		if (this.externalId == null) {
+			if (other.externalId != null) {
 				return false;
-		} else if (!externalId.equals(other.externalId))
+			}
+		} else if (!this.externalId.equals(other.externalId)) {
 			return false;
-		if (flagged == null) {
-			if (other.flagged != null)
+		}
+		if (this.flagged == null) {
+			if (other.flagged != null) {
 				return false;
-		} else if (!flagged.equals(other.flagged))
+			}
+		} else if (!this.flagged.equals(other.flagged)) {
 			return false;
-		if (gear == null) {
-			if (other.gear != null)
+		}
+		if (this.gear == null) {
+			if (other.gear != null) {
 				return false;
-		} else if (!gear.equals(other.gear))
+			}
+		} else if (!this.gear.equals(other.gear)) {
 			return false;
-		if (gearId == null) {
-			if (other.gearId != null)
+		}
+		if (this.gearId == null) {
+			if (other.gearId != null) {
 				return false;
-		} else if (!gearId.equals(other.gearId))
+			}
+		} else if (!this.gearId.equals(other.gearId)) {
 			return false;
-		if (hasHeartrate == null) {
-			if (other.hasHeartrate != null)
+		}
+		if (this.hasHeartrate == null) {
+			if (other.hasHeartrate != null) {
 				return false;
-		} else if (!hasHeartrate.equals(other.hasHeartrate))
+			}
+		} else if (!this.hasHeartrate.equals(other.hasHeartrate)) {
 			return false;
-		if (hasKudoed == null) {
-			if (other.hasKudoed != null)
+		}
+		if (this.hasKudoed == null) {
+			if (other.hasKudoed != null) {
 				return false;
-		} else if (!hasKudoed.equals(other.hasKudoed))
+			}
+		} else if (!this.hasKudoed.equals(other.hasKudoed)) {
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		}
+		if (this.id == null) {
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!this.id.equals(other.id)) {
 			return false;
-		if (instagramPrimaryPhoto == null) {
-			if (other.instagramPrimaryPhoto != null)
+		}
+		if (this.instagramPrimaryPhoto == null) {
+			if (other.instagramPrimaryPhoto != null) {
 				return false;
-		} else if (!instagramPrimaryPhoto.equals(other.instagramPrimaryPhoto))
+			}
+		} else if (!this.instagramPrimaryPhoto.equals(other.instagramPrimaryPhoto)) {
 			return false;
-		if (kilojoules == null) {
-			if (other.kilojoules != null)
+		}
+		if (this.kilojoules == null) {
+			if (other.kilojoules != null) {
 				return false;
-		} else if (!kilojoules.equals(other.kilojoules))
+			}
+		} else if (!this.kilojoules.equals(other.kilojoules)) {
 			return false;
-		if (kudosCount == null) {
-			if (other.kudosCount != null)
+		}
+		if (this.kudosCount == null) {
+			if (other.kudosCount != null) {
 				return false;
-		} else if (!kudosCount.equals(other.kudosCount))
+			}
+		} else if (!this.kudosCount.equals(other.kudosCount)) {
 			return false;
-		if (locationCity == null) {
-			if (other.locationCity != null)
+		}
+		if (this.locationCity == null) {
+			if (other.locationCity != null) {
 				return false;
-		} else if (!locationCity.equals(other.locationCity))
+			}
+		} else if (!this.locationCity.equals(other.locationCity)) {
 			return false;
-		if (locationCountry == null) {
-			if (other.locationCountry != null)
+		}
+		if (this.locationCountry == null) {
+			if (other.locationCountry != null) {
 				return false;
-		} else if (!locationCountry.equals(other.locationCountry))
+			}
+		} else if (!this.locationCountry.equals(other.locationCountry)) {
 			return false;
-		if (locationState == null) {
-			if (other.locationState != null)
+		}
+		if (this.locationState == null) {
+			if (other.locationState != null) {
 				return false;
-		} else if (!locationState.equals(other.locationState))
+			}
+		} else if (!this.locationState.equals(other.locationState)) {
 			return false;
-		if (manual == null) {
-			if (other.manual != null)
+		}
+		if (this.manual == null) {
+			if (other.manual != null) {
 				return false;
-		} else if (!manual.equals(other.manual))
+			}
+		} else if (!this.manual.equals(other.manual)) {
 			return false;
-		if (map == null) {
-			if (other.map != null)
+		}
+		if (this.map == null) {
+			if (other.map != null) {
 				return false;
-		} else if (!map.equals(other.map))
+			}
+		} else if (!this.map.equals(other.map)) {
 			return false;
-		if (maxHeartrate == null) {
-			if (other.maxHeartrate != null)
+		}
+		if (this.maxHeartrate == null) {
+			if (other.maxHeartrate != null) {
 				return false;
-		} else if (!maxHeartrate.equals(other.maxHeartrate))
+			}
+		} else if (!this.maxHeartrate.equals(other.maxHeartrate)) {
 			return false;
-		if (maxSpeed == null) {
-			if (other.maxSpeed != null)
+		}
+		if (this.maxSpeed == null) {
+			if (other.maxSpeed != null) {
 				return false;
-		} else if (!maxSpeed.equals(other.maxSpeed))
+			}
+		} else if (!this.maxSpeed.equals(other.maxSpeed)) {
 			return false;
-		if (movingTime == null) {
-			if (other.movingTime != null)
+		}
+		if (this.movingTime == null) {
+			if (other.movingTime != null) {
 				return false;
-		} else if (!movingTime.equals(other.movingTime))
+			}
+		} else if (!this.movingTime.equals(other.movingTime)) {
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		}
+		if (this.name == null) {
+			if (other.name != null) {
 				return false;
-		} else if (!name.equals(other.name))
+			}
+		} else if (!this.name.equals(other.name)) {
 			return false;
-		if (photoCount == null) {
-			if (other.photoCount != null)
+		}
+		if (this.photoCount == null) {
+			if (other.photoCount != null) {
 				return false;
-		} else if (!photoCount.equals(other.photoCount))
+			}
+		} else if (!this.photoCount.equals(other.photoCount)) {
 			return false;
-		if (photos == null) {
-			if (other.photos != null)
+		}
+		if (this.photos == null) {
+			if (other.photos != null) {
 				return false;
-		} else if (!photos.equals(other.photos))
+			}
+		} else if (!this.photos.equals(other.photos)) {
 			return false;
-		if (privateActivity == null) {
-			if (other.privateActivity != null)
+		}
+		if (this.privateActivity == null) {
+			if (other.privateActivity != null) {
 				return false;
-		} else if (!privateActivity.equals(other.privateActivity))
+			}
+		} else if (!this.privateActivity.equals(other.privateActivity)) {
 			return false;
-		if (resourceState != other.resourceState)
+		}
+		if (this.resourceState != other.resourceState) {
 			return false;
-		if (segmentEfforts == null) {
-			if (other.segmentEfforts != null)
+		}
+		if (this.segmentEfforts == null) {
+			if (other.segmentEfforts != null) {
 				return false;
-		} else if (!segmentEfforts.equals(other.segmentEfforts))
+			}
+		} else if (!this.segmentEfforts.equals(other.segmentEfforts)) {
 			return false;
-		if (splitsMetric == null) {
-			if (other.splitsMetric != null)
+		}
+		if (this.splitsMetric == null) {
+			if (other.splitsMetric != null) {
 				return false;
-		} else if (!splitsMetric.equals(other.splitsMetric))
+			}
+		} else if (!this.splitsMetric.equals(other.splitsMetric)) {
 			return false;
-		if (splitsStandard == null) {
-			if (other.splitsStandard != null)
+		}
+		if (this.splitsStandard == null) {
+			if (other.splitsStandard != null) {
 				return false;
-		} else if (!splitsStandard.equals(other.splitsStandard))
+			}
+		} else if (!this.splitsStandard.equals(other.splitsStandard)) {
 			return false;
-		if (startDate == null) {
-			if (other.startDate != null)
+		}
+		if (this.startDate == null) {
+			if (other.startDate != null) {
 				return false;
-		} else if (!startDate.equals(other.startDate))
+			}
+		} else if (!this.startDate.equals(other.startDate)) {
 			return false;
-		if (startDateLocal == null) {
-			if (other.startDateLocal != null)
+		}
+		if (this.startDateLocal == null) {
+			if (other.startDateLocal != null) {
 				return false;
-		} else if (!startDateLocal.equals(other.startDateLocal))
+			}
+		} else if (!this.startDateLocal.equals(other.startDateLocal)) {
 			return false;
-		if (startLatitude == null) {
-			if (other.startLatitude != null)
+		}
+		if (this.startLatitude == null) {
+			if (other.startLatitude != null) {
 				return false;
-		} else if (!startLatitude.equals(other.startLatitude))
+			}
+		} else if (!this.startLatitude.equals(other.startLatitude)) {
 			return false;
-		if (startLatlng == null) {
-			if (other.startLatlng != null)
+		}
+		if (this.startLatlng == null) {
+			if (other.startLatlng != null) {
 				return false;
-		} else if (!startLatlng.equals(other.startLatlng))
+			}
+		} else if (!this.startLatlng.equals(other.startLatlng)) {
 			return false;
-		if (startLongitude == null) {
-			if (other.startLongitude != null)
+		}
+		if (this.startLongitude == null) {
+			if (other.startLongitude != null) {
 				return false;
-		} else if (!startLongitude.equals(other.startLongitude))
+			}
+		} else if (!this.startLongitude.equals(other.startLongitude)) {
 			return false;
-		if (timezone == null) {
-			if (other.timezone != null)
+		}
+		if (this.timezone == null) {
+			if (other.timezone != null) {
 				return false;
-		} else if (!timezone.equals(other.timezone))
+			}
+		} else if (!this.timezone.equals(other.timezone)) {
 			return false;
-		if (totalElevationGain == null) {
-			if (other.totalElevationGain != null)
+		}
+		if (this.totalElevationGain == null) {
+			if (other.totalElevationGain != null) {
 				return false;
-		} else if (!totalElevationGain.equals(other.totalElevationGain))
+			}
+		} else if (!this.totalElevationGain.equals(other.totalElevationGain)) {
 			return false;
-		if (totalPhotoCount == null) {
-			if (other.totalPhotoCount != null)
+		}
+		if (this.totalPhotoCount == null) {
+			if (other.totalPhotoCount != null) {
 				return false;
-		} else if (!totalPhotoCount.equals(other.totalPhotoCount))
+			}
+		} else if (!this.totalPhotoCount.equals(other.totalPhotoCount)) {
 			return false;
-		if (trainer == null) {
-			if (other.trainer != null)
+		}
+		if (this.trainer == null) {
+			if (other.trainer != null) {
 				return false;
-		} else if (!trainer.equals(other.trainer))
+			}
+		} else if (!this.trainer.equals(other.trainer)) {
 			return false;
-		if (type != other.type)
+		}
+		if (this.type != other.type) {
 			return false;
-		if (uploadId == null) {
-			if (other.uploadId != null)
+		}
+		if (this.uploadId == null) {
+			if (other.uploadId != null) {
 				return false;
-		} else if (!uploadId.equals(other.uploadId))
+			}
+		} else if (!this.uploadId.equals(other.uploadId)) {
 			return false;
-		if (video == null) {
-			if (other.video != null)
+		}
+		if (this.video == null) {
+			if (other.video != null) {
 				return false;
-		} else if (!video.equals(other.video))
+			}
+		} else if (!this.video.equals(other.video)) {
 			return false;
-		if (weightedAverageWatts == null) {
-			if (other.weightedAverageWatts != null)
+		}
+		if (this.weightedAverageWatts == null) {
+			if (other.weightedAverageWatts != null) {
 				return false;
-		} else if (!weightedAverageWatts.equals(other.weightedAverageWatts))
+			}
+		} else if (!this.weightedAverageWatts.equals(other.weightedAverageWatts)) {
 			return false;
-		if (workoutType != other.workoutType)
+		}
+		if (this.workoutType != other.workoutType) {
 			return false;
+		}
 		return true;
 	}
 	/**
@@ -724,6 +845,12 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		return this.description;
 	}
 	/**
+	 * @return Device name
+	 */
+	public String getDeviceName() {
+		return this.deviceName;
+	}
+	/**
 	 * @return the deviceWatts
 	 */
 	public Boolean getDeviceWatts() {
@@ -776,6 +903,12 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 */
 	public String getGearId() {
 		return this.gearId;
+	}
+	/**
+	 * @return Whether the activity was recorded with heart-rate monitor
+	 */
+	public Boolean getHasHeartrate() {
+		return this.hasHeartrate;
 	}
 	/**
 	 * @return the hasKudoed
@@ -992,69 +1125,72 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	public StravaWorkoutType getWorkoutType() {
 		return this.workoutType;
 	}
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((achievementCount == null) ? 0 : achievementCount.hashCode());
-		result = prime * result + ((athlete == null) ? 0 : athlete.hashCode());
-		result = prime * result + ((athleteCount == null) ? 0 : athleteCount.hashCode());
-		result = prime * result + ((averageCadence == null) ? 0 : averageCadence.hashCode());
-		result = prime * result + ((averageHeartrate == null) ? 0 : averageHeartrate.hashCode());
-		result = prime * result + ((averageSpeed == null) ? 0 : averageSpeed.hashCode());
-		result = prime * result + ((averageTemp == null) ? 0 : averageTemp.hashCode());
-		result = prime * result + ((averageWatts == null) ? 0 : averageWatts.hashCode());
-		result = prime * result + ((bestEfforts == null) ? 0 : bestEfforts.hashCode());
-		result = prime * result + ((calories == null) ? 0 : calories.hashCode());
-		result = prime * result + ((commentCount == null) ? 0 : commentCount.hashCode());
-		result = prime * result + ((commute == null) ? 0 : commute.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((deviceName == null) ? 0 : deviceName.hashCode());
-		result = prime * result + ((deviceWatts == null) ? 0 : deviceWatts.hashCode());
-		result = prime * result + ((distance == null) ? 0 : distance.hashCode());
-		result = prime * result + ((elapsedTime == null) ? 0 : elapsedTime.hashCode());
-		result = prime * result + ((embedToken == null) ? 0 : embedToken.hashCode());
-		result = prime * result + ((endLatlng == null) ? 0 : endLatlng.hashCode());
-		result = prime * result + ((externalId == null) ? 0 : externalId.hashCode());
-		result = prime * result + ((flagged == null) ? 0 : flagged.hashCode());
-		result = prime * result + ((gear == null) ? 0 : gear.hashCode());
-		result = prime * result + ((gearId == null) ? 0 : gearId.hashCode());
-		result = prime * result + ((hasHeartrate == null) ? 0 : hasHeartrate.hashCode());
-		result = prime * result + ((hasKudoed == null) ? 0 : hasKudoed.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((instagramPrimaryPhoto == null) ? 0 : instagramPrimaryPhoto.hashCode());
-		result = prime * result + ((kilojoules == null) ? 0 : kilojoules.hashCode());
-		result = prime * result + ((kudosCount == null) ? 0 : kudosCount.hashCode());
-		result = prime * result + ((locationCity == null) ? 0 : locationCity.hashCode());
-		result = prime * result + ((locationCountry == null) ? 0 : locationCountry.hashCode());
-		result = prime * result + ((locationState == null) ? 0 : locationState.hashCode());
-		result = prime * result + ((manual == null) ? 0 : manual.hashCode());
-		result = prime * result + ((map == null) ? 0 : map.hashCode());
-		result = prime * result + ((maxHeartrate == null) ? 0 : maxHeartrate.hashCode());
-		result = prime * result + ((maxSpeed == null) ? 0 : maxSpeed.hashCode());
-		result = prime * result + ((movingTime == null) ? 0 : movingTime.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((photoCount == null) ? 0 : photoCount.hashCode());
-		result = prime * result + ((photos == null) ? 0 : photos.hashCode());
-		result = prime * result + ((privateActivity == null) ? 0 : privateActivity.hashCode());
-		result = prime * result + ((resourceState == null) ? 0 : resourceState.hashCode());
-		result = prime * result + ((segmentEfforts == null) ? 0 : segmentEfforts.hashCode());
-		result = prime * result + ((splitsMetric == null) ? 0 : splitsMetric.hashCode());
-		result = prime * result + ((splitsStandard == null) ? 0 : splitsStandard.hashCode());
-		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
-		result = prime * result + ((startDateLocal == null) ? 0 : startDateLocal.hashCode());
-		result = prime * result + ((startLatitude == null) ? 0 : startLatitude.hashCode());
-		result = prime * result + ((startLatlng == null) ? 0 : startLatlng.hashCode());
-		result = prime * result + ((startLongitude == null) ? 0 : startLongitude.hashCode());
-		result = prime * result + ((timezone == null) ? 0 : timezone.hashCode());
-		result = prime * result + ((totalElevationGain == null) ? 0 : totalElevationGain.hashCode());
-		result = prime * result + ((totalPhotoCount == null) ? 0 : totalPhotoCount.hashCode());
-		result = prime * result + ((trainer == null) ? 0 : trainer.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + ((uploadId == null) ? 0 : uploadId.hashCode());
-		result = prime * result + ((video == null) ? 0 : video.hashCode());
-		result = prime * result + ((weightedAverageWatts == null) ? 0 : weightedAverageWatts.hashCode());
-		result = prime * result + ((workoutType == null) ? 0 : workoutType.hashCode());
+		result = (prime * result) + ((this.achievementCount == null) ? 0 : this.achievementCount.hashCode());
+		result = (prime * result) + ((this.athlete == null) ? 0 : this.athlete.hashCode());
+		result = (prime * result) + ((this.athleteCount == null) ? 0 : this.athleteCount.hashCode());
+		result = (prime * result) + ((this.averageCadence == null) ? 0 : this.averageCadence.hashCode());
+		result = (prime * result) + ((this.averageHeartrate == null) ? 0 : this.averageHeartrate.hashCode());
+		result = (prime * result) + ((this.averageSpeed == null) ? 0 : this.averageSpeed.hashCode());
+		result = (prime * result) + ((this.averageTemp == null) ? 0 : this.averageTemp.hashCode());
+		result = (prime * result) + ((this.averageWatts == null) ? 0 : this.averageWatts.hashCode());
+		result = (prime * result) + ((this.bestEfforts == null) ? 0 : this.bestEfforts.hashCode());
+		result = (prime * result) + ((this.calories == null) ? 0 : this.calories.hashCode());
+		result = (prime * result) + ((this.commentCount == null) ? 0 : this.commentCount.hashCode());
+		result = (prime * result) + ((this.commute == null) ? 0 : this.commute.hashCode());
+		result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
+		result = (prime * result) + ((this.deviceName == null) ? 0 : this.deviceName.hashCode());
+		result = (prime * result) + ((this.deviceWatts == null) ? 0 : this.deviceWatts.hashCode());
+		result = (prime * result) + ((this.distance == null) ? 0 : this.distance.hashCode());
+		result = (prime * result) + ((this.elapsedTime == null) ? 0 : this.elapsedTime.hashCode());
+		result = (prime * result) + ((this.embedToken == null) ? 0 : this.embedToken.hashCode());
+		result = (prime * result) + ((this.endLatlng == null) ? 0 : this.endLatlng.hashCode());
+		result = (prime * result) + ((this.externalId == null) ? 0 : this.externalId.hashCode());
+		result = (prime * result) + ((this.flagged == null) ? 0 : this.flagged.hashCode());
+		result = (prime * result) + ((this.gear == null) ? 0 : this.gear.hashCode());
+		result = (prime * result) + ((this.gearId == null) ? 0 : this.gearId.hashCode());
+		result = (prime * result) + ((this.hasHeartrate == null) ? 0 : this.hasHeartrate.hashCode());
+		result = (prime * result) + ((this.hasKudoed == null) ? 0 : this.hasKudoed.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.instagramPrimaryPhoto == null) ? 0 : this.instagramPrimaryPhoto.hashCode());
+		result = (prime * result) + ((this.kilojoules == null) ? 0 : this.kilojoules.hashCode());
+		result = (prime * result) + ((this.kudosCount == null) ? 0 : this.kudosCount.hashCode());
+		result = (prime * result) + ((this.locationCity == null) ? 0 : this.locationCity.hashCode());
+		result = (prime * result) + ((this.locationCountry == null) ? 0 : this.locationCountry.hashCode());
+		result = (prime * result) + ((this.locationState == null) ? 0 : this.locationState.hashCode());
+		result = (prime * result) + ((this.manual == null) ? 0 : this.manual.hashCode());
+		result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());
+		result = (prime * result) + ((this.maxHeartrate == null) ? 0 : this.maxHeartrate.hashCode());
+		result = (prime * result) + ((this.maxSpeed == null) ? 0 : this.maxSpeed.hashCode());
+		result = (prime * result) + ((this.movingTime == null) ? 0 : this.movingTime.hashCode());
+		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+		result = (prime * result) + ((this.photoCount == null) ? 0 : this.photoCount.hashCode());
+		result = (prime * result) + ((this.photos == null) ? 0 : this.photos.hashCode());
+		result = (prime * result) + ((this.privateActivity == null) ? 0 : this.privateActivity.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.segmentEfforts == null) ? 0 : this.segmentEfforts.hashCode());
+		result = (prime * result) + ((this.splitsMetric == null) ? 0 : this.splitsMetric.hashCode());
+		result = (prime * result) + ((this.splitsStandard == null) ? 0 : this.splitsStandard.hashCode());
+		result = (prime * result) + ((this.startDate == null) ? 0 : this.startDate.hashCode());
+		result = (prime * result) + ((this.startDateLocal == null) ? 0 : this.startDateLocal.hashCode());
+		result = (prime * result) + ((this.startLatitude == null) ? 0 : this.startLatitude.hashCode());
+		result = (prime * result) + ((this.startLatlng == null) ? 0 : this.startLatlng.hashCode());
+		result = (prime * result) + ((this.startLongitude == null) ? 0 : this.startLongitude.hashCode());
+		result = (prime * result) + ((this.timezone == null) ? 0 : this.timezone.hashCode());
+		result = (prime * result) + ((this.totalElevationGain == null) ? 0 : this.totalElevationGain.hashCode());
+		result = (prime * result) + ((this.totalPhotoCount == null) ? 0 : this.totalPhotoCount.hashCode());
+		result = (prime * result) + ((this.trainer == null) ? 0 : this.trainer.hashCode());
+		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+		result = (prime * result) + ((this.uploadId == null) ? 0 : this.uploadId.hashCode());
+		result = (prime * result) + ((this.video == null) ? 0 : this.video.hashCode());
+		result = (prime * result) + ((this.weightedAverageWatts == null) ? 0 : this.weightedAverageWatts.hashCode());
+		result = (prime * result) + ((this.workoutType == null) ? 0 : this.workoutType.hashCode());
 		return result;
 	}
 	/**
@@ -1136,6 +1272,12 @@ public class StravaActivity implements StravaCacheable<Integer>{
 		this.description = description;
 	}
 	/**
+	 * @param deviceName The device name
+	 */
+	public void setDeviceName(final String deviceName) {
+		this.deviceName = deviceName;
+	}
+	/**
 	 * @param deviceWatts the deviceWatts to set
 	 */
 	public void setDeviceWatts(final Boolean deviceWatts) {
@@ -1188,6 +1330,12 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 */
 	public void setGearId(final String gearId) {
 		this.gearId = gearId;
+	}
+	/**
+	 * @param hasHeartrate Does the activity have heart rate recorded?
+	 */
+	public void setHasHeartrate(final Boolean hasHeartrate) {
+		this.hasHeartrate = hasHeartrate;
 	}
 	/**
 	 * @param hasKudoed the hasKudoed to set
@@ -1402,39 +1550,30 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	public void setWorkoutType(final StravaWorkoutType workoutType) {
 		this.workoutType = workoutType;
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "StravaActivity [id=" + id + ", resourceState=" + resourceState + ", externalId=" + externalId
-				+ ", athlete=" + athlete + ", name=" + name + ", description=" + description + ", distance=" + distance
-				+ ", movingTime=" + movingTime + ", elapsedTime=" + elapsedTime + ", totalElevationGain="
-				+ totalElevationGain + ", type=" + type + ", startDate=" + startDate + ", startDateLocal="
-				+ startDateLocal + ", timezone=" + timezone + ", startLatlng=" + startLatlng + ", endLatlng="
-				+ endLatlng + ", locationCity=" + locationCity + ", locationState=" + locationState
-				+ ", locationCountry=" + locationCountry + ", achievementCount=" + achievementCount + ", kudosCount="
-				+ kudosCount + ", commentCount=" + commentCount + ", athleteCount=" + athleteCount + ", photoCount="
-				+ photoCount + ", totalPhotoCount=" + totalPhotoCount + ", map=" + map + ", trainer=" + trainer
-				+ ", commute=" + commute + ", manual=" + manual + ", privateActivity=" + privateActivity + ", flagged="
-				+ flagged + ", workoutType=" + workoutType + ", gearId=" + gearId + ", gear=" + gear + ", averageSpeed="
-				+ averageSpeed + ", maxSpeed=" + maxSpeed + ", averageCadence=" + averageCadence + ", averageTemp="
-				+ averageTemp + ", averageWatts=" + averageWatts + ", weightedAverageWatts=" + weightedAverageWatts
-				+ ", kilojoules=" + kilojoules + ", deviceWatts=" + deviceWatts + ", hasHeartrate=" + hasHeartrate
-				+ ", averageHeartrate=" + averageHeartrate + ", maxHeartrate=" + maxHeartrate + ", calories=" + calories
-				+ ", hasKudoed=" + hasKudoed + ", segmentEfforts=" + segmentEfforts + ", splitsMetric=" + splitsMetric
-				+ ", splitsStandard=" + splitsStandard + ", bestEfforts=" + bestEfforts + ", uploadId=" + uploadId
-				+ ", startLatitude=" + startLatitude + ", startLongitude=" + startLongitude + ", instagramPrimaryPhoto="
-				+ instagramPrimaryPhoto + ", photos=" + photos + ", video=" + video + ", embedToken=" + embedToken
-				+ ", deviceName=" + deviceName + "]";
-	}
-	public Boolean getHasHeartrate() {
-		return hasHeartrate;
-	}
-	public void setHasHeartrate(Boolean hasHeartrate) {
-		this.hasHeartrate = hasHeartrate;
-	}
-	public String getDeviceName() {
-		return deviceName;
-	}
-	public void setDeviceName(String deviceName) {
-		this.deviceName = deviceName;
+		return "StravaActivity [id=" + this.id + ", resourceState=" + this.resourceState + ", externalId=" + this.externalId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", athlete=" + this.athlete + ", name=" + this.name + ", description=" + this.description + ", distance=" + this.distance //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", movingTime=" + this.movingTime + ", elapsedTime=" + this.elapsedTime + ", totalElevationGain=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.totalElevationGain + ", type=" + this.type + ", startDate=" + this.startDate + ", startDateLocal=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.startDateLocal + ", timezone=" + this.timezone + ", startLatlng=" + this.startLatlng + ", endLatlng=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.endLatlng + ", locationCity=" + this.locationCity + ", locationState=" + this.locationState //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", locationCountry=" + this.locationCountry + ", achievementCount=" + this.achievementCount + ", kudosCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.kudosCount + ", commentCount=" + this.commentCount + ", athleteCount=" + this.athleteCount + ", photoCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.photoCount + ", totalPhotoCount=" + this.totalPhotoCount + ", map=" + this.map + ", trainer=" + this.trainer //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", commute=" + this.commute + ", manual=" + this.manual + ", privateActivity=" + this.privateActivity + ", flagged=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.flagged + ", workoutType=" + this.workoutType + ", gearId=" + this.gearId + ", gear=" + this.gear + ", averageSpeed=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.averageSpeed + ", maxSpeed=" + this.maxSpeed + ", averageCadence=" + this.averageCadence + ", averageTemp=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.averageTemp + ", averageWatts=" + this.averageWatts + ", weightedAverageWatts=" + this.weightedAverageWatts //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", kilojoules=" + this.kilojoules + ", deviceWatts=" + this.deviceWatts + ", hasHeartrate=" + this.hasHeartrate //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", calories=" + this.calories //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", hasKudoed=" + this.hasKudoed + ", segmentEfforts=" + this.segmentEfforts + ", splitsMetric=" + this.splitsMetric //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", splitsStandard=" + this.splitsStandard + ", bestEfforts=" + this.bestEfforts + ", uploadId=" + this.uploadId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", instagramPrimaryPhoto=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.instagramPrimaryPhoto + ", photos=" + this.photos + ", video=" + this.video + ", embedToken=" + this.embedToken //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", deviceName=" + this.deviceName + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

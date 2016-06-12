@@ -156,6 +156,28 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	}
 
 	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 *
+	 * @return The athlete zones object
+	 */
+	@Override
+	public StravaAthleteZones getAuthenticatedAthleteZones() {
+		return this.api.getAuthenticatedAthleteZones();
+	}
+
+	/**
+	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 *
+	 * @return The athlete zones object (via a {@link CompletableFuture})
+	 */
+	@Override
+	public CompletableFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
+		return StravaServiceImpl.future(() -> {
+			return getAuthenticatedAthleteZones();
+		});
+	}
+
+	/**
 	 * @see javastrava.api.v3.service.AthleteService#listAllAthleteFriends(java.lang.Integer)
 	 */
 	@Override
@@ -454,18 +476,6 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
 		return StravaServiceImpl.future(() -> {
 			return updateAuthenticatedAthlete(city, state, country, sex, weight);
-		});
-	}
-
-	@Override
-	public StravaAthleteZones getAuthenticatedAthleteZones() {
-		return this.api.getAuthenticatedAthleteZones();
-	}
-
-	@Override
-	public CompletableFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
-		return StravaServiceImpl.future(() -> {
-			return getAuthenticatedAthleteZones();
 		});
 	}
 
