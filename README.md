@@ -24,7 +24,7 @@ javastrava is available on Maven. Just add this to your POM:
 
 Use (full implementation)
 =========================
-To use Javastrava, all you really need is an access token. Javastrava doesn't provide a mechanism for acquiring one via OAuth - it's a vanilla, headless implementation of the API. You will need to register with Strava for an API key, and you will get an API key (access token) automatically when you register your app. There is a hack which gets tokens through the OAuth process on the Strava website built into the test suite, see `test.utils.TestUtils.getValidToken()`, but remember that it's a hack!
+To use Javastrava, all you really need is an access token. Javastrava doesn't provide a programmatic mechanism for acquiring one via OAuth because you need to get your end user to agree to your specific use of their Strava data, and therefore they should do that personally. You will need to register with Strava for an API key, and you will get an API key (access token) automatically when you register your app. There is a hack which gets tokens through the OAuth process on the Strava website built into the test suite, see `test.utils.TestUtils.getValidToken()`, but remember that it's a hack!
 
 Basically, once you've gone through the OAuth validation process, Strava returns a one-off code. You then need to exchange that code for a token:
 
