@@ -73,8 +73,8 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	private AthleteServiceImpl(final Token token) {
 		super(token);
-		this.athleteCache = new StravaCacheImpl<StravaAthlete, Integer>(StravaAthlete.class, token);
-		this.effortCache = new StravaCacheImpl<StravaSegmentEffort, Long>(StravaSegmentEffort.class, token);
+		this.athleteCache = new StravaCacheImpl<>(StravaAthlete.class, token);
+		this.effortCache = new StravaCacheImpl<>(StravaSegmentEffort.class, token);
 	}
 
 	/**
@@ -121,9 +121,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<StravaAthlete> getAthleteAsync(final Integer athleteId) {
-		return StravaServiceImpl.future(() -> {
-			return getAthlete(athleteId);
-		});
+		return StravaServiceImpl.future(() -> getAthlete(athleteId));
 	}
 
 	/**
@@ -150,9 +148,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<StravaAthlete> getAuthenticatedAthleteAsync() {
-		return StravaServiceImpl.future(() -> {
-			return getAuthenticatedAthlete();
-		});
+		return StravaServiceImpl.future(() -> getAuthenticatedAthlete());
 	}
 
 	/**
@@ -172,9 +168,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync() {
-		return StravaServiceImpl.future(() -> {
-			return getAuthenticatedAthleteZones();
-		});
+		return StravaServiceImpl.future(() -> getAuthenticatedAthleteZones());
 	}
 
 	/**
@@ -194,9 +188,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAllAthleteFriendsAsync(final Integer athleteId) {
-		return StravaServiceImpl.future(() -> {
-			return listAllAthleteFriends(athleteId);
-		});
+		return StravaServiceImpl.future(() -> listAllAthleteFriends(athleteId));
 	}
 
 	/**
@@ -212,9 +204,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaSegmentEffort>> listAllAthleteKOMsAsync(final Integer athleteId) {
-		return StravaServiceImpl.future(() -> {
-			return listAllAthleteKOMs(athleteId);
-		});
+		return StravaServiceImpl.future(() -> listAllAthleteKOMs(athleteId));
 	}
 
 	/**
@@ -231,9 +221,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAllAthletesBothFollowingAsync(final Integer athleteId) {
-		return StravaServiceImpl.future(() -> {
-			return listAllAthletesBothFollowing(athleteId);
-		});
+		return StravaServiceImpl.future(() -> listAllAthletesBothFollowing(athleteId));
 	}
 
 	/**
@@ -249,9 +237,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAllAuthenticatedAthleteFriendsAsync() {
-		return StravaServiceImpl.future(() -> {
-			return listAllAuthenticatedAthleteFriends();
-		});
+		return StravaServiceImpl.future(() -> listAllAuthenticatedAthleteFriends());
 	}
 
 	/**
@@ -283,9 +269,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAthleteFriendsAsync(final Integer athleteId) {
-		return StravaServiceImpl.future(() -> {
-			return listAthleteFriends(athleteId);
-		});
+		return StravaServiceImpl.future(() -> listAthleteFriends(athleteId));
 	}
 
 	/**
@@ -293,9 +277,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAthleteFriendsAsync(final Integer athleteId, final Paging pagingInstruction) {
-		return StravaServiceImpl.future(() -> {
-			return listAthleteFriends(athleteId, pagingInstruction);
-		});
+		return StravaServiceImpl.future(() -> listAthleteFriends(athleteId, pagingInstruction));
 	}
 
 	/**
@@ -327,9 +309,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaSegmentEffort>> listAthleteKOMsAsync(final Integer athleteId) {
-		return StravaServiceImpl.future(() -> {
-			return listAthleteKOMs(athleteId);
-		});
+		return StravaServiceImpl.future(() -> listAthleteKOMs(athleteId));
 	}
 
 	/**
@@ -337,9 +317,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaSegmentEffort>> listAthleteKOMsAsync(final Integer athleteId, final Paging pagingInstruction) {
-		return StravaServiceImpl.future(() -> {
-			return listAthleteKOMs(athleteId, pagingInstruction);
-		});
+		return StravaServiceImpl.future(() -> listAthleteKOMs(athleteId, pagingInstruction));
 	}
 
 	/**
@@ -369,9 +347,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAthletesBothFollowingAsync(final Integer athleteId) {
-		return StravaServiceImpl.future(() -> {
-			return listAthletesBothFollowing(athleteId);
-		});
+		return StravaServiceImpl.future(() -> listAthletesBothFollowing(athleteId));
 	}
 
 	/**
@@ -379,9 +355,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAthletesBothFollowingAsync(final Integer athleteId, final Paging pagingInstruction) {
-		return StravaServiceImpl.future(() -> {
-			return listAthletesBothFollowing(athleteId, pagingInstruction);
-		});
+		return StravaServiceImpl.future(() -> listAthletesBothFollowing(athleteId, pagingInstruction));
 	}
 
 	/**
@@ -412,9 +386,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAuthenticatedAthleteFriendsAsync() {
-		return StravaServiceImpl.future(() -> {
-			return listAuthenticatedAthleteFriends();
-		});
+		return StravaServiceImpl.future(() -> listAuthenticatedAthleteFriends());
 	}
 
 	/**
@@ -422,9 +394,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAuthenticatedAthleteFriendsAsync(final Paging pagingInstruction) {
-		return StravaServiceImpl.future(() -> {
-			return listAuthenticatedAthleteFriends(pagingInstruction);
-		});
+		return StravaServiceImpl.future(() -> listAuthenticatedAthleteFriends(pagingInstruction));
 	}
 
 	/**
@@ -449,9 +419,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<StravaStatistics> statisticsAsync(final Integer athleteId) {
-		return StravaServiceImpl.future(() -> {
-			return statistics(athleteId);
-		});
+		return StravaServiceImpl.future(() -> statistics(athleteId));
 	}
 
 	/**
@@ -474,9 +442,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
-		return StravaServiceImpl.future(() -> {
-			return updateAuthenticatedAthlete(city, state, country, sex, weight);
-		});
+		return StravaServiceImpl.future(() -> updateAuthenticatedAthlete(city, state, country, sex, weight));
 	}
 
 }

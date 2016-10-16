@@ -1,19 +1,13 @@
 package javastrava.api.v3.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
-import javastrava.api.v3.model.StravaActivity;
-import javastrava.api.v3.model.StravaActivityUpdate;
-import javastrava.api.v3.model.StravaActivityZone;
-import javastrava.api.v3.model.StravaAthlete;
-import javastrava.api.v3.model.StravaComment;
-import javastrava.api.v3.model.StravaLap;
-import javastrava.api.v3.model.StravaPhoto;
+import javastrava.api.v3.model.*;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.util.Paging;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * StravaActivity related services
@@ -48,7 +42,7 @@ public interface ActivityService extends StravaService {
 	 * @throws NotFoundException if the activity does not exist
 	 * @throws BadRequestException if the comment is invalid
 	 */
-	public StravaComment createComment(final Integer activityId, final String text) throws NotFoundException, BadRequestException;
+	public StravaComment createComment(final Long activityId, final String text) throws NotFoundException, BadRequestException;
 
 	/**
 	 * <p>
@@ -75,7 +69,7 @@ public interface ActivityService extends StravaService {
 	 * @throws NotFoundException if the activity does not exist
 	 * @throws BadRequestException if the comment is invalid
 	 */
-	public CompletableFuture<StravaComment> createCommentAsync(final Integer activityId, final String text) throws NotFoundException, BadRequestException;
+	public CompletableFuture<StravaComment> createCommentAsync(final Long activityId, final String text) throws NotFoundException, BadRequestException;
 
 	/**
 	 * <p>
@@ -168,7 +162,7 @@ public interface ActivityService extends StravaService {
 	 * @return Should return <code>null</code>
 	 * @throws NotFoundException If the activity does not exist
 	 */
-	public StravaActivity deleteActivity(final Integer activityId) throws NotFoundException;
+	public StravaActivity deleteActivity(final Long activityId) throws NotFoundException;
 
 	/**
 	 * <p>
@@ -195,7 +189,7 @@ public interface ActivityService extends StravaService {
 	 * @return (A {@link CompletableFuture} which returns) Should return <code>null</code>
 	 * @throws NotFoundException If the activity does not exist
 	 */
-	public CompletableFuture<StravaActivity> deleteActivityAsync(final Integer activityId) throws NotFoundException;
+	public CompletableFuture<StravaActivity> deleteActivityAsync(final Long activityId) throws NotFoundException;
 
 	/**
 	 * <p>
@@ -209,7 +203,7 @@ public interface ActivityService extends StravaService {
 	 * @throws NotFoundException
 	 *             if the activity or the comment does exist
 	 */
-	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException;
+	public void deleteComment(final Long activityId, final Integer commentId) throws NotFoundException;
 
 	/**
 	 * <p>
@@ -235,7 +229,7 @@ public interface ActivityService extends StravaService {
 	 * @throws NotFoundException
 	 *             if the activity or the comment does exist
 	 */
-	public CompletableFuture<Void> deleteCommentAsync(final Integer activityId, final Integer commentId) throws NotFoundException;
+	public CompletableFuture<Void> deleteCommentAsync(final Long activityId, final Integer commentId) throws NotFoundException;
 
 	/**
 	 * <p>
@@ -283,7 +277,7 @@ public interface ActivityService extends StravaService {
 	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for
 	 *         all other requests.
 	 */
-	public StravaActivity getActivity(final Integer activityId);
+	public StravaActivity getActivity(final Long activityId);
 
 	/**
 	 * <p>
@@ -321,7 +315,7 @@ public interface ActivityService extends StravaService {
 	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for
 	 *         all other requests.
 	 */
-	public StravaActivity getActivity(final Integer activityId, final Boolean includeAllEfforts);
+	public StravaActivity getActivity(final Long activityId, final Boolean includeAllEfforts);
 
 	/**
 	 * <p>
@@ -357,7 +351,7 @@ public interface ActivityService extends StravaService {
 	 * @return (A {@link CompletableFuture} which returns) Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for
 	 *         all other requests.
 	 */
-	public CompletableFuture<StravaActivity> getActivityAsync(final Integer activityId);
+	public CompletableFuture<StravaActivity> getActivityAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -395,7 +389,7 @@ public interface ActivityService extends StravaService {
 	 * @return (A {@link CompletableFuture} which returns) Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for
 	 *         all other requests.
 	 */
-	public CompletableFuture<StravaActivity> getActivityAsync(final Integer activityId, final Boolean includeAllEfforts);
+	public CompletableFuture<StravaActivity> getActivityAsync(final Long activityId, final Boolean includeAllEfforts);
 
 	/**
 	 * <p>
@@ -406,7 +400,7 @@ public interface ActivityService extends StravaService {
 	 *            Identifier of the activity to be kudoed.
 	 * @throws NotFoundException If the activity does not exist on Strava
 	 */
-	public void giveKudos(final Integer activityId) throws NotFoundException;
+	public void giveKudos(final Long activityId) throws NotFoundException;
 
 	/**
 	 * <p>
@@ -418,7 +412,7 @@ public interface ActivityService extends StravaService {
 	 * @return A {@link CompletableFuture} which indicates when the kudos has been given
 	 * @throws NotFoundException If the activity does not exist on Strava
 	 */
-	public CompletableFuture<Void> giveKudosAsync(final Integer activityId) throws NotFoundException;
+	public CompletableFuture<Void> giveKudosAsync(final Long activityId) throws NotFoundException;
 
 	/**
 	 * <p>
@@ -456,7 +450,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} for which {@link StravaComment comments} should be returned
 	 * @return List of comments
 	 */
-	public List<StravaComment> listActivityComments(final Integer activityId);
+	public List<StravaComment> listActivityComments(final Long activityId);
 
 	/**
 	 * <p>
@@ -500,7 +494,7 @@ public interface ActivityService extends StravaService {
 	 *            (Optional) Include markdown in comments (default is <code>false</code> - i.e. filter out
 	 * @return List of comments
 	 */
-	public List<StravaComment> listActivityComments(final Integer activityId, final Boolean markdown);
+	public List<StravaComment> listActivityComments(final Long activityId, final Boolean markdown);
 
 	/**
 	 * <p>
@@ -542,7 +536,7 @@ public interface ActivityService extends StravaService {
 	 *            (Optional) The page to be returned
 	 * @return List of comments
 	 */
-	public List<StravaComment> listActivityComments(final Integer activityId, final Boolean markdown, final Paging pagingInstruction);
+	public List<StravaComment> listActivityComments(final Long activityId, final Boolean markdown, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -582,7 +576,7 @@ public interface ActivityService extends StravaService {
 	 *            (Optional) Paging instructions. If not provided then the first page is returned.
 	 * @return List of comments
 	 */
-	public List<StravaComment> listActivityComments(final Integer activityId, final Paging pagingInstruction);
+	public List<StravaComment> listActivityComments(final Long activityId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -620,7 +614,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} for which {@link StravaComment comments} should be returned
 	 * @return (A {@link CompletableFuture} which returns) List of comments
 	 */
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId);
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -664,7 +658,7 @@ public interface ActivityService extends StravaService {
 	 *            (Optional) Include markdown in comments (default is <code>false</code> - i.e. filter out
 	 * @return (A {@link CompletableFuture} which returns) List of comments
 	 */
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Boolean markdown);
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Boolean markdown);
 
 	/**
 	 * <p>
@@ -706,7 +700,7 @@ public interface ActivityService extends StravaService {
 	 *            (Optional) The page to be returned
 	 * @return (A {@link CompletableFuture} which returns) List of comments
 	 */
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Boolean markdown, final Paging pagingInstruction);
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Boolean markdown, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -746,7 +740,7 @@ public interface ActivityService extends StravaService {
 	 *            (Optional) Paging instructions. If not provided then the first page is returned.
 	 * @return (A {@link CompletableFuture} which returns) List of comments
 	 */
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Paging pagingInstruction);
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -776,7 +770,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} for which kudoers are to be listed
 	 * @return Returns an array of {@link StravaAthlete athlete} summary objects.
 	 */
-	public List<StravaAthlete> listActivityKudoers(final Integer activityId);
+	public List<StravaAthlete> listActivityKudoers(final Long activityId);
 
 	/**
 	 * <p>
@@ -808,7 +802,7 @@ public interface ActivityService extends StravaService {
 	 *            (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaAthlete athlete} summary objects.
 	 */
-	public List<StravaAthlete> listActivityKudoers(final Integer activityId, final Paging pagingInstruction);
+	public List<StravaAthlete> listActivityKudoers(final Long activityId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -838,7 +832,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} for which kudoers are to be listed
 	 * @return (A {@link CompletableFuture} which returns) Returns an array of {@link StravaAthlete athlete} summary objects.
 	 */
-	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Integer activityId);
+	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -870,7 +864,7 @@ public interface ActivityService extends StravaService {
 	 *            (Optional) The page to be returned
 	 * @return (A {@link CompletableFuture} which returns) Returns an array of {@link StravaAthlete athlete} summary objects.
 	 */
-	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Integer activityId, final Paging pagingInstruction);
+	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Long activityId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -895,7 +889,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} for which laps should be returned
 	 * @return Returns an array of {@link StravaLap lap} effort summaries
 	 */
-	public List<StravaLap> listActivityLaps(final Integer activityId);
+	public List<StravaLap> listActivityLaps(final Long activityId);
 
 	/**
 	 * <p>
@@ -920,7 +914,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} for which laps should be returned
 	 * @return (A {@link CompletableFuture} which returns) Returns an array of {@link StravaLap lap} effort summaries
 	 */
-	public CompletableFuture<List<StravaLap>> listActivityLapsAsync(final Integer activityId);
+	public CompletableFuture<List<StravaLap>> listActivityLapsAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -954,7 +948,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} for which photos are to be listed
 	 * @return Returns an array of {@link StravaPhoto photo} objects.
 	 */
-	public List<StravaPhoto> listActivityPhotos(final Integer activityId);
+	public List<StravaPhoto> listActivityPhotos(final Long activityId);
 
 	/**
 	 * <p>
@@ -988,7 +982,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} for which photos are to be listed
 	 * @return (A {@link CompletableFuture} which returns) Returns an array of {@link StravaPhoto photo} objects.
 	 */
-	public CompletableFuture<List<StravaPhoto>> listActivityPhotosAsync(final Integer activityId);
+	public CompletableFuture<List<StravaPhoto>> listActivityPhotosAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -1022,7 +1016,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity activity} for which zones should be returned
 	 * @return Returns an array of {@link StravaActivityZone activity zones} for the {@link StravaActivity} identified
 	 */
-	public List<StravaActivityZone> listActivityZones(final Integer activityId);
+	public List<StravaActivityZone> listActivityZones(final Long activityId);
 
 	/**
 	 * <p>
@@ -1056,7 +1050,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity activity} for which zones should be returned
 	 * @return (A {@link CompletableFuture} which returns) Returns an array of {@link StravaActivityZone activity zones} for the {@link StravaActivity} identified
 	 */
-	public CompletableFuture<List<StravaActivityZone>> listActivityZonesAsync(final Integer activityId);
+	public CompletableFuture<List<StravaActivityZone>> listActivityZonesAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -1078,7 +1072,7 @@ public interface ActivityService extends StravaService {
 	 * @param activityId The activity whose comments should be listed
 	 * @return All comments on the activity
 	 */
-	public List<StravaComment> listAllActivityComments(final Integer activityId);
+	public List<StravaComment> listAllActivityComments(final Long activityId);
 
 	/**
 	 * <p>
@@ -1100,7 +1094,7 @@ public interface ActivityService extends StravaService {
 	 * @param activityId The activity whose comments should be listed
 	 * @return (A {@link CompletableFuture} which returns) All comments on the activity
 	 */
-	public CompletableFuture<List<StravaComment>> listAllActivityCommentsAsync(final Integer activityId);
+	public CompletableFuture<List<StravaComment>> listAllActivityCommentsAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -1122,7 +1116,7 @@ public interface ActivityService extends StravaService {
 	 * @param activityId The activity whose kudoers should be listed
 	 * @return All athletes who have kudoed the activity
 	 */
-	public List<StravaAthlete> listAllActivityKudoers(final Integer activityId);
+	public List<StravaAthlete> listAllActivityKudoers(final Long activityId);
 
 	/**
 	 * <p>
@@ -1144,7 +1138,7 @@ public interface ActivityService extends StravaService {
 	 * @param activityId The activity whose kudoers should be listed
 	 * @return (A {@link CompletableFuture} which returns) All athletes who have kudoed the activity
 	 */
-	public CompletableFuture<List<StravaAthlete>> listAllActivityKudoersAsync(final Integer activityId);
+	public CompletableFuture<List<StravaAthlete>> listAllActivityKudoersAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -1296,7 +1290,7 @@ public interface ActivityService extends StravaService {
 	 * @param activityId The activity identifier
 	 * @return List of Strava activities that Strava has determined are related to this one
 	 */
-	public List<StravaActivity> listAllRelatedActivities(final Integer activityId);
+	public List<StravaActivity> listAllRelatedActivities(final Long activityId);
 
 	/**
 	 * <p>
@@ -1318,7 +1312,7 @@ public interface ActivityService extends StravaService {
 	 * @param activityId The activity identifier
 	 * @return (A {@link CompletableFuture} which returns) List of Strava activities that Strava has determined are related to this one
 	 */
-	public CompletableFuture<List<StravaActivity>> listAllRelatedActivitiesAsync(final Integer activityId);
+	public CompletableFuture<List<StravaActivity>> listAllRelatedActivitiesAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -1603,11 +1597,11 @@ public interface ActivityService extends StravaService {
 	 * Pagination is not supported. Only the first page is returned by Strava.
 	 * </p>
 	 *
-	 * @param id
+	 * @param activityId
 	 *            StravaActivity id for which related activities should be listed
 	 * @return List of related activities (not including the main activity)
 	 */
-	public List<StravaActivity> listRelatedActivities(final Integer id);
+	public List<StravaActivity> listRelatedActivities(final Long activityId);
 
 	/**
 	 * <p>
@@ -1622,13 +1616,13 @@ public interface ActivityService extends StravaService {
 	 * Pagination is supported.
 	 * </p>
 	 *
-	 * @param id
+	 * @param activityId
 	 *            StravaActivity id for which related activities should be listed
 	 * @param pagingInstruction
 	 *            Paging instructions
 	 * @return List of related activities (not including the main activity)
 	 */
-	public List<StravaActivity> listRelatedActivities(final Integer id, final Paging pagingInstruction);
+	public List<StravaActivity> listRelatedActivities(final Long activityId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -1643,11 +1637,11 @@ public interface ActivityService extends StravaService {
 	 * Pagination is not supported. Only the first page is returned by Strava.
 	 * </p>
 	 *
-	 * @param id
+	 * @param activityId
 	 *            StravaActivity id for which related activities should be listed
 	 * @return (A {@link CompletableFuture} which returns) List of related activities (not including the main activity)
 	 */
-	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Integer id);
+	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -1662,13 +1656,13 @@ public interface ActivityService extends StravaService {
 	 * Pagination is supported.
 	 * </p>
 	 *
-	 * @param id
+	 * @param activityId
 	 *            StravaActivity id for which related activities should be listed
 	 * @param pagingInstruction
 	 *            Paging instructions
 	 * @return (A {@link CompletableFuture} which returns) List of related activities (not including the main activity)
 	 */
-	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Integer id, final Paging pagingInstruction);
+	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Long activityId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -1696,7 +1690,7 @@ public interface ActivityService extends StravaService {
 	 * @throws NotFoundException If the activity with the given id does not exist
 	 *
 	 */
-	public StravaActivity updateActivity(final Integer activityId, final StravaActivityUpdate activity) throws NotFoundException;
+	public StravaActivity updateActivity(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException;
 
 	/**
 	 * <p>
@@ -1724,5 +1718,5 @@ public interface ActivityService extends StravaService {
 	 * @throws NotFoundException If the activity with the given id does not exist
 	 *
 	 */
-	public CompletableFuture<StravaActivity> updateActivityAsync(final Integer activityId, final StravaActivityUpdate activity) throws NotFoundException;
+	public CompletableFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException;
 }

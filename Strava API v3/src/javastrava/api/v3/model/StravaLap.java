@@ -15,11 +15,11 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaLap implements StravaCacheable<Integer> {
+public class StravaLap implements StravaCacheable<Long> {
 	/**
 	 * Strava's unique identifier for this lap
 	 */
-	private Integer id;
+	private Long id;
 
 	/**
 	 * State of this resource on Strava
@@ -363,7 +363,7 @@ public class StravaLap implements StravaCacheable<Integer> {
 	 * @return the id
 	 */
 	@Override
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
@@ -553,7 +553,7 @@ public class StravaLap implements StravaCacheable<Integer> {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(final Integer id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 

@@ -25,7 +25,7 @@ public class StravaComment implements StravaCacheable<Integer> {
 	/**
 	 * Identifier of the activity on which this is a comment
 	 */
-	private Integer activityId;
+	private Long activityId;
 	/**
 	 * Text of the comment. Allegedly Strava supports markdown in comments!
 	 */
@@ -102,7 +102,7 @@ public class StravaComment implements StravaCacheable<Integer> {
 	/**
 	 * @return the activityId
 	 */
-	public Integer getActivityId() {
+	public Long getActivityId() {
 		return this.activityId;
 	}
 	/**
@@ -155,7 +155,7 @@ public class StravaComment implements StravaCacheable<Integer> {
 	/**
 	 * @param activityId the activityId to set
 	 */
-	public void setActivityId(final Integer activityId) {
+	public void setActivityId(final Long activityId) {
 		this.activityId = activityId;
 	}
 	/**

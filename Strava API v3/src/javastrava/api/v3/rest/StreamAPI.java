@@ -22,7 +22,7 @@ import retrofit.http.Query;
  */
 public interface StreamAPI {
 	/**
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(Integer, StravaStreamResolutionType,
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(Long, StravaStreamResolutionType,
 	 *      StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType...)
 	 *
 	 * @param activityId
@@ -44,13 +44,13 @@ public interface StreamAPI {
 	 *             If the request is malformed
 	 */
 	@GET("/activities/{id}/streams/{types}")
-	public StravaStream[] getActivityStreams(@Path("id") final Integer activityId, @Path("types") final String types,
+	public StravaStream[] getActivityStreams(@Path("id") final Long activityId, @Path("types") final String types,
 			@Query("resolution") final StravaStreamResolutionType resolution,
 			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException,
 			NotFoundException, BadRequestException;
 
 	/**
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(Integer, StravaStreamResolutionType,
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(Long, StravaStreamResolutionType,
 	 *      StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType...)
 	 *
 	 * @param activityId
@@ -72,7 +72,7 @@ public interface StreamAPI {
 	 *             If the request is malformed
 	 */
 	@GET("/activities/{id}/streams/{types}")
-	public void getActivityStreams(@Path("id") final Integer activityId, @Path("types") final String types,
+	public void getActivityStreams(@Path("id") final Long activityId, @Path("types") final String types,
 			@Query("resolution") final StravaStreamResolutionType resolution,
 			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType, final StravaAPICallback<StravaStream[]> callback) throws UnauthorizedException,
 			NotFoundException, BadRequestException;

@@ -229,9 +229,9 @@ public class API {
 	 * @return The comment as posted
 	 * @throws NotFoundException If the activity does not exist
 	 * @throws BadRequestException If the comment text is null or the empty string
-	 * @see javastrava.api.v3.rest.ActivityAPI#createComment(java.lang.Integer, java.lang.String)
+	 * @see javastrava.api.v3.rest.ActivityAPI#createComment(java.lang.Long, java.lang.String)
 	 */
-	public StravaComment createComment(final Integer activityId, final String text) throws BadRequestException, NotFoundException {
+	public StravaComment createComment(final Long activityId, final String text) throws BadRequestException, NotFoundException {
 		return this.activityAPI.createComment(activityId, text);
 	}
 
@@ -242,7 +242,7 @@ public class API {
 	 * @throws NotFoundException If the activity does not exist
 	 * @throws BadRequestException If the comment text is null or the empty string
 	 */
-	public StravaAPIFuture<StravaComment> createCommentAsync(final Integer activityId, final String text) throws BadRequestException, NotFoundException {
+	public StravaAPIFuture<StravaComment> createCommentAsync(final Long activityId, final String text) throws BadRequestException, NotFoundException {
 		final StravaAPIFuture<StravaComment> future = new StravaAPIFuture<StravaComment>();
 		this.activityAPI.createComment(activityId, text, callback(future));
 		return future;
@@ -340,9 +340,9 @@ public class API {
 	 * @return The representation of the deleted activity
 	 * @throws NotFoundException
 	 *             If the identified activity does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#deleteActivity(java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#deleteActivity(java.lang.Long)
 	 */
-	public StravaActivity deleteActivity(final Integer id) throws NotFoundException {
+	public StravaActivity deleteActivity(final Long id) throws NotFoundException {
 		return this.activityAPI.deleteActivity(id);
 	}
 
@@ -356,9 +356,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException
 	 *             If the identified activity does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#deleteActivity(java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#deleteActivity(java.lang.Long, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivity> deleteActivityAsync(final Integer activityId) throws NotFoundException {
+	public StravaAPIFuture<StravaActivity> deleteActivityAsync(final Long activityId) throws NotFoundException {
 		final StravaAPIFuture<StravaActivity> future = new StravaAPIFuture<StravaActivity>();
 		this.activityAPI.deleteActivity(activityId, callback(future));
 		return future;
@@ -369,9 +369,9 @@ public class API {
 	 * @param commentId Id of the comment
 	 * @return Strava response
 	 * @throws NotFoundException If the comment does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#deleteComment(java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#deleteComment(java.lang.Long, java.lang.Integer)
 	 */
-	public StravaResponse deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
+	public StravaResponse deleteComment(final Long activityId, final Integer commentId) throws NotFoundException {
 		return this.activityAPI.deleteComment(activityId, commentId);
 	}
 
@@ -380,9 +380,9 @@ public class API {
 	 * @param commentId Id of the comment
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException If the comment does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#deleteComment(java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#deleteComment(java.lang.Long, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaResponse> deleteCommentAsync(final Integer activityId, final Integer commentId) throws NotFoundException {
+	public StravaAPIFuture<StravaResponse> deleteCommentAsync(final Long activityId, final Integer commentId) throws NotFoundException {
 		final StravaAPIFuture<StravaResponse> future = new StravaAPIFuture<StravaResponse>();
 		this.activityAPI.deleteComment(activityId, commentId, callback(future));
 		return future;
@@ -424,9 +424,9 @@ public class API {
 	 * @return The Strava activity with the given id, if it exists
 	 * @throws NotFoundException
 	 *             If the activity does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#getActivity(java.lang.Integer, java.lang.Boolean)
+	 * @see javastrava.api.v3.rest.ActivityAPI#getActivity(java.lang.Long, java.lang.Boolean)
 	 */
-	public StravaActivity getActivity(final Integer id, final Boolean includeAllEfforts) throws NotFoundException {
+	public StravaActivity getActivity(final Long id, final Boolean includeAllEfforts) throws NotFoundException {
 		return this.activityAPI.getActivity(id, includeAllEfforts);
 	}
 
@@ -442,9 +442,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException
 	 *             If the activity does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#getActivity(java.lang.Integer, java.lang.Boolean, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#getActivity(java.lang.Long, java.lang.Boolean, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivity> getActivityAsync(final Integer id, final Boolean includeAllEfforts) throws NotFoundException {
+	public StravaAPIFuture<StravaActivity> getActivityAsync(final Long id, final Boolean includeAllEfforts) throws NotFoundException {
 		final StravaAPIFuture<StravaActivity> future = new StravaAPIFuture<StravaActivity>();
 		this.activityAPI.getActivity(id, includeAllEfforts, callback(future));
 		return future;
@@ -468,10 +468,10 @@ public class API {
 	 *             If the activity does not exist
 	 * @throws BadRequestException
 	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getActivityStreams(java.lang.Integer, java.lang.String,
+	 * @see javastrava.api.v3.rest.StreamAPI#getActivityStreams(java.lang.Long, java.lang.String,
 	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
-	public StravaStream[] getActivityStreams(final Integer activityId, final String types, final StravaStreamResolutionType resolution,
+	public StravaStream[] getActivityStreams(final Long activityId, final String types, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
 		return this.streamAPI.getActivityStreams(activityId, types, resolution, seriesType);
 	}
@@ -494,9 +494,9 @@ public class API {
 	 *             If the activity does not exist
 	 * @throws BadRequestException
 	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getActivityStreams(java.lang.Integer, java.lang.String, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.StreamAPI#getActivityStreams(java.lang.Long, java.lang.String, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaStream[]> getActivityStreamsAsync(final Integer activityId, final String types, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaStream[]> getActivityStreamsAsync(final Long activityId, final String types, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaStream[]> future = new StravaAPIFuture<StravaStream[]>();
 		this.streamAPI.getActivityStreams(activityId, types, resolution, seriesType, callback(future));
 		return future;
@@ -822,9 +822,9 @@ public class API {
 	 * @param activityId Activity to be kudoed
 	 * @return Strava response
 	 * @throws NotFoundException if the activity does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#giveKudos(java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#giveKudos(java.lang.Long)
 	 */
-	public StravaResponse giveKudos(final Integer activityId) throws NotFoundException {
+	public StravaResponse giveKudos(final Long activityId) throws NotFoundException {
 		return this.activityAPI.giveKudos(activityId);
 	}
 
@@ -832,9 +832,9 @@ public class API {
 	 * @param activityId Activity to be kudoed
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException if the activity does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#giveKudos(java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#giveKudos(java.lang.Long, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaResponse> giveKudosAsync(final Integer activityId) throws NotFoundException {
+	public StravaAPIFuture<StravaResponse> giveKudosAsync(final Long activityId) throws NotFoundException {
 		final StravaAPIFuture<StravaResponse> future = new StravaAPIFuture<StravaResponse>();
 		this.activityAPI.giveKudos(activityId, callback(future));
 		return future;
@@ -892,9 +892,9 @@ public class API {
 	 * @return Array of comments belonging to the activity
 	 * @throws NotFoundException If the activity doesn't exist
 	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityComments(java.lang.Integer, java.lang.Boolean, java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityComments(java.lang.Long, java.lang.Boolean, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaComment[] listActivityComments(final Integer activityId, final Boolean markdown, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaComment[] listActivityComments(final Long activityId, final Boolean markdown, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.activityAPI.listActivityComments(activityId, markdown, page, perPage);
 	}
 
@@ -906,9 +906,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException If the activity doesn't exist
 	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityComments(java.lang.Integer, java.lang.Boolean, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityComments(java.lang.Long, java.lang.Boolean, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaComment[]> listActivityCommentsAsync(final Integer activityId, final Boolean markdown, final Integer page, final Integer perPage)
+	public StravaAPIFuture<StravaComment[]> listActivityCommentsAsync(final Long activityId, final Boolean markdown, final Integer page, final Integer perPage)
 			throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaComment[]> future = new StravaAPIFuture<StravaComment[]>();
 		this.activityAPI.listActivityComments(activityId, markdown, page, perPage, callback(future));
@@ -922,9 +922,9 @@ public class API {
 	 * @return Array of athletes who have kudoed the activity
 	 * @throws NotFoundException If the activity doesn't exist
 	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityKudoers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityKudoers(java.lang.Long, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaAthlete[] listActivityKudoers(final Integer activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaAthlete[] listActivityKudoers(final Long activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.activityAPI.listActivityKudoers(activityId, page, perPage);
 	}
 
@@ -935,9 +935,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException If the activity doesn't exist
 	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityKudoers(Integer, Integer, Integer, StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityKudoers(Long, Integer, Integer, StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaAthlete[]> listActivityKudoersAsync(final Integer activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaAthlete[]> listActivityKudoersAsync(final Long activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<StravaAthlete[]>();
 		this.activityAPI.listActivityKudoers(activityId, page, perPage, callback(future));
 		return future;
@@ -947,9 +947,9 @@ public class API {
 	 * @param activityId The activity identifier
 	 * @return Array of laps belonging to the activity
 	 * @throws NotFoundException If the activity doesn't exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityLaps(java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityLaps(java.lang.Long)
 	 */
-	public StravaLap[] listActivityLaps(final Integer activityId) throws NotFoundException {
+	public StravaLap[] listActivityLaps(final Long activityId) throws NotFoundException {
 		return this.activityAPI.listActivityLaps(activityId);
 	}
 
@@ -958,9 +958,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException If the activity doesn't exist
 	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityLaps(Integer, StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityLaps(Long, StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaLap[]> listActivityLapsAsync(final Integer activityId) throws NotFoundException {
+	public StravaAPIFuture<StravaLap[]> listActivityLapsAsync(final Long activityId) throws NotFoundException {
 		final StravaAPIFuture<StravaLap[]> future = new StravaAPIFuture<StravaLap[]>();
 		this.activityAPI.listActivityLaps(activityId, callback(future));
 		return future;
@@ -970,9 +970,9 @@ public class API {
 	 * @param activityId Activity identifier
 	 * @return Array of photos attached to the activity
 	 * @throws NotFoundException If the activity doesn't exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityPhotos(java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityPhotos(java.lang.Long)
 	 */
-	public StravaPhoto[] listActivityPhotos(final Integer activityId) throws NotFoundException {
+	public StravaPhoto[] listActivityPhotos(final Long activityId) throws NotFoundException {
 		return this.activityAPI.listActivityPhotos(activityId);
 	}
 
@@ -980,9 +980,9 @@ public class API {
 	 * @param activityId Activity identifier
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException If the activity doesn't exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityPhotos(java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityPhotos(java.lang.Long, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaPhoto[]> listActivityPhotosAsync(final Integer activityId) throws NotFoundException {
+	public StravaAPIFuture<StravaPhoto[]> listActivityPhotosAsync(final Long activityId) throws NotFoundException {
 		final StravaAPIFuture<StravaPhoto[]> future = new StravaAPIFuture<StravaPhoto[]>();
 		this.activityAPI.listActivityPhotos(activityId, callback(future));
 		return future;
@@ -992,9 +992,9 @@ public class API {
 	 * @param activityId The activity identifier
 	 * @return Array of activity zones for the activity
 	 * @throws NotFoundException If the activity doesn't exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityZones(java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityZones(java.lang.Long)
 	 */
-	public StravaActivityZone[] listActivityZones(final Integer activityId) throws NotFoundException {
+	public StravaActivityZone[] listActivityZones(final Long activityId) throws NotFoundException {
 		return this.activityAPI.listActivityZones(activityId);
 	}
 
@@ -1002,9 +1002,9 @@ public class API {
 	 * @param activityId The activity identifier
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException If the activity doesn't exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityZones(java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityZones(java.lang.Long, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivityZone[]> listActivityZonesAsync(final Integer activityId) throws NotFoundException {
+	public StravaAPIFuture<StravaActivityZone[]> listActivityZonesAsync(final Long activityId) throws NotFoundException {
 		final StravaAPIFuture<StravaActivityZone[]> future = new StravaAPIFuture<StravaActivityZone[]>();
 		this.activityAPI.listActivityZones(activityId, callback(future));
 		return future;
@@ -1343,9 +1343,9 @@ public class API {
 	 * @return Array of activities that Strava judges was 'done with' the activity identified by the id
 	 * @throws NotFoundException If the activity doesn't exist
 	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listRelatedActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listRelatedActivities(java.lang.Long, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaActivity[] listRelatedActivities(final Integer activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaActivity[] listRelatedActivities(final Long activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.activityAPI.listRelatedActivities(activityId, page, perPage);
 	}
 
@@ -1356,9 +1356,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException If the activity doesn't exist
 	 * @throws BadRequestException If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listRelatedActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listRelatedActivities(java.lang.Long, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivity[]> listRelatedActivitiesAsync(final Integer activityId, final Integer page, final Integer perPage)
+	public StravaAPIFuture<StravaActivity[]> listRelatedActivitiesAsync(final Long activityId, final Integer page, final Integer perPage)
 			throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaActivity[]> future = new StravaAPIFuture<StravaActivity[]>();
 		this.activityAPI.listRelatedActivities(activityId, page, perPage, callback(future));
@@ -1517,17 +1517,17 @@ public class API {
 	 * Update an activity that already exists on Strava
 	 * </p>
 	 *
-	 * @param id
+	 * @param activityId
 	 *            Activity identifier
 	 * @param activity
 	 *            Update representation
 	 * @return The activity as updated on Strava
 	 * @throws NotFoundException
 	 *             If the activity with the given id does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#updateActivity(java.lang.Integer, javastrava.api.v3.model.StravaActivityUpdate)
+	 * @see javastrava.api.v3.rest.ActivityAPI#updateActivity(java.lang.Long, javastrava.api.v3.model.StravaActivityUpdate)
 	 */
-	public StravaActivity updateActivity(final Integer id, final StravaActivityUpdate activity) throws NotFoundException {
-		return this.activityAPI.updateActivity(id, activity);
+	public StravaActivity updateActivity(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException {
+		return this.activityAPI.updateActivity(activityId, activity);
 	}
 
 	/**
@@ -1535,18 +1535,18 @@ public class API {
 	 * Update an activity that already exists on Strava
 	 * </p>
 	 *
-	 * @param id
+	 * @param activityId
 	 *            Activity identifier
 	 * @param activity
 	 *            Update representation
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException
 	 *             If the activity with the given id does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#updateActivity(java.lang.Integer, javastrava.api.v3.model.StravaActivityUpdate, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#updateActivity(java.lang.Long, javastrava.api.v3.model.StravaActivityUpdate, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivity> updateActivityAsync(final Integer id, final StravaActivityUpdate activity) throws NotFoundException {
+	public StravaAPIFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException {
 		final StravaAPIFuture<StravaActivity> future = new StravaAPIFuture<StravaActivity>();
-		this.activityAPI.updateActivity(id, activity, callback(future));
+		this.activityAPI.updateActivity(activityId, activity, callback(future));
 		return future;
 	}
 
