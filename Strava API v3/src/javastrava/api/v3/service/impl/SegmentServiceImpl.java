@@ -1,6 +1,3 @@
-/**
- *
- */
 package javastrava.api.v3.service.impl;
 
 import java.time.LocalDateTime;

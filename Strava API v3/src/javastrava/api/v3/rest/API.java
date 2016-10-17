@@ -575,7 +575,7 @@ public class API {
 	}
 
 	/**
-	 * <p>List the administrators of a club</club>
+	 * <p>List the administrators of a club</p>
 	 *
 	 * @param clubId Identifier of the club whose admins should be listed
 	 * @param page Page number to be returned (default is 1)
@@ -1202,7 +1202,7 @@ public class API {
 	}
 
 	/**
-	 * <p>List the administrators of a club</club>
+	 * <p>List the administrators of a club</p>
 	 *
 	 * @param clubId Identifier of the club whose admins should be listed
 	 * @param page Page number to be returned (default is 1)

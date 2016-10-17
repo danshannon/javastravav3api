@@ -8,9 +8,6 @@ import javastrava.api.v3.model.StravaResponse;
  * </p>
  * 
  * @author Dan Shannon
- */
-/**
- * @author dshannon
  *
  */
 public class StravaInternalServerErrorException extends RuntimeException implements StravaAPIException {

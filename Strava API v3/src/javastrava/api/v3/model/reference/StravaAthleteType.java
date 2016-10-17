@@ -1,6 +1,3 @@
-/**
- *
- */
 package javastrava.api.v3.model.reference;
 
 import javastrava.config.Messages;

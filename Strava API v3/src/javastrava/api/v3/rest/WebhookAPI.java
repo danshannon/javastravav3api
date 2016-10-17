@@ -1,6 +1,3 @@
-/**
- *
- */
 package javastrava.api.v3.rest;
 
 import javastrava.api.v3.model.StravaResponse;

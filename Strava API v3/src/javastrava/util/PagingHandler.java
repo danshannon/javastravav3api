@@ -16,7 +16,7 @@ import javastrava.config.StravaConfig;
  * </p>
  *
  * <p>
- * Example - see {@link ActivityServiceImpl#listActivityComments(Integer, Paging)}
+ * Example - see {@link ActivityServiceImpl#listActivityComments(Long, Paging)}
  * </p>
  *
  * @author Dan Shannon

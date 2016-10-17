@@ -119,8 +119,7 @@ public interface ActivityAPI {
 
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Long, java.lang.Boolean)
-	 */
-	/**
+	 *
 	 * @param id
 	 *            The id of the {@link StravaActivity activity} to be returned
 	 * @param includeAllEfforts

@@ -1,6 +1,3 @@
-/**
- *
- */
 package javastrava.util;
 
 import java.util.ArrayList;

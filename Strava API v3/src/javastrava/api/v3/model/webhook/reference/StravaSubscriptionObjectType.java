@@ -1,6 +1,3 @@
-/**
- *
- */
 package javastrava.api.v3.model.webhook.reference;
 
 import javastrava.api.v3.model.reference.StravaReferenceType;

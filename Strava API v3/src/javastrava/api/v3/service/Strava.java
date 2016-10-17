@@ -2254,7 +2254,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param pagingInstruction Paging instruction
 	 * @return List of activities that Strava has determined were done 'with' the identified activity, according with the paging instruction, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
 	public List<StravaActivity> listRelatedActivities(final Long activityId, final Paging pagingInstruction) {
@@ -2264,7 +2264,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of activities that Strava has determined were done 'with' the identified activity, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Long)
 	 */
 	@Override
 	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Long activityId) {
@@ -2275,7 +2275,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param pagingInstruction Paging instruction
 	 * @return List of activities that Strava has determined were done 'with' the identified activity, according with the paging instruction, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
 	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Long activityId, final Paging pagingInstruction) {

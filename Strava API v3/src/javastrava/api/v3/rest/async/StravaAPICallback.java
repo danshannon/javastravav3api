@@ -1,6 +1,3 @@
-/**
- *
- */
 package javastrava.api.v3.rest.async;
 
 import retrofit.Callback;

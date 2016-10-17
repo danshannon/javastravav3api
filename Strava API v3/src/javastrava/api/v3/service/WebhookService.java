@@ -1,6 +1,3 @@
-/**
- *
- */
 package javastrava.api.v3.service;
 
 import java.util.List;

@@ -10,8 +10,8 @@ import com.google.gson.annotations.SerializedName;
  * <p>
  * Collection of fields that can be updated on an activity
  * </p>
- * @see ActivityService#updateActivity(Integer, StravaActivityUpdate)
- * @see ActivityAPI#updateActivity(Integer, StravaActivityUpdate)
+ * @see ActivityService#updateActivity(Long, StravaActivityUpdate)
+ * @see ActivityAPI#updateActivity(Long, StravaActivityUpdate)
  * @author Dan Shannon
  *
  */
