@@ -163,10 +163,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @return The comment as stored on Strava
 	 * @throws NotFoundException If the activity does not exist
 	 * @throws BadRequestException If the comment is invalid (of zero length)
-	 * @see javastrava.api.v3.service.ActivityService#createComment(java.lang.Integer, java.lang.String)
+	 * @see javastrava.api.v3.service.ActivityService#createComment(java.lang.Long, java.lang.String)
 	 */
 	@Override
-	public StravaComment createComment(final Integer activityId, final String text) throws NotFoundException, BadRequestException {
+	public StravaComment createComment(final Long activityId, final String text) throws NotFoundException, BadRequestException {
 		return this.activityService.createComment(activityId, text);
 	}
 
@@ -176,10 +176,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @return The comment as stored on Strava
 	 * @throws NotFoundException If the activity does not exist
 	 * @throws BadRequestException If the comment is invalid (of zero length)
-	 * @see javastrava.api.v3.service.ActivityService#createCommentAsync(java.lang.Integer, java.lang.String)
+	 * @see javastrava.api.v3.service.ActivityService#createCommentAsync(java.lang.Long, java.lang.String)
 	 */
 	@Override
-	public CompletableFuture<StravaComment> createCommentAsync(final Integer activityId, final String text) throws NotFoundException, BadRequestException {
+	public CompletableFuture<StravaComment> createCommentAsync(final Long activityId, final String text) throws NotFoundException, BadRequestException {
 		return this.activityService.createCommentAsync(activityId, text);
 	}
 
@@ -302,10 +302,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId The identifier of the activity to be deleted
 	 * @return The activity that was deleted
 	 * @throws NotFoundException If the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(java.lang.Long)
 	 */
 	@Override
-	public StravaActivity deleteActivity(final Integer activityId) throws NotFoundException {
+	public StravaActivity deleteActivity(final Long activityId) throws NotFoundException {
 		return this.activityService.deleteActivity(activityId);
 	}
 
@@ -313,10 +313,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId The identifier of the activity to be deleted
 	 * @return The activity that was deleted
 	 * @throws NotFoundException If the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#deleteActivityAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#deleteActivityAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<StravaActivity> deleteActivityAsync(final Integer activityId) throws NotFoundException {
+	public CompletableFuture<StravaActivity> deleteActivityAsync(final Long activityId) throws NotFoundException {
 		return this.activityService.deleteActivityAsync(activityId);
 	}
 
@@ -324,10 +324,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param commentId Comment identifier
 	 * @throws NotFoundException If the comment does not exist
-	 * @see javastrava.api.v3.service.ActivityService#deleteComment(java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#deleteComment(java.lang.Long, java.lang.Integer)
 	 */
 	@Override
-	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
+	public void deleteComment(final Long activityId, final Integer commentId) throws NotFoundException {
 		this.activityService.deleteComment(activityId, commentId);
 	}
 
@@ -345,10 +345,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param commentId Comment identifier
 	 * @throws NotFoundException If the comment does not exist
-	 * @see javastrava.api.v3.service.ActivityService#deleteCommentAsync(java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#deleteCommentAsync(java.lang.Long, java.lang.Integer)
 	 */
 	@Override
-	public CompletableFuture<Void> deleteCommentAsync(final Integer activityId, final Integer commentId) throws NotFoundException {
+	public CompletableFuture<Void> deleteCommentAsync(final Long activityId, final Integer commentId) throws NotFoundException {
 		return this.activityService.deleteCommentAsync(activityId, commentId);
 	}
 
@@ -396,10 +396,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param activityId The activity identifier
 	 * @return The activity, if it exists, or <code>null</code> if it does not.
-	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Long)
 	 */
 	@Override
-	public StravaActivity getActivity(final Integer activityId) {
+	public StravaActivity getActivity(final Long activityId) {
 		return this.activityService.getActivity(activityId);
 	}
 
@@ -407,20 +407,20 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId The activity identifier
 	 * @param includeAllEfforts Whether to return efforts that Strava does not consider "important"
 	 * @return The activity, if it exists, or <code>null</code> if it does not
-	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Integer, java.lang.Boolean)
+	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Long, java.lang.Boolean)
 	 */
 	@Override
-	public StravaActivity getActivity(final Integer activityId, final Boolean includeAllEfforts) {
+	public StravaActivity getActivity(final Long activityId, final Boolean includeAllEfforts) {
 		return this.activityService.getActivity(activityId, includeAllEfforts);
 	}
 
 	/**
 	 * @param activityId The activity identifier
 	 * @return The activity, if it exists, or <code>null</code> if it does not.
-	 * @see javastrava.api.v3.service.ActivityService#getActivityAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#getActivityAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<StravaActivity> getActivityAsync(final Integer activityId) {
+	public CompletableFuture<StravaActivity> getActivityAsync(final Long activityId) {
 		return this.activityService.getActivityAsync(activityId);
 	}
 
@@ -428,20 +428,20 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId The activity identifier
 	 * @param includeAllEfforts Whether to return efforts that Strava does not consider "important"
 	 * @return The activity, if it exists, or <code>null</code> if it does not
-	 * @see javastrava.api.v3.service.ActivityService#getActivityAsync(java.lang.Integer, java.lang.Boolean)
+	 * @see javastrava.api.v3.service.ActivityService#getActivityAsync(java.lang.Long, java.lang.Boolean)
 	 */
 	@Override
-	public CompletableFuture<StravaActivity> getActivityAsync(final Integer activityId, final Boolean includeAllEfforts) {
+	public CompletableFuture<StravaActivity> getActivityAsync(final Long activityId, final Boolean includeAllEfforts) {
 		return this.activityService.getActivityAsync(activityId, includeAllEfforts);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of streams for the activity, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(java.lang.Integer)
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(java.lang.Long)
 	 */
 	@Override
-	public List<StravaStream> getActivityStreams(final Integer activityId) {
+	public List<StravaStream> getActivityStreams(final Long activityId) {
 		return this.streamService.getActivityStreams(activityId);
 	}
 
@@ -456,11 +456,11 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is
 	 *            being reduced
 	 * @return List of streams for the activity, or <code>null</code> if the activity does not exist.
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(java.lang.Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(java.lang.Long, javastrava.api.v3.model.reference.StravaStreamResolutionType,
 	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
 	 */
 	@Override
-	public List<StravaStream> getActivityStreams(final Integer activityId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+	public List<StravaStream> getActivityStreams(final Long activityId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types) {
 		return this.streamService.getActivityStreams(activityId, resolution, seriesType, types);
 	}
@@ -468,10 +468,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of streams for the activity, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Long activityId) {
 		return this.streamService.getActivityStreamsAsync(activityId);
 	}
 
@@ -486,10 +486,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is
 	 *            being reduced
 	 * @return List of streams for the activity, or <code>null</code> if the activity does not exist.
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Long, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
 	 */
 	@Override
-	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Integer activityId, final StravaStreamResolutionType resolution,
+	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Long activityId, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
 		return this.streamService.getActivityStreamsAsync(activityId, resolution, seriesType, types);
 	}
@@ -937,20 +937,20 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param activityId Activity identifier
 	 * @throws NotFoundException If the activity does not exist on Strava
-	 * @see javastrava.api.v3.service.ActivityService#giveKudos(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#giveKudos(java.lang.Long)
 	 */
 	@Override
-	public void giveKudos(final Integer activityId) throws NotFoundException {
+	public void giveKudos(final Long activityId) throws NotFoundException {
 		this.activityService.giveKudos(activityId);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @throws NotFoundException If the activity does not exist on Strava
-	 * @see javastrava.api.v3.service.ActivityService#giveKudosAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#giveKudosAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<Void> giveKudosAsync(final Integer activityId) throws NotFoundException {
+	public CompletableFuture<Void> giveKudosAsync(final Long activityId) throws NotFoundException {
 		return this.activityService.giveKudosAsync(activityId);
 	}
 
@@ -1032,10 +1032,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of comments on the activity, first page only, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long)
 	 */
 	@Override
-	public List<StravaComment> listActivityComments(final Integer activityId) {
+	public List<StravaComment> listActivityComments(final Long activityId) {
 		return this.activityService.listActivityComments(activityId);
 	}
 
@@ -1043,10 +1043,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param markdown Whether to include markdown in comments
 	 * @return List of comments on the activity, first page only, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Integer, java.lang.Boolean)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long, java.lang.Boolean)
 	 */
 	@Override
-	public List<StravaComment> listActivityComments(final Integer activityId, final Boolean markdown) {
+	public List<StravaComment> listActivityComments(final Long activityId, final Boolean markdown) {
 		return this.activityService.listActivityComments(activityId, markdown);
 	}
 
@@ -1055,10 +1055,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param markdown Whether to include markdown in comments
 	 * @param pagingInstruction Paging instruction
 	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Integer, java.lang.Boolean, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long, java.lang.Boolean, javastrava.util.Paging)
 	 */
 	@Override
-	public List<StravaComment> listActivityComments(final Integer activityId, final Boolean markdown, final Paging pagingInstruction) {
+	public List<StravaComment> listActivityComments(final Long activityId, final Boolean markdown, final Paging pagingInstruction) {
 		return this.activityService.listActivityComments(activityId, markdown, pagingInstruction);
 	}
 
@@ -1066,20 +1066,20 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param pagingInstruction Paging instruction
 	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
-	public List<StravaComment> listActivityComments(final Integer activityId, final Paging pagingInstruction) {
+	public List<StravaComment> listActivityComments(final Long activityId, final Paging pagingInstruction) {
 		return this.activityService.listActivityComments(activityId, pagingInstruction);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of comments on the activity, first page only, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId) {
 		return this.activityService.listActivityCommentsAsync(activityId);
 	}
 
@@ -1087,10 +1087,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param markdown Whether to include markdown in comments
 	 * @return List of comments on the activity, first page only, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Integer, java.lang.Boolean)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, java.lang.Boolean)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Boolean markdown) {
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Boolean markdown) {
 		return this.activityService.listActivityCommentsAsync(activityId, markdown);
 	}
 
@@ -1099,10 +1099,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param markdown Whether to include markdown in comments
 	 * @param pagingInstruction Paging instruction
 	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Integer, java.lang.Boolean, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, java.lang.Boolean, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Boolean markdown, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Boolean markdown, final Paging pagingInstruction) {
 		return this.activityService.listActivityCommentsAsync(activityId, markdown, pagingInstruction);
 	}
 
@@ -1110,20 +1110,20 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param pagingInstruction Paging instruction
 	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Paging pagingInstruction) {
 		return this.activityService.listActivityCommentsAsync(activityId, pagingInstruction);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of athletes who have given kudos to the activity, first page only, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(java.lang.Long)
 	 */
 	@Override
-	public List<StravaAthlete> listActivityKudoers(final Integer activityId) {
+	public List<StravaAthlete> listActivityKudoers(final Long activityId) {
 		return this.activityService.listActivityKudoers(activityId);
 	}
 
@@ -1131,20 +1131,20 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param pagingInstruction Paging instruction
 	 * @return List of athletes who have given kudos to the activity, according with the paging instruction, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
-	public List<StravaAthlete> listActivityKudoers(final Integer activityId, final Paging pagingInstruction) {
+	public List<StravaAthlete> listActivityKudoers(final Long activityId, final Paging pagingInstruction) {
 		return this.activityService.listActivityKudoers(activityId, pagingInstruction);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of athletes who have given kudos to the activity, first page only, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoersAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoersAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Long activityId) {
 		return this.activityService.listActivityKudoersAsync(activityId);
 	}
 
@@ -1152,70 +1152,70 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param pagingInstruction Paging instruction
 	 * @return List of athletes who have given kudos to the activity, according with the paging instruction, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoersAsync(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoersAsync(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Integer activityId, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Long activityId, final Paging pagingInstruction) {
 		return this.activityService.listActivityKudoersAsync(activityId, pagingInstruction);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of laps belonging to the activity, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityLaps(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityLaps(java.lang.Long)
 	 */
 	@Override
-	public List<StravaLap> listActivityLaps(final Integer activityId) {
+	public List<StravaLap> listActivityLaps(final Long activityId) {
 		return this.activityService.listActivityLaps(activityId);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of laps belonging to the activity, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityLapsAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityLapsAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaLap>> listActivityLapsAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaLap>> listActivityLapsAsync(final Long activityId) {
 		return this.activityService.listActivityLapsAsync(activityId);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of photos attached to the activity, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityPhotos(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityPhotos(java.lang.Long)
 	 */
 	@Override
-	public List<StravaPhoto> listActivityPhotos(final Integer activityId) {
+	public List<StravaPhoto> listActivityPhotos(final Long activityId) {
 		return this.activityService.listActivityPhotos(activityId);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of photos attached to the activity, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityPhotosAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityPhotosAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaPhoto>> listActivityPhotosAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaPhoto>> listActivityPhotosAsync(final Long activityId) {
 		return this.activityService.listActivityPhotosAsync(activityId);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return The activity zones for the activity (if it exists), or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityZones(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityZones(java.lang.Long)
 	 */
 	@Override
-	public List<StravaActivityZone> listActivityZones(final Integer activityId) {
+	public List<StravaActivityZone> listActivityZones(final Long activityId) {
 		return this.activityService.listActivityZones(activityId);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return The activity zones for the activity (if it exists), or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityZonesAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityZonesAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivityZone>> listActivityZonesAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaActivityZone>> listActivityZonesAsync(final Long activityId) {
 		return this.activityService.listActivityZonesAsync(activityId);
 	}
 
@@ -1225,10 +1225,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * </p>
 	 * @param activityId Activity identifier
 	 * @return List of all comments on the activity
-	 * @see javastrava.api.v3.service.ActivityService#listAllActivityComments(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllActivityComments(java.lang.Long)
 	 */
 	@Override
-	public List<StravaComment> listAllActivityComments(final Integer activityId) {
+	public List<StravaComment> listAllActivityComments(final Long activityId) {
 		return this.activityService.listAllActivityComments(activityId);
 	}
 
@@ -1238,10 +1238,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * </p>
 	 * @param activityId Activity identifier
 	 * @return List of all comments on the activity
-	 * @see javastrava.api.v3.service.ActivityService#listAllActivityCommentsAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllActivityCommentsAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listAllActivityCommentsAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaComment>> listAllActivityCommentsAsync(final Long activityId) {
 		return this.activityService.listAllActivityCommentsAsync(activityId);
 	}
 
@@ -1251,10 +1251,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * </p>
 	 * @param activityId Activity identifier
 	 * @return List of ALL athletes giving kudos to the activity
-	 * @see javastrava.api.v3.service.ActivityService#listAllActivityKudoers(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllActivityKudoers(java.lang.Long)
 	 */
 	@Override
-	public List<StravaAthlete> listAllActivityKudoers(final Integer activityId) {
+	public List<StravaAthlete> listAllActivityKudoers(final Long activityId) {
 		return this.activityService.listAllActivityKudoers(activityId);
 	}
 
@@ -1264,10 +1264,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * </p>
 	 * @param activityId Activity identifier
 	 * @return List of ALL athletes giving kudos to the activity
-	 * @see javastrava.api.v3.service.ActivityService#listAllActivityKudoersAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllActivityKudoersAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaAthlete>> listAllActivityKudoersAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaAthlete>> listAllActivityKudoersAsync(final Long activityId) {
 		return this.activityService.listAllActivityKudoersAsync(activityId);
 	}
 
@@ -1561,10 +1561,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * </p>
 	 * @param activityId Activity identifier
 	 * @return List of ALL related activities
-	 * @see javastrava.api.v3.service.ActivityService#listAllRelatedActivities(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllRelatedActivities(java.lang.Long)
 	 */
 	@Override
-	public List<StravaActivity> listAllRelatedActivities(final Integer activityId) {
+	public List<StravaActivity> listAllRelatedActivities(final Long activityId) {
 		return this.activityService.listAllRelatedActivities(activityId);
 	}
 
@@ -1574,10 +1574,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * </p>
 	 * @param activityId Activity identifier
 	 * @return List of ALL related activities
-	 * @see javastrava.api.v3.service.ActivityService#listAllRelatedActivitiesAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllRelatedActivitiesAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listAllRelatedActivitiesAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaActivity>> listAllRelatedActivitiesAsync(final Long activityId) {
 		return this.activityService.listAllRelatedActivitiesAsync(activityId);
 	}
 
@@ -2243,10 +2243,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of activities that Strava has determined were done 'with' the identified activity, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Long)
 	 */
 	@Override
-	public List<StravaActivity> listRelatedActivities(final Integer activityId) {
+	public List<StravaActivity> listRelatedActivities(final Long activityId) {
 		return this.activityService.listRelatedActivities(activityId);
 	}
 
@@ -2254,20 +2254,20 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param pagingInstruction Paging instruction
 	 * @return List of activities that Strava has determined were done 'with' the identified activity, according with the paging instruction, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
-	public List<StravaActivity> listRelatedActivities(final Integer activityId, final Paging pagingInstruction) {
+	public List<StravaActivity> listRelatedActivities(final Long activityId, final Paging pagingInstruction) {
 		return this.activityService.listRelatedActivities(activityId, pagingInstruction);
 	}
 
 	/**
 	 * @param activityId Activity identifier
 	 * @return List of activities that Strava has determined were done 'with' the identified activity, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Long activityId) {
 		return this.activityService.listRelatedActivitiesAsync(activityId);
 	}
 
@@ -2275,10 +2275,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activityId Activity identifier
 	 * @param pagingInstruction Paging instruction
 	 * @return List of activities that Strava has determined were done 'with' the identified activity, according with the paging instruction, or <code>null</code> if the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Integer activityId, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Long activityId, final Paging pagingInstruction) {
 		return this.activityService.listRelatedActivitiesAsync(activityId, pagingInstruction);
 	}
 
@@ -2532,10 +2532,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activity Representation of fields to be updated on the activity
 	 * @return The activity as updated on Strava
 	 * @throws NotFoundException If the activity with the given id does not exist
-	 * @see javastrava.api.v3.service.ActivityService#updateActivity(java.lang.Integer, javastrava.api.v3.model.StravaActivityUpdate)
+	 * @see javastrava.api.v3.service.ActivityService#updateActivity(java.lang.Long, javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
-	public StravaActivity updateActivity(final Integer activityId, final StravaActivityUpdate activity) throws NotFoundException {
+	public StravaActivity updateActivity(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException {
 		return this.activityService.updateActivity(activityId, activity);
 	}
 
@@ -2544,10 +2544,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param activity Representation of fields to be updated on the activity
 	 * @return The activity as updated on Strava
 	 * @throws NotFoundException If the activity with the given id does not exist
-	 * @see javastrava.api.v3.service.ActivityService#updateActivityAsync(java.lang.Integer, javastrava.api.v3.model.StravaActivityUpdate)
+	 * @see javastrava.api.v3.service.ActivityService#updateActivityAsync(java.lang.Long, javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
-	public CompletableFuture<StravaActivity> updateActivityAsync(final Integer activityId, final StravaActivityUpdate activity) throws NotFoundException {
+	public CompletableFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException {
 		return this.activityService.updateActivityAsync(activityId, activity);
 	}
 

@@ -7,7 +7,7 @@ import javastrava.json.impl.gson.serializer.ActivityZoneTypeSerializer;
 
 /**
  * <p>
- * Type of activity zone - see {@link ActivityService#listActivityZones(Integer)}
+ * Type of activity zone - see {@link ActivityService#listActivityZones(Long)}
  * </p>
  *
  * @author Dan Shannon

@@ -4,7 +4,7 @@ import javastrava.api.v3.service.ActivityService;
 
 /**
  * <p>
- * Split time data associated with runs. Comes in metric (1km) and imperial (1 mile) versions. See {@link ActivityService#getActivity(Integer)}
+ * Split time data associated with runs. Comes in metric (1km) and imperial (1 mile) versions. See {@link ActivityService#getActivity(Long)}
  * </p>
  *
  * @author Dan Shannon

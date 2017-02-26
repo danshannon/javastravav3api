@@ -64,7 +64,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	/**
 	 * Cache of activities
 	 */
-	private final StravaCache<StravaActivity, Integer> activityCache;
+	private final StravaCache<StravaActivity, Long> activityCache;
 
 	/**
 	 * Cache of comments
@@ -74,7 +74,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	/**
 	 * Cache of laps
 	 */
-	private final StravaCache<StravaLap, Integer> lapCache;
+	private final StravaCache<StravaLap, Long> lapCache;
 
 	/**
 	 * Cache of photos
@@ -90,10 +90,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	private ActivityServiceImpl(final Token token) {
 		super(token);
-		this.activityCache = new StravaCacheImpl<StravaActivity, Integer>(StravaActivity.class, token);
-		this.commentCache = new StravaCacheImpl<StravaComment, Integer>(StravaComment.class, token);
-		this.lapCache = new StravaCacheImpl<StravaLap, Integer>(StravaLap.class, token);
-		this.photoCache = new StravaCacheImpl<StravaPhoto, Integer>(StravaPhoto.class, token);
+		this.activityCache = new StravaCacheImpl<>(StravaActivity.class, token);
+		this.commentCache = new StravaCacheImpl<>(StravaComment.class, token);
+		this.lapCache = new StravaCacheImpl<>(StravaLap.class, token);
+		this.photoCache = new StravaCacheImpl<>(StravaPhoto.class, token);
 	}
 
 	/**
@@ -108,11 +108,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#createComment(java.lang.Integer,
+	 * @see javastrava.api.v3.service.ActivityService#createComment(java.lang.Long,
 	 *      java.lang.String)
 	 */
 	@Override
-	public StravaComment createComment(final Integer activityId, final String text) throws NotFoundException,
+	public StravaComment createComment(final Long activityId, final String text) throws NotFoundException,
 	BadRequestException {
 		//		if ((text == null) || text.equals("")) { //$NON-NLS-1$
 		//			throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
@@ -147,10 +147,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#createCommentAsync(java.lang.Integer, java.lang.String)
+	 * @see javastrava.api.v3.service.ActivityService#createCommentAsync(java.lang.Long, java.lang.String)
 	 */
 	@Override
-	public CompletableFuture<StravaComment> createCommentAsync(final Integer activityId, final String text) throws NotFoundException, BadRequestException {
+	public CompletableFuture<StravaComment> createCommentAsync(final Long activityId, final String text) throws NotFoundException, BadRequestException {
 		return StravaServiceImpl.future(() -> {
 			return createComment(activityId, text);
 		});
@@ -207,10 +207,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(java.lang.Long)
 	 */
 	@Override
-	public StravaActivity deleteActivity(final Integer id) throws NotFoundException {
+	public StravaActivity deleteActivity(final Long id) throws NotFoundException {
 		// Token must have write access
 		if (!getToken().hasWriteAccess()) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteActivityWithoutWriteAccess")); //$NON-NLS-1$
@@ -242,21 +242,21 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#deleteActivityAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#deleteActivityAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<StravaActivity> deleteActivityAsync(final Integer activityId) throws NotFoundException {
+	public CompletableFuture<StravaActivity> deleteActivityAsync(final Long activityId) throws NotFoundException {
 		return StravaServiceImpl.future(() -> {
 			return deleteActivity(activityId);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#deleteComment(java.lang.Integer,
+	 * @see javastrava.api.v3.service.ActivityService#deleteComment(java.lang.Long,
 	 *      java.lang.Integer)
 	 */
 	@Override
-	public void deleteComment(final Integer activityId, final Integer commentId) throws NotFoundException {
+	public void deleteComment(final Long activityId, final Integer commentId) throws NotFoundException {
 		// TODO This is a workaround for issue #63 (can delete comments without write access)
 		// Token must have write access
 		if (!(getToken().hasWriteAccess())) {
@@ -294,10 +294,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#deleteCommentAsync(java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#deleteCommentAsync(java.lang.Long, java.lang.Integer)
 	 */
 	@Override
-	public CompletableFuture<Void> deleteCommentAsync(final Integer activityId, final Integer commentId) throws NotFoundException {
+	public CompletableFuture<Void> deleteCommentAsync(final Long activityId, final Integer commentId) throws NotFoundException {
 		return StravaServiceImpl.future(() -> {
 			deleteComment(activityId, commentId);
 			return null;
@@ -321,7 +321,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 * @param update Updates to be made to the activity
 	 * @return Activity returned from Strava as a result of the update
 	 */
-	private StravaActivity doUpdateActivity(final Integer id, final StravaActivityUpdate update) {
+	private StravaActivity doUpdateActivity(final Long id, final StravaActivityUpdate update) {
 		try {
 			this.activityCache.remove(id);
 			final StravaActivity response = this.api.updateActivity(id, update);
@@ -332,19 +332,19 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Long)
 	 */
 	@Override
-	public StravaActivity getActivity(final Integer id) {
+	public StravaActivity getActivity(final Long id) {
 		return getActivity(id, Boolean.FALSE);
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Integer,
+	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Long,
 	 *      java.lang.Boolean)
 	 */
 	@Override
-	public StravaActivity getActivity(final Integer activityId, final Boolean includeAllEfforts) {
+	public StravaActivity getActivity(final Long activityId, final Boolean includeAllEfforts) {
 		// Attempt to get the activity from cache
 		StravaActivity stravaResponse = this.activityCache.get(activityId);
 		if ((stravaResponse != null) && (stravaResponse.getResourceState() != StravaResourceState.META)) {
@@ -371,30 +371,30 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#getActivityAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#getActivityAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<StravaActivity> getActivityAsync(final Integer activityId) {
+	public CompletableFuture<StravaActivity> getActivityAsync(final Long activityId) {
 		return StravaServiceImpl.future(() -> {
 			return getActivity(activityId);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#getActivityAsync(java.lang.Integer, java.lang.Boolean)
+	 * @see javastrava.api.v3.service.ActivityService#getActivityAsync(java.lang.Long, java.lang.Boolean)
 	 */
 	@Override
-	public CompletableFuture<StravaActivity> getActivityAsync(final Integer activityId, final Boolean includeAllEfforts) {
+	public CompletableFuture<StravaActivity> getActivityAsync(final Long activityId, final Boolean includeAllEfforts) {
 		return StravaServiceImpl.future(() -> {
 			return getActivity(activityId, includeAllEfforts);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#giveKudos(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#giveKudos(java.lang.Long)
 	 */
 	@Override
-	public void giveKudos(final Integer activityId) throws NotFoundException {
+	public void giveKudos(final Long activityId) throws NotFoundException {
 		// Must have write access to give kudos
 		if (!(getToken().hasWriteAccess())) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.kudosWithoutWriteAccess")); //$NON-NLS-1$
@@ -416,10 +416,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#giveKudosAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#giveKudosAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<Void> giveKudosAsync(final Integer activityId) throws NotFoundException {
+	public CompletableFuture<Void> giveKudosAsync(final Long activityId) throws NotFoundException {
 		return StravaServiceImpl.future(() -> {
 			giveKudos(activityId);
 			return null;
@@ -427,28 +427,28 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long)
 	 */
 	@Override
-	public List<StravaComment> listActivityComments(final Integer id) {
+	public List<StravaComment> listActivityComments(final Long id) {
 		return listActivityComments(id, Boolean.FALSE);
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Integer,
+	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long,
 	 *      java.lang.Boolean)
 	 */
 	@Override
-	public List<StravaComment> listActivityComments(final Integer id, final Boolean markdown) {
+	public List<StravaComment> listActivityComments(final Long id, final Boolean markdown) {
 		return listActivityComments(id, markdown, null);
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(Integer,
+	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(Long,
 	 *      Boolean, Paging)
 	 */
 	@Override
-	public List<StravaComment> listActivityComments(final Integer id, final Boolean markdown,
+	public List<StravaComment> listActivityComments(final Long id, final Boolean markdown,
 			final Paging pagingInstruction) {
 		// If the activity doesn't exist, then neither do the comments
 		final StravaActivity activity = getActivity(id);
@@ -477,68 +477,68 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Integer,
+	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long,
 	 *      javastrava.util.Paging)
 	 */
 	@Override
-	public List<StravaComment> listActivityComments(final Integer id, final Paging pagingInstruction) {
+	public List<StravaComment> listActivityComments(final Long id, final Paging pagingInstruction) {
 		return listActivityComments(id, Boolean.FALSE, pagingInstruction);
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId) {
 		return StravaServiceImpl.future(() -> {
 			return listActivityComments(activityId);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Integer, java.lang.Boolean)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, java.lang.Boolean)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Boolean markdown) {
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Boolean markdown) {
 		return StravaServiceImpl.future(() -> {
 			return listActivityComments(activityId, markdown);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Integer, java.lang.Boolean, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, java.lang.Boolean, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Boolean markdown, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Boolean markdown, final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return listActivityComments(activityId, markdown, pagingInstruction);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Integer activityId, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return listActivityComments(activityId, pagingInstruction);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(java.lang.Long)
 	 */
 	@Override
-	public List<StravaAthlete> listActivityKudoers(final Integer id) {
+	public List<StravaAthlete> listActivityKudoers(final Long id) {
 		return listActivityKudoers(id, null);
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(Integer,
+	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(Long,
 	 *      Paging)
 	 */
 	@Override
-	public List<StravaAthlete> listActivityKudoers(final Integer id, final Paging pagingInstruction) {
+	public List<StravaAthlete> listActivityKudoers(final Long id, final Paging pagingInstruction) {
 		// If the activity doesn't exist, then neither do the kudoers
 		final StravaActivity activity = getActivity(id);
 		if (activity == null) {
@@ -556,30 +556,30 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoersAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoersAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Long activityId) {
 		return StravaServiceImpl.future(() -> {
 			return listActivityKudoers(activityId);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoersAsync(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoersAsync(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Integer activityId, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaAthlete>> listActivityKudoersAsync(final Long activityId, final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return listActivityKudoers(activityId, pagingInstruction);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityLaps(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityLaps(java.lang.Long)
 	 */
 	@Override
-	public List<StravaLap> listActivityLaps(final Integer id) {
+	public List<StravaLap> listActivityLaps(final Long id) {
 		// If the activity doesn't exist, return null
 		final StravaActivity activity = getActivity(id);
 		if (activity == null) {
@@ -619,20 +619,20 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityLapsAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityLapsAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaLap>> listActivityLapsAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaLap>> listActivityLapsAsync(final Long activityId) {
 		return StravaServiceImpl.future(() -> {
 			return listActivityLaps(activityId);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityPhotos(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityPhotos(java.lang.Long)
 	 */
 	@Override
-	public List<StravaPhoto> listActivityPhotos(final Integer id) {
+	public List<StravaPhoto> listActivityPhotos(final Long id) {
 		// If the activity doesn't exist, return null
 		final StravaActivity activity = getActivity(id);
 		if (activity == null) {
@@ -671,20 +671,20 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityPhotosAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityPhotosAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaPhoto>> listActivityPhotosAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaPhoto>> listActivityPhotosAsync(final Long activityId) {
 		return StravaServiceImpl.future(() -> {
 			return listActivityPhotos(activityId);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityZones(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityZones(java.lang.Long)
 	 */
 	@Override
-	public List<StravaActivityZone> listActivityZones(final Integer id) {
+	public List<StravaActivityZone> listActivityZones(final Long id) {
 		// If the activity doesn't exist, return null
 		final StravaActivity activity = getActivity(id);
 		if (activity == null) {
@@ -704,46 +704,46 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityZonesAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityZonesAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivityZone>> listActivityZonesAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaActivityZone>> listActivityZonesAsync(final Long activityId) {
 		return StravaServiceImpl.future(() -> {
 			return listActivityZones(activityId);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAllActivityComments(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllActivityComments(java.lang.Long)
 	 */
 	@Override
-	public List<StravaComment> listAllActivityComments(final Integer activityId) {
+	public List<StravaComment> listAllActivityComments(final Long activityId) {
 		return PagingHandler.handleListAll(thisPage -> listActivityComments(activityId, thisPage));
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAllActivityCommentsAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllActivityCommentsAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listAllActivityCommentsAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaComment>> listAllActivityCommentsAsync(final Long activityId) {
 		return StravaServiceImpl.future(() -> {
 			return listAllActivityComments(activityId);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAllActivityKudoers(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllActivityKudoers(java.lang.Long)
 	 */
 	@Override
-	public List<StravaAthlete> listAllActivityKudoers(final Integer activityId) {
+	public List<StravaAthlete> listAllActivityKudoers(final Long activityId) {
 		return PagingHandler.handleListAll(thisPage -> listActivityKudoers(activityId, thisPage));
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAllActivityKudoersAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllActivityKudoersAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaAthlete>> listAllActivityKudoersAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaAthlete>> listAllActivityKudoersAsync(final Long activityId) {
 		return StravaServiceImpl.future(() -> {
 			return listAllActivityKudoers(activityId);
 		});
@@ -810,18 +810,18 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAllRelatedActivities(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllRelatedActivities(java.lang.Long)
 	 */
 	@Override
-	public List<StravaActivity> listAllRelatedActivities(final Integer activityId) {
+	public List<StravaActivity> listAllRelatedActivities(final Long activityId) {
 		return PagingHandler.handleListAll(thisPage -> listRelatedActivities(activityId, thisPage));
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAllRelatedActivitiesAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listAllRelatedActivitiesAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listAllRelatedActivitiesAsync(final Integer activityId) {
+	public CompletableFuture<List<StravaActivity>> listAllRelatedActivitiesAsync(final Long activityId) {
 		return StravaServiceImpl.future(() -> {
 			return listAllRelatedActivities(activityId);
 		});
@@ -966,19 +966,19 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Long)
 	 */
 	@Override
-	public List<StravaActivity> listRelatedActivities(final Integer id) {
+	public List<StravaActivity> listRelatedActivities(final Long id) {
 		return listRelatedActivities(id, null);
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Integer,
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Long,
 	 *      javastrava.util.Paging)
 	 */
 	@Override
-	public List<StravaActivity> listRelatedActivities(final Integer id, final Paging pagingInstruction) {
+	public List<StravaActivity> listRelatedActivities(final Long id, final Paging pagingInstruction) {
 		// Attempt to get the activities from Strava
 		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
 				.asList(ActivityServiceImpl.this.api.listRelatedActivities(id, thisPage.getPage(),
@@ -995,30 +995,30 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Integer id) {
+	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Long id) {
 		return StravaServiceImpl.future(() -> {
 			return listRelatedActivities(id);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Integer, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Integer id, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Long id, final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return listRelatedActivities(id, pagingInstruction);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#updateActivity(Integer,javastrava.api.v3.model.StravaActivityUpdate)
+	 * @see javastrava.api.v3.service.ActivityService#updateActivity(Long,javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
-	public StravaActivity updateActivity(final Integer activityId, final StravaActivityUpdate activity)
+	public StravaActivity updateActivity(final Long activityId, final StravaActivityUpdate activity)
 			throws NotFoundException {
 		final StravaActivityUpdate update = activity;
 		if (activity == null) {
@@ -1067,10 +1067,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#updateActivityAsync(java.lang.Integer, javastrava.api.v3.model.StravaActivityUpdate)
+	 * @see javastrava.api.v3.service.ActivityService#updateActivityAsync(java.lang.Long, javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
-	public CompletableFuture<StravaActivity> updateActivityAsync(final Integer activityId, final StravaActivityUpdate activity) throws NotFoundException {
+	public CompletableFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException {
 		return StravaServiceImpl.future(() -> {
 			return updateActivity(activityId, activity);
 		});

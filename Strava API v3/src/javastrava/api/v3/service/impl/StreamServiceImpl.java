@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaActivity;
@@ -36,12 +37,7 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	 */
 	private static StravaStreamType[] getAllStreamTypes() {
 		final List<StravaStreamType> types = Arrays.asList(StravaStreamType.values());
-		final List<StravaStreamType> returnList = new ArrayList<StravaStreamType>();
-		for (final StravaStreamType type : types) {
-			if (type != StravaStreamType.UNKNOWN) {
-				returnList.add(type);
-			}
-		}
+		final List<StravaStreamType> returnList = types.stream().filter(type -> type != StravaStreamType.UNKNOWN).collect(Collectors.toList());
 		return returnList.toArray(new StravaStreamType[returnList.size()]);
 	}
 
@@ -145,20 +141,20 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(java.lang.Integer)
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(java.lang.Long)
 	 */
 	@Override
-	public List<StravaStream> getActivityStreams(final Integer activityId) {
+	public List<StravaStream> getActivityStreams(final Long activityId) {
 		return getActivityStreams(activityId, null, null, getAllStreamTypes());
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(Integer,
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(Long,
 	 *      StravaStreamResolutionType, StravaStreamSeriesDownsamplingType,
 	 *      StravaStreamType...)
 	 */
 	@Override
-	public List<StravaStream> getActivityStreams(final Integer activityId, final StravaStreamResolutionType resolution,
+	public List<StravaStream> getActivityStreams(final Long activityId, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
 		StravaStreamType[] typesToGet = types;
 		validateArguments(resolution, seriesType, typesToGet);
@@ -176,10 +172,10 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 
 		// If it's private, then don't return the streams, just an empty list
 		if (activity.getResourceState() == StravaResourceState.PRIVATE) {
-			return new ArrayList<StravaStream>();
+			return new ArrayList<>();
 		}
 
-		List<StravaStream> streams = null;
+		List<StravaStream> streams;
 		try {
 			streams = Arrays.asList(this.api.getActivityStreams(activityId, typeString(typesToGet), resolution,
 					seriesType));
@@ -191,7 +187,7 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 
 		// TODO This is a workaround for issue javastrava-api #21
 		// (https://github.com/danshannon/javastravav3api/issues/21)
-		if ((streams != null) && (resolution == null)) {
+		if (resolution == null) {
 			for (final StravaStream stream : streams) {
 				stream.setResolution(null);
 			}
@@ -202,24 +198,20 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Integer activityId) {
-		return StravaServiceImpl.future(() -> {
-			return getActivityStreams(activityId);
-		});
+	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Long activityId) {
+		return StravaServiceImpl.future(() -> getActivityStreams(activityId));
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Long, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
 	 */
 	@Override
-	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Integer activityId, final StravaStreamResolutionType resolution,
+	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Long activityId, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
-		return StravaServiceImpl.future(() -> {
-			return getActivityStreams(activityId, resolution, seriesType, types);
-		});
+		return StravaServiceImpl.future(() -> getActivityStreams(activityId, resolution, seriesType, types));
 	}
 
 	/**
@@ -255,7 +247,7 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 
 		// If its resource state is PRIVATE, then it's private duh
 		if (effort.getResourceState() == StravaResourceState.PRIVATE) {
-			return new ArrayList<StravaStream>();
+			return new ArrayList<>();
 		}
 
 		try {
@@ -272,9 +264,7 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	 */
 	@Override
 	public CompletableFuture<List<StravaStream>> getEffortStreamsAsync(final Long effortId) {
-		return StravaServiceImpl.future(() -> {
-			return getEffortStreams(effortId);
-		});
+		return StravaServiceImpl.future(() -> getEffortStreams(effortId));
 	}
 
 	/**
@@ -283,9 +273,7 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	@Override
 	public CompletableFuture<List<StravaStream>> getEffortStreamsAsync(final Long effortId, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
-		return StravaServiceImpl.future(() -> {
-			return getEffortStreams(effortId, resolution, seriesType, types);
-		});
+		return StravaServiceImpl.future(() -> getEffortStreams(effortId, resolution, seriesType, types));
 	}
 
 	/**
@@ -323,7 +311,7 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 
 		// If the segment is PRIVATE, then return an empty list
 		if (segment.getResourceState() == StravaResourceState.PRIVATE) {
-			return new ArrayList<StravaStream>();
+			return new ArrayList<>();
 		}
 
 		try {
@@ -340,9 +328,7 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	 */
 	@Override
 	public CompletableFuture<List<StravaStream>> getSegmentStreamsAsync(final Integer segmentId) {
-		return StravaServiceImpl.future(() -> {
-			return getSegmentStreams(segmentId);
-		});
+		return StravaServiceImpl.future(() -> getSegmentStreams(segmentId));
 	}
 
 	/**
@@ -351,9 +337,7 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 	@Override
 	public CompletableFuture<List<StravaStream>> getSegmentStreamsAsync(final Integer segmentId, final StravaStreamResolutionType resolution,
 			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
-		return StravaServiceImpl.future(() -> {
-			return getSegmentStreams(segmentId, resolution, seriesType, types);
-		});
+		return StravaServiceImpl.future(() -> getSegmentStreams(segmentId, resolution, seriesType, types));
 	}
 
 }
