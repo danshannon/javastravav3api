@@ -252,11 +252,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * <<<<<<< HEAD
-	 * 
-	 * @see javastrava.api.v3.service.ActivityService#deleteComment(java.lang.Integer, java.lang.Integer) =======
-	 * @see javastrava.api.v3.service.ActivityService#deleteComment(java.lang.Long, java.lang.Integer) >>>>>>>
-	 *      refs/remotes/origin/master
+	 * @see javastrava.api.v3.service.ActivityService#deleteComment(java.lang.Long, java.lang.Integer)
 	 */
 	@Override
 	public void deleteComment(final Long activityId, final Integer commentId) throws NotFoundException {
@@ -346,11 +342,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * <<<<<<< HEAD
-	 * 
-	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Integer, java.lang.Boolean) =======
-	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Long, java.lang.Boolean) >>>>>>>
-	 *      refs/remotes/origin/master
+	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Long, java.lang.Boolean)
 	 */
 	@Override
 	public StravaActivity getActivity(final Long activityId, final Boolean includeAllEfforts) {
@@ -444,11 +436,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * <<<<<<< HEAD
-	 * 
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Integer, java.lang.Boolean) =======
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long, java.lang.Boolean) >>>>>>>
-	 *      refs/remotes/origin/master
+	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long, java.lang.Boolean)
 	 */
 	@Override
 	public List<StravaComment> listActivityComments(final Long id, final Boolean markdown) {
@@ -982,11 +970,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * <<<<<<< HEAD
-	 * 
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Integer, javastrava.util.Paging) =======
-	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Long, javastrava.util.Paging) >>>>>>>
-	 *      refs/remotes/origin/master
+	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
 	public List<StravaActivity> listRelatedActivities(final Long id, final Paging pagingInstruction) {
