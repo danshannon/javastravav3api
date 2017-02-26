@@ -1,6 +1,3 @@
-/**
- *
- */
 package javastrava.api.v3.model;
 
 import java.time.ZonedDateTime;

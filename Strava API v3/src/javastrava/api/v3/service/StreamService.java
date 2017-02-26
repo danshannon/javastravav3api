@@ -59,7 +59,7 @@ public interface StreamService extends StravaService {
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
 	 */
-	public List<StravaStream> getActivityStreams(final Integer activityId);
+	public List<StravaStream> getActivityStreams(final Long activityId);
 
 	/**
 	 * <p>
@@ -106,7 +106,7 @@ public interface StreamService extends StravaService {
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
 	 */
-	public List<StravaStream> getActivityStreams(final Integer activityId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+	public List<StravaStream> getActivityStreams(final Long activityId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types);
 
 	/**
@@ -146,7 +146,7 @@ public interface StreamService extends StravaService {
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
 	 */
-	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Integer activityId);
+	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Long activityId);
 
 	/**
 	 * <p>
@@ -193,7 +193,7 @@ public interface StreamService extends StravaService {
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
 	 */
-	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Integer activityId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Long activityId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types);
 
 	/**

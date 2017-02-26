@@ -1,5 +1,6 @@
 package javastrava.api.v3.rest;
 
+import com.squareup.okhttp.RequestBody;
 import javastrava.api.v3.model.StravaUploadResponse;
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.rest.async.StravaAPICallback;
@@ -78,7 +79,7 @@ public interface UploadAPI {
 	@Multipart
 	@POST("/uploads")
 	public void upload(@Part("activity_type") final StravaActivityType activityType, @Part("name") final String name,
-			@Part("description") final String description, @Part("private") final Boolean _private, @Part("trainer") final Boolean trainer, @Part("commute") Boolean commute, @Part("data_type") final String dataType,
-			@Part("external_id") final String externalId, @Part("file") final TypedFile file, final StravaAPICallback<StravaUploadResponse> callback) throws BadRequestException;
+					   @Part("description") final String description, @Part("private") final Boolean _private, @Part("trainer") final Boolean trainer, @Part("commute") Boolean commute, @Part("data_type") final String dataType,
+					   @Part("external_id") final String externalId, @Part("file") final TypedFile file, final StravaAPICallback<StravaUploadResponse> callback) throws BadRequestException;
 
 }

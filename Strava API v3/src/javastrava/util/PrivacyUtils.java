@@ -1,6 +1,3 @@
-/**
- *
- */
 package javastrava.util;
 
 import java.util.ArrayList;
@@ -167,7 +164,7 @@ public class PrivacyUtils {
 	 * @param activityId the activity id to be given to the private activity
 	 * @return The private activity
 	 */
-	public static StravaActivity privateActivity(final Integer activityId) {
+	public static StravaActivity privateActivity(final Long activityId) {
 		final StravaActivity activity = new StravaActivity();
 		activity.setId(activityId);
 		activity.setResourceState(StravaResourceState.PRIVATE);

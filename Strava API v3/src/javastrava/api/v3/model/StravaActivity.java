@@ -21,11 +21,11 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaActivity implements StravaCacheable<Integer>{
+public class StravaActivity implements StravaCacheable<Long>{
 	/**
 	 * Strava's unique identifier for the activity
 	 */
-	private Integer id;
+	private Long id;
 	/**
 	 * State of the resource (summary, detailed, etc.)
 	 */
@@ -120,7 +120,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 *
 	 * <p>
 	 * To get the actual list of athletes who have left kudos, see
-	 * {@link ActivityService#listActivityKudoers(Integer, javastrava.util.Paging)}
+	 * {@link ActivityService#listActivityKudoers(Long, javastrava.util.Paging)}
 	 * </p>
 	 */
 	private Integer kudosCount;
@@ -132,7 +132,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 *
 	 * <p>
 	 * To get the actual list of comments, see
-	 * {@link ActivityService#listActivityComments(Integer, Boolean, javastrava.util.Paging)}
+	 * {@link ActivityService#listActivityComments(Long, Boolean, javastrava.util.Paging)}
 	 * </p>
 	 */
 	private Integer commentCount;
@@ -145,7 +145,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 * <p>
 	 * To get the list of activities by all the other people who also took part,
 	 * see
-	 * {@link ActivityService#listRelatedActivities(Integer, javastrava.util.Paging)}
+	 * {@link ActivityService#listRelatedActivities(Long, javastrava.util.Paging)}
 	 * </p>
 	 */
 	private Integer athleteCount;
@@ -156,7 +156,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 *
 	 * <p>
 	 * To get the actual photo details, see
-	 * {@link ActivityService#listActivityPhotos(Integer)}
+	 * {@link ActivityService#listActivityPhotos(Long)}
 	 * </p>
 	 */
 	private Integer photoCount;
@@ -168,7 +168,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 *
 	 * <p>
 	 * To get the actual photo details, see
-	 * {@link ActivityService#listActivityPhotos(Integer)}
+	 * {@link ActivityService#listActivityPhotos(Long)}
 	 * </p>
 	 */
 	private Integer totalPhotoCount;
@@ -181,7 +181,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 * <p>
 	 * If you want the actual set of GPS coordinates of the activity, then you
 	 * need to use
-	 * {@link StreamService#getActivityStreams(Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType...)}
+	 * {@link StreamService#getActivityStreams(Long, javastrava.api.v3.model.reference.StravaStreamResolutionType, javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType...)}
 	 * </p>
 	 */
 	private StravaMap map;
@@ -920,7 +920,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	 * @return the id
 	 */
 	@Override
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 	/**
@@ -1346,7 +1346,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(final Integer id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 	/**
