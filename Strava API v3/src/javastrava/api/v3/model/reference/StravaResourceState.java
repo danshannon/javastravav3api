@@ -16,19 +16,19 @@ public enum StravaResourceState implements StravaReferenceType<Integer> {
 	/**
 	 * Resource is currently being updated
 	 */
-	UPDATING(StravaConfig.integer("StravaResourceState.updating"), Messages.string("StravaResourceState.updating.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	UPDATING(StravaConfig.integer("StravaResourceState.updating"), Messages.string("StravaResourceState.updating.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This is a representation of the resource which contains the id ONLY (other than the resource state)
 	 */
-	META(StravaConfig.integer("StravaResourceState.meta"), Messages.string("StravaResourceState.meta.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	META(StravaConfig.integer("StravaResourceState.meta"), Messages.string("StravaResourceState.meta.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This is a summary representation of the resource
 	 */
-	SUMMARY(StravaConfig.integer("StravaResourceState.summary"), Messages.string("StravaResourceState.summary.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	SUMMARY(StravaConfig.integer("StravaResourceState.summary"), Messages.string("StravaResourceState.summary.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * This is a detailed representation of the resource
 	 */
-	DETAILED(StravaConfig.integer("StravaResourceState.detailed"), Messages.string("StravaResourceState.detailed.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	DETAILED(StravaConfig.integer("StravaResourceState.detailed"), Messages.string("StravaResourceState.detailed.description")), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * <p>
@@ -48,7 +48,9 @@ public enum StravaResourceState implements StravaReferenceType<Integer> {
 
 	/**
 	 * Used by JSON deserialisation
-	 * @param id The integer representation of this {@link StravaResourceState} as returned by the Strava API
+	 * 
+	 * @param id
+	 *            The integer representation of this {@link StravaResourceState} as returned by the Strava API
 	 * @return The matching {@link StravaResourceState}, or {@link StravaResourceState#UNKNOWN} if there is no match
 	 */
 	public static StravaResourceState create(final Integer id) {
@@ -60,20 +62,24 @@ public enum StravaResourceState implements StravaReferenceType<Integer> {
 		}
 		return StravaResourceState.UNKNOWN;
 	}
+
 	/**
 	 * Identifier
 	 */
-	private Integer	id;
+	private Integer id;
 
 	/**
 	 * Description
 	 */
-	private String	description;
+	private String description;
 
 	/**
 	 * Private constructor used by declarations
-	 * @param id Identifier - also used when serialising/deserialising to JSON
-	 * @param description Description
+	 * 
+	 * @param id
+	 *            Identifier - also used when serialising/deserialising to JSON
+	 * @param description
+	 *            Description
 	 */
 	private StravaResourceState(final Integer id, final String description) {
 		this.id = id;
@@ -98,6 +104,7 @@ public enum StravaResourceState implements StravaReferenceType<Integer> {
 
 	/**
 	 * Used by JSON serialisation
+	 * 
 	 * @return The integer representation of this {@link StravaResourceState} to be used with the Strava API
 	 * @see ResourceStateSerializer#serialize(StravaResourceState, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
@@ -111,6 +118,6 @@ public enum StravaResourceState implements StravaReferenceType<Integer> {
 	 */
 	@Override
 	public String toString() {
-		return this.id.toString();
+		return this.description.toString();
 	}
 }

@@ -2,6 +2,8 @@ package javastrava.api.v3.model;
 
 import java.time.ZonedDateTime;
 
+import com.google.gson.annotations.SerializedName;
+
 import javastrava.api.v3.model.reference.StravaClimbCategory;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentActivityType;
@@ -9,18 +11,16 @@ import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.StreamService;
 import javastrava.cache.StravaCacheable;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * <p>
- * {@link StravaSegment Segments} are specific sections of road. {@link StravaAthlete Athletes}' {@link StravaSegmentEffort efforts} are compared on these
- * segments and leaderboards are created.
+ * {@link StravaSegment Segments} are specific sections of road. {@link StravaAthlete Athletes}' {@link StravaSegmentEffort efforts}
+ * are compared on these segments and leaderboards are created.
  * </p>
  *
  * @author Dan Shannon
  *
  */
-public class StravaSegment implements StravaCacheable<Integer> {
+public class StravaSegment implements StravaCacheable<Integer>, StravaEntity {
 	/**
 	 * Strava's unique identifier for a segment
 	 */
@@ -150,7 +150,8 @@ public class StravaSegment implements StravaCacheable<Integer> {
 	private Integer starCount;
 
 	/**
-	 * The authenticated athlete's fastest effort on this segment - only returned with {@link SegmentService#listStarredSegments(Integer)}
+	 * The authenticated athlete's fastest effort on this segment - only returned with
+	 * {@link SegmentService#listStarredSegments(Integer)}
 	 */
 	private StravaSegmentEffort athletePrEffort;
 
@@ -674,28 +675,32 @@ public class StravaSegment implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param activityType the activityType to set
+	 * @param activityType
+	 *            the activityType to set
 	 */
 	public void setActivityType(final StravaSegmentActivityType activityType) {
 		this.activityType = activityType;
 	}
 
 	/**
-	 * @param athleteCount the athleteCount to set
+	 * @param athleteCount
+	 *            the athleteCount to set
 	 */
 	public void setAthleteCount(final Integer athleteCount) {
 		this.athleteCount = athleteCount;
 	}
 
 	/**
-	 * @param athletePrEffort the athletePrEffort to set
+	 * @param athletePrEffort
+	 *            the athletePrEffort to set
 	 */
 	public void setAthletePrEffort(final StravaSegmentEffort athletePrEffort) {
 		this.athletePrEffort = athletePrEffort;
 	}
 
 	/**
-	 * @param athleteSegmentStats the athleteSegmentStats to set
+	 * @param athleteSegmentStats
+	 *            the athleteSegmentStats to set
 	 */
 	@Deprecated
 	public void setAthleteSegmentStats(final StravaAthleteSegmentStats athleteSegmentStats) {
@@ -703,70 +708,80 @@ public class StravaSegment implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param averageGrade the averageGrade to set
+	 * @param averageGrade
+	 *            the averageGrade to set
 	 */
 	public void setAverageGrade(final Float averageGrade) {
 		this.averageGrade = averageGrade;
 	}
 
 	/**
-	 * @param city the city to set
+	 * @param city
+	 *            the city to set
 	 */
 	public void setCity(final String city) {
 		this.city = city;
 	}
 
 	/**
-	 * @param climbCategory the climbCategory to set
+	 * @param climbCategory
+	 *            the climbCategory to set
 	 */
 	public void setClimbCategory(final StravaClimbCategory climbCategory) {
 		this.climbCategory = climbCategory;
 	}
 
 	/**
-	 * @param country the country to set
+	 * @param country
+	 *            the country to set
 	 */
 	public void setCountry(final String country) {
 		this.country = country;
 	}
 
 	/**
-	 * @param createdAt the createdAt to set
+	 * @param createdAt
+	 *            the createdAt to set
 	 */
 	public void setCreatedAt(final ZonedDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	/**
-	 * @param distance the distance to set
+	 * @param distance
+	 *            the distance to set
 	 */
 	public void setDistance(final Float distance) {
 		this.distance = distance;
 	}
 
 	/**
-	 * @param effortCount the effortCount to set
+	 * @param effortCount
+	 *            the effortCount to set
 	 */
 	public void setEffortCount(final Integer effortCount) {
 		this.effortCount = effortCount;
 	}
 
 	/**
-	 * @param elevationHigh the elevationHigh to set
+	 * @param elevationHigh
+	 *            the elevationHigh to set
 	 */
 	public void setElevationHigh(final Float elevationHigh) {
 		this.elevationHigh = elevationHigh;
 	}
 
 	/**
-	 * @param elevationLow the elevationLow to set
+	 * @param elevationLow
+	 *            the elevationLow to set
 	 */
 	public void setElevationLow(final Float elevationLow) {
 		this.elevationLow = elevationLow;
 	}
 
 	/**
-	 * @param endLatitude the endLatitude to set
+	 * @param endLatitude
+	 *            the endLatitude to set
 	 */
 	@Deprecated
 	public void setEndLatitude(final Float endLatitude) {
@@ -774,14 +789,16 @@ public class StravaSegment implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param endLatlng the endLatlng to set
+	 * @param endLatlng
+	 *            the endLatlng to set
 	 */
 	public void setEndLatlng(final StravaMapPoint endLatlng) {
 		this.endLatlng = endLatlng;
 	}
 
 	/**
-	 * @param endLongitude the endLongitude to set
+	 * @param endLongitude
+	 *            the endLongitude to set
 	 */
 	@Deprecated
 	public void setEndLongitude(final Float endLongitude) {
@@ -789,49 +806,56 @@ public class StravaSegment implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param hazardous the hazardous to set
+	 * @param hazardous
+	 *            the hazardous to set
 	 */
 	public void setHazardous(final Boolean hazardous) {
 		this.hazardous = hazardous;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
 
 	/**
-	 * @param map the map to set
+	 * @param map
+	 *            the map to set
 	 */
 	public void setMap(final StravaMap map) {
 		this.map = map;
 	}
 
 	/**
-	 * @param maximumGrade the maximumGrade to set
+	 * @param maximumGrade
+	 *            the maximumGrade to set
 	 */
 	public void setMaximumGrade(final Float maximumGrade) {
 		this.maximumGrade = maximumGrade;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(final String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @param privateSegment the privateSegment to set
+	 * @param privateSegment
+	 *            the privateSegment to set
 	 */
 	public void setPrivateSegment(final Boolean privateSegment) {
 		this.privateSegment = privateSegment;
 	}
 
 	/**
-	 * @param prTime the prTime to set
+	 * @param prTime
+	 *            the prTime to set
 	 */
 	@Deprecated
 	public void setPrTime(final Integer prTime) {
@@ -839,35 +863,40 @@ public class StravaSegment implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param resourceState the resourceState to set
+	 * @param resourceState
+	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
 	}
 
 	/**
-	 * @param starCount the starCount to set
+	 * @param starCount
+	 *            the starCount to set
 	 */
 	public void setStarCount(final Integer starCount) {
 		this.starCount = starCount;
 	}
 
 	/**
-	 * @param starred the starred to set
+	 * @param starred
+	 *            the starred to set
 	 */
 	public void setStarred(final Boolean starred) {
 		this.starred = starred;
 	}
 
 	/**
-	 * @param starredDate the starredDate to set
+	 * @param starredDate
+	 *            the starredDate to set
 	 */
 	public void setStarredDate(final ZonedDateTime starredDate) {
 		this.starredDate = starredDate;
 	}
 
 	/**
-	 * @param startLatitude the startLatitude to set
+	 * @param startLatitude
+	 *            the startLatitude to set
 	 */
 	@Deprecated
 	public void setStartLatitude(final Float startLatitude) {
@@ -875,14 +904,16 @@ public class StravaSegment implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param startLatlng the startLatlng to set
+	 * @param startLatlng
+	 *            the startLatlng to set
 	 */
 	public void setStartLatlng(final StravaMapPoint startLatlng) {
 		this.startLatlng = startLatlng;
 	}
 
 	/**
-	 * @param startLongitude the startLongitude to set
+	 * @param startLongitude
+	 *            the startLongitude to set
 	 */
 	@Deprecated
 	public void setStartLongitude(final Float startLongitude) {
@@ -890,21 +921,24 @@ public class StravaSegment implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param state the state to set
+	 * @param state
+	 *            the state to set
 	 */
 	public void setState(final String state) {
 		this.state = state;
 	}
 
 	/**
-	 * @param totalElevationGain the totalElevationGain to set
+	 * @param totalElevationGain
+	 *            the totalElevationGain to set
 	 */
 	public void setTotalElevationGain(final Float totalElevationGain) {
 		this.totalElevationGain = totalElevationGain;
 	}
 
 	/**
-	 * @param updatedAt the updatedAt to set
+	 * @param updatedAt
+	 *            the updatedAt to set
 	 */
 	public void setUpdatedAt(final ZonedDateTime updatedAt) {
 		this.updatedAt = updatedAt;
@@ -915,15 +949,24 @@ public class StravaSegment implements StravaCacheable<Integer> {
 	 */
 	@Override
 	public String toString() {
-		return "StravaSegment [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activityType=" + this.activityType //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", distance=" + this.distance + ", averageGrade=" + this.averageGrade + ", maximumGrade=" + this.maximumGrade + ", elevationHigh=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.elevationHigh + ", elevationLow=" + this.elevationLow + ", startLatlng=" + this.startLatlng + ", endLatlng=" + this.endLatlng //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", climbCategory=" + this.climbCategory + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", privateSegment=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.privateSegment + ", starred=" + this.starred + ", createdAt=" + this.createdAt + ", updatedAt=" + this.updatedAt //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", totalElevationGain=" + this.totalElevationGain + ", map=" + this.map + ", effortCount=" + this.effortCount + ", athleteCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.athleteCount + ", hazardous=" + this.hazardous + ", starCount=" + this.starCount + ", athletePrEffort=" + this.athletePrEffort //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", starredDate=" + this.starredDate + ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", endLatitude=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.endLatitude + ", endLongitude=" + this.endLongitude + ", prTime=" + this.prTime + ", athleteSegmentStats=" + this.athleteSegmentStats //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return "StravaSegment [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activityType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.activityType
+				+ ", distance=" + this.distance + ", averageGrade=" + this.averageGrade + ", maximumGrade=" + this.maximumGrade //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", elevationHigh=" //$NON-NLS-1$
+				+ this.elevationHigh + ", elevationLow=" + this.elevationLow + ", startLatlng=" + this.startLatlng + ", endLatlng=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.endLatlng
+				+ ", climbCategory=" + this.climbCategory + ", city=" + this.city + ", state=" + this.state + ", country=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.country + ", privateSegment=" //$NON-NLS-1$
+				+ this.privateSegment + ", starred=" + this.starred + ", createdAt=" + this.createdAt + ", updatedAt=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.updatedAt
+				+ ", totalElevationGain=" + this.totalElevationGain + ", map=" + this.map + ", effortCount=" + this.effortCount //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", athleteCount=" //$NON-NLS-1$
+				+ this.athleteCount + ", hazardous=" + this.hazardous + ", starCount=" + this.starCount + ", athletePrEffort=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.athletePrEffort
+				+ ", starredDate=" + this.starredDate + ", startLatitude=" + this.startLatitude + ", startLongitude=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.startLongitude + ", endLatitude=" //$NON-NLS-1$
+				+ this.endLatitude + ", endLongitude=" + this.endLongitude + ", prTime=" + this.prTime + ", athleteSegmentStats=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.athleteSegmentStats
 				+ "]"; //$NON-NLS-1$
 	}
 }

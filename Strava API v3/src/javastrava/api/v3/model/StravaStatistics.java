@@ -10,57 +10,59 @@ import javastrava.api.v3.service.AthleteService;
  * @author Dan Shannon
  *
  */
-public class StravaStatistics {
+public class StravaStatistics implements StravaEntity {
 	/**
 	 * distance (in metres) of athlete's longest ride
 	 */
-	private Float biggestRideDistance;
+	private Float					biggestRideDistance;
 	/**
 	 * elevation gain (in metres) of athlete's biggest climb
 	 */
-	private Float biggestClimbElevationGain;
+	private Float					biggestClimbElevationGain;
 	/**
 	 * Statistics for last 28 days' rides
 	 */
-	private StravaStatisticsEntry recentRideTotals;
+	private StravaStatisticsEntry	recentRideTotals;
 	/**
 	 * Statistics for last 28 days' runs
 	 */
-	private StravaStatisticsEntry recentRunTotals;
+	private StravaStatisticsEntry	recentRunTotals;
 	/**
 	 * Statistics for last 28 days' swims
 	 */
-	private StravaStatisticsEntry recentSwimTotals;
+	private StravaStatisticsEntry	recentSwimTotals;
 	/**
 	 * Year to date ride statistics
 	 */
-	private StravaStatisticsEntry ytdRideTotals;
+	private StravaStatisticsEntry	ytdRideTotals;
 	/**
 	 * Year to date run statistics
 	 */
-	private StravaStatisticsEntry ytdRunTotals;
+	private StravaStatisticsEntry	ytdRunTotals;
 	/**
 	 * Year to date swim statistics
 	 */
-	private StravaStatisticsEntry ytdSwimTotals;
+	private StravaStatisticsEntry	ytdSwimTotals;
 	/**
 	 * All time ride statistics
 	 */
-	private StravaStatisticsEntry allRideTotals;
+	private StravaStatisticsEntry	allRideTotals;
 	/**
 	 * All time run statistics
 	 */
-	private StravaStatisticsEntry allRunTotals;
+	private StravaStatisticsEntry	allRunTotals;
 	/**
 	 * All time swim statistics
 	 */
-	private StravaStatisticsEntry allSwimTotals;
+	private StravaStatisticsEntry	allSwimTotals;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaStatistics() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -134,72 +136,84 @@ public class StravaStatistics {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the allRideTotals
 	 */
 	public StravaStatisticsEntry getAllRideTotals() {
 		return this.allRideTotals;
 	}
+
 	/**
 	 * @return the allRunTotals
 	 */
 	public StravaStatisticsEntry getAllRunTotals() {
 		return this.allRunTotals;
 	}
+
 	/**
 	 * @return the allSwimTotals
 	 */
 	public StravaStatisticsEntry getAllSwimTotals() {
 		return this.allSwimTotals;
 	}
+
 	/**
 	 * @return the biggestClimbElevationGain
 	 */
 	public Float getBiggestClimbElevationGain() {
 		return this.biggestClimbElevationGain;
 	}
+
 	/**
 	 * @return the biggestRideDistance
 	 */
 	public Float getBiggestRideDistance() {
 		return this.biggestRideDistance;
 	}
+
 	/**
 	 * @return the recentRideTotals
 	 */
 	public StravaStatisticsEntry getRecentRideTotals() {
 		return this.recentRideTotals;
 	}
+
 	/**
 	 * @return the recentRunTotals
 	 */
 	public StravaStatisticsEntry getRecentRunTotals() {
 		return this.recentRunTotals;
 	}
+
 	/**
 	 * @return the recentSwimTotals
 	 */
 	public StravaStatisticsEntry getRecentSwimTotals() {
 		return this.recentSwimTotals;
 	}
+
 	/**
 	 * @return the ytdRideTotals
 	 */
 	public StravaStatisticsEntry getYtdRideTotals() {
 		return this.ytdRideTotals;
 	}
+
 	/**
 	 * @return the ytdRunTotals
 	 */
 	public StravaStatisticsEntry getYtdRunTotals() {
 		return this.ytdRunTotals;
 	}
+
 	/**
 	 * @return the ytdSwimTotals
 	 */
 	public StravaStatisticsEntry getYtdSwimTotals() {
 		return this.ytdSwimTotals;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -217,80 +231,107 @@ public class StravaStatistics {
 		result = (prime * result) + ((this.ytdRunTotals == null) ? 0 : this.ytdRunTotals.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param allRideTotals the allRideTotals to set
+	 * @param allRideTotals
+	 *            the allRideTotals to set
 	 */
 	public void setAllRideTotals(final StravaStatisticsEntry allRideTotals) {
 		this.allRideTotals = allRideTotals;
 	}
+
 	/**
-	 * @param allRunTotals the allRunTotals to set
+	 * @param allRunTotals
+	 *            the allRunTotals to set
 	 */
 	public void setAllRunTotals(final StravaStatisticsEntry allRunTotals) {
 		this.allRunTotals = allRunTotals;
 	}
+
 	/**
-	 * @param allSwimTotals the allSwimTotals to set
+	 * @param allSwimTotals
+	 *            the allSwimTotals to set
 	 */
 	public void setAllSwimTotals(final StravaStatisticsEntry allSwimTotals) {
 		this.allSwimTotals = allSwimTotals;
 	}
+
 	/**
-	 * @param biggestClimbElevationGain the biggestClimbElevationGain to set
+	 * @param biggestClimbElevationGain
+	 *            the biggestClimbElevationGain to set
 	 */
 	public void setBiggestClimbElevationGain(final Float biggestClimbElevationGain) {
 		this.biggestClimbElevationGain = biggestClimbElevationGain;
 	}
+
 	/**
-	 * @param biggestRideDistance the biggestRideDistance to set
+	 * @param biggestRideDistance
+	 *            the biggestRideDistance to set
 	 */
 	public void setBiggestRideDistance(final Float biggestRideDistance) {
 		this.biggestRideDistance = biggestRideDistance;
 	}
+
 	/**
-	 * @param recentRideTotals the recentRideTotals to set
+	 * @param recentRideTotals
+	 *            the recentRideTotals to set
 	 */
 	public void setRecentRideTotals(final StravaStatisticsEntry recentRideTotals) {
 		this.recentRideTotals = recentRideTotals;
 	}
+
 	/**
-	 * @param recentRunTotals the recentRunTotals to set
+	 * @param recentRunTotals
+	 *            the recentRunTotals to set
 	 */
 	public void setRecentRunTotals(final StravaStatisticsEntry recentRunTotals) {
 		this.recentRunTotals = recentRunTotals;
 	}
+
 	/**
-	 * @param recentSwimTotals the recentSwimTotals to set
+	 * @param recentSwimTotals
+	 *            the recentSwimTotals to set
 	 */
 	public void setRecentSwimTotals(final StravaStatisticsEntry recentSwimTotals) {
 		this.recentSwimTotals = recentSwimTotals;
 	}
+
 	/**
-	 * @param ytdRideTotals the ytdRideTotals to set
+	 * @param ytdRideTotals
+	 *            the ytdRideTotals to set
 	 */
 	public void setYtdRideTotals(final StravaStatisticsEntry ytdRideTotals) {
 		this.ytdRideTotals = ytdRideTotals;
 	}
+
 	/**
-	 * @param ytdRunTotals the ytdRunTotals to set
+	 * @param ytdRunTotals
+	 *            the ytdRunTotals to set
 	 */
 	public void setYtdRunTotals(final StravaStatisticsEntry ytdRunTotals) {
 		this.ytdRunTotals = ytdRunTotals;
 	}
+
 	/**
-	 * @param ytdSwimTotals the ytdSwimTotals to set
+	 * @param ytdSwimTotals
+	 *            the ytdSwimTotals to set
 	 */
 	public void setYtdSwimTotals(final StravaStatisticsEntry ytdSwimTotals) {
 		this.ytdSwimTotals = ytdSwimTotals;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StravaStatistics [biggestRideDistance=" + this.biggestRideDistance + ", biggestClimbElevationGain=" + this.biggestClimbElevationGain //$NON-NLS-1$ //$NON-NLS-2$
-				+ ", recentRideTotals=" + this.recentRideTotals + ", recentRunTotals=" + this.recentRunTotals + ", recentSwimTotals=" + this.recentSwimTotals //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", ytdRideTotals=" + this.ytdRideTotals + ", ytdRunTotals=" + this.ytdRunTotals + ", ytdSwimTotals=" + this.ytdSwimTotals //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals + ", allSwimTotals=" + this.allSwimTotals + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "StravaStatistics [biggestRideDistance=" + this.biggestRideDistance + ", biggestClimbElevationGain=" //$NON-NLS-1$ //$NON-NLS-2$
+				+ this.biggestClimbElevationGain + ", recentRideTotals=" + this.recentRideTotals + ", recentRunTotals=" //$NON-NLS-1$ //$NON-NLS-2$
+				+ this.recentRunTotals + ", recentSwimTotals=" + this.recentSwimTotals //$NON-NLS-1$
+				+ ", ytdRideTotals=" + this.ytdRideTotals + ", ytdRunTotals=" + this.ytdRunTotals + ", ytdSwimTotals=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.ytdSwimTotals + ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", allSwimTotals=" //$NON-NLS-1$
+				+ this.allSwimTotals + "]"; //$NON-NLS-1$
 	}
+
 }

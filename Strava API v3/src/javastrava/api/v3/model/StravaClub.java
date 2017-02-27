@@ -10,67 +10,67 @@ import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
- * Clubs represent groups of athletes on Strava. They can be public or private. Only members of private clubs can access their details. The object is returned
- * in summary or detailed {@link StravaResourceState representations}.
+ * Clubs represent groups of athletes on Strava. They can be public or private. Only members of private clubs can access their
+ * details. The object is returned in summary or detailed {@link StravaResourceState representations}.
  * </p>
  *
  * @author Dan Shannon
  *
  */
-public class StravaClub implements StravaCacheable<Integer>{
+public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 	/**
 	 * Strava's unique identifier for this club
 	 */
-	private Integer id;
+	private Integer				id;
 	/**
 	 * State of this resource on Strava
 	 */
-	private StravaResourceState resourceState;
+	private StravaResourceState	resourceState;
 	/**
 	 * Club name
 	 */
-	private String name;
+	private String				name;
 	/**
 	 * URL to a 62x62 pixel profile picture
 	 */
-	private String profileMedium;
+	private String				profileMedium;
 	/**
 	 * URL to a 124x124 pixel profile picture
 	 */
-	private String profile;
+	private String				profile;
 	/**
 	 * Description of the club
 	 */
-	private String description;
+	private String				description;
 	/**
 	 * Type of club: casual_club, racing_team, shop, company, other
 	 */
-	private StravaClubType clubType;
+	private StravaClubType		clubType;
 	/**
 	 * cycling, running, triathlon, other
 	 */
-	private StravaSportType sportType;
+	private StravaSportType		sportType;
 	/**
 	 * City that the club is based in
 	 */
-	private String city;
+	private String				city;
 	/**
 	 * State, territory, county, canton etc. that the club is based in
 	 */
-	private String state;
+	private String				state;
 	/**
 	 * Country that the club is based in
 	 */
-	private String country;
+	private String				country;
 	/**
 	 * Is set to <code>true</code> if the club is private (and therefore you require permission to join)
 	 */
 	@SerializedName("private")
-	private Boolean privateClub;
+	private Boolean				privateClub;
 	/**
 	 * Number of club members (calculated by Strava, not checked or re-calculated by javastrava)
 	 */
-	private Integer memberCount;
+	private Integer				memberCount;
 
 	/**
 	 * NOT DOCUMENTED
@@ -78,8 +78,7 @@ public class StravaClub implements StravaCacheable<Integer>{
 	private Boolean featured;
 
 	/**
-	 * Membership status of the requesting athlete:
-	 * "member", "pending", null (not a member and have not requested join)
+	 * Membership status of the requesting athlete: "member", "pending", null (not a member and have not requested join)
 	 */
 	private StravaClubMembershipStatus membership;
 
@@ -97,12 +96,14 @@ public class StravaClub implements StravaCacheable<Integer>{
 	 * total number of members the authenticated user is currently following
 	 */
 	private Integer followingCount;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaClub() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -230,48 +231,56 @@ public class StravaClub implements StravaCacheable<Integer>{
 		}
 		return true;
 	}
+
 	/**
 	 * @return the admin status of the authenticated athlete
 	 */
 	public Boolean getAdmin() {
 		return this.admin;
 	}
+
 	/**
 	 * @return the city
 	 */
 	public String getCity() {
 		return this.city;
 	}
+
 	/**
 	 * @return the clubType
 	 */
 	public StravaClubType getClubType() {
 		return this.clubType;
 	}
+
 	/**
 	 * @return the country
 	 */
 	public String getCountry() {
 		return this.country;
 	}
+
 	/**
 	 * @return the description
 	 */
 	public String getDescription() {
 		return this.description;
 	}
+
 	/**
 	 * @return the featured flag
 	 */
 	public Boolean getFeatured() {
 		return this.featured;
 	}
+
 	/**
 	 * @return follower count
 	 */
 	public Integer getFollowingCount() {
 		return this.followingCount;
 	}
+
 	/**
 	 * @return the id
 	 */
@@ -279,48 +288,56 @@ public class StravaClub implements StravaCacheable<Integer>{
 	public Integer getId() {
 		return this.id;
 	}
+
 	/**
 	 * @return the memberCount
 	 */
 	public Integer getMemberCount() {
 		return this.memberCount;
 	}
+
 	/**
 	 * @return the membership status of the authenticated athlete
 	 */
 	public StravaClubMembershipStatus getMembership() {
 		return this.membership;
 	}
+
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return this.name;
 	}
+
 	/**
 	 * @return true if the authenticated athlete is the owner of the club
 	 */
 	public Boolean getOwner() {
 		return this.owner;
 	}
+
 	/**
 	 * @return the privateClub
 	 */
 	public Boolean getPrivateClub() {
 		return this.privateClub;
 	}
+
 	/**
 	 * @return the profile
 	 */
 	public String getProfile() {
 		return this.profile;
 	}
+
 	/**
 	 * @return the profileMedium
 	 */
 	public String getProfileMedium() {
 		return this.profileMedium;
 	}
+
 	/**
 	 * @return the resourceState
 	 */
@@ -328,18 +345,21 @@ public class StravaClub implements StravaCacheable<Integer>{
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
+
 	/**
 	 * @return the sportType
 	 */
 	public StravaSportType getSportType() {
 		return this.sportType;
 	}
+
 	/**
 	 * @return the state
 	 */
 	public String getState() {
 		return this.state;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -367,121 +387,159 @@ public class StravaClub implements StravaCacheable<Integer>{
 		result = (prime * result) + ((this.state == null) ? 0 : this.state.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param admin the admin status of the authenticated athlete
+	 * @param admin
+	 *            the admin status of the authenticated athlete
 	 */
 	public void setAdmin(final Boolean admin) {
 		this.admin = admin;
 	}
+
 	/**
-	 * @param city the city to set
+	 * @param city
+	 *            the city to set
 	 */
 	public void setCity(final String city) {
 		this.city = city;
 	}
+
 	/**
-	 * @param clubType the clubType to set
+	 * @param clubType
+	 *            the clubType to set
 	 */
 	public void setClubType(final StravaClubType clubType) {
 		this.clubType = clubType;
 	}
+
 	/**
-	 * @param country the country to set
+	 * @param country
+	 *            the country to set
 	 */
 	public void setCountry(final String country) {
 		this.country = country;
 	}
+
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
 	}
+
 	/**
-	 * @param featured the featured flag
+	 * @param featured
+	 *            the featured flag
 	 */
 	public void setFeatured(final Boolean featured) {
 		this.featured = featured;
 	}
+
 	/**
-	 * @param followingCount follower count
+	 * @param followingCount
+	 *            follower count
 	 */
 	public void setFollowingCount(final Integer followingCount) {
 		this.followingCount = followingCount;
 	}
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
+
 	/**
-	 * @param memberCount the memberCount to set
+	 * @param memberCount
+	 *            the memberCount to set
 	 */
 	public void setMemberCount(final Integer memberCount) {
 		this.memberCount = memberCount;
 	}
+
 	/**
-	 * @param membership the membership status
+	 * @param membership
+	 *            the membership status
 	 */
 	public void setMembership(final StravaClubMembershipStatus membership) {
 		this.membership = membership;
 	}
+
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(final String name) {
 		this.name = name;
 	}
+
 	/**
-	 * @param owner true if the authenticated athlete is the owner of the club
+	 * @param owner
+	 *            true if the authenticated athlete is the owner of the club
 	 */
 	public void setOwner(final Boolean owner) {
 		this.owner = owner;
 	}
+
 	/**
-	 * @param privateClub the privateClub to set
+	 * @param privateClub
+	 *            the privateClub to set
 	 */
 	public void setPrivateClub(final Boolean privateClub) {
 		this.privateClub = privateClub;
 	}
+
 	/**
-	 * @param profile the profile to set
+	 * @param profile
+	 *            the profile to set
 	 */
 	public void setProfile(final String profile) {
 		this.profile = profile;
 	}
+
 	/**
-	 * @param profileMedium the profileMedium to set
+	 * @param profileMedium
+	 *            the profileMedium to set
 	 */
 	public void setProfileMedium(final String profileMedium) {
 		this.profileMedium = profileMedium;
 	}
+
 	/**
-	 * @param resourceState the resourceState to set
+	 * @param resourceState
+	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
 	}
+
 	/**
-	 * @param sportType the sportType to set
+	 * @param sportType
+	 *            the sportType to set
 	 */
 	public void setSportType(final StravaSportType sportType) {
 		this.sportType = sportType;
 	}
+
 	/**
-	 * @param state the state to set
+	 * @param state
+	 *            the state to set
 	 */
 	public void setState(final String state) {
 		this.state = state;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "StravaClub [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", profileMedium=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.profileMedium + ", profile=" + this.profile + ", description=" + this.description + ", clubType=" + this.clubType //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.profileMedium + ", profile=" + this.profile + ", description=" + this.description + ", clubType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.clubType
 				+ ", sportType=" + this.sportType + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ ", privateClub=" + this.privateClub + ", memberCount=" + this.memberCount + ", featured=" + this.featured //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ ", membership=" + this.membership + ", admin=" + this.admin + ", owner=" + this.owner + ", followingCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$

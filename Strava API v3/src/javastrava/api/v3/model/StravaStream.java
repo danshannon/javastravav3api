@@ -19,7 +19,7 @@ import javastrava.api.v3.model.reference.StravaStreamType;
  * @author Dan Shannon
  *
  */
-public class StravaStream {
+public class StravaStream implements StravaEntity {
 	/**
 	 * Type of stream data
 	 */
@@ -34,7 +34,8 @@ public class StravaStream {
 	 */
 	private List<StravaMapPoint>				mapPoints;
 	/**
-	 * Boolean data stream indicating whether athlete was moving or not (either this or {@link #data} or {@link #mapPoints} will be populated, depending on the {@link #type} of stream).
+	 * Boolean data stream indicating whether athlete was moving or not (either this or {@link #data} or {@link #mapPoints} will be
+	 * populated, depending on the {@link #type} of stream).
 	 */
 	private List<Boolean>						moving;
 	/**
@@ -49,12 +50,14 @@ public class StravaStream {
 	 * Reduced resolution of this stream representation (if appropriate)
 	 */
 	private StravaStreamResolutionType			resolution;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaStream() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -109,48 +112,56 @@ public class StravaStream {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the data
 	 */
 	public List<Float> getData() {
 		return this.data;
 	}
+
 	/**
 	 * @return the mapPoints
 	 */
 	public List<StravaMapPoint> getMapPoints() {
 		return this.mapPoints;
 	}
+
 	/**
 	 * @return the moving
 	 */
 	public List<Boolean> getMoving() {
 		return this.moving;
 	}
+
 	/**
 	 * @return the originalSize
 	 */
 	public Integer getOriginalSize() {
 		return this.originalSize;
 	}
+
 	/**
 	 * @return the resolution
 	 */
 	public StravaStreamResolutionType getResolution() {
 		return this.resolution;
 	}
+
 	/**
 	 * @return the seriesType
 	 */
 	public StravaStreamSeriesDownsamplingType getSeriesType() {
 		return this.seriesType;
 	}
+
 	/**
 	 * @return the type
 	 */
 	public StravaStreamType getType() {
 		return this.type;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -167,54 +178,70 @@ public class StravaStream {
 		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param data the data to set
+	 * @param data
+	 *            the data to set
 	 */
 	public void setData(final List<Float> data) {
 		this.data = data;
 	}
+
 	/**
-	 * @param mapPoints the mapPoints to set
+	 * @param mapPoints
+	 *            the mapPoints to set
 	 */
 	public void setMapPoints(final List<StravaMapPoint> mapPoints) {
 		this.mapPoints = mapPoints;
 	}
+
 	/**
-	 * @param moving the moving to set
+	 * @param moving
+	 *            the moving to set
 	 */
 	public void setMoving(final List<Boolean> moving) {
 		this.moving = moving;
 	}
+
 	/**
-	 * @param originalSize the originalSize to set
+	 * @param originalSize
+	 *            the originalSize to set
 	 */
 	public void setOriginalSize(final Integer originalSize) {
 		this.originalSize = originalSize;
 	}
+
 	/**
-	 * @param resolution the resolution to set
+	 * @param resolution
+	 *            the resolution to set
 	 */
 	public void setResolution(final StravaStreamResolutionType resolution) {
 		this.resolution = resolution;
 	}
+
 	/**
-	 * @param seriesType the seriesType to set
+	 * @param seriesType
+	 *            the seriesType to set
 	 */
 	public void setSeriesType(final StravaStreamSeriesDownsamplingType seriesType) {
 		this.seriesType = seriesType;
 	}
+
 	/**
-	 * @param type the type to set
+	 * @param type
+	 *            the type to set
 	 */
 	public void setType(final StravaStreamType type) {
 		this.type = type;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StravaStream [type=" + this.type + ", data=" + this.data + ", mapPoints=" + this.mapPoints + ", moving=" + this.moving + ", seriesType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		return "StravaStream [type=" + this.type + ", data=" + this.data + ", mapPoints=" + this.mapPoints + ", moving=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.moving + ", seriesType=" //$NON-NLS-1$
 				+ this.seriesType + ", originalSize=" + this.originalSize + ", resolution=" + this.resolution + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }
