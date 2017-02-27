@@ -7,7 +7,8 @@ import javastrava.api.v3.service.UploadService;
  * Response to an upload request
  * </p>
  *
- * @see UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, Boolean, String, String, java.io.File)
+ * @see UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, Boolean,
+ *      String, String, java.io.File)
  * @author Dan Shannon
  *
  */
@@ -15,17 +16,18 @@ public class StravaUploadResponse {
 	/**
 	 * Unique identifier of the upload
 	 */
-	private Integer id;
+	private Long	id;
 	/**
 	 * Unique identifier for the activity as given by the uploading application
 	 */
-	private String externalId;
+	private String	externalId;
 	/**
 	 * <p>
-	 * if there was an error during processing, this will contain a human a human readable error message that may include escaped HTML
+	 * if there was an error during processing, this will contain a human a human readable error message that may include escaped
+	 * HTML
 	 * </p>
 	 */
-	private String error;
+	private String	error;
 	/**
 	 * <p>
 	 * describes the error, possible values:
@@ -37,17 +39,19 @@ public class StravaUploadResponse {
 	 * <li>Your activity is ready.</li>
 	 * </ul>
 	 */
-	private String status;
+	private String	status;
 	/**
 	 * Unique identifier of the activity, if it was created as part of the upload process.
 	 */
-	private Integer activityId;
+	private Long	activityId;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaUploadResponse() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -100,36 +104,42 @@ public class StravaUploadResponse {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the activityId
 	 */
-	public Integer getActivityId() {
+	public Long getActivityId() {
 		return this.activityId;
 	}
+
 	/**
 	 * @return the error
 	 */
 	public String getError() {
 		return this.error;
 	}
+
 	/**
 	 * @return the externalId
 	 */
 	public String getExternalId() {
 		return this.externalId;
 	}
+
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
+
 	/**
 	 * @return the status
 	 */
 	public String getStatus() {
 		return this.status;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -144,42 +154,53 @@ public class StravaUploadResponse {
 		result = (prime * result) + ((this.status == null) ? 0 : this.status.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param activityId the activityId to set
+	 * @param activityId
+	 *            the activityId to set
 	 */
-	public void setActivityId(final Integer activityId) {
+	public void setActivityId(final Long activityId) {
 		this.activityId = activityId;
 	}
+
 	/**
-	 * @param error the error to set
+	 * @param error
+	 *            the error to set
 	 */
 	public void setError(final String error) {
 		this.error = error;
 	}
+
 	/**
-	 * @param externalId the externalId to set
+	 * @param externalId
+	 *            the externalId to set
 	 */
 	public void setExternalId(final String externalId) {
 		this.externalId = externalId;
 	}
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
-	public void setId(final Integer id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
+
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(final String status) {
 		this.status = status;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StravaUploadResponse [id=" + this.id + ", externalId=" + this.externalId + ", error=" + this.error + ", status=" + this.status //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", activityId=" + this.activityId + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+		return "StravaUploadResponse [id=" + this.id + ", externalId=" + this.externalId + ", error=" + this.error + ", status=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.status + ", activityId=" + this.activityId + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

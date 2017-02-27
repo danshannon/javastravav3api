@@ -12,7 +12,9 @@ import javastrava.config.StravaConfig;
 public class Paging {
 	/**
 	 * Validate the page number requested
-	 * @param page Requested page number
+	 *
+	 * @param page
+	 *            Requested page number
 	 * @return If requested page number is zero, return 1
 	 */
 	private static Integer validatePage(final Integer page) {
@@ -24,7 +26,9 @@ public class Paging {
 
 	/**
 	 * Validate the page size requested.
-	 * @param pageSize Requested page size
+	 *
+	 * @param pageSize
+	 *            Requested page size
 	 * @return If requested page size is zero, return the default page size
 	 */
 	private static Integer validatePageSize(final Integer pageSize) {
@@ -72,8 +76,11 @@ public class Paging {
 
 	/**
 	 * Constructor allowing page number and size only
-	 * @param page Page to be returned. If you specify 0, page 1 will be returned
-	 * @param pageSize Size of page to be returned. If you specify 0, the default page size will be used.
+	 *
+	 * @param page
+	 *            Page to be returned. If you specify 0, page 1 will be returned
+	 * @param pageSize
+	 *            Size of page to be returned. If you specify 0, the default page size will be used.
 	 */
 	public Paging(final Integer page, final Integer pageSize) {
 		this.page = validatePage(page);
@@ -84,10 +91,15 @@ public class Paging {
 
 	/**
 	 * Constructor allowing full control
-	 * @param page Page to be returned. If you specify 0, page 1 will be returned
-	 * @param pageSize Size of page to be returned. If you specify 0, the default page size will be used.
-	 * @param ignoreFirstN Ignore the first N items in the returned page
-	 * @param ignoreLastN Ignore the last N items in the returned page
+	 *
+	 * @param page
+	 *            Page to be returned. If you specify 0, page 1 will be returned
+	 * @param pageSize
+	 *            Size of page to be returned. If you specify 0, the default page size will be used.
+	 * @param ignoreFirstN
+	 *            Ignore the first N items in the returned page
+	 * @param ignoreLastN
+	 *            Ignore the last N items in the returned page
 	 */
 	public Paging(final Integer page, final Integer pageSize, final int ignoreFirstN, final int ignoreLastN) {
 		this.page = validatePage(page);
@@ -140,12 +152,14 @@ public class Paging {
 	public int getIgnoreFirstN() {
 		return this.ignoreFirstN;
 	}
+
 	/**
 	 * @return the ignoreLastN
 	 */
 	public int getIgnoreLastN() {
 		return this.ignoreLastN;
 	}
+
 	/**
 	 * @return the page
 	 */
@@ -175,28 +189,32 @@ public class Paging {
 	}
 
 	/**
-	 * @param ignoreFirstN the ignoreFirstN to set
+	 * @param ignoreFirstN
+	 *            the ignoreFirstN to set
 	 */
 	public void setIgnoreFirstN(final int ignoreFirstN) {
 		this.ignoreFirstN = ignoreFirstN;
 	}
 
 	/**
-	 * @param ignoreLastN the ignoreLastN to set
+	 * @param ignoreLastN
+	 *            the ignoreLastN to set
 	 */
 	public void setIgnoreLastN(final int ignoreLastN) {
 		this.ignoreLastN = ignoreLastN;
 	}
 
 	/**
-	 * @param page the page to set
+	 * @param page
+	 *            the page to set
 	 */
 	public void setPage(final Integer page) {
 		this.page = page;
 	}
 
 	/**
-	 * @param pageSize the pageSize to set
+	 * @param pageSize
+	 *            the pageSize to set
 	 */
 	public void setPageSize(final Integer pageSize) {
 		this.pageSize = pageSize;

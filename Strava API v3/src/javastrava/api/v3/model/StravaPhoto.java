@@ -16,7 +16,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaPhoto implements StravaCacheable<Integer> {
+public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
 	/**
 	 * Strava's unique identifier for the photo
 	 */
@@ -48,11 +48,11 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	/**
 	 * Date and time the photo was uploaded
 	 */
-	private ZonedDateTime				uploadedAt;
+	private ZonedDateTime		uploadedAt;
 	/**
 	 * Date and time the photo was linked with Strava
 	 */
-	private ZonedDateTime				createdAt;
+	private ZonedDateTime		createdAt;
 	/**
 	 * Geographical location of the photo
 	 */
@@ -60,16 +60,16 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	/**
 	 * Source of the photo (Instagram or Strava)
 	 */
-	private StravaPhotoSource source;
+	private StravaPhotoSource	source;
 
 	/**
 	 * URL's to use to access the photo
 	 */
-	private StravaPhotoUrls urls;
+	private StravaPhotoUrls	urls;
 	/**
 	 * Unique id given to the photo by Instagram / Strava
 	 */
-	private String uniqueId;
+	private String			uniqueId;
 
 	/**
 	 * Use as primary photo
@@ -90,12 +90,14 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	 * Local time the photo was created at (no time zone)
 	 */
 	private LocalDateTime createdAtLocal;
+
 	/**
 	 * no args constructor
 	 */
 	public StravaPhoto() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -220,36 +222,42 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the activityId
 	 */
 	public Integer getActivityId() {
 		return this.activityId;
 	}
+
 	/**
 	 * @return the activityName
 	 */
 	public String getActivityName() {
 		return this.activityName;
 	}
+
 	/**
 	 * @return the caption
 	 */
 	public String getCaption() {
 		return this.caption;
 	}
+
 	/**
 	 * @return the createdAt
 	 */
 	public ZonedDateTime getCreatedAt() {
 		return this.createdAt;
 	}
+
 	/**
 	 * @return the createdAtLocal
 	 */
 	public LocalDateTime getCreatedAtLocal() {
 		return this.createdAtLocal;
 	}
+
 	/**
 	 * @return the id
 	 */
@@ -257,18 +265,21 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	public Integer getId() {
 		return this.id;
 	}
+
 	/**
 	 * @return the location
 	 */
 	public StravaMapPoint getLocation() {
 		return this.location;
 	}
+
 	/**
 	 * @return the ref
 	 */
 	public String getRef() {
 		return this.ref;
 	}
+
 	/**
 	 * @return the resourceState
 	 */
@@ -276,48 +287,56 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
+
 	/**
 	 * @return the source
 	 */
 	public StravaPhotoSource getSource() {
 		return this.source;
 	}
+
 	/**
 	 * @return the type
 	 */
 	public StravaPhotoType getType() {
 		return this.type;
 	}
+
 	/**
 	 * @return the uid
 	 */
 	public String getUid() {
 		return this.uid;
 	}
+
 	/**
 	 * @return the uniqueId
 	 */
 	public String getUniqueId() {
 		return this.uniqueId;
 	}
+
 	/**
 	 * @return the uploadedAt
 	 */
 	public ZonedDateTime getUploadedAt() {
 		return this.uploadedAt;
 	}
+
 	/**
 	 * @return the urls
 	 */
 	public StravaPhotoUrls getUrls() {
 		return this.urls;
 	}
+
 	/**
 	 * @return the usePrimaryPhoto
 	 */
 	public Boolean getUsePrimaryPhoto() {
 		return this.usePrimaryPhoto;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -344,110 +363,147 @@ public class StravaPhoto implements StravaCacheable<Integer> {
 		result = (prime * result) + ((this.usePrimaryPhoto == null) ? 0 : this.usePrimaryPhoto.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param activityId the activityId to set
+	 * @param activityId
+	 *            the activityId to set
 	 */
 	public void setActivityId(final Integer activityId) {
 		this.activityId = activityId;
 	}
+
 	/**
-	 * @param activityName the activityName to set
+	 * @param activityName
+	 *            the activityName to set
 	 */
 	public void setActivityName(final String activityName) {
 		this.activityName = activityName;
 	}
+
 	/**
-	 * @param caption the caption to set
+	 * @param caption
+	 *            the caption to set
 	 */
 	public void setCaption(final String caption) {
 		this.caption = caption;
 	}
+
 	/**
-	 * @param createdAt the createdAt to set
+	 * @param createdAt
+	 *            the createdAt to set
 	 */
 	public void setCreatedAt(final ZonedDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+
 	/**
-	 * @param createdAtLocal the createdAtLocal to set
+	 * @param createdAtLocal
+	 *            the createdAtLocal to set
 	 */
 	public void setCreatedAtLocal(final LocalDateTime createdAtLocal) {
 		this.createdAtLocal = createdAtLocal;
 	}
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
+
 	/**
-	 * @param location the location to set
+	 * @param location
+	 *            the location to set
 	 */
 	public void setLocation(final StravaMapPoint location) {
 		this.location = location;
 	}
+
 	/**
-	 * @param ref the ref to set
+	 * @param ref
+	 *            the ref to set
 	 */
 	public void setRef(final String ref) {
 		this.ref = ref;
 	}
+
 	/**
-	 * @param resourceState the resourceState to set
+	 * @param resourceState
+	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
 	}
+
 	/**
-	 * @param source the source to set
+	 * @param source
+	 *            the source to set
 	 */
 	public void setSource(final StravaPhotoSource source) {
 		this.source = source;
 	}
+
 	/**
-	 * @param type the type to set
+	 * @param type
+	 *            the type to set
 	 */
 	public void setType(final StravaPhotoType type) {
 		this.type = type;
 	}
+
 	/**
-	 * @param uid the uid to set
+	 * @param uid
+	 *            the uid to set
 	 */
 	public void setUid(final String uid) {
 		this.uid = uid;
 	}
+
 	/**
-	 * @param uniqueId the uniqueId to set
+	 * @param uniqueId
+	 *            the uniqueId to set
 	 */
 	public void setUniqueId(final String uniqueId) {
 		this.uniqueId = uniqueId;
 	}
+
 	/**
-	 * @param uploadedAt the uploadedAt to set
+	 * @param uploadedAt
+	 *            the uploadedAt to set
 	 */
 	public void setUploadedAt(final ZonedDateTime uploadedAt) {
 		this.uploadedAt = uploadedAt;
 	}
+
 	/**
-	 * @param urls the urls to set
+	 * @param urls
+	 *            the urls to set
 	 */
 	public void setUrls(final StravaPhotoUrls urls) {
 		this.urls = urls;
 	}
+
 	/**
-	 * @param usePrimaryPhoto the usePrimaryPhoto to set
+	 * @param usePrimaryPhoto
+	 *            the usePrimaryPhoto to set
 	 */
 	public void setUsePrimaryPhoto(final Boolean usePrimaryPhoto) {
 		this.usePrimaryPhoto = usePrimaryPhoto;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StravaPhoto [id=" + this.id + ", activityId=" + this.activityId + ", resourceState=" + this.resourceState + ", ref=" + this.ref + ", uid=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.uid + ", caption=" + this.caption + ", type=" + this.type + ", uploadedAt=" + this.uploadedAt + ", createdAt=" + this.createdAt //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", location=" + this.location + ", source=" + this.source + ", urls=" + this.urls + ", uniqueId=" + this.uniqueId + ", usePrimaryPhoto=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.usePrimaryPhoto + ", sizes=" + this.sizes + ", activityName=" + this.activityName + ", createdAtLocal=" + this.createdAtLocal + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "StravaPhoto [id=" + this.id + ", activityId=" + this.activityId + ", resourceState=" + this.resourceState + ", ref=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.ref + ", uid=" //$NON-NLS-1$
+				+ this.uid + ", caption=" + this.caption + ", type=" + this.type + ", uploadedAt=" + this.uploadedAt //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", createdAt=" + this.createdAt //$NON-NLS-1$
+				+ ", location=" + this.location + ", source=" + this.source + ", urls=" + this.urls + ", uniqueId=" + this.uniqueId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", usePrimaryPhoto=" //$NON-NLS-1$
+				+ this.usePrimaryPhoto + ", sizes=" + this.sizes + ", activityName=" + this.activityName + ", createdAtLocal=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.createdAtLocal + "]"; //$NON-NLS-1$
 	}
 }

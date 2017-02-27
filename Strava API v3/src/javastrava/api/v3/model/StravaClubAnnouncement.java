@@ -7,14 +7,14 @@ import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
- * Announcements are posts sent by Club Admins or Owners to the members of a club. Only members of private clubs can access their announcements. The objects are
- * returned in summary representation.
+ * Announcements are posts sent by Club Admins or Owners to the members of a club. Only members of private clubs can access their
+ * announcements. The objects are returned in summary representation.
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public class StravaClubAnnouncement implements StravaCacheable<Integer> {
+public class StravaClubAnnouncement implements StravaCacheable<Integer>, StravaEntity {
 	/**
 	 * Unique identifier of the announcement
 	 */
@@ -54,7 +54,8 @@ public class StravaClubAnnouncement implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
@@ -69,7 +70,8 @@ public class StravaClubAnnouncement implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param resourceState the resourceState to set
+	 * @param resourceState
+	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
@@ -83,7 +85,8 @@ public class StravaClubAnnouncement implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param clubId the clubId to set
+	 * @param clubId
+	 *            the clubId to set
 	 */
 	public void setClubId(final Integer clubId) {
 		this.clubId = clubId;
@@ -97,7 +100,8 @@ public class StravaClubAnnouncement implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param athlete the athlete to set
+	 * @param athlete
+	 *            the athlete to set
 	 */
 	public void setAthlete(final StravaAthlete athlete) {
 		this.athlete = athlete;
@@ -111,7 +115,8 @@ public class StravaClubAnnouncement implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param createdAt the createdAt to set
+	 * @param createdAt
+	 *            the createdAt to set
 	 */
 	public void setCreatedAt(final ZonedDateTime createdAt) {
 		this.createdAt = createdAt;
@@ -125,7 +130,8 @@ public class StravaClubAnnouncement implements StravaCacheable<Integer> {
 	}
 
 	/**
-	 * @param message the message to set
+	 * @param message
+	 *            the message to set
 	 */
 	public void setMessage(final String message) {
 		this.message = message;
@@ -136,7 +142,8 @@ public class StravaClubAnnouncement implements StravaCacheable<Integer> {
 	 */
 	@Override
 	public String toString() {
-		return "StravaClubAnnouncement [id=" + this.id + ", resourceState=" + this.resourceState + ", clubId=" + this.clubId + ", athlete=" + this.athlete //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "StravaClubAnnouncement [id=" + this.id + ", resourceState=" + this.resourceState + ", clubId=" + this.clubId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", athlete=" + this.athlete //$NON-NLS-1$
 				+ ", createdAt=" + this.createdAt + ", message=" + this.message + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
@@ -147,12 +154,12 @@ public class StravaClubAnnouncement implements StravaCacheable<Integer> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.athlete == null) ? 0 : this.athlete.hashCode());
-		result = prime * result + ((this.clubId == null) ? 0 : this.clubId.hashCode());
-		result = prime * result + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-		result = prime * result + ((this.message == null) ? 0 : this.message.hashCode());
-		result = prime * result + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.athlete == null) ? 0 : this.athlete.hashCode());
+		result = (prime * result) + ((this.clubId == null) ? 0 : this.clubId.hashCode());
+		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.message == null) ? 0 : this.message.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
 		return result;
 	}
 
@@ -170,7 +177,7 @@ public class StravaClubAnnouncement implements StravaCacheable<Integer> {
 		if (!(obj instanceof StravaClubAnnouncement)) {
 			return false;
 		}
-		StravaClubAnnouncement other = (StravaClubAnnouncement) obj;
+		final StravaClubAnnouncement other = (StravaClubAnnouncement) obj;
 		if (this.athlete == null) {
 			if (other.athlete != null) {
 				return false;

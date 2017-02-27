@@ -8,14 +8,14 @@ import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
- * A lap within an {@link StravaActivity}; this is a user-specified section of a ride somewhat like a segment effort, but specifically bound to either being a
- * lap of a track or a section of the activity of a particular length (distance)
+ * A lap within an {@link StravaActivity}; this is a user-specified section of a ride somewhat like a segment effort, but
+ * specifically bound to either being a lap of a track or a section of the activity of a particular length (distance)
  * </p>
  *
  * @author Dan Shannon
  *
  */
-public class StravaLap implements StravaCacheable<Long> {
+public class StravaLap implements StravaCacheable<Long>, StravaEntity {
 	/**
 	 * Strava's unique identifier for this lap
 	 */
@@ -92,7 +92,8 @@ public class StravaLap implements StravaCacheable<Long> {
 	private Float maxSpeed;
 
 	/**
-	 * Average cadence in revolutions per minute (returned only if cadence data was uploaded with the activity). Applies only to rides.
+	 * Average cadence in revolutions per minute (returned only if cadence data was uploaded with the activity). Applies only to
+	 * rides.
 	 */
 	private Float averageCadence;
 
@@ -360,14 +361,6 @@ public class StravaLap implements StravaCacheable<Long> {
 	}
 
 	/**
-	 * @return the id
-	 */
-	@Override
-	public Long getId() {
-		return this.id;
-	}
-
-	/**
 	 * @return the lapIndex
 	 */
 	public Integer getLapIndex() {
@@ -400,14 +393,6 @@ public class StravaLap implements StravaCacheable<Long> {
 	 */
 	public String getName() {
 		return this.name;
-	}
-
-	/**
-	 * @return the resourceState
-	 */
-	@Override
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
 	}
 
 	/**
@@ -642,11 +627,26 @@ public class StravaLap implements StravaCacheable<Long> {
 	 */
 	@Override
 	public String toString() {
-		return "StravaLap [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activity=" + this.activity + ", athlete=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.athlete + ", elapsedTime=" + this.elapsedTime + ", movingTime=" + this.movingTime + ", startDate=" + this.startDate //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", startDateLocal=" + this.startDateLocal + ", distance=" + this.distance + ", startIndex=" + this.startIndex + ", endIndex=" + this.endIndex //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", totalElevationGain=" + this.totalElevationGain + ", averageSpeed=" + this.averageSpeed + ", maxSpeed=" + this.maxSpeed //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", averageCadence=" + this.averageCadence + ", averageWatts=" + this.averageWatts + ", deviceWatts=" + this.deviceWatts //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", lapIndex=" + this.lapIndex + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "StravaLap [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activity=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.activity + ", athlete=" //$NON-NLS-1$
+				+ this.athlete + ", elapsedTime=" + this.elapsedTime + ", movingTime=" + this.movingTime + ", startDate=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.startDate + ", startDateLocal=" + this.startDateLocal + ", distance=" + this.distance + ", startIndex=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.startIndex + ", endIndex=" + this.endIndex //$NON-NLS-1$
+				+ ", totalElevationGain=" + this.totalElevationGain + ", averageSpeed=" + this.averageSpeed + ", maxSpeed=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.maxSpeed + ", averageCadence=" + this.averageCadence + ", averageWatts=" + this.averageWatts //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", deviceWatts=" //$NON-NLS-1$
+				+ this.deviceWatts + ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", lapIndex=" //$NON-NLS-1$
+				+ this.lapIndex + "]"; //$NON-NLS-1$
+	}
+
+	@Override
+	public Long getId() {
+		return this.id;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
 	}
 }

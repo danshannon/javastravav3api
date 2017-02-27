@@ -124,24 +124,24 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param uploadId
+	 * @param activityId
 	 *            Upload identifier
 	 * @return Returns an Upload response object which includes the status of the upload and the upload id
-	 * @see javastrava.api.v3.service.UploadService#checkUploadStatus(java.lang.Integer)
+	 * @see javastrava.api.v3.service.UploadService#checkUploadStatus(java.lang.Long)
 	 */
 	@Override
-	public StravaUploadResponse checkUploadStatus(final Integer uploadId) {
-		return this.uploadService.checkUploadStatus(uploadId);
+	public StravaUploadResponse checkUploadStatus(final Long activityId) {
+		return this.uploadService.checkUploadStatus(activityId);
 	}
 
 	/**
 	 * @param uploadId
 	 *            Upload identifier
 	 * @return Returns an Upload response object which includes the status of the upload and the upload id
-	 * @see javastrava.api.v3.service.UploadService#checkUploadStatusAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.UploadService#checkUploadStatusAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<StravaUploadResponse> checkUploadStatusAsync(final Integer uploadId) {
+	public CompletableFuture<StravaUploadResponse> checkUploadStatusAsync(final Long uploadId) {
 		return this.uploadService.checkUploadStatusAsync(uploadId);
 	}
 

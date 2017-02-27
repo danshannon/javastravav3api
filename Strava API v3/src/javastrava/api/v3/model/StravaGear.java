@@ -17,7 +17,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaGear implements StravaCacheable<String> {
+public class StravaGear implements StravaCacheable<String>, StravaEntity {
 	/**
 	 * Unique identifier for the gear. Is prefixed with 'b' for bikes when returning via the API
 	 */
@@ -26,31 +26,31 @@ public class StravaGear implements StravaCacheable<String> {
 	/**
 	 * Is set to <code>true</code> if this is the athlete's default bike / shoes
 	 */
-	private Boolean primary;
+	private Boolean				primary;
 	/**
 	 * Name given to the gear by the owner
 	 */
-	private String name;
+	private String				name;
 	/**
 	 * Total distance in metres
 	 */
-	private Float distance;
+	private Float				distance;
 	/**
 	 * Brand name
 	 */
-	private String brandName;
+	private String				brandName;
 	/**
 	 * Model name
 	 */
-	private String modelName;
+	private String				modelName;
 	/**
 	 * (Bikes only) 1 -> mtb, 2 -> cross, 3 -> road, 4 -> time trial
 	 */
-	private StravaFrameType frameType;
+	private StravaFrameType		frameType;
 	/**
 	 * Test description
 	 */
-	private String description;
+	private String				description;
 	/**
 	 * State of this resource on Strava
 	 */
@@ -58,7 +58,7 @@ public class StravaGear implements StravaCacheable<String> {
 	/**
 	 * Type of gear (bike or shoes)
 	 */
-	private StravaGearType gearType;
+	private StravaGearType		gearType;
 
 	/**
 	 * No args constructor
@@ -236,42 +236,48 @@ public class StravaGear implements StravaCacheable<String> {
 	}
 
 	/**
-	 * @param brandName the brandName to set
+	 * @param brandName
+	 *            the brandName to set
 	 */
 	public void setBrandName(final String brandName) {
 		this.brandName = brandName;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
 	}
 
 	/**
-	 * @param distance the distance to set
+	 * @param distance
+	 *            the distance to set
 	 */
 	public void setDistance(final Float distance) {
 		this.distance = distance;
 	}
 
 	/**
-	 * @param frameType the frameType to set
+	 * @param frameType
+	 *            the frameType to set
 	 */
 	public void setFrameType(final StravaFrameType frameType) {
 		this.frameType = frameType;
 	}
 
 	/**
-	 * @param gearType the gearType to set
+	 * @param gearType
+	 *            the gearType to set
 	 */
 	public void setGearType(final StravaGearType gearType) {
 		this.gearType = gearType;
 	}
 
 	/**
-	 * @param id The id of the gear
+	 * @param id
+	 *            The id of the gear
 	 */
 	public void setId(final String id) {
 		this.id = id;
@@ -281,28 +287,32 @@ public class StravaGear implements StravaCacheable<String> {
 	}
 
 	/**
-	 * @param modelName the modelName to set
+	 * @param modelName
+	 *            the modelName to set
 	 */
 	public void setModelName(final String modelName) {
 		this.modelName = modelName;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(final String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @param primary the primary to set
+	 * @param primary
+	 *            the primary to set
 	 */
 	public void setPrimary(final Boolean primary) {
 		this.primary = primary;
 	}
 
 	/**
-	 * @param resourceState the resourceState to set
+	 * @param resourceState
+	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
@@ -313,8 +323,10 @@ public class StravaGear implements StravaCacheable<String> {
 	 */
 	@Override
 	public String toString() {
-		return "StravaGear [id=" + this.id + ", primary=" + this.primary + ", name=" + this.name + ", distance=" + this.distance + ", brandName=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.brandName + ", modelName=" + this.modelName + ", frameType=" + this.frameType + ", description=" + this.description + ", resourceState=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "StravaGear [id=" + this.id + ", primary=" + this.primary + ", name=" + this.name + ", distance=" + this.distance //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", brandName=" //$NON-NLS-1$
+				+ this.brandName + ", modelName=" + this.modelName + ", frameType=" + this.frameType + ", description=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.description + ", resourceState=" //$NON-NLS-1$
 				+ this.resourceState + ", gearType=" + this.gearType + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

@@ -2,47 +2,48 @@ package javastrava.api.v3.model.webhook;
 
 import java.time.ZonedDateTime;
 
+import com.google.gson.annotations.SerializedName;
+
+import javastrava.api.v3.model.StravaEntity;
 import javastrava.api.v3.model.webhook.reference.StravaSubscriptionAspectType;
 import javastrava.api.v3.model.webhook.reference.StravaSubscriptionObjectType;
-
-import com.google.gson.annotations.SerializedName;
 
 /**
  * @author danshannon
  *
  */
-public class StravaEventSubscription {
+public class StravaEventSubscription implements StravaEntity {
 	/**
 	 * Unique identifier of this event subscription
 	 */
-	private Integer id;
+	private Integer							id;
 	/**
 	 * Application's id, obtained during registration
 	 */
-	private Integer applicationId;
+	private Integer							applicationId;
 	/**
 	 * Object type included in the subscription
 	 */
 	@SerializedName("object_type_id")
-	private StravaSubscriptionObjectType objectType;
+	private StravaSubscriptionObjectType	objectType;
 	/**
 	 * Aspect type included in the subscription
 	 */
 	@SerializedName("aspect_type_id")
-	private StravaSubscriptionAspectType aspectType;
+	private StravaSubscriptionAspectType	aspectType;
 	/**
 	 * Callpack URL which is POSTed to by Strava when an event has occurred
 	 */
 	@SerializedName("callback_url")
-	private String callbackURL;
+	private String							callbackURL;
 	/**
 	 * Date and time this subscription was created
 	 */
-	private ZonedDateTime createdAt;
+	private ZonedDateTime					createdAt;
 	/**
 	 * Date and time this subscription was last updated
 	 */
-	private ZonedDateTime updatedAt;
+	private ZonedDateTime					updatedAt;
 
 	/**
 	 * No-argument constructor
@@ -177,49 +178,56 @@ public class StravaEventSubscription {
 	}
 
 	/**
-	 * @param applicationId the applicationId to set
+	 * @param applicationId
+	 *            the applicationId to set
 	 */
 	public void setApplicationId(final Integer applicationId) {
 		this.applicationId = applicationId;
 	}
 
 	/**
-	 * @param aspectType the aspectType to set
+	 * @param aspectType
+	 *            the aspectType to set
 	 */
 	public void setAspectType(final StravaSubscriptionAspectType aspectType) {
 		this.aspectType = aspectType;
 	}
 
 	/**
-	 * @param callbackURL the callbackURL to set
+	 * @param callbackURL
+	 *            the callbackURL to set
 	 */
 	public void setCallbackURL(final String callbackURL) {
 		this.callbackURL = callbackURL;
 	}
 
 	/**
-	 * @param createdAt the createdAt to set
+	 * @param createdAt
+	 *            the createdAt to set
 	 */
 	public void setCreatedAt(final ZonedDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
 
 	/**
-	 * @param objectType the objectType to set
+	 * @param objectType
+	 *            the objectType to set
 	 */
 	public void setObjectType(final StravaSubscriptionObjectType objectType) {
 		this.objectType = objectType;
 	}
 
 	/**
-	 * @param updatedAt the updatedAt to set
+	 * @param updatedAt
+	 *            the updatedAt to set
 	 */
 	public void setUpdatedAt(final ZonedDateTime updatedAt) {
 		this.updatedAt = updatedAt;
@@ -230,7 +238,9 @@ public class StravaEventSubscription {
 	 */
 	@Override
 	public String toString() {
-		return "StravaEventSubscription [id=" + this.id + ", applicationId=" + this.applicationId + ", objectType=" + this.objectType + ", aspectType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.aspectType + ", callbackURL=" + this.callbackURL + ", createdAt=" + this.createdAt + ", updatedAt=" + this.updatedAt + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "StravaEventSubscription [id=" + this.id + ", applicationId=" + this.applicationId + ", objectType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.objectType + ", aspectType=" //$NON-NLS-1$
+				+ this.aspectType + ", callbackURL=" + this.callbackURL + ", createdAt=" + this.createdAt + ", updatedAt=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.updatedAt + "]"; //$NON-NLS-1$
 	}
 }

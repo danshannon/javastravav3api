@@ -17,105 +17,106 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentEffort implements StravaCacheable<Long>{
+public class StravaSegmentEffort implements StravaCacheable<Long>, StravaEntity {
 	/**
 	 * Strava's unique identifier for this segment effort
 	 */
-	private Long				id;
+	private Long id;
 
 	/**
 	 * Status of this resource on Strava
 	 */
-	private StravaResourceState	resourceState;
+	private StravaResourceState		resourceState;
 	/**
 	 * Name of the segment
 	 */
-	private String				name;
+	private String					name;
 	/**
 	 * Activity - this instance will contain the id of the activity only
 	 */
-	private StravaActivity		activity;
+	private StravaActivity			activity;
 	/**
 	 * Athlete - this instance will contain the id of the athlete only
 	 */
-	private StravaAthlete		athlete;
+	private StravaAthlete			athlete;
 	/**
 	 * Elapsed time in seconds (including time spent stopped)
 	 */
-	private Integer				elapsedTime;
+	private Integer					elapsedTime;
 	/**
 	 * Moving time in seconds (excluding time spent stopped)
 	 */
-	private Integer				movingTime;
+	private Integer					movingTime;
 	/**
 	 * Start date and time for this effort
 	 */
-	private ZonedDateTime				startDate;
+	private ZonedDateTime			startDate;
 	/**
 	 * Start date and time for this effort, hacked to local time zone at the start
 	 */
-	private LocalDateTime				startDateLocal;
+	private LocalDateTime			startDateLocal;
 	/**
-	 *  the length im metres of the effort as described by the activity, this may be different than the length of the segment
+	 * the length im metres of the effort as described by the activity, this may be different than the length of the segment
 	 */
-	private Float				distance;
+	private Float					distance;
 	/**
 	 * the activity stream index of the start of this effort
 	 */
-	private Integer				startIndex;
+	private Integer					startIndex;
 	/**
 	 * the activity stream index of the end of this effort
 	 */
-	private Integer				endIndex;
+	private Integer					endIndex;
 	/**
 	 * Average cadence in revolutions per minute, if cadence data was provided with the activity upload
 	 */
-	private Float				averageCadence;
+	private Float					averageCadence;
 	/**
 	 * Average watts (rides only)
 	 */
-	private Float				averageWatts;
+	private Float					averageWatts;
 	/**
 	 * Average heart rate in beats per minute, if heart rate data was provided with the activity upload
 	 */
-	private Float				averageHeartrate;
+	private Float					averageHeartrate;
 	/**
 	 * Maximum heart rate in beats per minute, if heart rate data was provided with the activity upload
 	 */
-	private Integer				maxHeartrate;
+	private Integer					maxHeartrate;
 	/**
 	 * {@link StravaResourceState#SUMMARY} representation of the segment
 	 */
-	private StravaSegment		segment;
+	private StravaSegment			segment;
 	/**
 	 * 1-10 rank on segment at time of upload
 	 */
-	private Integer				komRank;
+	private Integer					komRank;
 	/**
 	 * 1-3 personal record on segment at time of upload
 	 */
-	private Integer				prRank;
+	private Integer					prRank;
 	/**
-	 * indicates a hidden/non-important effort when returned as part of an activity, value may change over time, see retrieve an activity for more details
+	 * indicates a hidden/non-important effort when returned as part of an activity, value may change over time, see retrieve an
+	 * activity for more details
 	 */
-	private Boolean				hidden;
+	private Boolean					hidden;
 	/**
 	 * @see SegmentService#listStarredSegments(Integer)
 	 */
-	private Boolean				isKom;
+	private Boolean					isKom;
 	/**
 	 * Summary of achievements on this effort
 	 */
-	private List<StravaAchievement> achievements;
+	private List<StravaAchievement>	achievements;
 
 	/**
 	 * Summary of athlete's statistics on this segment
 	 */
-	private StravaAthleteSegmentStats athleteSegmentStats;
+	private StravaAthleteSegmentStats	athleteSegmentStats;
 	/**
 	 * Was the power data on this effort from a device (i.e. a power meter of some kind)
 	 */
-	private Boolean deviceWatts;
+	private Boolean						deviceWatts;
 
 	/**
 	 *
@@ -511,168 +512,192 @@ public class StravaSegmentEffort implements StravaCacheable<Long>{
 	}
 
 	/**
-	 * @param achievements the achievements to set
+	 * @param achievements
+	 *            the achievements to set
 	 */
 	public void setAchievements(final List<StravaAchievement> achievements) {
 		this.achievements = achievements;
 	}
 
 	/**
-	 * @param activity the activity to set
+	 * @param activity
+	 *            the activity to set
 	 */
 	public void setActivity(final StravaActivity activity) {
 		this.activity = activity;
 	}
 
 	/**
-	 * @param athlete the athlete to set
+	 * @param athlete
+	 *            the athlete to set
 	 */
 	public void setAthlete(final StravaAthlete athlete) {
 		this.athlete = athlete;
 	}
 
 	/**
-	 * @param athleteSegmentStats the athleteSegmentStats to set
+	 * @param athleteSegmentStats
+	 *            the athleteSegmentStats to set
 	 */
 	public void setAthleteSegmentStats(final StravaAthleteSegmentStats athleteSegmentStats) {
 		this.athleteSegmentStats = athleteSegmentStats;
 	}
 
 	/**
-	 * @param averageCadence the averageCadence to set
+	 * @param averageCadence
+	 *            the averageCadence to set
 	 */
 	public void setAverageCadence(final Float averageCadence) {
 		this.averageCadence = averageCadence;
 	}
 
 	/**
-	 * @param averageHeartrate the averageHeartrate to set
+	 * @param averageHeartrate
+	 *            the averageHeartrate to set
 	 */
 	public void setAverageHeartrate(final Float averageHeartrate) {
 		this.averageHeartrate = averageHeartrate;
 	}
 
 	/**
-	 * @param averageWatts the averageWatts to set
+	 * @param averageWatts
+	 *            the averageWatts to set
 	 */
 	public void setAverageWatts(final Float averageWatts) {
 		this.averageWatts = averageWatts;
 	}
 
 	/**
-	 * @param deviceWatts the deviceWatts to set
+	 * @param deviceWatts
+	 *            the deviceWatts to set
 	 */
 	public void setDeviceWatts(final Boolean deviceWatts) {
 		this.deviceWatts = deviceWatts;
 	}
 
 	/**
-	 * @param distance the distance to set
+	 * @param distance
+	 *            the distance to set
 	 */
 	public void setDistance(final Float distance) {
 		this.distance = distance;
 	}
 
 	/**
-	 * @param elapsedTime the elapsedTime to set
+	 * @param elapsedTime
+	 *            the elapsedTime to set
 	 */
 	public void setElapsedTime(final Integer elapsedTime) {
 		this.elapsedTime = elapsedTime;
 	}
 
 	/**
-	 * @param endIndex the endIndex to set
+	 * @param endIndex
+	 *            the endIndex to set
 	 */
 	public void setEndIndex(final Integer endIndex) {
 		this.endIndex = endIndex;
 	}
 
 	/**
-	 * @param hidden the hidden to set
+	 * @param hidden
+	 *            the hidden to set
 	 */
 	public void setHidden(final Boolean hidden) {
 		this.hidden = hidden;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Long id) {
 		this.id = id;
 	}
 
 	/**
-	 * @param isKom the isKom to set
+	 * @param isKom
+	 *            the isKom to set
 	 */
 	public void setIsKom(final Boolean isKom) {
 		this.isKom = isKom;
 	}
 
 	/**
-	 * @param komRank the komRank to set
+	 * @param komRank
+	 *            the komRank to set
 	 */
 	public void setKomRank(final Integer komRank) {
 		this.komRank = komRank;
 	}
 
 	/**
-	 * @param maxHeartrate the maxHeartrate to set
+	 * @param maxHeartrate
+	 *            the maxHeartrate to set
 	 */
 	public void setMaxHeartrate(final Integer maxHeartrate) {
 		this.maxHeartrate = maxHeartrate;
 	}
 
 	/**
-	 * @param movingTime the movingTime to set
+	 * @param movingTime
+	 *            the movingTime to set
 	 */
 	public void setMovingTime(final Integer movingTime) {
 		this.movingTime = movingTime;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(final String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @param prRank the prRank to set
+	 * @param prRank
+	 *            the prRank to set
 	 */
 	public void setPrRank(final Integer prRank) {
 		this.prRank = prRank;
 	}
 
 	/**
-	 * @param resourceState the resourceState to set
+	 * @param resourceState
+	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
 	}
 
 	/**
-	 * @param segment the segment to set
+	 * @param segment
+	 *            the segment to set
 	 */
 	public void setSegment(final StravaSegment segment) {
 		this.segment = segment;
 	}
 
 	/**
-	 * @param startDate the startDate to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
 	public void setStartDate(final ZonedDateTime startDate) {
 		this.startDate = startDate;
 	}
 
 	/**
-	 * @param startDateLocal the startDateLocal to set
+	 * @param startDateLocal
+	 *            the startDateLocal to set
 	 */
 	public void setStartDateLocal(final LocalDateTime startDateLocal) {
 		this.startDateLocal = startDateLocal;
 	}
 
 	/**
-	 * @param startIndex the startIndex to set
+	 * @param startIndex
+	 *            the startIndex to set
 	 */
 	public void setStartIndex(final Integer startIndex) {
 		this.startIndex = startIndex;
@@ -683,12 +708,18 @@ public class StravaSegmentEffort implements StravaCacheable<Long>{
 	 */
 	@Override
 	public String toString() {
-		return "StravaSegmentEffort [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activity=" + this.activity //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", athlete=" + this.athlete + ", elapsedTime=" + this.elapsedTime + ", movingTime=" + this.movingTime + ", startDate=" + this.startDate //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", startDateLocal=" + this.startDateLocal + ", distance=" + this.distance + ", startIndex=" + this.startIndex + ", endIndex=" + this.endIndex //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", averageCadence=" + this.averageCadence + ", averageWatts=" + this.averageWatts + ", averageHeartrate=" + this.averageHeartrate //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", maxHeartrate=" + this.maxHeartrate + ", segment=" + this.segment + ", komRank=" + this.komRank + ", prRank=" + this.prRank + ", hidden=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.hidden + ", isKom=" + this.isKom + ", achievements=" + this.achievements + ", athleteSegmentStats=" + this.athleteSegmentStats //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return "StravaSegmentEffort [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", activity=" + this.activity //$NON-NLS-1$
+				+ ", athlete=" + this.athlete + ", elapsedTime=" + this.elapsedTime + ", movingTime=" + this.movingTime //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", startDate=" + this.startDate //$NON-NLS-1$
+				+ ", startDateLocal=" + this.startDateLocal + ", distance=" + this.distance + ", startIndex=" + this.startIndex //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", endIndex=" + this.endIndex //$NON-NLS-1$
+				+ ", averageCadence=" + this.averageCadence + ", averageWatts=" + this.averageWatts + ", averageHeartrate=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.averageHeartrate
+				+ ", maxHeartrate=" + this.maxHeartrate + ", segment=" + this.segment + ", komRank=" + this.komRank + ", prRank=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.prRank + ", hidden=" //$NON-NLS-1$
+				+ this.hidden + ", isKom=" + this.isKom + ", achievements=" + this.achievements + ", athleteSegmentStats=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.athleteSegmentStats
 				+ ", deviceWatts=" + this.deviceWatts + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }
