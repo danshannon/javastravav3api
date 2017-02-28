@@ -1836,6 +1836,52 @@ public class API {
 	}
 
 	/**
+	 * <p>
+	 * Star or unstar a segment
+	 * </p>
+	 *
+	 * @param segmentId
+	 *            Identifier of the segment to be starred or unstarred
+	 * @param starred
+	 *            <code>true</code> if the segment is to be starred, <code>false</code> if to be unstarred
+	 * @return Detailed representation of the segment
+	 * @throws NotFoundException
+	 *             If the segment does not exist
+	 * @throws BadRequestException
+	 *             If required parameters are not provided
+	 * @throws UnauthorizedException
+	 *             If there is a security or privacy violation
+	 */
+	public StravaSegment starSegment(final Integer segmentId, final Boolean starred)
+			throws NotFoundException, BadRequestException, UnauthorizedException {
+		return this.segmentAPI.starSegment(segmentId, starred);
+	}
+
+	/**
+	 * <p>
+	 * Star or unstar a segment
+	 * </p>
+	 *
+	 * @param segmentId
+	 *            Identifier of the segment to be starred or unstarred
+	 * @param starred
+	 *            <code>true</code> if the segment is to be starred, <code>false</code> if to be unstarred
+	 * @return Detailed representation of the segment
+	 * @throws NotFoundException
+	 *             If the segment does not exist
+	 * @throws BadRequestException
+	 *             If required parameters are not provided
+	 * @throws UnauthorizedException
+	 *             If there is a security or privacy violation
+	 */
+	public StravaAPIFuture<StravaSegment> starSegmentAsync(final Integer segmentId, final Boolean starred)
+			throws NotFoundException, BadRequestException, UnauthorizedException {
+		final StravaAPIFuture<StravaSegment> future = new StravaAPIFuture<StravaSegment>();
+		this.segmentAPI.starSegment(segmentId, starred, callback(future));
+		return future;
+	}
+
+	/**
 	 * @param athleteId
 	 *            Athlete identifier
 	 * @return Statistics summary for the identified athlete

@@ -3135,4 +3135,36 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 		return this.uploadService.uploadAsync(activityType, name, description, _private, trainer, commute, dataType, externalId,
 				file);
 	}
+
+	/**
+	 * <p>
+	 * Star or unstar a segment
+	 * </p>
+	 *
+	 * @param segmentId
+	 *            The id of the segment to be starred
+	 * @param starred
+	 *            <code>true</code> if segment is to be starred, <code>false</code> if segment is to be unstarred
+	 * @return Detailed representation of the segment
+	 */
+	@Override
+	public StravaSegment starSegment(Integer segmentId, Boolean starred) {
+		return this.segmentService.starSegment(segmentId, starred);
+	}
+
+	/**
+	 * <p>
+	 * Star or unstar a segment
+	 * </p>
+	 *
+	 * @param segmentId
+	 *            The id of the segment to be starred
+	 * @param starred
+	 *            <code>true</code> if segment is to be starred, <code>false</code> if segment is to be unstarred
+	 * @return CompletableFuture which returns the detailed representation of the segment
+	 */
+	@Override
+	public CompletableFuture<StravaSegment> starSegmentAsync(Integer segmentId, Boolean starred) {
+		return this.segmentService.starSegmentAsync(segmentId, starred);
+	}
 }

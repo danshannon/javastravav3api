@@ -98,6 +98,36 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 	private Integer followingCount;
 
 	/**
+	 * Vanity URL for the club
+	 */
+	private String url;
+
+	/**
+	 * Undocumented
+	 */
+	private Boolean verified;
+
+	/**
+	 * Undocumented
+	 */
+	private Integer postCount;
+
+	/**
+	 * @return the verified
+	 */
+	public Boolean getVerified() {
+		return this.verified;
+	}
+
+	/**
+	 * @param verified
+	 *            the verified to set
+	 */
+	public void setVerified(Boolean verified) {
+		this.verified = verified;
+	}
+
+	/**
 	 * No args constructor
 	 */
 	public StravaClub() {
@@ -539,10 +569,40 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 	public String toString() {
 		return "StravaClub [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", profileMedium=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.profileMedium + ", profile=" + this.profile + ", description=" + this.description + ", clubType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.clubType
-				+ ", sportType=" + this.sportType + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", privateClub=" + this.privateClub + ", memberCount=" + this.memberCount + ", featured=" + this.featured //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", membership=" + this.membership + ", admin=" + this.admin + ", owner=" + this.owner + ", followingCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.clubType + ", sportType=" + this.sportType + ", city=" + this.city + ", state=" + this.state + ", country=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.country + ", privateClub=" + this.privateClub + ", memberCount=" + this.memberCount + ", featured=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.featured + ", membership=" + this.membership + ", admin=" + this.admin + ", owner=" + this.owner //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", followingCount=" //$NON-NLS-1$
 				+ this.followingCount + "]"; //$NON-NLS-1$
+	}
+
+	/**
+	 * @return The vanity URL for the club
+	 */
+	public String getUrl() {
+		return this.url;
+	}
+
+	/**
+	 * @param url
+	 *            The Vanity URL for the club
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	/**
+	 * @return the postCount
+	 */
+	public Integer getPostCount() {
+		return this.postCount;
+	}
+
+	/**
+	 * @param postCount
+	 *            the postCount to set
+	 */
+	public void setPostCount(Integer postCount) {
+		this.postCount = postCount;
 	}
 }

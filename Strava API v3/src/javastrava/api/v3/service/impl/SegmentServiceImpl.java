@@ -50,13 +50,11 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 * </p>
 	 *
 	 * <p>
-	 * Instances are cached so that if 2 requests are made for the same token,
-	 * the same instance is returned
+	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
 	 * </p>
 	 *
 	 * @param token
-	 *            The Strava access token to be used in requests to the Strava
-	 *            API
+	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An instance of the segment services
 	 */
 	public static SegmentService instance(final Token token) {
@@ -82,8 +80,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 	/**
 	 * <p>
-	 * Private constructor ensures that the only way to get an instance is via
-	 * {@link #instance(Token)} with a valid access token
+	 * Private constructor ensures that the only way to get an instance is via {@link #instance(Token)} with a valid access token
 	 * </p>
 	 *
 	 * @param token
@@ -96,8 +93,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 	/**
 	 * <p>
-	 * Most irritatingly, Strava returns one list of leaderboard entries that is
-	 * actually two lists
+	 * Most irritatingly, Strava returns one list of leaderboard entries that is actually two lists
 	 * </p>
 	 *
 	 * <p>
@@ -107,11 +103,9 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 * @param leaderboard
 	 *            The set of entries to be split out
 	 * @param pagingInstruction
-	 *            The paging instruction that was sent to Strava API, so we can
-	 *            work out how to split the entries up
+	 *            The paging instruction that was sent to Strava API, so we can work out how to split the entries up
 	 * @param contextSize
-	 *            Number of entries either side of the athlete's to return as
-	 *            context
+	 *            Number of entries either side of the athlete's to return as context
 	 * @return List of athlete entries
 	 */
 	private List<StravaSegmentLeaderboardEntry> calculateAthleteEntries(final StravaSegmentLeaderboard leaderboard,
@@ -175,16 +169,14 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 	/**
 	 * @see javastrava.api.v3.service.SegmentService#getAllSegmentLeaderboard(java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaGender,
-	 *      javastrava.api.v3.model.reference.StravaAgeGroup,
-	 *      javastrava.api.v3.model.reference.StravaWeightClass,
-	 *      java.lang.Boolean, java.lang.Integer,
+	 *      javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
+	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
 	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange)
 	 */
 	@Override
 	public StravaSegmentLeaderboard getAllSegmentLeaderboard(final Integer segmentId, final StravaGender gender,
-			final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following,
-			final Integer clubId, final StravaLeaderboardDateRange dateRange) {
+			final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following, final Integer clubId,
+			final StravaLeaderboardDateRange dateRange) {
 		boolean loop = true;
 		StravaSegmentLeaderboard leaderboard = new StravaSegmentLeaderboard();
 
@@ -193,8 +185,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			page++;
 			StravaSegmentLeaderboard currentPage;
 			try {
-				currentPage = getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId,
-						dateRange, new Paging(Integer.valueOf(page), StravaConfig.MAX_PAGE_SIZE), Integer.valueOf(2));
+				currentPage = getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange,
+						new Paging(Integer.valueOf(page), StravaConfig.MAX_PAGE_SIZE), Integer.valueOf(2));
 			} catch (final UnauthorizedException e) {
 				return new StravaSegmentLeaderboard();
 			}
@@ -225,11 +217,15 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#getAllSegmentLeaderboardAsync(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup, javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer, javastrava.api.v3.model.reference.StravaLeaderboardDateRange)
+	 * @see javastrava.api.v3.service.SegmentService#getAllSegmentLeaderboardAsync(java.lang.Integer,
+	 *      javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
+	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
+	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange)
 	 */
 	@Override
-	public CompletableFuture<StravaSegmentLeaderboard> getAllSegmentLeaderboardAsync(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
-			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange) {
+	public CompletableFuture<StravaSegmentLeaderboard> getAllSegmentLeaderboardAsync(final Integer segmentId,
+			final StravaGender gender, final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following,
+			final Integer clubId, final StravaLeaderboardDateRange dateRange) {
 		return StravaServiceImpl.future(() -> {
 			return getAllSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange);
 		});
@@ -257,7 +253,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		// TODO Workaround for javastrava-api #70
 		// If the segment is private and the token doesn't have view_private
 		// scope, then return an empty segment
-		if ((segment.getResourceState() != StravaResourceState.PRIVATE) && segment.getPrivateSegment().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
+		if ((segment.getResourceState() != StravaResourceState.PRIVATE) && segment.getPrivateSegment().equals(Boolean.TRUE)
+				&& !getToken().hasViewPrivate()) {
 			segment = PrivacyUtils.privateSegment(segmentId);
 		}
 		// End of workaround
@@ -287,8 +284,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboard(java.lang.Integer,
-	 *      javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboard(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final Paging pagingInstruction) {
@@ -296,15 +292,13 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboard(Integer,
-	 *      StravaGender, StravaAgeGroup, StravaWeightClass, Boolean, Integer,
-	 *      StravaLeaderboardDateRange, Paging, Integer)
+	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboard(Integer, StravaGender, StravaAgeGroup, StravaWeightClass,
+	 *      Boolean, Integer, StravaLeaderboardDateRange, Paging, Integer)
 	 */
 	@Override
 	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender,
-			final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following,
-			final Integer clubId, final StravaLeaderboardDateRange dateRange, final Paging pagingInstruction,
-			final Integer contextEntries) {
+			final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following, final Integer clubId,
+			final StravaLeaderboardDateRange dateRange, final Paging pagingInstruction, final Integer contextEntries) {
 		// Check that the paging arguments are valid
 		PagingUtils.validatePagingArguments(pagingInstruction);
 
@@ -326,14 +320,14 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 
 		// If null, then the default value for contextEntries is 2; the max is
 		// 15
-		final Integer context = (contextEntries == null ? Integer.valueOf(2) : Integer.valueOf(Math.max(0,
-				Math.min(15, contextEntries.intValue()))));
+		final Integer context = (contextEntries == null ? Integer.valueOf(2)
+				: Integer.valueOf(Math.max(0, Math.min(15, contextEntries.intValue()))));
 		final Integer contextSize = Integer.valueOf((context.intValue() * 2) + 1);
 
 		try {
 			for (final Paging paging : PagingUtils.convertToStravaPaging(pagingInstruction)) {
-				final StravaSegmentLeaderboard current = this.api.getSegmentLeaderboard(segmentId, gender, ageGroup,
-						weightClass, following, clubId, dateRange, paging.getPage(), paging.getPageSize(), context);
+				final StravaSegmentLeaderboard current = this.api.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass,
+						following, clubId, dateRange, paging.getPage(), paging.getPageSize(), context);
 				if (current.getEntries().isEmpty()) {
 					current.setAthleteEntries(new ArrayList<StravaSegmentLeaderboardEntry>());
 					if (leaderboard.getEntries() == null) {
@@ -377,21 +371,27 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboardAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<StravaSegmentLeaderboard> getSegmentLeaderboardAsync(final Integer segmentId, final Paging pagingInstruction) {
+	public CompletableFuture<StravaSegmentLeaderboard> getSegmentLeaderboardAsync(final Integer segmentId,
+			final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return getSegmentLeaderboard(segmentId, pagingInstruction);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboardAsync(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup, javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer, javastrava.api.v3.model.reference.StravaLeaderboardDateRange, javastrava.util.Paging, java.lang.Integer)
+	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboardAsync(java.lang.Integer,
+	 *      javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
+	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
+	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange, javastrava.util.Paging, java.lang.Integer)
 	 */
 	@Override
-	public CompletableFuture<StravaSegmentLeaderboard> getSegmentLeaderboardAsync(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
-			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Paging pagingInstruction,
+	public CompletableFuture<StravaSegmentLeaderboard> getSegmentLeaderboardAsync(final Integer segmentId,
+			final StravaGender gender, final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following,
+			final Integer clubId, final StravaLeaderboardDateRange dateRange, final Paging pagingInstruction,
 			final Integer contextEntries) {
 		return StravaServiceImpl.future(() -> {
-			return getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, pagingInstruction, contextEntries);
+			return getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, pagingInstruction,
+					contextEntries);
 		});
 	}
 
@@ -439,8 +439,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEfforts(java.lang.Integer,
-	 *      java.lang.Integer, LocalDateTime, LocalDateTime)
+	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime,
+	 *      LocalDateTime)
 	 */
 	@Override
 	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId,
@@ -470,8 +470,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 			return new ArrayList<StravaSegmentEffort>();
 		}
 		// End of workaround
-		return PagingHandler.handleListAll(thisPage -> listSegmentEfforts(segmentId, athleteId, startDate, endDate,
-				thisPage), parallelism);
+		return PagingHandler.handleListAll(thisPage -> listSegmentEfforts(segmentId, athleteId, startDate, endDate, thisPage),
+				parallelism);
 	}
 
 	/**
@@ -485,11 +485,12 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEffortsAsync(java.lang.Integer, java.lang.Integer, java.time.LocalDateTime, java.time.LocalDateTime)
+	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEffortsAsync(java.lang.Integer, java.lang.Integer,
+	 *      java.time.LocalDateTime, java.time.LocalDateTime)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegmentEffort>> listAllSegmentEffortsAsync(final Integer segmentId, final Integer athleteId, final LocalDateTime startDate,
-			final LocalDateTime endDate) {
+	public CompletableFuture<List<StravaSegmentEffort>> listAllSegmentEffortsAsync(final Integer segmentId, final Integer athleteId,
+			final LocalDateTime startDate, final LocalDateTime endDate) {
 		return StravaServiceImpl.future(() -> {
 			return listAllSegmentEfforts(segmentId);
 		});
@@ -526,10 +527,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 */
 	@Override
 	public List<StravaSegment> listAuthenticatedAthleteStarredSegments(final Paging pagingInstruction) {
-		final List<StravaSegment> segments = PagingHandler.handlePaging(
-				pagingInstruction,
-				thisPage -> Arrays.asList(SegmentServiceImpl.this.api.listAuthenticatedAthleteStarredSegments(
-						thisPage.getPage(), thisPage.getPageSize())));
+		final List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(
+				SegmentServiceImpl.this.api.listAuthenticatedAthleteStarredSegments(thisPage.getPage(), thisPage.getPageSize())));
 
 		// TODO This is a workaround for issue javastrava-api #81
 		// (https://github.com/danshannon/javastravav3api/issues/81)
@@ -573,8 +572,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer,
-	 *      java.lang.Integer, LocalDateTime, LocalDateTime)
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime,
+	 *      LocalDateTime)
 	 */
 	@Override
 	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId,
@@ -583,8 +582,7 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(Integer,
-	 *      Integer, LocalDateTime, LocalDateTime, Paging)
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(Integer, Integer, LocalDateTime, LocalDateTime, Paging)
 	 */
 	@Override
 	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId,
@@ -628,16 +626,15 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		final String start = (startDateLocal == null ? null : startDateLocal.toString());
 		final String end = (endDateLocal == null ? null : endDateLocal.toString());
 
-		final List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
-				.asList(SegmentServiceImpl.this.api.listSegmentEfforts(segmentId, athleteId, start, end, thisPage.getPage(),
-						thisPage.getPageSize())));
+		final List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction,
+				thisPage -> Arrays.asList(SegmentServiceImpl.this.api.listSegmentEfforts(segmentId, athleteId, start, end,
+						thisPage.getPage(), thisPage.getPageSize())));
 
 		return PrivacyUtils.handlePrivateSegmentEfforts(efforts, this.getToken());
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer,
-	 *      javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
 	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Paging pagingInstruction) {
@@ -655,22 +652,24 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer, java.lang.Integer, java.time.LocalDateTime, java.time.LocalDateTime)
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer, java.lang.Integer,
+	 *      java.time.LocalDateTime, java.time.LocalDateTime)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId, final Integer athleteId, final LocalDateTime startDateLocal,
-			final LocalDateTime endDateLocal) {
+	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId, final Integer athleteId,
+			final LocalDateTime startDateLocal, final LocalDateTime endDateLocal) {
 		return StravaServiceImpl.future(() -> {
 			return listSegmentEfforts(segmentId, athleteId, startDateLocal, endDateLocal);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer, java.lang.Integer, java.time.LocalDateTime, java.time.LocalDateTime, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer, java.lang.Integer,
+	 *      java.time.LocalDateTime, java.time.LocalDateTime, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId, final Integer athleteId, final LocalDateTime startDateLocal,
-			final LocalDateTime endDateLocal, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId, final Integer athleteId,
+			final LocalDateTime startDateLocal, final LocalDateTime endDateLocal, final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return listSegmentEfforts(segmentId, athleteId, startDateLocal, endDateLocal, pagingInstruction);
 		});
@@ -680,7 +679,8 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId,
+			final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return listSegmentEfforts(segmentId, pagingInstruction);
 		});
@@ -695,14 +695,12 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#listStarredSegments(Integer,
-	 *      Paging)
+	 * @see javastrava.api.v3.service.SegmentService#listStarredSegments(Integer, Paging)
 	 */
 	@Override
 	public List<StravaSegment> listStarredSegments(final Integer athleteId, final Paging pagingInstruction) {
-		final List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction,
-				thisPage -> Arrays.asList(SegmentServiceImpl.this.api.listStarredSegments(athleteId, thisPage.getPage(),
-						thisPage.getPageSize())));
+		final List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
+				.asList(SegmentServiceImpl.this.api.listStarredSegments(athleteId, thisPage.getPage(), thisPage.getPageSize())));
 
 		// TODO This is a workaround for issue javastrava-api #25
 		// (https://github.com/danshannon/javastravav3api/issues/25)
@@ -731,23 +729,23 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 * @see javastrava.api.v3.service.SegmentService#listStarredSegmentsAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegment>> listStarredSegmentsAsync(final Integer athleteId, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaSegment>> listStarredSegmentsAsync(final Integer athleteId,
+			final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return listStarredSegments(athleteId, pagingInstruction);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#segmentExplore(StravaMapPoint,
-	 *      StravaMapPoint, StravaSegmentExplorerActivityType,
-	 *      StravaClimbCategory, StravaClimbCategory)
+	 * @see javastrava.api.v3.service.SegmentService#segmentExplore(StravaMapPoint, StravaMapPoint,
+	 *      StravaSegmentExplorerActivityType, StravaClimbCategory, StravaClimbCategory)
 	 */
 	@Override
-	public StravaSegmentExplorerResponse segmentExplore(final StravaMapPoint southwestCorner,
-			final StravaMapPoint northeastCorner, final StravaSegmentExplorerActivityType activityType,
-			final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
-		final String bounds = southwestCorner.getLatitude()
-				+ "," + southwestCorner.getLongitude() + "," + northeastCorner.getLatitude() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	public StravaSegmentExplorerResponse segmentExplore(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner,
+			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat,
+			final StravaClimbCategory maxCat) {
+		final String bounds = southwestCorner.getLatitude() + "," + southwestCorner.getLongitude() + "," //$NON-NLS-1$ //$NON-NLS-2$
+				+ northeastCorner.getLatitude() + "," //$NON-NLS-1$
 				+ northeastCorner.getLongitude();
 		final StravaSegmentExplorerResponse response = this.api.segmentExplore(bounds, activityType, minCat, maxCat);
 		for (final StravaSegmentExplorerResponseSegment segment : response.getSegments()) {
@@ -757,13 +755,34 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.SegmentService#segmentExploreAsync(javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType, javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory)
+	 * @see javastrava.api.v3.service.SegmentService#segmentExploreAsync(javastrava.api.v3.model.StravaMapPoint,
+	 *      javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType,
+	 *      javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory)
 	 */
 	@Override
-	public CompletableFuture<StravaSegmentExplorerResponse> segmentExploreAsync(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner,
-			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
+	public CompletableFuture<StravaSegmentExplorerResponse> segmentExploreAsync(final StravaMapPoint southwestCorner,
+			final StravaMapPoint northeastCorner, final StravaSegmentExplorerActivityType activityType,
+			final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
 		return StravaServiceImpl.future(() -> {
 			return segmentExplore(southwestCorner, northeastCorner, activityType, minCat, maxCat);
+		});
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.SegmentService#starSegment(java.lang.Integer, java.lang.Boolean)
+	 */
+	@Override
+	public StravaSegment starSegment(Integer segmentId, Boolean starred) {
+		return this.api.starSegment(segmentId, starred);
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.SegmentService#starSegmentAsync(java.lang.Integer, java.lang.Boolean)
+	 */
+	@Override
+	public CompletableFuture<StravaSegment> starSegmentAsync(Integer segmentId, Boolean starred) {
+		return StravaServiceImpl.future(() -> {
+			return starSegment(segmentId, starred);
 		});
 	}
 
