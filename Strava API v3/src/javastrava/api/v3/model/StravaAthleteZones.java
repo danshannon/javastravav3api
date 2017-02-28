@@ -6,7 +6,7 @@ package javastrava.api.v3.model;
  * @author Dan Shannon
  *
  */
-public class StravaAthleteZones {
+public class StravaAthleteZones implements StravaEntity {
 	/**
 	 * Set of heart-rate zones for the athlete
 	 */
