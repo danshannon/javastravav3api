@@ -3,27 +3,29 @@ package javastrava.api.v3.model;
 import java.util.List;
 
 /**
- * Set of athlete heart rate zones
+ * Set of athlete heart rate or power zones
  *
  * @author Dan Shannon
  *
  */
-public class StravaHeartRateZones {
+public class StravaAthleteZone {
 	/**
 	 * Is this a set of custom zones?
 	 */
-	private Boolean customZones;
+	private Boolean				customZones;
 	/**
 	 * The actual zones
 	 */
-	private List<StravaZone> zones;
+	private List<StravaZone>	zones;
+
 	/**
 	 * no-args constructor
 	 */
-	public StravaHeartRateZones() {
+	public StravaAthleteZone() {
 		super();
 
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -35,10 +37,10 @@ public class StravaHeartRateZones {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof StravaAthleteZone)) {
 			return false;
 		}
-		final StravaHeartRateZones other = (StravaHeartRateZones) obj;
+		final StravaAthleteZone other = (StravaAthleteZone) obj;
 		if (this.customZones == null) {
 			if (other.customZones != null) {
 				return false;
@@ -55,18 +57,21 @@ public class StravaHeartRateZones {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the customZones
 	 */
 	public Boolean getCustomZones() {
 		return this.customZones;
 	}
+
 	/**
 	 * @return the zones
 	 */
 	public List<StravaZone> getZones() {
 		return this.zones;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -78,18 +83,23 @@ public class StravaHeartRateZones {
 		result = (prime * result) + ((this.zones == null) ? 0 : this.zones.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param customZones the customZones to set
+	 * @param customZones
+	 *            the customZones to set
 	 */
 	public void setCustomZones(final Boolean customZones) {
 		this.customZones = customZones;
 	}
+
 	/**
-	 * @param zones the zones to set
+	 * @param zones
+	 *            the zones to set
 	 */
 	public void setZones(final List<StravaZone> zones) {
 		this.zones = zones;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

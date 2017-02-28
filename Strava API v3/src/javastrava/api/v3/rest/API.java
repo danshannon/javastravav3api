@@ -226,7 +226,7 @@ public class API {
 	 *            The upload id as given back in the response to
 	 *            {@link #upload(StravaActivityType, String, String, Boolean, Boolean, Boolean, String, String, TypedFile)}
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
-	 * @see javastrava.api.v3.rest.UploadAPI#checkUploadStatus(java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.UploadAPI#checkUploadStatus(java.lang.Long, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
 	public StravaAPIFuture<StravaUploadResponse> checkUploadStatusAsync(final Long uploadId) {
 		final StravaAPIFuture<StravaUploadResponse> future = new StravaAPIFuture<StravaUploadResponse>();
@@ -612,7 +612,7 @@ public class API {
 	}
 
 	/**
-	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
 	 *
 	 * @return The athlete zones object
 	 */
@@ -622,7 +622,7 @@ public class API {
 	}
 
 	/**
-	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
 	 *
 	 * @return The athlete zones object (via a future)
 	 */

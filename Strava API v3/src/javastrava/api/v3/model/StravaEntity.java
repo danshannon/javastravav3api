@@ -9,5 +9,5 @@ package javastrava.api.v3.model;
  *
  */
 public interface StravaEntity {
-
+	// Empty
 }
