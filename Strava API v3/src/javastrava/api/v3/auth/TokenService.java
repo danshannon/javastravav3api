@@ -74,5 +74,4 @@ public interface TokenService extends StravaService {
 	 *             if the token is not allowed to be deauthorised
 	 */
 	public TokenResponse deauthorise(final Token accessToken) throws UnauthorizedException;
-
 }
