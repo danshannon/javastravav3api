@@ -20,6 +20,7 @@ import javastrava.api.v3.model.StravaGear;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaPhoto;
 import javastrava.api.v3.model.StravaResponse;
+import javastrava.api.v3.model.StravaRunningRace;
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaSegmentExplorerResponse;
@@ -164,6 +165,223 @@ public class API {
 	 */
 	private final GearAPI			gearAPI;
 	/**
+	 * API instance for access to running race data
+	 */
+	private final RunningRaceAPI	runningRaceAPI;
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.activityAPI == null) ? 0 : this.activityAPI.hashCode());
+		result = (prime * result) + ((this.athleteAPI == null) ? 0 : this.athleteAPI.hashCode());
+		result = (prime * result) + ((this.clubAPI == null) ? 0 : this.clubAPI.hashCode());
+		result = (prime * result) + ((this.effortAPI == null) ? 0 : this.effortAPI.hashCode());
+		result = (prime * result) + ((this.gearAPI == null) ? 0 : this.gearAPI.hashCode());
+		result = (prime * result) + ((this.runningRaceAPI == null) ? 0 : this.runningRaceAPI.hashCode());
+		result = (prime * result) + ((this.segmentAPI == null) ? 0 : this.segmentAPI.hashCode());
+		result = (prime * result) + ((this.streamAPI == null) ? 0 : this.streamAPI.hashCode());
+		result = (prime * result) + ((this.tokenAPI == null) ? 0 : this.tokenAPI.hashCode());
+		result = (prime * result) + ((this.uploadAPI == null) ? 0 : this.uploadAPI.hashCode());
+		result = (prime * result) + ((this.webhookAPI == null) ? 0 : this.webhookAPI.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof API)) {
+			return false;
+		}
+		final API other = (API) obj;
+		if (this.activityAPI == null) {
+			if (other.activityAPI != null) {
+				return false;
+			}
+		} else if (!this.activityAPI.equals(other.activityAPI)) {
+			return false;
+		}
+		if (this.athleteAPI == null) {
+			if (other.athleteAPI != null) {
+				return false;
+			}
+		} else if (!this.athleteAPI.equals(other.athleteAPI)) {
+			return false;
+		}
+		if (this.clubAPI == null) {
+			if (other.clubAPI != null) {
+				return false;
+			}
+		} else if (!this.clubAPI.equals(other.clubAPI)) {
+			return false;
+		}
+		if (this.effortAPI == null) {
+			if (other.effortAPI != null) {
+				return false;
+			}
+		} else if (!this.effortAPI.equals(other.effortAPI)) {
+			return false;
+		}
+		if (this.gearAPI == null) {
+			if (other.gearAPI != null) {
+				return false;
+			}
+		} else if (!this.gearAPI.equals(other.gearAPI)) {
+			return false;
+		}
+		if (this.runningRaceAPI == null) {
+			if (other.runningRaceAPI != null) {
+				return false;
+			}
+		} else if (!this.runningRaceAPI.equals(other.runningRaceAPI)) {
+			return false;
+		}
+		if (this.segmentAPI == null) {
+			if (other.segmentAPI != null) {
+				return false;
+			}
+		} else if (!this.segmentAPI.equals(other.segmentAPI)) {
+			return false;
+		}
+		if (this.streamAPI == null) {
+			if (other.streamAPI != null) {
+				return false;
+			}
+		} else if (!this.streamAPI.equals(other.streamAPI)) {
+			return false;
+		}
+		if (this.tokenAPI == null) {
+			if (other.tokenAPI != null) {
+				return false;
+			}
+		} else if (!this.tokenAPI.equals(other.tokenAPI)) {
+			return false;
+		}
+		if (this.uploadAPI == null) {
+			if (other.uploadAPI != null) {
+				return false;
+			}
+		} else if (!this.uploadAPI.equals(other.uploadAPI)) {
+			return false;
+		}
+		if (this.webhookAPI == null) {
+			if (other.webhookAPI != null) {
+				return false;
+			}
+		} else if (!this.webhookAPI.equals(other.webhookAPI)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @return the authorisationAPI
+	 */
+	public static AuthorisationAPI getAuthorisationAPI() {
+		return authorisationAPI;
+	}
+
+	/**
+	 * @param authorisationAPI
+	 *            the authorisationAPI to set
+	 */
+	public static void setAuthorisationAPI(AuthorisationAPI authorisationAPI) {
+		API.authorisationAPI = authorisationAPI;
+	}
+
+	/**
+	 * @return the activityAPI
+	 */
+	public ActivityAPI getActivityAPI() {
+		return this.activityAPI;
+	}
+
+	/**
+	 * @return the athleteAPI
+	 */
+	public AthleteAPI getAthleteAPI() {
+		return this.athleteAPI;
+	}
+
+	/**
+	 * @return the clubAPI
+	 */
+	public ClubAPI getClubAPI() {
+		return this.clubAPI;
+	}
+
+	/**
+	 * @return the gearAPI
+	 */
+	public GearAPI getGearAPI() {
+		return this.gearAPI;
+	}
+
+	/**
+	 * @return the runningRaceAPI
+	 */
+	public RunningRaceAPI getRunningRaceAPI() {
+		return this.runningRaceAPI;
+	}
+
+	/**
+	 * @return the segmentAPI
+	 */
+	public SegmentAPI getSegmentAPI() {
+		return this.segmentAPI;
+	}
+
+	/**
+	 * @return the effortAPI
+	 */
+	public SegmentEffortAPI getEffortAPI() {
+		return this.effortAPI;
+	}
+
+	/**
+	 * @return the streamAPI
+	 */
+	public StreamAPI getStreamAPI() {
+		return this.streamAPI;
+	}
+
+	/**
+	 * @return the tokenAPI
+	 */
+	public TokenAPI getTokenAPI() {
+		return this.tokenAPI;
+	}
+
+	/**
+	 * @return the uploadAPI
+	 */
+	public UploadAPI getUploadAPI() {
+		return this.uploadAPI;
+	}
+
+	/**
+	 * @return the webhookAPI
+	 */
+	public WebhookAPI getWebhookAPI() {
+		return this.webhookAPI;
+	}
+
+	/**
 	 * API instance for access to segment data
 	 */
 	private final SegmentAPI		segmentAPI;
@@ -204,6 +422,7 @@ public class API {
 		this.gearAPI = API.instance(GearAPI.class, token);
 		this.segmentAPI = API.instance(SegmentAPI.class, token);
 		this.effortAPI = API.instance(SegmentEffortAPI.class, token);
+		this.runningRaceAPI = API.instance(RunningRaceAPI.class, token);
 		this.streamAPI = API.instance(StreamAPI.class, token);
 		this.tokenAPI = API.instance(TokenAPI.class, token);
 		this.uploadAPI = API.instance(UploadAPI.class, token);
@@ -762,6 +981,23 @@ public class API {
 		final StravaAPIFuture<StravaGear> future = new StravaAPIFuture<StravaGear>();
 		this.gearAPI.getGear(gearId, callback(future));
 		return future;
+	}
+
+	/**
+	 * <p>
+	 * Get details of a specific running race
+	 * </p>
+	 *
+	 * @param id
+	 *            The id of the race to be retrieved
+	 * @return A detailed representation of the running race
+	 * @throws NotFoundException
+	 *             If the race does not exist
+	 * @throws UnauthorizedException
+	 *             If the race is private or a security exception has occurred
+	 */
+	public StravaRunningRace getRace(Integer id) throws NotFoundException, UnauthorizedException {
+		return this.runningRaceAPI.getRace(id);
 	}
 
 	/**
@@ -1664,6 +1900,34 @@ public class API {
 			final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaActivity[]> future = new StravaAPIFuture<StravaActivity[]>();
 		this.activityAPI.listRelatedActivities(activityId, page, perPage, callback(future));
+		return future;
+	}
+
+	/**
+	 * <p>
+	 * List Strava's featured running races
+	 * </p>
+	 *
+	 * @param year
+	 *            (Optional) restrict results to the given year
+	 * @return List of running races as summary representations
+	 */
+	public StravaRunningRace[] listRaces(Integer year) {
+		return this.runningRaceAPI.listRaces(year);
+	}
+
+	/**
+	 * <p>
+	 * List Strava's featured running races
+	 * </p>
+	 *
+	 * @param year
+	 *            (Optional) restrict results to the given year
+	 * @return Future with list of running races as summary representations
+	 */
+	public StravaAPIFuture<StravaRunningRace[]> listRacesAsync(Integer year) {
+		final StravaAPIFuture<StravaRunningRace[]> future = new StravaAPIFuture<StravaRunningRace[]>();
+		this.runningRaceAPI.listRacesAsync(year, callback(future));
 		return future;
 	}
 

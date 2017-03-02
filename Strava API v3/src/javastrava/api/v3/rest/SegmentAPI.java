@@ -21,6 +21,7 @@ import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.util.Paging;
 import retrofit.http.GET;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -324,7 +325,7 @@ public interface SegmentAPI {
 	 * @throws UnauthorizedException
 	 *             If there is a security or privacy violation
 	 */
-	@GET("/segments/{id}/starred")
+	@PUT("/segments/{id}/starred")
 	public StravaSegment starSegment(@Path("id") final Integer segmentId, @Query("starred") final Boolean starred)
 			throws NotFoundException, BadRequestException, UnauthorizedException;
 
@@ -342,7 +343,7 @@ public interface SegmentAPI {
 	 * @throws UnauthorizedException
 	 *             If there is a security or privacy violation
 	 */
-	@GET("/segments/{id}/starred")
+	@PUT("/segments/{id}/starred")
 	public void starSegment(@Path("id") final Integer segmentId, @Query("starred") final Boolean starred,
 			final StravaAPICallback<StravaSegment> callback);
 
