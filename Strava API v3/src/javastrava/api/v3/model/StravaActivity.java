@@ -321,10 +321,10 @@ public class StravaActivity implements StravaCacheable<Long>, StravaEntity {
 	 */
 	private String deviceName;
 
-    /**
-     * A measure of heartrate intensity, available on premium users’ activities only
-     */
-    private Integer sufferScore;
+	/**
+	 * A measure of heartrate intensity, available on premium users’ activities only
+	 */
+	private Integer sufferScore;
 
 	/**
 	 * No args constructor
@@ -749,9 +749,9 @@ public class StravaActivity implements StravaCacheable<Long>, StravaEntity {
 		if (this.workoutType != other.workoutType) {
 			return false;
 		}
-        if (!Objects.equals(this.sufferScore, other.sufferScore)) {
-            return false;
-        }
+		if (!Objects.equals(this.sufferScore, other.sufferScore)) {
+			return false;
+		}
 		return true;
 	}
 
@@ -1173,14 +1173,14 @@ public class StravaActivity implements StravaCacheable<Long>, StravaEntity {
 		return this.workoutType;
 	}
 
-    /**
-     * @return the sufferScore
-     */
-    public Integer getSufferScore() {
-        return sufferScore;
-    }
+	/**
+	 * @return the sufferScore
+	 */
+	public Integer getSufferScore() {
+		return this.sufferScore;
+	}
 
-    /**
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -1246,8 +1246,8 @@ public class StravaActivity implements StravaCacheable<Long>, StravaEntity {
 		result = (prime * result) + ((this.video == null) ? 0 : this.video.hashCode());
 		result = (prime * result) + ((this.weightedAverageWatts == null) ? 0 : this.weightedAverageWatts.hashCode());
 		result = (prime * result) + ((this.workoutType == null) ? 0 : this.workoutType.hashCode());
-        result = (prime * result) + ((this.sufferScore == null) ? 0 : this.sufferScore.hashCode());
-        return result;
+		result = (prime * result) + ((this.sufferScore == null) ? 0 : this.sufferScore.hashCode());
+		return result;
 	}
 
 	/**
@@ -1725,15 +1725,15 @@ public class StravaActivity implements StravaCacheable<Long>, StravaEntity {
 		this.workoutType = workoutType;
 	}
 
-    /**
-     * @param sufferScore
-     *            the sufferScore to set
-     */
-    public void setSufferScore(Integer sufferScore) {
-        this.sufferScore = sufferScore;
-    }
+	/**
+	 * @param sufferScore
+	 *            the sufferScore to set
+	 */
+	public void setSufferScore(Integer sufferScore) {
+		this.sufferScore = sufferScore;
+	}
 
-    /**
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -1760,7 +1760,7 @@ public class StravaActivity implements StravaCacheable<Long>, StravaEntity {
 				+ ", uploadId=" + this.uploadId //$NON-NLS-1$
 				+ ", startLatitude=" + this.startLatitude + ", startLongitude=" + this.startLongitude + ", instagramPrimaryPhoto=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ this.instagramPrimaryPhoto + ", photos=" + this.photos + ", video=" + this.video + ", embedToken=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.embedToken + ", deviceName=" + this.deviceName +", sufferScore="+this.sufferScore+ "]"; //$NON-NLS-1$ //$NON-NLS-2$
+				+ this.embedToken + ", deviceName=" + this.deviceName + ", sufferScore=" + this.sufferScore + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 	}
 }

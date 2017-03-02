@@ -24,6 +24,7 @@ import javastrava.api.v3.model.StravaGear;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaMapPoint;
 import javastrava.api.v3.model.StravaPhoto;
+import javastrava.api.v3.model.StravaRunningRace;
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.api.v3.model.StravaSegmentEffort;
 import javastrava.api.v3.model.StravaSegmentExplorerResponse;
@@ -55,8 +56,8 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class Strava implements ActivityService, AthleteService, ClubService, GearService, SegmentEffortService, SegmentService,
-		StreamService, UploadService, WebhookService {
+public class Strava implements ActivityService, AthleteService, ClubService, GearService, RunningRaceService, SegmentEffortService,
+		SegmentService, StreamService, UploadService, WebhookService {
 	/**
 	 * Instance used for access to activity data
 	 */
@@ -74,6 +75,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * instance used for access to gear data
 	 */
 	private final GearService			gearService;
+	/**
+	 * Instance used for access to running race data
+	 */
+	private final RunningRaceService	runningRaceService;
 	/**
 	 * instance used for access to segment effort data
 	 */
@@ -115,6 +120,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 		this.athleteService = token.getService(AthleteService.class);
 		this.clubService = token.getService(ClubService.class);
 		this.gearService = token.getService(GearService.class);
+		this.runningRaceService = token.getService(RunningRaceService.class);
 		this.segmentEffortService = token.getService(SegmentEffortService.class);
 		this.segmentService = token.getService(SegmentService.class);
 		this.streamService = token.getService(StreamService.class);
@@ -3166,5 +3172,61 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	@Override
 	public CompletableFuture<StravaSegment> starSegmentAsync(Integer segmentId, Boolean starred) {
 		return this.segmentService.starSegmentAsync(segmentId, starred);
+	}
+
+	/**
+	 * <p>
+	 * List Strava's featured running races
+	 * </p>
+	 *
+	 * @param year
+	 *            (Optional) restrict results to the given year
+	 * @return List of running races as summary representations
+	 */
+	@Override
+	public List<StravaRunningRace> listRaces(Integer year) {
+		return this.runningRaceService.listRaces(year);
+	}
+
+	/**
+	 * <p>
+	 * List Strava's featured running races
+	 * </p>
+	 *
+	 * @param year
+	 *            (Optional) restrict results to the given year
+	 * @return Future containing list of running races as summary representations
+	 */
+	@Override
+	public CompletableFuture<List<StravaRunningRace>> listRacesAsync(Integer year) {
+		return this.runningRaceService.listRacesAsync(year);
+	}
+
+	/**
+	 * <p>
+	 * Get details of a specific running race
+	 * </p>
+	 *
+	 * @param id
+	 *            The id of the race to be retrieved
+	 * @return A detailed representation of the running race
+	 */
+	@Override
+	public StravaRunningRace getRace(Integer id) {
+		return this.getRace(id);
+	}
+
+	/**
+	 * <p>
+	 * Get details of a specific running race
+	 * </p>
+	 *
+	 * @param id
+	 *            The id of the race to be retrieved
+	 * @return A future which will return a detailed representation of the running race
+	 */
+	@Override
+	public CompletableFuture<StravaRunningRace> getRaceAsync(Integer id) {
+		return this.getRaceAsync(id);
 	}
 }

@@ -30,6 +30,10 @@ import javastrava.util.PrivacyUtils;
 import javastrava.util.StravaDateUtils;
 
 /**
+ * <p>
+ * Implementation of the activity service
+ * </p>
+ *
  * @author Dan Shannon
  *
  */

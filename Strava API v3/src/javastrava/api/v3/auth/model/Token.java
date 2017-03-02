@@ -13,6 +13,7 @@ import javastrava.api.v3.service.ActivityService;
 import javastrava.api.v3.service.AthleteService;
 import javastrava.api.v3.service.ClubService;
 import javastrava.api.v3.service.GearService;
+import javastrava.api.v3.service.RunningRaceService;
 import javastrava.api.v3.service.SegmentEffortService;
 import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.StravaService;
@@ -23,6 +24,7 @@ import javastrava.api.v3.service.impl.ActivityServiceImpl;
 import javastrava.api.v3.service.impl.AthleteServiceImpl;
 import javastrava.api.v3.service.impl.ClubServiceImpl;
 import javastrava.api.v3.service.impl.GearServiceImpl;
+import javastrava.api.v3.service.impl.RunningRaceServiceImpl;
 import javastrava.api.v3.service.impl.SegmentEffortServiceImpl;
 import javastrava.api.v3.service.impl.SegmentServiceImpl;
 import javastrava.api.v3.service.impl.StravaServiceImpl;
@@ -40,14 +42,15 @@ import javastrava.api.v3.service.impl.WebhookServiceImpl;
  * </p>
  *
  * <p>
- * Tokens are acquired through the OAuth process; this implementation of the API does not provide a purely programmatic way to acquire a token as that would
- * kind of destroy the point(!) - although once a user has given their permission to the application via the OAuth process, you can use
- * {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)} to acquire a token at that point in the process.
+ * Tokens are acquired through the OAuth process; this implementation of the API does not provide a purely programmatic way to
+ * acquire a token as that would kind of destroy the point(!) - although once a user has given their permission to the application
+ * via the OAuth process, you can use {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)} to
+ * acquire a token at that point in the process.
  * </p>
  *
  * <p>
- * The application will now be able to make requests on the user’s behalf using the access_token query string parameter (GET) or POST/PUT body, or the
- * Authorization header. This is done auto-magically by javastrava.
+ * The application will now be able to make requests on the user’s behalf using the access_token query string parameter (GET) or
+ * POST/PUT body, or the Authorization header. This is done auto-magically by javastrava.
  * </p>
  *
  * <p>
@@ -99,7 +102,8 @@ public class Token {
 	 * </p>
 	 *
 	 * @param tokenResponse
-	 *            The response as received from {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
+	 *            The response as received from
+	 *            {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
 	 * @param scopes
 	 *            The list of authorisation scopes to be associated with the token
 	 */
@@ -115,6 +119,7 @@ public class Token {
 		this.addService(AthleteService.class, AthleteServiceImpl.instance(this));
 		this.addService(ClubService.class, ClubServiceImpl.instance(this));
 		this.addService(GearService.class, GearServiceImpl.instance(this));
+		this.addService(RunningRaceService.class, RunningRaceServiceImpl.instance(this));
 		this.addService(SegmentEffortService.class, SegmentEffortServiceImpl.instance(this));
 		this.addService(SegmentService.class, SegmentServiceImpl.instance(this));
 		this.addService(StreamService.class, StreamServiceImpl.instance(this));
@@ -258,8 +263,8 @@ public class Token {
 
 	/**
 	 * <p>
-	 * Validates that the toke has view private access (according to the scopes that it was granted on creation at least; it is quite possible that permissions
-	 * have subsequently been revoked by the user)
+	 * Validates that the toke has view private access (according to the scopes that it was granted on creation at least; it is
+	 * quite possible that permissions have subsequently been revoked by the user)
 	 * </p>
 	 *
 	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#VIEW_PRIVATE}
@@ -273,8 +278,8 @@ public class Token {
 
 	/**
 	 * <p>
-	 * Validates that the token has write access (according to the scopes that it was granted on creation at least; it is quite possible that permissions have
-	 * subsequently been revoked by the user)
+	 * Validates that the token has write access (according to the scopes that it was granted on creation at least; it is quite
+	 * possible that permissions have subsequently been revoked by the user)
 	 * </p>
 	 *
 	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#WRITE}
@@ -343,7 +348,8 @@ public class Token {
 	 */
 	@Override
 	public String toString() {
-		return "Token [athlete=" + this.athlete + ", token=" + this.token + ", scopes=" + this.scopes + ", services=" + this.services + ", tokenType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		return "Token [athlete=" + this.athlete + ", token=" + this.token + ", scopes=" + this.scopes + ", services=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.services + ", tokenType=" //$NON-NLS-1$
 				+ this.tokenType + "]"; //$NON-NLS-1$
 	}
 

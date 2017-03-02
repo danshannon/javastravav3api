@@ -6,8 +6,17 @@ import java.util.List;
 import javastrava.api.v3.model.reference.StravaMeasurementMethod;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaRunningRaceType;
+import javastrava.cache.StravaCacheable;
 
-public class StravaRunningRace {
+/**
+ * <p>
+ * Strava running race
+ * </p>
+ *
+ * @author Dan Shannon
+ *
+ */
+public class StravaRunningRace implements StravaEntity, StravaCacheable<Integer> {
 	private Integer id;
 
 	private StravaResourceState resourceState;
@@ -159,6 +168,7 @@ public class StravaRunningRace {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -174,6 +184,7 @@ public class StravaRunningRace {
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
