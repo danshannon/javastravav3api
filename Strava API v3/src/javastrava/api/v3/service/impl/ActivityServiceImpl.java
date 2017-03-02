@@ -348,7 +348,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	public StravaActivity getActivity(final Long activityId, final Boolean includeAllEfforts) {
 		// Attempt to get the activity from cache
 		StravaActivity stravaResponse = this.activityCache.get(activityId);
-		if ((stravaResponse != null) && (stravaResponse.getResourceState() != StravaResourceState.META)) {
+		if ((stravaResponse != null) && (stravaResponse.getResourceState() == StravaResourceState.DETAILED)) {
 			return stravaResponse;
 		}
 
