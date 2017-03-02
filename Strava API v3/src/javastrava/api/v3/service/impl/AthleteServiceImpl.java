@@ -34,13 +34,11 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 * </p>
 	 *
 	 * <p>
-	 * Instances are cached so that if 2 requests are made for the same token,
-	 * the same instance is returned
+	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
 	 * </p>
 	 *
 	 * @param token
-	 *            The Strava access token to be used in requests to the Strava
-	 *            API
+	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An instance of the athlete services
 	 */
 	public static AthleteService instance(final Token token) {
@@ -69,7 +67,9 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 * <p>
 	 * Private constructor requires a valid token to instantiate, see {@link AthleteServiceImpl#instance}
 	 * </p>
-	 * @param token A valid access token returned by Strava's OAuth process
+	 * 
+	 * @param token
+	 *            A valid access token returned by Strava's OAuth process
 	 */
 	private AthleteServiceImpl(final Token token) {
 		super(token);
@@ -152,7 +152,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	}
 
 	/**
-	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
 	 *
 	 * @return The athlete zones object
 	 */
@@ -162,7 +162,7 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	}
 
 	/**
-	 * Returns the current athlete’s heart rate zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
 	 *
 	 * @return The athlete zones object (via a {@link CompletableFuture})
 	 */
@@ -249,13 +249,12 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.AthleteService#listAthleteFriends(Integer,
-	 *      Paging)
+	 * @see javastrava.api.v3.service.AthleteService#listAthleteFriends(Integer, Paging)
 	 */
 	@Override
 	public List<StravaAthlete> listAthleteFriends(final Integer id, final Paging pagingInstruction) {
-		final List<StravaAthlete> athletes = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(AthleteServiceImpl.this.api
-				.listAthleteFriends(id, thisPage.getPage(), thisPage.getPageSize())));
+		final List<StravaAthlete> athletes = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
+				.asList(AthleteServiceImpl.this.api.listAthleteFriends(id, thisPage.getPage(), thisPage.getPageSize())));
 
 		// Put them in the cache so they can be read back later
 		this.athleteCache.putAll(athletes);
@@ -289,15 +288,12 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.AthleteService#listAthleteKOMs(Integer,
-	 *      Paging)
+	 * @see javastrava.api.v3.service.AthleteService#listAthleteKOMs(Integer, Paging)
 	 */
 	@Override
 	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id, final Paging pagingInstruction) {
-		final List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(
-				pagingInstruction,
-				thisPage -> Arrays.asList(AthleteServiceImpl.this.api.listAthleteKOMs(id, thisPage.getPage(),
-						thisPage.getPageSize())));
+		final List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
+				.asList(AthleteServiceImpl.this.api.listAthleteKOMs(id, thisPage.getPage(), thisPage.getPageSize())));
 
 		this.effortCache.putAll(efforts);
 
@@ -316,7 +312,8 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 * @see javastrava.api.v3.service.AthleteService#listAthleteKOMsAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegmentEffort>> listAthleteKOMsAsync(final Integer athleteId, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaSegmentEffort>> listAthleteKOMsAsync(final Integer athleteId,
+			final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> listAthleteKOMs(athleteId, pagingInstruction));
 	}
 
@@ -329,13 +326,12 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.AthleteService#listAthletesBothFollowing(Integer,
-	 *      Paging)
+	 * @see javastrava.api.v3.service.AthleteService#listAthletesBothFollowing(Integer, Paging)
 	 */
 	@Override
 	public List<StravaAthlete> listAthletesBothFollowing(final Integer id, final Paging pagingInstruction) {
-		final List<StravaAthlete> athletes = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(AthleteServiceImpl.this.api
-				.listAthletesBothFollowing(id, thisPage.getPage(), thisPage.getPageSize())));
+		final List<StravaAthlete> athletes = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
+				.asList(AthleteServiceImpl.this.api.listAthletesBothFollowing(id, thisPage.getPage(), thisPage.getPageSize())));
 
 		this.athleteCache.putAll(athletes);
 
@@ -354,7 +350,8 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 * @see javastrava.api.v3.service.AthleteService#listAthletesBothFollowingAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaAthlete>> listAthletesBothFollowingAsync(final Integer athleteId, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaAthlete>> listAthletesBothFollowingAsync(final Integer athleteId,
+			final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> listAthletesBothFollowing(athleteId, pagingInstruction));
 	}
 
@@ -371,10 +368,8 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public List<StravaAthlete> listAuthenticatedAthleteFriends(final Paging pagingInstruction) {
-		final List<StravaAthlete> athletes = PagingHandler.handlePaging(
-				pagingInstruction,
-				thisPage -> Arrays.asList(AthleteServiceImpl.this.api.listAuthenticatedAthleteFriends(
-						thisPage.getPage(), thisPage.getPageSize())));
+		final List<StravaAthlete> athletes = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
+				.asList(AthleteServiceImpl.this.api.listAuthenticatedAthleteFriends(thisPage.getPage(), thisPage.getPageSize())));
 
 		this.athleteCache.putAll(athletes);
 
@@ -423,9 +418,8 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.AthleteService#updateAuthenticatedAthlete(java.lang.String,
-	 *      java.lang.String, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
+	 * @see javastrava.api.v3.service.AthleteService#updateAuthenticatedAthlete(java.lang.String, java.lang.String,
+	 *      java.lang.String, javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
 	 */
 	@Override
 	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country,
@@ -438,10 +432,12 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.AthleteService#updateAuthenticatedAthleteAsync(java.lang.String, java.lang.String, java.lang.String, javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
+	 * @see javastrava.api.v3.service.AthleteService#updateAuthenticatedAthleteAsync(java.lang.String, java.lang.String,
+	 *      java.lang.String, javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
 	 */
 	@Override
-	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
+	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state,
+			final String country, final StravaGender sex, final Float weight) {
 		return StravaServiceImpl.future(() -> updateAuthenticatedAthlete(city, state, country, sex, weight));
 	}
 

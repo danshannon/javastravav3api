@@ -28,13 +28,11 @@ public class UploadServiceImpl extends StravaServiceImpl implements UploadServic
 	 * </p>
 	 *
 	 * <p>
-	 * Instances are cached so that if 2 requests are made for the same token,
-	 * the same instance is returned
+	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
 	 * </p>
 	 *
 	 * @param token
-	 *            The Strava access token to be used in requests to the Strava
-	 *            API
+	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An instance of the upload services
 	 */
 	public static UploadService instance(final Token token) {
@@ -51,8 +49,7 @@ public class UploadServiceImpl extends StravaServiceImpl implements UploadServic
 
 	/**
 	 * <p>
-	 * Private constructor prevents anyone getting an instance without going via
-	 * {@link #instance(Token)}
+	 * Private constructor prevents anyone getting an instance without going via {@link #instance(Token)}
 	 * </p>
 	 *
 	 * @param token
@@ -63,18 +60,18 @@ public class UploadServiceImpl extends StravaServiceImpl implements UploadServic
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.UploadService#checkUploadStatus(java.lang.Integer)
+	 * @see javastrava.api.v3.service.UploadService#checkUploadStatus(java.lang.Long)
 	 */
 	@Override
-	public StravaUploadResponse checkUploadStatus(final Integer id) {
+	public StravaUploadResponse checkUploadStatus(final Long id) {
 		return this.api.checkUploadStatus(id);
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.UploadService#checkUploadStatusAsync(java.lang.Integer)
+	 * @see javastrava.api.v3.service.UploadService#checkUploadStatusAsync(java.lang.Long)
 	 */
 	@Override
-	public CompletableFuture<StravaUploadResponse> checkUploadStatusAsync(final Integer uploadId) throws UnauthorizedException {
+	public CompletableFuture<StravaUploadResponse> checkUploadStatusAsync(final Long uploadId) throws UnauthorizedException {
 		return StravaServiceImpl.future(() -> {
 			return checkUploadStatus(uploadId);
 		});
@@ -89,20 +86,20 @@ public class UploadServiceImpl extends StravaServiceImpl implements UploadServic
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType,
-	 *      java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean,
-	 *      java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
+	 * @see javastrava.api.v3.service.UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String,
+	 *      java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String,
+	 *      java.io.File)
 	 */
 	@Override
-	public StravaUploadResponse upload(final StravaActivityType activityType, final String name,
-			final String description, final Boolean _private, final Boolean trainer, final Boolean commute, final String dataType,
-			final String externalId, final File file) {
+	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description,
+			final Boolean _private, final Boolean trainer, final Boolean commute, final String dataType, final String externalId,
+			final File file) {
 		if (file == null) {
 			throw new IllegalArgumentException(Messages.string("UploadServiceImpl.cannotUploadNullFile")); //$NON-NLS-1$
 		}
 		if (!file.exists() || file.isDirectory()) {
-			throw new IllegalArgumentException(String.format(
-					Messages.string("UploadServiceImpl.fileDoesNotExist"), file.getName())); //$NON-NLS-1$
+			throw new IllegalArgumentException(
+					String.format(Messages.string("UploadServiceImpl.fileDoesNotExist"), file.getName())); //$NON-NLS-1$
 		}
 		try {
 			return this.api.upload(activityType, name, description, _private, trainer, commute, dataType, externalId,
@@ -113,11 +110,14 @@ public class UploadServiceImpl extends StravaServiceImpl implements UploadServic
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.UploadService#uploadAsync(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
+	 * @see javastrava.api.v3.service.UploadService#uploadAsync(javastrava.api.v3.model.reference.StravaActivityType,
+	 *      java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.String,
+	 *      java.lang.String, java.io.File)
 	 */
 	@Override
-	public CompletableFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name, final String description, final Boolean _private,
-			final Boolean trainer, final Boolean commute, final String dataType, final String externalId, final File file) {
+	public CompletableFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name,
+			final String description, final Boolean _private, final Boolean trainer, final Boolean commute, final String dataType,
+			final String externalId, final File file) {
 		return StravaServiceImpl.future(() -> {
 			return upload(activityType, name, description, _private, trainer, commute, dataType, externalId, file);
 		});

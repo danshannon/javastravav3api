@@ -7,14 +7,14 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 
 /**
  * <p>
- * Heart rate and power zones are set by the {@link StravaAthlete athlete}. This class returns the time (in seconds) spent in each zone during an
- * {@link StravaActivity activity}.
+ * Heart rate and power zones are set by the {@link StravaAthlete athlete}. This class returns the time (in seconds) spent in each
+ * zone during an {@link StravaActivity activity}.
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public class StravaActivityZone {
+public class StravaActivityZone implements StravaEntity {
 	/**
 	 * No args constructor
 	 */
@@ -25,36 +25,36 @@ public class StravaActivityZone {
 	/**
 	 * Strava suffer score for the activity
 	 */
-	private Integer score;
+	private Integer										score;
 	/**
 	 * Data on each zone and time spent in it
 	 */
-	private List<StravaActivityZoneDistributionBucket> distributionBuckets;
+	private List<StravaActivityZoneDistributionBucket>	distributionBuckets;
 	/**
 	 * The type of activity zone - {@link StravaActivityZoneType#HEARTRATE} or {@link StravaActivityZoneType#POWER}
 	 */
-	private StravaActivityZoneType type;
+	private StravaActivityZoneType						type;
 	/**
 	 * State of this resource
 	 */
-	private StravaResourceState resourceState;
+	private StravaResourceState							resourceState;
 	/**
-	 * Is set to <code>true</code> if the information is based on sensor data included with the upload of the activity (i.e. a heart rate monitor for heart
-	 * rates, or a power meter for power)
+	 * Is set to <code>true</code> if the information is based on sensor data included with the upload of the activity (i.e. a heart
+	 * rate monitor for heart rates, or a power meter for power)
 	 */
-	private Boolean sensorBased;
+	private Boolean										sensorBased;
 	/**
 	 * Points in this zone (contributing to the total suffer score)
 	 */
-	private Integer points;
+	private Integer										points;
 	/**
 	 * Is set to <code>true</code> if the athlete has customised the zones
 	 */
-	private Boolean customZones;
+	private Boolean										customZones;
 	/**
 	 * Maximum heart rate reached during the activity
 	 */
-	private Integer max;
+	private Integer										max;
 
 	/**
 	 * @return the score
@@ -99,13 +99,6 @@ public class StravaActivityZone {
 	 */
 	public void setType(final StravaActivityZoneType type) {
 		this.type = type;
-	}
-
-	/**
-	 * @return the resourceState
-	 */
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
 	}
 
 	/**
@@ -181,8 +174,10 @@ public class StravaActivityZone {
 	 */
 	@Override
 	public String toString() {
-		return "StravaActivityZone [score=" + this.score + ", distributionBuckets=" + this.distributionBuckets + ", type=" + this.type + ", resourceState=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.resourceState + ", sensorBased=" + this.sensorBased + ", points=" + this.points + ", customZones=" + this.customZones + ", max=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "StravaActivityZone [score=" + this.score + ", distributionBuckets=" + this.distributionBuckets + ", type=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.type + ", resourceState=" //$NON-NLS-1$
+				+ this.resourceState + ", sensorBased=" + this.sensorBased + ", points=" + this.points + ", customZones=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.customZones + ", max=" //$NON-NLS-1$
 				+ this.max + "]"; //$NON-NLS-1$
 	}
 
@@ -193,14 +188,14 @@ public class StravaActivityZone {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.customZones == null) ? 0 : this.customZones.hashCode());
-		result = prime * result + ((this.distributionBuckets == null) ? 0 : this.distributionBuckets.hashCode());
-		result = prime * result + ((this.max == null) ? 0 : this.max.hashCode());
-		result = prime * result + ((this.points == null) ? 0 : this.points.hashCode());
-		result = prime * result + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
-		result = prime * result + ((this.score == null) ? 0 : this.score.hashCode());
-		result = prime * result + ((this.sensorBased == null) ? 0 : this.sensorBased.hashCode());
-		result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
+		result = (prime * result) + ((this.customZones == null) ? 0 : this.customZones.hashCode());
+		result = (prime * result) + ((this.distributionBuckets == null) ? 0 : this.distributionBuckets.hashCode());
+		result = (prime * result) + ((this.max == null) ? 0 : this.max.hashCode());
+		result = (prime * result) + ((this.points == null) ? 0 : this.points.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.score == null) ? 0 : this.score.hashCode());
+		result = (prime * result) + ((this.sensorBased == null) ? 0 : this.sensorBased.hashCode());
+		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
 		return result;
 	}
 
@@ -218,7 +213,7 @@ public class StravaActivityZone {
 		if (!(obj instanceof StravaActivityZone)) {
 			return false;
 		}
-		StravaActivityZone other = (StravaActivityZone) obj;
+		final StravaActivityZone other = (StravaActivityZone) obj;
 		if (this.customZones == null) {
 			if (other.customZones != null) {
 				return false;
@@ -269,4 +264,5 @@ public class StravaActivityZone {
 		}
 		return true;
 	}
+
 }
