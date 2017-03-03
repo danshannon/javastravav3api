@@ -3,12 +3,13 @@ package javastrava.api.v3.model;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSkillLevel;
 import javastrava.api.v3.model.reference.StravaTerrainType;
-
-import com.google.gson.annotations.SerializedName;
+import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -18,7 +19,7 @@ import com.google.gson.annotations.SerializedName;
  * @author Dan Shannon
  *
  */
-public class StravaClubEvent {
+public class StravaClubEvent implements StravaCacheable<Integer>, StravaEntity {
 	/**
 	 * Unique id of this event
 	 */
@@ -76,7 +77,6 @@ public class StravaClubEvent {
 	 * Location of the event
 	 */
 	private String address;
-
 
 	/**
 	 * No-args constructor
@@ -178,90 +178,107 @@ public class StravaClubEvent {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the activityType
 	 */
 	public StravaActivityType getActivityType() {
 		return this.activityType;
 	}
+
 	/**
 	 * @return the address
 	 */
 	public String getAddress() {
 		return this.address;
 	}
+
 	/**
 	 * @return the clubId
 	 */
 	public Integer getClubId() {
 		return this.clubId;
 	}
+
 	/**
 	 * @return the createdAt
 	 */
 	public ZonedDateTime getCreatedAt() {
 		return this.createdAt;
 	}
+
 	/**
 	 * @return the description
 	 */
 	public String getDescription() {
 		return this.description;
 	}
+
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
+
 	/**
 	 * @return the privateEvent
 	 */
 	public Boolean getPrivateEvent() {
 		return this.privateEvent;
 	}
+
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
+
 	/**
 	 * @return the routeId
 	 */
 	public Integer getRouteId() {
 		return this.routeId;
 	}
+
 	/**
 	 * @return the skillLevel
 	 */
 	public StravaSkillLevel getSkillLevel() {
 		return this.skillLevel;
 	}
+
 	/**
 	 * @return the terrain
 	 */
 	public StravaTerrainType getTerrain() {
 		return this.terrain;
 	}
+
 	/**
 	 * @return the title
 	 */
 	public String getTitle() {
 		return this.title;
 	}
+
 	/**
 	 * @return the upcomingOccurrences
 	 */
 	public List<ZonedDateTime> getUpcomingOccurrences() {
 		return this.upcomingOccurrences;
 	}
+
 	/**
 	 * @return the womanOnly
 	 */
 	public Boolean getWomanOnly() {
 		return this.womanOnly;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -283,90 +300,119 @@ public class StravaClubEvent {
 		result = (prime * result) + ((this.womanOnly == null) ? 0 : this.womanOnly.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param activityType the activityType to set
+	 * @param activityType
+	 *            the activityType to set
 	 */
 	public void setActivityType(final StravaActivityType activityType) {
 		this.activityType = activityType;
 	}
+
 	/**
-	 * @param address the address to set
+	 * @param address
+	 *            the address to set
 	 */
 	public void setAddress(final String address) {
 		this.address = address;
 	}
+
 	/**
-	 * @param clubId the clubId to set
+	 * @param clubId
+	 *            the clubId to set
 	 */
 	public void setClubId(final Integer clubId) {
 		this.clubId = clubId;
 	}
+
 	/**
-	 * @param createdAt the createdAt to set
+	 * @param createdAt
+	 *            the createdAt to set
 	 */
 	public void setCreatedAt(final ZonedDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
 	}
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
+
 	/**
-	 * @param privateEvent the privateEvent to set
+	 * @param privateEvent
+	 *            the privateEvent to set
 	 */
 	public void setPrivateEvent(final Boolean privateEvent) {
 		this.privateEvent = privateEvent;
 	}
+
 	/**
-	 * @param resourceState the resourceState to set
+	 * @param resourceState
+	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
 	}
+
 	/**
-	 * @param routeId the routeId to set
+	 * @param routeId
+	 *            the routeId to set
 	 */
 	public void setRouteId(final Integer routeId) {
 		this.routeId = routeId;
 	}
+
 	/**
-	 * @param skillLevel the skillLevel to set
+	 * @param skillLevel
+	 *            the skillLevel to set
 	 */
 	public void setSkillLevel(final StravaSkillLevel skillLevel) {
 		this.skillLevel = skillLevel;
 	}
+
 	/**
-	 * @param terrain the terrain to set
+	 * @param terrain
+	 *            the terrain to set
 	 */
 	public void setTerrain(final StravaTerrainType terrain) {
 		this.terrain = terrain;
 	}
+
 	/**
-	 * @param title the title to set
+	 * @param title
+	 *            the title to set
 	 */
 	public void setTitle(final String title) {
 		this.title = title;
 	}
+
 	/**
-	 * @param upcomingOccurrences the upcomingOccurrences to set
+	 * @param upcomingOccurrences
+	 *            the upcomingOccurrences to set
 	 */
 	public void setUpcomingOccurrences(final List<ZonedDateTime> upcomingOccurrences) {
 		this.upcomingOccurrences = upcomingOccurrences;
 	}
+
 	/**
-	 * @param womanOnly the womanOnly to set
+	 * @param womanOnly
+	 *            the womanOnly to set
 	 */
 	public void setWomanOnly(final Boolean womanOnly) {
 		this.womanOnly = womanOnly;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

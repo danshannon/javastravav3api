@@ -6,10 +6,11 @@ import java.time.LocalDate;
  * <p>
  * Athlete's statistics for a segment, returned by Strava with a segment effort
  * </p>
+ * 
  * @author Dan Shannon
  *
  */
-public class StravaAthleteSegmentStats {
+public class StravaAthleteSegmentStats implements StravaEntity {
 	/**
 	 * Number of efforts by the authenticated athlete on the segment
 	 */
@@ -22,12 +23,14 @@ public class StravaAthleteSegmentStats {
 	 * Date on which the athlete's personal record was set
 	 */
 	private LocalDate prDate;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaAthleteSegmentStats() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -66,24 +69,28 @@ public class StravaAthleteSegmentStats {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the effortCount
 	 */
 	public Integer getEffortCount() {
 		return this.effortCount;
 	}
+
 	/**
 	 * @return the prDate
 	 */
 	public LocalDate getPrDate() {
 		return this.prDate;
 	}
+
 	/**
 	 * @return the prElapsedTime
 	 */
 	public Integer getPrElapsedTime() {
 		return this.prElapsedTime;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -96,24 +103,31 @@ public class StravaAthleteSegmentStats {
 		result = (prime * result) + ((this.prElapsedTime == null) ? 0 : this.prElapsedTime.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param effortCount the effortCount to set
+	 * @param effortCount
+	 *            the effortCount to set
 	 */
 	public void setEffortCount(final Integer effortCount) {
 		this.effortCount = effortCount;
 	}
+
 	/**
-	 * @param prDate the prDate to set
+	 * @param prDate
+	 *            the prDate to set
 	 */
 	public void setPrDate(final LocalDate prDate) {
 		this.prDate = prDate;
 	}
+
 	/**
-	 * @param prElapsedTime the prElapsedTime to set
+	 * @param prElapsedTime
+	 *            the prElapsedTime to set
 	 */
 	public void setPrElapsedTime(final Integer prElapsedTime) {
 		this.prElapsedTime = prElapsedTime;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

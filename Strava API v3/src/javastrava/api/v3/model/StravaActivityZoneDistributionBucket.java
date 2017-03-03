@@ -4,49 +4,59 @@ package javastrava.api.v3.model;
  * @author Dan Shannon
  *
  */
-public class StravaActivityZoneDistributionBucket {
+public class StravaActivityZoneDistributionBucket implements StravaEntity {
 	/**
-	 * 
+	 *
 	 */
 	public StravaActivityZoneDistributionBucket() {
 		super();
 	}
+
 	/**
 	 * @return the max
 	 */
 	public Integer getMax() {
 		return this.max;
 	}
+
 	/**
-	 * @param max the max to set
+	 * @param max
+	 *            the max to set
 	 */
 	public void setMax(final Integer max) {
 		this.max = max;
 	}
+
 	/**
 	 * @return the min
 	 */
 	public Integer getMin() {
 		return this.min;
 	}
+
 	/**
-	 * @param min the min to set
+	 * @param min
+	 *            the min to set
 	 */
 	public void setMin(final Integer min) {
 		this.min = min;
 	}
+
 	/**
 	 * @return the time
 	 */
 	public Integer getTime() {
 		return this.time;
 	}
+
 	/**
-	 * @param time the time to set
+	 * @param time
+	 *            the time to set
 	 */
 	public void setTime(final Integer time) {
 		this.time = time;
 	}
+
 	/**
 	 * Maximum value of heart rate or power for this zone. Note that this returns as -1 if the maximum is in fact infinity
 	 */
@@ -59,6 +69,7 @@ public class StravaActivityZoneDistributionBucket {
 	 * Total time in seconds spent in this zone
 	 */
 	private Integer time;
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -66,6 +77,7 @@ public class StravaActivityZoneDistributionBucket {
 	public String toString() {
 		return "StravaActivityZoneDistributionBucket [max=" + this.max + ", min=" + this.min + ", time=" + this.time + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -73,11 +85,12 @@ public class StravaActivityZoneDistributionBucket {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.max == null) ? 0 : this.max.hashCode());
-		result = prime * result + ((this.min == null) ? 0 : this.min.hashCode());
-		result = prime * result + ((this.time == null) ? 0 : this.time.hashCode());
+		result = (prime * result) + ((this.max == null) ? 0 : this.max.hashCode());
+		result = (prime * result) + ((this.min == null) ? 0 : this.min.hashCode());
+		result = (prime * result) + ((this.time == null) ? 0 : this.time.hashCode());
 		return result;
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -92,7 +105,7 @@ public class StravaActivityZoneDistributionBucket {
 		if (!(obj instanceof StravaActivityZoneDistributionBucket)) {
 			return false;
 		}
-		StravaActivityZoneDistributionBucket other = (StravaActivityZoneDistributionBucket) obj;
+		final StravaActivityZoneDistributionBucket other = (StravaActivityZoneDistributionBucket) obj;
 		if (this.max == null) {
 			if (other.max != null) {
 				return false;

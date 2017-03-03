@@ -4,7 +4,7 @@ package javastrava.api.v3.model;
  * @author Dan Shannon
  *
  */
-public class StravaVideo {
+public class StravaVideo implements StravaEntity {
 	/**
 	 * Unique id of the video
 	 */
@@ -17,13 +17,13 @@ public class StravaVideo {
 	 * URL of badge image
 	 */
 	private String badgeImageUrl;
+
 	/**
 	 * No-args constructor
 	 */
 	public StravaVideo() {
 		super();
 	}
-
 
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -63,24 +63,28 @@ public class StravaVideo {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the badgeImageUrl
 	 */
 	public String getBadgeImageUrl() {
 		return this.badgeImageUrl;
 	}
+
 	/**
 	 * @return the id
 	 */
 	public Integer getId() {
 		return this.id;
 	}
+
 	/**
 	 * @return the stillImageUrl
 	 */
 	public String getStillImageUrl() {
 		return this.stillImageUrl;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -93,24 +97,31 @@ public class StravaVideo {
 		result = (prime * result) + ((this.stillImageUrl == null) ? 0 : this.stillImageUrl.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param badgeImageUrl the badgeImageUrl to set
+	 * @param badgeImageUrl
+	 *            the badgeImageUrl to set
 	 */
 	public void setBadgeImageUrl(final String badgeImageUrl) {
 		this.badgeImageUrl = badgeImageUrl;
 	}
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
+
 	/**
-	 * @param stillImageUrl the stillImageUrl to set
+	 * @param stillImageUrl
+	 *            the stillImageUrl to set
 	 */
 	public void setStillImageUrl(final String stillImageUrl) {
 		this.stillImageUrl = stillImageUrl;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

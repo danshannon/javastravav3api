@@ -6,7 +6,7 @@ package javastrava.api.v3.model;
  * @author Dan Shannon
  *
  */
-public class StravaAPIError {
+public class StravaAPIError implements StravaEntity {
 	/**
 	 * The resource which has caused the error
 	 */
@@ -19,12 +19,14 @@ public class StravaAPIError {
 	 * Error message
 	 */
 	private String code;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaAPIError() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -63,24 +65,28 @@ public class StravaAPIError {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the code
 	 */
 	public String getCode() {
 		return this.code;
 	}
+
 	/**
 	 * @return the field
 	 */
 	public String getField() {
 		return this.field;
 	}
+
 	/**
 	 * @return the resource
 	 */
 	public String getResource() {
 		return this.resource;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -93,24 +99,31 @@ public class StravaAPIError {
 		result = (prime * result) + ((this.resource == null) ? 0 : this.resource.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param code the code to set
+	 * @param code
+	 *            the code to set
 	 */
 	public void setCode(final String code) {
 		this.code = code;
 	}
+
 	/**
-	 * @param field the field to set
+	 * @param field
+	 *            the field to set
 	 */
 	public void setField(final String field) {
 		this.field = field;
 	}
+
 	/**
-	 * @param resource the resource to set
+	 * @param resource
+	 *            the resource to set
 	 */
 	public void setResource(final String resource) {
 		this.resource = resource;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

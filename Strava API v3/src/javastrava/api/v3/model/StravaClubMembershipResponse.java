@@ -15,7 +15,7 @@ import javastrava.api.v3.service.ClubService;
  * @author Dan Shannon
  *
  */
-public class StravaClubMembershipResponse {
+public class StravaClubMembershipResponse implements StravaEntity {
 	/**
 	 * true if the call to set membership status succeeded
 	 */
@@ -28,12 +28,14 @@ public class StravaClubMembershipResponse {
 	 * Membership status
 	 */
 	private StravaClubMembershipStatus membership;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaClubMembershipResponse() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -68,24 +70,28 @@ public class StravaClubMembershipResponse {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the active
 	 */
 	public Boolean getActive() {
 		return this.active;
 	}
+
 	/**
 	 * @return membership status
 	 */
 	public StravaClubMembershipStatus getMembership() {
 		return this.membership;
 	}
+
 	/**
 	 * @return the success
 	 */
 	public Boolean getSuccess() {
 		return this.success;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -98,24 +104,31 @@ public class StravaClubMembershipResponse {
 		result = (prime * result) + ((this.success == null) ? 0 : this.success.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param active the active to set
+	 * @param active
+	 *            the active to set
 	 */
 	public void setActive(final Boolean active) {
 		this.active = active;
 	}
+
 	/**
-	 * @param membership membership status
+	 * @param membership
+	 *            membership status
 	 */
 	public void setMembership(final StravaClubMembershipStatus membership) {
 		this.membership = membership;
 	}
+
 	/**
-	 * @param success the success to set
+	 * @param success
+	 *            the success to set
 	 */
 	public void setSuccess(final Boolean success) {
 		this.success = success;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

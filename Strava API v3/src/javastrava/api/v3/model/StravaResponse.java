@@ -4,28 +4,29 @@ import java.util.List;
 
 /**
  * <p>
- * Representation of the response received from Strava in error situations (most commonly when resources are not found or there is
- * an authorisation issue)
+ * Representation of the response received from Strava in error situations (most commonly when resources are not found or there is an authorisation issue)
  * </p>
  *
  * @author Dan Shannon
  *
  */
-public class StravaResponse {
+public class StravaResponse implements StravaEntity {
 	/**
 	 * Text message describing the overall error
 	 */
-	private String					message;
+	private String message;
 	/**
 	 * List of error details
 	 */
-	private List<StravaAPIError>	errors;
+	private List<StravaAPIError> errors;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaResponse() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -57,18 +58,21 @@ public class StravaResponse {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the errors
 	 */
 	public List<StravaAPIError> getErrors() {
 		return this.errors;
 	}
+
 	/**
 	 * @return the message
 	 */
 	public String getMessage() {
 		return this.message;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -80,18 +84,23 @@ public class StravaResponse {
 		result = (prime * result) + ((this.message == null) ? 0 : this.message.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param errors the errors to set
+	 * @param errors
+	 *            the errors to set
 	 */
 	public void setErrors(final List<StravaAPIError> errors) {
 		this.errors = errors;
 	}
+
 	/**
-	 * @param message the message to set
+	 * @param message
+	 *            the message to set
 	 */
 	public void setMessage(final String message) {
 		this.message = message;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

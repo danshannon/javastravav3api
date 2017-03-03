@@ -8,15 +8,15 @@ import java.util.List;
  * @author Dan Shannon
  *
  */
-public class StravaAthleteZone {
+public class StravaAthleteZone implements StravaEntity {
 	/**
 	 * Is this a set of custom zones?
 	 */
-	private Boolean				customZones;
+	private Boolean customZones;
 	/**
 	 * The actual zones
 	 */
-	private List<StravaZone>	zones;
+	private List<StravaZone> zones;
 
 	/**
 	 * no-args constructor

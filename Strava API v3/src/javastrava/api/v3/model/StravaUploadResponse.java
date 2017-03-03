@@ -7,27 +7,25 @@ import javastrava.api.v3.service.UploadService;
  * Response to an upload request
  * </p>
  *
- * @see UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, Boolean,
- *      String, String, java.io.File)
+ * @see UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, String, String, Boolean, Boolean, Boolean, String, String, java.io.File)
  * @author Dan Shannon
  *
  */
-public class StravaUploadResponse {
+public class StravaUploadResponse implements StravaEntity {
 	/**
 	 * Unique identifier of the upload
 	 */
-	private Long	id;
+	private Long id;
 	/**
 	 * Unique identifier for the activity as given by the uploading application
 	 */
-	private String	externalId;
+	private String externalId;
 	/**
 	 * <p>
-	 * if there was an error during processing, this will contain a human a human readable error message that may include escaped
-	 * HTML
+	 * if there was an error during processing, this will contain a human a human readable error message that may include escaped HTML
 	 * </p>
 	 */
-	private String	error;
+	private String error;
 	/**
 	 * <p>
 	 * describes the error, possible values:
@@ -39,11 +37,11 @@ public class StravaUploadResponse {
 	 * <li>Your activity is ready.</li>
 	 * </ul>
 	 */
-	private String	status;
+	private String status;
 	/**
 	 * Unique identifier of the activity, if it was created as part of the upload process.
 	 */
-	private Long	activityId;
+	private Long activityId;
 
 	/**
 	 * No args constructor

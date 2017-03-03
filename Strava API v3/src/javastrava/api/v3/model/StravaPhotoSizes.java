@@ -8,10 +8,11 @@ import com.google.gson.annotations.SerializedName;
  * <p>
  * Photo sizes
  * </p>
+ * 
  * @author Dan Shannon
  *
  */
-public class StravaPhotoSizes {
+public class StravaPhotoSizes implements StravaEntity {
 	/**
 	 * URL of full-size photo
 	 */
@@ -27,12 +28,14 @@ public class StravaPhotoSizes {
 	 */
 	@SerializedName("600")
 	private Integer url600;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaPhotoSizes() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -63,24 +66,28 @@ public class StravaPhotoSizes {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the size0
 	 */
 	public Integer[] getSize0() {
 		return this.size0;
 	}
+
 	/**
 	 * @return the url100
 	 */
 	public Integer[] getUrl100() {
 		return this.url100;
 	}
+
 	/**
 	 * @return the url600
 	 */
 	public Integer getUrl600() {
 		return this.url600;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -93,24 +100,31 @@ public class StravaPhotoSizes {
 		result = (prime * result) + ((this.url600 == null) ? 0 : this.url600.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param size0 the size0 to set
+	 * @param size0
+	 *            the size0 to set
 	 */
 	public void setSize0(final Integer[] size0) {
 		this.size0 = size0;
 	}
+
 	/**
-	 * @param url100 the url100 to set
+	 * @param url100
+	 *            the url100 to set
 	 */
 	public void setUrl100(final Integer[] url100) {
 		this.url100 = url100;
 	}
+
 	/**
-	 * @param url600 the url600 to set
+	 * @param url600
+	 *            the url600 to set
 	 */
 	public void setUrl600(final Integer url600) {
 		this.url600 = url600;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

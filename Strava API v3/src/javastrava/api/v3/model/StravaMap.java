@@ -15,7 +15,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaMap implements StravaCacheable<String> {
+public class StravaMap implements StravaCacheable<String>, StravaEntity {
 	/**
 	 * Strava's unique identifier for the map
 	 */
@@ -130,28 +130,32 @@ public class StravaMap implements StravaCacheable<String> {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final String id) {
 		this.id = id;
 	}
 
 	/**
-	 * @param polyline the polyline to set
+	 * @param polyline
+	 *            the polyline to set
 	 */
 	public void setPolyline(final String polyline) {
 		this.polyline = polyline;
 	}
 
 	/**
-	 * @param resourceState the resourceState to set
+	 * @param resourceState
+	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
 	}
 
 	/**
-	 * @param summaryPolyline the summaryPolyline to set
+	 * @param summaryPolyline
+	 *            the summaryPolyline to set
 	 */
 	public void setSummaryPolyline(final String summaryPolyline) {
 		this.summaryPolyline = summaryPolyline;

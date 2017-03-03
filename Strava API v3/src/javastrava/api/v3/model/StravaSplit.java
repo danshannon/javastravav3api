@@ -10,7 +10,7 @@ import javastrava.api.v3.service.ActivityService;
  * @author Dan Shannon
  *
  */
-public class StravaSplit {
+public class StravaSplit implements StravaEntity {
 	/**
 	 * Total distance in metres
 	 */
@@ -31,12 +31,14 @@ public class StravaSplit {
 	 * Order of the split within the run
 	 */
 	private Integer split;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaSplit() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -89,36 +91,42 @@ public class StravaSplit {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the distance
 	 */
 	public Float getDistance() {
 		return this.distance;
 	}
+
 	/**
 	 * @return the elapsedTime
 	 */
 	public Integer getElapsedTime() {
 		return this.elapsedTime;
 	}
+
 	/**
 	 * @return the elevationDifference
 	 */
 	public Float getElevationDifference() {
 		return this.elevationDifference;
 	}
+
 	/**
 	 * @return the movingTime
 	 */
 	public Integer getMovingTime() {
 		return this.movingTime;
 	}
+
 	/**
 	 * @return the split
 	 */
 	public Integer getSplit() {
 		return this.split;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -133,36 +141,47 @@ public class StravaSplit {
 		result = (prime * result) + ((this.split == null) ? 0 : this.split.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param distance the distance to set
+	 * @param distance
+	 *            the distance to set
 	 */
 	public void setDistance(final Float distance) {
 		this.distance = distance;
 	}
+
 	/**
-	 * @param elapsedTime the elapsedTime to set
+	 * @param elapsedTime
+	 *            the elapsedTime to set
 	 */
 	public void setElapsedTime(final Integer elapsedTime) {
 		this.elapsedTime = elapsedTime;
 	}
+
 	/**
-	 * @param elevationDifference the elevationDifference to set
+	 * @param elevationDifference
+	 *            the elevationDifference to set
 	 */
 	public void setElevationDifference(final Float elevationDifference) {
 		this.elevationDifference = elevationDifference;
 	}
+
 	/**
-	 * @param movingTime the movingTime to set
+	 * @param movingTime
+	 *            the movingTime to set
 	 */
 	public void setMovingTime(final Integer movingTime) {
 		this.movingTime = movingTime;
 	}
+
 	/**
-	 * @param split the split to set
+	 * @param split
+	 *            the split to set
 	 */
 	public void setSplit(final Integer split) {
 		this.split = split;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

@@ -12,7 +12,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Integer> {
+public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Integer>, StravaEntity {
 	/**
 	 * Strava's unique identifier of the {@link StravaSegment segment}
 	 */
@@ -57,12 +57,14 @@ public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Int
 	 * Resource state - not returned by Strava API but is set at the service layer instead
 	 */
 	private StravaResourceState resourceState;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaSegmentExplorerResponseSegment() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -146,42 +148,49 @@ public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Int
 		}
 		return true;
 	}
+
 	/**
 	 * @return the avgGrade
 	 */
 	public Float getAvgGrade() {
 		return this.avgGrade;
 	}
+
 	/**
 	 * @return the climbCategory
 	 */
 	public StravaClimbCategory getClimbCategory() {
 		return this.climbCategory;
 	}
+
 	/**
 	 * @return the climbCategoryDesc
 	 */
 	public String getClimbCategoryDesc() {
 		return this.climbCategoryDesc;
 	}
+
 	/**
 	 * @return the distance
 	 */
 	public Float getDistance() {
 		return this.distance;
 	}
+
 	/**
 	 * @return the elevDifference
 	 */
 	public Float getElevDifference() {
 		return this.elevDifference;
 	}
+
 	/**
 	 * @return the endLatlng
 	 */
 	public StravaMapPoint getEndLatlng() {
 		return this.endLatlng;
 	}
+
 	/**
 	 * @return the id
 	 */
@@ -189,18 +198,21 @@ public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Int
 	public Integer getId() {
 		return this.id;
 	}
+
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return this.name;
 	}
+
 	/**
 	 * @return the points
 	 */
 	public String getPoints() {
 		return this.points;
 	}
+
 	/**
 	 * @see javastrava.cache.StravaCacheable#getResourceState()
 	 */
@@ -208,12 +220,14 @@ public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Int
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
+
 	/**
 	 * @return the startLatlng
 	 */
 	public StravaMapPoint getStartLatlng() {
 		return this.startLatlng;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -233,73 +247,96 @@ public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Int
 		result = (prime * result) + ((this.startLatlng == null) ? 0 : this.startLatlng.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param avgGrade the avgGrade to set
+	 * @param avgGrade
+	 *            the avgGrade to set
 	 */
 	public void setAvgGrade(final Float avgGrade) {
 		this.avgGrade = avgGrade;
 	}
+
 	/**
-	 * @param climbCategory the climbCategory to set
+	 * @param climbCategory
+	 *            the climbCategory to set
 	 */
 	public void setClimbCategory(final StravaClimbCategory climbCategory) {
 		this.climbCategory = climbCategory;
 	}
+
 	/**
-	 * @param climbCategoryDesc the climbCategoryDesc to set
+	 * @param climbCategoryDesc
+	 *            the climbCategoryDesc to set
 	 */
 	public void setClimbCategoryDesc(final String climbCategoryDesc) {
 		this.climbCategoryDesc = climbCategoryDesc;
 	}
+
 	/**
-	 * @param distance the distance to set
+	 * @param distance
+	 *            the distance to set
 	 */
 	public void setDistance(final Float distance) {
 		this.distance = distance;
 	}
+
 	/**
-	 * @param elevDifference the elevDifference to set
+	 * @param elevDifference
+	 *            the elevDifference to set
 	 */
 	public void setElevDifference(final Float elevDifference) {
 		this.elevDifference = elevDifference;
 	}
+
 	/**
-	 * @param endLatlng the endLatlng to set
+	 * @param endLatlng
+	 *            the endLatlng to set
 	 */
 	public void setEndLatlng(final StravaMapPoint endLatlng) {
 		this.endLatlng = endLatlng;
 	}
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
+
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(final String name) {
 		this.name = name;
 	}
+
 	/**
-	 * @param points the points to set
+	 * @param points
+	 *            the points to set
 	 */
 	public void setPoints(final String points) {
 		this.points = points;
 	}
+
 	/**
-	 * @param resourceState The resourceState to set
+	 * @param resourceState
+	 *            The resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
 
 	}
+
 	/**
-	 * @param startLatlng the startLatlng to set
+	 * @param startLatlng
+	 *            the startLatlng to set
 	 */
 	public void setStartLatlng(final StravaMapPoint startLatlng) {
 		this.startLatlng = startLatlng;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

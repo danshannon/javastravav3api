@@ -6,7 +6,7 @@ package javastrava.api.v3.model;
  * @author DShannon
  *
  */
-public class StravaZone {
+public class StravaZone implements StravaEntity {
 	/**
 	 * Minimum value in a zone
 	 */
@@ -62,6 +62,7 @@ public class StravaZone {
 	public Integer getMax() {
 		return this.max;
 	}
+
 	/**
 	 * @return minimum value in this zone
 	 */
@@ -82,14 +83,16 @@ public class StravaZone {
 	}
 
 	/**
-	 * @param max maximum value in this zone
+	 * @param max
+	 *            maximum value in this zone
 	 */
 	public void setMax(final Integer max) {
 		this.max = max;
 	}
 
 	/**
-	 * @param min minimum value in this zone
+	 * @param min
+	 *            minimum value in this zone
 	 */
 	public void setMin(final Integer min) {
 		this.min = min;

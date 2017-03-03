@@ -1,21 +1,22 @@
 package javastrava.api.v3.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.rest.ActivityAPI;
 import javastrava.api.v3.service.ActivityService;
-
-import com.google.gson.annotations.SerializedName;
 
 /**
  * <p>
  * Collection of fields that can be updated on an activity
  * </p>
+ * 
  * @see ActivityService#updateActivity(Long, StravaActivityUpdate)
  * @see ActivityAPI#updateActivity(Long, StravaActivityUpdate)
  * @author Dan Shannon
  *
  */
-public class StravaActivityUpdate {
+public class StravaActivityUpdate implements StravaEntity {
 	/**
 	 * Activity name
 	 */
@@ -46,16 +47,20 @@ public class StravaActivityUpdate {
 	 * Description of the activity
 	 */
 	private String description;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaActivityUpdate() {
 		super();
 	}
+
 	/**
 	 * <p>
 	 * Constructor to create a {@link StravaActivityUpdate} from an existing {@link StravaActivity}
-	 * @param activity The activity to be used to create the {@link StravaActivityUpdate} from
+	 * 
+	 * @param activity
+	 *            The activity to be used to create the {@link StravaActivityUpdate} from
 	 */
 	public StravaActivityUpdate(final StravaActivity activity) {
 		this.name = activity.getName();
@@ -66,6 +71,7 @@ public class StravaActivityUpdate {
 		this.gearId = activity.getGearId();
 		this.description = activity.getDescription();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -128,48 +134,56 @@ public class StravaActivityUpdate {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the commute
 	 */
 	public Boolean getCommute() {
 		return this.commute;
 	}
+
 	/**
 	 * @return the description
 	 */
 	public String getDescription() {
 		return this.description;
 	}
+
 	/**
 	 * @return the gearId
 	 */
 	public String getGearId() {
 		return this.gearId;
 	}
+
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return this.name;
 	}
+
 	/**
 	 * @return the privateActivity
 	 */
 	public Boolean getPrivateActivity() {
 		return this.privateActivity;
 	}
+
 	/**
 	 * @return the trainer
 	 */
 	public Boolean getTrainer() {
 		return this.trainer;
 	}
+
 	/**
 	 * @return the type
 	 */
 	public StravaActivityType getType() {
 		return this.type;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -186,48 +200,63 @@ public class StravaActivityUpdate {
 		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param commute the commute to set
+	 * @param commute
+	 *            the commute to set
 	 */
 	public void setCommute(final Boolean commute) {
 		this.commute = commute;
 	}
+
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
 	}
+
 	/**
-	 * @param gearId the gearId to set
+	 * @param gearId
+	 *            the gearId to set
 	 */
 	public void setGearId(final String gearId) {
 		this.gearId = gearId;
 	}
+
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(final String name) {
 		this.name = name;
 	}
+
 	/**
-	 * @param privateActivity the privateActivity to set
+	 * @param privateActivity
+	 *            the privateActivity to set
 	 */
 	public void setPrivateActivity(final Boolean privateActivity) {
 		this.privateActivity = privateActivity;
 	}
+
 	/**
-	 * @param trainer the trainer to set
+	 * @param trainer
+	 *            the trainer to set
 	 */
 	public void setTrainer(final Boolean trainer) {
 		this.trainer = trainer;
 	}
+
 	/**
-	 * @param type the type to set
+	 * @param type
+	 *            the type to set
 	 */
 	public void setType(final StravaActivityType type) {
 		this.type = type;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

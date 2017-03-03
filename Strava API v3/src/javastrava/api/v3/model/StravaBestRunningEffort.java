@@ -13,7 +13,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaBestRunningEffort {
+public class StravaBestRunningEffort implements StravaEntity {
 	/**
 	 * Strava's unique identifier for this running effort
 	 */
@@ -66,12 +66,14 @@ public class StravaBestRunningEffort {
 	 * distance in metres
 	 */
 	private Float distance;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaBestRunningEffort() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -176,84 +178,98 @@ public class StravaBestRunningEffort {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the activity
 	 */
 	public StravaActivity getActivity() {
 		return this.activity;
 	}
+
 	/**
 	 * @return the athlete
 	 */
 	public StravaAthlete getAthlete() {
 		return this.athlete;
 	}
+
 	/**
 	 * @return the distance
 	 */
 	public Float getDistance() {
 		return this.distance;
 	}
+
 	/**
 	 * @return the elapsedTime
 	 */
 	public Integer getElapsedTime() {
 		return this.elapsedTime;
 	}
+
 	/**
 	 * @return the id
 	 */
 	public Integer getId() {
 		return this.id;
 	}
+
 	/**
 	 * @return the komRank
 	 */
 	public Integer getKomRank() {
 		return this.komRank;
 	}
+
 	/**
 	 * @return the movingTime
 	 */
 	public Integer getMovingTime() {
 		return this.movingTime;
 	}
+
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return this.name;
 	}
+
 	/**
 	 * @return the prRank
 	 */
 	public Integer getPrRank() {
 		return this.prRank;
 	}
+
 	/**
 	 * @return the resourceState
 	 */
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
+
 	/**
 	 * @return the segment
 	 */
 	public StravaSegment getSegment() {
 		return this.segment;
 	}
+
 	/**
 	 * @return the startDate
 	 */
 	public ZonedDateTime getStartDate() {
 		return this.startDate;
 	}
+
 	/**
 	 * @return the startDateLocal
 	 */
 	public LocalDateTime getStartDateLocal() {
 		return this.startDateLocal;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -276,84 +292,111 @@ public class StravaBestRunningEffort {
 		result = (prime * result) + ((this.startDateLocal == null) ? 0 : this.startDateLocal.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param activity the activity to set
+	 * @param activity
+	 *            the activity to set
 	 */
 	public void setActivity(final StravaActivity activity) {
 		this.activity = activity;
 	}
+
 	/**
-	 * @param athlete the athlete to set
+	 * @param athlete
+	 *            the athlete to set
 	 */
 	public void setAthlete(final StravaAthlete athlete) {
 		this.athlete = athlete;
 	}
+
 	/**
-	 * @param distance the distance to set
+	 * @param distance
+	 *            the distance to set
 	 */
 	public void setDistance(final Float distance) {
 		this.distance = distance;
 	}
+
 	/**
-	 * @param elapsedTime the elapsedTime to set
+	 * @param elapsedTime
+	 *            the elapsedTime to set
 	 */
 	public void setElapsedTime(final Integer elapsedTime) {
 		this.elapsedTime = elapsedTime;
 	}
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
+
 	/**
-	 * @param komRank the komRank to set
+	 * @param komRank
+	 *            the komRank to set
 	 */
 	public void setKomRank(final Integer komRank) {
 		this.komRank = komRank;
 	}
+
 	/**
-	 * @param movingTime the movingTime to set
+	 * @param movingTime
+	 *            the movingTime to set
 	 */
 	public void setMovingTime(final Integer movingTime) {
 		this.movingTime = movingTime;
 	}
+
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(final String name) {
 		this.name = name;
 	}
+
 	/**
-	 * @param prRank the prRank to set
+	 * @param prRank
+	 *            the prRank to set
 	 */
 	public void setPrRank(final Integer prRank) {
 		this.prRank = prRank;
 	}
+
 	/**
-	 * @param resourceState the resourceState to set
+	 * @param resourceState
+	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
 	}
+
 	/**
-	 * @param segment the segment to set
+	 * @param segment
+	 *            the segment to set
 	 */
 	public void setSegment(final StravaSegment segment) {
 		this.segment = segment;
 	}
+
 	/**
-	 * @param startDate the startDate to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
 	public void setStartDate(final ZonedDateTime startDate) {
 		this.startDate = startDate;
 	}
+
 	/**
-	 * @param startDateLocal the startDateLocal to set
+	 * @param startDateLocal
+	 *            the startDateLocal to set
 	 */
 	public void setStartDateLocal(final LocalDateTime startDateLocal) {
 		this.startDateLocal = startDateLocal;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

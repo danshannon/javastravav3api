@@ -8,7 +8,7 @@ package javastrava.api.v3.model;
  * @author Dan Shannon
  *
  */
-public class StravaStatisticsEntry {
+public class StravaStatisticsEntry implements StravaEntity {
 	/**
 	 * Number of activities
 	 */
@@ -33,12 +33,14 @@ public class StravaStatisticsEntry {
 	 * Total number of achievements
 	 */
 	private Integer achievementCount;
+
 	/**
 	 *
 	 */
 	public StravaStatisticsEntry() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -98,42 +100,49 @@ public class StravaStatisticsEntry {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the achievementCount
 	 */
 	public Integer getAchievementCount() {
 		return this.achievementCount;
 	}
+
 	/**
 	 * @return the count
 	 */
 	public Integer getCount() {
 		return this.count;
 	}
+
 	/**
 	 * @return the distance
 	 */
 	public Float getDistance() {
 		return this.distance;
 	}
+
 	/**
 	 * @return the elapsedTime
 	 */
 	public Integer getElapsedTime() {
 		return this.elapsedTime;
 	}
+
 	/**
 	 * @return the elevationGain
 	 */
 	public Float getElevationGain() {
 		return this.elevationGain;
 	}
+
 	/**
 	 * @return the movingTime
 	 */
 	public Integer getMovingTime() {
 		return this.movingTime;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -149,42 +158,55 @@ public class StravaStatisticsEntry {
 		result = (prime * result) + ((this.movingTime == null) ? 0 : this.movingTime.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param achievementCount the achievementCount to set
+	 * @param achievementCount
+	 *            the achievementCount to set
 	 */
 	public void setAchievementCount(final Integer achievementCount) {
 		this.achievementCount = achievementCount;
 	}
+
 	/**
-	 * @param count the count to set
+	 * @param count
+	 *            the count to set
 	 */
 	public void setCount(final Integer count) {
 		this.count = count;
 	}
+
 	/**
-	 * @param distance the distance to set
+	 * @param distance
+	 *            the distance to set
 	 */
 	public void setDistance(final Float distance) {
 		this.distance = distance;
 	}
+
 	/**
-	 * @param elapsedTime the elapsedTime to set
+	 * @param elapsedTime
+	 *            the elapsedTime to set
 	 */
 	public void setElapsedTime(final Integer elapsedTime) {
 		this.elapsedTime = elapsedTime;
 	}
+
 	/**
-	 * @param elevationGain the elevationGain to set
+	 * @param elevationGain
+	 *            the elevationGain to set
 	 */
 	public void setElevationGain(final Float elevationGain) {
 		this.elevationGain = elevationGain;
 	}
+
 	/**
-	 * @param movingTime the movingTime to set
+	 * @param movingTime
+	 *            the movingTime to set
 	 */
 	public void setMovingTime(final Integer movingTime) {
 		this.movingTime = movingTime;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

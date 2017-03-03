@@ -13,7 +13,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentLeaderboard {
+public class StravaSegmentLeaderboard implements StravaEntity {
 	/**
 	 * Number of entries in the leaderboard as a whole (i.e. the number of athletes)
 	 */
@@ -42,12 +42,14 @@ public class StravaSegmentLeaderboard {
 	 * The entries relative to the athlete
 	 */
 	private List<StravaSegmentLeaderboardEntry> athleteEntries;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaSegmentLeaderboard() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -110,48 +112,56 @@ public class StravaSegmentLeaderboard {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the athleteEntries
 	 */
 	public List<StravaSegmentLeaderboardEntry> getAthleteEntries() {
 		return this.athleteEntries;
 	}
+
 	/**
 	 * @return the effortCount
 	 */
 	public Integer getEffortCount() {
 		return this.effortCount;
 	}
+
 	/**
 	 * @return the entries
 	 */
 	public List<StravaSegmentLeaderboardEntry> getEntries() {
 		return this.entries;
 	}
+
 	/**
 	 * @return the entryCount
 	 */
 	public Integer getEntryCount() {
 		return this.entryCount;
 	}
+
 	/**
 	 * @return the komType
 	 */
 	public StravaLeaderboardDateRange getKomType() {
 		return this.komType;
 	}
+
 	/**
 	 * @return the neighborhoodCount
 	 */
 	public Integer getNeighborhoodCount() {
 		return this.neighborhoodCount;
 	}
+
 	/**
 	 * @return the resourceState
 	 */
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -168,48 +178,63 @@ public class StravaSegmentLeaderboard {
 		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param athleteEntries the athleteEntries to set
+	 * @param athleteEntries
+	 *            the athleteEntries to set
 	 */
 	public void setAthleteEntries(final List<StravaSegmentLeaderboardEntry> athleteEntries) {
 		this.athleteEntries = athleteEntries;
 	}
+
 	/**
-	 * @param effortCount the effortCount to set
+	 * @param effortCount
+	 *            the effortCount to set
 	 */
 	public void setEffortCount(final Integer effortCount) {
 		this.effortCount = effortCount;
 	}
+
 	/**
-	 * @param entries the entries to set
+	 * @param entries
+	 *            the entries to set
 	 */
 	public void setEntries(final List<StravaSegmentLeaderboardEntry> entries) {
 		this.entries = entries;
 	}
+
 	/**
-	 * @param entryCount the entryCount to set
+	 * @param entryCount
+	 *            the entryCount to set
 	 */
 	public void setEntryCount(final Integer entryCount) {
 		this.entryCount = entryCount;
 	}
+
 	/**
-	 * @param komType the komType to set
+	 * @param komType
+	 *            the komType to set
 	 */
 	public void setKomType(final StravaLeaderboardDateRange komType) {
 		this.komType = komType;
 	}
+
 	/**
-	 * @param neighborhoodCount the neighborhoodCount to set
+	 * @param neighborhoodCount
+	 *            the neighborhoodCount to set
 	 */
 	public void setNeighborhoodCount(final Integer neighborhoodCount) {
 		this.neighborhoodCount = neighborhoodCount;
 	}
+
 	/**
-	 * @param resourceState the resourceState to set
+	 * @param resourceState
+	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

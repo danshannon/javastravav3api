@@ -18,7 +18,7 @@ import javastrava.api.v3.service.SegmentService;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentExplorerResponse {
+public class StravaSegmentExplorerResponse implements StravaEntity {
 	/**
 	 * List of segments returned by the explorer
 	 */
@@ -75,7 +75,8 @@ public class StravaSegmentExplorerResponse {
 	}
 
 	/**
-	 * @param segments the segments to set
+	 * @param segments
+	 *            the segments to set
 	 */
 	public void setSegments(final List<StravaSegmentExplorerResponseSegment> segments) {
 		this.segments = segments;

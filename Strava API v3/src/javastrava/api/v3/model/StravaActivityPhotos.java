@@ -4,10 +4,11 @@ package javastrava.api.v3.model;
  * <p>
  * Photo(s) associated with a specific activity
  * </p>
+ * 
  * @author Dan Shannon
  *
  */
-public class StravaActivityPhotos {
+public class StravaActivityPhotos implements StravaEntity {
 	/**
 	 * Primary photo
 	 */
@@ -16,12 +17,14 @@ public class StravaActivityPhotos {
 	 * Total number of photos (instagram + native)
 	 */
 	private Integer count;
+
 	/**
 	 *
 	 */
 	public StravaActivityPhotos() {
 		super();
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -53,18 +56,21 @@ public class StravaActivityPhotos {
 		}
 		return true;
 	}
+
 	/**
 	 * @return the count
 	 */
 	public Integer getCount() {
 		return this.count;
 	}
+
 	/**
 	 * @return the primary
 	 */
 	public StravaPhoto getPrimary() {
 		return this.primary;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -76,18 +82,23 @@ public class StravaActivityPhotos {
 		result = (prime * result) + ((this.primary == null) ? 0 : this.primary.hashCode());
 		return result;
 	}
+
 	/**
-	 * @param count the count to set
+	 * @param count
+	 *            the count to set
 	 */
 	public void setCount(final Integer count) {
 		this.count = count;
 	}
+
 	/**
-	 * @param primary the primary to set
+	 * @param primary
+	 *            the primary to set
 	 */
 	public void setPrimary(final StravaPhoto primary) {
 		this.primary = primary;
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

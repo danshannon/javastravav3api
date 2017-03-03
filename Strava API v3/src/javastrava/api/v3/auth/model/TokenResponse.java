@@ -1,17 +1,17 @@
 package javastrava.api.v3.auth.model;
 
 import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaEntity;
 import javastrava.api.v3.rest.API;
 
 /**
  * <p>
- * The TokenResponse is returned by authorisation services; it contains user details and the access token which is then used for authentication purposes for all
- * other Strava API access
+ * The TokenResponse is returned by authorisation services; it contains user details and the access token which is then used for authentication purposes for all other Strava API access
  * </p>
  *
  * @author Dan Shannon
  */
-public class TokenResponse {
+public class TokenResponse implements StravaEntity {
 	/**
 	 * The value of the access token
 	 */

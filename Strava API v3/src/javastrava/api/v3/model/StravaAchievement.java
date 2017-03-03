@@ -8,7 +8,7 @@ package javastrava.api.v3.model;
  * @author Dan Shannon
  *
  */
-public class StravaAchievement {
+public class StravaAchievement implements StravaEntity {
 	/**
 	 * Identifier of the achievement type
 	 */
@@ -22,6 +22,7 @@ public class StravaAchievement {
 	 * Rank (1-10 for trophies, 1-3 for PR's)
 	 */
 	private Integer rank;
+
 	/**
 	 * No-args constructor
 	 */
