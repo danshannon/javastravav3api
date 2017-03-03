@@ -1,19 +1,43 @@
 package javastrava.api.v3.model.reference;
 
+import javastrava.api.v3.model.StravaRunningRace;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
 import javastrava.json.impl.gson.serializer.AthleteTypeSerializer;
 
+/**
+ * <p>
+ * Type enumeration for {@link StravaRunningRace running races}
+ * </p>
+ *
+ * @author Dan Shannon
+ *
+ */
 public enum StravaRunningRaceType implements StravaReferenceType<Integer> {
+	/**
+	 * Road race
+	 */
 	ROAD(StravaConfig.integer("StravaRunningRaceType.road"), Messages.string("StravaRunningRaceType.road.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Trail race
+	 */
 	TRAIL(StravaConfig.integer("StravaRunningRaceType.trail"), Messages.string("StravaRunningRaceType.trail.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Track race
+	 */
 	TRACK(StravaConfig.integer("StravaRunningRaceType.track"), Messages.string("StravaRunningRaceType.track.description")), //$NON-NLS-1$ //$NON-NLS-2$
-	XC(StravaConfig.integer("StravaRunningRaceType.xc"), Messages.string("StravaRunningRaceType.xc.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Cross-country race
+	 */
+	CROSS_COUNTRY(StravaConfig.integer("StravaRunningRaceType.xc"), Messages.string("StravaRunningRaceType.xc.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Unknown type
+	 */
 	UNKNOWN(StravaConfig.integer("Common.unknown.integer"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * Used by JSON deserialisation
-	 * 
+	 *
 	 * @param id
 	 *            The integer representation of the {@link StravaAthleteType} as returned by the Strava API
 	 * @return The matching {@link StravaAthleteType}, or {@link StravaAthleteType#UNKNOWN} if there is no match
@@ -42,7 +66,7 @@ public enum StravaRunningRaceType implements StravaReferenceType<Integer> {
 
 	/**
 	 * Private constructor used by declarations
-	 * 
+	 *
 	 * @param id
 	 *            Identifier - also used when serialising/deserialising to JSON
 	 * @param description
@@ -71,7 +95,7 @@ public enum StravaRunningRaceType implements StravaReferenceType<Integer> {
 
 	/**
 	 * Used by JSON serialisation
-	 * 
+	 *
 	 * @return The integer value to be used with the Strava API
 	 * @see AthleteTypeSerializer#serialize(StravaAthleteType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
