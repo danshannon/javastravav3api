@@ -1,12 +1,13 @@
 package javastrava.api.v3.model.reference;
 
+import javastrava.api.v3.model.StravaRunningRace;
 import javastrava.config.Messages;
 import javastrava.config.StravaConfig;
 import javastrava.json.impl.gson.serializer.AthleteTypeSerializer;
 
 /**
  * <p>
- * Types of running race
+ * Type enumeration for {@link StravaRunningRace running races}
  * </p>
  *
  * @author Dan Shannon
@@ -28,9 +29,9 @@ public enum StravaRunningRaceType implements StravaReferenceType<Integer> {
 	/**
 	 * Cross-country race
 	 */
-	XC(StravaConfig.integer("StravaRunningRaceType.xc"), Messages.string("StravaRunningRaceType.xc.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CROSS_COUNTRY(StravaConfig.integer("StravaRunningRaceType.xc"), Messages.string("StravaRunningRaceType.xc.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
-	 * Unknown race type
+	 * Unknown type
 	 */
 	UNKNOWN(StravaConfig.integer("Common.unknown.integer"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
 
