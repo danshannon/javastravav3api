@@ -10,37 +10,106 @@ import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
- * Strava running race
+ * A featured set of running races taking place across the world. Each race has an associated race page with course information,
+ * athlete goals, and results.
  * </p>
  *
  * @author Dan Shannon
  *
  */
 public class StravaRunningRace implements StravaEntity, StravaCacheable<Integer> {
+	/**
+	 * Identifier
+	 */
 	private Integer id;
 
+	/**
+	 * <p>
+	 * Indicates level of detail
+	 * </p>
+	 * <p>
+	 * The {@link StravaResourceState#SUMMARY summary representation} of the running race is the same as the
+	 * {@link StravaResourceState#DETAILED detailed representation}, except it does NOT include these attributes:
+	 * <ul>
+	 * <li><code>{@link #routeIds}</code></li>
+	 * <li><code>{@link #websiteUrl}</code></li>
+	 * </ul>
+	 * </p>
+	 *
+	 */
 	private StravaResourceState resourceState;
 
+	/**
+	 * Name of the race
+	 */
 	private String name;
 
+	/**
+	 * Road, trail, track or cross-country
+	 */
 	private StravaRunningRaceType runningRaceType;
 
+	/**
+	 * <p>
+	 * Race distance in metres
+	 * </p>
+	 * <p>
+	 * Common race distances have fixed distance values. These include:
+	 * <ul>
+	 * <li>1 Mile: 1609.34</li>
+	 * <li>5K: 5000</li>
+	 * <li>10K: 10000</li>
+	 * <li>Half Marathon: 21097</li>
+	 * <li>Marathon: 42195.0</li>
+	 * <li>50K: 50000</li>
+	 * <li>100K: 100000</li>
+	 * </ul>
+	 * </p>
+	 * <p>
+	 * Other races have custom distances. For example, a 50 Mile will be 80467.0 calculated as 1609.34 meters/mile.
+	 * </p>
+	 *
+	 */
 	private Float distance;
 
+	/**
+	 * Local date-time for race start
+	 */
 	private ZonedDateTime startDateLocal;
 
+	/**
+	 * City where the race is held
+	 */
 	private String city;
 
+	/**
+	 * State where the race is held
+	 */
 	private String state;
 
+	/**
+	 * Country where the race is held
+	 */
 	private String country;
 
+	/**
+	 * Can be used to retrieve route information
+	 */
 	private List<Integer> routeIds;
 
+	/**
+	 * Meters or feet
+	 */
 	private StravaMeasurementMethod measurementPreference;
 
+	/**
+	 * canonical Strava url i.e. www.strava.com/running-races/:url
+	 */
 	private String url;
 
+	/**
+	 * Official website url e.g. “http://www.baa.org/races/boston-marathon”
+	 */
 	private String websiteUrl;
 
 	/**
@@ -66,9 +135,7 @@ public class StravaRunningRace implements StravaEntity, StravaCacheable<Integer>
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

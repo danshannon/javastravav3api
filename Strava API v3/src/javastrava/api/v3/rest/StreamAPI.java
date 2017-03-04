@@ -46,8 +46,8 @@ public interface StreamAPI {
 	@GET("/activities/{id}/streams/{types}")
 	public StravaStream[] getActivityStreams(@Path("id") final Long activityId, @Path("types") final String types,
 			@Query("resolution") final StravaStreamResolutionType resolution,
-			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException,
-			NotFoundException, BadRequestException;
+			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType)
+			throws UnauthorizedException, NotFoundException, BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(Long, StravaStreamResolutionType,
@@ -63,7 +63,8 @@ public interface StreamAPI {
 	 * @param seriesType
 	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
 	 *            the streams if the stream is being reduced
-	 * @param callback The callback to execute on completion
+	 * @param callback
+	 *            The callback to execute on completion
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
 	 * @throws NotFoundException
@@ -74,8 +75,8 @@ public interface StreamAPI {
 	@GET("/activities/{id}/streams/{types}")
 	public void getActivityStreams(@Path("id") final Long activityId, @Path("types") final String types,
 			@Query("resolution") final StravaStreamResolutionType resolution,
-			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType, final StravaAPICallback<StravaStream[]> callback) throws UnauthorizedException,
-			NotFoundException, BadRequestException;
+			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaAPICallback<StravaStream[]> callback) throws UnauthorizedException, NotFoundException, BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.StreamService#getEffortStreams(Long, StravaStreamResolutionType,
@@ -102,8 +103,8 @@ public interface StreamAPI {
 	@GET("/segment_efforts/{id}/streams/{types}")
 	public StravaStream[] getEffortStreams(@Path("id") final Long segmentEffortId, @Path("types") final String types,
 			@Query("resolution") final StravaStreamResolutionType resolution,
-			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException,
-			NotFoundException, BadRequestException;
+			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType)
+			throws UnauthorizedException, NotFoundException, BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.StreamService#getEffortStreams(Long, StravaStreamResolutionType,
@@ -119,7 +120,8 @@ public interface StreamAPI {
 	 * @param seriesType
 	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
 	 *            the streams if the stream is being reduced
-	 * @param callback The callback to execute on completion
+	 * @param callback
+	 *            The callback to execute on completion
 	 * @throws UnauthorizedException
 	 *             If the security token is not valid or the effort is flagged as private
 	 * @throws NotFoundException
@@ -130,8 +132,8 @@ public interface StreamAPI {
 	@GET("/segment_efforts/{id}/streams/{types}")
 	public void getEffortStreams(@Path("id") final Long segmentEffortId, @Path("types") final String types,
 			@Query("resolution") final StravaStreamResolutionType resolution,
-			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType, final StravaAPICallback<StravaStream[]> callback) throws UnauthorizedException,
-			NotFoundException, BadRequestException;
+			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaAPICallback<StravaStream[]> callback) throws UnauthorizedException, NotFoundException, BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.StreamService#getSegmentStreams(Integer, StravaStreamResolutionType,
@@ -158,8 +160,8 @@ public interface StreamAPI {
 	@GET("/segments/{id}/streams/{types}")
 	public StravaStream[] getSegmentStreams(@Path("id") final Integer segmentId, @Path("types") final String types,
 			@Query("resolution") final StravaStreamResolutionType resolution,
-			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException,
-			NotFoundException, BadRequestException;
+			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType)
+			throws UnauthorizedException, NotFoundException, BadRequestException;
 
 	/**
 	 * @see javastrava.api.v3.service.StreamService#getSegmentStreams(Integer, StravaStreamResolutionType,
@@ -175,7 +177,8 @@ public interface StreamAPI {
 	 * @param seriesType
 	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
 	 *            the streams if the stream is being reduced
-	 * @param callback The callback to execute on completion
+	 * @param callback
+	 *            The callback to execute on completion
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
 	 * @throws NotFoundException
@@ -186,7 +189,45 @@ public interface StreamAPI {
 	@GET("/segments/{id}/streams/{types}")
 	public void getSegmentStreams(@Path("id") final Integer segmentId, @Path("types") final String types,
 			@Query("resolution") final StravaStreamResolutionType resolution,
-			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType, final StravaAPICallback<StravaStream[]> callback) throws UnauthorizedException,
-			NotFoundException, BadRequestException;
+			@Query("series_type") final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaAPICallback<StravaStream[]> callback) throws UnauthorizedException, NotFoundException, BadRequestException;
 
+	/**
+	 * <p>
+	 * distance, altitude and latlng stream types are always returned.
+	 * </p>
+	 *
+	 * @param id
+	 *            Id of the route
+	 * @return Array of Streams. distance, altitude and latlng stream types are always returned.
+	 * @throws UnauthorizedException
+	 *             if the route is private and token doesn't have view_private authorisation scope
+	 * @throws NotFoundException
+	 *             if the route doesn't exist
+	 * @throws BadRequestException
+	 *             If the request is malformed
+	 */
+	@GET("/routes/{id}/streams")
+	public StravaStream[] getRouteStreams(@Path("id") final Integer id)
+			throws UnauthorizedException, NotFoundException, BadRequestException;
+
+	/**
+	 * <p>
+	 * distance, altitude and latlng stream types are always returned.
+	 * </p>
+	 *
+	 * @param id
+	 *            Id of the route
+	 * @param callback
+	 *            The callback to execute on completion
+	 * @throws UnauthorizedException
+	 *             if the route is private and token doesn't have view_private authorisation scope
+	 * @throws NotFoundException
+	 *             if the route doesn't exist
+	 * @throws BadRequestException
+	 *             If the request is malformed
+	 */
+	@GET("/routes/{id}/streams")
+	public void getRouteStreams(@Path("id") final Integer id, final StravaAPICallback<StravaStream[]> callback)
+			throws UnauthorizedException, NotFoundException, BadRequestException;
 }

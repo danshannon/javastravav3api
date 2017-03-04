@@ -10,8 +10,8 @@ import retrofit.http.Query;
 
 /**
  * <p>
- * API declarations of running race service endpoints
- * </p>
+ * A featured set of running races taking place across the world. Each race has an associated race page with course information,
+ * athlete goals, and results.
  *
  * @author Dan Shannon
  *

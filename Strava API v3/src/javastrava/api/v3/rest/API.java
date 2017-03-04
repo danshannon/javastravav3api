@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 import javastrava.api.v3.auth.impl.retrofit.AuthorisationServiceImpl;
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.auth.model.TokenResponse;
+import javastrava.api.v3.auth.ref.AuthorisationScope;
 import javastrava.api.v3.model.StravaActivity;
 import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
@@ -20,6 +21,7 @@ import javastrava.api.v3.model.StravaGear;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaPhoto;
 import javastrava.api.v3.model.StravaResponse;
+import javastrava.api.v3.model.StravaRoute;
 import javastrava.api.v3.model.StravaRunningRace;
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.api.v3.model.StravaSegmentEffort;
@@ -54,6 +56,7 @@ import retrofit.RestAdapter;
 import retrofit.RestAdapter.LogLevel;
 import retrofit.converter.GsonConverter;
 import retrofit.http.GET;
+import retrofit.http.Path;
 import retrofit.mime.TypedFile;
 
 /**
@@ -169,6 +172,8 @@ public class API {
 	 */
 	private final RunningRaceAPI	runningRaceAPI;
 
+	private final RouteAPI routeAPI;
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -183,6 +188,7 @@ public class API {
 		result = (prime * result) + ((this.clubAPI == null) ? 0 : this.clubAPI.hashCode());
 		result = (prime * result) + ((this.effortAPI == null) ? 0 : this.effortAPI.hashCode());
 		result = (prime * result) + ((this.gearAPI == null) ? 0 : this.gearAPI.hashCode());
+		result = (prime * result) + ((this.routeAPI == null) ? 0 : this.routeAPI.hashCode());
 		result = (prime * result) + ((this.runningRaceAPI == null) ? 0 : this.runningRaceAPI.hashCode());
 		result = (prime * result) + ((this.segmentAPI == null) ? 0 : this.segmentAPI.hashCode());
 		result = (prime * result) + ((this.streamAPI == null) ? 0 : this.streamAPI.hashCode());
@@ -242,6 +248,13 @@ public class API {
 				return false;
 			}
 		} else if (!this.gearAPI.equals(other.gearAPI)) {
+			return false;
+		}
+		if (this.routeAPI == null) {
+			if (other.routeAPI != null) {
+				return false;
+			}
+		} else if (!this.routeAPI.equals(other.routeAPI)) {
 			return false;
 		}
 		if (this.runningRaceAPI == null) {
@@ -422,6 +435,7 @@ public class API {
 		this.gearAPI = API.instance(GearAPI.class, token);
 		this.segmentAPI = API.instance(SegmentAPI.class, token);
 		this.effortAPI = API.instance(SegmentEffortAPI.class, token);
+		this.routeAPI = API.instance(RouteAPI.class, token);
 		this.runningRaceAPI = API.instance(RunningRaceAPI.class, token);
 		this.streamAPI = API.instance(StreamAPI.class, token);
 		this.tokenAPI = API.instance(TokenAPI.class, token);
@@ -2326,4 +2340,78 @@ public class API {
 		return future;
 	}
 
+	/**
+	 * <p>
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating
+	 * user and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions. For raw data associated with a route
+	 * see route streams.
+	 * </p>
+	 *
+	 * @param routeId
+	 *            The identifier of the route to retrieve
+	 * @return The route
+	 * @throws NotFoundException
+	 *             If the route does not exist
+	 * @throws BadRequestException
+	 *             If the id is not an integer
+	 * @throws UnauthorizedException
+	 *             If the route is private and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private}
+	 */
+	public StravaRoute getRoute(@Path("id") Integer routeId) throws NotFoundException, BadRequestException, UnauthorizedException {
+		return this.routeAPI.getRoute(routeId);
+	}
+
+	/**
+	 * <p>
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating
+	 * user and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions. For raw data associated with a route
+	 * see route streams.
+	 * </p>
+	 *
+	 * @param routeId
+	 *            The identifier of the route to retrieve
+	 * @return The route
+	 * @throws NotFoundException
+	 *             If the route does not exist
+	 * @throws BadRequestException
+	 *             If the id is not an integer
+	 * @throws UnauthorizedException
+	 *             If the route is private and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private}
+	 */
+	public StravaAPIFuture<StravaRoute> getRouteAsync(@Path("id") Integer routeId)
+			throws NotFoundException, BadRequestException, UnauthorizedException {
+		final StravaAPIFuture<StravaRoute> future = new StravaAPIFuture<>();
+		this.routeAPI.getRoute(routeId, callback(future));
+		return future;
+	}
+
+	/**
+	 * <p>
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own
+	 * routes and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions.
+	 * </p>
+	 *
+	 * @param id
+	 *            The athlete id whose routes should be listed
+	 * @return The route
+	 */
+	public StravaRoute[] listAthleteRoutes(@Path("id") Integer id) {
+		return this.routeAPI.listAthleteRoutes(id);
+	}
+
+	/**
+	 * <p>
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own
+	 * routes and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions.
+	 * </p>
+	 *
+	 * @param id
+	 *            The athlete id whose routes should be listed
+	 * @return The route
+	 */
+	public StravaAPIFuture<StravaRoute[]> listAthleteRoutesAsync(@Path("id") Integer id) {
+		final StravaAPIFuture<StravaRoute[]> future = new StravaAPIFuture<>();
+		this.routeAPI.listAthleteRoutes(id, callback(future));
+		return future;
+	}
 }

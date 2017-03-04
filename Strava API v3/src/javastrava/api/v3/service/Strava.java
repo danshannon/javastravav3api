@@ -24,6 +24,7 @@ import javastrava.api.v3.model.StravaGear;
 import javastrava.api.v3.model.StravaLap;
 import javastrava.api.v3.model.StravaMapPoint;
 import javastrava.api.v3.model.StravaPhoto;
+import javastrava.api.v3.model.StravaRoute;
 import javastrava.api.v3.model.StravaRunningRace;
 import javastrava.api.v3.model.StravaSegment;
 import javastrava.api.v3.model.StravaSegmentEffort;
@@ -56,8 +57,8 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class Strava implements ActivityService, AthleteService, ClubService, GearService, RunningRaceService, SegmentEffortService,
-		SegmentService, StreamService, UploadService, WebhookService {
+public class Strava implements ActivityService, AthleteService, ClubService, GearService, RouteService, RunningRaceService,
+		SegmentEffortService, SegmentService, StreamService, UploadService, WebhookService {
 	/**
 	 * Instance used for access to activity data
 	 */
@@ -66,15 +67,20 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * instance used for access to athlete data
 	 */
-	private final AthleteService		athleteService;
+	private final AthleteService	athleteService;
 	/**
 	 * instance used for access to club data
 	 */
-	private final ClubService			clubService;
+	private final ClubService		clubService;
 	/**
 	 * instance used for access to gear data
 	 */
-	private final GearService			gearService;
+	private final GearService		gearService;
+
+	/**
+	 * instance used for access to route data
+	 */
+	private final RouteService			routeService;
 	/**
 	 * Instance used for access to running race data
 	 */
@@ -120,6 +126,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 		this.athleteService = token.getService(AthleteService.class);
 		this.clubService = token.getService(ClubService.class);
 		this.gearService = token.getService(GearService.class);
+		this.routeService = token.getService(RouteService.class);
 		this.runningRaceService = token.getService(RunningRaceService.class);
 		this.segmentEffortService = token.getService(SegmentEffortService.class);
 		this.segmentService = token.getService(SegmentService.class);
@@ -161,6 +168,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 		this.athleteService.clearCache();
 		this.clubService.clearCache();
 		this.gearService.clearCache();
+		this.routeService.clearCache();
+		this.runningRaceService.clearCache();
 		this.segmentEffortService.clearCache();
 		this.segmentService.clearCache();
 		this.streamService.clearCache();
@@ -3228,5 +3237,67 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	@Override
 	public CompletableFuture<StravaRunningRace> getRaceAsync(Integer id) {
 		return this.getRaceAsync(id);
+	}
+
+	/**
+	 * <p>
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating
+	 * user and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions. For raw data associated with a route
+	 * see route streams.
+	 * </p>
+	 *
+	 * @param routeId
+	 *            The identifier of the route to retrieve
+	 * @return The route
+	 */
+	@Override
+	public StravaRoute getRoute(Integer routeId) {
+		return this.routeService.getRoute(routeId);
+	}
+
+	/**
+	 * <p>
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating
+	 * user and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions. For raw data associated with a route
+	 * see route streams.
+	 * </p>
+	 *
+	 * @param routeId
+	 *            The identifier of the route to retrieve
+	 * @return The future on which to execute get() to retrieve the route
+	 */
+	@Override
+	public CompletableFuture<StravaRoute> getRouteAsync(Integer routeId) {
+		return this.routeService.getRouteAsync(routeId);
+	}
+
+	/**
+	 * <p>
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own
+	 * routes and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions.
+	 * </p>
+	 *
+	 * @param id
+	 *            The athlete id whose routes should be listed
+	 * @return The route
+	 */
+	@Override
+	public List<StravaRoute> listAthleteRoutes(Integer id) {
+		return this.routeService.listAthleteRoutes(id);
+	}
+
+	/**
+	 * <p>
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own
+	 * routes and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions.
+	 * </p>
+	 *
+	 * @param id
+	 *            The athlete id whose routes should be listed
+	 * @return The future to execute get() on to return the routes
+	 */
+	@Override
+	public CompletableFuture<List<StravaRoute>> listAthleteRoutesAsync(Integer id) {
+		return this.routeService.listAthleteRoutesAsync(id);
 	}
 }
