@@ -79,7 +79,11 @@ public class RouteServiceImpl extends StravaServiceImpl implements RouteService 
 
 	@Override
 	public List<StravaRoute> listAthleteRoutes(Integer id) {
-		return Arrays.asList(this.api.listAthleteRoutes(id));
+		try {
+			return Arrays.asList(this.api.listAthleteRoutes(id));
+		} catch (final NotFoundException e) {
+			return null;
+		}
 	}
 
 	@Override
