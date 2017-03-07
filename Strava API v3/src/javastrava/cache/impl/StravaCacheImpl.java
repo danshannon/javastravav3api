@@ -4,36 +4,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javastrava.api.v3.auth.model.Token;
-import javastrava.cache.StravaCache;
-import javastrava.cache.StravaCacheable;
-
 import org.apache.commons.jcs.JCS;
 import org.apache.commons.jcs.access.GroupCacheAccess;
+
+import javastrava.api.v3.auth.model.Token;
+import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.cache.StravaCache;
+import javastrava.cache.StravaCacheable;
 
 /**
  * @author Dan Shannon
  *
- * @param <T> Class of object to be stored in cache
- * @param <U> Class of object id
+ * @param <T>
+ *            Class of object to be stored in cache
+ * @param <U>
+ *            Class of object id
  */
 public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaCache<T, U> {
 	/**
 	 * Strava access token associated with this cache instance
 	 */
-	private final Token token;
+	private final Token										token;
 	/**
-	 * The cache implementation (which is global, so we need to be careful about how we store stuff in it or we'll revealn  stuff to the wrong users)
+	 * The cache implementation (which is global, so we need to be careful about how we store stuff in it or we'll revealn stuff to
+	 * the wrong users)
 	 */
-	private final GroupCacheAccess<StravaCacheKey<U,T>, T> cache;
+	private final GroupCacheAccess<StravaCacheKey<U, T>, T>	cache;
 	/**
 	 * Class of object being stored in the cache
 	 */
-	private final Class<T> class1;
+	private final Class<T>									class1;
 
 	/**
-	 * @param class1 The class of objects to be stored
-	 * @param token The security token will be used to generate the key for the stored objects
+	 * @param class1
+	 *            The class of objects to be stored
+	 * @param token
+	 *            The security token will be used to generate the key for the stored objects
 	 */
 	public StravaCacheImpl(final Class<T> class1, final Token token) {
 		this.token = token;
@@ -50,12 +56,13 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 		if (id == null) {
 			return null;
 		}
-		final StravaCacheKey<U,T> key = new StravaCacheKey<U,T>(id, this.token, this.class1);
+		final StravaCacheKey<U, T> key = new StravaCacheKey<U, T>(id, this.token, this.class1);
 		return this.cache.getFromGroup(key, groupName());
 	}
 
 	/**
 	 * Get the token in use
+	 *
 	 * @return The token
 	 */
 	protected Token getToken() {
@@ -64,6 +71,7 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 
 	/**
 	 * Generate the group name to store the data in cache
+	 *
 	 * @return The group name, based on the token and the class being stored
 	 */
 	private String groupName() {
@@ -75,13 +83,14 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 	 */
 	@Override
 	public List<T> list() {
-		final Set<StravaCacheKey<U,T>> keys = this.cache.getGroupKeys(groupName());
+		final Set<StravaCacheKey<U, T>> keys = this.cache.getGroupKeys(groupName());
 		final List<T> list = new ArrayList<T>();
-		for (final StravaCacheKey<U,T> key : keys) {
+		for (final StravaCacheKey<U, T> key : keys) {
 			list.add(this.cache.getFromGroup(key, groupName()));
 		}
 		return list;
 	}
+
 	/**
 	 * @see javastrava.cache.StravaCache#put(javastrava.cache.StravaCacheable)
 	 */
@@ -92,16 +101,13 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 			return;
 		}
 
-		// If the object is already in the cache and is more detailed than this one, then don't store it
-		final T cached = get(object.getId());
-		if ((cached != null) && (cached.getResourceState().getValue().intValue() > object.getResourceState().getValue().intValue())) {
-			return;
+		// Only cache detailed objects
+		if (object.getResourceState() == StravaResourceState.DETAILED) {
+			final StravaCacheKey<U, T> key = new StravaCacheKey<U, T>(object.getId(), this.token, this.class1);
+			this.cache.putInGroup(key, groupName(), object);
 		}
-
-
-		final StravaCacheKey<U,T> key = new StravaCacheKey<U,T>(object.getId(), this.token, this.class1);
-		this.cache.putInGroup(key, groupName(), object);
 	}
+
 	/**
 	 * @see javastrava.cache.StravaCache#putAll(java.util.List)
 	 */
@@ -120,7 +126,7 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 	 */
 	@Override
 	public void remove(final U id) {
-		final StravaCacheKey<U,T> key = new StravaCacheKey<U,T>(id, this.token, this.class1);
+		final StravaCacheKey<U, T> key = new StravaCacheKey<U, T>(id, this.token, this.class1);
 		this.cache.removeFromGroup(key, groupName());
 
 	}

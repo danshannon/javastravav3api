@@ -351,19 +351,20 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public StravaActivity getActivity(final Long activityId, final Boolean includeAllEfforts) {
 		// Attempt to get the activity from cache
-		StravaActivity stravaResponse = this.activityCache.get(activityId);
-		if ((stravaResponse != null) && (stravaResponse.getResourceState() == StravaResourceState.DETAILED)) {
-			return stravaResponse;
+		final StravaActivity cachedActivity = this.activityCache.get(activityId);
+		if (cachedActivity != null) {
+			return cachedActivity;
 		}
 
 		// If it wasn't in cache, then get it from the API
+		final StravaActivity stravaResponse;
 		try {
 			stravaResponse = this.api.getActivity(activityId, includeAllEfforts);
 		} catch (final NotFoundException e) {
 			// Activity doesn't exist - return null
 			return null;
 		} catch (final UnauthorizedException e) {
-			stravaResponse = PrivacyUtils.privateActivity(activityId);
+			return PrivacyUtils.privateActivity(activityId);
 		}
 
 		// Put the activity in cache unless it's UPDATING
