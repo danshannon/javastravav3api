@@ -1387,9 +1387,9 @@ public class API {
 
 	/**
 	 * @param before
-	 *            Time in milliseconds since the UNIX epoch date - only return activities commenced before this time
+	 *            Time in seconds since the UNIX epoch date - only return activities commenced before this time
 	 * @param after
-	 *            Time in milliseconds since the UNIX epoch date - only return activities commenced after this time
+	 *            Time in seconds since the UNIX epoch date - only return activities commenced after this time
 	 * @param page
 	 *            Page number to return
 	 * @param perPage
@@ -1405,9 +1405,9 @@ public class API {
 
 	/**
 	 * @param before
-	 *            Time in milliseconds since the UNIX epoch date - only return activities commenced before this time
+	 *            Time in seconds since the UNIX epoch date - only return activities commenced before this time
 	 * @param after
-	 *            Time in milliseconds since the UNIX epoch date - only return activities commenced after this time
+	 *            Time in seconds since the UNIX epoch date - only return activities commenced after this time
 	 * @param page
 	 *            Page number to return
 	 * @param perPage
