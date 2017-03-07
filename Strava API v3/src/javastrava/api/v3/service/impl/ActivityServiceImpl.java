@@ -23,6 +23,7 @@ import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.cache.StravaCache;
 import javastrava.cache.impl.StravaCacheImpl;
+import javastrava.config.JavastravaApplicationConfig;
 import javastrava.config.Messages;
 import javastrava.util.Paging;
 import javastrava.util.PagingHandler;
@@ -119,6 +120,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
 		// }
 
+		// Can't create the comment if we don't have Strava's permission to write comments
+		if (JavastravaApplicationConfig.STRAVA_ALLOWS_COMMENTS_WRITE) {
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.commentWithoutStravaPermission")); //$NON-NLS-1$
+		}
+
 		// TODO This is a workaround for issue #30 - API allows comments to be posted without write access
 		// Token must have write access
 		if (!(getToken().hasWriteAccess())) {
@@ -147,12 +153,16 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		return comment;
 	}
 
+	@Override
+	public StravaComment createComment(StravaComment comment) {
+		return createComment(comment.getActivityId(), comment.getText());
+	}
+
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#createCommentAsync(java.lang.Long, java.lang.String)
 	 */
 	@Override
-	public CompletableFuture<StravaComment> createCommentAsync(final Long activityId, final String text)
-			throws NotFoundException, BadRequestException {
+	public CompletableFuture<StravaComment> createCommentAsync(final Long activityId, final String text) throws NotFoundException, BadRequestException {
 		return StravaServiceImpl.future(() -> {
 			return createComment(activityId, text);
 		});
@@ -170,8 +180,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		// Token must have view_private to write a private activity
-		if ((activity.getPrivateActivity() != null) && activity.getPrivateActivity().equals(Boolean.TRUE)
-				&& !getToken().hasViewPrivate()) {
+		if ((activity.getPrivateActivity() != null) && activity.getPrivateActivity().equals(Boolean.TRUE) && !getToken().hasViewPrivate()) {
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.createPrivateActivityWithoutViewPrivate")); //$NON-NLS-1$
 		}
 
@@ -218,6 +227,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteActivityWithoutWriteAccess")); //$NON-NLS-1$
 		}
 
+		// Must have permission to delete activities from Strava
+		if (JavastravaApplicationConfig.STRAVA_ALLOWS_ACTIVITY_DELETE == false) {
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteActivityWithoutStravaApplicationPermission")); //$NON-NLS-1$
+		}
+
 		// // Activity must exist
 		// StravaActivity activity = getActivity(id);
 		// if (activity == null) {
@@ -245,6 +259,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		return activity;
 	}
 
+	@Override
+	public StravaActivity deleteActivity(StravaActivity activity) throws NotFoundException {
+		return deleteActivity(activity);
+	}
+
 	/**
 	 * @see javastrava.api.v3.service.ActivityService#deleteActivityAsync(java.lang.Long)
 	 */
@@ -266,6 +285,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.deleteCommentWithoutWriteAccess")); //$NON-NLS-1$
 		}
 		// End of workaround
+
+		// Can't create the comment if we don't have Strava's permission to write comments
+		if (JavastravaApplicationConfig.STRAVA_ALLOWS_COMMENTS_WRITE) {
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.commentWithoutStravaPermission")); //$NON-NLS-1$
+		}
 
 		// Activity must exist
 		final StravaActivity activity = getActivity(activityId);
@@ -406,6 +430,11 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.kudosWithoutWriteAccess")); //$NON-NLS-1$
 		}
 
+		// Must have Strava application-level permission to give kudos
+		if (!JavastravaApplicationConfig.STRAVA_ALLOWS_GIVE_KUDOS) {
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.kudosWithoutStravaApplicationPermission")); //$NON-NLS-1$
+		}
+
 		// Activity must exist
 		final StravaActivity activity = getActivity(activityId);
 		if (activity == null) {
@@ -467,8 +496,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		}
 
 		// Get the comments from Strava
-		final List<StravaComment> comments = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(
-				ActivityServiceImpl.this.api.listActivityComments(id, markdown, thisPage.getPage(), thisPage.getPageSize())));
+		final List<StravaComment> comments = PagingHandler.handlePaging(pagingInstruction,
+				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listActivityComments(id, markdown, thisPage.getPage(), thisPage.getPageSize())));
 
 		// And put them in the cache
 		this.commentCache.putAll(comments);
@@ -506,12 +535,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, java.lang.Boolean,
-	 *      javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, java.lang.Boolean, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Boolean markdown,
-			final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Boolean markdown, final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return listActivityComments(activityId, markdown, pagingInstruction);
 		});
@@ -551,8 +578,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 			return new ArrayList<StravaAthlete>();
 		}
 
-		return PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
-				.asList(ActivityServiceImpl.this.api.listActivityKudoers(id, thisPage.getPage(), thisPage.getPageSize())));
+		return PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listActivityKudoers(id, thisPage.getPage(), thisPage.getPageSize())));
 
 	}
 
@@ -764,8 +790,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after) {
-		final List<StravaActivity> activities = PagingHandler
-				.handleListAll(thisPage -> listAuthenticatedAthleteActivities(before, after, thisPage));
+		final List<StravaActivity> activities = PagingHandler.handleListAll(thisPage -> listAuthenticatedAthleteActivities(before, after, thisPage));
 
 		return activities;
 	}
@@ -781,12 +806,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAllAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime,
-	 *      java.time.LocalDateTime)
+	 * @see javastrava.api.v3.service.ActivityService#listAllAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime, java.time.LocalDateTime)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listAllAuthenticatedAthleteActivitiesAsync(final LocalDateTime before,
-			final LocalDateTime after) {
+	public CompletableFuture<List<StravaActivity>> listAllAuthenticatedAthleteActivitiesAsync(final LocalDateTime before, final LocalDateTime after) {
 		return StravaServiceImpl.future(() -> {
 			return listAllAuthenticatedAthleteActivities(before, after);
 		});
@@ -848,14 +871,13 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime, Paging)
 	 */
 	@Override
-	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after,
-			final Paging pagingInstruction) {
+	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after, final Paging pagingInstruction) {
 		final Integer secondsBefore = StravaDateUtils.secondsSinceUnixEpoch(before);
 		final Integer secondsAfter = StravaDateUtils.secondsSinceUnixEpoch(after);
 
 		// Get the activities from Strava
-		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(this.api
-				.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, thisPage.getPage(), thisPage.getPageSize())));
+		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
+				thisPage -> Arrays.asList(this.api.listAuthenticatedAthleteActivities(secondsBefore, secondsAfter, thisPage.getPage(), thisPage.getPageSize())));
 
 		// Handle Strava's slight weirdnesses with privacy
 		activities = PrivacyUtils.handlePrivateActivities(activities, this.getToken());
@@ -886,24 +908,20 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime,
-	 *      java.time.LocalDateTime)
+	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime, java.time.LocalDateTime)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final LocalDateTime before,
-			final LocalDateTime after) {
+	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final LocalDateTime before, final LocalDateTime after) {
 		return StravaServiceImpl.future(() -> {
 			return listAuthenticatedAthleteActivities(before, after);
 		});
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime,
-	 *      java.time.LocalDateTime, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime, java.time.LocalDateTime, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final LocalDateTime before,
-			final LocalDateTime after, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final LocalDateTime before, final LocalDateTime after, final Paging pagingInstruction) {
 		return StravaServiceImpl.future(() -> {
 			return listAuthenticatedAthleteActivities(before, after, pagingInstruction);
 		});
@@ -933,8 +951,7 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaActivity> listFriendsActivities(final Paging pagingInstruction) {
 		// Attempt to get the activities from Strava
-		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
-				thisPage -> Arrays.asList(this.api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize())));
+		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(this.api.listFriendsActivities(thisPage.getPage(), thisPage.getPageSize())));
 
 		// Handle any privacy errors
 		activities = PrivacyUtils.handlePrivateActivities(activities, this.getToken());
@@ -980,8 +997,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	@Override
 	public List<StravaActivity> listRelatedActivities(final Long id, final Paging pagingInstruction) {
 		// Attempt to get the activities from Strava
-		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays
-				.asList(ActivityServiceImpl.this.api.listRelatedActivities(id, thisPage.getPage(), thisPage.getPageSize())));
+		List<StravaActivity> activities = PagingHandler.handlePaging(pagingInstruction,
+				thisPage -> Arrays.asList(ActivityServiceImpl.this.api.listRelatedActivities(id, thisPage.getPage(), thisPage.getPageSize())));
 
 		// Handle any privacy errors
 		activities = PrivacyUtils.handlePrivateActivities(activities, this.getToken());
@@ -1065,12 +1082,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#updateActivityAsync(java.lang.Long,
-	 *      javastrava.api.v3.model.StravaActivityUpdate)
+	 * @see javastrava.api.v3.service.ActivityService#updateActivityAsync(java.lang.Long, javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
-	public CompletableFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity)
-			throws NotFoundException {
+	public CompletableFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException {
 		return StravaServiceImpl.future(() -> {
 			return updateActivity(activityId, activity);
 		});

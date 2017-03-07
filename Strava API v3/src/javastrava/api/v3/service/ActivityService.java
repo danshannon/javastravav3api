@@ -1,13 +1,19 @@
 package javastrava.api.v3.service;
 
-import javastrava.api.v3.model.*;
-import javastrava.api.v3.service.exception.BadRequestException;
-import javastrava.api.v3.service.exception.NotFoundException;
-import javastrava.util.Paging;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
+import javastrava.api.v3.model.StravaActivity;
+import javastrava.api.v3.model.StravaActivityUpdate;
+import javastrava.api.v3.model.StravaActivityZone;
+import javastrava.api.v3.model.StravaAthlete;
+import javastrava.api.v3.model.StravaComment;
+import javastrava.api.v3.model.StravaLap;
+import javastrava.api.v3.model.StravaPhoto;
+import javastrava.api.v3.service.exception.BadRequestException;
+import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.util.Paging;
 
 /**
  * StravaActivity related services
@@ -23,7 +29,11 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * Comment posting must be explicitly authorised by Strava for your application.
+	 * Comments on an activity can be viewed by any user. However, only internal applications are allowed to create or delete them.
+	 * </p>
+	 *
+	 * <p>
+	 * Comment posting can be enabled on a per application basis, email developers -at- strava.com for more information.
 	 * </p>
 	 *
 	 * <p>
@@ -39,8 +49,10 @@ public interface ActivityService extends StravaService {
 	 * @param text
 	 *            Comment text
 	 * @return The comment as created on Strava
-	 * @throws NotFoundException if the activity does not exist
-	 * @throws BadRequestException if the comment is invalid
+	 * @throws NotFoundException
+	 *             if the activity does not exist
+	 * @throws BadRequestException
+	 *             if the comment is invalid
 	 */
 	public StravaComment createComment(final Long activityId, final String text) throws NotFoundException, BadRequestException;
 
@@ -50,7 +62,42 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * Comment posting must be explicitly authorised by Strava for your application.
+	 * Comments on an activity can be viewed by any user. However, only internal applications are allowed to create or delete them.
+	 * </p>
+	 *
+	 * <p>
+	 * Comment posting can be enabled on a per application basis, email developers -at- strava.com for more information.
+	 * </p>
+	 *
+	 * <p>
+	 * The comment will be made by the user associated with the access_token.
+	 * </p>
+	 *
+	 * <p>
+	 * URL POST https://www.strava.com/api/v3/activities/:id/comments
+	 * </p>
+	 *
+	 * @param comment
+	 *            Comment to be created
+	 * @return The comment as created on Strava
+	 * @throws NotFoundException
+	 *             if the activity does not exist
+	 * @throws BadRequestException
+	 *             if the comment is invalid
+	 */
+	public StravaComment createComment(final StravaComment comment) throws NotFoundException, BadRequestException;
+
+	/**
+	 * <p>
+	 * Create a comment on an activity.
+	 * </p>
+	 *
+	 * <p>
+	 * Comments on an activity can be viewed by any user. However, only internal applications are allowed to create or delete them.
+	 * </p>
+	 *
+	 * <p>
+	 * Comment posting can be enabled on a per application basis, email developers -at- strava.com for more information.
 	 * </p>
 	 *
 	 * <p>
@@ -66,8 +113,10 @@ public interface ActivityService extends StravaService {
 	 * @param text
 	 *            Comment text
 	 * @return (A {@link CompletableFuture} which returns) The comment as created on Strava
-	 * @throws NotFoundException if the activity does not exist
-	 * @throws BadRequestException if the comment is invalid
+	 * @throws NotFoundException
+	 *             if the activity does not exist
+	 * @throws BadRequestException
+	 *             if the comment is invalid
 	 */
 	public CompletableFuture<StravaComment> createCommentAsync(final Long activityId, final String text) throws NotFoundException, BadRequestException;
 
@@ -143,7 +192,8 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * Requires write permissions, as requested during the authorization process.
+	 * Activity deletion can be enabled on a per application basis, email developers -at- strava.com for more information. It also requires write permissions, as requested during the authorization
+	 * process.
 	 * </p>
 	 *
 	 * <p>
@@ -160,7 +210,8 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} to be deleted.
 	 *
 	 * @return Should return <code>null</code>
-	 * @throws NotFoundException If the activity does not exist
+	 * @throws NotFoundException
+	 *             If the activity does not exist
 	 */
 	public StravaActivity deleteActivity(final Long activityId) throws NotFoundException;
 
@@ -170,7 +221,37 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * Requires write permissions, as requested during the authorization process.
+	 * Activity deletion can be enabled on a per application basis, email developers -at- strava.com for more information. It also requires write permissions, as requested during the authorization
+	 * process.
+	 * </p>
+	 *
+	 * <p>
+	 * Returns <code>null</code> if the activity does not exist on Strava
+	 * </p>
+	 *
+	 * <p>
+	 * URL DELETE https://www.strava.com/api/v3/activities/:id
+	 * </p>
+	 *
+	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
+	 *
+	 * @param activity
+	 *            The {@link StravaActivity} to be deleted.
+	 *
+	 * @return Should return <code>null</code>
+	 * @throws NotFoundException
+	 *             If the activity does not exist
+	 */
+	public StravaActivity deleteActivity(final StravaActivity activity) throws NotFoundException;
+
+	/**
+	 * <p>
+	 * Deletes the identified {@link StravaActivity}
+	 * </p>
+	 *
+	 * <p>
+	 * Activity deletion can be enabled on a per application basis, email developers -at- strava.com for more information. It also requires write permissions, as requested during the authorization
+	 * process.
 	 * </p>
 	 *
 	 * <p>
@@ -187,7 +268,8 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity} to be deleted.
 	 *
 	 * @return (A {@link CompletableFuture} which returns) Should return <code>null</code>
-	 * @throws NotFoundException If the activity does not exist
+	 * @throws NotFoundException
+	 *             If the activity does not exist
 	 */
 	public CompletableFuture<StravaActivity> deleteActivityAsync(final Long activityId) throws NotFoundException;
 
@@ -212,7 +294,8 @@ public interface ActivityService extends StravaService {
 	 *
 	 * @param comment
 	 *            The comment to be deleted
-	 * @throws NotFoundException If the comment does not exist on Strava
+	 * @throws NotFoundException
+	 *             If the comment does not exist on Strava
 	 */
 	public void deleteComment(final StravaComment comment) throws NotFoundException;
 
@@ -239,7 +322,8 @@ public interface ActivityService extends StravaService {
 	 * @param comment
 	 *            The comment to be deleted
 	 * @return A {@link CompletableFuture} which indicates when the deletion is complete
-	 * @throws NotFoundException If the comment does not exist on Strava
+	 * @throws NotFoundException
+	 *             If the comment does not exist on Strava
 	 */
 	public CompletableFuture<Void> deleteCommentAsync(final StravaComment comment) throws NotFoundException;
 
@@ -249,9 +333,9 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * By default, only "important" efforts are included. "Importance" is based on a number of undocumented factors and its value may change over time. Factors
-	 * considered include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the
-	 * same segment, it is possible that for one activity the associated effort is "important" but not for the other.
+	 * By default, only "important" efforts are included. "Importance" is based on a number of undocumented factors and its value may change over time. Factors considered include: segment age, views
+	 * and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated effort is
+	 * "important" but not for the other.
 	 * </p>
 	 *
 	 * <p>
@@ -274,8 +358,7 @@ public interface ActivityService extends StravaService {
 	 *
 	 * @param activityId
 	 *            The id of the {@link StravaActivity activity} to be returned
-	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for
-	 *         all other requests.
+	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for all other requests.
 	 */
 	public StravaActivity getActivity(final Long activityId);
 
@@ -285,9 +368,9 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * By default, only "important" efforts are included. "Importance" is based on a number of factors and its value may change over time. Factors considered
-	 * include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same
-	 * segment, it is possible that for one activity the associated effort is "important" but not for the other.
+	 * By default, only "important" efforts are included. "Importance" is based on a number of factors and its value may change over time. Factors considered include: segment age, views and stars, if
+	 * the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated effort is "important" but
+	 * not for the other.
 	 * </p>
 	 *
 	 * <p>
@@ -312,8 +395,7 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity activity} to be returned
 	 * @param includeAllEfforts
 	 *            (Optional) Used to include all segment efforts in the result (if omitted or <code>false</code> then only "important" efforts are returned).
-	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for
-	 *         all other requests.
+	 * @return Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for all other requests.
 	 */
 	public StravaActivity getActivity(final Long activityId, final Boolean includeAllEfforts);
 
@@ -323,9 +405,9 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * By default, only "important" efforts are included. "Importance" is based on a number of undocumented factors and its value may change over time. Factors
-	 * considered include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the
-	 * same segment, it is possible that for one activity the associated effort is "important" but not for the other.
+	 * By default, only "important" efforts are included. "Importance" is based on a number of undocumented factors and its value may change over time. Factors considered include: segment age, views
+	 * and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated effort is
+	 * "important" but not for the other.
 	 * </p>
 	 *
 	 * <p>
@@ -348,8 +430,8 @@ public interface ActivityService extends StravaService {
 	 *
 	 * @param activityId
 	 *            The id of the {@link StravaActivity activity} to be returned
-	 * @return (A {@link CompletableFuture} which returns) Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for
-	 *         all other requests.
+	 * @return (A {@link CompletableFuture} which returns) Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation
+	 *         for all other requests.
 	 */
 	public CompletableFuture<StravaActivity> getActivityAsync(final Long activityId);
 
@@ -359,9 +441,9 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * By default, only "important" efforts are included. "Importance" is based on a number of factors and its value may change over time. Factors considered
-	 * include: segment age, views and stars, if the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same
-	 * segment, it is possible that for one activity the associated effort is "important" but not for the other.
+	 * By default, only "important" efforts are included. "Importance" is based on a number of factors and its value may change over time. Factors considered include: segment age, views and stars, if
+	 * the user has hidden/shown the segment and if the effort was a PR. Note, if two activities cover the same segment, it is possible that for one activity the associated effort is "important" but
+	 * not for the other.
 	 * </p>
 	 *
 	 * <p>
@@ -386,8 +468,8 @@ public interface ActivityService extends StravaService {
 	 *            The id of the {@link StravaActivity activity} to be returned
 	 * @param includeAllEfforts
 	 *            (Optional) Used to include all segment efforts in the result (if omitted or <code>false</code> then only "important" efforts are returned).
-	 * @return (A {@link CompletableFuture} which returns) Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation for
-	 *         all other requests.
+	 * @return (A {@link CompletableFuture} which returns) Returns a detailed representation if the {@link StravaActivity activity} is owned by the requesting athlete. Returns a summary representation
+	 *         for all other requests.
 	 */
 	public CompletableFuture<StravaActivity> getActivityAsync(final Long activityId, final Boolean includeAllEfforts);
 
@@ -396,9 +478,14 @@ public interface ActivityService extends StravaService {
 	 * Kudo an activity (kudo is given by the authenticated athlete). You can do this multiple times, but the activity only receives one kudos.
 	 * </p>
 	 *
+	 * <p>
+	 * Kudos posting can be enabled on a per application basis, email developers -at- strava.com for more information.
+	 * </p>
+	 *
 	 * @param activityId
 	 *            Identifier of the activity to be kudoed.
-	 * @throws NotFoundException If the activity does not exist on Strava
+	 * @throws NotFoundException
+	 *             If the activity does not exist on Strava
 	 */
 	public void giveKudos(final Long activityId) throws NotFoundException;
 
@@ -407,10 +494,15 @@ public interface ActivityService extends StravaService {
 	 * Kudo an activity (kudo is given by the authenticated athlete). You can do this multiple times, but the activity only receives one kudos.
 	 * </p>
 	 *
+	 * <p>
+	 * Kudos posting can be enabled on a per application basis, email developers -at- strava.com for more information.
+	 * </p>
+	 *
 	 * @param activityId
 	 *            Identifier of the activity to be kudoed.
 	 * @return A {@link CompletableFuture} which indicates when the kudos has been given
-	 * @throws NotFoundException If the activity does not exist on Strava
+	 * @throws NotFoundException
+	 *             If the activity does not exist on Strava
 	 */
 	public CompletableFuture<Void> giveKudosAsync(final Long activityId) throws NotFoundException;
 
@@ -424,8 +516,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
-	 * activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.
 	 * </p>
 	 *
 	 * <p>
@@ -462,8 +553,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
-	 * activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.
 	 * </p>
 	 *
 	 * <p>
@@ -506,8 +596,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
-	 * activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.
 	 * </p>
 	 *
 	 * <p>
@@ -548,8 +637,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
-	 * activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.
 	 * </p>
 	 *
 	 * <p>
@@ -588,8 +676,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
-	 * activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.
 	 * </p>
 	 *
 	 * <p>
@@ -626,8 +713,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
-	 * activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.
 	 * </p>
 	 *
 	 * <p>
@@ -670,8 +756,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
-	 * activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.
 	 * </p>
 	 *
 	 * <p>
@@ -712,8 +797,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given
-	 * activity.
+	 * The number of comments is included in the activity summary and detail responses. Use this endpoint to retrieve a list of comments left on a given activity.
 	 * </p>
 	 *
 	 * <p>
@@ -752,8 +836,8 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the
-	 * athletes who have left kudos and can only be accessed by the owner of the activity.
+	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the athletes who have left kudos and can only
+	 * be accessed by the owner of the activity.
 	 * </p>
 	 *
 	 * <p>
@@ -782,8 +866,8 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the
-	 * athletes who have left kudos and can only be accessed by the owner of the activity.
+	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the athletes who have left kudos and can only
+	 * be accessed by the owner of the activity.
 	 * </p>
 	 *
 	 * <p>
@@ -814,8 +898,8 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the
-	 * athletes who have left kudos and can only be accessed by the owner of the activity.
+	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the athletes who have left kudos and can only
+	 * be accessed by the owner of the activity.
 	 * </p>
 	 *
 	 * <p>
@@ -844,8 +928,8 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the
-	 * athletes who have left kudos and can only be accessed by the owner of the activity.
+	 * The number of kudos is included in the activity summary and detailed representations. This endpoint is for retrieving more detailed information on the athletes who have left kudos and can only
+	 * be accessed by the owner of the activity.
 	 * </p>
 	 *
 	 * <p>
@@ -926,8 +1010,8 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of photos is included in the activity summary and detail responses. Use this endpoint to retrieve a list of photos associated with this
-	 * activity. This endpoint can only be accessed by the owner of the activity.
+	 * The number of photos is included in the activity summary and detail responses. Use this endpoint to retrieve a list of photos associated with this activity. This endpoint can only be accessed
+	 * by the owner of the activity.
 	 * </p>
 	 *
 	 * <p>
@@ -960,8 +1044,8 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * The number of photos is included in the activity summary and detail responses. Use this endpoint to retrieve a list of photos associated with this
-	 * activity. This endpoint can only be accessed by the owner of the activity.
+	 * The number of photos is included in the activity summary and detail responses. Use this endpoint to retrieve a list of photos associated with this activity. This endpoint can only be accessed
+	 * by the owner of the activity.
 	 * </p>
 	 *
 	 * <p>
@@ -986,8 +1070,7 @@ public interface ActivityService extends StravaService {
 
 	/**
 	 * <p>
-	 * Heartrate and power zones are set by the {@link StravaAthlete athlete}. This endpoint returns the time (seconds) in each zone for the
-	 * {@link StravaActivity activity}.
+	 * Heartrate and power zones are set by the {@link StravaAthlete athlete}. This endpoint returns the time (seconds) in each zone for the {@link StravaActivity activity}.
 	 * </p>
 	 *
 	 * <p>
@@ -1020,8 +1103,7 @@ public interface ActivityService extends StravaService {
 
 	/**
 	 * <p>
-	 * Heartrate and power zones are set by the {@link StravaAthlete athlete}. This endpoint returns the time (seconds) in each zone for the
-	 * {@link StravaActivity activity}.
+	 * Heartrate and power zones are set by the {@link StravaAthlete athlete}. This endpoint returns the time (seconds) in each zone for the {@link StravaActivity activity}.
 	 * </p>
 	 *
 	 * <p>
@@ -1069,7 +1151,8 @@ public interface ActivityService extends StravaService {
 	 * USE WITH CAUTION - ACTIVITIES WITH MANY COMMENTS WILL REQUIRE MANY CALLS TO THE STRAVA API
 	 * </p>
 	 *
-	 * @param activityId The activity whose comments should be listed
+	 * @param activityId
+	 *            The activity whose comments should be listed
 	 * @return All comments on the activity
 	 */
 	public List<StravaComment> listAllActivityComments(final Long activityId);
@@ -1091,7 +1174,8 @@ public interface ActivityService extends StravaService {
 	 * USE WITH CAUTION - ACTIVITIES WITH MANY COMMENTS WILL REQUIRE MANY CALLS TO THE STRAVA API
 	 * </p>
 	 *
-	 * @param activityId The activity whose comments should be listed
+	 * @param activityId
+	 *            The activity whose comments should be listed
 	 * @return (A {@link CompletableFuture} which returns) All comments on the activity
 	 */
 	public CompletableFuture<List<StravaComment>> listAllActivityCommentsAsync(final Long activityId);
@@ -1113,7 +1197,8 @@ public interface ActivityService extends StravaService {
 	 * USE WITH CAUTION - ACTIVITIES WITH MANY KUDOS WILL REQUIRE MANY CALLS TO THE STRAVA API
 	 * </p>
 	 *
-	 * @param activityId The activity whose kudoers should be listed
+	 * @param activityId
+	 *            The activity whose kudoers should be listed
 	 * @return All athletes who have kudoed the activity
 	 */
 	public List<StravaAthlete> listAllActivityKudoers(final Long activityId);
@@ -1135,7 +1220,8 @@ public interface ActivityService extends StravaService {
 	 * USE WITH CAUTION - ACTIVITIES WITH MANY KUDOS WILL REQUIRE MANY CALLS TO THE STRAVA API
 	 * </p>
 	 *
-	 * @param activityId The activity whose kudoers should be listed
+	 * @param activityId
+	 *            The activity whose kudoers should be listed
 	 * @return (A {@link CompletableFuture} which returns) All athletes who have kudoed the activity
 	 */
 	public CompletableFuture<List<StravaAthlete>> listAllActivityKudoersAsync(final Long activityId);
@@ -1146,8 +1232,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls to the Strava API are
-	 * required to achieve this.
+	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls to the Strava API are required to achieve this.
 	 * </p>
 	 *
 	 * <p>
@@ -1166,8 +1251,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls to the Strava API are
-	 * required to achieve this.
+	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls to the Strava API are required to achieve this.
 	 * </p>
 	 *
 	 * <p>
@@ -1176,8 +1260,10 @@ public interface ActivityService extends StravaService {
 	 *
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 *
-	 * @param before Return only rides started BEFORE this date/time
-	 * @param after Return only rides started AFTER this data/time
+	 * @param before
+	 *            Return only rides started BEFORE this date/time
+	 * @param after
+	 *            Return only rides started AFTER this data/time
 	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default.
 	 */
 	public List<StravaActivity> listAllAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after);
@@ -1188,8 +1274,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls to the Strava API are
-	 * required to achieve this.
+	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls to the Strava API are required to achieve this.
 	 * </p>
 	 *
 	 * <p>
@@ -1208,8 +1293,7 @@ public interface ActivityService extends StravaService {
 	 * </p>
 	 *
 	 * <p>
-	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls to the Strava API are
-	 * required to achieve this.
+	 * Pagination is NOT supported. USE WITH CAUTION. ALL activities for the athlete will be returned, regardless of how many calls to the Strava API are required to achieve this.
 	 * </p>
 	 *
 	 * <p>
@@ -1218,8 +1302,10 @@ public interface ActivityService extends StravaService {
 	 *
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 *
-	 * @param before Return only rides started BEFORE this date/time
-	 * @param after Return only rides started AFTER this data/time
+	 * @param before
+	 *            Return only rides started BEFORE this date/time
+	 * @param after
+	 *            Return only rides started AFTER this data/time
 	 * @return (A {@link CompletableFuture} which returns) Returns an array of {@link StravaActivity} summary representations sorted newest first by default.
 	 */
 	public CompletableFuture<List<StravaActivity>> listAllAuthenticatedAthleteActivitiesAsync(final LocalDateTime before, final LocalDateTime after);
@@ -1287,7 +1373,8 @@ public interface ActivityService extends StravaService {
 	 * USE WITH CAUTION - ACTIVITIES WITH MANY RELATED ACTIVITIES WILL REQUIRE MANY CALLS TO THE STRAVA API
 	 * </p>
 	 *
-	 * @param activityId The activity identifier
+	 * @param activityId
+	 *            The activity identifier
 	 * @return List of Strava activities that Strava has determined are related to this one
 	 */
 	public List<StravaActivity> listAllRelatedActivities(final Long activityId);
@@ -1309,7 +1396,8 @@ public interface ActivityService extends StravaService {
 	 * USE WITH CAUTION - ACTIVITIES WITH MANY RELATED ACTIVITIES WILL REQUIRE MANY CALLS TO THE STRAVA API
 	 * </p>
 	 *
-	 * @param activityId The activity identifier
+	 * @param activityId
+	 *            The activity identifier
 	 * @return (A {@link CompletableFuture} which returns) List of Strava activities that Strava has determined are related to this one
 	 */
 	public CompletableFuture<List<StravaActivity>> listAllRelatedActivitiesAsync(final Long activityId);
@@ -1352,8 +1440,7 @@ public interface ActivityService extends StravaService {
 	 *            (Optional) result will start with activities whose start_date is before this value
 	 * @param after
 	 *            (Optional) result will start with activities whose start_date is after this value, sorted oldest first
-	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after
-	 *         parameter is used.
+	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
 	 */
 	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after);
 
@@ -1382,8 +1469,7 @@ public interface ActivityService extends StravaService {
 	 *            (Optional) result will start with activities whose start_date is after this value, sorted oldest first
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
-	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after
-	 *         parameter is used.
+	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
 	 */
 	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after, final Paging pagingInstruction);
 
@@ -1404,8 +1490,7 @@ public interface ActivityService extends StravaService {
 	 *
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
-	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after
-	 *         parameter is used.
+	 * @return Returns an array of {@link StravaActivity} summary representations sorted newest first by default. Will be sorted oldest first if the after parameter is used.
 	 */
 	public List<StravaActivity> listAuthenticatedAthleteActivities(final Paging pagingInstruction);
 
@@ -1683,11 +1768,13 @@ public interface ActivityService extends StravaService {
 	 *
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 *
-	 * @param activityId The identifier of the activity to be updated
+	 * @param activityId
+	 *            The identifier of the activity to be updated
 	 * @param activity
 	 *            The {@link StravaActivityUpdate} to be updated
 	 * @return Returns a detailed representation of the updated {@link StravaActivity}.
-	 * @throws NotFoundException If the activity with the given id does not exist
+	 * @throws NotFoundException
+	 *             If the activity with the given id does not exist
 	 *
 	 */
 	public StravaActivity updateActivity(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException;
@@ -1711,11 +1798,13 @@ public interface ActivityService extends StravaService {
 	 *
 	 * @see <a href="http://strava.github.io/api/v3/activities/">http://strava.github.io/api/v3/activities/</a>
 	 *
-	 * @param activityId The identifier of the activity to be updated
+	 * @param activityId
+	 *            The identifier of the activity to be updated
 	 * @param activity
 	 *            The {@link StravaActivityUpdate} to be updated
 	 * @return (A {@link CompletableFuture} which returns) Returns a detailed representation of the updated {@link StravaActivity}.
-	 * @throws NotFoundException If the activity with the given id does not exist
+	 * @throws NotFoundException
+	 *             If the activity with the given id does not exist
 	 *
 	 */
 	public CompletableFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException;
