@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 /**
  * Internationalisable messages
+ * 
  * @author Dan Shannon
  *
  */
@@ -11,7 +12,7 @@ public class Messages {
 	/**
 	 * Bundle name
 	 */
-	private static final String BUNDLE_NAME = "java-strava-messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "javastrava-messages"; //$NON-NLS-1$
 
 	/**
 	 * The resource bundle itseld
@@ -20,7 +21,9 @@ public class Messages {
 
 	/**
 	 * Get the value of a property in the resource bundle
-	 * @param key Name of the property
+	 * 
+	 * @param key
+	 *            Name of the property
 	 * @return The value of the property
 	 */
 	public static String string(final String key) {

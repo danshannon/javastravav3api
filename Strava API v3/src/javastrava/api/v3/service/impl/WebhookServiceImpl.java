@@ -10,14 +10,14 @@ import javastrava.api.v3.model.webhook.StravaEventSubscription;
 import javastrava.api.v3.service.WebhookService;
 
 /**
- * @author danshannon
+ * @author Dan Shannon
  *
  */
 public class WebhookServiceImpl extends StravaServiceImpl implements WebhookService {
 	/**
 	 * Name of the configuration file
 	 */
-	private static final String BUNDLE_NAME = "application"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "javastrava-application"; //$NON-NLS-1$
 
 	/**
 	 * Resource bundle containing configuration properties
@@ -39,7 +39,8 @@ public class WebhookServiceImpl extends StravaServiceImpl implements WebhookServ
 	private static final String CLIENT_SECRET = string("strava.client_secret"); //$NON-NLS-1$
 
 	/**
-	 * @param token The access token to associate with the service
+	 * @param token
+	 *            The access token to associate with the service
 	 * @return An instance of the service
 	 */
 	public static WebhookService instance(final Token token) {
@@ -64,7 +65,9 @@ public class WebhookServiceImpl extends StravaServiceImpl implements WebhookServ
 
 	/**
 	 * Get the value of a String property
-	 * @param property The property name
+	 *
+	 * @param property
+	 *            The property name
 	 * @return The value of the property
 	 */
 	private static String string(final String property) {
@@ -72,7 +75,8 @@ public class WebhookServiceImpl extends StravaServiceImpl implements WebhookServ
 	}
 
 	/**
-	 * @param token The access token to use in calls to the API
+	 * @param token
+	 *            The access token to use in calls to the API
 	 */
 	protected WebhookServiceImpl(final Token token) {
 		super(token);
@@ -88,20 +92,25 @@ public class WebhookServiceImpl extends StravaServiceImpl implements WebhookServ
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.WebhookService#createSubscription(javastrava.api.v3.model.webhook.StravaEventSubscription, String)
+	 * @see javastrava.api.v3.service.WebhookService#createSubscription(javastrava.api.v3.model.webhook.StravaEventSubscription,
+	 *      String)
 	 */
 	@Override
 	public StravaEventSubscription createSubscription(final StravaEventSubscription subscription, final String verifyToken) {
-		return this.api.createSubscription(CLIENT_ID, CLIENT_SECRET, subscription.getObjectType(), subscription.getAspectType(), subscription.getCallbackURL(), verifyToken);
+		return this.api.createSubscription(CLIENT_ID, CLIENT_SECRET, subscription.getObjectType(), subscription.getAspectType(),
+				subscription.getCallbackURL(), verifyToken);
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.WebhookService#createSubscriptionAsync(javastrava.api.v3.model.webhook.StravaEventSubscription, String)
+	 * @see javastrava.api.v3.service.WebhookService#createSubscriptionAsync(javastrava.api.v3.model.webhook.StravaEventSubscription,
+	 *      String)
 	 */
 	@Override
-	public CompletableFuture<StravaEventSubscription> createSubscriptionAsync(final StravaEventSubscription subscription, final String verifyToken) {
+	public CompletableFuture<StravaEventSubscription> createSubscriptionAsync(final StravaEventSubscription subscription,
+			final String verifyToken) {
 		return StravaServiceImpl.future(() -> {
-			return this.api.createSubscription(CLIENT_ID, CLIENT_SECRET, subscription.getObjectType(), subscription.getAspectType(), subscription.getCallbackURL(), verifyToken);
+			return this.api.createSubscription(CLIENT_ID, CLIENT_SECRET, subscription.getObjectType(), subscription.getAspectType(),
+					subscription.getCallbackURL(), verifyToken);
 		});
 	}
 
