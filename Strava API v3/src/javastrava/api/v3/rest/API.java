@@ -12,6 +12,7 @@ import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaAthleteZones;
+import javastrava.api.v3.model.StravaChallenge;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubEvent;
@@ -61,8 +62,7 @@ import retrofit.mime.TypedFile;
 
 /**
  * <p>
- * Provides a static method {@link #instance(Class, Token)} which constructs a standard retrofit service with all the required
- * options.
+ * Provides a static method {@link #instance(Class, Token)} which constructs a standard retrofit service with all the required options.
  * </p>
  *
  * @author Dan Shannon
@@ -83,17 +83,15 @@ public class API {
 	 */
 	public static AuthorisationAPI authorisationInstance() {
 		if (authorisationAPI == null) {
-			authorisationAPI = new RestAdapter.Builder().setClient(new RetrofitClientResponseInterceptor())
-					.setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
-					.setLogLevel(API.logLevel(AuthorisationServiceImpl.class)).setEndpoint(StravaConfig.AUTH_ENDPOINT)
-					.setErrorHandler(new RetrofitErrorHandler()).build().create(AuthorisationAPI.class);
+			authorisationAPI = new RestAdapter.Builder().setClient(new RetrofitClientResponseInterceptor()).setConverter(new GsonConverter(new JsonUtilImpl().getGson()))
+					.setLogLevel(API.logLevel(AuthorisationServiceImpl.class)).setEndpoint(StravaConfig.AUTH_ENDPOINT).setErrorHandler(new RetrofitErrorHandler()).build()
+					.create(AuthorisationAPI.class);
 		}
 		return authorisationAPI;
 	}
 
 	/**
-	 * Generates a callback for the API, based on a {@link CompletableFuture}. {@link CompletableFuture#complete(Object)} will be
-	 * called when the asynchronous call to the API is complete
+	 * Generates a callback for the API, based on a {@link CompletableFuture}. {@link CompletableFuture#complete(Object)} will be called when the asynchronous call to the API is complete
 	 *
 	 * @param <T>
 	 *            The type of object which will be returned to the caller
@@ -174,133 +172,7 @@ public class API {
 
 	private final RouteAPI routeAPI;
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.activityAPI == null) ? 0 : this.activityAPI.hashCode());
-		result = (prime * result) + ((this.athleteAPI == null) ? 0 : this.athleteAPI.hashCode());
-		result = (prime * result) + ((this.clubAPI == null) ? 0 : this.clubAPI.hashCode());
-		result = (prime * result) + ((this.effortAPI == null) ? 0 : this.effortAPI.hashCode());
-		result = (prime * result) + ((this.gearAPI == null) ? 0 : this.gearAPI.hashCode());
-		result = (prime * result) + ((this.routeAPI == null) ? 0 : this.routeAPI.hashCode());
-		result = (prime * result) + ((this.runningRaceAPI == null) ? 0 : this.runningRaceAPI.hashCode());
-		result = (prime * result) + ((this.segmentAPI == null) ? 0 : this.segmentAPI.hashCode());
-		result = (prime * result) + ((this.streamAPI == null) ? 0 : this.streamAPI.hashCode());
-		result = (prime * result) + ((this.tokenAPI == null) ? 0 : this.tokenAPI.hashCode());
-		result = (prime * result) + ((this.uploadAPI == null) ? 0 : this.uploadAPI.hashCode());
-		result = (prime * result) + ((this.webhookAPI == null) ? 0 : this.webhookAPI.hashCode());
-		return result;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof API)) {
-			return false;
-		}
-		final API other = (API) obj;
-		if (this.activityAPI == null) {
-			if (other.activityAPI != null) {
-				return false;
-			}
-		} else if (!this.activityAPI.equals(other.activityAPI)) {
-			return false;
-		}
-		if (this.athleteAPI == null) {
-			if (other.athleteAPI != null) {
-				return false;
-			}
-		} else if (!this.athleteAPI.equals(other.athleteAPI)) {
-			return false;
-		}
-		if (this.clubAPI == null) {
-			if (other.clubAPI != null) {
-				return false;
-			}
-		} else if (!this.clubAPI.equals(other.clubAPI)) {
-			return false;
-		}
-		if (this.effortAPI == null) {
-			if (other.effortAPI != null) {
-				return false;
-			}
-		} else if (!this.effortAPI.equals(other.effortAPI)) {
-			return false;
-		}
-		if (this.gearAPI == null) {
-			if (other.gearAPI != null) {
-				return false;
-			}
-		} else if (!this.gearAPI.equals(other.gearAPI)) {
-			return false;
-		}
-		if (this.routeAPI == null) {
-			if (other.routeAPI != null) {
-				return false;
-			}
-		} else if (!this.routeAPI.equals(other.routeAPI)) {
-			return false;
-		}
-		if (this.runningRaceAPI == null) {
-			if (other.runningRaceAPI != null) {
-				return false;
-			}
-		} else if (!this.runningRaceAPI.equals(other.runningRaceAPI)) {
-			return false;
-		}
-		if (this.segmentAPI == null) {
-			if (other.segmentAPI != null) {
-				return false;
-			}
-		} else if (!this.segmentAPI.equals(other.segmentAPI)) {
-			return false;
-		}
-		if (this.streamAPI == null) {
-			if (other.streamAPI != null) {
-				return false;
-			}
-		} else if (!this.streamAPI.equals(other.streamAPI)) {
-			return false;
-		}
-		if (this.tokenAPI == null) {
-			if (other.tokenAPI != null) {
-				return false;
-			}
-		} else if (!this.tokenAPI.equals(other.tokenAPI)) {
-			return false;
-		}
-		if (this.uploadAPI == null) {
-			if (other.uploadAPI != null) {
-				return false;
-			}
-		} else if (!this.uploadAPI.equals(other.uploadAPI)) {
-			return false;
-		}
-		if (this.webhookAPI == null) {
-			if (other.webhookAPI != null) {
-				return false;
-			}
-		} else if (!this.webhookAPI.equals(other.webhookAPI)) {
-			return false;
-		}
-		return true;
-	}
+	private final ChallengeAPI challengeAPI;
 
 	/**
 	 * @return the authorisationAPI
@@ -431,6 +303,7 @@ public class API {
 	public API(final Token token) {
 		this.activityAPI = API.instance(ActivityAPI.class, token);
 		this.athleteAPI = API.instance(AthleteAPI.class, token);
+		this.challengeAPI = API.instance(ChallengeAPI.class, token);
 		this.clubAPI = API.instance(ClubAPI.class, token);
 		this.gearAPI = API.instance(GearAPI.class, token);
 		this.segmentAPI = API.instance(SegmentAPI.class, token);
@@ -445,8 +318,7 @@ public class API {
 
 	/**
 	 * @param id
-	 *            The upload id as given back in the response to
-	 *            {@link #upload(StravaActivityType, String, String, Boolean, Boolean, Boolean, String, String, TypedFile)}
+	 *            The upload id as given back in the response to {@link #upload(StravaActivityType, String, String, Boolean, Boolean, Boolean, String, String, TypedFile)}
 	 * @return Upload response containing the upload id and activity id and current status of the upload
 	 * @see javastrava.api.v3.rest.UploadAPI#checkUploadStatus(java.lang.Long)
 	 */
@@ -456,8 +328,7 @@ public class API {
 
 	/**
 	 * @param uploadId
-	 *            The upload id as given back in the response to
-	 *            {@link #upload(StravaActivityType, String, String, Boolean, Boolean, Boolean, String, String, TypedFile)}
+	 *            The upload id as given back in the response to {@link #upload(StravaActivityType, String, String, Boolean, Boolean, Boolean, String, String, TypedFile)}
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @see javastrava.api.v3.rest.UploadAPI#checkUploadStatus(java.lang.Long, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
@@ -494,8 +365,7 @@ public class API {
 	 * @throws BadRequestException
 	 *             If the comment text is null or the empty string
 	 */
-	public StravaAPIFuture<StravaComment> createCommentAsync(final Long activityId, final String text)
-			throws BadRequestException, NotFoundException {
+	public StravaAPIFuture<StravaComment> createCommentAsync(final Long activityId, final String text) throws BadRequestException, NotFoundException {
 		final StravaAPIFuture<StravaComment> future = new StravaAPIFuture<StravaComment>();
 		this.activityAPI.createComment(activityId, text, callback(future));
 		return future;
@@ -523,8 +393,7 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws BadRequestException
 	 *             If the activity is malformed and can't be uploaded
-	 * @see javastrava.api.v3.rest.ActivityAPI#createManualActivity(javastrava.api.v3.model.StravaActivity,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#createManualActivity(javastrava.api.v3.model.StravaActivity, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
 	public StravaAPIFuture<StravaActivity> createManualActivityAsync(final StravaActivity activity) throws BadRequestException {
 		final StravaAPIFuture<StravaActivity> future = new StravaAPIFuture<StravaActivity>();
@@ -542,15 +411,13 @@ public class API {
 	 * @param aspectType
 	 *            The aspect being subscribed to
 	 * @param callbackURL
-	 *            (Max 255 characters) URL which Strava will callback with an HTTP GET to verify the existence of the webhook
-	 *            endpoint, then subsequently will POST to with subscribed events
+	 *            (Max 255 characters) URL which Strava will callback with an HTTP GET to verify the existence of the webhook endpoint, then subsequently will POST to with subscribed events
 	 * @param verifyToken
 	 *            The token's value will be included in the GET callback request when verifying the endpoint
 	 * @return Details of the event subscription
 	 */
-	public StravaEventSubscription createSubscription(final Integer clientId, final String clientSecret,
-			final StravaSubscriptionObjectType objectType, final StravaSubscriptionAspectType aspectType, final String callbackURL,
-			final String verifyToken) {
+	public StravaEventSubscription createSubscription(final Integer clientId, final String clientSecret, final StravaSubscriptionObjectType objectType, final StravaSubscriptionAspectType aspectType,
+			final String callbackURL, final String verifyToken) {
 		return this.webhookAPI.createSubscription(clientId, clientSecret, objectType, aspectType, callbackURL, verifyToken);
 	}
 
@@ -564,18 +431,15 @@ public class API {
 	 * @param aspectType
 	 *            The aspect being subscribed to
 	 * @param callbackURL
-	 *            (Max 255 characters) URL which Strava will callback with an HTTP GET to verify the existence of the webhook
-	 *            endpoint, then subsequently will POST to with subscribed events
+	 *            (Max 255 characters) URL which Strava will callback with an HTTP GET to verify the existence of the webhook endpoint, then subsequently will POST to with subscribed events
 	 * @param verifyToken
 	 *            The token's value will be included in the GET callback request when verifying the endpoint
 	 * @return Details of the event subscription
 	 */
-	public StravaAPIFuture<StravaEventSubscription> createSubscriptionAsync(final Integer clientId, final String clientSecret,
-			final StravaSubscriptionObjectType objectType, final StravaSubscriptionAspectType aspectType, final String callbackURL,
-			final String verifyToken) {
+	public StravaAPIFuture<StravaEventSubscription> createSubscriptionAsync(final Integer clientId, final String clientSecret, final StravaSubscriptionObjectType objectType,
+			final StravaSubscriptionAspectType aspectType, final String callbackURL, final String verifyToken) {
 		final StravaAPIFuture<StravaEventSubscription> future = new StravaAPIFuture<StravaEventSubscription>();
-		this.webhookAPI.createSubscription(clientId, clientSecret, objectType, aspectType, callbackURL, verifyToken,
-				callback(future));
+		this.webhookAPI.createSubscription(clientId, clientSecret, objectType, aspectType, callbackURL, verifyToken, callback(future));
 		return future;
 	}
 
@@ -661,11 +525,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException
 	 *             If the comment does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#deleteComment(java.lang.Long, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#deleteComment(java.lang.Long, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaResponse> deleteCommentAsync(final Long activityId, final Integer commentId)
-			throws NotFoundException {
+	public StravaAPIFuture<StravaResponse> deleteCommentAsync(final Long activityId, final Integer commentId) throws NotFoundException {
 		final StravaAPIFuture<StravaResponse> future = new StravaAPIFuture<StravaResponse>();
 		this.activityAPI.deleteComment(activityId, commentId, callback(future));
 		return future;
@@ -695,8 +557,7 @@ public class API {
 	 * @return Returns nothing on success
 	 * @see javastrava.api.v3.rest.WebhookAPI#deleteSubscription(java.lang.Integer, java.lang.Integer, java.lang.String)
 	 */
-	public StravaAPIFuture<StravaResponse> deleteSubscriptionAsync(final Integer subscriptionId, final Integer clientId,
-			final String clientSecret) {
+	public StravaAPIFuture<StravaResponse> deleteSubscriptionAsync(final Integer subscriptionId, final Integer clientId, final String clientSecret) {
 		final StravaAPIFuture<StravaResponse> future = new StravaAPIFuture<StravaResponse>();
 		this.webhookAPI.deleteSubscription(subscriptionId, clientId, clientSecret, callback(future));
 		return future;
@@ -732,11 +593,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException
 	 *             If the activity does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#getActivity(java.lang.Long, java.lang.Boolean,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#getActivity(java.lang.Long, java.lang.Boolean, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivity> getActivityAsync(final Long id, final Boolean includeAllEfforts)
-			throws NotFoundException {
+	public StravaAPIFuture<StravaActivity> getActivityAsync(final Long id, final Boolean includeAllEfforts) throws NotFoundException {
 		final StravaAPIFuture<StravaActivity> future = new StravaAPIFuture<StravaActivity>();
 		this.activityAPI.getActivity(id, includeAllEfforts, callback(future));
 		return future;
@@ -748,11 +607,9 @@ public class API {
 	 * @param types
 	 *            List of types, if the activity does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return Returns an array of unordered stream objects, or <code>null</code> if the activity doesn't exist
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
@@ -760,12 +617,10 @@ public class API {
 	 *             If the activity does not exist
 	 * @throws BadRequestException
 	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getActivityStreams(java.lang.Long, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 * @see javastrava.api.v3.rest.StreamAPI#getActivityStreams(java.lang.Long, java.lang.String, javastrava.api.v3.model.reference.StravaStreamResolutionType,
 	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
-	public StravaStream[] getActivityStreams(final Long activityId, final String types, final StravaStreamResolutionType resolution,
-			final StravaStreamSeriesDownsamplingType seriesType)
+	public StravaStream[] getActivityStreams(final Long activityId, final String types, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType)
 			throws UnauthorizedException, NotFoundException, BadRequestException {
 		return this.streamAPI.getActivityStreams(activityId, types, resolution, seriesType);
 	}
@@ -776,11 +631,9 @@ public class API {
 	 * @param types
 	 *            List of types, if the activity does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
@@ -788,13 +641,11 @@ public class API {
 	 *             If the activity does not exist
 	 * @throws BadRequestException
 	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getActivityStreams(java.lang.Long, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 * @see javastrava.api.v3.rest.StreamAPI#getActivityStreams(java.lang.Long, java.lang.String, javastrava.api.v3.model.reference.StravaStreamResolutionType,
 	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaStream[]> getActivityStreamsAsync(final Long activityId, final String types,
-			final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType)
-			throws UnauthorizedException, NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaStream[]> getActivityStreamsAsync(final Long activityId, final String types, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaStream[]> future = new StravaAPIFuture<StravaStream[]>();
 		this.streamAPI.getActivityStreams(activityId, types, resolution, seriesType, callback(future));
 		return future;
@@ -889,8 +740,7 @@ public class API {
 	 *            Page number to be returned (default is 1)
 	 * @param perPage
 	 *            Page size to be returned (default is 50)
-	 * @return The {@link StravaAPIFuture} on which to call complete when ready; this will return the array of
-	 *         {@link StravaAthlete}s.
+	 * @return The {@link StravaAPIFuture} on which to call complete when ready; this will return the array of {@link StravaAthlete}s.
 	 */
 	public StravaAPIFuture<StravaAthlete[]> getClubAdminsAsync(final Integer clubId, final Integer page, final Integer perPage) {
 		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<StravaAthlete[]>();
@@ -919,11 +769,9 @@ public class API {
 	 * @param types
 	 *            List of types, if the effort does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return Returns an array of unordered stream objects.
 	 * @throws UnauthorizedException
 	 *             If the security token is not valid or the effort is flagged as private
@@ -931,12 +779,10 @@ public class API {
 	 *             If the effort does not exist
 	 * @throws BadRequestException
 	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getEffortStreams(java.lang.Long, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 * @see javastrava.api.v3.rest.StreamAPI#getEffortStreams(java.lang.Long, java.lang.String, javastrava.api.v3.model.reference.StravaStreamResolutionType,
 	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
-	public StravaStream[] getEffortStreams(final Long segmentEffortId, final String types,
-			final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType)
+	public StravaStream[] getEffortStreams(final Long segmentEffortId, final String types, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType)
 			throws UnauthorizedException, NotFoundException, BadRequestException {
 		return this.streamAPI.getEffortStreams(segmentEffortId, types, resolution, seriesType);
 	}
@@ -947,11 +793,9 @@ public class API {
 	 * @param types
 	 *            List of types, if the effort does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws UnauthorizedException
 	 *             If the security token is not valid or the effort is flagged as private
@@ -959,13 +803,11 @@ public class API {
 	 *             If the effort does not exist
 	 * @throws BadRequestException
 	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getEffortStreams(java.lang.Long, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 * @see javastrava.api.v3.rest.StreamAPI#getEffortStreams(java.lang.Long, java.lang.String, javastrava.api.v3.model.reference.StravaStreamResolutionType,
 	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaStream[]> getEffortStreamsAsync(final Long segmentEffortId, final String types,
-			final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType)
-			throws UnauthorizedException, NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaStream[]> getEffortStreamsAsync(final Long segmentEffortId, final String types, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaStream[]> future = new StravaAPIFuture<StravaStream[]>();
 		this.streamAPI.getEffortStreams(segmentEffortId, types, resolution, seriesType, callback(future));
 		return future;
@@ -1086,24 +928,20 @@ public class API {
 	 * @param perPage
 	 *            (Optional) Page size to return (default is 50)
 	 * @param contextEntries
-	 *            (Optional) Number of context entries to return either side of the authenticated athlete (default is 2, maximum is
-	 *            15)
+	 *            (Optional) Number of context entries to return either side of the authenticated athlete (default is 2, maximum is 15)
 	 * @return A Strava leaderboard
 	 * @throws NotFoundException
 	 *             If the segment with the given id doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.SegmentAPI#getSegmentLeaderboard(java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
-	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange, java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.rest.SegmentAPI#getSegmentLeaderboard(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
+	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer, javastrava.api.v3.model.reference.StravaLeaderboardDateRange, java.lang.Integer,
+	 *      java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender,
-			final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following, final Integer clubId,
-			final StravaLeaderboardDateRange dateRange, final Integer page, final Integer perPage, final Integer contextEntries)
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup, final StravaWeightClass weightClass,
+			final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Integer page, final Integer perPage, final Integer contextEntries)
 			throws NotFoundException, BadRequestException {
-		return this.segmentAPI.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, page,
-				perPage, contextEntries);
+		return this.segmentAPI.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, page, perPage, contextEntries);
 	}
 
 	/**
@@ -1126,26 +964,21 @@ public class API {
 	 * @param perPage
 	 *            (Optional) Page size to return (default is 50)
 	 * @param contextEntries
-	 *            (Optional) Number of context entries to return either side of the authenticated athlete (default is 2, maximum is
-	 *            15)
+	 *            (Optional) Number of context entries to return either side of the authenticated athlete (default is 2, maximum is 15)
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException
 	 *             If the segment with the given id doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.SegmentAPI#getSegmentLeaderboard(java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
-	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange, java.lang.Integer, java.lang.Integer, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.SegmentAPI#getSegmentLeaderboard(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
+	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer, javastrava.api.v3.model.reference.StravaLeaderboardDateRange, java.lang.Integer,
+	 *      java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaSegmentLeaderboard> getSegmentLeaderboardAsync(final Integer segmentId, final StravaGender gender,
-			final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following, final Integer clubId,
-			final StravaLeaderboardDateRange dateRange, final Integer page, final Integer perPage, final Integer contextEntries)
+	public StravaAPIFuture<StravaSegmentLeaderboard> getSegmentLeaderboardAsync(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup, final StravaWeightClass weightClass,
+			final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Integer page, final Integer perPage, final Integer contextEntries)
 			throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaSegmentLeaderboard> future = new StravaAPIFuture<StravaSegmentLeaderboard>();
-		this.segmentAPI.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, page, perPage,
-				contextEntries, callback(future));
+		this.segmentAPI.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, page, perPage, contextEntries, callback(future));
 		return future;
 	}
 
@@ -1155,11 +988,9 @@ public class API {
 	 * @param types
 	 *            List of types, if the segment does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return Returns an array of unordered stream objects.
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
@@ -1167,12 +998,10 @@ public class API {
 	 *             If the segment does not exist
 	 * @throws BadRequestException
 	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getSegmentStreams(java.lang.Integer, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 * @see javastrava.api.v3.rest.StreamAPI#getSegmentStreams(java.lang.Integer, java.lang.String, javastrava.api.v3.model.reference.StravaStreamResolutionType,
 	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType)
 	 */
-	public StravaStream[] getSegmentStreams(final Integer segmentId, final String types,
-			final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType)
+	public StravaStream[] getSegmentStreams(final Integer segmentId, final String types, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType)
 			throws UnauthorizedException, NotFoundException, BadRequestException {
 		return this.streamAPI.getSegmentStreams(segmentId, types, resolution, seriesType);
 	}
@@ -1183,11 +1012,9 @@ public class API {
 	 * @param types
 	 *            List of types, if the segment does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws UnauthorizedException
 	 *             If there is a security exception
@@ -1195,13 +1022,11 @@ public class API {
 	 *             If the segment does not exist
 	 * @throws BadRequestException
 	 *             If the request is malformed
-	 * @see javastrava.api.v3.rest.StreamAPI#getSegmentStreams(java.lang.Integer, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 * @see javastrava.api.v3.rest.StreamAPI#getSegmentStreams(java.lang.Integer, java.lang.String, javastrava.api.v3.model.reference.StravaStreamResolutionType,
 	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaStream[]> getSegmentStreamsAsync(final Integer segmentId, final String types,
-			final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType)
-			throws UnauthorizedException, NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaStream[]> getSegmentStreamsAsync(final Integer segmentId, final String types, final StravaStreamResolutionType resolution,
+			final StravaStreamSeriesDownsamplingType seriesType) throws UnauthorizedException, NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaStream[]> future = new StravaAPIFuture<StravaStream[]>();
 		this.streamAPI.getSegmentStreams(segmentId, types, resolution, seriesType, callback(future));
 		return future;
@@ -1299,11 +1124,9 @@ public class API {
 	 *             If the activity doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityComments(java.lang.Long, java.lang.Boolean, java.lang.Integer,
-	 *      java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityComments(java.lang.Long, java.lang.Boolean, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaComment[] listActivityComments(final Long activityId, final Boolean markdown, final Integer page,
-			final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaComment[] listActivityComments(final Long activityId, final Boolean markdown, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.activityAPI.listActivityComments(activityId, markdown, page, perPage);
 	}
 
@@ -1321,11 +1144,10 @@ public class API {
 	 *             If the activity doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityComments(java.lang.Long, java.lang.Boolean, java.lang.Integer,
-	 *      java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityComments(java.lang.Long, java.lang.Boolean, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaComment[]> listActivityCommentsAsync(final Long activityId, final Boolean markdown,
-			final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaComment[]> listActivityCommentsAsync(final Long activityId, final Boolean markdown, final Integer page, final Integer perPage)
+			throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaComment[]> future = new StravaAPIFuture<StravaComment[]>();
 		this.activityAPI.listActivityComments(activityId, markdown, page, perPage, callback(future));
 		return future;
@@ -1345,8 +1167,7 @@ public class API {
 	 *             If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityKudoers(java.lang.Long, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaAthlete[] listActivityKudoers(final Long activityId, final Integer page, final Integer perPage)
-			throws NotFoundException, BadRequestException {
+	public StravaAthlete[] listActivityKudoers(final Long activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.activityAPI.listActivityKudoers(activityId, page, perPage);
 	}
 
@@ -1364,8 +1185,7 @@ public class API {
 	 *             If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ActivityAPI#listActivityKudoers(Long, Integer, Integer, StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaAthlete[]> listActivityKudoersAsync(final Long activityId, final Integer page,
-			final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaAthlete[]> listActivityKudoersAsync(final Long activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<StravaAthlete[]>();
 		this.activityAPI.listActivityKudoers(activityId, page, perPage, callback(future));
 		return future;
@@ -1465,8 +1285,7 @@ public class API {
 	 *             If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteFriends(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaAthlete[] listAthleteFriends(final Integer athleteId, final Integer page, final Integer perPage)
-			throws NotFoundException, BadRequestException {
+	public StravaAthlete[] listAthleteFriends(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.athleteAPI.listAthleteFriends(athleteId, page, perPage);
 	}
 
@@ -1482,11 +1301,9 @@ public class API {
 	 *             If the athlete with the given id doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteFriends(java.lang.Integer, java.lang.Integer, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteFriends(java.lang.Integer, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaAthlete[]> listAthleteFriendsAsync(final Integer athleteId, final Integer page,
-			final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaAthlete[]> listAthleteFriendsAsync(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<StravaAthlete[]>();
 		this.athleteAPI.listAthleteFriends(athleteId, page, perPage, callback(future));
 		return future;
@@ -1506,8 +1323,7 @@ public class API {
 	 *             If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaSegmentEffort[] listAthleteKOMs(final Integer athleteId, final Integer page, final Integer perPage)
-			throws NotFoundException, BadRequestException {
+	public StravaSegmentEffort[] listAthleteKOMs(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.athleteAPI.listAthleteKOMs(athleteId, page, perPage);
 	}
 
@@ -1523,11 +1339,9 @@ public class API {
 	 *             If the athlete doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.AthleteAPI#listAthleteKOMs(java.lang.Integer, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaSegmentEffort[]> listAthleteKOMsAsync(final Integer athleteId, final Integer page,
-			final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaSegmentEffort[]> listAthleteKOMsAsync(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaSegmentEffort[]> future = new StravaAPIFuture<StravaSegmentEffort[]>();
 		this.athleteAPI.listAthleteKOMs(athleteId, page, perPage, callback(future));
 		return future;
@@ -1547,8 +1361,7 @@ public class API {
 	 *             If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.AthleteAPI#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaAthlete[] listAthletesBothFollowing(final Integer athleteId, final Integer page, final Integer perPage)
-			throws NotFoundException, BadRequestException {
+	public StravaAthlete[] listAthletesBothFollowing(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.athleteAPI.listAthletesBothFollowing(athleteId, page, perPage);
 	}
 
@@ -1564,11 +1377,9 @@ public class API {
 	 *             If the athlete with the given id doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.AthleteAPI#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.AthleteAPI#listAthletesBothFollowing(java.lang.Integer, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaAthlete[]> listAthletesBothFollowingAsync(final Integer athleteId, final Integer page,
-			final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaAthlete[]> listAthletesBothFollowingAsync(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<StravaAthlete[]>();
 		this.athleteAPI.listAthletesBothFollowing(athleteId, page, perPage, callback(future));
 		return future;
@@ -1586,11 +1397,9 @@ public class API {
 	 * @return Array of activities
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer,
-	 *      java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaActivity[] listAuthenticatedAthleteActivities(final Integer before, final Integer after, final Integer page,
-			final Integer perPage) throws BadRequestException {
+	public StravaActivity[] listAuthenticatedAthleteActivities(final Integer before, final Integer after, final Integer page, final Integer perPage) throws BadRequestException {
 		return this.activityAPI.listAuthenticatedAthleteActivities(before, after, page, perPage);
 	}
 
@@ -1606,11 +1415,10 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer,
-	 *      java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listAuthenticatedAthleteActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer,
+	 *      javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivity[]> listAuthenticatedAthleteActivitiesAsync(final Integer before, final Integer after,
-			final Integer page, final Integer perPage) throws BadRequestException {
+	public StravaAPIFuture<StravaActivity[]> listAuthenticatedAthleteActivitiesAsync(final Integer before, final Integer after, final Integer page, final Integer perPage) throws BadRequestException {
 		final StravaAPIFuture<StravaActivity[]> future = new StravaAPIFuture<StravaActivity[]>();
 		this.activityAPI.listAuthenticatedAthleteActivities(before, after, page, perPage, callback(future));
 		return future;
@@ -1656,11 +1464,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.AthleteAPI#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.AthleteAPI#listAuthenticatedAthleteFriends(java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaAthlete[]> listAuthenticatedAthleteFriendsAsync(final Integer page, final Integer perPage)
-			throws BadRequestException {
+	public StravaAPIFuture<StravaAthlete[]> listAuthenticatedAthleteFriendsAsync(final Integer page, final Integer perPage) throws BadRequestException {
 		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<StravaAthlete[]>();
 		this.athleteAPI.listAuthenticatedAthleteFriends(page, perPage, callback(future));
 		return future;
@@ -1676,8 +1482,7 @@ public class API {
 	 *             If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.SegmentAPI#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaSegment[] listAuthenticatedAthleteStarredSegments(final Integer page, final Integer perPage)
-			throws BadRequestException {
+	public StravaSegment[] listAuthenticatedAthleteStarredSegments(final Integer page, final Integer perPage) throws BadRequestException {
 		return this.segmentAPI.listAuthenticatedAthleteStarredSegments(page, perPage);
 	}
 
@@ -1689,11 +1494,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.SegmentAPI#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.SegmentAPI#listAuthenticatedAthleteStarredSegments(java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaSegment[]> listAuthenticatedAthleteStarredSegmentsAsync(final Integer page, final Integer perPage)
-			throws BadRequestException {
+	public StravaAPIFuture<StravaSegment[]> listAuthenticatedAthleteStarredSegmentsAsync(final Integer page, final Integer perPage) throws BadRequestException {
 		final StravaAPIFuture<StravaSegment[]> future = new StravaAPIFuture<StravaSegment[]>();
 		this.segmentAPI.listAuthenticatedAthleteStarredSegments(page, perPage, callback(future));
 		return future;
@@ -1776,8 +1579,7 @@ public class API {
 	 *             If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ClubAPI#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaAthlete[] listClubMembers(final Integer clubId, final Integer page, final Integer perPage)
-			throws NotFoundException, BadRequestException {
+	public StravaAthlete[] listClubMembers(final Integer clubId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.clubAPI.listClubMembers(clubId, page, perPage);
 	}
 
@@ -1793,11 +1595,9 @@ public class API {
 	 *             If the club with the given id doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ClubAPI#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ClubAPI#listClubMembers(java.lang.Integer, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaAthlete[]> listClubMembersAsync(final Integer clubId, final Integer page, final Integer perPage)
-			throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaAthlete[]> listClubMembersAsync(final Integer clubId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<StravaAthlete[]>();
 		this.clubAPI.listClubMembers(clubId, page, perPage, callback(future));
 		return future;
@@ -1828,8 +1628,7 @@ public class API {
 	 *             If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ActivityAPI#listFriendsActivities(Integer, Integer, StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivity[]> listFriendsActivitiesAsync(final Integer page, final Integer perPage)
-			throws BadRequestException {
+	public StravaAPIFuture<StravaActivity[]> listFriendsActivitiesAsync(final Integer page, final Integer perPage) throws BadRequestException {
 		final StravaAPIFuture<StravaActivity[]> future = new StravaAPIFuture<StravaActivity[]>();
 		this.activityAPI.listFriendsActivities(page, perPage, callback(future));
 		return future;
@@ -1849,8 +1648,7 @@ public class API {
 	 *             If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ClubAPI#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaActivity[] listRecentClubActivities(final Integer clubId, final Integer page, final Integer perPage)
-			throws NotFoundException, BadRequestException {
+	public StravaActivity[] listRecentClubActivities(final Integer clubId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.clubAPI.listRecentClubActivities(clubId, page, perPage);
 	}
 
@@ -1866,11 +1664,9 @@ public class API {
 	 *             If the club with the given id doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ClubAPI#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ClubAPI#listRecentClubActivities(java.lang.Integer, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivity[]> listRecentClubActivitiesAsync(final Integer clubId, final Integer page,
-			final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaActivity[]> listRecentClubActivitiesAsync(final Integer clubId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaActivity[]> future = new StravaAPIFuture<StravaActivity[]>();
 		this.clubAPI.listRecentClubActivities(clubId, page, perPage, callback(future));
 		return future;
@@ -1890,8 +1686,7 @@ public class API {
 	 *             If the paging instructions are invalid
 	 * @see javastrava.api.v3.rest.ActivityAPI#listRelatedActivities(java.lang.Long, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaActivity[] listRelatedActivities(final Long activityId, final Integer page, final Integer perPage)
-			throws NotFoundException, BadRequestException {
+	public StravaActivity[] listRelatedActivities(final Long activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.activityAPI.listRelatedActivities(activityId, page, perPage);
 	}
 
@@ -1907,11 +1702,9 @@ public class API {
 	 *             If the activity doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.ActivityAPI#listRelatedActivities(java.lang.Long, java.lang.Integer, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#listRelatedActivities(java.lang.Long, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivity[]> listRelatedActivitiesAsync(final Long activityId, final Integer page,
-			final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaActivity[]> listRelatedActivitiesAsync(final Long activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaActivity[]> future = new StravaAPIFuture<StravaActivity[]>();
 		this.activityAPI.listRelatedActivities(activityId, page, perPage, callback(future));
 		return future;
@@ -1954,8 +1747,8 @@ public class API {
 	 *            (Optional) ISO 8601 formatted date time
 	 * @param end
 	 *            (Optional) ISO 8601 formatted date time
-	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations}
-	 *         sorted by start_date_local ascending or by elapsed_time if an athlete_id is provided.
+	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local ascending or by elapsed_time if an
+	 *         athlete_id is provided.
 	 * @param page
 	 *            (optional) Page number to be returned
 	 * @param perPage
@@ -1964,11 +1757,10 @@ public class API {
 	 *             If the segment with the given id doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.SegmentAPI#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.lang.String,
-	 *      java.lang.String, java.lang.Integer, java.lang.Integer)
+	 * @see javastrava.api.v3.rest.SegmentAPI#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)
 	 */
-	public StravaSegmentEffort[] listSegmentEfforts(final Integer segmentId, final Integer athleteId, final String start,
-			final String end, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaSegmentEffort[] listSegmentEfforts(final Integer segmentId, final Integer athleteId, final String start, final String end, final Integer page, final Integer perPage)
+			throws NotFoundException, BadRequestException {
 		return this.segmentAPI.listSegmentEfforts(segmentId, athleteId, start, end, page, perPage);
 	}
 
@@ -1990,12 +1782,11 @@ public class API {
 	 *             If the segment with the given id doesn't exist
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.SegmentAPI#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.lang.String,
-	 *      java.lang.String, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.SegmentAPI#listSegmentEfforts(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer,
+	 *      javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaSegmentEffort[]> listSegmentEffortsAsync(final Integer segmentId, final Integer athleteId,
-			final String start, final String end, final Integer page, final Integer perPage)
-			throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaSegmentEffort[]> listSegmentEffortsAsync(final Integer segmentId, final Integer athleteId, final String start, final String end, final Integer page,
+			final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaSegmentEffort[]> future = new StravaAPIFuture<StravaSegmentEffort[]>();
 		this.segmentAPI.listSegmentEfforts(segmentId, athleteId, start, end, page, perPage, callback(future));
 		return future;
@@ -2016,8 +1807,7 @@ public class API {
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
 	 */
-	public StravaSegment[] listStarredSegments(final Integer athleteId, final Integer page, final Integer perPage)
-			throws NotFoundException, BadRequestException {
+	public StravaSegment[] listStarredSegments(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		return this.segmentAPI.listStarredSegments(athleteId, page, perPage);
 	}
 
@@ -2035,11 +1825,9 @@ public class API {
 	 *             If there is a security or privacy violation
 	 * @throws BadRequestException
 	 *             If the paging instructions are invalid
-	 * @see javastrava.api.v3.rest.SegmentAPI#listStarredSegments(java.lang.Integer, java.lang.Integer, java.lang.Integer,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.SegmentAPI#listStarredSegments(java.lang.Integer, java.lang.Integer, java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaSegment[]> listStarredSegmentsAsync(final Integer athleteId, final Integer page,
-			final Integer perPage) throws NotFoundException, BadRequestException {
+	public StravaAPIFuture<StravaSegment[]> listStarredSegmentsAsync(final Integer athleteId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaSegment[]> future = new StravaAPIFuture<StravaSegment[]>();
 		this.segmentAPI.listStarredSegments(athleteId, page, perPage, callback(future));
 		return future;
@@ -2081,12 +1869,11 @@ public class API {
 	 * @param maxCategory
 	 *            (Optional) Maximum climb category for which rides should be returned
 	 * @return A response full of slightly weird-looking segments
-	 * @see javastrava.api.v3.rest.SegmentAPI#segmentExplore(java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType,
+	 * @see javastrava.api.v3.rest.SegmentAPI#segmentExplore(java.lang.String, javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType,
 	 *      javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory)
 	 */
-	public StravaSegmentExplorerResponse segmentExplore(final String bounds, final StravaSegmentExplorerActivityType activityType,
-			final StravaClimbCategory minCategory, final StravaClimbCategory maxCategory) {
+	public StravaSegmentExplorerResponse segmentExplore(final String bounds, final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCategory,
+			final StravaClimbCategory maxCategory) {
 		return this.segmentAPI.segmentExplore(bounds, activityType, minCategory, maxCategory);
 	}
 
@@ -2100,13 +1887,10 @@ public class API {
 	 * @param maxCategory
 	 *            (Optional) Maximum climb category for which rides should be returned
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
-	 * @see javastrava.api.v3.rest.SegmentAPI#segmentExplore(java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType,
-	 *      javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.SegmentAPI#segmentExplore(java.lang.String, javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType,
+	 *      javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaSegmentExplorerResponse> segmentExploreAsync(final String bounds,
-			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCategory,
+	public StravaAPIFuture<StravaSegmentExplorerResponse> segmentExploreAsync(final String bounds, final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCategory,
 			final StravaClimbCategory maxCategory) {
 		final StravaAPIFuture<StravaSegmentExplorerResponse> future = new StravaAPIFuture<StravaSegmentExplorerResponse>();
 		this.segmentAPI.segmentExplore(bounds, activityType, minCategory, maxCategory, callback(future));
@@ -2130,8 +1914,7 @@ public class API {
 	 * @throws UnauthorizedException
 	 *             If there is a security or privacy violation
 	 */
-	public StravaSegment starSegment(final Integer segmentId, final Boolean starred)
-			throws NotFoundException, BadRequestException, UnauthorizedException {
+	public StravaSegment starSegment(final Integer segmentId, final Boolean starred) throws NotFoundException, BadRequestException, UnauthorizedException {
 		return this.segmentAPI.starSegment(segmentId, starred);
 	}
 
@@ -2152,8 +1935,7 @@ public class API {
 	 * @throws UnauthorizedException
 	 *             If there is a security or privacy violation
 	 */
-	public StravaAPIFuture<StravaSegment> starSegmentAsync(final Integer segmentId, final Boolean starred)
-			throws NotFoundException, BadRequestException, UnauthorizedException {
+	public StravaAPIFuture<StravaSegment> starSegmentAsync(final Integer segmentId, final Boolean starred) throws NotFoundException, BadRequestException, UnauthorizedException {
 		final StravaAPIFuture<StravaSegment> future = new StravaAPIFuture<StravaSegment>();
 		this.segmentAPI.starSegment(segmentId, starred, callback(future));
 		return future;
@@ -2215,11 +1997,9 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException
 	 *             If the activity with the given id does not exist
-	 * @see javastrava.api.v3.rest.ActivityAPI#updateActivity(java.lang.Long, javastrava.api.v3.model.StravaActivityUpdate,
-	 *      javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.ActivityAPI#updateActivity(java.lang.Long, javastrava.api.v3.model.StravaActivityUpdate, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity)
-			throws NotFoundException {
+	public StravaAPIFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException {
 		final StravaAPIFuture<StravaActivity> future = new StravaAPIFuture<StravaActivity>();
 		this.activityAPI.updateActivity(activityId, activity, callback(future));
 		return future;
@@ -2237,11 +2017,9 @@ public class API {
 	 * @param weight
 	 *            Weight in kilograms
 	 * @return Athlete details as updated on Strava
-	 * @see javastrava.api.v3.rest.AthleteAPI#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
+	 * @see javastrava.api.v3.rest.AthleteAPI#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String, javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
 	 */
-	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country,
-			final StravaGender sex, final Float weight) {
+	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
 		return this.athleteAPI.updateAuthenticatedAthlete(city, state, country, sex, weight);
 	}
 
@@ -2257,11 +2035,10 @@ public class API {
 	 * @param weight
 	 *            Weight in kilograms
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
-	 * @see javastrava.api.v3.rest.AthleteAPI#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String,
-	 *      javastrava.api.v3.model.reference.StravaGender, java.lang.Float, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.AthleteAPI#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String, javastrava.api.v3.model.reference.StravaGender, java.lang.Float,
+	 *      javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state,
-			final String country, final StravaGender sex, final Float weight) {
+	public StravaAPIFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
 		final StravaAPIFuture<StravaAthlete> future = new StravaAPIFuture<StravaAthlete>();
 		this.athleteAPI.updateAuthenticatedAthlete(city, state, country, sex, weight, callback(future));
 		return future;
@@ -2285,20 +2062,17 @@ public class API {
 	 * @param dataType
 	 *            Type of data file being uploaded
 	 * @param externalId
-	 *            (Optional) External identifier generated by your application which Strava will later use as a reference when
-	 *            you're checking upload status
+	 *            (Optional) External identifier generated by your application which Strava will later use as a reference when you're checking upload status
 	 * @param file
 	 *            The file to be uploaded!
 	 * @return Upload response containing the upload id and activity id and current status of the upload
 	 * @throws BadRequestException
 	 *             If required elements of the call are missing
-	 * @see javastrava.api.v3.rest.UploadAPI#upload(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String,
-	 *      java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String,
-	 *      retrofit.mime.TypedFile)
+	 * @see javastrava.api.v3.rest.UploadAPI#upload(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean,
+	 *      java.lang.String, java.lang.String, retrofit.mime.TypedFile)
 	 */
-	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description,
-			final Boolean _private, final Boolean trainer, final Boolean commute, final String dataType, final String externalId,
-			final TypedFile file) throws BadRequestException {
+	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer, final Boolean commute,
+			final String dataType, final String externalId, final TypedFile file) throws BadRequestException {
 		return this.uploadAPI.upload(activityType, name, description, _private, trainer, commute, dataType, externalId, file);
 	}
 
@@ -2320,31 +2094,26 @@ public class API {
 	 * @param dataType
 	 *            Type of data file being uploaded
 	 * @param externalId
-	 *            (Optional) External identifier generated by your application which Strava will later use as a reference when
-	 *            you're checking upload status
+	 *            (Optional) External identifier generated by your application which Strava will later use as a reference when you're checking upload status
 	 * @param file
 	 *            The file to be uploaded!
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws BadRequestException
 	 *             If required elements of the call are missing
-	 * @see javastrava.api.v3.rest.UploadAPI#upload(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String,
-	 *      java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String,
-	 *      retrofit.mime.TypedFile, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.UploadAPI#upload(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean,
+	 *      java.lang.String, java.lang.String, retrofit.mime.TypedFile, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
-	public StravaAPIFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name,
-			final String description, final Boolean _private, final Boolean trainer, final Boolean commute, final String dataType,
-			final String externalId, final TypedFile file) throws BadRequestException {
+	public StravaAPIFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer,
+			final Boolean commute, final String dataType, final String externalId, final TypedFile file) throws BadRequestException {
 		final StravaAPIFuture<StravaUploadResponse> future = new StravaAPIFuture<StravaUploadResponse>();
-		this.uploadAPI.upload(activityType, name, description, _private, trainer, commute, dataType, externalId, file,
-				callback(future));
+		this.uploadAPI.upload(activityType, name, description, _private, trainer, commute, dataType, externalId, file, callback(future));
 		return future;
 	}
 
 	/**
 	 * <p>
-	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating
-	 * user and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions. For raw data associated with a route
-	 * see route streams.
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions. For raw data associated with a route see route streams.
 	 * </p>
 	 *
 	 * @param routeId
@@ -2363,9 +2132,8 @@ public class API {
 
 	/**
 	 * <p>
-	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating
-	 * user and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions. For raw data associated with a route
-	 * see route streams.
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions. For raw data associated with a route see route streams.
 	 * </p>
 	 *
 	 * @param routeId
@@ -2378,8 +2146,7 @@ public class API {
 	 * @throws UnauthorizedException
 	 *             If the route is private and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private}
 	 */
-	public StravaAPIFuture<StravaRoute> getRouteAsync(@Path("id") Integer routeId)
-			throws NotFoundException, BadRequestException, UnauthorizedException {
+	public StravaAPIFuture<StravaRoute> getRouteAsync(@Path("id") Integer routeId) throws NotFoundException, BadRequestException, UnauthorizedException {
 		final StravaAPIFuture<StravaRoute> future = new StravaAPIFuture<>();
 		this.routeAPI.getRoute(routeId, callback(future));
 		return future;
@@ -2387,8 +2154,8 @@ public class API {
 
 	/**
 	 * <p>
-	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own
-	 * routes and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions.
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions.
 	 * </p>
 	 *
 	 * @param id
@@ -2401,8 +2168,8 @@ public class API {
 
 	/**
 	 * <p>
-	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own
-	 * routes and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions.
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions.
 	 * </p>
 	 *
 	 * @param id
@@ -2413,5 +2180,232 @@ public class API {
 		final StravaAPIFuture<StravaRoute[]> future = new StravaAPIFuture<>();
 		this.routeAPI.listAthleteRoutes(id, callback(future));
 		return future;
+	}
+
+	/**
+	 * <p>
+	 * Retrieve a challenge
+	 * </p>
+	 *
+	 * <p>
+	 * Returns a detailed representation of a challenge
+	 * </p>
+	 *
+	 * @param id
+	 *            Identifier of the challenge
+	 * @return The challenge
+	 */
+	public StravaChallenge getChallenge(Integer id) {
+		return this.challengeAPI.getChallenge(id);
+	}
+
+	/**
+	 * <p>
+	 * Retrieve a challenge
+	 * </p>
+	 *
+	 * <p>
+	 * Returns a detailed representation of a challenge
+	 * </p>
+	 *
+	 * @param id
+	 *            Identifier of the challenge
+	 * @return The {@link CompletableFuture} giving access to the returned challenge
+	 */
+	public StravaAPIFuture<StravaChallenge> getChallengeAsync(Integer id) {
+		final StravaAPIFuture<StravaChallenge> future = new StravaAPIFuture<>();
+		this.challengeAPI.getChallenge(id, callback(future));
+		return future;
+	}
+
+	/**
+	 * Join a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to be joined
+	 */
+	public void joinChallenge(Integer id) {
+		this.challengeAPI.joinChallenge(id);
+	}
+
+	/**
+	 * Leave a challenge on behalf of the authenticated user. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to leave
+	 */
+	public void leaveChallenge(Integer id) {
+		this.challengeAPI.leaveChallenge(id);
+
+	}
+
+	/**
+	 * List the challenges the athlete has joined.
+	 *
+	 * @return Array of challenges that the athlete has joined
+	 */
+	public StravaChallenge[] listJoinedChallenges() {
+		return this.challengeAPI.listJoinedChallenges();
+	}
+
+	/**
+	 * List the challenges the athlete has joined.
+	 *
+	 * @return Array of challenges that the athlete has joined
+	 */
+	public StravaAPIFuture<StravaChallenge[]> listJoinedChallengesAsync() {
+		final StravaAPIFuture<StravaChallenge[]> future = new StravaAPIFuture<>();
+		this.challengeAPI.listJoinedChallenges(callback(future));
+		return future;
+	}
+
+	/**
+	 * @return the routeAPI
+	 */
+	public RouteAPI getRouteAPI() {
+		return this.routeAPI;
+	}
+
+	/**
+	 * @return the challengeAPI
+	 */
+	public ChallengeAPI getChallengeAPI() {
+		return this.challengeAPI;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.activityAPI == null) ? 0 : this.activityAPI.hashCode());
+		result = (prime * result) + ((this.athleteAPI == null) ? 0 : this.athleteAPI.hashCode());
+		result = (prime * result) + ((this.challengeAPI == null) ? 0 : this.challengeAPI.hashCode());
+		result = (prime * result) + ((this.clubAPI == null) ? 0 : this.clubAPI.hashCode());
+		result = (prime * result) + ((this.effortAPI == null) ? 0 : this.effortAPI.hashCode());
+		result = (prime * result) + ((this.gearAPI == null) ? 0 : this.gearAPI.hashCode());
+		result = (prime * result) + ((this.routeAPI == null) ? 0 : this.routeAPI.hashCode());
+		result = (prime * result) + ((this.runningRaceAPI == null) ? 0 : this.runningRaceAPI.hashCode());
+		result = (prime * result) + ((this.segmentAPI == null) ? 0 : this.segmentAPI.hashCode());
+		result = (prime * result) + ((this.streamAPI == null) ? 0 : this.streamAPI.hashCode());
+		result = (prime * result) + ((this.tokenAPI == null) ? 0 : this.tokenAPI.hashCode());
+		result = (prime * result) + ((this.uploadAPI == null) ? 0 : this.uploadAPI.hashCode());
+		result = (prime * result) + ((this.webhookAPI == null) ? 0 : this.webhookAPI.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof API)) {
+			return false;
+		}
+		final API other = (API) obj;
+		if (this.activityAPI == null) {
+			if (other.activityAPI != null) {
+				return false;
+			}
+		} else if (!this.activityAPI.equals(other.activityAPI)) {
+			return false;
+		}
+		if (this.athleteAPI == null) {
+			if (other.athleteAPI != null) {
+				return false;
+			}
+		} else if (!this.athleteAPI.equals(other.athleteAPI)) {
+			return false;
+		}
+		if (this.challengeAPI == null) {
+			if (other.challengeAPI != null) {
+				return false;
+			}
+		} else if (!this.challengeAPI.equals(other.challengeAPI)) {
+			return false;
+		}
+		if (this.clubAPI == null) {
+			if (other.clubAPI != null) {
+				return false;
+			}
+		} else if (!this.clubAPI.equals(other.clubAPI)) {
+			return false;
+		}
+		if (this.effortAPI == null) {
+			if (other.effortAPI != null) {
+				return false;
+			}
+		} else if (!this.effortAPI.equals(other.effortAPI)) {
+			return false;
+		}
+		if (this.gearAPI == null) {
+			if (other.gearAPI != null) {
+				return false;
+			}
+		} else if (!this.gearAPI.equals(other.gearAPI)) {
+			return false;
+		}
+		if (this.routeAPI == null) {
+			if (other.routeAPI != null) {
+				return false;
+			}
+		} else if (!this.routeAPI.equals(other.routeAPI)) {
+			return false;
+		}
+		if (this.runningRaceAPI == null) {
+			if (other.runningRaceAPI != null) {
+				return false;
+			}
+		} else if (!this.runningRaceAPI.equals(other.runningRaceAPI)) {
+			return false;
+		}
+		if (this.segmentAPI == null) {
+			if (other.segmentAPI != null) {
+				return false;
+			}
+		} else if (!this.segmentAPI.equals(other.segmentAPI)) {
+			return false;
+		}
+		if (this.streamAPI == null) {
+			if (other.streamAPI != null) {
+				return false;
+			}
+		} else if (!this.streamAPI.equals(other.streamAPI)) {
+			return false;
+		}
+		if (this.tokenAPI == null) {
+			if (other.tokenAPI != null) {
+				return false;
+			}
+		} else if (!this.tokenAPI.equals(other.tokenAPI)) {
+			return false;
+		}
+		if (this.uploadAPI == null) {
+			if (other.uploadAPI != null) {
+				return false;
+			}
+		} else if (!this.uploadAPI.equals(other.uploadAPI)) {
+			return false;
+		}
+		if (this.webhookAPI == null) {
+			if (other.webhookAPI != null) {
+				return false;
+			}
+		} else if (!this.webhookAPI.equals(other.webhookAPI)) {
+			return false;
+		}
+		return true;
 	}
 }

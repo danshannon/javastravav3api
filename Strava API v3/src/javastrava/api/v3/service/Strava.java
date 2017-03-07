@@ -57,8 +57,8 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class Strava implements ActivityService, AthleteService, ClubService, GearService, RouteService, RunningRaceService,
-		SegmentEffortService, SegmentService, StreamService, UploadService, WebhookService {
+public class Strava implements ActivityService, AthleteService, ClubService, GearService, RouteService, RunningRaceService, SegmentEffortService, SegmentService, StreamService, TokenService,
+		UploadService, WebhookService {
 	/**
 	 * Instance used for access to activity data
 	 */
@@ -177,29 +177,14 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param comment
-	 *            Comment to be created
-	 * @return The comment as stored on Strava
-	 * @throws NotFoundException
-	 *             If the activity does not exist
-	 * @throws BadRequestException
-	 *             If the comment is invalid (of zero length)
-	 * @see javastrava.api.v3.service.ActivityService#createComment(java.lang.Long, java.lang.String)
+	 * @see javastrava.api.v3.service.ActivityService#createComment(StravaComment)
 	 */
+	@Override
 	public StravaComment createComment(final StravaComment comment) throws NotFoundException, BadRequestException {
 		return this.activityService.createComment(comment.getActivityId(), comment.getText());
 	}
 
 	/**
-	 * @param activityId
-	 *            Activity identifier
-	 * @param text
-	 *            Text of the comment (which may include markdown)
-	 * @return The comment as stored on Strava
-	 * @throws NotFoundException
-	 *             If the activity does not exist
-	 * @throws BadRequestException
-	 *             If the comment is invalid (of zero length)
 	 * @see javastrava.api.v3.service.ActivityService#createComment(java.lang.Long, java.lang.String)
 	 */
 	@Override
@@ -208,27 +193,14 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param activityId
-	 *            Activity identifier
-	 * @param text
-	 *            Text of the comment (which may include markdown)
-	 * @return The comment as stored on Strava
-	 * @throws NotFoundException
-	 *             If the activity does not exist
-	 * @throws BadRequestException
-	 *             If the comment is invalid (of zero length)
 	 * @see javastrava.api.v3.service.ActivityService#createCommentAsync(java.lang.Long, java.lang.String)
 	 */
 	@Override
-	public CompletableFuture<StravaComment> createCommentAsync(final Long activityId, final String text)
-			throws NotFoundException, BadRequestException {
+	public CompletableFuture<StravaComment> createCommentAsync(final Long activityId, final String text) throws NotFoundException, BadRequestException {
 		return this.activityService.createCommentAsync(activityId, text);
 	}
 
 	/**
-	 * @param activity
-	 *            The activity to be created on Strava
-	 * @return The activity as has been created on Strava
 	 * @see javastrava.api.v3.service.ActivityService#createManualActivity(javastrava.api.v3.model.StravaActivity)
 	 */
 	@Override
@@ -237,9 +209,6 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param activity
-	 *            The activity to be created on Strava
-	 * @return The activity as has been created on Strava
 	 * @see javastrava.api.v3.service.ActivityService#createManualActivityAsync(javastrava.api.v3.model.StravaActivity)
 	 */
 	@Override
@@ -248,53 +217,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * <p>
-	 * Creates a subscription to an allowed event
-	 * </p>
-	 *
-	 * <p>
-	 * The application must have permission to make use of the webhook API. Access can be requested by contacting developers -at-
-	 * strava.com.
-	 * </p>
-	 *
-	 * <p>
-	 * The above request will send a GET request to callback url to verify existence
-	 * </p>
-	 *
-	 * <p>
-	 * Your response to this GET request must contain the hub.challenge token, ie. 15f7d1a91c1f40f8a748fd134752feb3 and have a
-	 * response code of 200.
-	 * </p>
-	 *
-	 * <p>
-	 * On callback verification we respond to the original POST with the created subscription. If there is an error, a response
-	 * containing the reason for failure will be returned.
-	 * </p>
-	 *
-	 * <p>
-	 * When an event occurs that corresponds to a push subscription, a POST request will be made to the callback url defined in the
-	 * subscription. The payload will contain the object and aspect types affected, as well as information about the object and its
-	 * owner if applicable.
-	 * </p>
-	 *
-	 * <p>
-	 * You should acknowledge the POST within a 2 second timeout–if you need to do more processing of the received information, you
-	 * can do so in an asynchronous task.
-	 * </p>
-	 *
-	 * <p>
-	 * Additional metadata about the object is not included, and an application must decide how or if it wants to fetch updated
-	 * data. For example, you may decide only to fetch new data for specific users, or after a certain number of activities have
-	 * been uploaded.
-	 * </p>
-	 *
-	 * @param subscription
-	 *            The subscription to create on Strava
-	 * @param verifyToken
-	 *            The verification token Strava should use when validating your endpoint
-	 * @return Details as stored on Strava
-	 * @see javastrava.api.v3.service.WebhookService#createSubscription(javastrava.api.v3.model.webhook.StravaEventSubscription,
-	 *      String)
+	 * @see javastrava.api.v3.service.WebhookService#createSubscription(javastrava.api.v3.model.webhook.StravaEventSubscription, String)
 	 */
 	@Override
 	public StravaEventSubscription createSubscription(final StravaEventSubscription subscription, final String verifyToken) {
@@ -302,88 +225,30 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * <p>
-	 * Creates a subscription to an allowed event
-	 * </p>
-	 *
-	 * <p>
-	 * The application must have permission to make use of the webhook API. Access can be requested by contacting developers -at-
-	 * strava.com.
-	 * </p>
-	 *
-	 * <p>
-	 * The above request will send a GET request to callback url to verify existence
-	 * </p>
-	 *
-	 * <p>
-	 * Your response to this GET request must contain the hub.challenge token, ie. 15f7d1a91c1f40f8a748fd134752feb3 and have a
-	 * response code of 200.
-	 * </p>
-	 *
-	 * <p>
-	 * On callback verification we respond to the original POST with the created subscription. If there is an error, a response
-	 * containing the reason for failure will be returned.
-	 * </p>
-	 *
-	 * <p>
-	 * When an event occurs that corresponds to a push subscription, a POST request will be made to the callback url defined in the
-	 * subscription. The payload will contain the object and aspect types affected, as well as information about the object and its
-	 * owner if applicable.
-	 * </p>
-	 *
-	 * <p>
-	 * You should acknowledge the POST within a 2 second timeout–if you need to do more processing of the received information, you
-	 * can do so in an asynchronous task.
-	 * </p>
-	 *
-	 * <p>
-	 * Additional metadata about the object is not included, and an application must decide how or if it wants to fetch updated
-	 * data. For example, you may decide only to fetch new data for specific users, or after a certain number of activities have
-	 * been uploaded.
-	 * </p>
-	 *
-	 * @param subscription
-	 *            The subscription to create on Strava
-	 * @param verifyToken
-	 *            The verification token Strava should use when validating your endpoint
-	 * @return Details as stored on Strava
-	 * @see javastrava.api.v3.service.WebhookService#createSubscriptionAsync(javastrava.api.v3.model.webhook.StravaEventSubscription,
-	 *      String)
+	 * @see javastrava.api.v3.service.WebhookService#createSubscriptionAsync(javastrava.api.v3.model.webhook.StravaEventSubscription, String)
 	 */
 	@Override
-	public CompletableFuture<StravaEventSubscription> createSubscriptionAsync(final StravaEventSubscription subscription,
-			final String verifyToken) {
+	public CompletableFuture<StravaEventSubscription> createSubscriptionAsync(final StravaEventSubscription subscription, final String verifyToken) {
 		return this.webhookService.createSubscriptionAsync(subscription, verifyToken);
 	}
 
 	/**
-	 * @param accessToken
-	 *            token to be deauthorised
-	 * @return Response from Strava
 	 * @see javastrava.api.v3.auth.TokenService#deauthorise(javastrava.api.v3.auth.model.Token)
 	 */
+	@Override
 	public TokenResponse deauthorise(final Token accessToken) {
 		return this.tokenService.deauthorise(accessToken);
 	}
 
 	/**
-	 * @param activity
-	 *            The activity to be deleted
-	 * @return The activity that was deleted
-	 * @throws NotFoundException
-	 *             If the activity does not exist
-	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(Long)
+	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(StravaActivity)
 	 */
+	@Override
 	public StravaActivity deleteActivity(final StravaActivity activity) throws NotFoundException {
 		return this.activityService.deleteActivity(activity.getId());
 	}
 
 	/**
-	 * @param activityId
-	 *            The identifier of the activity to be deleted
-	 * @return The activity that was deleted
-	 * @throws NotFoundException
-	 *             If the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(java.lang.Long)
 	 */
 	@Override
@@ -392,11 +257,6 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param activityId
-	 *            The identifier of the activity to be deleted
-	 * @return The activity that was deleted
-	 * @throws NotFoundException
-	 *             If the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#deleteActivityAsync(java.lang.Long)
 	 */
 	@Override
@@ -405,12 +265,6 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param activityId
-	 *            Activity identifier
-	 * @param commentId
-	 *            Comment identifier
-	 * @throws NotFoundException
-	 *             If the comment does not exist
 	 * @see javastrava.api.v3.service.ActivityService#deleteComment(java.lang.Long, java.lang.Integer)
 	 */
 	@Override
@@ -419,10 +273,6 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param comment
-	 *            Comment to be deleted
-	 * @throws NotFoundException
-	 *             If the comment does not exist on Strava
 	 * @see javastrava.api.v3.service.ActivityService#deleteComment(javastrava.api.v3.model.StravaComment)
 	 */
 	@Override
@@ -431,12 +281,6 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param activityId
-	 *            Activity identifier
-	 * @param commentId
-	 *            Comment identifier
-	 * @throws NotFoundException
-	 *             If the comment does not exist
 	 * @see javastrava.api.v3.service.ActivityService#deleteCommentAsync(java.lang.Long, java.lang.Integer)
 	 */
 	@Override
@@ -445,10 +289,6 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param comment
-	 *            Comment to be deleted
-	 * @throws NotFoundException
-	 *             If the comment does not exist on Strava
 	 * @see javastrava.api.v3.service.ActivityService#deleteCommentAsync(javastrava.api.v3.model.StravaComment)
 	 */
 	@Override
@@ -457,17 +297,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * <p>
-	 * This request is used to unsubscribe from events.
-	 * </p>
-	 *
-	 * <p>
-	 * If the delete is successful, a 204 will be returned. Otherwise, an error will be returned containing the reason for a
-	 * failure.
-	 * </p>
-	 *
-	 * @param id
-	 *            Unique identifier of the subscription to be deleted
+	 * @see WebhookService#deleteSubscription(Integer)
 	 */
 	@Override
 	public void deleteSubscription(final Integer id) {
@@ -475,18 +305,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * <p>
-	 * This request is used to unsubscribe from events.
-	 * </p>
-	 *
-	 * <p>
-	 * If the delete is successful, a 204 will be returned. Otherwise, an error will be returned containing the reason for a
-	 * failure.
-	 * </p>
-	 *
-	 * @param id
-	 *            Unique identifier of the subscription to be deleted
-	 * @return Future to call get() on when ready
+	 * @see WebhookService#deleteSubscriptionAsync(Integer)
 	 */
 	@Override
 	public CompletableFuture<Void> deleteSubscriptionAsync(final Integer id) {
@@ -494,9 +313,6 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param activityId
-	 *            The activity identifier
-	 * @return The activity, if it exists, or <code>null</code> if it does not.
 	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Long)
 	 */
 	@Override
@@ -505,11 +321,6 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param activityId
-	 *            The activity identifier
-	 * @param includeAllEfforts
-	 *            Whether to return efforts that Strava does not consider "important"
-	 * @return The activity, if it exists, or <code>null</code> if it does not
 	 * @see javastrava.api.v3.service.ActivityService#getActivity(java.lang.Long, java.lang.Boolean)
 	 */
 	@Override
@@ -518,9 +329,6 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	}
 
 	/**
-	 * @param activityId
-	 *            The activity identifier
-	 * @return The activity, if it exists, or <code>null</code> if it does not.
 	 * @see javastrava.api.v3.service.ActivityService#getActivityAsync(java.lang.Long)
 	 */
 	@Override
@@ -558,20 +366,16 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param types
 	 *            List of types, if the activity does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return List of streams for the activity, or <code>null</code> if the activity does not exist.
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(java.lang.Long,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
-	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType,
-	 *      javastrava.api.v3.model.reference.StravaStreamType[])
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreams(java.lang.Long, javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
 	 */
 	@Override
-	public List<StravaStream> getActivityStreams(final Long activityId, final StravaStreamResolutionType resolution,
-			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
+	public List<StravaStream> getActivityStreams(final Long activityId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaStreamType... types) {
 		return this.streamService.getActivityStreams(activityId, resolution, seriesType, types);
 	}
 
@@ -592,28 +396,22 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param types
 	 *            List of types, if the activity does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return List of streams for the activity, or <code>null</code> if the activity does not exist.
-	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Long,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
-	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType,
-	 *      javastrava.api.v3.model.reference.StravaStreamType[])
+	 * @see javastrava.api.v3.service.StreamService#getActivityStreamsAsync(java.lang.Long, javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
 	 */
 	@Override
-	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Long activityId,
-			final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+	public CompletableFuture<List<StravaStream>> getActivityStreamsAsync(final Long activityId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types) {
 		return this.streamService.getActivityStreamsAsync(activityId, resolution, seriesType, types);
 	}
 
 	/**
 	 * <p>
-	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF ATHLETES ON THE LEADERBOARD, REQUIRING A VERY LARGE NUMBER
-	 * OF CALLS TO THE STRAVA API
+	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF ATHLETES ON THE LEADERBOARD, REQUIRING A VERY LARGE NUMBER OF CALLS TO THE STRAVA API
 	 * </p>
 	 *
 	 * @param segmentId
@@ -628,8 +426,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 
 	/**
 	 * <p>
-	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF ATHLETES ON THE LEADERBOARD, REQUIRING A VERY LARGE NUMBER
-	 * OF CALLS TO THE STRAVA API
+	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF ATHLETES ON THE LEADERBOARD, REQUIRING A VERY LARGE NUMBER OF CALLS TO THE STRAVA API
 	 * </p>
 	 *
 	 * @param segmentId
@@ -641,29 +438,24 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param weightClass
 	 *            (Optional) {@link StravaWeightClass Weight class} to filter results by
 	 * @param following
-	 *            (Optional) If <code>true</code> then will return only results for {@link StravaAthlete athletes} that the
-	 *            currently authenticated athlete is following
+	 *            (Optional) If <code>true</code> then will return only results for {@link StravaAthlete athletes} that the currently authenticated athlete is following
 	 * @param clubId
 	 *            (Optional) Id of {@link StravaClub} to filter results by
 	 * @param dateRange
 	 *            (Optional) Use to set to return results for this year, this month, this week etc.
 	 * @return The WHOLE leaderboard for the segment, filtered as required, or <code>null</code> if the segment does not exist
-	 * @see javastrava.api.v3.service.SegmentService#getAllSegmentLeaderboard(java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
-	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange)
+	 * @see javastrava.api.v3.service.SegmentService#getAllSegmentLeaderboard(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
+	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer, javastrava.api.v3.model.reference.StravaLeaderboardDateRange)
 	 */
 	@Override
-	public StravaSegmentLeaderboard getAllSegmentLeaderboard(final Integer segmentId, final StravaGender gender,
-			final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following, final Integer clubId,
-			final StravaLeaderboardDateRange dateRange) {
+	public StravaSegmentLeaderboard getAllSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup, final StravaWeightClass weightClass,
+			final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange) {
 		return this.segmentService.getAllSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange);
 	}
 
 	/**
 	 * <p>
-	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF ATHLETES ON THE LEADERBOARD, REQUIRING A VERY LARGE NUMBER
-	 * OF CALLS TO THE STRAVA API
+	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF ATHLETES ON THE LEADERBOARD, REQUIRING A VERY LARGE NUMBER OF CALLS TO THE STRAVA API
 	 * </p>
 	 *
 	 * @param segmentId
@@ -678,8 +470,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 
 	/**
 	 * <p>
-	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF ATHLETES ON THE LEADERBOARD, REQUIRING A VERY LARGE NUMBER
-	 * OF CALLS TO THE STRAVA API
+	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF ATHLETES ON THE LEADERBOARD, REQUIRING A VERY LARGE NUMBER OF CALLS TO THE STRAVA API
 	 * </p>
 	 *
 	 * @param segmentId
@@ -691,24 +482,19 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param weightClass
 	 *            (Optional) {@link StravaWeightClass Weight class} to filter results by
 	 * @param following
-	 *            (Optional) If <code>true</code> then will return only results for {@link StravaAthlete athletes} that the
-	 *            currently authenticated athlete is following
+	 *            (Optional) If <code>true</code> then will return only results for {@link StravaAthlete athletes} that the currently authenticated athlete is following
 	 * @param clubId
 	 *            (Optional) Id of {@link StravaClub} to filter results by
 	 * @param dateRange
 	 *            (Optional) Use to set to return results for this year, this month, this week etc.
 	 * @return The WHOLE leaderboard for the segment, filtered as required, or <code>null</code> if the segment does not exist
-	 * @see javastrava.api.v3.service.SegmentService#getAllSegmentLeaderboardAsync(java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
-	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange)
+	 * @see javastrava.api.v3.service.SegmentService#getAllSegmentLeaderboardAsync(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
+	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer, javastrava.api.v3.model.reference.StravaLeaderboardDateRange)
 	 */
 	@Override
-	public CompletableFuture<StravaSegmentLeaderboard> getAllSegmentLeaderboardAsync(final Integer segmentId,
-			final StravaGender gender, final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following,
-			final Integer clubId, final StravaLeaderboardDateRange dateRange) {
-		return this.segmentService.getAllSegmentLeaderboardAsync(segmentId, gender, ageGroup, weightClass, following, clubId,
-				dateRange);
+	public CompletableFuture<StravaSegmentLeaderboard> getAllSegmentLeaderboardAsync(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
+			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange) {
+		return this.segmentService.getAllSegmentLeaderboardAsync(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange);
 	}
 
 	/**
@@ -810,20 +596,16 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param types
 	 *            List of types, if the activity does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return List of streams for the segment effort, or <code>null</code> if the effort does not exist
-	 * @see javastrava.api.v3.service.StreamService#getEffortStreams(java.lang.Long,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
-	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType,
-	 *      javastrava.api.v3.model.reference.StravaStreamType[])
+	 * @see javastrava.api.v3.service.StreamService#getEffortStreams(java.lang.Long, javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
 	 */
 	@Override
-	public List<StravaStream> getEffortStreams(final Long segmentEffortId, final StravaStreamResolutionType resolution,
-			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
+	public List<StravaStream> getEffortStreams(final Long segmentEffortId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaStreamType... types) {
 		return this.streamService.getEffortStreams(segmentEffortId, resolution, seriesType, types);
 	}
 
@@ -844,20 +626,15 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param types
 	 *            List of types, if the activity does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return List of streams for the segment effort, or <code>null</code> if the effort does not exist
-	 * @see javastrava.api.v3.service.StreamService#getEffortStreamsAsync(java.lang.Long,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
-	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType,
-	 *      javastrava.api.v3.model.reference.StravaStreamType[])
+	 * @see javastrava.api.v3.service.StreamService#getEffortStreamsAsync(java.lang.Long, javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
 	 */
 	@Override
-	public CompletableFuture<List<StravaStream>> getEffortStreamsAsync(final Long effortId,
-			final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+	public CompletableFuture<List<StravaStream>> getEffortStreamsAsync(final Long effortId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types) {
 		return this.streamService.getEffortStreamsAsync(effortId, resolution, seriesType, types);
 	}
@@ -962,8 +739,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param weightClass
 	 *            (Optional) {@link StravaWeightClass Weight class} to filter results by
 	 * @param following
-	 *            (Optional) If <code>true</code> then will return only results for {@link StravaAthlete athletes} that the
-	 *            currently authenticated athlete is following
+	 *            (Optional) If <code>true</code> then will return only results for {@link StravaAthlete athletes} that the currently authenticated athlete is following
 	 * @param clubId
 	 *            (Optional) Id of {@link StravaClub} to filter results by
 	 * @param dateRange
@@ -973,17 +749,14 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param contextEntries
 	 *            (Optional) number of entries to return as athlete context either side of the athlete (default is 2, maximum is 15)
 	 * @return Segment leaderboard, as per filters
-	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboard(java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
-	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange, javastrava.util.Paging, java.lang.Integer)
+	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboard(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
+	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer, javastrava.api.v3.model.reference.StravaLeaderboardDateRange, javastrava.util.Paging,
+	 *      java.lang.Integer)
 	 */
 	@Override
-	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender,
-			final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following, final Integer clubId,
-			final StravaLeaderboardDateRange dateRange, final Paging pagingInstruction, final Integer contextEntries) {
-		return this.segmentService.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange,
-				pagingInstruction, contextEntries);
+	public StravaSegmentLeaderboard getSegmentLeaderboard(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup, final StravaWeightClass weightClass,
+			final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Paging pagingInstruction, final Integer contextEntries) {
+		return this.segmentService.getSegmentLeaderboard(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, pagingInstruction, contextEntries);
 	}
 
 	/**
@@ -1006,8 +779,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboardAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<StravaSegmentLeaderboard> getSegmentLeaderboardAsync(final Integer segmentId,
-			final Paging pagingInstruction) {
+	public CompletableFuture<StravaSegmentLeaderboard> getSegmentLeaderboardAsync(final Integer segmentId, final Paging pagingInstruction) {
 		return this.segmentService.getSegmentLeaderboardAsync(segmentId, pagingInstruction);
 	}
 
@@ -1021,8 +793,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param weightClass
 	 *            (Optional) {@link StravaWeightClass Weight class} to filter results by
 	 * @param following
-	 *            (Optional) If <code>true</code> then will return only results for {@link StravaAthlete athletes} that the
-	 *            currently authenticated athlete is following
+	 *            (Optional) If <code>true</code> then will return only results for {@link StravaAthlete athletes} that the currently authenticated athlete is following
 	 * @param clubId
 	 *            (Optional) Id of {@link StravaClub} to filter results by
 	 * @param dateRange
@@ -1032,18 +803,15 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param contextEntries
 	 *            (Optional) number of entries to return as athlete context either side of the athlete (default is 2, maximum is 15)
 	 * @return Segment leaderboard, as per filters
-	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboardAsync(java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
-	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaLeaderboardDateRange, javastrava.util.Paging, java.lang.Integer)
+	 * @see javastrava.api.v3.service.SegmentService#getSegmentLeaderboardAsync(java.lang.Integer, javastrava.api.v3.model.reference.StravaGender, javastrava.api.v3.model.reference.StravaAgeGroup,
+	 *      javastrava.api.v3.model.reference.StravaWeightClass, java.lang.Boolean, java.lang.Integer, javastrava.api.v3.model.reference.StravaLeaderboardDateRange, javastrava.util.Paging,
+	 *      java.lang.Integer)
 	 */
 	@Override
-	public CompletableFuture<StravaSegmentLeaderboard> getSegmentLeaderboardAsync(final Integer segmentId,
-			final StravaGender gender, final StravaAgeGroup ageGroup, final StravaWeightClass weightClass, final Boolean following,
-			final Integer clubId, final StravaLeaderboardDateRange dateRange, final Paging pagingInstruction,
+	public CompletableFuture<StravaSegmentLeaderboard> getSegmentLeaderboardAsync(final Integer segmentId, final StravaGender gender, final StravaAgeGroup ageGroup,
+			final StravaWeightClass weightClass, final Boolean following, final Integer clubId, final StravaLeaderboardDateRange dateRange, final Paging pagingInstruction,
 			final Integer contextEntries) {
-		return this.segmentService.getSegmentLeaderboardAsync(segmentId, gender, ageGroup, weightClass, following, clubId,
-				dateRange, pagingInstruction, contextEntries);
+		return this.segmentService.getSegmentLeaderboardAsync(segmentId, gender, ageGroup, weightClass, following, clubId, dateRange, pagingInstruction, contextEntries);
 	}
 
 	/**
@@ -1063,20 +831,16 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param types
 	 *            List of types, if the activity does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return List of streams for the segment, or <code>null</code> if the segment does not exist
-	 * @see javastrava.api.v3.service.StreamService#getSegmentStreams(java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
-	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType,
-	 *      javastrava.api.v3.model.reference.StravaStreamType[])
+	 * @see javastrava.api.v3.service.StreamService#getSegmentStreams(java.lang.Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
 	 */
 	@Override
-	public List<StravaStream> getSegmentStreams(final Integer segmentId, final StravaStreamResolutionType resolution,
-			final StravaStreamSeriesDownsamplingType seriesType, final StravaStreamType... types) {
+	public List<StravaStream> getSegmentStreams(final Integer segmentId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+			final StravaStreamType... types) {
 		return this.streamService.getSegmentStreams(segmentId, resolution, seriesType, types);
 	}
 
@@ -1097,20 +861,15 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param types
 	 *            List of types, if the activity does not have that stream it will not be included in the response
 	 * @param resolution
-	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points,
-	 *            streams will only be down sampled
+	 *            (Optional) low (100), medium (1000) or high (10000), default is all, indicates desired number of data points, streams will only be down sampled
 	 * @param seriesType
-	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index
-	 *            the streams if the stream is being reduced
+	 *            (Optional) relevant only if using resolution. Either "time" or "distance", default is "distance", used to index the streams if the stream is being reduced
 	 * @return List of streams for the segment, or <code>null</code> if the segment does not exist
-	 * @see javastrava.api.v3.service.StreamService#getSegmentStreamsAsync(java.lang.Integer,
-	 *      javastrava.api.v3.model.reference.StravaStreamResolutionType,
-	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType,
-	 *      javastrava.api.v3.model.reference.StravaStreamType[])
+	 * @see javastrava.api.v3.service.StreamService#getSegmentStreamsAsync(java.lang.Integer, javastrava.api.v3.model.reference.StravaStreamResolutionType,
+	 *      javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType, javastrava.api.v3.model.reference.StravaStreamType[])
 	 */
 	@Override
-	public CompletableFuture<List<StravaStream>> getSegmentStreamsAsync(final Integer segmentId,
-			final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
+	public CompletableFuture<List<StravaStream>> getSegmentStreamsAsync(final Integer segmentId, final StravaStreamResolutionType resolution, final StravaStreamSeriesDownsamplingType seriesType,
 			final StravaStreamType... types) {
 		return this.streamService.getSegmentStreamsAsync(segmentId, resolution, seriesType, types);
 	}
@@ -1251,10 +1010,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Whether to include markdown in comments
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not
-	 *         exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long, java.lang.Boolean,
-	 *      javastrava.util.Paging)
+	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not exist
+	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long, java.lang.Boolean, javastrava.util.Paging)
 	 */
 	@Override
 	public List<StravaComment> listActivityComments(final Long activityId, final Boolean markdown, final Paging pagingInstruction) {
@@ -1266,8 +1023,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Activity identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not
-	 *         exist
+	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#listActivityComments(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
@@ -1306,14 +1062,11 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Whether to include markdown in comments
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not
-	 *         exist
-	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, java.lang.Boolean,
-	 *      javastrava.util.Paging)
+	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not exist
+	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, java.lang.Boolean, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Boolean markdown,
-			final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaComment>> listActivityCommentsAsync(final Long activityId, final Boolean markdown, final Paging pagingInstruction) {
 		return this.activityService.listActivityCommentsAsync(activityId, markdown, pagingInstruction);
 	}
 
@@ -1322,8 +1075,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Activity identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not
-	 *         exist
+	 * @return List of comments on the activity, according to the paging instruction, or <code>null</code> if the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#listActivityCommentsAsync(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
@@ -1334,8 +1086,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param activityId
 	 *            Activity identifier
-	 * @return List of athletes who have given kudos to the activity, first page only, or <code>null</code> if the activity does not
-	 *         exist
+	 * @return List of athletes who have given kudos to the activity, first page only, or <code>null</code> if the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(java.lang.Long)
 	 */
 	@Override
@@ -1348,8 +1099,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Activity identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of athletes who have given kudos to the activity, according with the paging instruction, or <code>null</code> if
-	 *         the activity does not exist
+	 * @return List of athletes who have given kudos to the activity, according with the paging instruction, or <code>null</code> if the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoers(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
@@ -1360,8 +1110,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param activityId
 	 *            Activity identifier
-	 * @return List of athletes who have given kudos to the activity, first page only, or <code>null</code> if the activity does not
-	 *         exist
+	 * @return List of athletes who have given kudos to the activity, first page only, or <code>null</code> if the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoersAsync(java.lang.Long)
 	 */
 	@Override
@@ -1374,8 +1123,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Activity identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of athletes who have given kudos to the activity, according with the paging instruction, or <code>null</code> if
-	 *         the activity does not exist
+	 * @return List of athletes who have given kudos to the activity, according with the paging instruction, or <code>null</code> if the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#listActivityKudoersAsync(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
@@ -1546,8 +1294,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *
 	 * @param athleteId
 	 *            Athlete identifier
-	 * @return List of ALL segment efforts which represent a KOM for the identified athlete, or <code>null</code> if the athlete
-	 *         does not exist
+	 * @return List of ALL segment efforts which represent a KOM for the identified athlete, or <code>null</code> if the athlete does not exist
 	 * @see javastrava.api.v3.service.AthleteService#listAllAthleteKOMs(java.lang.Integer)
 	 */
 	@Override
@@ -1562,8 +1309,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *
 	 * @param athleteId
 	 *            Athlete identifier
-	 * @return List of ALL segment efforts which represent a KOM for the identified athlete, or <code>null</code> if the athlete
-	 *         does not exist
+	 * @return List of ALL segment efforts which represent a KOM for the identified athlete, or <code>null</code> if the athlete does not exist
 	 * @see javastrava.api.v3.service.AthleteService#listAllAthleteKOMsAsync(java.lang.Integer)
 	 */
 	@Override
@@ -1654,12 +1400,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param after
 	 *            Only return activities after this date/time
 	 * @return List of all the authenticated athlete's activities, filtered by dates
-	 * @see javastrava.api.v3.service.ActivityService#listAllAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime,
-	 *      java.time.LocalDateTime)
+	 * @see javastrava.api.v3.service.ActivityService#listAllAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime, java.time.LocalDateTime)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listAllAuthenticatedAthleteActivitiesAsync(final LocalDateTime before,
-			final LocalDateTime after) {
+	public CompletableFuture<List<StravaActivity>> listAllAuthenticatedAthleteActivitiesAsync(final LocalDateTime before, final LocalDateTime after) {
 		return this.activityService.listAllAuthenticatedAthleteActivitiesAsync(before, after);
 	}
 
@@ -1826,8 +1570,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param clubId
 	 *            Club identifier
-	 * @return List of ALL recent activities by members of the club (note that Strava caps this at 200 activities), or
-	 *         <code>null</code> if the club does not exist
+	 * @return List of ALL recent activities by members of the club (note that Strava caps this at 200 activities), or <code>null</code> if the club does not exist
 	 * @see javastrava.api.v3.service.ClubService#listAllRecentClubActivities(java.lang.Integer)
 	 */
 	@Override
@@ -1838,8 +1581,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param clubId
 	 *            Club identifier
-	 * @return List of ALL recent activities by members of the club (note that Strava caps this at 200 activities), or
-	 *         <code>null</code> if the club does not exist
+	 * @return List of ALL recent activities by members of the club (note that Strava caps this at 200 activities), or <code>null</code> if the club does not exist
 	 * @see javastrava.api.v3.service.ClubService#listAllRecentClubActivitiesAsync(java.lang.Integer)
 	 */
 	@Override
@@ -1879,8 +1621,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 
 	/**
 	 * <p>
-	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF EFFORTS, REQUIRING A VERY LARGE NUMBER OF CALLS TO THE
-	 * STRAVA API
+	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF EFFORTS, REQUIRING A VERY LARGE NUMBER OF CALLS TO THE STRAVA API
 	 * </p>
 	 *
 	 * @param segmentId
@@ -1903,19 +1644,16 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param endDate
 	 *            (Optional) Do not return activities after this date/time
 	 * @return List of ALL efforts on the segment, filtered as required, or <code>null</code> if the segment or athlete do not exist
-	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime,
-	 *      LocalDateTime)
+	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime, LocalDateTime)
 	 */
 	@Override
-	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId,
-			final LocalDateTime startDate, final LocalDateTime endDate) {
+	public List<StravaSegmentEffort> listAllSegmentEfforts(final Integer segmentId, final Integer athleteId, final LocalDateTime startDate, final LocalDateTime endDate) {
 		return this.segmentService.listAllSegmentEfforts(segmentId, athleteId, startDate, endDate);
 	}
 
 	/**
 	 * <p>
-	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF EFFORTS, REQUIRING A VERY LARGE NUMBER OF CALLS TO THE
-	 * STRAVA API
+	 * USE WITH CAUTION - POPULAR SEGMENTS CAN HAVE TENS OF THOUSANDS OF EFFORTS, REQUIRING A VERY LARGE NUMBER OF CALLS TO THE STRAVA API
 	 * </p>
 	 *
 	 * @param segmentId
@@ -1938,12 +1676,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param endDate
 	 *            (Optional) Do not return activities after this date/time
 	 * @return List of ALL efforts on the segment, filtered as required, or <code>null</code> if the segment or athlete do not exist
-	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEffortsAsync(java.lang.Integer, java.lang.Integer,
-	 *      java.time.LocalDateTime, java.time.LocalDateTime)
+	 * @see javastrava.api.v3.service.SegmentService#listAllSegmentEffortsAsync(java.lang.Integer, java.lang.Integer, java.time.LocalDateTime, java.time.LocalDateTime)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegmentEffort>> listAllSegmentEffortsAsync(final Integer segmentId, final Integer athleteId,
-			final LocalDateTime startDate, final LocalDateTime endDate) {
+	public CompletableFuture<List<StravaSegmentEffort>> listAllSegmentEffortsAsync(final Integer segmentId, final Integer athleteId, final LocalDateTime startDate, final LocalDateTime endDate) {
 		return this.segmentService.listAllSegmentEffortsAsync(segmentId, athleteId, startDate, endDate);
 	}
 
@@ -1972,8 +1708,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param athleteId
 	 *            Athlete identifier
-	 * @return List of athletes the identified athlete is following, first page only, or <code>null</code> if the identified athlete
-	 *         does not exist
+	 * @return List of athletes the identified athlete is following, first page only, or <code>null</code> if the identified athlete does not exist
 	 * @see javastrava.api.v3.service.AthleteService#listAthleteFriends(java.lang.Integer)
 	 */
 	@Override
@@ -1986,8 +1721,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Athlete identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of athletes the identified athlete is following, according with the paging instruction, or <code>null</code> if
-	 *         the identified athlete does not exist
+	 * @return List of athletes the identified athlete is following, according with the paging instruction, or <code>null</code> if the identified athlete does not exist
 	 * @see javastrava.api.v3.service.AthleteService#listAthleteFriends(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
@@ -1998,8 +1732,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param athleteId
 	 *            Athlete identifier
-	 * @return List of athletes the identified athlete is following, first page only, or <code>null</code> if the identified athlete
-	 *         does not exist
+	 * @return List of athletes the identified athlete is following, first page only, or <code>null</code> if the identified athlete does not exist
 	 * @see javastrava.api.v3.service.AthleteService#listAthleteFriendsAsync(java.lang.Integer)
 	 */
 	@Override
@@ -2012,8 +1745,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Athlete identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of athletes the identified athlete is following, according with the paging instruction, or <code>null</code> if
-	 *         the identified athlete does not exist
+	 * @return List of athletes the identified athlete is following, according with the paging instruction, or <code>null</code> if the identified athlete does not exist
 	 * @see javastrava.api.v3.service.AthleteService#listAthleteFriendsAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
@@ -2065,16 +1797,14 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @see javastrava.api.v3.service.AthleteService#listAthleteKOMsAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegmentEffort>> listAthleteKOMsAsync(final Integer athleteId,
-			final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaSegmentEffort>> listAthleteKOMsAsync(final Integer athleteId, final Paging pagingInstruction) {
 		return this.athleteService.listAthleteKOMsAsync(athleteId, pagingInstruction);
 	}
 
 	/**
 	 * @param athleteId
 	 *            Athlete identifier
-	 * @return List of athletes being followed by both the authenticated athlete and the identified athlete, first page only, or
-	 *         <code>null</code> if the identified athlete does not exist
+	 * @return List of athletes being followed by both the authenticated athlete and the identified athlete, first page only, or <code>null</code> if the identified athlete does not exist
 	 * @see javastrava.api.v3.service.AthleteService#listAthletesBothFollowing(java.lang.Integer)
 	 */
 	@Override
@@ -2087,8 +1817,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Athlete identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of athletes being followed by both the authenticated athlete and the identified athlete, according with the
-	 *         paging instruction, or <code>null</code> if the identified athlete does not exist
+	 * @return List of athletes being followed by both the authenticated athlete and the identified athlete, according with the paging instruction, or <code>null</code> if the identified athlete does
+	 *         not exist
 	 * @see javastrava.api.v3.service.AthleteService#listAthletesBothFollowing(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
@@ -2099,8 +1829,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param athleteId
 	 *            Athlete identifier
-	 * @return List of athletes being followed by both the authenticated athlete and the identified athlete, first page only, or
-	 *         <code>null</code> if the identified athlete does not exist
+	 * @return List of athletes being followed by both the authenticated athlete and the identified athlete, first page only, or <code>null</code> if the identified athlete does not exist
 	 * @see javastrava.api.v3.service.AthleteService#listAthletesBothFollowingAsync(java.lang.Integer)
 	 */
 	@Override
@@ -2113,13 +1842,12 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Athlete identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of athletes being followed by both the authenticated athlete and the identified athlete, according with the
-	 *         paging instruction, or <code>null</code> if the identified athlete does not exist
+	 * @return List of athletes being followed by both the authenticated athlete and the identified athlete, according with the paging instruction, or <code>null</code> if the identified athlete does
+	 *         not exist
 	 * @see javastrava.api.v3.service.AthleteService#listAthletesBothFollowingAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaAthlete>> listAthletesBothFollowingAsync(final Integer athleteId,
-			final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaAthlete>> listAthletesBothFollowingAsync(final Integer athleteId, final Paging pagingInstruction) {
 		return this.athleteService.listAthletesBothFollowingAsync(athleteId, pagingInstruction);
 	}
 
@@ -2153,12 +1881,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param pagingInstruction
 	 *            Paging instruction
 	 * @return List of authenticated athlete's activities, filtered by dates, according to the paging instruction
-	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime,
-	 *      javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivities(LocalDateTime, LocalDateTime, javastrava.util.Paging)
 	 */
 	@Override
-	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after,
-			final Paging pagingInstruction) {
+	public List<StravaActivity> listAuthenticatedAthleteActivities(final LocalDateTime before, final LocalDateTime after, final Paging pagingInstruction) {
 		return this.activityService.listAuthenticatedAthleteActivities(before, after, pagingInstruction);
 	}
 
@@ -2188,12 +1914,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param after
 	 *            Only return activities after this date/time
 	 * @return First page of authenticated athlete's activities, filtered by dates
-	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime,
-	 *      java.time.LocalDateTime)
+	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime, java.time.LocalDateTime)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final LocalDateTime before,
-			final LocalDateTime after) {
+	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final LocalDateTime before, final LocalDateTime after) {
 		return this.activityService.listAuthenticatedAthleteActivitiesAsync(before, after);
 	}
 
@@ -2205,12 +1929,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param pagingInstruction
 	 *            Paging instruction
 	 * @return List of authenticated athlete's activities, filtered by dates, according to the paging instruction
-	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime,
-	 *      java.time.LocalDateTime, javastrava.util.Paging)
+	 * @see javastrava.api.v3.service.ActivityService#listAuthenticatedAthleteActivitiesAsync(java.time.LocalDateTime, java.time.LocalDateTime, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final LocalDateTime before,
-			final LocalDateTime after, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaActivity>> listAuthenticatedAthleteActivitiesAsync(final LocalDateTime before, final LocalDateTime after, final Paging pagingInstruction) {
 		return this.activityService.listAuthenticatedAthleteActivitiesAsync(before, after, pagingInstruction);
 	}
 
@@ -2485,8 +2207,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * Pagination is NOT supported
 	 * </p>
 	 *
-	 * @see <a href=
-	 *      "http://strava.github.io/api/partner/v3/clubs/#get-group-events">http://strava.github.io/api/partner/v3/clubs/#get-group-events</a>
+	 * @see <a href= "http://strava.github.io/api/partner/v3/clubs/#get-group-events">http://strava.github.io/api/partner/v3/clubs/#get-group-events</a>
 	 * @param clubId
 	 *            Club identifier
 	 * @return List of all club events
@@ -2513,8 +2234,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * Pagination is NOT supported
 	 * </p>
 	 *
-	 * @see <a href=
-	 *      "http://strava.github.io/api/partner/v3/clubs/#get-group-events">http://strava.github.io/api/partner/v3/clubs/#get-group-events</a>
+	 * @see <a href= "http://strava.github.io/api/partner/v3/clubs/#get-group-events">http://strava.github.io/api/partner/v3/clubs/#get-group-events</a>
 	 * @param clubId
 	 *            Club identifier
 	 * @return List of all club events
@@ -2586,8 +2306,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of activities by friends of the authenticated athlete, according to the paging instruction, sorted by start date
-	 *         (descending)
+	 * @return List of activities by friends of the authenticated athlete, according to the paging instruction, sorted by start date (descending)
 	 * @see javastrava.api.v3.service.ActivityService#listFriendsActivities(javastrava.util.Paging)
 	 */
 	@Override
@@ -2607,8 +2326,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of activities by friends of the authenticated athlete, according to the paging instruction, sorted by start date
-	 *         (descending)
+	 * @return List of activities by friends of the authenticated athlete, according to the paging instruction, sorted by start date (descending)
 	 * @see javastrava.api.v3.service.ActivityService#listFriendsActivitiesAsync(javastrava.util.Paging)
 	 */
 	@Override
@@ -2619,8 +2337,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param clubId
 	 *            Club identifier
-	 * @return List of activities done by members of the club, in reverse order of start date, first page only, or <code>null</code>
-	 *         if the club does not exist
+	 * @return List of activities done by members of the club, in reverse order of start date, first page only, or <code>null</code> if the club does not exist
 	 * @see javastrava.api.v3.service.ClubService#listRecentClubActivities(java.lang.Integer)
 	 */
 	@Override
@@ -2633,9 +2350,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Club identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return list of activities done by members of the club, in reverse order of start date, according with the paging
-	 *         instruction, or <code>null</code> if the club does not exist. Note that Strava returns a maximum of 200 recent
-	 *         activities.
+	 * @return list of activities done by members of the club, in reverse order of start date, according with the paging instruction, or <code>null</code> if the club does not exist. Note that Strava
+	 *         returns a maximum of 200 recent activities.
 	 * @see javastrava.api.v3.service.ClubService#listRecentClubActivities(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
@@ -2646,8 +2362,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param clubId
 	 *            Club identifier
-	 * @return List of activities done by members of the club, in reverse order of start date, first page only, or <code>null</code>
-	 *         if the club does not exist
+	 * @return List of activities done by members of the club, in reverse order of start date, first page only, or <code>null</code> if the club does not exist
 	 * @see javastrava.api.v3.service.ClubService#listRecentClubActivitiesAsync(java.lang.Integer)
 	 */
 	@Override
@@ -2660,22 +2375,19 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Club identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return list of activities done by members of the club, in reverse order of start date, according with the paging
-	 *         instruction, or <code>null</code> if the club does not exist. Note that Strava returns a maximum of 200 recent
-	 *         activities.
+	 * @return list of activities done by members of the club, in reverse order of start date, according with the paging instruction, or <code>null</code> if the club does not exist. Note that Strava
+	 *         returns a maximum of 200 recent activities.
 	 * @see javastrava.api.v3.service.ClubService#listRecentClubActivitiesAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listRecentClubActivitiesAsync(final Integer clubId,
-			final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaActivity>> listRecentClubActivitiesAsync(final Integer clubId, final Paging pagingInstruction) {
 		return this.clubService.listRecentClubActivitiesAsync(clubId, pagingInstruction);
 	}
 
 	/**
 	 * @param activityId
 	 *            Activity identifier
-	 * @return List of activities that Strava has determined were done 'with' the identified activity, or <code>null</code> if the
-	 *         activity does not exist
+	 * @return List of activities that Strava has determined were done 'with' the identified activity, or <code>null</code> if the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Long)
 	 */
 	@Override
@@ -2688,8 +2400,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Activity identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of activities that Strava has determined were done 'with' the identified activity, according with the paging
-	 *         instruction, or <code>null</code> if the activity does not exist
+	 * @return List of activities that Strava has determined were done 'with' the identified activity, according with the paging instruction, or <code>null</code> if the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivities(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
@@ -2700,8 +2411,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param activityId
 	 *            Activity identifier
-	 * @return List of activities that Strava has determined were done 'with' the identified activity, or <code>null</code> if the
-	 *         activity does not exist
+	 * @return List of activities that Strava has determined were done 'with' the identified activity, or <code>null</code> if the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Long)
 	 */
 	@Override
@@ -2714,21 +2424,19 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Activity identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of activities that Strava has determined were done 'with' the identified activity, according with the paging
-	 *         instruction, or <code>null</code> if the activity does not exist
+	 * @return List of activities that Strava has determined were done 'with' the identified activity, according with the paging instruction, or <code>null</code> if the activity does not exist
 	 * @see javastrava.api.v3.service.ActivityService#listRelatedActivitiesAsync(java.lang.Long, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Long activityId,
-			final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaActivity>> listRelatedActivitiesAsync(final Long activityId, final Paging pagingInstruction) {
 		return this.activityService.listRelatedActivitiesAsync(activityId, pagingInstruction);
 	}
 
 	/**
 	 * @param segmentId
 	 *            Segment identifier
-	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations}
-	 *         sorted by start_date_local ascending. If the segment does not exist, then returns <code>null</code>
+	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local ascending. If the segment does not exist,
+	 *         then returns <code>null</code>
 	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer)
 	 */
 	@Override
@@ -2745,15 +2453,12 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            (Optional) Return only efforts after this date/time
 	 * @param endDateLocal
 	 *            (Optional) Return only efforts before this date/time
-	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations}
-	 *         sorted by start_date_local ascending or by elapsed time if an athleteId is provided. If the segment or athlete do not
-	 *         exist, then returns <code>null</code>
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime,
-	 *      LocalDateTime)
+	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local ascending or by elapsed time if an athleteId
+	 *         is provided. If the segment or athlete do not exist, then returns <code>null</code>
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime, LocalDateTime)
 	 */
 	@Override
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId,
-			final LocalDateTime startDateLocal, final LocalDateTime endDateLocal) {
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final LocalDateTime startDateLocal, final LocalDateTime endDateLocal) {
 		return this.segmentService.listSegmentEfforts(segmentId, athleteId, startDateLocal, endDateLocal);
 	}
 
@@ -2768,15 +2473,13 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            (Optional) Return only efforts before this date/time
 	 * @param pagingInstruction
 	 *            (Optional) Paging instruction
-	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations}
-	 *         sorted by start_date_local ascending or by elapsed time if an athleteId is provided. If the segment or athlete do not
-	 *         exist, then returns <code>null</code>
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime,
-	 *      LocalDateTime, javastrava.util.Paging)
+	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local ascending or by elapsed time if an athleteId
+	 *         is provided. If the segment or athlete do not exist, then returns <code>null</code>
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, java.lang.Integer, LocalDateTime, LocalDateTime, javastrava.util.Paging)
 	 */
 	@Override
-	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId,
-			final LocalDateTime startDateLocal, final LocalDateTime endDateLocal, final Paging pagingInstruction) {
+	public List<StravaSegmentEffort> listSegmentEfforts(final Integer segmentId, final Integer athleteId, final LocalDateTime startDateLocal, final LocalDateTime endDateLocal,
+			final Paging pagingInstruction) {
 		return this.segmentService.listSegmentEfforts(segmentId, athleteId, startDateLocal, endDateLocal, pagingInstruction);
 	}
 
@@ -2785,8 +2488,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Segment identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations}
-	 *         sorted by start_date_local ascending. If the segment does not exist, then returns <code>null</code>
+	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local ascending. If the segment does not exist,
+	 *         then returns <code>null</code>
 	 * @see javastrava.api.v3.service.SegmentService#listSegmentEfforts(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
@@ -2797,8 +2500,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param segmentId
 	 *            Segment identifier
-	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations}
-	 *         sorted by start_date_local ascending. If the segment does not exist, then returns <code>null</code>
+	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local ascending. If the segment does not exist,
+	 *         then returns <code>null</code>
 	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer)
 	 */
 	@Override
@@ -2815,15 +2518,13 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            (Optional) Return only efforts after this date/time
 	 * @param endDateLocal
 	 *            (Optional) Return only efforts before this date/time
-	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations}
-	 *         sorted by start_date_local ascending or by elapsed time if an athleteId is provided. If the segment or athlete do not
-	 *         exist, then returns <code>null</code>
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer, java.lang.Integer,
-	 *      java.time.LocalDateTime, java.time.LocalDateTime)
+	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local ascending or by elapsed time if an athleteId
+	 *         is provided. If the segment or athlete do not exist, then returns <code>null</code>
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer, java.lang.Integer, java.time.LocalDateTime, java.time.LocalDateTime)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId, final Integer athleteId,
-			final LocalDateTime startDateLocal, final LocalDateTime endDateLocal) {
+	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId, final Integer athleteId, final LocalDateTime startDateLocal,
+			final LocalDateTime endDateLocal) {
 		return this.segmentService.listSegmentEffortsAsync(segmentId, athleteId, startDateLocal, endDateLocal);
 	}
 
@@ -2838,15 +2539,13 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            (Optional) Return only efforts before this date/time
 	 * @param pagingInstruction
 	 *            (Optional) Paging instruction
-	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations}
-	 *         sorted by start_date_local ascending or by elapsed time if an athleteId is provided. If the segment or athlete do not
-	 *         exist, then returns <code>null</code>
-	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer, java.lang.Integer,
-	 *      java.time.LocalDateTime, java.time.LocalDateTime, javastrava.util.Paging)
+	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local ascending or by elapsed time if an athleteId
+	 *         is provided. If the segment or athlete do not exist, then returns <code>null</code>
+	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer, java.lang.Integer, java.time.LocalDateTime, java.time.LocalDateTime, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId, final Integer athleteId,
-			final LocalDateTime startDateLocal, final LocalDateTime endDateLocal, final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId, final Integer athleteId, final LocalDateTime startDateLocal, final LocalDateTime endDateLocal,
+			final Paging pagingInstruction) {
 		return this.segmentService.listSegmentEffortsAsync(segmentId, athleteId, startDateLocal, endDateLocal, pagingInstruction);
 	}
 
@@ -2855,21 +2554,19 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Segment identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations}
-	 *         sorted by start_date_local ascending. If the segment does not exist, then returns <code>null</code>
+	 * @return Returns a list of {@link StravaSegmentEffort segment effort} summary {@link StravaResourceState representations} sorted by start_date_local ascending. If the segment does not exist,
+	 *         then returns <code>null</code>
 	 * @see javastrava.api.v3.service.SegmentService#listSegmentEffortsAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId,
-			final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaSegmentEffort>> listSegmentEffortsAsync(final Integer segmentId, final Paging pagingInstruction) {
 		return this.segmentService.listSegmentEffortsAsync(segmentId, pagingInstruction);
 	}
 
 	/**
 	 * @param athleteId
 	 *            Athlete identifier
-	 * @return List of segments starred by the identified athlete, first page only, or <code>null</code> if the athlete does not
-	 *         exist
+	 * @return List of segments starred by the identified athlete, first page only, or <code>null</code> if the athlete does not exist
 	 * @see javastrava.api.v3.service.SegmentService#listStarredSegments(java.lang.Integer)
 	 */
 	@Override
@@ -2882,8 +2579,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Athlete identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of segments starred by the identified athlete, in accordance with the paging instruction, or <code>null</code>
-	 *         if the athlete does not exist
+	 * @return List of segments starred by the identified athlete, in accordance with the paging instruction, or <code>null</code> if the athlete does not exist
 	 * @see javastrava.api.v3.service.SegmentService#listStarredSegments(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
@@ -2894,8 +2590,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * @param athleteId
 	 *            Athlete identifier
-	 * @return List of segments starred by the identified athlete, first page only, or <code>null</code> if the athlete does not
-	 *         exist
+	 * @return List of segments starred by the identified athlete, first page only, or <code>null</code> if the athlete does not exist
 	 * @see javastrava.api.v3.service.SegmentService#listStarredSegmentsAsync(java.lang.Integer)
 	 */
 	@Override
@@ -2908,13 +2603,11 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 *            Athlete identifier
 	 * @param pagingInstruction
 	 *            Paging instruction
-	 * @return List of segments starred by the identified athlete, in accordance with the paging instruction, or <code>null</code>
-	 *         if the athlete does not exist
+	 * @return List of segments starred by the identified athlete, in accordance with the paging instruction, or <code>null</code> if the athlete does not exist
 	 * @see javastrava.api.v3.service.SegmentService#listStarredSegmentsAsync(java.lang.Integer, javastrava.util.Paging)
 	 */
 	@Override
-	public CompletableFuture<List<StravaSegment>> listStarredSegmentsAsync(final Integer athleteId,
-			final Paging pagingInstruction) {
+	public CompletableFuture<List<StravaSegment>> listStarredSegmentsAsync(final Integer athleteId, final Paging pagingInstruction) {
 		return this.segmentService.listStarredSegmentsAsync(athleteId, pagingInstruction);
 	}
 
@@ -2956,14 +2649,12 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param maxCat
 	 *            (Rides only) Maximum climb category to return
 	 * @return A list of up to 10 segments within the area being explored
-	 * @see javastrava.api.v3.service.SegmentService#segmentExplore(javastrava.api.v3.model.StravaMapPoint,
-	 *      javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType,
-	 *      javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory)
+	 * @see javastrava.api.v3.service.SegmentService#segmentExplore(javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.StravaMapPoint,
+	 *      javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType, javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory)
 	 */
 	@Override
-	public StravaSegmentExplorerResponse segmentExplore(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner,
-			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat,
-			final StravaClimbCategory maxCat) {
+	public StravaSegmentExplorerResponse segmentExplore(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner, final StravaSegmentExplorerActivityType activityType,
+			final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
 		return this.segmentService.segmentExplore(southwestCorner, northeastCorner, activityType, minCat, maxCat);
 	}
 
@@ -2979,14 +2670,12 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param maxCat
 	 *            (Rides only) Maximum climb category to return
 	 * @return A list of up to 10 segments within the area being explored
-	 * @see javastrava.api.v3.service.SegmentService#segmentExploreAsync(javastrava.api.v3.model.StravaMapPoint,
-	 *      javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType,
-	 *      javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory)
+	 * @see javastrava.api.v3.service.SegmentService#segmentExploreAsync(javastrava.api.v3.model.StravaMapPoint, javastrava.api.v3.model.StravaMapPoint,
+	 *      javastrava.api.v3.model.reference.StravaSegmentExplorerActivityType, javastrava.api.v3.model.reference.StravaClimbCategory, javastrava.api.v3.model.reference.StravaClimbCategory)
 	 */
 	@Override
-	public CompletableFuture<StravaSegmentExplorerResponse> segmentExploreAsync(final StravaMapPoint southwestCorner,
-			final StravaMapPoint northeastCorner, final StravaSegmentExplorerActivityType activityType,
-			final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
+	public CompletableFuture<StravaSegmentExplorerResponse> segmentExploreAsync(final StravaMapPoint southwestCorner, final StravaMapPoint northeastCorner,
+			final StravaSegmentExplorerActivityType activityType, final StravaClimbCategory minCat, final StravaClimbCategory maxCat) {
 		return this.segmentService.segmentExploreAsync(southwestCorner, northeastCorner, activityType, minCat, maxCat);
 	}
 
@@ -3035,12 +2724,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @return The activity as updated on Strava
 	 * @throws NotFoundException
 	 *             If the activity with the given id does not exist
-	 * @see javastrava.api.v3.service.ActivityService#updateActivityAsync(java.lang.Long,
-	 *      javastrava.api.v3.model.StravaActivityUpdate)
+	 * @see javastrava.api.v3.service.ActivityService#updateActivityAsync(java.lang.Long, javastrava.api.v3.model.StravaActivityUpdate)
 	 */
 	@Override
-	public CompletableFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity)
-			throws NotFoundException {
+	public CompletableFuture<StravaActivity> updateActivityAsync(final Long activityId, final StravaActivityUpdate activity) throws NotFoundException {
 		return this.activityService.updateActivityAsync(activityId, activity);
 	}
 
@@ -3056,12 +2743,10 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param weight
 	 *            The weight that the athlete wants Strava to believe that they are
 	 * @return Detailed representation of the updated athlete
-	 * @see javastrava.api.v3.service.AthleteService#updateAuthenticatedAthlete(java.lang.String, java.lang.String,
-	 *      java.lang.String, javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
+	 * @see javastrava.api.v3.service.AthleteService#updateAuthenticatedAthlete(java.lang.String, java.lang.String, java.lang.String, javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
 	 */
 	@Override
-	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country,
-			final StravaGender sex, final Float weight) {
+	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
 		return this.athleteService.updateAuthenticatedAthlete(city, state, country, sex, weight);
 	}
 
@@ -3077,12 +2762,11 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param weight
 	 *            The weight that the athlete wants Strava to believe that they are
 	 * @return Detailed representation of the updated athlete
-	 * @see javastrava.api.v3.service.AthleteService#updateAuthenticatedAthleteAsync(java.lang.String, java.lang.String,
-	 *      java.lang.String, javastrava.api.v3.model.reference.StravaGender, java.lang.Float)
+	 * @see javastrava.api.v3.service.AthleteService#updateAuthenticatedAthleteAsync(java.lang.String, java.lang.String, java.lang.String, javastrava.api.v3.model.reference.StravaGender,
+	 *      java.lang.Float)
 	 */
 	@Override
-	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state,
-			final String country, final StravaGender sex, final Float weight) {
+	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state, final String country, final StravaGender sex, final Float weight) {
 		return this.athleteService.updateAuthenticatedAthleteAsync(city, state, country, sex, weight);
 	}
 
@@ -3094,8 +2778,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param description
 	 *            (Optional)
 	 * @param _private
-	 *            (Optional) set to 1 to mark the resulting activity as private, 'view_private' permissions will be necessary to
-	 *            view the activity
+	 *            (Optional) set to 1 to mark the resulting activity as private, 'view_private' permissions will be necessary to view the activity
 	 * @param trainer
 	 *            (Optional) activities without lat/lng info in the file are auto marked as stationary, set to 1 to force
 	 * @param commute
@@ -3107,14 +2790,12 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param file
 	 *            the actual activity data, if gzipped the data_type must end with .gz
 	 * @return Returns an Upload response object which includes the status of the upload and the upload id
-	 * @see javastrava.api.v3.service.UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String,
-	 *      java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.lang.String,
-	 *      java.io.File)
+	 * @see javastrava.api.v3.service.UploadService#upload(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean,
+	 *      java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
 	 */
 	@Override
-	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description,
-			final Boolean _private, final Boolean trainer, final Boolean commute, final String dataType, final String externalId,
-			final File file) {
+	public StravaUploadResponse upload(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer, final Boolean commute,
+			final String dataType, final String externalId, final File file) {
 		return this.uploadService.upload(activityType, name, description, _private, trainer, commute, dataType, externalId, file);
 	}
 
@@ -3126,8 +2807,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param description
 	 *            (Optional)
 	 * @param _private
-	 *            (Optional) set to 1 to mark the resulting activity as private, 'view_private' permissions will be necessary to
-	 *            view the activity
+	 *            (Optional) set to 1 to mark the resulting activity as private, 'view_private' permissions will be necessary to view the activity
 	 * @param trainer
 	 *            (Optional) activities without lat/lng info in the file are auto marked as stationary, set to 1 to force
 	 * @param commute
@@ -3139,16 +2819,13 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	 * @param file
 	 *            the actual activity data, if gzipped the data_type must end with .gz
 	 * @return Returns an Upload response object which includes the status of the upload and the upload id
-	 * @see javastrava.api.v3.service.UploadService#uploadAsync(javastrava.api.v3.model.reference.StravaActivityType,
-	 *      java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.String,
-	 *      java.lang.String, java.io.File)
+	 * @see javastrava.api.v3.service.UploadService#uploadAsync(javastrava.api.v3.model.reference.StravaActivityType, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean,
+	 *      java.lang.Boolean, java.lang.String, java.lang.String, java.io.File)
 	 */
 	@Override
-	public CompletableFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name,
-			final String description, final Boolean _private, final Boolean trainer, final Boolean commute, final String dataType,
-			final String externalId, final File file) {
-		return this.uploadService.uploadAsync(activityType, name, description, _private, trainer, commute, dataType, externalId,
-				file);
+	public CompletableFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer,
+			final Boolean commute, final String dataType, final String externalId, final File file) {
+		return this.uploadService.uploadAsync(activityType, name, description, _private, trainer, commute, dataType, externalId, file);
 	}
 
 	/**
@@ -3241,9 +2918,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 
 	/**
 	 * <p>
-	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating
-	 * user and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions. For raw data associated with a route
-	 * see route streams.
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions. For raw data associated with a route see route streams.
 	 * </p>
 	 *
 	 * @param routeId
@@ -3257,9 +2933,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 
 	/**
 	 * <p>
-	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating
-	 * user and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions. For raw data associated with a route
-	 * see route streams.
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions. For raw data associated with a route see route streams.
 	 * </p>
 	 *
 	 * @param routeId
@@ -3273,8 +2948,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 
 	/**
 	 * <p>
-	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own
-	 * routes and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions.
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions.
 	 * </p>
 	 *
 	 * @param id
@@ -3288,8 +2963,8 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 
 	/**
 	 * <p>
-	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own
-	 * routes and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private} permissions.
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions.
 	 * </p>
 	 *
 	 * @param id
