@@ -2229,6 +2229,19 @@ public class API {
 	}
 
 	/**
+	 * Join a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to be joined
+	 * @return The {@link CompletableFuture} giving access to the returned challenge
+	 */
+	public StravaAPIFuture<StravaChallenge> joinChallengeAsync(Integer id) {
+		final StravaAPIFuture<StravaChallenge> future = new StravaAPIFuture<>();
+		this.challengeAPI.joinChallenge(id, callback(future));
+		return future;
+	}
+
+	/**
 	 * Leave a challenge on behalf of the authenticated user. An access token with write permissions is required.
 	 *
 	 * @param id
@@ -2237,6 +2250,19 @@ public class API {
 	public void leaveChallenge(Integer id) {
 		this.challengeAPI.leaveChallenge(id);
 
+	}
+
+	/**
+	 * Leave a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to be joined
+	 * @return The {@link CompletableFuture} giving access to the returned challenge
+	 */
+	public StravaAPIFuture<StravaChallenge> leaveChallengeAsync(Integer id) {
+		final StravaAPIFuture<StravaChallenge> future = new StravaAPIFuture<>();
+		this.challengeAPI.leaveChallenge(id, callback(future));
+		return future;
 	}
 
 	/**

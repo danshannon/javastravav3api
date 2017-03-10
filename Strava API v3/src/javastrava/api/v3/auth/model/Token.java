@@ -12,6 +12,7 @@ import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaEntity;
 import javastrava.api.v3.service.ActivityService;
 import javastrava.api.v3.service.AthleteService;
+import javastrava.api.v3.service.ChallengeService;
 import javastrava.api.v3.service.ClubService;
 import javastrava.api.v3.service.GearService;
 import javastrava.api.v3.service.RouteService;
@@ -24,6 +25,7 @@ import javastrava.api.v3.service.UploadService;
 import javastrava.api.v3.service.WebhookService;
 import javastrava.api.v3.service.impl.ActivityServiceImpl;
 import javastrava.api.v3.service.impl.AthleteServiceImpl;
+import javastrava.api.v3.service.impl.ChallengeServiceImpl;
 import javastrava.api.v3.service.impl.ClubServiceImpl;
 import javastrava.api.v3.service.impl.GearServiceImpl;
 import javastrava.api.v3.service.impl.RouteServiceImpl;
@@ -45,15 +47,14 @@ import javastrava.api.v3.service.impl.WebhookServiceImpl;
  * </p>
  *
  * <p>
- * Tokens are acquired through the OAuth process; this implementation of the API does not provide a purely programmatic way to
- * acquire a token as that would kind of destroy the point(!) - although once a user has given their permission to the application
- * via the OAuth process, you can use {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)} to
- * acquire a token at that point in the process.
+ * Tokens are acquired through the OAuth process; this implementation of the API does not provide a purely programmatic way to acquire a token as that would kind of destroy the point(!) - although
+ * once a user has given their permission to the application via the OAuth process, you can use {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)} to acquire a
+ * token at that point in the process.
  * </p>
  *
  * <p>
- * The application will now be able to make requests on the user’s behalf using the access_token query string parameter (GET) or
- * POST/PUT body, or the Authorization header. This is done auto-magically by javastrava.
+ * The application will now be able to make requests on the user’s behalf using the access_token query string parameter (GET) or POST/PUT body, or the Authorization header. This is done auto-magically
+ * by javastrava.
  * </p>
  *
  * <p>
@@ -100,13 +101,11 @@ public class Token implements StravaEntity {
 
 	/**
 	 * <p>
-	 * Default constructor is based on the {@link TokenResponse} structure received from
-	 * {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
+	 * Default constructor is based on the {@link TokenResponse} structure received from {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
 	 * </p>
 	 *
 	 * @param tokenResponse
-	 *            The response as received from
-	 *            {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
+	 *            The response as received from {@link AuthorisationService#tokenExchange(Integer, String, String, AuthorisationScope...)}
 	 * @param scopes
 	 *            The list of authorisation scopes to be associated with the token
 	 */
@@ -120,6 +119,7 @@ public class Token implements StravaEntity {
 		// Get pre-packed instances of all the services
 		this.addService(ActivityService.class, ActivityServiceImpl.instance(this));
 		this.addService(AthleteService.class, AthleteServiceImpl.instance(this));
+		this.addService(ChallengeService.class, ChallengeServiceImpl.instance(this));
 		this.addService(ClubService.class, ClubServiceImpl.instance(this));
 		this.addService(GearService.class, GearServiceImpl.instance(this));
 		this.addService(RouteService.class, RouteServiceImpl.instance(this));
@@ -267,8 +267,8 @@ public class Token implements StravaEntity {
 
 	/**
 	 * <p>
-	 * Validates that the toke has view private access (according to the scopes that it was granted on creation at least; it is
-	 * quite possible that permissions have subsequently been revoked by the user)
+	 * Validates that the toke has view private access (according to the scopes that it was granted on creation at least; it is quite possible that permissions have subsequently been revoked by the
+	 * user)
 	 * </p>
 	 *
 	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#VIEW_PRIVATE}
@@ -282,8 +282,7 @@ public class Token implements StravaEntity {
 
 	/**
 	 * <p>
-	 * Validates that the token has write access (according to the scopes that it was granted on creation at least; it is quite
-	 * possible that permissions have subsequently been revoked by the user)
+	 * Validates that the token has write access (according to the scopes that it was granted on creation at least; it is quite possible that permissions have subsequently been revoked by the user)
 	 * </p>
 	 *
 	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#WRITE}

@@ -60,6 +60,17 @@ public interface ChallengeAPI {
 	public void joinChallenge(@Path("id") Integer id);
 
 	/**
+	 * Join a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to be joined
+	 * @param callback
+	 *            Callback which will give access to the challenges
+	 */
+	@POST("/challenges/{id}/athletes")
+	public void joinChallenge(@Path("id") Integer id, StravaAPICallback<StravaChallenge> callback);
+
+	/**
 	 * Leave a challenge on behalf of the authenticated user. An access token with write permissions is required.
 	 *
 	 * @param id
@@ -67,6 +78,17 @@ public interface ChallengeAPI {
 	 */
 	@DELETE("/challenges/{id}/athletes")
 	public void leaveChallenge(@Path("id") Integer id);
+
+	/**
+	 * Leave a challenge on behalf of the authenticated user. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to leave
+	 * @param callback
+	 *            Callback which will give access to the challenges
+	 */
+	@DELETE("/challenges/{id}/athletes")
+	public void leaveChallenge(@Path("id") Integer id, StravaAPICallback<StravaChallenge> callback);
 
 	/**
 	 * List the challenges the athlete has joined.
