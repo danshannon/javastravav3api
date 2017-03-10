@@ -5,6 +5,7 @@ import java.util.List;
 
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaActivity;
+import javastrava.api.v3.model.StravaChallenge;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaGear;
 import javastrava.api.v3.model.StravaSegment;
@@ -23,8 +24,11 @@ public class PrivacyUtils {
 	 * <p>
 	 * Check that an activity belongs to the authenticated user
 	 * </p>
-	 * @param activity The activity to check
-	 * @param token The access token in use
+	 * 
+	 * @param activity
+	 *            The activity to check
+	 * @param token
+	 *            The access token in use
 	 * @return <code>true</code> if the activity belongs to the authenticated user, <code>false</code> otherwise
 	 */
 	private static boolean activityBelongsToAuthenticatedUser(final StravaActivity activity, final Token token) {
@@ -32,8 +36,12 @@ public class PrivacyUtils {
 	}
 
 	/**
-	 * <p>Checks if an activity is private</p>
-	 * @param activity The activity to check
+	 * <p>
+	 * Checks if an activity is private
+	 * </p>
+	 * 
+	 * @param activity
+	 *            The activity to check
 	 * @return <code>true</code> if and only if the privateActivity flag is set to Boolean.TRUE
 	 */
 	private static boolean activityIsPrivate(final StravaActivity activity) {
@@ -44,8 +52,11 @@ public class PrivacyUtils {
 	 * <p>
 	 * Removes private activities from the list (by changing private ones to activities with resourceState=PRIVATE)
 	 * </p>
-	 * @param activities The list of activities to process
-	 * @param token The access token in use (so we can check if it has view_private acess)
+	 * 
+	 * @param activities
+	 *            The list of activities to process
+	 * @param token
+	 *            The access token in use (so we can check if it has view_private acess)
 	 * @return Modified list of activities
 	 */
 	public static List<StravaActivity> handlePrivateActivities(final List<StravaActivity> activities, final Token token) {
@@ -70,61 +81,63 @@ public class PrivacyUtils {
 		}
 		return returnedActivities;
 
-
 	}
 
 	/**
 	 * <p>
 	 * Returns the list of segments with any that should be flagged as private having their data cleared and resource state set to {@link StravaResourceState#PRIVATE}
 	 * </p>
-	 * @param efforts List of efforts to be 'privatised'
-	 * @param token The access token in use
+	 * 
+	 * @param efforts
+	 *            List of efforts to be 'privatised'
+	 * @param token
+	 *            The access token in use
 	 * @return Modified list of efforts
 	 */
 	public static List<StravaSegmentEffort> handlePrivateSegmentEfforts(final List<StravaSegmentEffort> efforts, final Token token) {
 		return efforts;
-		//		if (efforts == null) {
-		//			return null;
-		//		}
+		// if (efforts == null) {
+		// return null;
+		// }
 		//
-		//		// Build a set of segments and activities to check for privacy
-		//		Set<StravaActivity> activities = new HashSet<StravaActivity>();
-		//		Set<StravaSegment> segments = new HashSet<StravaSegment>();
-		//		for (StravaSegmentEffort effort : efforts) {
-		//			activities.add(effort.getActivity());
-		//			segments.add(effort.getSegment());
-		//		}
+		// // Build a set of segments and activities to check for privacy
+		// Set<StravaActivity> activities = new HashSet<StravaActivity>();
+		// Set<StravaSegment> segments = new HashSet<StravaSegment>();
+		// for (StravaSegmentEffort effort : efforts) {
+		// activities.add(effort.getActivity());
+		// segments.add(effort.getSegment());
+		// }
 		//
-		//		// Now make a list of the activities that are private
-		//		Set<StravaActivity> privateActivities = new HashSet<StravaActivity>();
-		//		for (StravaActivity activity : activities) {
-		//			StravaActivity stravaActivity = token.getService(ActivityService.class).getActivity(activity.getId());
-		//			if (stravaActivity.getResourceState() == StravaResourceState.PRIVATE) {
-		//				privateActivities.add(activity);
-		//			}
-		//		}
+		// // Now make a list of the activities that are private
+		// Set<StravaActivity> privateActivities = new HashSet<StravaActivity>();
+		// for (StravaActivity activity : activities) {
+		// StravaActivity stravaActivity = token.getService(ActivityService.class).getActivity(activity.getId());
+		// if (stravaActivity.getResourceState() == StravaResourceState.PRIVATE) {
+		// privateActivities.add(activity);
+		// }
+		// }
 		//
-		//		// Now make a list of the segments that are private
-		//		Set<StravaSegment> privateSegments = new HashSet<StravaSegment>();
-		//		for (StravaSegment segment : segments) {
-		//			StravaSegment stravaSegment = token.getService(SegmentService.class).getSegment(segment.getId());
-		//			if (stravaSegment.getResourceState() == StravaResourceState.PRIVATE) {
-		//				privateSegments.add(segment);
-		//			}
-		//		}
+		// // Now make a list of the segments that are private
+		// Set<StravaSegment> privateSegments = new HashSet<StravaSegment>();
+		// for (StravaSegment segment : segments) {
+		// StravaSegment stravaSegment = token.getService(SegmentService.class).getSegment(segment.getId());
+		// if (stravaSegment.getResourceState() == StravaResourceState.PRIVATE) {
+		// privateSegments.add(segment);
+		// }
+		// }
 		//
-		//		// Now run through all the efforts and fix the ones for private segments/activities
-		//		List<StravaSegmentEffort> returnedEfforts = new ArrayList<StravaSegmentEffort>();
-		//		for (StravaSegmentEffort effort : efforts) {
-		//			if (privateActivities.contains(effort.getActivity()) || privateSegments.contains(effort.getSegment())) {
-		//				returnedEfforts.add(privateSegmentEffort(effort.getId()));
-		//			} else {
-		//				returnedEfforts.add(effort);
-		//			}
-		//		}
+		// // Now run through all the efforts and fix the ones for private segments/activities
+		// List<StravaSegmentEffort> returnedEfforts = new ArrayList<StravaSegmentEffort>();
+		// for (StravaSegmentEffort effort : efforts) {
+		// if (privateActivities.contains(effort.getActivity()) || privateSegments.contains(effort.getSegment())) {
+		// returnedEfforts.add(privateSegmentEffort(effort.getId()));
+		// } else {
+		// returnedEfforts.add(effort);
+		// }
+		// }
 		//
-		//		// That's it
-		//		return returnedEfforts;
+		// // That's it
+		// return returnedEfforts;
 
 	}
 
@@ -132,8 +145,11 @@ public class PrivacyUtils {
 	 * <p>
 	 * Removes private segments from the given list (by replacing them with segments with resourceState = {@link StravaResourceState#PRIVATE}
 	 * </p>
-	 * @param segments The list of segments to be 'privatised'
-	 * @param token The access token being used; will be checked for view_private access for segments belonging to the authenticated user
+	 * 
+	 * @param segments
+	 *            The list of segments to be 'privatised'
+	 * @param token
+	 *            The access token being used; will be checked for view_private access for segments belonging to the authenticated user
 	 * @return The modified list of segments
 	 */
 	public static List<StravaSegment> handlePrivateSegments(final List<StravaSegment> segments, final Token token) {
@@ -160,8 +176,12 @@ public class PrivacyUtils {
 	}
 
 	/**
-	 * <p>Creates an activity with the given id and resourceState = {@link StravaResourceState#PRIVATE}</p>
-	 * @param activityId the activity id to be given to the private activity
+	 * <p>
+	 * Creates an activity with the given id and resourceState = {@link StravaResourceState#PRIVATE}
+	 * </p>
+	 * 
+	 * @param activityId
+	 *            the activity id to be given to the private activity
 	 * @return The private activity
 	 */
 	public static StravaActivity privateActivity(final Long activityId) {
@@ -172,8 +192,12 @@ public class PrivacyUtils {
 	}
 
 	/**
-	 * <p>Creates a {@link StravaClub} with resourceState = {@link StravaResourceState#PRIVATE}</p>
-	 * @param id The id of the club to create
+	 * <p>
+	 * Creates a {@link StravaClub} with resourceState = {@link StravaResourceState#PRIVATE}
+	 * </p>
+	 * 
+	 * @param id
+	 *            The id of the club to create
 	 * @return The private club
 	 */
 	public static StravaClub privateClubRepresentation(final Integer id) {
@@ -184,8 +208,12 @@ public class PrivacyUtils {
 	}
 
 	/**
-	 * <p>Creates a {@link StravaGear} with resourceState = {@link StravaResourceState#PRIVATE}</p>
-	 * @param id The id of the gear to create
+	 * <p>
+	 * Creates a {@link StravaGear} with resourceState = {@link StravaResourceState#PRIVATE}
+	 * </p>
+	 * 
+	 * @param id
+	 *            The id of the gear to create
 	 * @return The private gear
 	 */
 	public static StravaGear privateGear(final String id) {
@@ -196,8 +224,12 @@ public class PrivacyUtils {
 	}
 
 	/**
-	 * <p>Creates a {@link StravaSegment} with resourceState = {@link StravaResourceState#PRIVATE}</p>
-	 * @param id The id of the segment to create
+	 * <p>
+	 * Creates a {@link StravaSegment} with resourceState = {@link StravaResourceState#PRIVATE}
+	 * </p>
+	 * 
+	 * @param id
+	 *            The id of the segment to create
 	 * @return The private segment
 	 */
 	public static StravaSegment privateSegment(final Integer id) {
@@ -208,8 +240,11 @@ public class PrivacyUtils {
 	}
 
 	/**
-	 * <p>Creates a {@link StravaSegmentEffort} with resourceState = {@link StravaResourceState#PRIVATE}
-	 * @param id The id of the effort to create
+	 * <p>
+	 * Creates a {@link StravaSegmentEffort} with resourceState = {@link StravaResourceState#PRIVATE}
+	 * 
+	 * @param id
+	 *            The id of the effort to create
 	 * @return The private effort
 	 */
 	public static StravaSegmentEffort privateSegmentEffort(final Long id) {
@@ -223,6 +258,7 @@ public class PrivacyUtils {
 	 * <p>
 	 * Creates a {@link StravaSegmentLeaderboard} with resourceState = {@link StravaResourceState#PRIVATE}
 	 * </p>
+	 * 
 	 * @return The private leaderboard
 	 */
 	public static StravaSegmentLeaderboard privateSegmentLeaderboard() {
@@ -242,11 +278,29 @@ public class PrivacyUtils {
 	 * <p>
 	 * Checks if a segment is flagged as private
 	 * </p>
-	 * @param segment the segment to check
+	 * 
+	 * @param segment
+	 *            the segment to check
 	 * @return <code>true</code> if the segment is flagged as private, <code>false</code> otherwise
 	 */
 	private static boolean segmentIsPrivate(final StravaSegment segment) {
 		return ((segment.getPrivateSegment() != null) && segment.getPrivateSegment().equals(Boolean.TRUE));
+	}
+
+	/**
+	 * <p>
+	 * Creates a {@link StravaChallenge} with resourceState = {@link StravaResourceState#PRIVATE}
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the challenge
+	 * @return The challenge
+	 */
+	public static StravaChallenge privateChallenge(Integer id) {
+		final StravaChallenge challenge = new StravaChallenge();
+		challenge.setId(id);
+		challenge.setResourceState(StravaResourceState.PRIVATE);
+		return challenge;
 	}
 
 }

@@ -15,6 +15,7 @@ import javastrava.api.v3.model.StravaActivityUpdate;
 import javastrava.api.v3.model.StravaActivityZone;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaAthleteZones;
+import javastrava.api.v3.model.StravaChallenge;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubEvent;
@@ -57,8 +58,8 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class Strava implements ActivityService, AthleteService, ClubService, GearService, RouteService, RunningRaceService, SegmentEffortService, SegmentService, StreamService, TokenService,
-		UploadService, WebhookService {
+public class Strava implements ActivityService, AthleteService, ChallengeService, ClubService, GearService, RouteService, RunningRaceService, SegmentEffortService, SegmentService, StreamService,
+		TokenService, UploadService, WebhookService {
 	/**
 	 * Instance used for access to activity data
 	 */
@@ -67,15 +68,21 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	/**
 	 * instance used for access to athlete data
 	 */
-	private final AthleteService	athleteService;
+	private final AthleteService athleteService;
+
+	/**
+	 * instance used for access to challenge data
+	 */
+	private final ChallengeService challengeService;
+
 	/**
 	 * instance used for access to club data
 	 */
-	private final ClubService		clubService;
+	private final ClubService	clubService;
 	/**
 	 * instance used for access to gear data
 	 */
-	private final GearService		gearService;
+	private final GearService	gearService;
 
 	/**
 	 * instance used for access to route data
@@ -124,6 +131,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 		this.token = token;
 		this.activityService = token.getService(ActivityService.class);
 		this.athleteService = token.getService(AthleteService.class);
+		this.challengeService = token.getService(ChallengeService.class);
 		this.clubService = token.getService(ClubService.class);
 		this.gearService = token.getService(GearService.class);
 		this.routeService = token.getService(RouteService.class);
@@ -166,6 +174,7 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 		// Clear all the component services' caches
 		this.activityService.clearCache();
 		this.athleteService.clearCache();
+		this.challengeService.clearCache();
 		this.clubService.clearCache();
 		this.gearService.clearCache();
 		this.routeService.clearCache();
@@ -2974,5 +2983,46 @@ public class Strava implements ActivityService, AthleteService, ClubService, Gea
 	@Override
 	public CompletableFuture<List<StravaRoute>> listAthleteRoutesAsync(Integer id) {
 		return this.routeService.listAthleteRoutesAsync(id);
+	}
+
+	@Override
+	public StravaChallenge getChallenge(Integer id) {
+		return this.challengeService.getChallenge(id);
+	}
+
+	@Override
+	public CompletableFuture<StravaChallenge> getChallengeAsync(Integer id) {
+		return this.challengeService.getChallengeAsync(id);
+	}
+
+	@Override
+	public void joinChallenge(Integer id) {
+		this.challengeService.joinChallenge(id);
+	}
+
+	@Override
+	public void leaveChallenge(Integer id) {
+		this.challengeService.leaveChallenge(id);
+
+	}
+
+	@Override
+	public CompletableFuture<Void> joinChallengeAsync(Integer id) {
+		return this.challengeService.joinChallengeAsync(id);
+	}
+
+	@Override
+	public CompletableFuture<Void> leaveChallengeAsync(Integer id) {
+		return this.challengeService.leaveChallengeAsync(id);
+	}
+
+	@Override
+	public List<StravaChallenge> listJoinedChallenges() {
+		return this.challengeService.listJoinedChallenges();
+	}
+
+	@Override
+	public CompletableFuture<List<StravaChallenge>> listJoinedChallengesAsync() {
+		return this.challengeService.listJoinedChallengesAsync();
 	}
 }
