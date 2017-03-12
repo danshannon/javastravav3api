@@ -6,6 +6,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+
 import javastrava.api.v3.auth.ref.AuthorisationApprovalPrompt;
 import javastrava.api.v3.auth.ref.AuthorisationResponseType;
 import javastrava.api.v3.auth.ref.AuthorisationScope;
@@ -15,6 +20,7 @@ import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.model.reference.StravaActivityZoneType;
 import javastrava.api.v3.model.reference.StravaAgeGroup;
 import javastrava.api.v3.model.reference.StravaAthleteType;
+import javastrava.api.v3.model.reference.StravaChallengeType;
 import javastrava.api.v3.model.reference.StravaClimbCategory;
 import javastrava.api.v3.model.reference.StravaClubMembershipStatus;
 import javastrava.api.v3.model.reference.StravaClubType;
@@ -48,6 +54,7 @@ import javastrava.json.impl.gson.serializer.AthleteTypeSerializer;
 import javastrava.json.impl.gson.serializer.AuthorisationApprovalPromptSerializer;
 import javastrava.json.impl.gson.serializer.AuthorisationResponseTypeSerializer;
 import javastrava.json.impl.gson.serializer.AuthorisationScopeSerializer;
+import javastrava.json.impl.gson.serializer.ChallengeTypeSerializer;
 import javastrava.json.impl.gson.serializer.ClimbCategorySerializer;
 import javastrava.json.impl.gson.serializer.ClubMembershipStatusSerializer;
 import javastrava.json.impl.gson.serializer.ClubTypeSerializer;
@@ -75,11 +82,6 @@ import javastrava.json.impl.gson.serializer.SubscriptionObjectTypeSerializer;
 import javastrava.json.impl.gson.serializer.WeightClassSerializer;
 import javastrava.json.impl.gson.serializer.WorkoutTypeSerializer;
 import javastrava.json.impl.gson.serializer.ZonedDateTimeSerializer;
-
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
 
 /**
  * <p>
@@ -112,6 +114,7 @@ public class JsonUtilImpl implements JsonUtil {
 		gsonBuilder.registerTypeAdapter(StravaActivityZoneType.class, new ActivityZoneTypeSerializer());
 		gsonBuilder.registerTypeAdapter(StravaAgeGroup.class, new AgeGroupSerializer());
 		gsonBuilder.registerTypeAdapter(StravaAthleteType.class, new AthleteTypeSerializer());
+		gsonBuilder.registerTypeAdapter(StravaChallengeType.class, new ChallengeTypeSerializer());
 		gsonBuilder.registerTypeAdapter(StravaClimbCategory.class, new ClimbCategorySerializer());
 		gsonBuilder.registerTypeAdapter(StravaClubType.class, new ClubTypeSerializer());
 		gsonBuilder.registerTypeAdapter(StravaClubMembershipStatus.class, new ClubMembershipStatusSerializer());

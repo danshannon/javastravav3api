@@ -34,14 +34,14 @@ public enum StravaChallengeType implements StravaReferenceType<String> {
 	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$//$NON-NLS-2$
 
 	/**
-	 * @param id
+	 * @param string
 	 *            The string representation of the activity type as returned by the Strava API
 	 * @return The {@link StravaChallengeType} with the matching id, or {@link StravaChallengeType#UNKNOWN} if there is no match
 	 * @see ActivityTypeSerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
-	public static StravaChallengeType create(final Integer id) {
+	public static StravaChallengeType create(final String string) {
 		for (final StravaChallengeType type : StravaChallengeType.values()) {
-			if (type.getId().equals(id)) {
+			if (type.getId().equals(string)) {
 				return type;
 			}
 		}
@@ -83,6 +83,6 @@ public enum StravaChallengeType implements StravaReferenceType<String> {
 
 	@Override
 	public String toString() {
-		return this.id.toString();
+		return this.id;
 	}
 }

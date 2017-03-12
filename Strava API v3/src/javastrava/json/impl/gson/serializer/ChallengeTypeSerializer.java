@@ -22,7 +22,7 @@ public class ChallengeTypeSerializer implements JsonSerializer<StravaChallengeTy
 	 */
 	@Override
 	public StravaChallengeType deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
-		final StravaChallengeType activityType = StravaChallengeType.create(new Integer(json.getAsInt()));
+		final StravaChallengeType activityType = StravaChallengeType.create(json.getAsString());
 		return activityType;
 	}
 
