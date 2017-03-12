@@ -12,26 +12,26 @@ import javastrava.json.impl.gson.serializer.ActivityTypeSerializer;
  * @author Dan Shannon
  *
  */
-public enum StravaChallengeType implements StravaReferenceType<Integer> {
+public enum StravaChallengeType implements StravaReferenceType<String> {
 	/**
 	 * Cumulative challenge
 	 */
-	CUMULATIVE_CHALLENGE(StravaConfig.integer("StravaChallengeType.cumulative"), Messages.string("StravaChallengeType.cumulative.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	CUMULATIVE_CHALLENGE(StravaConfig.string("StravaChallengeType.cumulative"), Messages.string("StravaChallengeType.cumulative.description")), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * Single segment challenge
 	 */
-	SEGMENT_CHALLENGE(StravaConfig.integer("StravaChallengeType.segment"), Messages.string("StravaChallengeType.segment.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	SEGMENT_CHALLENGE(StravaConfig.string("StravaChallengeType.segment"), Messages.string("StravaChallengeType.segment.description")), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * Single activity challenge
 	 */
-	SINGLE_ACTIVITY_CHALLENGE(StravaConfig.integer("StravaChallengeType.singleActivity"), Messages.string("StravaChallengeType.singleActivity.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	SINGLE_ACTIVITY_CHALLENGE(StravaConfig.string("StravaChallengeType.singleActivity"), Messages.string("StravaChallengeType.singleActivity.description")), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * Unknown
 	 */
-	UNKNOWN(StravaConfig.integer("Common.unknown.integer"), Messages.string("Common.unknown.description")); //$NON-NLS-1$//$NON-NLS-2$
+	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$//$NON-NLS-2$
 
 	/**
 	 * @param id
@@ -51,14 +51,14 @@ public enum StravaChallengeType implements StravaReferenceType<Integer> {
 	/**
 	 * Identifier
 	 */
-	private Integer id;
+	private String id;
 
 	/**
 	 * Description
 	 */
 	private String description;
 
-	private StravaChallengeType(final Integer id, final String description) {
+	private StravaChallengeType(final String id, final String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -72,12 +72,12 @@ public enum StravaChallengeType implements StravaReferenceType<Integer> {
 	}
 
 	@Override
-	public Integer getId() {
+	public String getId() {
 		return this.id;
 	}
 
 	@Override
-	public Integer getValue() {
+	public String getValue() {
 		return this.id;
 	}
 
