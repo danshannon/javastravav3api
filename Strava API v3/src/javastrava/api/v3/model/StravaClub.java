@@ -10,67 +10,81 @@ import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
- * Clubs represent groups of athletes on Strava. They can be public or private. Only members of private clubs can access their
- * details. The object is returned in summary or detailed {@link StravaResourceState representations}.
+ * Clubs represent groups of athletes on Strava. They can be public or private. Only members of private clubs can access their details. The object is returned in summary or detailed
+ * {@link StravaResourceState representations}.
  * </p>
  *
  * @author Dan Shannon
  *
  */
 public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
+
 	/**
 	 * Strava's unique identifier for this club
 	 */
-	private Integer				id;
+	private Integer id;
+
 	/**
 	 * State of this resource on Strava
 	 */
-	private StravaResourceState	resourceState;
+	private StravaResourceState resourceState;
+
 	/**
 	 * Club name
 	 */
-	private String				name;
+	private String name;
+
 	/**
 	 * URL to a 62x62 pixel profile picture
 	 */
-	private String				profileMedium;
+	private String profileMedium;
+
 	/**
 	 * URL to a 124x124 pixel profile picture
 	 */
-	private String				profile;
+	private String profile;
+
 	/**
 	 * Description of the club
 	 */
-	private String				description;
+	private String description;
+
 	/**
 	 * Type of club: casual_club, racing_team, shop, company, other
 	 */
-	private StravaClubType		clubType;
+	private StravaClubType clubType;
+
 	/**
 	 * cycling, running, triathlon, other
 	 */
-	private StravaSportType		sportType;
+	private StravaSportType sportType;
+
 	/**
 	 * City that the club is based in
 	 */
-	private String				city;
+
+	private String	city;
 	/**
 	 * State, territory, county, canton etc. that the club is based in
 	 */
-	private String				state;
+
+	private String	state;
 	/**
 	 * Country that the club is based in
 	 */
-	private String				country;
+
+	private String	country;
 	/**
 	 * Is set to <code>true</code> if the club is private (and therefore you require permission to join)
 	 */
+
 	@SerializedName("private")
-	private Boolean				privateClub;
+	private Boolean	privateClub;
 	/**
 	 * Number of club members (calculated by Strava, not checked or re-calculated by javastrava)
 	 */
-	private Integer				memberCount;
+
+	private Integer	memberCount;
 
 	/**
 	 * NOT DOCUMENTED
@@ -113,6 +127,16 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 	private Integer postCount;
 
 	/**
+	 * URL to a ~1185x580 pixel cover photo
+	 */
+	private String coverPhoto;
+
+	/**
+	 * URL to a ~360x176 pixel cover photo
+	 */
+	private String coverPhotoSmall;
+
+	/**
 	 * @return the verified
 	 */
 	public Boolean getVerified() {
@@ -134,18 +158,20 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 		super();
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof StravaClub)) {
 			return false;
 		}
 		final StravaClub other = (StravaClub) obj;
@@ -171,6 +197,20 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 				return false;
 			}
 		} else if (!this.country.equals(other.country)) {
+			return false;
+		}
+		if (this.coverPhoto == null) {
+			if (other.coverPhoto != null) {
+				return false;
+			}
+		} else if (!this.coverPhoto.equals(other.coverPhoto)) {
+			return false;
+		}
+		if (this.coverPhotoSmall == null) {
+			if (other.coverPhotoSmall != null) {
+				return false;
+			}
+		} else if (!this.coverPhotoSmall.equals(other.coverPhotoSmall)) {
 			return false;
 		}
 		if (this.description == null) {
@@ -225,6 +265,13 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 		} else if (!this.owner.equals(other.owner)) {
 			return false;
 		}
+		if (this.postCount == null) {
+			if (other.postCount != null) {
+				return false;
+			}
+		} else if (!this.postCount.equals(other.postCount)) {
+			return false;
+		}
 		if (this.privateClub == null) {
 			if (other.privateClub != null) {
 				return false;
@@ -257,6 +304,20 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 				return false;
 			}
 		} else if (!this.state.equals(other.state)) {
+			return false;
+		}
+		if (this.url == null) {
+			if (other.url != null) {
+				return false;
+			}
+		} else if (!this.url.equals(other.url)) {
+			return false;
+		}
+		if (this.verified == null) {
+			if (other.verified != null) {
+				return false;
+			}
+		} else if (!this.verified.equals(other.verified)) {
 			return false;
 		}
 		return true;
@@ -390,7 +451,9 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 		return this.state;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -401,6 +464,8 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 		result = (prime * result) + ((this.city == null) ? 0 : this.city.hashCode());
 		result = (prime * result) + ((this.clubType == null) ? 0 : this.clubType.hashCode());
 		result = (prime * result) + ((this.country == null) ? 0 : this.country.hashCode());
+		result = (prime * result) + ((this.coverPhoto == null) ? 0 : this.coverPhoto.hashCode());
+		result = (prime * result) + ((this.coverPhotoSmall == null) ? 0 : this.coverPhotoSmall.hashCode());
 		result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
 		result = (prime * result) + ((this.featured == null) ? 0 : this.featured.hashCode());
 		result = (prime * result) + ((this.followingCount == null) ? 0 : this.followingCount.hashCode());
@@ -409,12 +474,15 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 		result = (prime * result) + ((this.membership == null) ? 0 : this.membership.hashCode());
 		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
 		result = (prime * result) + ((this.owner == null) ? 0 : this.owner.hashCode());
+		result = (prime * result) + ((this.postCount == null) ? 0 : this.postCount.hashCode());
 		result = (prime * result) + ((this.privateClub == null) ? 0 : this.privateClub.hashCode());
 		result = (prime * result) + ((this.profile == null) ? 0 : this.profile.hashCode());
 		result = (prime * result) + ((this.profileMedium == null) ? 0 : this.profileMedium.hashCode());
 		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
 		result = (prime * result) + ((this.sportType == null) ? 0 : this.sportType.hashCode());
 		result = (prime * result) + ((this.state == null) ? 0 : this.state.hashCode());
+		result = (prime * result) + ((this.url == null) ? 0 : this.url.hashCode());
+		result = (prime * result) + ((this.verified == null) ? 0 : this.verified.hashCode());
 		return result;
 	}
 
@@ -562,18 +630,13 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 		this.state = state;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "StravaClub [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", profileMedium=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.profileMedium + ", profile=" + this.profile + ", description=" + this.description + ", clubType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.clubType + ", sportType=" + this.sportType + ", city=" + this.city + ", state=" + this.state + ", country=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.country + ", privateClub=" + this.privateClub + ", memberCount=" + this.memberCount + ", featured=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.featured + ", membership=" + this.membership + ", admin=" + this.admin + ", owner=" + this.owner //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", followingCount=" //$NON-NLS-1$
-				+ this.followingCount + "]"; //$NON-NLS-1$
+		return "StravaClub [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", profileMedium=" + this.profileMedium + ", profile=" + this.profile + ", description=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ this.description + ", clubType=" + this.clubType + ", sportType=" + this.sportType + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", privateClub=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ this.privateClub + ", memberCount=" + this.memberCount + ", featured=" + this.featured + ", membership=" + this.membership + ", admin=" + this.admin + ", owner=" + this.owner //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", followingCount=" + this.followingCount + ", url=" + this.url + ", verified=" + this.verified + ", postCount=" + this.postCount + ", coverPhoto=" + this.coverPhoto //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", coverPhotoSmall=" + this.coverPhotoSmall + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -604,5 +667,35 @@ public class StravaClub implements StravaCacheable<Integer>, StravaEntity {
 	 */
 	public void setPostCount(Integer postCount) {
 		this.postCount = postCount;
+	}
+
+	/**
+	 * @return the coverPhoto
+	 */
+	public String getCoverPhoto() {
+		return this.coverPhoto;
+	}
+
+	/**
+	 * @param coverPhoto
+	 *            the coverPhoto to set
+	 */
+	public void setCoverPhoto(String coverPhoto) {
+		this.coverPhoto = coverPhoto;
+	}
+
+	/**
+	 * @return the coverPhotoSmall
+	 */
+	public String getCoverPhotoSmall() {
+		return this.coverPhotoSmall;
+	}
+
+	/**
+	 * @param coverPhotoSmall
+	 *            the coverPhotoSmall to set
+	 */
+	public void setCoverPhotoSmall(String coverPhotoSmall) {
+		this.coverPhotoSmall = coverPhotoSmall;
 	}
 }

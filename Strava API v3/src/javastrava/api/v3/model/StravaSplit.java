@@ -14,23 +14,38 @@ public class StravaSplit implements StravaEntity {
 	/**
 	 * Total distance in metres
 	 */
-	private Float distance;
+	private Float	distance;
 	/**
 	 * Elapsed time for the split in seconds (including time spent stopped)
 	 */
-	private Integer elapsedTime;
+	private Integer	elapsedTime;
 	/**
 	 * elevation difference in metres
 	 */
-	private Float elevationDifference;
+	private Float	elevationDifference;
 	/**
 	 * Moving time for the split in seconds (excluding time spent stopped)
 	 */
-	private Integer movingTime;
+	private Integer	movingTime;
 	/**
 	 * Order of the split within the run
 	 */
-	private Integer split;
+	private Integer	split;
+
+	/**
+	 * Average heartrate
+	 */
+	private Integer averageHeartrate;
+
+	/**
+	 * Average speed
+	 */
+	private Integer averageSpeed;
+
+	/**
+	 * Pace zone (runs only)
+	 */
+	private Integer paceZone;
 
 	/**
 	 * No args constructor
@@ -39,11 +54,13 @@ public class StravaSplit implements StravaEntity {
 		super();
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -54,6 +71,20 @@ public class StravaSplit implements StravaEntity {
 			return false;
 		}
 		final StravaSplit other = (StravaSplit) obj;
+		if (this.averageHeartrate == null) {
+			if (other.averageHeartrate != null) {
+				return false;
+			}
+		} else if (!this.averageHeartrate.equals(other.averageHeartrate)) {
+			return false;
+		}
+		if (this.averageSpeed == null) {
+			if (other.averageSpeed != null) {
+				return false;
+			}
+		} else if (!this.averageSpeed.equals(other.averageSpeed)) {
+			return false;
+		}
 		if (this.distance == null) {
 			if (other.distance != null) {
 				return false;
@@ -80,6 +111,13 @@ public class StravaSplit implements StravaEntity {
 				return false;
 			}
 		} else if (!this.movingTime.equals(other.movingTime)) {
+			return false;
+		}
+		if (this.paceZone == null) {
+			if (other.paceZone != null) {
+				return false;
+			}
+		} else if (!this.paceZone.equals(other.paceZone)) {
 			return false;
 		}
 		if (this.split == null) {
@@ -127,17 +165,22 @@ public class StravaSplit implements StravaEntity {
 		return this.split;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = (prime * result) + ((this.averageHeartrate == null) ? 0 : this.averageHeartrate.hashCode());
+		result = (prime * result) + ((this.averageSpeed == null) ? 0 : this.averageSpeed.hashCode());
 		result = (prime * result) + ((this.distance == null) ? 0 : this.distance.hashCode());
 		result = (prime * result) + ((this.elapsedTime == null) ? 0 : this.elapsedTime.hashCode());
 		result = (prime * result) + ((this.elevationDifference == null) ? 0 : this.elevationDifference.hashCode());
 		result = (prime * result) + ((this.movingTime == null) ? 0 : this.movingTime.hashCode());
+		result = (prime * result) + ((this.paceZone == null) ? 0 : this.paceZone.hashCode());
 		result = (prime * result) + ((this.split == null) ? 0 : this.split.hashCode());
 		return result;
 	}
@@ -182,12 +225,54 @@ public class StravaSplit implements StravaEntity {
 		this.split = split;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "StravaSplit [distance=" + this.distance + ", elapsedTime=" + this.elapsedTime + ", elevationDifference=" + this.elevationDifference //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", movingTime=" + this.movingTime + ", split=" + this.split + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return "StravaSplit [distance=" + this.distance + ", elapsedTime=" + this.elapsedTime + ", elevationDifference=" + this.elevationDifference + ", movingTime=" + this.movingTime + ", split=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.split + ", averageHeartrate=" + this.averageHeartrate + ", averageSpeed=" + this.averageSpeed + ", paceZone=" + this.paceZone + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	}
+
+	/**
+	 * @return the averageHeartrate
+	 */
+	public Integer getAverageHeartrate() {
+		return this.averageHeartrate;
+	}
+
+	/**
+	 * @param averageHeartrate
+	 *            the averageHeartrate to set
+	 */
+	public void setAverageHeartrate(Integer averageHeartrate) {
+		this.averageHeartrate = averageHeartrate;
+	}
+
+	/**
+	 * @return the averageSpeed
+	 */
+	public Integer getAverageSpeed() {
+		return this.averageSpeed;
+	}
+
+	/**
+	 * @param averageSpeed
+	 *            the averageSpeed to set
+	 */
+	public void setAverageSpeed(Integer averageSpeed) {
+		this.averageSpeed = averageSpeed;
+	}
+
+	/**
+	 * @return the paceZone
+	 */
+	public Integer getPaceZone() {
+		return this.paceZone;
+	}
+
+	/**
+	 * @param paceZone
+	 *            the paceZone to set
+	 */
+	public void setPaceZone(Integer paceZone) {
+		this.paceZone = paceZone;
 	}
 }

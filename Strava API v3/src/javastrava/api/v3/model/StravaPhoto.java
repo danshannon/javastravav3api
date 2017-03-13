@@ -20,61 +20,67 @@ public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
 	/**
 	 * Strava's unique identifier for the photo
 	 */
-	private Integer				id;
+	private Integer id;
+
 	/**
 	 * Identifier of the activity to which the photo is attached
 	 */
-	private Integer				activityId;
+	private Long activityId;
+
 	/**
 	 * Current state of this resource on Strava
 	 */
-	private StravaResourceState	resourceState;
+	private StravaResourceState resourceState;
+
 	/**
 	 * External link to the image
 	 */
-	private String				ref;
+	private String ref;
+
 	/**
 	 * Unique identifier specified by the source
 	 */
-	private String				uid;
+	private String uid;
+
 	/**
 	 * Caption
 	 */
-	private String				caption;
+	private String caption;
+
 	/**
 	 * Photo's source, currently only Instagram
 	 */
-	private StravaPhotoType		type;
+	private StravaPhotoType type;
+
 	/**
 	 * Date and time the photo was uploaded
 	 */
-	private ZonedDateTime		uploadedAt;
+	private ZonedDateTime uploadedAt;
+
 	/**
 	 * Date and time the photo was linked with Strava
 	 */
-	private ZonedDateTime		createdAt;
+	private ZonedDateTime createdAt;
+
 	/**
 	 * Geographical location of the photo
 	 */
-	private StravaMapPoint		location;
+	private StravaMapPoint location;
+
 	/**
 	 * Source of the photo (Instagram or Strava)
 	 */
-	private StravaPhotoSource	source;
+	private StravaPhotoSource source;
 
 	/**
 	 * URL's to use to access the photo
 	 */
-	private StravaPhotoUrls	urls;
+	private StravaPhotoUrls urls;
+
 	/**
 	 * Unique id given to the photo by Instagram / Strava
 	 */
-	private String			uniqueId;
-
-	/**
-	 * Use as primary photo
-	 */
-	private Boolean usePrimaryPhoto;
+	private String uniqueId;
 
 	/**
 	 * Photo sizes
@@ -92,17 +98,34 @@ public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
 	private LocalDateTime createdAtLocal;
 
 	/**
+	 * Athlete identifier
+	 */
+	private Integer athleteId;
+
+	/**
+	 * UNDOCUMENTED
+	 */
+	private Boolean defaultPhoto;
+
+	/**
+	 * UNDOCUMENTED
+	 */
+	private String usePrimaryPhoto;
+
+	/**
 	 * no args constructor
 	 */
 	public StravaPhoto() {
 		super();
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -127,6 +150,13 @@ public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
 		} else if (!this.activityName.equals(other.activityName)) {
 			return false;
 		}
+		if (this.athleteId == null) {
+			if (other.athleteId != null) {
+				return false;
+			}
+		} else if (!this.athleteId.equals(other.athleteId)) {
+			return false;
+		}
 		if (this.caption == null) {
 			if (other.caption != null) {
 				return false;
@@ -146,6 +176,13 @@ public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
 				return false;
 			}
 		} else if (!this.createdAtLocal.equals(other.createdAtLocal)) {
+			return false;
+		}
+		if (this.defaultPhoto == null) {
+			if (other.defaultPhoto != null) {
+				return false;
+			}
+		} else if (!this.defaultPhoto.equals(other.defaultPhoto)) {
 			return false;
 		}
 		if (this.id == null) {
@@ -221,13 +258,6 @@ public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * @return the activityId
-	 */
-	public Integer getActivityId() {
-		return this.activityId;
 	}
 
 	/**
@@ -330,14 +360,9 @@ public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
 		return this.urls;
 	}
 
-	/**
-	 * @return the usePrimaryPhoto
-	 */
-	public Boolean getUsePrimaryPhoto() {
-		return this.usePrimaryPhoto;
-	}
-
-	/**
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -346,9 +371,11 @@ public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
 		int result = 1;
 		result = (prime * result) + ((this.activityId == null) ? 0 : this.activityId.hashCode());
 		result = (prime * result) + ((this.activityName == null) ? 0 : this.activityName.hashCode());
+		result = (prime * result) + ((this.athleteId == null) ? 0 : this.athleteId.hashCode());
 		result = (prime * result) + ((this.caption == null) ? 0 : this.caption.hashCode());
 		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
 		result = (prime * result) + ((this.createdAtLocal == null) ? 0 : this.createdAtLocal.hashCode());
+		result = (prime * result) + ((this.defaultPhoto == null) ? 0 : this.defaultPhoto.hashCode());
 		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
 		result = (prime * result) + ((this.location == null) ? 0 : this.location.hashCode());
 		result = (prime * result) + ((this.ref == null) ? 0 : this.ref.hashCode());
@@ -362,14 +389,6 @@ public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
 		result = (prime * result) + ((this.urls == null) ? 0 : this.urls.hashCode());
 		result = (prime * result) + ((this.usePrimaryPhoto == null) ? 0 : this.usePrimaryPhoto.hashCode());
 		return result;
-	}
-
-	/**
-	 * @param activityId
-	 *            the activityId to set
-	 */
-	public void setActivityId(final Integer activityId) {
-		this.activityId = activityId;
 	}
 
 	/**
@@ -484,26 +503,88 @@ public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
 		this.urls = urls;
 	}
 
+	@Override
+	public String toString() {
+		return "StravaPhoto [id=" + this.id + ", activityId=" + this.activityId + ", resourceState=" + this.resourceState + ", ref=" + this.ref + ", uid=" + this.uid + ", caption=" + this.caption //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ ", type=" + this.type //$NON-NLS-1$
+				+ ", uploadedAt=" + this.uploadedAt + ", createdAt=" + this.createdAt + ", location=" + this.location + ", source=" + this.source + ", urls=" + this.urls + ", uniqueId=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ this.uniqueId + ", sizes=" + this.sizes //$NON-NLS-1$
+				+ ", activityName=" + this.activityName + ", createdAtLocal=" + this.createdAtLocal + ", athleteId=" + this.athleteId + ", defaultPhoto=" + this.defaultPhoto + ", usePrimaryPhoto=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.usePrimaryPhoto + "]"; //$NON-NLS-1$
+	}
+
+	/**
+	 * @return the sizes
+	 */
+	public StravaPhotoSizes getSizes() {
+		return this.sizes;
+	}
+
+	/**
+	 * @param sizes
+	 *            the sizes to set
+	 */
+	public void setSizes(StravaPhotoSizes sizes) {
+		this.sizes = sizes;
+	}
+
+	/**
+	 * @return the athleteId
+	 */
+	public Integer getAthleteId() {
+		return this.athleteId;
+	}
+
+	/**
+	 * @param athleteId
+	 *            the athleteId to set
+	 */
+	public void setAthleteId(Integer athleteId) {
+		this.athleteId = athleteId;
+	}
+
+	/**
+	 * @return the defaultPhoto
+	 */
+	public Boolean getDefaultPhoto() {
+		return this.defaultPhoto;
+	}
+
+	/**
+	 * @param defaultPhoto
+	 *            the defaultPhoto to set
+	 */
+	public void setDefaultPhoto(Boolean defaultPhoto) {
+		this.defaultPhoto = defaultPhoto;
+	}
+
+	/**
+	 * @param activityId
+	 *            the activityId to set
+	 */
+	public void setActivityId(Long activityId) {
+		this.activityId = activityId;
+	}
+
+	/**
+	 * @return the activityId
+	 */
+	public Long getActivityId() {
+		return this.activityId;
+	}
+
+	/**
+	 * @return the usePrimaryPhoto
+	 */
+	public String getUsePrimaryPhoto() {
+		return this.usePrimaryPhoto;
+	}
+
 	/**
 	 * @param usePrimaryPhoto
 	 *            the usePrimaryPhoto to set
 	 */
-	public void setUsePrimaryPhoto(final Boolean usePrimaryPhoto) {
+	public void setUsePrimaryPhoto(String usePrimaryPhoto) {
 		this.usePrimaryPhoto = usePrimaryPhoto;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "StravaPhoto [id=" + this.id + ", activityId=" + this.activityId + ", resourceState=" + this.resourceState + ", ref=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.ref + ", uid=" //$NON-NLS-1$
-				+ this.uid + ", caption=" + this.caption + ", type=" + this.type + ", uploadedAt=" + this.uploadedAt //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", createdAt=" + this.createdAt //$NON-NLS-1$
-				+ ", location=" + this.location + ", source=" + this.source + ", urls=" + this.urls + ", uniqueId=" + this.uniqueId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", usePrimaryPhoto=" //$NON-NLS-1$
-				+ this.usePrimaryPhoto + ", sizes=" + this.sizes + ", activityName=" + this.activityName + ", createdAtLocal=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.createdAtLocal + "]"; //$NON-NLS-1$
 	}
 }

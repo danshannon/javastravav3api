@@ -19,15 +19,15 @@ public class StravaClubMembershipResponse implements StravaEntity {
 	/**
 	 * true if the call to set membership status succeeded
 	 */
-	private Boolean success;
+	private Boolean						success;
 	/**
 	 * true if the authenticated athlete is now a member of the club
 	 */
-	private Boolean active;
+	private Boolean						active;
 	/**
 	 * Membership status
 	 */
-	private StravaClubMembershipStatus membership;
+	private StravaClubMembershipStatus	membership;
 
 	/**
 	 * No args constructor
@@ -36,18 +36,20 @@ public class StravaClubMembershipResponse implements StravaEntity {
 		super();
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof StravaClubMembershipResponse)) {
 			return false;
 		}
 		final StravaClubMembershipResponse other = (StravaClubMembershipResponse) obj;
@@ -92,7 +94,9 @@ public class StravaClubMembershipResponse implements StravaEntity {
 		return this.success;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override

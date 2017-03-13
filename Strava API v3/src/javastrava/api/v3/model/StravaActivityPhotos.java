@@ -4,7 +4,7 @@ package javastrava.api.v3.model;
  * <p>
  * Photo(s) associated with a specific activity
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
@@ -13,10 +13,16 @@ public class StravaActivityPhotos implements StravaEntity {
 	 * Primary photo
 	 */
 	private StravaPhoto primary;
+
 	/**
 	 * Total number of photos (instagram + native)
 	 */
 	private Integer count;
+
+	/**
+	 * UNDOCUMENTED
+	 */
+	private String usePrimaryPhoto;
 
 	/**
 	 *
@@ -25,11 +31,13 @@ public class StravaActivityPhotos implements StravaEntity {
 		super();
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -54,6 +62,13 @@ public class StravaActivityPhotos implements StravaEntity {
 		} else if (!this.primary.equals(other.primary)) {
 			return false;
 		}
+		if (this.usePrimaryPhoto == null) {
+			if (other.usePrimaryPhoto != null) {
+				return false;
+			}
+		} else if (!this.usePrimaryPhoto.equals(other.usePrimaryPhoto)) {
+			return false;
+		}
 		return true;
 	}
 
@@ -71,7 +86,9 @@ public class StravaActivityPhotos implements StravaEntity {
 		return this.primary;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -80,6 +97,7 @@ public class StravaActivityPhotos implements StravaEntity {
 		int result = 1;
 		result = (prime * result) + ((this.count == null) ? 0 : this.count.hashCode());
 		result = (prime * result) + ((this.primary == null) ? 0 : this.primary.hashCode());
+		result = (prime * result) + ((this.usePrimaryPhoto == null) ? 0 : this.usePrimaryPhoto.hashCode());
 		return result;
 	}
 
@@ -99,12 +117,24 @@ public class StravaActivityPhotos implements StravaEntity {
 		this.primary = primary;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "StravaActivityPhotos [primary=" + this.primary + ", count=" + this.count + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return "StravaActivityPhotos [primary=" + this.primary + ", count=" + this.count + ", usePrimaryPhoto=" + this.usePrimaryPhoto + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	}
+
+	/**
+	 * @return the usePrimaryPhoto
+	 */
+	public String getUsePrimaryPhoto() {
+		return this.usePrimaryPhoto;
+	}
+
+	/**
+	 * @param usePrimaryPhoto
+	 *            the usePrimaryPhoto to set
+	 */
+	public void setUsePrimaryPhoto(String usePrimaryPhoto) {
+		this.usePrimaryPhoto = usePrimaryPhoto;
 	}
 
 }

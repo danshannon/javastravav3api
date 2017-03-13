@@ -11,8 +11,7 @@ import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
- * Routes are manually-created paths made up of sections called legs. Currently it is only possible to create routes using the
- * Routebuilder web interface.
+ * Routes are manually-created paths made up of sections called legs. Currently it is only possible to create routes using the Routebuilder web interface.
  * </p>
  *
  * @author Dan Shannon
@@ -301,5 +300,137 @@ public class StravaRoute implements StravaCacheable<Integer>, StravaEntity {
 	 */
 	public void setSegments(List<StravaSegment> segments) {
 		this.segments = segments;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.athlete == null) ? 0 : this.athlete.hashCode());
+		result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
+		result = (prime * result) + ((this.distance == null) ? 0 : this.distance.hashCode());
+		result = (prime * result) + ((this.elevationGain == null) ? 0 : this.elevationGain.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.isPrivate == null) ? 0 : this.isPrivate.hashCode());
+		result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());
+		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.segments == null) ? 0 : this.segments.hashCode());
+		result = (prime * result) + ((this.starred == null) ? 0 : this.starred.hashCode());
+		result = (prime * result) + ((this.subType == null) ? 0 : this.subType.hashCode());
+		result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
+		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof StravaRoute)) {
+			return false;
+		}
+		final StravaRoute other = (StravaRoute) obj;
+		if (this.athlete == null) {
+			if (other.athlete != null) {
+				return false;
+			}
+		} else if (!this.athlete.equals(other.athlete)) {
+			return false;
+		}
+		if (this.description == null) {
+			if (other.description != null) {
+				return false;
+			}
+		} else if (!this.description.equals(other.description)) {
+			return false;
+		}
+		if (this.distance == null) {
+			if (other.distance != null) {
+				return false;
+			}
+		} else if (!this.distance.equals(other.distance)) {
+			return false;
+		}
+		if (this.elevationGain == null) {
+			if (other.elevationGain != null) {
+				return false;
+			}
+		} else if (!this.elevationGain.equals(other.elevationGain)) {
+			return false;
+		}
+		if (this.id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!this.id.equals(other.id)) {
+			return false;
+		}
+		if (this.isPrivate == null) {
+			if (other.isPrivate != null) {
+				return false;
+			}
+		} else if (!this.isPrivate.equals(other.isPrivate)) {
+			return false;
+		}
+		if (this.map == null) {
+			if (other.map != null) {
+				return false;
+			}
+		} else if (!this.map.equals(other.map)) {
+			return false;
+		}
+		if (this.name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!this.name.equals(other.name)) {
+			return false;
+		}
+		if (this.resourceState != other.resourceState) {
+			return false;
+		}
+		if (this.segments == null) {
+			if (other.segments != null) {
+				return false;
+			}
+		} else if (!this.segments.equals(other.segments)) {
+			return false;
+		}
+		if (this.starred == null) {
+			if (other.starred != null) {
+				return false;
+			}
+		} else if (!this.starred.equals(other.starred)) {
+			return false;
+		}
+		if (this.subType != other.subType) {
+			return false;
+		}
+		if (this.timestamp == null) {
+			if (other.timestamp != null) {
+				return false;
+			}
+		} else if (!this.timestamp.equals(other.timestamp)) {
+			return false;
+		}
+		if (this.type != other.type) {
+			return false;
+		}
+		return true;
 	}
 }

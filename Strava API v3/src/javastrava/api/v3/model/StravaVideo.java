@@ -1,5 +1,7 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * @author Dan Shannon
  *
@@ -9,14 +11,21 @@ public class StravaVideo implements StravaEntity {
 	 * Unique id of the video
 	 */
 	private Integer id;
+
 	/**
 	 * URL of still image
 	 */
 	private String stillImageUrl;
+
 	/**
 	 * URL of badge image
 	 */
 	private String badgeImageUrl;
+
+	/**
+	 * Resource state
+	 */
+	private StravaResourceState resourceState;
 
 	/**
 	 * No-args constructor
@@ -25,11 +34,13 @@ public class StravaVideo implements StravaEntity {
 		super();
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -52,6 +63,9 @@ public class StravaVideo implements StravaEntity {
 				return false;
 			}
 		} else if (!this.id.equals(other.id)) {
+			return false;
+		}
+		if (this.resourceState != other.resourceState) {
 			return false;
 		}
 		if (this.stillImageUrl == null) {
@@ -85,7 +99,9 @@ public class StravaVideo implements StravaEntity {
 		return this.stillImageUrl;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -94,6 +110,7 @@ public class StravaVideo implements StravaEntity {
 		int result = 1;
 		result = (prime * result) + ((this.badgeImageUrl == null) ? 0 : this.badgeImageUrl.hashCode());
 		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
 		result = (prime * result) + ((this.stillImageUrl == null) ? 0 : this.stillImageUrl.hashCode());
 		return result;
 	}
@@ -122,12 +139,24 @@ public class StravaVideo implements StravaEntity {
 		this.stillImageUrl = stillImageUrl;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "StravaVideo [id=" + this.id + ", stillImageUrl=" + this.stillImageUrl + ", badgeImageUrl=" + this.badgeImageUrl + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "StravaVideo [id=" + this.id + ", stillImageUrl=" + this.stillImageUrl + ", badgeImageUrl=" + this.badgeImageUrl + ", resourceState=" + this.resourceState + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+	}
+
+	/**
+	 * @return the resourceState
+	 */
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+
+	/**
+	 * @param resourceState
+	 *            the resourceState to set
+	 */
+	public void setResourceState(StravaResourceState resourceState) {
+		this.resourceState = resourceState;
 	}
 
 }
