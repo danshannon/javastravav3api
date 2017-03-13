@@ -3,18 +3,16 @@ package javastrava.api.v3.model;
 import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
- * Announcements are posts sent by Club Admins or Owners to the members of a club. Only members of private clubs can access their
- * announcements. The objects are returned in summary representation.
+ * Announcements are posts sent by Club Admins or Owners to the members of a club. Only members of private clubs can access their announcements. The objects are returned in summary representation.
  * </p>
  *
  * @author Dan Shannon
  *
  */
-public class StravaClubAnnouncement implements StravaCacheable<Integer>, StravaEntity {
+public class StravaClubAnnouncement implements StravaEntity<Integer> {
 	/**
 	 * Unique identifier of the announcement
 	 */

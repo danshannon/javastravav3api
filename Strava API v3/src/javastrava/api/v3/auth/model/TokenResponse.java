@@ -2,6 +2,7 @@ package javastrava.api.v3.auth.model;
 
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaEntity;
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.rest.API;
 
 /**
@@ -11,7 +12,7 @@ import javastrava.api.v3.rest.API;
  *
  * @author Dan Shannon
  */
-public class TokenResponse implements StravaEntity {
+public class TokenResponse implements StravaEntity<Integer> {
 	/**
 	 * The value of the access token
 	 */
@@ -130,6 +131,16 @@ public class TokenResponse implements StravaEntity {
 	@Override
 	public String toString() {
 		return "TokenResponse [accessToken=" + this.accessToken + ", tokenType=" + this.tokenType + ", athlete=" + this.athlete + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 
 }

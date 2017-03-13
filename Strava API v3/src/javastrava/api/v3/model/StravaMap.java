@@ -1,7 +1,6 @@
 package javastrava.api.v3.model;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -15,7 +14,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaMap implements StravaCacheable<String>, StravaEntity {
+public class StravaMap implements StravaEntity<String> {
 	/**
 	 * Strava's unique identifier for the map
 	 */

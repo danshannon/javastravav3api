@@ -13,35 +13,35 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentLeaderboard implements StravaEntity {
+public class StravaSegmentLeaderboard implements StravaEntity<Integer> {
 	/**
 	 * Number of entries in the leaderboard as a whole (i.e. the number of athletes)
 	 */
-	private Integer entryCount;
+	private Integer								entryCount;
 	/**
 	 * Number of efforts altogether on this segment
 	 */
-	private Integer effortCount;
+	private Integer								effortCount;
 	/**
 	 * How many 'neighbourhoods' there are in this leaderboard - 1 if only returning leaderboard or only returning athlete context entries, 2 if returning both
 	 */
-	private Integer neighborhoodCount;
+	private Integer								neighborhoodCount;
 	/**
 	 * KOM type as requested
 	 */
-	private StravaLeaderboardDateRange komType;
+	private StravaLeaderboardDateRange			komType;
 	/**
 	 * Resource state
 	 */
-	private StravaResourceState resourceState;
+	private StravaResourceState					resourceState;
 	/**
 	 * The entries that were actually asked for
 	 */
-	private List<StravaSegmentLeaderboardEntry> entries;
+	private List<StravaSegmentLeaderboardEntry>	entries;
 	/**
 	 * The entries relative to the athlete
 	 */
-	private List<StravaSegmentLeaderboardEntry> athleteEntries;
+	private List<StravaSegmentLeaderboardEntry>	athleteEntries;
 
 	/**
 	 * No args constructor
@@ -158,6 +158,7 @@ public class StravaSegmentLeaderboard implements StravaEntity {
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
@@ -243,5 +244,10 @@ public class StravaSegmentLeaderboard implements StravaEntity {
 		return "StravaSegmentLeaderboard [entryCount=" + this.entryCount + ", effortCount=" + this.effortCount + ", neighborhoodCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ this.neighborhoodCount + ", komType=" + this.komType + ", resourceState=" + this.resourceState + ", entries=" + this.entries //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ ", athleteEntries=" + this.athleteEntries + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
 	}
 }

@@ -2,21 +2,23 @@ package javastrava.api.v3.model;
 
 import java.util.List;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * Set of athlete heart rate or power zones
  *
  * @author Dan Shannon
  *
  */
-public class StravaAthleteZone implements StravaEntity {
+public class StravaAthleteZone implements StravaEntity<Integer> {
 	/**
 	 * Is this a set of custom zones?
 	 */
-	private Boolean customZones;
+	private Boolean				customZones;
 	/**
 	 * The actual zones
 	 */
-	private List<StravaZone> zones;
+	private List<StravaZone>	zones;
 
 	/**
 	 * no-args constructor
@@ -106,5 +108,15 @@ public class StravaAthleteZone implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaHeartRateZones [customZones=" + this.customZones + ", zones=" + this.zones + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

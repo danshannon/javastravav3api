@@ -1,12 +1,14 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * A zone e.g. for measuring athlete's heart rate zone
  *
  * @author DShannon
  *
  */
-public class StravaZone implements StravaEntity {
+public class StravaZone implements StravaEntity<Integer> {
 	/**
 	 * Minimum value in a zone
 	 */
@@ -104,6 +106,16 @@ public class StravaZone implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaZone [min=" + this.min + ", max=" + this.max + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 
 }

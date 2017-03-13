@@ -5,45 +5,54 @@ import java.time.ZonedDateTime;
 import com.google.gson.annotations.SerializedName;
 
 import javastrava.api.v3.model.StravaEntity;
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.webhook.reference.StravaSubscriptionAspectType;
 import javastrava.api.v3.model.webhook.reference.StravaSubscriptionObjectType;
 
 /**
- * @author danshannon
+ * The record of a subscription to an event
+ *
+ * @author Dan Shannon
  *
  */
-public class StravaEventSubscription implements StravaEntity {
+public class StravaEventSubscription implements StravaEntity<Integer> {
 	/**
 	 * Unique identifier of this event subscription
 	 */
-	private Integer							id;
+	private Integer id;
+
 	/**
 	 * Application's id, obtained during registration
 	 */
-	private Integer							applicationId;
+	private Integer applicationId;
+
 	/**
 	 * Object type included in the subscription
 	 */
 	@SerializedName("object_type_id")
-	private StravaSubscriptionObjectType	objectType;
+	private StravaSubscriptionObjectType objectType;
+
 	/**
 	 * Aspect type included in the subscription
 	 */
 	@SerializedName("aspect_type_id")
-	private StravaSubscriptionAspectType	aspectType;
+	private StravaSubscriptionAspectType aspectType;
+
 	/**
 	 * Callpack URL which is POSTed to by Strava when an event has occurred
 	 */
 	@SerializedName("callback_url")
-	private String							callbackURL;
+	private String callbackURL;
+
 	/**
 	 * Date and time this subscription was created
 	 */
-	private ZonedDateTime					createdAt;
+	private ZonedDateTime createdAt;
+
 	/**
 	 * Date and time this subscription was last updated
 	 */
-	private ZonedDateTime					updatedAt;
+	private ZonedDateTime updatedAt;
 
 	/**
 	 * No-argument constructor
@@ -142,6 +151,7 @@ public class StravaEventSubscription implements StravaEntity {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -242,5 +252,10 @@ public class StravaEventSubscription implements StravaEntity {
 				+ this.objectType + ", aspectType=" //$NON-NLS-1$
 				+ this.aspectType + ", callbackURL=" + this.callbackURL + ", createdAt=" + this.createdAt + ", updatedAt=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ this.updatedAt + "]"; //$NON-NLS-1$
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

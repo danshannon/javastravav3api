@@ -10,7 +10,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaSimilarActivities implements StravaEntity {
+public class StravaSimilarActivities implements StravaEntity<Integer> {
 
 	/**
 	 * UNDOCUMENTED
@@ -187,6 +187,7 @@ public class StravaSimilarActivities implements StravaEntity {
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}
@@ -310,5 +311,10 @@ public class StravaSimilarActivities implements StravaEntity {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
 	}
 }

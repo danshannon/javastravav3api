@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaGender;
+import javastrava.api.v3.model.reference.StravaResourceState;
 
 /**
  * <p>
@@ -13,7 +14,7 @@ import javastrava.api.v3.model.reference.StravaGender;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentLeaderboardEntry implements StravaEntity {
+public class StravaSegmentLeaderboardEntry implements StravaEntity<Integer> {
 	/**
 	 * Name of the athlete
 	 */
@@ -27,8 +28,7 @@ public class StravaSegmentLeaderboardEntry implements StravaEntity {
 	 */
 	private StravaGender	athleteGender;
 	/**
-	 * Average heart rate (in beats per minute) for the effort associated with the leaderboard entry, if data was provided with the
-	 * upload
+	 * Average heart rate (in beats per minute) for the effort associated with the leaderboard entry, if data was provided with the upload
 	 */
 	private Float			averageHr;
 	/**
@@ -466,5 +466,15 @@ public class StravaSegmentLeaderboardEntry implements StravaEntity {
 				+ this.activityId + ", effortId=" + this.effortId + ", rank=" + this.rank + ", athleteProfile=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ this.athleteProfile + ", neighborhoodIndex=" //$NON-NLS-1$
 				+ this.neighborhoodIndex + "]"; //$NON-NLS-1$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

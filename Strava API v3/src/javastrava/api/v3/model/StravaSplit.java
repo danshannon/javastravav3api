@@ -1,5 +1,6 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.ActivityService;
 
 /**
@@ -10,7 +11,7 @@ import javastrava.api.v3.service.ActivityService;
  * @author Dan Shannon
  *
  */
-public class StravaSplit implements StravaEntity {
+public class StravaSplit implements StravaEntity<Integer> {
 	/**
 	 * Total distance in metres
 	 */
@@ -35,12 +36,12 @@ public class StravaSplit implements StravaEntity {
 	/**
 	 * Average heartrate
 	 */
-	private Integer averageHeartrate;
+	private Float averageHeartrate;
 
 	/**
 	 * Average speed
 	 */
-	private Integer averageSpeed;
+	private Float averageSpeed;
 
 	/**
 	 * Pace zone (runs only)
@@ -56,7 +57,7 @@ public class StravaSplit implements StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -167,7 +168,7 @@ public class StravaSplit implements StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -234,7 +235,7 @@ public class StravaSplit implements StravaEntity {
 	/**
 	 * @return the averageHeartrate
 	 */
-	public Integer getAverageHeartrate() {
+	public Float getAverageHeartrate() {
 		return this.averageHeartrate;
 	}
 
@@ -242,14 +243,14 @@ public class StravaSplit implements StravaEntity {
 	 * @param averageHeartrate
 	 *            the averageHeartrate to set
 	 */
-	public void setAverageHeartrate(Integer averageHeartrate) {
+	public void setAverageHeartrate(Float averageHeartrate) {
 		this.averageHeartrate = averageHeartrate;
 	}
 
 	/**
 	 * @return the averageSpeed
 	 */
-	public Integer getAverageSpeed() {
+	public Float getAverageSpeed() {
 		return this.averageSpeed;
 	}
 
@@ -257,7 +258,7 @@ public class StravaSplit implements StravaEntity {
 	 * @param averageSpeed
 	 *            the averageSpeed to set
 	 */
-	public void setAverageSpeed(Integer averageSpeed) {
+	public void setAverageSpeed(Float averageSpeed) {
 		this.averageSpeed = averageSpeed;
 	}
 
@@ -274,5 +275,15 @@ public class StravaSplit implements StravaEntity {
 	 */
 	public void setPaceZone(Integer paceZone) {
 		this.paceZone = paceZone;
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

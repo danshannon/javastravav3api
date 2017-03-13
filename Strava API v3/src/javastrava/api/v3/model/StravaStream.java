@@ -2,6 +2,7 @@ package javastrava.api.v3.model;
 
 import java.util.List;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaStreamResolutionType;
 import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import javastrava.api.v3.model.reference.StravaStreamType;
@@ -12,14 +13,13 @@ import javastrava.api.v3.model.reference.StravaStreamType;
  * </p>
  *
  * <p>
- * All streams for a given {@link StravaActivity activity} or {@link StravaSegmentEffort segment effort} will be the same length and
- * the values at a given index correspond to the same time.
+ * All streams for a given {@link StravaActivity activity} or {@link StravaSegmentEffort segment effort} will be the same length and the values at a given index correspond to the same time.
  * </p>
  *
  * @author Dan Shannon
  *
  */
-public class StravaStream implements StravaEntity {
+public class StravaStream implements StravaEntity<Integer> {
 	/**
 	 * Type of stream data
 	 */
@@ -29,13 +29,11 @@ public class StravaStream implements StravaEntity {
 	 */
 	private List<Float>							data;
 	/**
-	 * Raw GPS co-ordinates (either this or {@link #data} or {@link #moving} will be populated, depending on the {@link #type} of
-	 * stream).
+	 * Raw GPS co-ordinates (either this or {@link #data} or {@link #moving} will be populated, depending on the {@link #type} of stream).
 	 */
 	private List<StravaMapPoint>				mapPoints;
 	/**
-	 * Boolean data stream indicating whether athlete was moving or not (either this or {@link #data} or {@link #mapPoints} will be
-	 * populated, depending on the {@link #type} of stream).
+	 * Boolean data stream indicating whether athlete was moving or not (either this or {@link #data} or {@link #mapPoints} will be populated, depending on the {@link #type} of stream).
 	 */
 	private List<Boolean>						moving;
 	/**
@@ -243,5 +241,15 @@ public class StravaStream implements StravaEntity {
 		return "StravaStream [type=" + this.type + ", data=" + this.data + ", mapPoints=" + this.mapPoints + ", moving=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.moving + ", seriesType=" //$NON-NLS-1$
 				+ this.seriesType + ", originalSize=" + this.originalSize + ", resolution=" + this.resolution + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

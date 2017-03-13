@@ -1,5 +1,6 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.AthleteService;
 
 /**
@@ -10,51 +11,61 @@ import javastrava.api.v3.service.AthleteService;
  * @author Dan Shannon
  *
  */
-public class StravaStatistics implements StravaEntity {
+public class StravaStatistics implements StravaEntity<Integer> {
 	/**
 	 * distance (in metres) of athlete's longest ride
 	 */
-	private Float					biggestRideDistance;
+	private Float biggestRideDistance;
+
 	/**
 	 * elevation gain (in metres) of athlete's biggest climb
 	 */
-	private Float					biggestClimbElevationGain;
+	private Float biggestClimbElevationGain;
+
 	/**
 	 * Statistics for last 28 days' rides
 	 */
-	private StravaStatisticsEntry	recentRideTotals;
+	private StravaStatisticsEntry recentRideTotals;
+
 	/**
 	 * Statistics for last 28 days' runs
 	 */
-	private StravaStatisticsEntry	recentRunTotals;
+	private StravaStatisticsEntry recentRunTotals;
+
 	/**
 	 * Statistics for last 28 days' swims
 	 */
-	private StravaStatisticsEntry	recentSwimTotals;
+	private StravaStatisticsEntry recentSwimTotals;
+
 	/**
 	 * Year to date ride statistics
 	 */
-	private StravaStatisticsEntry	ytdRideTotals;
+	private StravaStatisticsEntry ytdRideTotals;
+
 	/**
 	 * Year to date run statistics
 	 */
-	private StravaStatisticsEntry	ytdRunTotals;
+	private StravaStatisticsEntry ytdRunTotals;
+
 	/**
 	 * Year to date swim statistics
 	 */
-	private StravaStatisticsEntry	ytdSwimTotals;
+	private StravaStatisticsEntry ytdSwimTotals;
+
 	/**
 	 * All time ride statistics
 	 */
-	private StravaStatisticsEntry	allRideTotals;
+	private StravaStatisticsEntry allRideTotals;
+
 	/**
 	 * All time run statistics
 	 */
-	private StravaStatisticsEntry	allRunTotals;
+	private StravaStatisticsEntry allRunTotals;
+
 	/**
 	 * All time swim statistics
 	 */
-	private StravaStatisticsEntry	allSwimTotals;
+	private StravaStatisticsEntry allSwimTotals;
 
 	/**
 	 * No args constructor
@@ -332,6 +343,16 @@ public class StravaStatistics implements StravaEntity {
 				+ this.ytdSwimTotals + ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals //$NON-NLS-1$ //$NON-NLS-2$
 				+ ", allSwimTotals=" //$NON-NLS-1$
 				+ this.allSwimTotals + "]"; //$NON-NLS-1$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 
 }

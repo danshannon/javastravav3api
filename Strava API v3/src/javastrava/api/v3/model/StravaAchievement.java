@@ -1,5 +1,7 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * <p>
  * Authenticated user's achievement on a given segment effort
@@ -8,7 +10,7 @@ package javastrava.api.v3.model;
  * @author Dan Shannon
  *
  */
-public class StravaAchievement implements StravaEntity {
+public class StravaAchievement implements StravaEntity<Integer> {
 	/**
 	 * Identifier of the achievement type
 	 */
@@ -17,11 +19,11 @@ public class StravaAchievement implements StravaEntity {
 	/**
 	 * Type
 	 */
-	private String type;
+	private String	type;
 	/**
 	 * Rank (1-10 for trophies, 1-3 for PR's)
 	 */
-	private Integer rank;
+	private Integer	rank;
 
 	/**
 	 * No-args constructor
@@ -133,5 +135,15 @@ public class StravaAchievement implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaAchievement [typeId=" + this.typeId + ", type=" + this.type + ", rank=" + this.rank + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	}
+
+	@Override
+	public Integer getId() {
+		return this.typeId;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

@@ -7,14 +7,13 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 
 /**
  * <p>
- * Heart rate and power zones are set by the {@link StravaAthlete athlete}. This class returns the time (in seconds) spent in each
- * zone during an {@link StravaActivity activity}.
+ * Heart rate and power zones are set by the {@link StravaAthlete athlete}. This class returns the time (in seconds) spent in each zone during an {@link StravaActivity activity}.
  * </p>
  *
  * @author Dan Shannon
  *
  */
-public class StravaActivityZone implements StravaEntity {
+public class StravaActivityZone implements StravaEntity<Integer> {
 	/**
 	 * No args constructor
 	 */
@@ -39,8 +38,7 @@ public class StravaActivityZone implements StravaEntity {
 	 */
 	private StravaResourceState							resourceState;
 	/**
-	 * Is set to <code>true</code> if the information is based on sensor data included with the upload of the activity (i.e. a heart
-	 * rate monitor for heart rates, or a power meter for power)
+	 * Is set to <code>true</code> if the information is based on sensor data included with the upload of the activity (i.e. a heart rate monitor for heart rates, or a power meter for power)
 	 */
 	private Boolean										sensorBased;
 	/**
@@ -263,6 +261,16 @@ public class StravaActivityZone implements StravaEntity {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
 	}
 
 }

@@ -9,7 +9,6 @@ import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSkillLevel;
 import javastrava.api.v3.model.reference.StravaTerrainType;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -19,64 +18,64 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaClubEvent implements StravaCacheable<Integer>, StravaEntity {
+public class StravaClubEvent implements StravaEntity<Integer> {
 	/**
 	 * Unique id of this event
 	 */
-	private Integer id;
+	private Integer				id;
 	/**
 	 * Resource state as returned by Strava
 	 */
-	private StravaResourceState resourceState;
+	private StravaResourceState	resourceState;
 	/**
 	 * Title of the event
 	 */
-	private String title;
+	private String				title;
 	/**
 	 * Text description of the event
 	 */
-	private String description;
+	private String				description;
 	/**
 	 * Unique id of the club that the event belongs to
 	 */
-	private Integer clubId;
+	private Integer				clubId;
 	/**
 	 * Type of activity for this event
 	 */
-	private StravaActivityType activityType;
+	private StravaActivityType	activityType;
 	/**
 	 * Date and time the event was created
 	 */
-	private ZonedDateTime createdAt;
+	private ZonedDateTime		createdAt;
 	/**
 	 * Unique ID of the Strava route associated with the
 	 */
-	private Integer routeId;
+	private Integer				routeId;
 	/**
 	 * Event is for women
 	 */
-	private Boolean womanOnly;
+	private Boolean				womanOnly;
 	/**
 	 * Is this a private event (only club members can access private events)
 	 */
 	@SerializedName("private")
-	private Boolean privateEvent;
+	private Boolean				privateEvent;
 	/**
 	 * Skill level (casual, tempo, hammerfest)
 	 */
-	private StravaSkillLevel skillLevel;
+	private StravaSkillLevel	skillLevel;
 	/**
 	 * Terrain type (flat, rolling, etc)
 	 */
-	private StravaTerrainType terrain;
+	private StravaTerrainType	terrain;
 	/**
 	 * List of upcoming occurrences
 	 */
-	private List<ZonedDateTime> upcomingOccurrences;
+	private List<ZonedDateTime>	upcomingOccurrences;
 	/**
 	 * Location of the event
 	 */
-	private String address;
+	private String				address;
 
 	/**
 	 * No-args constructor

@@ -2,25 +2,29 @@ package javastrava.api.v3.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * <p>
  * URL's for various versions of a specific photo
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public class StravaPhotoUrls implements StravaEntity {
+public class StravaPhotoUrls implements StravaEntity<Integer> {
 	/**
 	 * URL of full-size photo
 	 */
 	@SerializedName("0")
 	private String url0;
+
 	/**
 	 * URL for thumbnail
 	 */
 	@SerializedName("100")
 	private String url100;
+
 	/**
 	 * URL for medium-size rendering
 	 */
@@ -137,5 +141,15 @@ public class StravaPhotoUrls implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaPhotoUrls [url0=" + this.url0 + ", url100=" + this.url100 + ", url600=" + this.url600 + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

@@ -2,7 +2,6 @@ package javastrava.api.v3.model;
 
 import javastrava.api.v3.model.reference.StravaClimbCategory;
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -12,47 +11,57 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Integer>, StravaEntity {
+public class StravaSegmentExplorerResponseSegment implements StravaEntity<Integer> {
 	/**
 	 * Strava's unique identifier of the {@link StravaSegment segment}
 	 */
 	private Integer id;
+
 	/**
 	 * Segment name
 	 */
 	private String name;
+
 	/**
 	 * Climb category
 	 */
 	private StravaClimbCategory climbCategory;
+
 	/**
 	 * Description of the climb category (see {@link StravaClimbCategory#getDescription()})
 	 */
 	private String climbCategoryDesc;
+
 	/**
 	 * Average grade in percent
 	 */
 	private Float avgGrade;
+
 	/**
 	 * Start co-ordinates of the segment
 	 */
 	private StravaMapPoint startLatlng;
+
 	/**
 	 * End co-ordinates of the segment
 	 */
 	private StravaMapPoint endLatlng;
+
 	/**
 	 * Total elevation difference in metres
 	 */
 	private Float elevDifference;
+
 	/**
 	 * Total distance in metres
 	 */
 	private Float distance;
+
 	/**
 	 * Polyline for rendering with Google maps
 	 */
 	private String points;
+
 	/**
 	 * Resource state - not returned by Strava API but is set at the service layer instead
 	 */
@@ -213,9 +222,6 @@ public class StravaSegmentExplorerResponseSegment implements StravaCacheable<Int
 		return this.points;
 	}
 
-	/**
-	 * @see javastrava.cache.StravaCacheable#getResourceState()
-	 */
 	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;

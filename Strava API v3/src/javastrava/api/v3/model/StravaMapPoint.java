@@ -1,14 +1,16 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * <p>
  * Representation of a GPS co-ordinate
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public class StravaMapPoint implements StravaEntity {
+public class StravaMapPoint implements StravaEntity<Integer> {
 	/**
 	 * Latitude. Negative values are south of the equator.
 	 */
@@ -28,7 +30,7 @@ public class StravaMapPoint implements StravaEntity {
 
 	/**
 	 * Constructor allows creation of a map point by specifying latitude and longitude
-	 * 
+	 *
 	 * @param latitude
 	 *            Latitude of the point to be created
 	 * @param longitude
@@ -119,6 +121,16 @@ public class StravaMapPoint implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaMapPoint [latitude=" + this.latitude + ", longitude=" + this.longitude + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 
 }

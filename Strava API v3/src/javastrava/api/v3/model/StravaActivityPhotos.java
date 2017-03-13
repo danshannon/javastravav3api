@@ -1,5 +1,7 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * <p>
  * Photo(s) associated with a specific activity
@@ -8,7 +10,7 @@ package javastrava.api.v3.model;
  * @author Dan Shannon
  *
  */
-public class StravaActivityPhotos implements StravaEntity {
+public class StravaActivityPhotos implements StravaEntity<Integer> {
 	/**
 	 * Primary photo
 	 */
@@ -33,7 +35,7 @@ public class StravaActivityPhotos implements StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -88,7 +90,7 @@ public class StravaActivityPhotos implements StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -135,6 +137,16 @@ public class StravaActivityPhotos implements StravaEntity {
 	 */
 	public void setUsePrimaryPhoto(String usePrimaryPhoto) {
 		this.usePrimaryPhoto = usePrimaryPhoto;
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 
 }

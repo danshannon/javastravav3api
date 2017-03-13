@@ -6,18 +6,17 @@ import java.util.List;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.SegmentService;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
- * A segment effort represents an athlete's attempt at a segment. It can also be thought of as a portion of a ride that covers a
- * segment. The object is returned in summary or detailed representations. They are currently the same.
+ * A segment effort represents an athlete's attempt at a segment. It can also be thought of as a portion of a ride that covers a segment. The object is returned in summary or detailed representations.
+ * They are currently the same.
  * </p>
  *
  * @author Dan Shannon
  *
  */
-public class StravaSegmentEffort implements StravaCacheable<Long>, StravaEntity {
+public class StravaSegmentEffort implements StravaEntity<Long> {
 	/**
 	 * Strava's unique identifier for this segment effort
 	 */
@@ -96,8 +95,7 @@ public class StravaSegmentEffort implements StravaCacheable<Long>, StravaEntity 
 	 */
 	private Integer					prRank;
 	/**
-	 * indicates a hidden/non-important effort when returned as part of an activity, value may change over time, see retrieve an
-	 * activity for more details
+	 * indicates a hidden/non-important effort when returned as part of an activity, value may change over time, see retrieve an activity for more details
 	 */
 	private Boolean					hidden;
 	/**
@@ -715,11 +713,9 @@ public class StravaSegmentEffort implements StravaCacheable<Long>, StravaEntity 
 				+ ", startDateLocal=" + this.startDateLocal + ", distance=" + this.distance + ", startIndex=" + this.startIndex //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ ", endIndex=" + this.endIndex //$NON-NLS-1$
 				+ ", averageCadence=" + this.averageCadence + ", averageWatts=" + this.averageWatts + ", averageHeartrate=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.averageHeartrate
-				+ ", maxHeartrate=" + this.maxHeartrate + ", segment=" + this.segment + ", komRank=" + this.komRank + ", prRank=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", segment=" + this.segment + ", komRank=" + this.komRank + ", prRank=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.prRank + ", hidden=" //$NON-NLS-1$
 				+ this.hidden + ", isKom=" + this.isKom + ", achievements=" + this.achievements + ", athleteSegmentStats=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.athleteSegmentStats
-				+ ", deviceWatts=" + this.deviceWatts + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+				+ this.athleteSegmentStats + ", deviceWatts=" + this.deviceWatts + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

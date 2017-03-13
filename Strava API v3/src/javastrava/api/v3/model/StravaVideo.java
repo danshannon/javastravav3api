@@ -6,7 +6,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaVideo implements StravaEntity {
+public class StravaVideo implements StravaEntity<Integer> {
 	/**
 	 * Unique id of the video
 	 */
@@ -36,7 +36,7 @@ public class StravaVideo implements StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -88,6 +88,7 @@ public class StravaVideo implements StravaEntity {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -101,7 +102,7 @@ public class StravaVideo implements StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -147,6 +148,7 @@ public class StravaVideo implements StravaEntity {
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}

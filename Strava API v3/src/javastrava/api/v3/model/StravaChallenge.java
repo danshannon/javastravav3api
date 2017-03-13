@@ -6,7 +6,6 @@ import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.model.reference.StravaChallengeType;
 import javastrava.api.v3.model.reference.StravaMeasurementMethod;
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -16,7 +15,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaChallenge implements StravaCacheable<Integer>, StravaEntity {
+public class StravaChallenge implements StravaEntity<Integer> {
 	/**
 	 * Identifier
 	 */
@@ -517,7 +516,7 @@ public class StravaChallenge implements StravaCacheable<Integer>, StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -558,7 +557,7 @@ public class StravaChallenge implements StravaCacheable<Integer>, StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

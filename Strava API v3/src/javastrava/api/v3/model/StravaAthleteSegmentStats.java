@@ -2,27 +2,29 @@ package javastrava.api.v3.model;
 
 import java.time.LocalDate;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * <p>
  * Athlete's statistics for a segment, returned by Strava with a segment effort
  * </p>
- * 
+ *
  * @author Dan Shannon
  *
  */
-public class StravaAthleteSegmentStats implements StravaEntity {
+public class StravaAthleteSegmentStats implements StravaEntity<Integer> {
 	/**
 	 * Number of efforts by the authenticated athlete on the segment
 	 */
-	private Integer effortCount;
+	private Integer		effortCount;
 	/**
 	 * Elapsed time of the athlete's personal record for this segment
 	 */
-	private Integer prElapsedTime;
+	private Integer		prElapsedTime;
 	/**
 	 * Date on which the athlete's personal record was set
 	 */
-	private LocalDate prDate;
+	private LocalDate	prDate;
 
 	/**
 	 * No args constructor
@@ -134,5 +136,15 @@ public class StravaAthleteSegmentStats implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaAthleteSegmentStats [effortCount=" + this.effortCount + ", prElapsedTime=" + this.prElapsedTime + ", prDate=" + this.prDate + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

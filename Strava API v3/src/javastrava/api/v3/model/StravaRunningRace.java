@@ -6,18 +6,16 @@ import java.util.List;
 import javastrava.api.v3.model.reference.StravaMeasurementMethod;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaRunningRaceType;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
- * A featured set of running races taking place across the world. Each race has an associated race page with course information,
- * athlete goals, and results.
+ * A featured set of running races taking place across the world. Each race has an associated race page with course information, athlete goals, and results.
  * </p>
  *
  * @author Dan Shannon
  *
  */
-public class StravaRunningRace implements StravaEntity, StravaCacheable<Integer> {
+public class StravaRunningRace implements StravaEntity<Integer> {
 	/**
 	 * Identifier
 	 */
@@ -28,8 +26,8 @@ public class StravaRunningRace implements StravaEntity, StravaCacheable<Integer>
 	 * Indicates level of detail
 	 * </p>
 	 * <p>
-	 * The {@link StravaResourceState#SUMMARY summary representation} of the running race is the same as the
-	 * {@link StravaResourceState#DETAILED detailed representation}, except it does NOT include these attributes:
+	 * The {@link StravaResourceState#SUMMARY summary representation} of the running race is the same as the {@link StravaResourceState#DETAILED detailed representation}, except it does NOT include
+	 * these attributes:
 	 * <ul>
 	 * <li><code>{@link #routeIds}</code></li>
 	 * <li><code>{@link #websiteUrl}</code></li>

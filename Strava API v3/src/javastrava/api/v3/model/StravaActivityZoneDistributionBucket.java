@@ -1,10 +1,12 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * @author Dan Shannon
  *
  */
-public class StravaActivityZoneDistributionBucket implements StravaEntity {
+public class StravaActivityZoneDistributionBucket implements StravaEntity<Integer> {
 	/**
 	 *
 	 */
@@ -60,15 +62,15 @@ public class StravaActivityZoneDistributionBucket implements StravaEntity {
 	/**
 	 * Maximum value of heart rate or power for this zone. Note that this returns as -1 if the maximum is in fact infinity
 	 */
-	private Integer max;
+	private Integer	max;
 	/**
 	 * Minimum value of heart rate or power for this zone
 	 */
-	private Integer min;
+	private Integer	min;
 	/**
 	 * Total time in seconds spent in this zone
 	 */
-	private Integer time;
+	private Integer	time;
 
 	/**
 	 * @see java.lang.Object#toString()
@@ -128,5 +130,15 @@ public class StravaActivityZoneDistributionBucket implements StravaEntity {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

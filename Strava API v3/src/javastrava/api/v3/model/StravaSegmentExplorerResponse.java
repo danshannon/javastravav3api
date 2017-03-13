@@ -2,6 +2,7 @@ package javastrava.api.v3.model;
 
 import java.util.List;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.SegmentService;
 
 /**
@@ -18,7 +19,7 @@ import javastrava.api.v3.service.SegmentService;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentExplorerResponse implements StravaEntity {
+public class StravaSegmentExplorerResponse implements StravaEntity<Integer> {
 	/**
 	 * List of segments returned by the explorer
 	 */
@@ -88,5 +89,15 @@ public class StravaSegmentExplorerResponse implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaSegmentExplorerResponse [segments=" + this.segments + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

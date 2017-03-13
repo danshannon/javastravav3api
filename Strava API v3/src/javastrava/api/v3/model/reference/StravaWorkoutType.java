@@ -15,21 +15,33 @@ import javastrava.json.impl.gson.serializer.WorkoutTypeSerializer;
  */
 public enum StravaWorkoutType implements StravaReferenceType<Integer> {
 	/**
-	 * Default
+	 * Default run
 	 */
-	DEFAULT(StravaConfig.integer("StravaWorkoutType.default"), Messages.string("StravaWorkoutType.default.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	DEFAULT_RUN(StravaConfig.integer("StravaWorkoutType.defaultRun"), Messages.string("StravaWorkoutType.defaultRun.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Race
 	 */
-	RACE(StravaConfig.integer("StravaWorkoutType.race"), Messages.string("StravaWorkoutType.race.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	RACE_RUN(StravaConfig.integer("StravaWorkoutType.raceRun"), Messages.string("StravaWorkoutType.raceRun.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * Long run
 	 */
-	LONG_RUN(StravaConfig.integer("StravaWorkoutType.longRun"), Messages.string("StravaWorkoutType.longRun.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	LONG_RUN(StravaConfig.integer("StravaWorkoutType.longRun"), Messages.string("StravaWorkoutType.longRun.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
-	 * Intervals
+	 * Workout
 	 */
-	INTERVALS(StravaConfig.integer("StravaWorkoutType.intervals"), Messages.string("StravaWorkoutType.intervals.description")),  //$NON-NLS-1$ //$NON-NLS-2$
+	WORKOUT_RUN(StravaConfig.integer("StravaWorkoutType.workoutRun"), Messages.string("StravaWorkoutType.workoutRun.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Default ride
+	 */
+	DEFAULT_RIDE(StravaConfig.integer("StravaWorkoutType.defaultRide"), Messages.string("StravaWorkoutType.defaultRide.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Race
+	 */
+	RACE_RIDE(StravaConfig.integer("StravaWorkoutType.raceRide"), Messages.string("StravaWorkoutType.raceRide.description")), //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Workout
+	 */
+	WORKOUT_RIDE(StravaConfig.integer("StravaWorkoutType.workoutRide"), Messages.string("StravaWorkoutType.workoutRide.description")), //$NON-NLS-1$ //$NON-NLS-2$
 	/**
 	 * <p>
 	 * Should never occur but may if Strava API behaviour has changed
@@ -39,7 +51,9 @@ public enum StravaWorkoutType implements StravaReferenceType<Integer> {
 
 	/**
 	 * Used by JSON deserialisation
-	 * @param id The integer representation of a {@link StravaWorkoutType} as returned by the Strava API
+	 * 
+	 * @param id
+	 *            The integer representation of a {@link StravaWorkoutType} as returned by the Strava API
 	 * @return The matching {@link StravaWorkoutType}, or {@link StravaWorkoutType#UNKNOWN} if there is no match
 	 * @see WorkoutTypeSerializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
@@ -52,20 +66,24 @@ public enum StravaWorkoutType implements StravaReferenceType<Integer> {
 		}
 		return StravaWorkoutType.UNKNOWN;
 	}
+
 	/**
 	 * Identifier
 	 */
-	private Integer	id;
+	private Integer id;
 
 	/**
 	 * Description
 	 */
-	private String	description;
+	private String description;
 
 	/**
 	 * Private constructor used by declarations
-	 * @param id Identifier - also used when serialising/deserialising to JSON
-	 * @param description Description
+	 * 
+	 * @param id
+	 *            Identifier - also used when serialising/deserialising to JSON
+	 * @param description
+	 *            Description
 	 */
 	private StravaWorkoutType(final Integer id, final String description) {
 		this.id = id;
@@ -90,6 +108,7 @@ public enum StravaWorkoutType implements StravaReferenceType<Integer> {
 
 	/**
 	 * Used by JSON serialisation
+	 * 
 	 * @return The integer representation of this {@link StravaWorkoutType} to be used with the Strava API
 	 * @see WorkoutTypeSerializer#serialize(StravaWorkoutType, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */

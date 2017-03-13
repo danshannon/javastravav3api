@@ -2,6 +2,8 @@ package javastrava.api.v3.model;
 
 import java.util.List;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * <p>
  * UNDOCUMENTED
@@ -10,7 +12,7 @@ import java.util.List;
  * @author Dan Shannon
  *
  */
-public class StravaSimilarActivitiesTrend implements StravaEntity {
+public class StravaSimilarActivitiesTrend implements StravaEntity<Integer> {
 	/**
 	 * UNDOCUMENTED
 	 */
@@ -223,5 +225,15 @@ public class StravaSimilarActivitiesTrend implements StravaEntity {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

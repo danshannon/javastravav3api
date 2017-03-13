@@ -8,9 +8,9 @@ import org.apache.commons.jcs.JCS;
 import org.apache.commons.jcs.access.GroupCacheAccess;
 
 import javastrava.api.v3.auth.model.Token;
+import javastrava.api.v3.model.StravaEntity;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.cache.StravaCache;
-import javastrava.cache.StravaCacheable;
 
 /**
  * @author Dan Shannon
@@ -20,20 +20,21 @@ import javastrava.cache.StravaCacheable;
  * @param <U>
  *            Class of object id
  */
-public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaCache<T, U> {
+public class StravaCacheImpl<T extends StravaEntity<U>, U> implements StravaCache<T, U> {
 	/**
 	 * Strava access token associated with this cache instance
 	 */
-	private final Token										token;
+	private final Token token;
+
 	/**
-	 * The cache implementation (which is global, so we need to be careful about how we store stuff in it or we'll revealn stuff to
-	 * the wrong users)
+	 * The cache implementation (which is global, so we need to be careful about how we store stuff in it or we'll revealn stuff to the wrong users)
 	 */
-	private final GroupCacheAccess<StravaCacheKey<U, T>, T>	cache;
+	private final GroupCacheAccess<StravaCacheKey<U, T>, T> cache;
+
 	/**
 	 * Class of object being stored in the cache
 	 */
-	private final Class<T>									class1;
+	private final Class<T> class1;
 
 	/**
 	 * @param class1
@@ -48,9 +49,6 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 		removeAll();
 	}
 
-	/**
-	 * @see javastrava.cache.StravaCache#get(java.lang.Object)
-	 */
 	@Override
 	public T get(final U id) {
 		if (id == null) {
@@ -78,9 +76,6 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 		return this.class1.getName() + "::" + this.token.getToken(); //$NON-NLS-1$
 	}
 
-	/**
-	 * @see javastrava.cache.StravaCache#list()
-	 */
 	@Override
 	public List<T> list() {
 		final Set<StravaCacheKey<U, T>> keys = this.cache.getGroupKeys(groupName());
@@ -91,9 +86,6 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 		return list;
 	}
 
-	/**
-	 * @see javastrava.cache.StravaCache#put(javastrava.cache.StravaCacheable)
-	 */
 	@Override
 	public void put(final T object) {
 		// Null safety!
@@ -108,9 +100,6 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 		}
 	}
 
-	/**
-	 * @see javastrava.cache.StravaCache#putAll(java.util.List)
-	 */
 	@Override
 	public void putAll(final List<T> list) {
 		if (list == null) {
@@ -121,9 +110,6 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 		}
 	}
 
-	/**
-	 * @see javastrava.cache.StravaCache#remove(java.lang.Object)
-	 */
 	@Override
 	public void remove(final U id) {
 		final StravaCacheKey<U, T> key = new StravaCacheKey<U, T>(id, this.token, this.class1);
@@ -131,17 +117,11 @@ public class StravaCacheImpl<T extends StravaCacheable<U>, U> implements StravaC
 
 	}
 
-	/**
-	 * @see javastrava.cache.StravaCache#removeAll()
-	 */
 	@Override
 	public void removeAll() {
 		this.cache.invalidateGroup(groupName());
 	}
 
-	/**
-	 * @see javastrava.cache.StravaCache#size()
-	 */
 	@Override
 	public int size() {
 		return this.cache.getGroupKeys(groupName()).size();

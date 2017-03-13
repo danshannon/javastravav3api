@@ -1,5 +1,6 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.UploadService;
 
 /**
@@ -11,21 +12,21 @@ import javastrava.api.v3.service.UploadService;
  * @author Dan Shannon
  *
  */
-public class StravaUploadResponse implements StravaEntity {
+public class StravaUploadResponse implements StravaEntity<Long> {
 	/**
 	 * Unique identifier of the upload
 	 */
-	private Long id;
+	private Long	id;
 	/**
 	 * Unique identifier for the activity as given by the uploading application
 	 */
-	private String externalId;
+	private String	externalId;
 	/**
 	 * <p>
 	 * if there was an error during processing, this will contain a human a human readable error message that may include escaped HTML
 	 * </p>
 	 */
-	private String error;
+	private String	error;
 	/**
 	 * <p>
 	 * describes the error, possible values:
@@ -37,11 +38,11 @@ public class StravaUploadResponse implements StravaEntity {
 	 * <li>Your activity is ready.</li>
 	 * </ul>
 	 */
-	private String status;
+	private String	status;
 	/**
 	 * Unique identifier of the activity, if it was created as part of the upload process.
 	 */
-	private Long activityId;
+	private Long	activityId;
 
 	/**
 	 * No args constructor
@@ -127,6 +128,7 @@ public class StravaUploadResponse implements StravaEntity {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Long getId() {
 		return this.id;
 	}
@@ -200,5 +202,10 @@ public class StravaUploadResponse implements StravaEntity {
 	public String toString() {
 		return "StravaUploadResponse [id=" + this.id + ", externalId=" + this.externalId + ", error=" + this.error + ", status=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.status + ", activityId=" + this.activityId + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

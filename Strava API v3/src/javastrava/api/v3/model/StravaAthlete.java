@@ -8,7 +8,6 @@ import javastrava.api.v3.model.reference.StravaFollowerState;
 import javastrava.api.v3.model.reference.StravaGender;
 import javastrava.api.v3.model.reference.StravaMeasurementMethod;
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.cache.StravaCacheable;
 
 /**
  * Detailed representation of an StravaAthlete
@@ -18,7 +17,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaAthlete implements StravaCacheable<Integer>, StravaEntity {
+public class StravaAthlete implements StravaEntity<Integer> {
 	/**
 	 * Unique id of the athlete
 	 */

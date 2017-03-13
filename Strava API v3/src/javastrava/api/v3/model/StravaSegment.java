@@ -9,18 +9,16 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSegmentActivityType;
 import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.StreamService;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
- * {@link StravaSegment Segments} are specific sections of road. {@link StravaAthlete Athletes}' {@link StravaSegmentEffort efforts}
- * are compared on these segments and leaderboards are created.
+ * {@link StravaSegment Segments} are specific sections of road. {@link StravaAthlete Athletes}' {@link StravaSegmentEffort efforts} are compared on these segments and leaderboards are created.
  * </p>
  *
  * @author Dan Shannon
  *
  */
-public class StravaSegment implements StravaCacheable<Integer>, StravaEntity {
+public class StravaSegment implements StravaEntity<Integer> {
 	/**
 	 * Strava's unique identifier for a segment
 	 */
@@ -150,8 +148,7 @@ public class StravaSegment implements StravaCacheable<Integer>, StravaEntity {
 	private Integer starCount;
 
 	/**
-	 * The authenticated athlete's fastest effort on this segment - only returned with
-	 * {@link SegmentService#listStarredSegments(Integer)}
+	 * The authenticated athlete's fastest effort on this segment - only returned with {@link SegmentService#listStarredSegments(Integer)}
 	 */
 	private StravaSegmentEffort athletePrEffort;
 
@@ -950,23 +947,18 @@ public class StravaSegment implements StravaCacheable<Integer>, StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaSegment [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activityType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.activityType
-				+ ", distance=" + this.distance + ", averageGrade=" + this.averageGrade + ", maximumGrade=" + this.maximumGrade //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.activityType + ", distance=" + this.distance + ", averageGrade=" + this.averageGrade + ", maximumGrade=" + this.maximumGrade //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ ", elevationHigh=" //$NON-NLS-1$
 				+ this.elevationHigh + ", elevationLow=" + this.elevationLow + ", startLatlng=" + this.startLatlng + ", endLatlng=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.endLatlng
-				+ ", climbCategory=" + this.climbCategory + ", city=" + this.city + ", state=" + this.state + ", country=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.endLatlng + ", climbCategory=" + this.climbCategory + ", city=" + this.city + ", state=" + this.state + ", country=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.country + ", privateSegment=" //$NON-NLS-1$
 				+ this.privateSegment + ", starred=" + this.starred + ", createdAt=" + this.createdAt + ", updatedAt=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.updatedAt
-				+ ", totalElevationGain=" + this.totalElevationGain + ", map=" + this.map + ", effortCount=" + this.effortCount //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.updatedAt + ", totalElevationGain=" + this.totalElevationGain + ", map=" + this.map + ", effortCount=" + this.effortCount //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ ", athleteCount=" //$NON-NLS-1$
 				+ this.athleteCount + ", hazardous=" + this.hazardous + ", starCount=" + this.starCount + ", athletePrEffort=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.athletePrEffort
-				+ ", starredDate=" + this.starredDate + ", startLatitude=" + this.startLatitude + ", startLongitude=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.athletePrEffort + ", starredDate=" + this.starredDate + ", startLatitude=" + this.startLatitude + ", startLongitude=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ this.startLongitude + ", endLatitude=" //$NON-NLS-1$
 				+ this.endLatitude + ", endLongitude=" + this.endLongitude + ", prTime=" + this.prTime + ", athleteSegmentStats=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.athleteSegmentStats
-				+ "]"; //$NON-NLS-1$
+				+ this.athleteSegmentStats + "]"; //$NON-NLS-1$
 	}
 }

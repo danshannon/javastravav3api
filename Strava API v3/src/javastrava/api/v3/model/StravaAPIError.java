@@ -1,24 +1,26 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * Error details returned in a {@link StravaResponse} when an error is returned by the API
  *
  * @author Dan Shannon
  *
  */
-public class StravaAPIError implements StravaEntity {
+public class StravaAPIError implements StravaEntity<Integer> {
 	/**
 	 * The resource which has caused the error
 	 */
-	private String resource;
+	private String	resource;
 	/**
 	 * The field which has caused the error
 	 */
-	private String field;
+	private String	field;
 	/**
 	 * Error message
 	 */
-	private String code;
+	private String	code;
 
 	/**
 	 * No args constructor
@@ -130,5 +132,15 @@ public class StravaAPIError implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaAPIError [resource=" + this.resource + ", field=" + this.field + ", code=" + this.code + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

@@ -6,7 +6,6 @@ import java.time.ZonedDateTime;
 import javastrava.api.v3.model.reference.StravaPhotoSource;
 import javastrava.api.v3.model.reference.StravaPhotoType;
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -16,7 +15,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaPhoto implements StravaCacheable<Integer>, StravaEntity {
+public class StravaPhoto implements StravaEntity<Integer> {
 	/**
 	 * Strava's unique identifier for the photo
 	 */

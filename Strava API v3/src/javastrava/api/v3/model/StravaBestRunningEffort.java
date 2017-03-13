@@ -13,59 +13,59 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaBestRunningEffort implements StravaEntity {
+public class StravaBestRunningEffort implements StravaEntity<Integer> {
 	/**
 	 * Strava's unique identifier for this running effort
 	 */
-	private Integer id;
+	private Integer				id;
 	/**
 	 * Status of this resource on Strava
 	 */
-	private StravaResourceState resourceState;
+	private StravaResourceState	resourceState;
 	/**
 	 * Name of this effort (Best 1k, etc.)
 	 */
-	private String name;
+	private String				name;
 	/**
 	 * Strava segment associated with this best effort (if there is one)
 	 */
-	private StravaSegment segment;
+	private StravaSegment		segment;
 	/**
 	 * Strava activity associated with this best effort
 	 */
-	private StravaActivity activity;
+	private StravaActivity		activity;
 	/**
 	 * Strava athlete associated with this run
 	 */
-	private StravaAthlete athlete;
+	private StravaAthlete		athlete;
 	/**
 	 * KOM rank for the effort
 	 */
-	private Integer komRank;
+	private Integer				komRank;
 	/**
 	 * Personal record ranking for this effort
 	 */
-	private Integer prRank;
+	private Integer				prRank;
 	/**
 	 * elapsed time in seconds (includes time spent stopped)
 	 */
-	private Integer elapsedTime;
+	private Integer				elapsedTime;
 	/**
 	 * moving time in seconds (excludes time spent stopped)
 	 */
-	private Integer movingTime;
+	private Integer				movingTime;
 	/**
 	 * date and time that the effort started
 	 */
-	private ZonedDateTime startDate;
+	private ZonedDateTime		startDate;
 	/**
 	 * local start date for the effort (i.e. in the timezone that it started, shifted to UTC)
 	 */
-	private LocalDateTime startDateLocal;
+	private LocalDateTime		startDateLocal;
 	/**
 	 * distance in metres
 	 */
-	private Float distance;
+	private Float				distance;
 
 	/**
 	 * No args constructor
@@ -210,6 +210,7 @@ public class StravaBestRunningEffort implements StravaEntity {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -245,6 +246,7 @@ public class StravaBestRunningEffort implements StravaEntity {
 	/**
 	 * @return the resourceState
 	 */
+	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
 	}

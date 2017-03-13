@@ -1,12 +1,14 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * Athlete zones to support the athlete zones endpoint
  *
  * @author Dan Shannon
  *
  */
-public class StravaAthleteZones implements StravaEntity {
+public class StravaAthleteZones implements StravaEntity<Integer> {
 	/**
 	 * Set of heart-rate zones for the athlete
 	 */
@@ -90,5 +92,15 @@ public class StravaAthleteZones implements StravaEntity {
 	 */
 	public void setPower(StravaAthleteZone power) {
 		this.power = power;
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

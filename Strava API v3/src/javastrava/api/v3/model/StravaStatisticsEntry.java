@@ -1,5 +1,7 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * <p>
  * Detail of athlete {@link StravaStatistics}
@@ -8,31 +10,31 @@ package javastrava.api.v3.model;
  * @author Dan Shannon
  *
  */
-public class StravaStatisticsEntry implements StravaEntity {
+public class StravaStatisticsEntry implements StravaEntity<Integer> {
 	/**
 	 * Number of activities
 	 */
-	private Integer count;
+	private Integer	count;
 	/**
 	 * Total distance in metres
 	 */
-	private Float distance;
+	private Float	distance;
 	/**
 	 * Total moving time in seconds (excluding time spent stopped)
 	 */
-	private Integer movingTime;
+	private Integer	movingTime;
 	/**
 	 * Total elapsed time in seconds (including time spent stopped)
 	 */
-	private Integer elapsedTime;
+	private Integer	elapsedTime;
 	/**
 	 * Total elevation gain in metres
 	 */
-	private Float elevationGain;
+	private Float	elevationGain;
 	/**
 	 * Total number of achievements
 	 */
-	private Integer achievementCount;
+	private Integer	achievementCount;
 
 	/**
 	 *
@@ -214,5 +216,15 @@ public class StravaStatisticsEntry implements StravaEntity {
 	public String toString() {
 		return "StravaStatisticsEntry [count=" + this.count + ", distance=" + this.distance + ", movingTime=" + this.movingTime + ", elapsedTime=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.elapsedTime + ", elevationGain=" + this.elevationGain + ", achievementCount=" + this.achievementCount + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

@@ -3,6 +3,7 @@ package javastrava.api.v3.model;
 import com.google.gson.annotations.SerializedName;
 
 import javastrava.api.v3.model.reference.StravaActivityType;
+import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.rest.ActivityAPI;
 import javastrava.api.v3.service.ActivityService;
 
@@ -10,43 +11,43 @@ import javastrava.api.v3.service.ActivityService;
  * <p>
  * Collection of fields that can be updated on an activity
  * </p>
- * 
+ *
  * @see ActivityService#updateActivity(Long, StravaActivityUpdate)
  * @see ActivityAPI#updateActivity(Long, StravaActivityUpdate)
  * @author Dan Shannon
  *
  */
-public class StravaActivityUpdate implements StravaEntity {
+public class StravaActivityUpdate implements StravaEntity<Integer> {
 	/**
 	 * Activity name
 	 */
-	private String name;
+	private String				name;
 	/**
 	 * Activity type
 	 */
-	private StravaActivityType type;
+	private StravaActivityType	type;
 
 	/**
 	 * Whether the activity has been flagged by the athlete as private
 	 */
 	@SerializedName("private")
-	private Boolean privateActivity;
+	private Boolean	privateActivity;
 	/**
 	 * Whether the activity has been flagged by the athlete as a commute
 	 */
-	private Boolean commute;
+	private Boolean	commute;
 	/**
 	 * Whether the activity has been flagged by the athlete as being done on a stationary trainer
 	 */
-	private Boolean trainer;
+	private Boolean	trainer;
 	/**
 	 * Identifier of the gear (i.e. bike or shoes) used for the activity
 	 */
-	private String gearId;
+	private String	gearId;
 	/**
 	 * Description of the activity
 	 */
-	private String description;
+	private String	description;
 
 	/**
 	 * No args constructor
@@ -58,7 +59,7 @@ public class StravaActivityUpdate implements StravaEntity {
 	/**
 	 * <p>
 	 * Constructor to create a {@link StravaActivityUpdate} from an existing {@link StravaActivity}
-	 * 
+	 *
 	 * @param activity
 	 *            The activity to be used to create the {@link StravaActivityUpdate} from
 	 */
@@ -264,6 +265,16 @@ public class StravaActivityUpdate implements StravaEntity {
 	public String toString() {
 		return "StravaActivityUpdate [name=" + this.name + ", type=" + this.type + ", privateActivity=" + this.privateActivity + ", commute=" + this.commute //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ ", trainer=" + this.trainer + ", gearId=" + this.gearId + ", description=" + this.description + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 
 }

@@ -3,7 +3,6 @@ package javastrava.api.v3.model;
 import javastrava.api.v3.model.reference.StravaFrameType;
 import javastrava.api.v3.model.reference.StravaGearType;
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -17,7 +16,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaGear implements StravaCacheable<String>, StravaEntity {
+public class StravaGear implements StravaEntity<String> {
 	/**
 	 * Unique identifier for the gear. Is prefixed with 'b' for bikes when returning via the API
 	 */

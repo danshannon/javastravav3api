@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaRouteSubType;
 import javastrava.api.v3.model.reference.StravaRouteType;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -17,7 +16,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaRoute implements StravaCacheable<Integer>, StravaEntity {
+public class StravaRoute implements StravaEntity<Integer> {
 
 	/**
 	 * Identifier
@@ -304,7 +303,7 @@ public class StravaRoute implements StravaCacheable<Integer>, StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -330,7 +329,7 @@ public class StravaRoute implements StravaCacheable<Integer>, StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

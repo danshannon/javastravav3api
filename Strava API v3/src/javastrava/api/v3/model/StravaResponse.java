@@ -2,6 +2,8 @@ package javastrava.api.v3.model;
 
 import java.util.List;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * <p>
  * Representation of the response received from Strava in error situations (most commonly when resources are not found or there is an authorisation issue)
@@ -10,15 +12,15 @@ import java.util.List;
  * @author Dan Shannon
  *
  */
-public class StravaResponse implements StravaEntity {
+public class StravaResponse implements StravaEntity<Integer> {
 	/**
 	 * Text message describing the overall error
 	 */
-	private String message;
+	private String					message;
 	/**
 	 * List of error details
 	 */
-	private List<StravaAPIError> errors;
+	private List<StravaAPIError>	errors;
 
 	/**
 	 * No args constructor
@@ -107,5 +109,15 @@ public class StravaResponse implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaResponse [message=" + this.message + ", errors=" + this.errors + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 }

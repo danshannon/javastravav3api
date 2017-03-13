@@ -3,7 +3,6 @@ package javastrava.api.v3.model;
 import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
-import javastrava.cache.StravaCacheable;
 
 /**
  * <p>
@@ -13,7 +12,7 @@ import javastrava.cache.StravaCacheable;
  * @author Dan Shannon
  *
  */
-public class StravaComment implements StravaCacheable<Integer>, StravaEntity {
+public class StravaComment implements StravaEntity<Integer> {
 	/**
 	 * Strava's unique identifier for the comment
 	 */
