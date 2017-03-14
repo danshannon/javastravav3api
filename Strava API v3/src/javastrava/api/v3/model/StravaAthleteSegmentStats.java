@@ -12,7 +12,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaAthleteSegmentStats implements StravaEntity<Integer> {
+public class StravaAthleteSegmentStats implements StravaEntity {
 	/**
 	 * Number of efforts by the authenticated athlete on the segment
 	 */
@@ -136,11 +136,6 @@ public class StravaAthleteSegmentStats implements StravaEntity<Integer> {
 	@Override
 	public String toString() {
 		return "StravaAthleteSegmentStats [effortCount=" + this.effortCount + ", prElapsedTime=" + this.prElapsedTime + ", prDate=" + this.prDate + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

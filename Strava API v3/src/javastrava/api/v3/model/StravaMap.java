@@ -14,7 +14,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaMap implements StravaEntity<String> {
+public class StravaMap implements StravaEntity {
 	/**
 	 * Strava's unique identifier for the map
 	 */
@@ -87,7 +87,6 @@ public class StravaMap implements StravaEntity<String> {
 	/**
 	 * @return the id
 	 */
-	@Override
 	public String getId() {
 		return this.id;
 	}

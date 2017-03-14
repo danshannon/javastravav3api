@@ -16,7 +16,7 @@ import javastrava.api.v3.model.reference.StravaRouteType;
  * @author Dan Shannon
  *
  */
-public class StravaRoute implements StravaEntity<Integer> {
+public class StravaRoute implements StravaEntity {
 
 	/**
 	 * Identifier
@@ -92,7 +92,6 @@ public class StravaRoute implements StravaEntity<Integer> {
 	/**
 	 * @return the id
 	 */
-	@Override
 	public Integer getId() {
 		return this.id;
 	}

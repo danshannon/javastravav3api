@@ -14,7 +14,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaPhotoSizes implements StravaEntity<Integer> {
+public class StravaPhotoSizes implements StravaEntity {
 	/**
 	 * URL of full-size photo
 	 */
@@ -142,11 +142,6 @@ public class StravaPhotoSizes implements StravaEntity<Integer> {
 	 */
 	public void setUrl100(List<Integer> url100) {
 		this.url100 = url100;
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

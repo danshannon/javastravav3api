@@ -12,7 +12,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaResponse implements StravaEntity<Integer> {
+public class StravaResponse implements StravaEntity {
 	/**
 	 * Text message describing the overall error
 	 */
@@ -109,11 +109,6 @@ public class StravaResponse implements StravaEntity<Integer> {
 	@Override
 	public String toString() {
 		return "StravaResponse [message=" + this.message + ", errors=" + this.errors + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

@@ -19,7 +19,7 @@ import javastrava.api.v3.service.SegmentService;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentExplorerResponse implements StravaEntity<Integer> {
+public class StravaSegmentExplorerResponse implements StravaEntity {
 	/**
 	 * List of segments returned by the explorer
 	 */
@@ -89,11 +89,6 @@ public class StravaSegmentExplorerResponse implements StravaEntity<Integer> {
 	@Override
 	public String toString() {
 		return "StravaSegmentExplorerResponse [segments=" + this.segments + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

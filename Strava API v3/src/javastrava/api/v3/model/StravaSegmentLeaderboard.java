@@ -13,7 +13,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentLeaderboard implements StravaEntity<Integer> {
+public class StravaSegmentLeaderboard implements StravaEntity {
 	/**
 	 * Number of entries in the leaderboard as a whole (i.e. the number of athletes)
 	 */
@@ -246,8 +246,4 @@ public class StravaSegmentLeaderboard implements StravaEntity<Integer> {
 				+ ", athleteEntries=" + this.athleteEntries + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	@Override
-	public Integer getId() {
-		return null;
-	}
 }

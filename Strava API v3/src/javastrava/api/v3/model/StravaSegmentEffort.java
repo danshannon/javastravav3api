@@ -6,6 +6,7 @@ import java.util.List;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.SegmentService;
+import javastrava.cache.StravaCacheableEntity;
 
 /**
  * <p>
@@ -16,7 +17,7 @@ import javastrava.api.v3.service.SegmentService;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentEffort implements StravaEntity<Long> {
+public class StravaSegmentEffort implements StravaCacheableEntity<Long> {
 	/**
 	 * Strava's unique identifier for this segment effort
 	 */

@@ -14,7 +14,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentLeaderboardEntry implements StravaEntity<Integer> {
+public class StravaSegmentLeaderboardEntry implements StravaEntity {
 	/**
 	 * Name of the athlete
 	 */
@@ -466,11 +466,6 @@ public class StravaSegmentLeaderboardEntry implements StravaEntity<Integer> {
 				+ this.activityId + ", effortId=" + this.effortId + ", rank=" + this.rank + ", athleteProfile=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ this.athleteProfile + ", neighborhoodIndex=" //$NON-NLS-1$
 				+ this.neighborhoodIndex + "]"; //$NON-NLS-1$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

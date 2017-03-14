@@ -18,7 +18,7 @@ import javastrava.api.v3.model.reference.StravaTerrainType;
  * @author Dan Shannon
  *
  */
-public class StravaClubEvent implements StravaEntity<Integer> {
+public class StravaClubEvent implements StravaEntity {
 	/**
 	 * Unique id of this event
 	 */
@@ -216,7 +216,6 @@ public class StravaClubEvent implements StravaEntity<Integer> {
 	/**
 	 * @return the id
 	 */
-	@Override
 	public Integer getId() {
 		return this.id;
 	}

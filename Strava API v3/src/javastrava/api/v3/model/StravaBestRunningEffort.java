@@ -13,7 +13,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaBestRunningEffort implements StravaEntity<Integer> {
+public class StravaBestRunningEffort implements StravaEntity {
 	/**
 	 * Strava's unique identifier for this running effort
 	 */
@@ -210,7 +210,6 @@ public class StravaBestRunningEffort implements StravaEntity<Integer> {
 	/**
 	 * @return the id
 	 */
-	@Override
 	public Integer getId() {
 		return this.id;
 	}

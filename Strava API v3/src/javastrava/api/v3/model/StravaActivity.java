@@ -11,6 +11,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaWorkoutType;
 import javastrava.api.v3.service.ActivityService;
 import javastrava.api.v3.service.StreamService;
+import javastrava.cache.StravaCacheableEntity;
 
 /**
  * <p>
@@ -20,7 +21,7 @@ import javastrava.api.v3.service.StreamService;
  * @author Dan Shannon
  *
  */
-public class StravaActivity implements StravaEntity<Long> {
+public class StravaActivity implements StravaCacheableEntity<Long> {
 	/**
 	 * Strava's unique identifier for the activity
 	 */

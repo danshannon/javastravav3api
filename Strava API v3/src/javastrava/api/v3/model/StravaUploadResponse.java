@@ -12,7 +12,7 @@ import javastrava.api.v3.service.UploadService;
  * @author Dan Shannon
  *
  */
-public class StravaUploadResponse implements StravaEntity<Long> {
+public class StravaUploadResponse implements StravaEntity {
 	/**
 	 * Unique identifier of the upload
 	 */
@@ -128,7 +128,6 @@ public class StravaUploadResponse implements StravaEntity<Long> {
 	/**
 	 * @return the id
 	 */
-	@Override
 	public Long getId() {
 		return this.id;
 	}

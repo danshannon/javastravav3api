@@ -15,7 +15,7 @@ import javastrava.api.v3.model.webhook.reference.StravaSubscriptionObjectType;
  * @author Dan Shannon
  *
  */
-public class StravaEventSubscription implements StravaEntity<Integer> {
+public class StravaEventSubscription implements StravaEntity {
 	/**
 	 * Unique identifier of this event subscription
 	 */
@@ -151,7 +151,6 @@ public class StravaEventSubscription implements StravaEntity<Integer> {
 	/**
 	 * @return the id
 	 */
-	@Override
 	public Integer getId() {
 		return this.id;
 	}

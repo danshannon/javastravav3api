@@ -11,7 +11,7 @@ import javastrava.api.v3.service.AthleteService;
  * @author Dan Shannon
  *
  */
-public class StravaStatistics implements StravaEntity<Integer> {
+public class StravaStatistics implements StravaEntity {
 	/**
 	 * distance (in metres) of athlete's longest ride
 	 */
@@ -343,11 +343,6 @@ public class StravaStatistics implements StravaEntity<Integer> {
 				+ this.ytdSwimTotals + ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals //$NON-NLS-1$ //$NON-NLS-2$
 				+ ", allSwimTotals=" //$NON-NLS-1$
 				+ this.allSwimTotals + "]"; //$NON-NLS-1$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

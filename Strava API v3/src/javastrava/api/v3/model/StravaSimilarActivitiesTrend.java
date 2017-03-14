@@ -12,7 +12,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaSimilarActivitiesTrend implements StravaEntity<Integer> {
+public class StravaSimilarActivitiesTrend implements StravaEntity {
 	/**
 	 * UNDOCUMENTED
 	 */
@@ -225,11 +225,6 @@ public class StravaSimilarActivitiesTrend implements StravaEntity<Integer> {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

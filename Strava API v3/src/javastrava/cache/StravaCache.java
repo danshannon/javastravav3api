@@ -2,8 +2,6 @@ package javastrava.cache;
 
 import java.util.List;
 
-import javastrava.api.v3.model.StravaEntity;
-
 /**
  * <p>
  * The caching mechanism caches data temporarily in memory
@@ -20,7 +18,7 @@ import javastrava.api.v3.model.StravaEntity;
  * @param <U>
  *            Class of object's id
  */
-public interface StravaCache<T extends StravaEntity<U>, U> {
+public interface StravaCache<T extends StravaCacheableEntity<U>, U> {
 	/**
 	 * <p>
 	 * Retrieves the object from the cache.
@@ -36,7 +34,7 @@ public interface StravaCache<T extends StravaEntity<U>, U> {
 	 * <p>
 	 * Returns a list of the objects in the cache
 	 * </p>
-	 * 
+	 *
 	 * @return List of the objects in the cache
 	 */
 	public List<T> list();
@@ -55,7 +53,7 @@ public interface StravaCache<T extends StravaEntity<U>, U> {
 	 * <p>
 	 * Puts all the contents of the list in the cache
 	 * </p>
-	 * 
+	 *
 	 * @param list
 	 *            List of objects to be stored in cache
 	 */
@@ -82,7 +80,7 @@ public interface StravaCache<T extends StravaEntity<U>, U> {
 	 * <p>
 	 * Returns the number of objects in the cache
 	 * </p>
-	 * 
+	 *
 	 * @return Number of objects in the cache
 	 */
 	public int size();

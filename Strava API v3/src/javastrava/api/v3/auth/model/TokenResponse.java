@@ -12,7 +12,7 @@ import javastrava.api.v3.rest.API;
  *
  * @author Dan Shannon
  */
-public class TokenResponse implements StravaEntity<Integer> {
+public class TokenResponse implements StravaEntity {
 	/**
 	 * The value of the access token
 	 */
@@ -131,11 +131,6 @@ public class TokenResponse implements StravaEntity<Integer> {
 	@Override
 	public String toString() {
 		return "TokenResponse [accessToken=" + this.accessToken + ", tokenType=" + this.tokenType + ", athlete=" + this.athlete + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

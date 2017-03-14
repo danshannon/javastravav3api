@@ -10,7 +10,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaStatisticsEntry implements StravaEntity<Integer> {
+public class StravaStatisticsEntry implements StravaEntity {
 	/**
 	 * Number of activities
 	 */
@@ -216,11 +216,6 @@ public class StravaStatisticsEntry implements StravaEntity<Integer> {
 	public String toString() {
 		return "StravaStatisticsEntry [count=" + this.count + ", distance=" + this.distance + ", movingTime=" + this.movingTime + ", elapsedTime=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.elapsedTime + ", elevationGain=" + this.elevationGain + ", achievementCount=" + this.achievementCount + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

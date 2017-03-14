@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.cache.StravaCacheableEntity;
 
 /**
  * <p>
@@ -14,7 +15,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaLap implements StravaEntity<Long> {
+public class StravaLap implements StravaCacheableEntity<Long> {
 	/**
 	 * Strava's unique identifier for this lap
 	 */
@@ -667,6 +668,9 @@ public class StravaLap implements StravaEntity<Long> {
 				+ this.split + "]"; //$NON-NLS-1$
 	}
 
+	/**
+	 * @return The identifier
+	 */
 	@Override
 	public Long getId() {
 		return this.id;

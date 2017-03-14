@@ -6,6 +6,7 @@ import java.util.List;
 import javastrava.api.v3.model.reference.StravaMeasurementMethod;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaRunningRaceType;
+import javastrava.cache.StravaCacheableEntity;
 
 /**
  * <p>
@@ -15,7 +16,7 @@ import javastrava.api.v3.model.reference.StravaRunningRaceType;
  * @author Dan Shannon
  *
  */
-public class StravaRunningRace implements StravaEntity<Integer> {
+public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	/**
 	 * Identifier
 	 */

@@ -10,7 +10,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaAchievement implements StravaEntity<Integer> {
+public class StravaAchievement implements StravaEntity {
 	/**
 	 * Identifier of the achievement type
 	 */
@@ -135,11 +135,6 @@ public class StravaAchievement implements StravaEntity<Integer> {
 	@Override
 	public String toString() {
 		return "StravaAchievement [typeId=" + this.typeId + ", type=" + this.type + ", rank=" + this.rank + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	@Override
-	public Integer getId() {
-		return this.typeId;
 	}
 
 	@Override

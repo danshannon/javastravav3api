@@ -8,7 +8,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaAthleteZones implements StravaEntity<Integer> {
+public class StravaAthleteZones implements StravaEntity {
 	/**
 	 * Set of heart-rate zones for the athlete
 	 */
@@ -92,11 +92,6 @@ public class StravaAthleteZones implements StravaEntity<Integer> {
 	 */
 	public void setPower(StravaAthleteZone power) {
 		this.power = power;
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

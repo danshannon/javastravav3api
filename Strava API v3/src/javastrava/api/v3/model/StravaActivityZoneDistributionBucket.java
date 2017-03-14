@@ -6,7 +6,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaActivityZoneDistributionBucket implements StravaEntity<Integer> {
+public class StravaActivityZoneDistributionBucket implements StravaEntity {
 	/**
 	 *
 	 */
@@ -130,11 +130,6 @@ public class StravaActivityZoneDistributionBucket implements StravaEntity<Intege
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

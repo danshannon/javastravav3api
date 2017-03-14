@@ -11,7 +11,7 @@ import javastrava.api.v3.service.ActivityService;
  * @author Dan Shannon
  *
  */
-public class StravaSplit implements StravaEntity<Integer> {
+public class StravaSplit implements StravaEntity {
 	/**
 	 * Total distance in metres
 	 */
@@ -275,11 +275,6 @@ public class StravaSplit implements StravaEntity<Integer> {
 	 */
 	public void setPaceZone(Integer paceZone) {
 		this.paceZone = paceZone;
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

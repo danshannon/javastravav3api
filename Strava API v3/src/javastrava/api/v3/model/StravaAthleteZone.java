@@ -10,7 +10,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaAthleteZone implements StravaEntity<Integer> {
+public class StravaAthleteZone implements StravaEntity {
 	/**
 	 * Is this a set of custom zones?
 	 */
@@ -108,11 +108,6 @@ public class StravaAthleteZone implements StravaEntity<Integer> {
 	@Override
 	public String toString() {
 		return "StravaHeartRateZones [customZones=" + this.customZones + ", zones=" + this.zones + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

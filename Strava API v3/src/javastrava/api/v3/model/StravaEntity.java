@@ -8,16 +8,9 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * </p>
  *
  * @author Dan Shannon
- * @param <T>
- *            Type of the entity's identifier
  *
  */
-public interface StravaEntity<T> {
-	/**
-	 * @return Return the identifier
-	 */
-	public T getId();
-
+public interface StravaEntity {
 	/**
 	 * @return Return the resource state of the entity
 	 */

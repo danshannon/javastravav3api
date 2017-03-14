@@ -6,6 +6,7 @@ import javastrava.api.v3.model.reference.StravaClubMembershipStatus;
 import javastrava.api.v3.model.reference.StravaClubType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSportType;
+import javastrava.cache.StravaCacheableEntity;
 
 /**
  * <p>
@@ -16,7 +17,7 @@ import javastrava.api.v3.model.reference.StravaSportType;
  * @author Dan Shannon
  *
  */
-public class StravaClub implements StravaEntity<Integer> {
+public class StravaClub implements StravaCacheableEntity<Integer> {
 
 	/**
 	 * Strava's unique identifier for this club

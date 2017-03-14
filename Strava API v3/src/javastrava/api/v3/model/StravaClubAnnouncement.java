@@ -12,7 +12,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaClubAnnouncement implements StravaEntity<Integer> {
+public class StravaClubAnnouncement implements StravaEntity {
 	/**
 	 * Unique identifier of the announcement
 	 */
@@ -46,7 +46,6 @@ public class StravaClubAnnouncement implements StravaEntity<Integer> {
 	/**
 	 * @return the id
 	 */
-	@Override
 	public Integer getId() {
 		return this.id;
 	}

@@ -3,6 +3,7 @@ package javastrava.api.v3.model;
 import javastrava.api.v3.model.reference.StravaFrameType;
 import javastrava.api.v3.model.reference.StravaGearType;
 import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.cache.StravaCacheableEntity;
 
 /**
  * <p>
@@ -16,7 +17,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaGear implements StravaEntity<String> {
+public class StravaGear implements StravaCacheableEntity<String> {
 	/**
 	 * Unique identifier for the gear. Is prefixed with 'b' for bikes when returning via the API
 	 */
@@ -25,39 +26,47 @@ public class StravaGear implements StravaEntity<String> {
 	/**
 	 * Is set to <code>true</code> if this is the athlete's default bike / shoes
 	 */
-	private Boolean				primary;
+	private Boolean primary;
+
 	/**
 	 * Name given to the gear by the owner
 	 */
-	private String				name;
+	private String name;
+
 	/**
 	 * Total distance in metres
 	 */
-	private Float				distance;
+	private Float distance;
+
 	/**
 	 * Brand name
 	 */
-	private String				brandName;
+	private String brandName;
+
 	/**
 	 * Model name
 	 */
-	private String				modelName;
+	private String modelName;
+
 	/**
 	 * (Bikes only) 1 -> mtb, 2 -> cross, 3 -> road, 4 -> time trial
 	 */
-	private StravaFrameType		frameType;
+	private StravaFrameType frameType;
+
 	/**
 	 * Test description
 	 */
-	private String				description;
+	private String description;
+
 	/**
 	 * State of this resource on Strava
 	 */
-	private StravaResourceState	resourceState;
+	private StravaResourceState resourceState;
+
 	/**
 	 * Type of gear (bike or shoes)
 	 */
-	private StravaGearType		gearType;
+	private StravaGearType gearType;
 
 	/**
 	 * No args constructor

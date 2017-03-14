@@ -19,7 +19,7 @@ import javastrava.api.v3.model.reference.StravaStreamType;
  * @author Dan Shannon
  *
  */
-public class StravaStream implements StravaEntity<Integer> {
+public class StravaStream implements StravaEntity {
 	/**
 	 * Type of stream data
 	 */
@@ -241,11 +241,6 @@ public class StravaStream implements StravaEntity<Integer> {
 		return "StravaStream [type=" + this.type + ", data=" + this.data + ", mapPoints=" + this.mapPoints + ", moving=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.moving + ", seriesType=" //$NON-NLS-1$
 				+ this.seriesType + ", originalSize=" + this.originalSize + ", resolution=" + this.resolution + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

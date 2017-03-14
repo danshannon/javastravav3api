@@ -8,9 +8,9 @@ import org.apache.commons.jcs.JCS;
 import org.apache.commons.jcs.access.GroupCacheAccess;
 
 import javastrava.api.v3.auth.model.Token;
-import javastrava.api.v3.model.StravaEntity;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.cache.StravaCache;
+import javastrava.cache.StravaCacheableEntity;
 
 /**
  * @author Dan Shannon
@@ -20,7 +20,7 @@ import javastrava.cache.StravaCache;
  * @param <U>
  *            Class of object id
  */
-public class StravaCacheImpl<T extends StravaEntity<U>, U> implements StravaCache<T, U> {
+public class StravaCacheImpl<T extends StravaCacheableEntity<U>, U> implements StravaCache<T, U> {
 	/**
 	 * Strava access token associated with this cache instance
 	 */

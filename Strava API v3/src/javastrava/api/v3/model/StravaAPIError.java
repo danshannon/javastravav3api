@@ -8,7 +8,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaAPIError implements StravaEntity<Integer> {
+public class StravaAPIError implements StravaEntity {
 	/**
 	 * The resource which has caused the error
 	 */
@@ -132,11 +132,6 @@ public class StravaAPIError implements StravaEntity<Integer> {
 	@Override
 	public String toString() {
 		return "StravaAPIError [resource=" + this.resource + ", field=" + this.field + ", code=" + this.code + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

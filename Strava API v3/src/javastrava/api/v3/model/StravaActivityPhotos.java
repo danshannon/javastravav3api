@@ -10,7 +10,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaActivityPhotos implements StravaEntity<Integer> {
+public class StravaActivityPhotos implements StravaEntity {
 	/**
 	 * Primary photo
 	 */
@@ -137,11 +137,6 @@ public class StravaActivityPhotos implements StravaEntity<Integer> {
 	 */
 	public void setUsePrimaryPhoto(String usePrimaryPhoto) {
 		this.usePrimaryPhoto = usePrimaryPhoto;
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

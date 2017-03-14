@@ -10,7 +10,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaMapPoint implements StravaEntity<Integer> {
+public class StravaMapPoint implements StravaEntity {
 	/**
 	 * Latitude. Negative values are south of the equator.
 	 */
@@ -121,11 +121,6 @@ public class StravaMapPoint implements StravaEntity<Integer> {
 	@Override
 	public String toString() {
 		return "StravaMapPoint [latitude=" + this.latitude + ", longitude=" + this.longitude + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

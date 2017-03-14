@@ -12,7 +12,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaPhotoUrls implements StravaEntity<Integer> {
+public class StravaPhotoUrls implements StravaEntity {
 	/**
 	 * URL of full-size photo
 	 */
@@ -141,11 +141,6 @@ public class StravaPhotoUrls implements StravaEntity<Integer> {
 	@Override
 	public String toString() {
 		return "StravaPhotoUrls [url0=" + this.url0 + ", url100=" + this.url100 + ", url600=" + this.url600 + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  * @author Dan Shannon
  *
  */
-public class StravaSegmentExplorerResponseSegment implements StravaEntity<Integer> {
+public class StravaSegmentExplorerResponseSegment implements StravaEntity {
 	/**
 	 * Strava's unique identifier of the {@link StravaSegment segment}
 	 */
@@ -203,7 +203,6 @@ public class StravaSegmentExplorerResponseSegment implements StravaEntity<Intege
 	/**
 	 * @return the id
 	 */
-	@Override
 	public Integer getId() {
 		return this.id;
 	}

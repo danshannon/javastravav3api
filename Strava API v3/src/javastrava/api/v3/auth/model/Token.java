@@ -67,7 +67,7 @@ import javastrava.api.v3.service.impl.WebhookServiceImpl;
  * @author Dan Shannon
  *
  */
-public class Token implements StravaEntity<Integer> {
+public class Token implements StravaEntity {
 	/**
 	 * The {@link StravaAthlete athlete} to whom this token is assigned
 	 */
@@ -355,11 +355,6 @@ public class Token implements StravaEntity<Integer> {
 		return "Token [athlete=" + this.athlete + ", token=" + this.token + ", scopes=" + this.scopes + ", services=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.services + ", tokenType=" //$NON-NLS-1$
 				+ this.tokenType + "]"; //$NON-NLS-1$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override

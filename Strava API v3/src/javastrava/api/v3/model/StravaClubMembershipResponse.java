@@ -16,7 +16,7 @@ import javastrava.api.v3.service.ClubService;
  * @author Dan Shannon
  *
  */
-public class StravaClubMembershipResponse implements StravaEntity<Integer> {
+public class StravaClubMembershipResponse implements StravaEntity {
 	/**
 	 * true if the call to set membership status succeeded
 	 */
@@ -141,11 +141,6 @@ public class StravaClubMembershipResponse implements StravaEntity<Integer> {
 	public String toString() {
 		return "StravaClubMembershipResponse [success=" + this.success + ", active=" + this.active + ", membership=" + this.membership //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ "]"; //$NON-NLS-1$
-	}
-
-	@Override
-	public Integer getId() {
-		return null;
 	}
 
 	@Override
