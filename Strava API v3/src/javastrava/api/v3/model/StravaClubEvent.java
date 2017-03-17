@@ -22,60 +22,78 @@ public class StravaClubEvent implements StravaEntity {
 	/**
 	 * Unique id of this event
 	 */
-	private Integer				id;
+	private Integer id;
+
 	/**
 	 * Resource state as returned by Strava
 	 */
-	private StravaResourceState	resourceState;
+	private StravaResourceState resourceState;
+
 	/**
 	 * Title of the event
 	 */
-	private String				title;
+	private String title;
+
 	/**
 	 * Text description of the event
 	 */
-	private String				description;
+	private String description;
+
 	/**
 	 * Unique id of the club that the event belongs to
 	 */
-	private Integer				clubId;
+	private Integer clubId;
+
 	/**
 	 * Type of activity for this event
 	 */
-	private StravaActivityType	activityType;
+	private StravaActivityType activityType;
+
 	/**
 	 * Date and time the event was created
 	 */
-	private ZonedDateTime		createdAt;
+	private ZonedDateTime createdAt;
+
 	/**
 	 * Unique ID of the Strava route associated with the
 	 */
-	private Integer				routeId;
+	private Integer routeId;
+
 	/**
 	 * Event is for women
 	 */
-	private Boolean				womanOnly;
+	private Boolean womanOnly;
+
 	/**
 	 * Is this a private event (only club members can access private events)
 	 */
 	@SerializedName("private")
-	private Boolean				privateEvent;
+	private Boolean privateEvent;
+
 	/**
 	 * Skill level (casual, tempo, hammerfest)
 	 */
-	private StravaSkillLevel	skillLevel;
+	private StravaSkillLevel skillLevel;
+
 	/**
 	 * Terrain type (flat, rolling, etc)
 	 */
-	private StravaTerrainType	terrain;
+	private StravaTerrainType terrain;
+
 	/**
 	 * List of upcoming occurrences
 	 */
-	private List<ZonedDateTime>	upcomingOccurrences;
+	private List<ZonedDateTime> upcomingOccurrences;
+
 	/**
 	 * Location of the event
 	 */
-	private String				address;
+	private String address;
+
+	/**
+	 * <code>true</code> if the authenticated athlete has joined the next occurrence of the event
+	 */
+	private Boolean joined;
 
 	/**
 	 * No-args constructor
@@ -84,11 +102,8 @@ public class StravaClubEvent implements StravaEntity {
 		// Empty
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -137,6 +152,13 @@ public class StravaClubEvent implements StravaEntity {
 		} else if (!this.id.equals(other.id)) {
 			return false;
 		}
+		if (this.joined == null) {
+			if (other.joined != null) {
+				return false;
+			}
+		} else if (!this.joined.equals(other.joined)) {
+			return false;
+		}
 		if (this.privateEvent == null) {
 			if (other.privateEvent != null) {
 				return false;
@@ -152,6 +174,12 @@ public class StravaClubEvent implements StravaEntity {
 				return false;
 			}
 		} else if (!this.routeId.equals(other.routeId)) {
+			return false;
+		}
+		if (this.skillLevel != other.skillLevel) {
+			return false;
+		}
+		if (this.terrain != other.terrain) {
 			return false;
 		}
 		if (this.title == null) {
@@ -277,7 +305,9 @@ public class StravaClubEvent implements StravaEntity {
 		return this.womanOnly;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -290,9 +320,12 @@ public class StravaClubEvent implements StravaEntity {
 		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
 		result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
 		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.joined == null) ? 0 : this.joined.hashCode());
 		result = (prime * result) + ((this.privateEvent == null) ? 0 : this.privateEvent.hashCode());
 		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
 		result = (prime * result) + ((this.routeId == null) ? 0 : this.routeId.hashCode());
+		result = (prime * result) + ((this.skillLevel == null) ? 0 : this.skillLevel.hashCode());
+		result = (prime * result) + ((this.terrain == null) ? 0 : this.terrain.hashCode());
 		result = (prime * result) + ((this.title == null) ? 0 : this.title.hashCode());
 		result = (prime * result) + ((this.upcomingOccurrences == null) ? 0 : this.upcomingOccurrences.hashCode());
 		result = (prime * result) + ((this.womanOnly == null) ? 0 : this.womanOnly.hashCode());
@@ -411,14 +444,25 @@ public class StravaClubEvent implements StravaEntity {
 		this.womanOnly = womanOnly;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "StravaClubEvent [id=" + this.id + ", resourceState=" + this.resourceState + ", title=" + this.title + ", description=" + this.description //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", clubId=" + this.clubId + ", activityType=" + this.activityType + ", createdAt=" + this.createdAt + ", routeId=" + this.routeId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", womanOnly=" + this.womanOnly + ", privateEvent=" + this.privateEvent + ", upcomingOccurrences=" + this.upcomingOccurrences + ", address=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.address + "]"; //$NON-NLS-1$
+		return "StravaClubEvent [id=" + this.id + ", resourceState=" + this.resourceState + ", title=" + this.title + ", description=" + this.description + ", clubId=" + this.clubId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", activityType=" + this.activityType + ", createdAt=" + this.createdAt + ", routeId=" + this.routeId + ", womanOnly=" + this.womanOnly + ", privateEvent=" + this.privateEvent //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", skillLevel=" + this.skillLevel + ", terrain=" + this.terrain + ", upcomingOccurrences=" + this.upcomingOccurrences + ", address=" + this.address + ", joined=" + this.joined + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+	}
+
+	/**
+	 * @return the joined
+	 */
+	public Boolean getJoined() {
+		return this.joined;
+	}
+
+	/**
+	 * @param joined
+	 *            the joined to set
+	 */
+	public void setJoined(Boolean joined) {
+		this.joined = joined;
 	}
 }
