@@ -21,7 +21,7 @@ public class ZonedDateTimeSerializer implements JsonSerializer<ZonedDateTime>, J
 	 */
 	@Override
 	public JsonElement serialize(final ZonedDateTime src, final Type srcType, final JsonSerializationContext context) {
-		return new JsonPrimitive(src.toString());
+		return new JsonPrimitive(src.format(DateTimeFormatter.ISO_DATE_TIME));
 	}
 
 	/**

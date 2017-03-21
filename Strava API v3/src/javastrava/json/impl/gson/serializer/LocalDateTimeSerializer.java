@@ -23,7 +23,7 @@ public class LocalDateTimeSerializer implements JsonSerializer<LocalDateTime>, J
 	 */
 	@Override
 	public JsonElement serialize(final LocalDateTime src, final Type srcType, final JsonSerializationContext context) {
-		return new JsonPrimitive(src.atZone(ZoneOffset.UTC).toString());
+		return new JsonPrimitive(src.atZone(ZoneOffset.UTC).format(DateTimeFormatter.ISO_DATE_TIME));
 	}
 
 	/**
