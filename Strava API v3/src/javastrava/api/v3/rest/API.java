@@ -857,6 +857,25 @@ public class API {
 	}
 
 	/**
+	 * <p>
+	 * Get details of a specific running race
+	 * </p>
+	 *
+	 * @param id
+	 *            The id of the race to be retrieved
+	 * @return A detailed representation of the running race
+	 * @throws NotFoundException
+	 *             If the race does not exist
+	 * @throws UnauthorizedException
+	 *             If the race is private or a security exception has occurred
+	 */
+	public StravaAPIFuture<StravaRunningRace> getRaceAsync(Integer id) throws NotFoundException, UnauthorizedException {
+		final StravaAPIFuture<StravaRunningRace> future = new StravaAPIFuture<>();
+		this.runningRaceAPI.getRace(id, callback(future));
+		return future;
+	}
+
+	/**
 	 * @param segmentId
 	 *            The unique identifier of the segment
 	 * @return The Segment
@@ -1734,7 +1753,7 @@ public class API {
 	 */
 	public StravaAPIFuture<StravaRunningRace[]> listRacesAsync(Integer year) {
 		final StravaAPIFuture<StravaRunningRace[]> future = new StravaAPIFuture<StravaRunningRace[]>();
-		this.runningRaceAPI.listRacesAsync(year, callback(future));
+		this.runningRaceAPI.listRaces(year, callback(future));
 		return future;
 	}
 
@@ -1947,10 +1966,10 @@ public class API {
 	 * @return Statistics summary for the identified athlete
 	 * @throws NotFoundException
 	 *             If the identified athlete doesn't exist
-	 * @see javastrava.api.v3.rest.AthleteAPI#statistics(java.lang.Integer)
+	 * @see javastrava.api.v3.rest.AthleteAPI#getStatistics(java.lang.Integer)
 	 */
 	public StravaStatistics statistics(final Integer athleteId) throws NotFoundException {
-		return this.athleteAPI.statistics(athleteId);
+		return this.athleteAPI.getStatistics(athleteId);
 	}
 
 	/**
@@ -1959,11 +1978,11 @@ public class API {
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
 	 * @throws NotFoundException
 	 *             If the identified athlete doesn't exist
-	 * @see javastrava.api.v3.rest.AthleteAPI#statistics(java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
+	 * @see javastrava.api.v3.rest.AthleteAPI#getStatistics(java.lang.Integer, javastrava.api.v3.rest.async.StravaAPICallback)
 	 */
 	public StravaAPIFuture<StravaStatistics> statisticsAsync(final Integer athleteId) throws NotFoundException {
 		final StravaAPIFuture<StravaStatistics> future = new StravaAPIFuture<StravaStatistics>();
-		this.athleteAPI.statistics(athleteId, callback(future));
+		this.athleteAPI.getStatistics(athleteId, callback(future));
 		return future;
 	}
 

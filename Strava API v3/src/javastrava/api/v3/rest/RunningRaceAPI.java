@@ -10,8 +10,7 @@ import retrofit.http.Query;
 
 /**
  * <p>
- * A featured set of running races taking place across the world. Each race has an associated race page with course information,
- * athlete goals, and results.
+ * A featured set of running races taking place across the world. Each race has an associated race page with course information, athlete goals, and results.
  *
  * @author Dan Shannon
  *
@@ -40,7 +39,7 @@ public interface RunningRaceAPI {
 	 *            Future containing list of running races as summary representations
 	 */
 	@GET("/running_races")
-	public void listRacesAsync(@Query("year") final Integer year, final StravaAPICallback<StravaRunningRace[]> races);
+	public void listRaces(@Query("year") final Integer year, final StravaAPICallback<StravaRunningRace[]> races);
 
 	/**
 	 * <p>
@@ -73,5 +72,5 @@ public interface RunningRaceAPI {
 	 *             If the race is private or a security exception has occurred
 	 */
 	@GET("/running/races/{id}")
-	public void getRaceAsync(@Path("id") final Integer id, final StravaAPICallback<StravaRunningRace> callback);
+	public void getRace(@Path("id") final Integer id, final StravaAPICallback<StravaRunningRace> callback);
 }

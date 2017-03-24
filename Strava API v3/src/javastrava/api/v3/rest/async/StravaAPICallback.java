@@ -6,7 +6,8 @@ import retrofit.client.Response;
 
 /**
  * @author Dan Shannon
- * @param <T> The type being returned to the callback
+ * @param <T>
+ *            The type being returned to the callback
  *
  */
 public class StravaAPICallback<T> implements Callback<T> {
@@ -16,7 +17,8 @@ public class StravaAPICallback<T> implements Callback<T> {
 	private final StravaAPIFuture<T> future;
 
 	/**
-	 * @param completableFuture A Future which will be completed when the call to the API is complete
+	 * @param completableFuture
+	 *            A Future which will be completed when the call to the API is complete
 	 */
 	public StravaAPICallback(final StravaAPIFuture<T> completableFuture) {
 		this.future = completableFuture;
@@ -27,7 +29,6 @@ public class StravaAPICallback<T> implements Callback<T> {
 	 */
 	@Override
 	public void failure(final RetrofitError error) {
-		// final RuntimeException exception = (RuntimeException) errorHandler.handleError(error);
 		this.future.completeExceptionally(error.getCause());
 	}
 
