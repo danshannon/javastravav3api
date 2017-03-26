@@ -1,14 +1,17 @@
 package javastrava.api.v3.model;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
 import javastrava.api.v3.model.reference.StravaActivityType;
+import javastrava.api.v3.model.reference.StravaEventFrequency;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSkillLevel;
 import javastrava.api.v3.model.reference.StravaTerrainType;
+import javastrava.api.v3.model.reference.StravaWeekOfMonth;
 import javastrava.cache.StravaCacheableEntity;
 
 /**
@@ -64,6 +67,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	/**
 	 * Unique ID of the Strava route associated with the
 	 */
+	@Deprecated
 	private Integer routeId;
 
 	/**
@@ -90,7 +94,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	/**
 	 * List of upcoming occurrences
 	 */
-	private List<ZonedDateTime> upcomingOccurrences;
+	private List<LocalDateTime> upcomingOccurrences;
 
 	/**
 	 * Location of the event
@@ -103,6 +107,40 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	private Boolean joined;
 
 	/**
+	 * The athlete organising the event
+	 */
+	private StravaAthlete organizingAthlete;
+
+	/**
+	 * The start location of the event
+	 */
+	private StravaMapPoint startLatlng;
+
+	/**
+	 * The route of the event
+	 */
+	private StravaRoute route;
+
+	/**
+	 * The timezone of the event
+	 */
+	private String zone;
+
+	private StravaClubEventViewerPermissions viewerPermissions;
+
+	private LocalDateTime startDatetime;
+
+	private StravaEventFrequency frequency;
+
+	private StravaWeekOfMonth weekOfMonth;
+
+	private String dayOfWeek;
+
+	private List<String> daysOfWeek;
+
+	private Integer weeklyInterval;
+
+	/**
 	 * No-args constructor
 	 */
 	public StravaClubEvent() {
@@ -111,7 +149,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -157,11 +195,28 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 		} else if (!this.createdAt.equals(other.createdAt)) {
 			return false;
 		}
+		if (this.dayOfWeek == null) {
+			if (other.dayOfWeek != null) {
+				return false;
+			}
+		} else if (!this.dayOfWeek.equals(other.dayOfWeek)) {
+			return false;
+		}
+		if (this.daysOfWeek == null) {
+			if (other.daysOfWeek != null) {
+				return false;
+			}
+		} else if (!this.daysOfWeek.equals(other.daysOfWeek)) {
+			return false;
+		}
 		if (this.description == null) {
 			if (other.description != null) {
 				return false;
 			}
 		} else if (!this.description.equals(other.description)) {
+			return false;
+		}
+		if (this.frequency != other.frequency) {
 			return false;
 		}
 		if (this.id == null) {
@@ -178,6 +233,13 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 		} else if (!this.joined.equals(other.joined)) {
 			return false;
 		}
+		if (this.organizingAthlete == null) {
+			if (other.organizingAthlete != null) {
+				return false;
+			}
+		} else if (!this.organizingAthlete.equals(other.organizingAthlete)) {
+			return false;
+		}
 		if (this.privateEvent == null) {
 			if (other.privateEvent != null) {
 				return false;
@@ -188,6 +250,13 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 		if (this.resourceState != other.resourceState) {
 			return false;
 		}
+		if (this.route == null) {
+			if (other.route != null) {
+				return false;
+			}
+		} else if (!this.route.equals(other.route)) {
+			return false;
+		}
 		if (this.routeId == null) {
 			if (other.routeId != null) {
 				return false;
@@ -196,6 +265,20 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 			return false;
 		}
 		if (this.skillLevel != other.skillLevel) {
+			return false;
+		}
+		if (this.startDatetime == null) {
+			if (other.startDatetime != null) {
+				return false;
+			}
+		} else if (!this.startDatetime.equals(other.startDatetime)) {
+			return false;
+		}
+		if (this.startLatlng == null) {
+			if (other.startLatlng != null) {
+				return false;
+			}
+		} else if (!this.startLatlng.equals(other.startLatlng)) {
 			return false;
 		}
 		if (this.terrain != other.terrain) {
@@ -215,11 +298,35 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 		} else if (!this.upcomingOccurrences.equals(other.upcomingOccurrences)) {
 			return false;
 		}
+		if (this.viewerPermissions == null) {
+			if (other.viewerPermissions != null) {
+				return false;
+			}
+		} else if (!this.viewerPermissions.equals(other.viewerPermissions)) {
+			return false;
+		}
+		if (this.weekOfMonth != other.weekOfMonth) {
+			return false;
+		}
+		if (this.weeklyInterval == null) {
+			if (other.weeklyInterval != null) {
+				return false;
+			}
+		} else if (!this.weeklyInterval.equals(other.weeklyInterval)) {
+			return false;
+		}
 		if (this.womanOnly == null) {
 			if (other.womanOnly != null) {
 				return false;
 			}
 		} else if (!this.womanOnly.equals(other.womanOnly)) {
+			return false;
+		}
+		if (this.zone == null) {
+			if (other.zone != null) {
+				return false;
+			}
+		} else if (!this.zone.equals(other.zone)) {
 			return false;
 		}
 		return true;
@@ -287,6 +394,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	/**
 	 * @return the routeId
 	 */
+	@Deprecated
 	public Integer getRouteId() {
 		return this.routeId;
 	}
@@ -315,7 +423,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	/**
 	 * @return the upcomingOccurrences
 	 */
-	public List<ZonedDateTime> getUpcomingOccurrences() {
+	public List<LocalDateTime> getUpcomingOccurrences() {
 		return this.upcomingOccurrences;
 	}
 
@@ -328,7 +436,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -340,17 +448,28 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 		result = (prime * result) + ((this.club == null) ? 0 : this.club.hashCode());
 		result = (prime * result) + ((this.clubId == null) ? 0 : this.clubId.hashCode());
 		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
+		result = (prime * result) + ((this.dayOfWeek == null) ? 0 : this.dayOfWeek.hashCode());
+		result = (prime * result) + ((this.daysOfWeek == null) ? 0 : this.daysOfWeek.hashCode());
 		result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
+		result = (prime * result) + ((this.frequency == null) ? 0 : this.frequency.hashCode());
 		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
 		result = (prime * result) + ((this.joined == null) ? 0 : this.joined.hashCode());
+		result = (prime * result) + ((this.organizingAthlete == null) ? 0 : this.organizingAthlete.hashCode());
 		result = (prime * result) + ((this.privateEvent == null) ? 0 : this.privateEvent.hashCode());
 		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.route == null) ? 0 : this.route.hashCode());
 		result = (prime * result) + ((this.routeId == null) ? 0 : this.routeId.hashCode());
 		result = (prime * result) + ((this.skillLevel == null) ? 0 : this.skillLevel.hashCode());
+		result = (prime * result) + ((this.startDatetime == null) ? 0 : this.startDatetime.hashCode());
+		result = (prime * result) + ((this.startLatlng == null) ? 0 : this.startLatlng.hashCode());
 		result = (prime * result) + ((this.terrain == null) ? 0 : this.terrain.hashCode());
 		result = (prime * result) + ((this.title == null) ? 0 : this.title.hashCode());
 		result = (prime * result) + ((this.upcomingOccurrences == null) ? 0 : this.upcomingOccurrences.hashCode());
+		result = (prime * result) + ((this.viewerPermissions == null) ? 0 : this.viewerPermissions.hashCode());
+		result = (prime * result) + ((this.weekOfMonth == null) ? 0 : this.weekOfMonth.hashCode());
+		result = (prime * result) + ((this.weeklyInterval == null) ? 0 : this.weeklyInterval.hashCode());
 		result = (prime * result) + ((this.womanOnly == null) ? 0 : this.womanOnly.hashCode());
+		result = (prime * result) + ((this.zone == null) ? 0 : this.zone.hashCode());
 		return result;
 	}
 
@@ -423,6 +542,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	 * @param routeId
 	 *            the routeId to set
 	 */
+	@Deprecated
 	public void setRouteId(final Integer routeId) {
 		this.routeId = routeId;
 	}
@@ -455,7 +575,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	 * @param upcomingOccurrences
 	 *            the upcomingOccurrences to set
 	 */
-	public void setUpcomingOccurrences(final List<ZonedDateTime> upcomingOccurrences) {
+	public void setUpcomingOccurrences(final List<LocalDateTime> upcomingOccurrences) {
 		this.upcomingOccurrences = upcomingOccurrences;
 	}
 
@@ -467,13 +587,22 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 		this.womanOnly = womanOnly;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "StravaClubEvent [id=" + this.id + ", resourceState=" + this.resourceState + ", title=" + this.title + ", description=" + this.description + ", club=" + this.club + ", clubId=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 				+ this.clubId + ", activityType=" //$NON-NLS-1$
 				+ this.activityType + ", createdAt=" + this.createdAt + ", routeId=" + this.routeId + ", womanOnly=" + this.womanOnly + ", privateEvent=" + this.privateEvent + ", skillLevel=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 				+ this.skillLevel + ", terrain=" //$NON-NLS-1$
-				+ this.terrain + ", upcomingOccurrences=" + this.upcomingOccurrences + ", address=" + this.address + ", joined=" + this.joined + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.terrain + ", upcomingOccurrences=" + this.upcomingOccurrences + ", address=" + this.address + ", joined=" + this.joined + ", organizingAthlete=" + this.organizingAthlete //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", startLatlng=" + this.startLatlng //$NON-NLS-1$
+				+ ", route=" + this.route + ", zone=" + this.zone + ", viewerPermissions=" + this.viewerPermissions + ", startDatetime=" + this.startDatetime + ", frequency=" + this.frequency //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", weekOfMonth=" + this.weekOfMonth //$NON-NLS-1$
+				+ ", dayOfWeek=" + this.dayOfWeek + ", daysOfWeek=" + this.daysOfWeek + ", weeklyInterval=" + this.weeklyInterval + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	/**
@@ -505,4 +634,170 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	public void setClub(StravaClub club) {
 		this.club = club;
 	}
+
+	/**
+	 * @return the organizingAthlete
+	 */
+	public StravaAthlete getOrganizingAthlete() {
+		return this.organizingAthlete;
+	}
+
+	/**
+	 * @param organizingAthlete
+	 *            the organizingAthlete to set
+	 */
+	public void setOrganizingAthlete(StravaAthlete organizingAthlete) {
+		this.organizingAthlete = organizingAthlete;
+	}
+
+	/**
+	 * @return the startLatlng
+	 */
+	public StravaMapPoint getStartLatlng() {
+		return this.startLatlng;
+	}
+
+	/**
+	 * @param startLatlng
+	 *            the startLatlng to set
+	 */
+	public void setStartLatlng(StravaMapPoint startLatlng) {
+		this.startLatlng = startLatlng;
+	}
+
+	/**
+	 * @return the route
+	 */
+	public StravaRoute getRoute() {
+		return this.route;
+	}
+
+	/**
+	 * @param route
+	 *            the route to set
+	 */
+	public void setRoute(StravaRoute route) {
+		this.route = route;
+	}
+
+	/**
+	 * @return the zone
+	 */
+	public String getZone() {
+		return this.zone;
+	}
+
+	/**
+	 * @param zone
+	 *            the zone to set
+	 */
+	public void setZone(String zone) {
+		this.zone = zone;
+	}
+
+	/**
+	 * @return The viewer permissions
+	 */
+	public StravaClubEventViewerPermissions getViewerPermissions() {
+		return this.viewerPermissions;
+	}
+
+	/**
+	 * @param viewerPermissions
+	 *            The viewer permissions to set
+	 */
+	public void setViewerPermissions(StravaClubEventViewerPermissions viewerPermissions) {
+		this.viewerPermissions = viewerPermissions;
+	}
+
+	/**
+	 * @return the startDatetime
+	 */
+	public LocalDateTime getStartDatetime() {
+		return this.startDatetime;
+	}
+
+	/**
+	 * @param startDatetime
+	 *            the startDatetime to set
+	 */
+	public void setStartDatetime(LocalDateTime startDatetime) {
+		this.startDatetime = startDatetime;
+	}
+
+	/**
+	 * @return the frequency
+	 */
+	public StravaEventFrequency getFrequency() {
+		return this.frequency;
+	}
+
+	/**
+	 * @param frequency
+	 *            the frequency to set
+	 */
+	public void setFrequency(StravaEventFrequency frequency) {
+		this.frequency = frequency;
+	}
+
+	/**
+	 * @return the weekOfMonth
+	 */
+	public StravaWeekOfMonth getWeekOfMonth() {
+		return this.weekOfMonth;
+	}
+
+	/**
+	 * @param weekOfMonth
+	 *            the weekOfMonth to set
+	 */
+	public void setWeekOfMonth(StravaWeekOfMonth weekOfMonth) {
+		this.weekOfMonth = weekOfMonth;
+	}
+
+	/**
+	 * @return the daysOfWeek
+	 */
+	public List<String> getDaysOfWeek() {
+		return this.daysOfWeek;
+	}
+
+	/**
+	 * @param daysOfWeek
+	 *            the daysOfWeek to set
+	 */
+	public void setDaysOfWeek(List<String> daysOfWeek) {
+		this.daysOfWeek = daysOfWeek;
+	}
+
+	/**
+	 * @return the weeklyInterval
+	 */
+	public Integer getWeeklyInterval() {
+		return this.weeklyInterval;
+	}
+
+	/**
+	 * @param weeklyInterval
+	 *            the weeklyInterval to set
+	 */
+	public void setWeeklyInterval(Integer weeklyInterval) {
+		this.weeklyInterval = weeklyInterval;
+	}
+
+	/**
+	 * @return the dayOfWeek
+	 */
+	public String getDayOfWeek() {
+		return this.dayOfWeek;
+	}
+
+	/**
+	 * @param dayOfWeek
+	 *            the dayOfWeek to set
+	 */
+	public void setDayOfWeek(String dayOfWeek) {
+		this.dayOfWeek = dayOfWeek;
+	}
+
 }
