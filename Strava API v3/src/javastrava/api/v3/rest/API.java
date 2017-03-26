@@ -16,6 +16,7 @@ import javastrava.api.v3.model.StravaChallenge;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubEvent;
+import javastrava.api.v3.model.StravaClubEventJoinResponse;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaGear;
@@ -55,6 +56,7 @@ import javastrava.config.StravaConfig;
 import javastrava.json.impl.gson.JsonUtilImpl;
 import retrofit.RestAdapter;
 import retrofit.RestAdapter.LogLevel;
+import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -170,9 +172,20 @@ public class API {
 	 */
 	private final RunningRaceAPI	runningRaceAPI;
 
+	/**
+	 * API instance for access to route data
+	 */
 	private final RouteAPI routeAPI;
 
+	/**
+	 * API instance for access to challenge data
+	 */
 	private final ChallengeAPI challengeAPI;
+
+	/**
+	 * API instance for access to club group event data
+	 */
+	private final ClubGroupEventAPI clubGroupEventAPI;
 
 	/**
 	 * @return the authorisationAPI
@@ -204,6 +217,13 @@ public class API {
 	}
 
 	/**
+	 * @return the challengeAPI
+	 */
+	public ChallengeAPI getChallengeAPI() {
+		return this.challengeAPI;
+	}
+
+	/**
 	 * @return the clubAPI
 	 */
 	public ClubAPI getClubAPI() {
@@ -211,10 +231,24 @@ public class API {
 	}
 
 	/**
+	 * @return the clubGroupEventAPI
+	 */
+	public ClubGroupEventAPI getClubGroupEventAPI() {
+		return this.clubGroupEventAPI;
+	}
+
+	/**
 	 * @return the gearAPI
 	 */
 	public GearAPI getGearAPI() {
 		return this.gearAPI;
+	}
+
+	/**
+	 * @return the routeAPI
+	 */
+	public RouteAPI getRouteAPI() {
+		return this.routeAPI;
 	}
 
 	/**
@@ -305,6 +339,7 @@ public class API {
 		this.athleteAPI = API.instance(AthleteAPI.class, token);
 		this.challengeAPI = API.instance(ChallengeAPI.class, token);
 		this.clubAPI = API.instance(ClubAPI.class, token);
+		this.clubGroupEventAPI = API.instance(ClubGroupEventAPI.class, token);
 		this.gearAPI = API.instance(GearAPI.class, token);
 		this.segmentAPI = API.instance(SegmentAPI.class, token);
 		this.effortAPI = API.instance(SegmentEffortAPI.class, token);
@@ -2305,152 +2340,162 @@ public class API {
 	}
 
 	/**
-	 * @return the routeAPI
+	 * <p>
+	 * Returns a single group event summary representation.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return The group event
+	 * @throws NotFoundException
+	 *             If the event does not exist
 	 */
-	public RouteAPI getRouteAPI() {
-		return this.routeAPI;
+	public StravaClubEvent getEvent(Integer id) throws NotFoundException {
+		return this.clubGroupEventAPI.getEvent(id);
 	}
 
 	/**
-	 * @return the challengeAPI
+	 * <p>
+	 * Returns a single group event summary representation.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return Future which can be called later to return the event
+	 * @throws NotFoundException
+	 *             If the event does not exist
 	 */
-	public ChallengeAPI getChallengeAPI() {
-		return this.challengeAPI;
+	public StravaAPIFuture<StravaClubEvent> getEventAsync(Integer id) throws NotFoundException {
+		final StravaAPIFuture<StravaClubEvent> future = new StravaAPIFuture<>();
+		this.clubGroupEventAPI.getEvent(id, callback(future));
+		return future;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * <p>
+	 * Returns a single group event summary representation.
+	 * </p>
 	 *
-	 * @see java.lang.Object#hashCode()
+	 * @param id
+	 *            The identifier of the group event
+	 * @return The group event as a raw Retrofit response
+	 * @throws NotFoundException
+	 *             If the event does not exist
 	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.activityAPI == null) ? 0 : this.activityAPI.hashCode());
-		result = (prime * result) + ((this.athleteAPI == null) ? 0 : this.athleteAPI.hashCode());
-		result = (prime * result) + ((this.challengeAPI == null) ? 0 : this.challengeAPI.hashCode());
-		result = (prime * result) + ((this.clubAPI == null) ? 0 : this.clubAPI.hashCode());
-		result = (prime * result) + ((this.effortAPI == null) ? 0 : this.effortAPI.hashCode());
-		result = (prime * result) + ((this.gearAPI == null) ? 0 : this.gearAPI.hashCode());
-		result = (prime * result) + ((this.routeAPI == null) ? 0 : this.routeAPI.hashCode());
-		result = (prime * result) + ((this.runningRaceAPI == null) ? 0 : this.runningRaceAPI.hashCode());
-		result = (prime * result) + ((this.segmentAPI == null) ? 0 : this.segmentAPI.hashCode());
-		result = (prime * result) + ((this.streamAPI == null) ? 0 : this.streamAPI.hashCode());
-		result = (prime * result) + ((this.tokenAPI == null) ? 0 : this.tokenAPI.hashCode());
-		result = (prime * result) + ((this.uploadAPI == null) ? 0 : this.uploadAPI.hashCode());
-		result = (prime * result) + ((this.webhookAPI == null) ? 0 : this.webhookAPI.hashCode());
-		return result;
+	public Response getEventRaw(Integer id) throws NotFoundException {
+		return this.clubGroupEventAPI.getEventRaw(id);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * <p>
+	 * Join a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, join the upcoming occurrence. An {@link Token access token} with
+	 * {@link AuthorisationScope#WRITE write scope} is required.
+	 * </p>
 	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @param id
+	 *            The identifier of the group event
+	 * @return The response indicating whether the authenticated athlete has joined the event
+	 * @throws NotFoundException
+	 *             if the event does not exist
+	 * @throws UnauthorizedException
+	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
 	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof API)) {
-			return false;
-		}
-		final API other = (API) obj;
-		if (this.activityAPI == null) {
-			if (other.activityAPI != null) {
-				return false;
-			}
-		} else if (!this.activityAPI.equals(other.activityAPI)) {
-			return false;
-		}
-		if (this.athleteAPI == null) {
-			if (other.athleteAPI != null) {
-				return false;
-			}
-		} else if (!this.athleteAPI.equals(other.athleteAPI)) {
-			return false;
-		}
-		if (this.challengeAPI == null) {
-			if (other.challengeAPI != null) {
-				return false;
-			}
-		} else if (!this.challengeAPI.equals(other.challengeAPI)) {
-			return false;
-		}
-		if (this.clubAPI == null) {
-			if (other.clubAPI != null) {
-				return false;
-			}
-		} else if (!this.clubAPI.equals(other.clubAPI)) {
-			return false;
-		}
-		if (this.effortAPI == null) {
-			if (other.effortAPI != null) {
-				return false;
-			}
-		} else if (!this.effortAPI.equals(other.effortAPI)) {
-			return false;
-		}
-		if (this.gearAPI == null) {
-			if (other.gearAPI != null) {
-				return false;
-			}
-		} else if (!this.gearAPI.equals(other.gearAPI)) {
-			return false;
-		}
-		if (this.routeAPI == null) {
-			if (other.routeAPI != null) {
-				return false;
-			}
-		} else if (!this.routeAPI.equals(other.routeAPI)) {
-			return false;
-		}
-		if (this.runningRaceAPI == null) {
-			if (other.runningRaceAPI != null) {
-				return false;
-			}
-		} else if (!this.runningRaceAPI.equals(other.runningRaceAPI)) {
-			return false;
-		}
-		if (this.segmentAPI == null) {
-			if (other.segmentAPI != null) {
-				return false;
-			}
-		} else if (!this.segmentAPI.equals(other.segmentAPI)) {
-			return false;
-		}
-		if (this.streamAPI == null) {
-			if (other.streamAPI != null) {
-				return false;
-			}
-		} else if (!this.streamAPI.equals(other.streamAPI)) {
-			return false;
-		}
-		if (this.tokenAPI == null) {
-			if (other.tokenAPI != null) {
-				return false;
-			}
-		} else if (!this.tokenAPI.equals(other.tokenAPI)) {
-			return false;
-		}
-		if (this.uploadAPI == null) {
-			if (other.uploadAPI != null) {
-				return false;
-			}
-		} else if (!this.uploadAPI.equals(other.uploadAPI)) {
-			return false;
-		}
-		if (this.webhookAPI == null) {
-			if (other.webhookAPI != null) {
-				return false;
-			}
-		} else if (!this.webhookAPI.equals(other.webhookAPI)) {
-			return false;
-		}
-		return true;
+	public StravaClubEventJoinResponse joinEvent(Integer id) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventAPI.joinEvent(id);
 	}
+
+	/**
+	 * <p>
+	 * Join a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, join the upcoming occurrence. An {@link Token access token} with
+	 * {@link AuthorisationScope#WRITE write scope} is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return Future which can be called later to return the join response
+	 * @throws NotFoundException
+	 *             if the event does not exist
+	 * @throws UnauthorizedException
+	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
+	 */
+	public StravaAPIFuture<StravaClubEventJoinResponse> joinEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
+		final StravaAPIFuture<StravaClubEventJoinResponse> future = new StravaAPIFuture<>();
+		this.clubGroupEventAPI.joinEvent(id, callback(future));
+		return future;
+	}
+
+	/**
+	 * <p>
+	 * Join a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, join the upcoming occurrence. An {@link Token access token} with
+	 * {@link AuthorisationScope#WRITE write scope} is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return The response indicating whether the authenticated athlete has joined the event
+	 * @throws NotFoundException
+	 *             if the event does not exist
+	 * @throws UnauthorizedException
+	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
+	 */
+	public Response joinEventRaw(Integer id) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventAPI.joinEventRaw(id);
+	}
+
+	/**
+	 * <p>
+	 * Leave a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, leave the upcoming occurrence. An {@link Token access token} with
+	 * {@link AuthorisationScope#WRITE write scope} is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return The response indicating whether the authenticated athlete has joined the event
+	 * @throws NotFoundException
+	 *             if the event does not exist
+	 * @throws UnauthorizedException
+	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
+	 */
+	public StravaClubEventJoinResponse leaveEvent(Integer id) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventAPI.leaveEvent(id);
+	}
+
+	/**
+	 * <p>
+	 * Leave a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, leave the upcoming occurrence. An {@link Token access token} with
+	 * {@link AuthorisationScope#WRITE write scope} is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return Future which can be called later to return the join response
+	 * @throws NotFoundException
+	 *             if the event does not exist
+	 * @throws UnauthorizedException
+	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
+	 */
+	public StravaAPIFuture<StravaClubEventJoinResponse> leaveEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
+		final StravaAPIFuture<StravaClubEventJoinResponse> future = new StravaAPIFuture<>();
+		this.clubGroupEventAPI.leaveEvent(id, callback(future));
+		return future;
+	}
+
+	/**
+	 * <p>
+	 * Leave a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, leave the upcoming occurrence. An {@link Token access token} with
+	 * {@link AuthorisationScope#WRITE write scope} is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return The response indicating whether the authenticated athlete has joined the event
+	 * @throws NotFoundException
+	 *             if the event does not exist
+	 * @throws UnauthorizedException
+	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
+	 */
+	public Response leaveEventRaw(Integer id) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventAPI.leaveEventRaw(id);
+	}
+
 }

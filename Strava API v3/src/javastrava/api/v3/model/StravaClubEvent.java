@@ -9,6 +9,7 @@ import javastrava.api.v3.model.reference.StravaActivityType;
 import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.model.reference.StravaSkillLevel;
 import javastrava.api.v3.model.reference.StravaTerrainType;
+import javastrava.cache.StravaCacheableEntity;
 
 /**
  * <p>
@@ -18,7 +19,7 @@ import javastrava.api.v3.model.reference.StravaTerrainType;
  * @author Dan Shannon
  *
  */
-public class StravaClubEvent implements StravaEntity {
+public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	/**
 	 * Unique id of this event
 	 */
@@ -110,7 +111,7 @@ public class StravaClubEvent implements StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -263,6 +264,7 @@ public class StravaClubEvent implements StravaEntity {
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -326,7 +328,7 @@ public class StravaClubEvent implements StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override

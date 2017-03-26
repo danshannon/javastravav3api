@@ -19,6 +19,7 @@ import javastrava.api.v3.model.StravaChallenge;
 import javastrava.api.v3.model.StravaClub;
 import javastrava.api.v3.model.StravaClubAnnouncement;
 import javastrava.api.v3.model.StravaClubEvent;
+import javastrava.api.v3.model.StravaClubEventJoinResponse;
 import javastrava.api.v3.model.StravaClubMembershipResponse;
 import javastrava.api.v3.model.StravaComment;
 import javastrava.api.v3.model.StravaGear;
@@ -58,8 +59,8 @@ import javastrava.util.Paging;
  * @author Dan Shannon
  *
  */
-public class Strava implements ActivityService, AthleteService, ChallengeService, ClubService, GearService, RouteService, RunningRaceService, SegmentEffortService, SegmentService, StreamService,
-		TokenService, UploadService, WebhookService {
+public class Strava implements ActivityService, AthleteService, ChallengeService, ClubService, ClubGroupEventService, GearService, RouteService, RunningRaceService, SegmentEffortService,
+		SegmentService, StreamService, TokenService, UploadService, WebhookService {
 	/**
 	 * Instance used for access to activity data
 	 */
@@ -78,48 +79,62 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	/**
 	 * instance used for access to club data
 	 */
-	private final ClubService	clubService;
+	private final ClubService clubService;
+
+	/**
+	 * instance used for access to club group event data
+	 */
+	private final ClubGroupEventService clubGroupEventService;
+
 	/**
 	 * instance used for access to gear data
 	 */
-	private final GearService	gearService;
+	private final GearService gearService;
 
 	/**
 	 * instance used for access to route data
 	 */
-	private final RouteService			routeService;
+	private final RouteService routeService;
+
 	/**
 	 * Instance used for access to running race data
 	 */
-	private final RunningRaceService	runningRaceService;
+	private final RunningRaceService runningRaceService;
+
 	/**
 	 * instance used for access to segment effort data
 	 */
-	private final SegmentEffortService	segmentEffortService;
+	private final SegmentEffortService segmentEffortService;
+
 	/**
 	 * instance used for access to segment data
 	 */
-	private final SegmentService		segmentService;
+	private final SegmentService segmentService;
+
 	/**
 	 * instance used for access to streams data
 	 */
-	private final StreamService			streamService;
+	private final StreamService streamService;
+
 	/**
 	 * instance used for token deauthorisation
 	 */
-	private final TokenService			tokenService;
+	private final TokenService tokenService;
+
 	/**
 	 * instance used for activity upload functionality
 	 */
-	private final UploadService			uploadService;
+	private final UploadService uploadService;
+
 	/**
 	 * instance used for management of webhook subscriptions
 	 */
-	private final WebhookService		webhookService;
+	private final WebhookService webhookService;
+
 	/**
 	 * the access token associated with this implementation of the Strava functionality
 	 */
-	private final Token					token;
+	private final Token token;
 
 	/**
 	 * Constructor requires a token
@@ -133,6 +148,7 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 		this.athleteService = token.getService(AthleteService.class);
 		this.challengeService = token.getService(ChallengeService.class);
 		this.clubService = token.getService(ClubService.class);
+		this.clubGroupEventService = token.getService(ClubGroupEventService.class);
 		this.gearService = token.getService(GearService.class);
 		this.routeService = token.getService(RouteService.class);
 		this.runningRaceService = token.getService(RunningRaceService.class);
@@ -3024,5 +3040,35 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	@Override
 	public CompletableFuture<List<StravaChallenge>> listJoinedChallengesAsync() {
 		return this.challengeService.listJoinedChallengesAsync();
+	}
+
+	@Override
+	public StravaClubEvent getEvent(Integer id) {
+		return this.clubGroupEventService.getEvent(id);
+	}
+
+	@Override
+	public CompletableFuture<StravaClubEvent> getEventAsync(Integer id) {
+		return this.clubGroupEventService.getEventAsync(id);
+	}
+
+	@Override
+	public StravaClubEventJoinResponse joinEvent(Integer id) {
+		return this.clubGroupEventService.joinEvent(id);
+	}
+
+	@Override
+	public CompletableFuture<StravaClubEventJoinResponse> joinEventAsync(Integer id) {
+		return this.clubGroupEventService.joinEventAsync(id);
+	}
+
+	@Override
+	public StravaClubEventJoinResponse leaveEvent(Integer id) {
+		return this.clubGroupEventService.leaveEvent(id);
+	}
+
+	@Override
+	public CompletableFuture<StravaClubEventJoinResponse> leaveEventAsync(Integer id) {
+		return this.clubGroupEventService.leaveEventAsync(id);
 	}
 }
