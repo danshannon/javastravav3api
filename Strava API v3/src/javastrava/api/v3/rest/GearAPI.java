@@ -3,6 +3,7 @@ package javastrava.api.v3.rest;
 import javastrava.api.v3.model.StravaGear;
 import javastrava.api.v3.rest.async.StravaAPICallback;
 import javastrava.api.v3.service.exception.NotFoundException;
+import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
@@ -18,9 +19,11 @@ public interface GearAPI {
 	/**
 	 * @see javastrava.api.v3.service.GearService#getGear(java.lang.String)
 	 *
-	 * @param gearId Gear identifier
+	 * @param gearId
+	 *            Gear identifier
 	 * @return Details of the identified gear
-	 * @throws NotFoundException If the gear with the given id doesn't exist
+	 * @throws NotFoundException
+	 *             If the gear with the given id doesn't exist
 	 */
 	@GET("/gear/{id}")
 	public StravaGear getGear(@Path("id") final String gearId) throws NotFoundException;
@@ -28,9 +31,24 @@ public interface GearAPI {
 	/**
 	 * @see javastrava.api.v3.service.GearService#getGear(java.lang.String)
 	 *
-	 * @param gearId Gear identifier
-	 * @param callback The callback to execute on completion
-	 * @throws NotFoundException If the gear with the given id doesn't exist
+	 * @param gearId
+	 *            Gear identifier
+	 * @return Details of the identified gear
+	 * @throws NotFoundException
+	 *             If the gear with the given id doesn't exist
+	 */
+	@GET("/gear/{id}")
+	public Response getGearRaw(@Path("id") final String gearId) throws NotFoundException;
+
+	/**
+	 * @see javastrava.api.v3.service.GearService#getGear(java.lang.String)
+	 *
+	 * @param gearId
+	 *            Gear identifier
+	 * @param callback
+	 *            The callback to execute on completion
+	 * @throws NotFoundException
+	 *             If the gear with the given id doesn't exist
 	 */
 	@GET("/gear/{id}")
 	public void getGear(@Path("id") final String gearId, StravaAPICallback<StravaGear> callback) throws NotFoundException;

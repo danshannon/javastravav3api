@@ -2,6 +2,7 @@ package javastrava.api.v3.rest;
 
 import javastrava.api.v3.model.StravaChallenge;
 import javastrava.api.v3.rest.async.StravaAPICallback;
+import retrofit.client.Response;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -32,6 +33,22 @@ public interface ChallengeAPI {
 	 */
 	@GET("/challenges/{id}")
 	public StravaChallenge getChallenge(@Path("id") Integer id);
+
+	/**
+	 * <p>
+	 * Retrieve a challenge
+	 * </p>
+	 *
+	 * <p>
+	 * Returns a detailed representation of a challenge
+	 * </p>
+	 *
+	 * @param id
+	 *            Identifier of the challenge
+	 * @return The challenge
+	 */
+	@GET("/challenges/{id}")
+	public Response getChallengeRaw(@Path("id") Integer id);
 
 	/**
 	 * <p>
@@ -97,6 +114,14 @@ public interface ChallengeAPI {
 	 */
 	@GET("/challenges/joined")
 	public StravaChallenge[] listJoinedChallenges();
+
+	/**
+	 * List the challenges the athlete has joined.
+	 *
+	 * @return Array of challenges that the athlete has joined
+	 */
+	@GET("/challenges/joined")
+	public Response listJoinedChallengesRaw();
 
 	/**
 	 * List the challenges the athlete has joined.
