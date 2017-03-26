@@ -40,8 +40,14 @@ public class StravaClubEvent implements StravaEntity {
 	private String description;
 
 	/**
+	 * Club that the event belongs to
+	 */
+	private StravaClub club;
+
+	/**
 	 * Unique id of the club that the event belongs to
 	 */
+	@Deprecated
 	private Integer clubId;
 
 	/**
@@ -102,6 +108,11 @@ public class StravaClubEvent implements StravaEntity {
 		// Empty
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -122,6 +133,13 @@ public class StravaClubEvent implements StravaEntity {
 				return false;
 			}
 		} else if (!this.address.equals(other.address)) {
+			return false;
+		}
+		if (this.club == null) {
+			if (other.club != null) {
+				return false;
+			}
+		} else if (!this.club.equals(other.club)) {
 			return false;
 		}
 		if (this.clubId == null) {
@@ -223,6 +241,7 @@ public class StravaClubEvent implements StravaEntity {
 	/**
 	 * @return the clubId
 	 */
+	@Deprecated
 	public Integer getClubId() {
 		return this.clubId;
 	}
@@ -307,7 +326,7 @@ public class StravaClubEvent implements StravaEntity {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -316,6 +335,7 @@ public class StravaClubEvent implements StravaEntity {
 		int result = 1;
 		result = (prime * result) + ((this.activityType == null) ? 0 : this.activityType.hashCode());
 		result = (prime * result) + ((this.address == null) ? 0 : this.address.hashCode());
+		result = (prime * result) + ((this.club == null) ? 0 : this.club.hashCode());
 		result = (prime * result) + ((this.clubId == null) ? 0 : this.clubId.hashCode());
 		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
 		result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
@@ -352,6 +372,7 @@ public class StravaClubEvent implements StravaEntity {
 	 * @param clubId
 	 *            the clubId to set
 	 */
+	@Deprecated
 	public void setClubId(final Integer clubId) {
 		this.clubId = clubId;
 	}
@@ -446,9 +467,11 @@ public class StravaClubEvent implements StravaEntity {
 
 	@Override
 	public String toString() {
-		return "StravaClubEvent [id=" + this.id + ", resourceState=" + this.resourceState + ", title=" + this.title + ", description=" + this.description + ", clubId=" + this.clubId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ ", activityType=" + this.activityType + ", createdAt=" + this.createdAt + ", routeId=" + this.routeId + ", womanOnly=" + this.womanOnly + ", privateEvent=" + this.privateEvent //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ ", skillLevel=" + this.skillLevel + ", terrain=" + this.terrain + ", upcomingOccurrences=" + this.upcomingOccurrences + ", address=" + this.address + ", joined=" + this.joined + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+		return "StravaClubEvent [id=" + this.id + ", resourceState=" + this.resourceState + ", title=" + this.title + ", description=" + this.description + ", club=" + this.club + ", clubId=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ this.clubId + ", activityType=" //$NON-NLS-1$
+				+ this.activityType + ", createdAt=" + this.createdAt + ", routeId=" + this.routeId + ", womanOnly=" + this.womanOnly + ", privateEvent=" + this.privateEvent + ", skillLevel=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.skillLevel + ", terrain=" //$NON-NLS-1$
+				+ this.terrain + ", upcomingOccurrences=" + this.upcomingOccurrences + ", address=" + this.address + ", joined=" + this.joined + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	/**
@@ -464,5 +487,20 @@ public class StravaClubEvent implements StravaEntity {
 	 */
 	public void setJoined(Boolean joined) {
 		this.joined = joined;
+	}
+
+	/**
+	 * @return the club
+	 */
+	public StravaClub getClub() {
+		return this.club;
+	}
+
+	/**
+	 * @param club
+	 *            the club to set
+	 */
+	public void setClub(StravaClub club) {
+		this.club = club;
 	}
 }
