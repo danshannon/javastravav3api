@@ -376,7 +376,13 @@ public interface AthleteAPI {
 			@Query("weight") final Float weight, final StravaAPICallback<StravaAthlete> callback);
 
 	/**
-	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * <p>
+	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1.
+	 * </p>
+	 *
+	 * <p>
+	 * Premium members who have set a functional threshold power (ftp) will see their power zones. Power zones are a Premium-only feature. Free members will not see the power part of this endpoint.
+	 * </p>
 	 *
 	 * @return The athlete zones object
 	 */
@@ -384,7 +390,13 @@ public interface AthleteAPI {
 	public StravaAthleteZones getAuthenticatedAthleteZones();
 
 	/**
-	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * <p>
+	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1.
+	 * </p>
+	 *
+	 * <p>
+	 * Premium members who have set a functional threshold power (ftp) will see their power zones. Power zones are a Premium-only feature. Free members will not see the power part of this endpoint.
+	 * </p>
 	 *
 	 * @param callback
 	 *            The callback used to return the asynchronous result

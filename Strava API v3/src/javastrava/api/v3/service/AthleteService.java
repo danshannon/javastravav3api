@@ -36,8 +36,7 @@ public interface AthleteService extends StravaService {
 	 *
 	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} to be returned
-	 * @return Returns a summary representation of the {@link StravaAthlete athlete} even if the indicated athlete matches the
-	 *         authenticated athlete.
+	 * @return Returns a summary representation of the {@link StravaAthlete athlete} even if the indicated athlete matches the authenticated athlete.
 	 */
 	public StravaAthlete getAthlete(final Integer athleteId);
 
@@ -58,8 +57,7 @@ public interface AthleteService extends StravaService {
 	 *
 	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} to be returned
-	 * @return Returns a summary representation of the {@link StravaAthlete athlete} even if the indicated athlete matches the
-	 *         authenticated athlete.
+	 * @return Returns a summary representation of the {@link StravaAthlete athlete} even if the indicated athlete matches the authenticated athlete.
 	 */
 	public CompletableFuture<StravaAthlete> getAthleteAsync(final Integer athleteId);
 
@@ -247,7 +245,7 @@ public interface AthleteService extends StravaService {
 	 * <p>
 	 * URL GET https://www.strava.com/api/v3/athletes/:id/both-following
 	 * </p>
-	 * 
+	 *
 	 * @param athleteId
 	 *            The athlete who the list is to be generated for
 	 *
@@ -277,7 +275,7 @@ public interface AthleteService extends StravaService {
 	 * <p>
 	 * URL GET https://www.strava.com/api/v3/athletes/:id/both-following
 	 * </p>
-	 * 
+	 *
 	 * @param athleteId
 	 *            The athlete who the list is to be generated for
 	 *
@@ -343,8 +341,7 @@ public interface AthleteService extends StravaService {
 
 	/**
 	 * <p>
-	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the
-	 * current athlete's activity feed.
+	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's activity feed.
 	 * </p>
 	 *
 	 * <p>
@@ -367,15 +364,13 @@ public interface AthleteService extends StravaService {
 	 *
 	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} whose friends are to be listed
-	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified
-	 *         athlete has blocked the currently authenticated athlete.
+	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
 	 */
 	public List<StravaAthlete> listAthleteFriends(final Integer athleteId);
 
 	/**
 	 * <p>
-	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the
-	 * current athlete's activity feed.
+	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's activity feed.
 	 * </p>
 	 *
 	 * <p>
@@ -400,15 +395,13 @@ public interface AthleteService extends StravaService {
 	 *            The id of the {@link StravaAthlete athlete} whose friends are to be listed
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
-	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified
-	 *         athlete has blocked the currently authenticated athlete.
+	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
 	 */
 	public List<StravaAthlete> listAthleteFriends(final Integer athleteId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
-	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the
-	 * current athlete's activity feed.
+	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's activity feed.
 	 * </p>
 	 *
 	 * <p>
@@ -431,15 +424,13 @@ public interface AthleteService extends StravaService {
 	 *
 	 * @param athleteId
 	 *            The id of the {@link StravaAthlete athlete} whose friends are to be listed
-	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified
-	 *         athlete has blocked the currently authenticated athlete.
+	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
 	 */
 	public CompletableFuture<List<StravaAthlete>> listAthleteFriendsAsync(final Integer athleteId);
 
 	/**
 	 * <p>
-	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the
-	 * current athlete's activity feed.
+	 * Friends are users an {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's activity feed.
 	 * </p>
 	 *
 	 * <p>
@@ -464,15 +455,13 @@ public interface AthleteService extends StravaService {
 	 *            The id of the {@link StravaAthlete athlete} whose friends are to be listed
 	 * @param pagingInstruction
 	 *            (Optional) The page to be returned
-	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified
-	 *         athlete has blocked the currently authenticated athlete.
+	 * @return List of {@link StravaAthlete athletes} who are friends of the identified athlete. Will be empty if the identified athlete has blocked the currently authenticated athlete.
 	 */
 	public CompletableFuture<List<StravaAthlete>> listAthleteFriendsAsync(final Integer athleteId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
-	 * Returns an array of {@link StravaSegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given
-	 * athlete.
+	 * Returns an array of {@link StravaSegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given athlete.
 	 * </p>
 	 *
 	 * <p>
@@ -501,8 +490,7 @@ public interface AthleteService extends StravaService {
 
 	/**
 	 * <p>
-	 * Returns an array of {@link StravaSegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given
-	 * athlete.
+	 * Returns an array of {@link StravaSegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given athlete.
 	 * </p>
 	 *
 	 * <p>
@@ -533,8 +521,7 @@ public interface AthleteService extends StravaService {
 
 	/**
 	 * <p>
-	 * Returns an array of {@link StravaSegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given
-	 * athlete.
+	 * Returns an array of {@link StravaSegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given athlete.
 	 * </p>
 	 *
 	 * <p>
@@ -563,8 +550,7 @@ public interface AthleteService extends StravaService {
 
 	/**
 	 * <p>
-	 * Returns an array of {@link StravaSegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given
-	 * athlete.
+	 * Returns an array of {@link StravaSegmentEffort segment efforts} representing KOMs/QOMs and course records held by the given athlete.
 	 * </p>
 	 *
 	 * <p>
@@ -591,8 +577,7 @@ public interface AthleteService extends StravaService {
 	 *            (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaSegmentEffort segment effort} summary representations
 	 */
-	public CompletableFuture<List<StravaSegmentEffort>> listAthleteKOMsAsync(final Integer athleteId,
-			final Paging pagingInstruction);
+	public CompletableFuture<List<StravaSegmentEffort>> listAthleteKOMsAsync(final Integer athleteId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -696,13 +681,11 @@ public interface AthleteService extends StravaService {
 	 *            (Optional) The page to be returned
 	 * @return Returns an array of {@link StravaAthlete athlete} summary representations.
 	 */
-	public CompletableFuture<List<StravaAthlete>> listAthletesBothFollowingAsync(final Integer athleteId,
-			final Paging pagingInstruction);
+	public CompletableFuture<List<StravaAthlete>> listAthletesBothFollowingAsync(final Integer athleteId, final Paging pagingInstruction);
 
 	/**
 	 * <p>
-	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in
-	 * the current athlete's activity feed.
+	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's activity feed.
 	 * </p>
 	 *
 	 * <p>
@@ -725,8 +708,7 @@ public interface AthleteService extends StravaService {
 
 	/**
 	 * <p>
-	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in
-	 * the current athlete's activity feed.
+	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's activity feed.
 	 * </p>
 	 *
 	 * <p>
@@ -751,8 +733,7 @@ public interface AthleteService extends StravaService {
 
 	/**
 	 * <p>
-	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in
-	 * the current athlete's activity feed.
+	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's activity feed.
 	 * </p>
 	 *
 	 * <p>
@@ -775,8 +756,7 @@ public interface AthleteService extends StravaService {
 
 	/**
 	 * <p>
-	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in
-	 * the current athlete's activity feed.
+	 * Friends are users the current {@link StravaAthlete athlete} is following. The activities owned by these users will appear in the current athlete's activity feed.
 	 * </p>
 	 *
 	 * <p>
@@ -801,8 +781,7 @@ public interface AthleteService extends StravaService {
 
 	/**
 	 * <p>
-	 * Returns recent (last 4 weeks), year to date and all time stats for a given athlete. Only available for the authenticated
-	 * athlete.
+	 * Returns recent (last 4 weeks), year to date and all time stats for a given athlete. Only available for the authenticated athlete.
 	 * </p>
 	 *
 	 * <p>
@@ -827,8 +806,7 @@ public interface AthleteService extends StravaService {
 
 	/**
 	 * <p>
-	 * Returns recent (last 4 weeks), year to date and all time stats for a given athlete. Only available for the authenticated
-	 * athlete.
+	 * Returns recent (last 4 weeks), year to date and all time stats for a given athlete. Only available for the authenticated athlete.
 	 * </p>
 	 *
 	 * <p>
@@ -882,8 +860,7 @@ public interface AthleteService extends StravaService {
 	 *            The weight that the athlete wants Strava to believe that they are
 	 * @return Detailed representation of the updated athlete
 	 */
-	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country,
-			final StravaGender sex, final Float weight);
+	public StravaAthlete updateAuthenticatedAthlete(final String city, final String state, final String country, final StravaGender sex, final Float weight);
 
 	/**
 	 * <p>
@@ -916,18 +893,29 @@ public interface AthleteService extends StravaService {
 	 *            The weight that the athlete wants Strava to believe that they are
 	 * @return Detailed representation of the updated athlete
 	 */
-	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state,
-			final String country, final StravaGender sex, final Float weight);
+	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state, final String country, final StravaGender sex, final Float weight);
 
 	/**
-	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * <p>
+	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1.
+	 * </p>
+	 *
+	 * <p>
+	 * Premium members who have set a functional threshold power (ftp) will see their power zones. Power zones are a Premium-only feature. Free members will not see the power part of this endpoint.
+	 * </p>
 	 *
 	 * @return The athlete zones object
 	 */
 	public StravaAthleteZones getAuthenticatedAthleteZones();
 
 	/**
-	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1
+	 * <p>
+	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1.
+	 * </p>
+	 *
+	 * <p>
+	 * Premium members who have set a functional threshold power (ftp) will see their power zones. Power zones are a Premium-only feature. Free members will not see the power part of this endpoint.
+	 * </p>
 	 *
 	 * @return The athlete zones object (via a {@link CompletableFuture})
 	 */
