@@ -90,6 +90,11 @@ public class StravaRoute implements StravaEntity {
 	private List<StravaSegment> segments;
 
 	/**
+	 * UNDOCUMENTED Estimated moving time for the authenticated athlete
+	 */
+	private Integer estimatedMovingTime;
+
+	/**
 	 * @return the id
 	 */
 	public Integer getId() {
@@ -300,11 +305,6 @@ public class StravaRoute implements StravaEntity {
 		this.segments = segments;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -313,6 +313,7 @@ public class StravaRoute implements StravaEntity {
 		result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
 		result = (prime * result) + ((this.distance == null) ? 0 : this.distance.hashCode());
 		result = (prime * result) + ((this.elevationGain == null) ? 0 : this.elevationGain.hashCode());
+		result = (prime * result) + ((this.estimatedMovingTime == null) ? 0 : this.estimatedMovingTime.hashCode());
 		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
 		result = (prime * result) + ((this.isPrivate == null) ? 0 : this.isPrivate.hashCode());
 		result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());
@@ -326,11 +327,6 @@ public class StravaRoute implements StravaEntity {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -369,6 +365,13 @@ public class StravaRoute implements StravaEntity {
 				return false;
 			}
 		} else if (!this.elevationGain.equals(other.elevationGain)) {
+			return false;
+		}
+		if (this.estimatedMovingTime == null) {
+			if (other.estimatedMovingTime != null) {
+				return false;
+			}
+		} else if (!this.estimatedMovingTime.equals(other.estimatedMovingTime)) {
 			return false;
 		}
 		if (this.id == null) {
@@ -430,5 +433,27 @@ public class StravaRoute implements StravaEntity {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return the estimatedMovingTime
+	 */
+	public Integer getEstimatedMovingTime() {
+		return this.estimatedMovingTime;
+	}
+
+	/**
+	 * @param estimatedMovingTime
+	 *            the estimatedMovingTime to set
+	 */
+	public void setEstimatedMovingTime(Integer estimatedMovingTime) {
+		this.estimatedMovingTime = estimatedMovingTime;
+	}
+
+	@Override
+	public String toString() {
+		return "StravaRoute [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", description=" + this.description + ", athlete=" + this.athlete + ", distance=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ this.distance + ", elevationGain=" + this.elevationGain + ", map=" + this.map + ", type=" + this.type + ", subType=" + this.subType + ", isPrivate=" + this.isPrivate + ", starred=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ this.starred + ", timestamp=" + this.timestamp + ", segments=" + this.segments + ", estimatedMovingTime=" + this.estimatedMovingTime + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

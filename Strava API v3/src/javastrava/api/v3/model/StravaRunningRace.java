@@ -112,8 +112,10 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	private String websiteUrl;
 
 	/**
-	 * @see java.lang.Object#hashCode()
+	 * UNDOCUMENTED - see #
 	 */
+	private Integer status;
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -129,12 +131,15 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 		result = (prime * result) + ((this.runningRaceType == null) ? 0 : this.runningRaceType.hashCode());
 		result = (prime * result) + ((this.startDateLocal == null) ? 0 : this.startDateLocal.hashCode());
 		result = (prime * result) + ((this.state == null) ? 0 : this.state.hashCode());
+		result = (prime * result) + ((this.status == null) ? 0 : this.status.hashCode());
 		result = (prime * result) + ((this.url == null) ? 0 : this.url.hashCode());
 		result = (prime * result) + ((this.websiteUrl == null) ? 0 : this.websiteUrl.hashCode());
 		return result;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -212,6 +217,13 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 				return false;
 			}
 		} else if (!this.state.equals(other.state)) {
+			return false;
+		}
+		if (this.status == null) {
+			if (other.status != null) {
+				return false;
+			}
+		} else if (!this.status.equals(other.status)) {
 			return false;
 		}
 		if (this.url == null) {
@@ -426,5 +438,27 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	 */
 	public void setWebsiteUrl(String websiteUrl) {
 		this.websiteUrl = websiteUrl;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public Integer getStatus() {
+		return this.status;
+	}
+
+	/**
+	 * @param status
+	 *            the status to set
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "StravaRunningRace [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", runningRaceType=" + this.runningRaceType + ", distance=" + this.distance //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", startDateLocal=" + this.startDateLocal + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", routeIds=" + this.routeIds + ", measurementPreference=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ this.measurementPreference + ", url=" + this.url + ", websiteUrl=" + this.websiteUrl + ", status=" + this.status + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

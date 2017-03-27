@@ -4,12 +4,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import javastrava.api.v3.model.StravaMapPoint;
-import javastrava.api.v3.model.StravaStream;
-import javastrava.api.v3.model.reference.StravaStreamResolutionType;
-import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
-import javastrava.api.v3.model.reference.StravaStreamType;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -19,6 +13,12 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import javastrava.api.v3.model.StravaMapPoint;
+import javastrava.api.v3.model.StravaStream;
+import javastrava.api.v3.model.reference.StravaStreamResolutionType;
+import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
+import javastrava.api.v3.model.reference.StravaStreamType;
+
 /**
  * @author Dan Shannon
  *
@@ -26,8 +26,7 @@ import com.google.gson.JsonSerializer;
 public class StravaStreamSerializer implements JsonSerializer<StravaStream>, JsonDeserializer<StravaStream> {
 
 	/**
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type,
-	 *      com.google.gson.JsonDeserializationContext)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	@Override
 	public StravaStream deserialize(final JsonElement element, final Type type, final JsonDeserializationContext context) throws JsonParseException {
@@ -75,7 +74,10 @@ public class StravaStreamSerializer implements JsonSerializer<StravaStream>, Jso
 		stream.setData(data);
 		stream.setMapPoints(points);
 		stream.setMoving(moving);
-		stream.setOriginalSize(new Integer(json.get("original_size").getAsInt())); //$NON-NLS-1$
+		final JsonElement originalSizeElement = json.get("original_size");//$NON-NLS-1$
+		if (originalSizeElement != null) {
+			stream.setOriginalSize(new Integer(originalSizeElement.getAsInt()));
+		}
 		stream.setResolution((StravaStreamResolutionType) context.deserialize(json.get("resolution"), //$NON-NLS-1$
 				StravaStreamResolutionType.class));
 		stream.setSeriesType((StravaStreamSeriesDownsamplingType) context.deserialize(json.get("series_type"), //$NON-NLS-1$
@@ -85,8 +87,7 @@ public class StravaStreamSerializer implements JsonSerializer<StravaStream>, Jso
 	}
 
 	/**
-	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type,
-	 *      com.google.gson.JsonSerializationContext)
+	 * @see com.google.gson.JsonSerializer#serialize(java.lang.Object, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
 	@Override
 	public JsonElement serialize(final StravaStream stream, final Type type, final JsonSerializationContext context) {

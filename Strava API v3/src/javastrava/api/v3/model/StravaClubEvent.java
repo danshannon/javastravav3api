@@ -73,7 +73,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	/**
 	 * Event is for women
 	 */
-	private Boolean womanOnly;
+	private Boolean womenOnly;
 
 	/**
 	 * Is this a private event (only club members can access private events)
@@ -315,11 +315,11 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 		} else if (!this.weeklyInterval.equals(other.weeklyInterval)) {
 			return false;
 		}
-		if (this.womanOnly == null) {
-			if (other.womanOnly != null) {
+		if (this.womenOnly == null) {
+			if (other.womenOnly != null) {
 				return false;
 			}
-		} else if (!this.womanOnly.equals(other.womanOnly)) {
+		} else if (!this.womenOnly.equals(other.womenOnly)) {
 			return false;
 		}
 		if (this.zone == null) {
@@ -428,10 +428,10 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @return the womanOnly
+	 * @return the womenOnly
 	 */
-	public Boolean getWomanOnly() {
-		return this.womanOnly;
+	public Boolean getWomenOnly() {
+		return this.womenOnly;
 	}
 
 	/*
@@ -468,7 +468,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 		result = (prime * result) + ((this.viewerPermissions == null) ? 0 : this.viewerPermissions.hashCode());
 		result = (prime * result) + ((this.weekOfMonth == null) ? 0 : this.weekOfMonth.hashCode());
 		result = (prime * result) + ((this.weeklyInterval == null) ? 0 : this.weeklyInterval.hashCode());
-		result = (prime * result) + ((this.womanOnly == null) ? 0 : this.womanOnly.hashCode());
+		result = (prime * result) + ((this.womenOnly == null) ? 0 : this.womenOnly.hashCode());
 		result = (prime * result) + ((this.zone == null) ? 0 : this.zone.hashCode());
 		return result;
 	}
@@ -580,11 +580,11 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @param womanOnly
-	 *            the womanOnly to set
+	 * @param womenOnly
+	 *            the womenOnly to set
 	 */
-	public void setWomanOnly(final Boolean womanOnly) {
-		this.womanOnly = womanOnly;
+	public void setWomenOnly(final Boolean womenOnly) {
+		this.womenOnly = womenOnly;
 	}
 
 	/*
@@ -596,7 +596,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	public String toString() {
 		return "StravaClubEvent [id=" + this.id + ", resourceState=" + this.resourceState + ", title=" + this.title + ", description=" + this.description + ", club=" + this.club + ", clubId=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 				+ this.clubId + ", activityType=" //$NON-NLS-1$
-				+ this.activityType + ", createdAt=" + this.createdAt + ", routeId=" + this.routeId + ", womanOnly=" + this.womanOnly + ", privateEvent=" + this.privateEvent + ", skillLevels=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.activityType + ", createdAt=" + this.createdAt + ", routeId=" + this.routeId + ", womenOnly=" + this.womenOnly + ", privateEvent=" + this.privateEvent + ", skillLevels=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 				+ this.skillLevels + ", terrain=" //$NON-NLS-1$
 				+ this.terrain + ", upcomingOccurrences=" + this.upcomingOccurrences + ", address=" + this.address + ", joined=" + this.joined + ", organizingAthlete=" + this.organizingAthlete //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ ", startLatlng=" + this.startLatlng //$NON-NLS-1$
