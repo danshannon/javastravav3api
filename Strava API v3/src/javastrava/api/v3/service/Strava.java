@@ -49,6 +49,7 @@ import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.model.webhook.StravaEventSubscription;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.util.Paging;
 
 /**
@@ -3090,5 +3091,25 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	@Override
 	public CompletableFuture<List<StravaAthlete>> listAllEventJoinedAthletesAsync(Integer eventId) {
 		return this.clubGroupEventService.listAllEventJoinedAthletesAsync(eventId);
+	}
+
+	@Override
+	public void deleteEvent(Integer id) throws NotFoundException, UnauthorizedException {
+		this.clubGroupEventService.deleteEvent(id);
+	}
+
+	@Override
+	public void deleteEvent(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
+		this.clubGroupEventService.deleteEvent(event);
+	}
+
+	@Override
+	public CompletableFuture<Void> deleteEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventService.deleteEventAsync(id);
+	}
+
+	@Override
+	public CompletableFuture<Void> deleteEventAsync(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventService.deleteEventAsync(event);
 	}
 }

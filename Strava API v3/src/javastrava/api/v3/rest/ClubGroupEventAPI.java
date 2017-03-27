@@ -255,4 +255,36 @@ public interface ClubGroupEventAPI {
 	@GET("/group_events/{id}/athletes")
 	public Response listEventJoinedAthletesRaw(@Path("id") Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage) throws NotFoundException, UnauthorizedException;
 
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event to be deleted
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete does not have permission to delete the event
+	 */
+	@DELETE("/group_events/{id}")
+	public void deleteEvent(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event to be deleted
+	 * @param callback
+	 *            Callback that can be used later to get results
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete does not have permission to delete the event
+	 */
+	@DELETE("/group_events/{id}")
+	public void deleteEvent(@Path("id") Integer id, StravaAPICallback<Void> callback) throws NotFoundException, UnauthorizedException;
+
 }

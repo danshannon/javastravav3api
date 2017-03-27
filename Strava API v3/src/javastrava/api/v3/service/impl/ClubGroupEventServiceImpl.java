@@ -115,6 +115,13 @@ public class ClubGroupEventServiceImpl extends StravaServiceImpl implements Club
 	@Override
 	public StravaClubEvent getEvent(Integer id) {
 
+		// Attempt to get the event from the cache
+		final StravaClubEvent cachedEvent = this.clubEventCache.get(id);
+		if (cachedEvent != null) {
+			return cachedEvent;
+		}
+
+		// If it wasn't in cache, get it from the API
 		StravaClubEvent event;
 		try {
 			event = this.api.getEvent(id);
@@ -126,6 +133,11 @@ public class ClubGroupEventServiceImpl extends StravaServiceImpl implements Club
 			event.setResourceState(StravaResourceState.PRIVATE);
 			return event;
 		}
+
+		// Put the event in the cache
+		this.clubEventCache.put(event);
+
+		// Return it
 		return event;
 	}
 
@@ -161,6 +173,29 @@ public class ClubGroupEventServiceImpl extends StravaServiceImpl implements Club
 		return StravaServiceImpl.future(() -> {
 			return listAllEventJoinedAthletes(eventId);
 		});
+	}
+
+	@Override
+	public void deleteEvent(Integer id) throws NotFoundException, UnauthorizedException {
+		this.api.deleteEvent(id);
+	}
+
+	@Override
+	public CompletableFuture<Void> deleteEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
+		return StravaServiceImpl.future(() -> {
+			deleteEvent(id);
+			return null;
+		});
+	}
+
+	@Override
+	public void deleteEvent(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
+		deleteEvent(event.getId());
+	}
+
+	@Override
+	public CompletableFuture<Void> deleteEventAsync(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
+		return deleteEventAsync(event.getId());
 	}
 
 }

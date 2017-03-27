@@ -8,6 +8,8 @@ import javastrava.api.v3.auth.ref.AuthorisationScope;
 import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClubEvent;
 import javastrava.api.v3.model.StravaClubEventJoinResponse;
+import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.util.Paging;
 
 /**
@@ -204,4 +206,61 @@ public interface ClubGroupEventService extends StravaService {
 	 */
 	public CompletableFuture<List<StravaAthlete>> listAllEventJoinedAthletesAsync(Integer eventId);
 
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event to be deleted
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete or the token does not have permission to delete the event
+	 */
+	public void deleteEvent(Integer id) throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param event
+	 *            The event to be deleted
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete or the token does not have permission to delete the event
+	 */
+	public void deleteEvent(StravaClubEvent event) throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event to be deleted
+	 * @return Callback that can be used later to get results
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete or the token does not have permission to delete the event
+	 */
+	public CompletableFuture<Void> deleteEventAsync(Integer id) throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param event
+	 *            The event to be deleted
+	 * @return Callback that can be used later to get results
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete or the token does not have permission to delete the event
+	 */
+	public CompletableFuture<Void> deleteEventAsync(StravaClubEvent event) throws NotFoundException, UnauthorizedException;
 }

@@ -58,6 +58,7 @@ import retrofit.RestAdapter;
 import retrofit.RestAdapter.LogLevel;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
+import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.mime.TypedFile;
@@ -2515,6 +2516,43 @@ public class API {
 	public StravaAPIFuture<StravaAthlete[]> listJoinedAthletesAsync(Integer id, final Integer page, final Integer perPage) throws NotFoundException, UnauthorizedException {
 		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<>();
 		this.clubGroupEventAPI.listEventJoinedAthletes(id, page, perPage, callback(future));
+		return future;
+	}
+
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event to be deleted
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete does not have permission to delete the event
+	 */
+	@DELETE("/group_events/{id}")
+	public void deleteEvent(@Path("id") Integer id) throws NotFoundException, UnauthorizedException {
+		this.clubGroupEventAPI.deleteEvent(id);
+	}
+
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event to be deleted
+	 * @return Callback that can be used later to get results
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete does not have permission to delete the event
+	 */
+	@DELETE("/group_events/{id}")
+	public StravaAPIFuture<Void> deleteEventAsync(@Path("id") Integer id) throws NotFoundException, UnauthorizedException {
+		final StravaAPIFuture<Void> future = new StravaAPIFuture<>();
+		this.clubGroupEventAPI.deleteEvent(id, callback(future));
 		return future;
 	}
 
