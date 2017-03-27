@@ -84,7 +84,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	/**
 	 * Skill level (casual, tempo, hammerfest)
 	 */
-	private StravaSkillLevel skillLevel;
+	private StravaSkillLevel skillLevels;
 
 	/**
 	 * Terrain type (flat, rolling, etc)
@@ -149,7 +149,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -264,7 +264,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 		} else if (!this.routeId.equals(other.routeId)) {
 			return false;
 		}
-		if (this.skillLevel != other.skillLevel) {
+		if (this.skillLevels != other.skillLevels) {
 			return false;
 		}
 		if (this.startDatetime == null) {
@@ -402,8 +402,8 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	/**
 	 * @return the skillLevel
 	 */
-	public StravaSkillLevel getSkillLevel() {
-		return this.skillLevel;
+	public StravaSkillLevel getSkillLevels() {
+		return this.skillLevels;
 	}
 
 	/**
@@ -436,7 +436,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -459,7 +459,7 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
 		result = (prime * result) + ((this.route == null) ? 0 : this.route.hashCode());
 		result = (prime * result) + ((this.routeId == null) ? 0 : this.routeId.hashCode());
-		result = (prime * result) + ((this.skillLevel == null) ? 0 : this.skillLevel.hashCode());
+		result = (prime * result) + ((this.skillLevels == null) ? 0 : this.skillLevels.hashCode());
 		result = (prime * result) + ((this.startDatetime == null) ? 0 : this.startDatetime.hashCode());
 		result = (prime * result) + ((this.startLatlng == null) ? 0 : this.startLatlng.hashCode());
 		result = (prime * result) + ((this.terrain == null) ? 0 : this.terrain.hashCode());
@@ -551,8 +551,8 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	 * @param skillLevel
 	 *            the skillLevel to set
 	 */
-	public void setSkillLevel(final StravaSkillLevel skillLevel) {
-		this.skillLevel = skillLevel;
+	public void setSkillLevels(final StravaSkillLevel skillLevel) {
+		this.skillLevels = skillLevel;
 	}
 
 	/**
@@ -589,15 +589,15 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "StravaClubEvent [id=" + this.id + ", resourceState=" + this.resourceState + ", title=" + this.title + ", description=" + this.description + ", club=" + this.club + ", clubId=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 				+ this.clubId + ", activityType=" //$NON-NLS-1$
-				+ this.activityType + ", createdAt=" + this.createdAt + ", routeId=" + this.routeId + ", womanOnly=" + this.womanOnly + ", privateEvent=" + this.privateEvent + ", skillLevel=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ this.skillLevel + ", terrain=" //$NON-NLS-1$
+				+ this.activityType + ", createdAt=" + this.createdAt + ", routeId=" + this.routeId + ", womanOnly=" + this.womanOnly + ", privateEvent=" + this.privateEvent + ", skillLevels=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.skillLevels + ", terrain=" //$NON-NLS-1$
 				+ this.terrain + ", upcomingOccurrences=" + this.upcomingOccurrences + ", address=" + this.address + ", joined=" + this.joined + ", organizingAthlete=" + this.organizingAthlete //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ ", startLatlng=" + this.startLatlng //$NON-NLS-1$
 				+ ", route=" + this.route + ", zone=" + this.zone + ", viewerPermissions=" + this.viewerPermissions + ", startDatetime=" + this.startDatetime + ", frequency=" + this.frequency //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
