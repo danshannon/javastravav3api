@@ -2426,24 +2426,6 @@ public class API {
 
 	/**
 	 * <p>
-	 * Join a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, join the upcoming occurrence. An {@link Token access token} with
-	 * {@link AuthorisationScope#WRITE write scope} is required.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the group event
-	 * @return The response indicating whether the authenticated athlete has joined the event
-	 * @throws NotFoundException
-	 *             if the event does not exist
-	 * @throws UnauthorizedException
-	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
-	 */
-	public Response joinEventRaw(Integer id) throws NotFoundException, UnauthorizedException {
-		return this.clubGroupEventAPI.joinEventRaw(id);
-	}
-
-	/**
-	 * <p>
 	 * Leave a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, leave the upcoming occurrence. An {@link Token access token} with
 	 * {@link AuthorisationScope#WRITE write scope} is required.
 	 * </p>
@@ -2478,24 +2460,6 @@ public class API {
 		final StravaAPIFuture<StravaClubEventJoinResponse> future = new StravaAPIFuture<>();
 		this.clubGroupEventAPI.leaveEvent(id, callback(future));
 		return future;
-	}
-
-	/**
-	 * <p>
-	 * Leave a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, leave the upcoming occurrence. An {@link Token access token} with
-	 * {@link AuthorisationScope#WRITE write scope} is required.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the group event
-	 * @return The response indicating whether the authenticated athlete has joined the event
-	 * @throws NotFoundException
-	 *             if the event does not exist
-	 * @throws UnauthorizedException
-	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
-	 */
-	public Response leaveEventRaw(Integer id) throws NotFoundException, UnauthorizedException {
-		return this.clubGroupEventAPI.leaveEventRaw(id);
 	}
 
 }
