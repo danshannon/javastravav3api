@@ -1,8 +1,12 @@
 package javastrava.api.v3.service.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import javastrava.api.v3.auth.model.Token;
+import javastrava.api.v3.model.StravaAthlete;
 import javastrava.api.v3.model.StravaClubEvent;
 import javastrava.api.v3.model.StravaClubEventJoinResponse;
 import javastrava.api.v3.model.reference.StravaResourceState;
@@ -11,6 +15,8 @@ import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.cache.StravaCache;
 import javastrava.cache.impl.StravaCacheImpl;
+import javastrava.util.Paging;
+import javastrava.util.PagingHandler;
 
 /**
  * <p>
@@ -121,6 +127,40 @@ public class ClubGroupEventServiceImpl extends StravaServiceImpl implements Club
 			return event;
 		}
 		return event;
+	}
+
+	@Override
+	public List<StravaAthlete> listEventJoinedAthletes(Integer eventId, Paging pagingInstruction) {
+		List<StravaAthlete> list;
+		try {
+			list = Arrays.asList(this.api.listEventJoinedAthletes(eventId, pagingInstruction.getPage(), pagingInstruction.getPageSize()));
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaAthlete>();
+		}
+
+		return list;
+
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listEventJoinedAthletesAsync(Integer eventId, Paging pagingInstruction) {
+		return StravaServiceImpl.future(() -> {
+			return listEventJoinedAthletes(eventId, pagingInstruction);
+		});
+	}
+
+	@Override
+	public List<StravaAthlete> listAllEventJoinedAthletes(Integer eventId) {
+		return PagingHandler.handleListAll(thisPage -> listEventJoinedAthletes(eventId, thisPage));
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listAllEventJoinedAthletesAsync(Integer eventId) {
+		return StravaServiceImpl.future(() -> {
+			return listAllEventJoinedAthletes(eventId);
+		});
 	}
 
 }

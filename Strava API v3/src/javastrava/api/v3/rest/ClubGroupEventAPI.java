@@ -13,6 +13,7 @@ import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * <p>
@@ -173,5 +174,85 @@ public interface ClubGroupEventAPI {
 	 */
 	@DELETE("/group_events/{id}/rsvps")
 	public Response leaveEventRaw(@Path("id") Integer id) throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
+	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
+	 * </p>
+	 * <p>
+	 * Pagination is supported.
+	 * </p>
+	 * <p>
+	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event for which athletes should be listed
+	 * @param page
+	 *            Page number to be returned (default is 1)
+	 * @param perPage
+	 *            Page size to be returned (default is 50)
+	 * @return Array of athletes who have joined the event
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the event is private??
+	 */
+	@GET("/group_events/{id}/athletes")
+	public StravaAthlete[] listEventJoinedAthletes(@Path("id") Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage) throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
+	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
+	 * </p>
+	 * <p>
+	 * Pagination is supported.
+	 * </p>
+	 * <p>
+	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event for which athletes should be listed
+	 * @param page
+	 *            Page number to be returned (default is 1)
+	 * @param perPage
+	 *            Page size to be returned (default is 50)
+	 * @param callback
+	 *            Callback which can be used to get the array of athletes who have joined the event
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the event is private??
+	 */
+	@GET("/group_events/{id}/athletes")
+	public void listEventJoinedAthletes(@Path("id") Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage, StravaAPICallback<StravaAthlete[]> callback)
+			throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
+	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
+	 * </p>
+	 * <p>
+	 * Pagination is supported.
+	 * </p>
+	 * <p>
+	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event for which athletes should be listed
+	 * @param page
+	 *            Page number to be returned (default is 1)
+	 * @param perPage
+	 *            Page size to be returned (default is 50)
+	 * @return Array of athletes who have joined the event
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the event is private??
+	 */
+	@GET("/group_events/{id}/athletes")
+	public Response listEventJoinedAthletesRaw(@Path("id") Integer id, @Query("page") final Integer page, @Query("per_page") final Integer perPage) throws NotFoundException, UnauthorizedException;
 
 }

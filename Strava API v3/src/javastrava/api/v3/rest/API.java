@@ -2462,4 +2462,60 @@ public class API {
 		return future;
 	}
 
+	/**
+	 * <p>
+	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
+	 * </p>
+	 * <p>
+	 * Pagination is supported.
+	 * </p>
+	 * <p>
+	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event for which athletes should be listed
+	 * @param page
+	 *            Page number to be returned (default is 1)
+	 * @param perPage
+	 *            Page size to be returned (default is 50)
+	 * @return Array of athletes who have joined the event
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the event is private??
+	 */
+	public StravaAthlete[] listEventJoinedAthletes(Integer id, final Integer page, final Integer perPage) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventAPI.listEventJoinedAthletes(id, page, perPage);
+	}
+
+	/**
+	 * <p>
+	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
+	 * </p>
+	 * <p>
+	 * Pagination is supported.
+	 * </p>
+	 * <p>
+	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event for which athletes should be listed
+	 * @param page
+	 *            Page number to be returned (default is 1)
+	 * @param perPage
+	 *            Page size to be returned (default is 50)
+	 * @return Callback which can be used to get the array of athletes who have joined the event
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the event is private??
+	 */
+	public StravaAPIFuture<StravaAthlete[]> listJoinedAthletesAsync(Integer id, final Integer page, final Integer perPage) throws NotFoundException, UnauthorizedException {
+		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<>();
+		this.clubGroupEventAPI.listEventJoinedAthletes(id, page, perPage, callback(future));
+		return future;
+	}
+
 }

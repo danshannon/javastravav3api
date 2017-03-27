@@ -3071,4 +3071,24 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	public CompletableFuture<StravaClubEventJoinResponse> leaveEventAsync(Integer id) {
 		return this.clubGroupEventService.leaveEventAsync(id);
 	}
+
+	@Override
+	public List<StravaAthlete> listEventJoinedAthletes(Integer eventId, Paging pagingInstruction) {
+		return this.clubGroupEventService.listEventJoinedAthletes(eventId, pagingInstruction);
+	}
+
+	@Override
+	public List<StravaAthlete> listAllEventJoinedAthletes(Integer eventId) {
+		return this.clubGroupEventService.listAllEventJoinedAthletes(eventId);
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listEventJoinedAthletesAsync(Integer eventId, Paging pagingInstruction) {
+		return this.clubGroupEventService.listEventJoinedAthletesAsync(eventId, pagingInstruction);
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listAllEventJoinedAthletesAsync(Integer eventId) {
+		return this.clubGroupEventService.listAllEventJoinedAthletesAsync(eventId);
+	}
 }
