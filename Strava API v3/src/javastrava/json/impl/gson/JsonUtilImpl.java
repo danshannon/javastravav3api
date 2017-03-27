@@ -39,6 +39,8 @@ import javastrava.api.v3.model.reference.StravaSportType;
 import javastrava.api.v3.model.reference.StravaStreamResolutionType;
 import javastrava.api.v3.model.reference.StravaStreamSeriesDownsamplingType;
 import javastrava.api.v3.model.reference.StravaStreamType;
+import javastrava.api.v3.model.reference.StravaTerrainType;
+import javastrava.api.v3.model.reference.StravaWeekOfMonth;
 import javastrava.api.v3.model.reference.StravaWeightClass;
 import javastrava.api.v3.model.reference.StravaWorkoutType;
 import javastrava.api.v3.model.webhook.reference.StravaSubscriptionAspectType;
@@ -79,6 +81,8 @@ import javastrava.json.impl.gson.serializer.StreamSeriesDownsamplingTypeSerializ
 import javastrava.json.impl.gson.serializer.StreamTypeSerializer;
 import javastrava.json.impl.gson.serializer.SubscriptionAspectTypeSerializer;
 import javastrava.json.impl.gson.serializer.SubscriptionObjectTypeSerializer;
+import javastrava.json.impl.gson.serializer.TerrainTypeSerializer;
+import javastrava.json.impl.gson.serializer.WeekOfMonthSerializer;
 import javastrava.json.impl.gson.serializer.WeightClassSerializer;
 import javastrava.json.impl.gson.serializer.WorkoutTypeSerializer;
 import javastrava.json.impl.gson.serializer.ZonedDateTimeSerializer;
@@ -137,6 +141,8 @@ public class JsonUtilImpl implements JsonUtil {
 		gsonBuilder.registerTypeAdapter(StravaStreamType.class, new StreamTypeSerializer());
 		gsonBuilder.registerTypeAdapter(StravaSubscriptionAspectType.class, new SubscriptionAspectTypeSerializer());
 		gsonBuilder.registerTypeAdapter(StravaSubscriptionObjectType.class, new SubscriptionObjectTypeSerializer());
+		gsonBuilder.registerTypeAdapter(StravaTerrainType.class, new TerrainTypeSerializer());
+		gsonBuilder.registerTypeAdapter(StravaWeekOfMonth.class, new WeekOfMonthSerializer());
 		gsonBuilder.registerTypeAdapter(StravaWeightClass.class, new WeightClassSerializer());
 		gsonBuilder.registerTypeAdapter(StravaWorkoutType.class, new WorkoutTypeSerializer());
 
