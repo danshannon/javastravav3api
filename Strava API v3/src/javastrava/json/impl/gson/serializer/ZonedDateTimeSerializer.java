@@ -2,6 +2,7 @@ package javastrava.json.impl.gson.serializer;
 
 import java.lang.reflect.Type;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -21,7 +22,7 @@ public class ZonedDateTimeSerializer implements JsonSerializer<ZonedDateTime>, J
 	 */
 	@Override
 	public JsonElement serialize(final ZonedDateTime src, final Type srcType, final JsonSerializationContext context) {
-		return new JsonPrimitive(src.toString());
+		return new JsonPrimitive(src.format(DateTimeFormatter.ISO_DATE_TIME));
 	}
 
 	/**
