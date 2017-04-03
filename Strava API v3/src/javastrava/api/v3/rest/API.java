@@ -1970,6 +1970,16 @@ public class API {
 	 *             If there is a security or privacy violation
 	 */
 	public StravaSegment starSegment(final Integer segmentId, final Boolean starred) throws NotFoundException, BadRequestException, UnauthorizedException {
+
+		// Workaround for #162 - this will throw the required UnauthorizedException if the segment is private
+		final StravaSegment segment = this.segmentAPI.getSegment(segmentId);
+
+		// If the segment is already in the correct state, then we are done
+		if ((starred != null) && starred.equals(segment.getStarred())) {
+			return segment;
+		}
+
+		// Star the segment
 		return this.segmentAPI.starSegment(segmentId, starred);
 	}
 
