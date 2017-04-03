@@ -287,8 +287,8 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		// End of workaround
 
 		// Can't create the comment if we don't have Strava's permission to write comments
-		if (JavastravaApplicationConfig.STRAVA_ALLOWS_COMMENTS_WRITE) {
-			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.commentWithoutStravaPermission")); //$NON-NLS-1$
+		if (!JavastravaApplicationConfig.STRAVA_ALLOWS_COMMENTS_WRITE) {
+			throw new UnauthorizedException(Messages.string("ActivityServiceImpl.commentWithoutStravaApplicationPermission")); //$NON-NLS-1$
 		}
 
 		// Activity must exist

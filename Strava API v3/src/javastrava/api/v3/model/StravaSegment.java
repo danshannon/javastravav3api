@@ -201,11 +201,13 @@ public class StravaSegment implements StravaCacheableEntity<Integer> {
 		super();
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -231,6 +233,13 @@ public class StravaSegment implements StravaCacheableEntity<Integer> {
 				return false;
 			}
 		} else if (!this.athletePrEffort.equals(other.athletePrEffort)) {
+			return false;
+		}
+		if (this.athleteSegmentStats == null) {
+			if (other.athleteSegmentStats != null) {
+				return false;
+			}
+		} else if (!this.athleteSegmentStats.equals(other.athleteSegmentStats)) {
 			return false;
 		}
 		if (this.averageGrade == null) {
@@ -292,11 +301,25 @@ public class StravaSegment implements StravaCacheableEntity<Integer> {
 		} else if (!this.elevationLow.equals(other.elevationLow)) {
 			return false;
 		}
+		if (this.endLatitude == null) {
+			if (other.endLatitude != null) {
+				return false;
+			}
+		} else if (!this.endLatitude.equals(other.endLatitude)) {
+			return false;
+		}
 		if (this.endLatlng == null) {
 			if (other.endLatlng != null) {
 				return false;
 			}
 		} else if (!this.endLatlng.equals(other.endLatlng)) {
+			return false;
+		}
+		if (this.endLongitude == null) {
+			if (other.endLongitude != null) {
+				return false;
+			}
+		} else if (!this.endLongitude.equals(other.endLongitude)) {
 			return false;
 		}
 		if (this.hazardous == null) {
@@ -334,6 +357,13 @@ public class StravaSegment implements StravaCacheableEntity<Integer> {
 		} else if (!this.name.equals(other.name)) {
 			return false;
 		}
+		if (this.prTime == null) {
+			if (other.prTime != null) {
+				return false;
+			}
+		} else if (!this.prTime.equals(other.prTime)) {
+			return false;
+		}
 		if (this.privateSegment == null) {
 			if (other.privateSegment != null) {
 				return false;
@@ -365,11 +395,25 @@ public class StravaSegment implements StravaCacheableEntity<Integer> {
 		} else if (!this.starredDate.equals(other.starredDate)) {
 			return false;
 		}
+		if (this.startLatitude == null) {
+			if (other.startLatitude != null) {
+				return false;
+			}
+		} else if (!this.startLatitude.equals(other.startLatitude)) {
+			return false;
+		}
 		if (this.startLatlng == null) {
 			if (other.startLatlng != null) {
 				return false;
 			}
 		} else if (!this.startLatlng.equals(other.startLatlng)) {
+			return false;
+		}
+		if (this.startLongitude == null) {
+			if (other.startLongitude != null) {
+				return false;
+			}
+		} else if (!this.startLongitude.equals(other.startLongitude)) {
 			return false;
 		}
 		if (this.state == null) {
@@ -635,7 +679,9 @@ public class StravaSegment implements StravaCacheableEntity<Integer> {
 		return this.updatedAt;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -645,6 +691,7 @@ public class StravaSegment implements StravaCacheableEntity<Integer> {
 		result = (prime * result) + ((this.activityType == null) ? 0 : this.activityType.hashCode());
 		result = (prime * result) + ((this.athleteCount == null) ? 0 : this.athleteCount.hashCode());
 		result = (prime * result) + ((this.athletePrEffort == null) ? 0 : this.athletePrEffort.hashCode());
+		result = (prime * result) + ((this.athleteSegmentStats == null) ? 0 : this.athleteSegmentStats.hashCode());
 		result = (prime * result) + ((this.averageGrade == null) ? 0 : this.averageGrade.hashCode());
 		result = (prime * result) + ((this.city == null) ? 0 : this.city.hashCode());
 		result = (prime * result) + ((this.climbCategory == null) ? 0 : this.climbCategory.hashCode());
@@ -654,18 +701,23 @@ public class StravaSegment implements StravaCacheableEntity<Integer> {
 		result = (prime * result) + ((this.effortCount == null) ? 0 : this.effortCount.hashCode());
 		result = (prime * result) + ((this.elevationHigh == null) ? 0 : this.elevationHigh.hashCode());
 		result = (prime * result) + ((this.elevationLow == null) ? 0 : this.elevationLow.hashCode());
+		result = (prime * result) + ((this.endLatitude == null) ? 0 : this.endLatitude.hashCode());
 		result = (prime * result) + ((this.endLatlng == null) ? 0 : this.endLatlng.hashCode());
+		result = (prime * result) + ((this.endLongitude == null) ? 0 : this.endLongitude.hashCode());
 		result = (prime * result) + ((this.hazardous == null) ? 0 : this.hazardous.hashCode());
 		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
 		result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());
 		result = (prime * result) + ((this.maximumGrade == null) ? 0 : this.maximumGrade.hashCode());
 		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+		result = (prime * result) + ((this.prTime == null) ? 0 : this.prTime.hashCode());
 		result = (prime * result) + ((this.privateSegment == null) ? 0 : this.privateSegment.hashCode());
 		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
 		result = (prime * result) + ((this.starCount == null) ? 0 : this.starCount.hashCode());
 		result = (prime * result) + ((this.starred == null) ? 0 : this.starred.hashCode());
 		result = (prime * result) + ((this.starredDate == null) ? 0 : this.starredDate.hashCode());
+		result = (prime * result) + ((this.startLatitude == null) ? 0 : this.startLatitude.hashCode());
 		result = (prime * result) + ((this.startLatlng == null) ? 0 : this.startLatlng.hashCode());
+		result = (prime * result) + ((this.startLongitude == null) ? 0 : this.startLongitude.hashCode());
 		result = (prime * result) + ((this.state == null) ? 0 : this.state.hashCode());
 		result = (prime * result) + ((this.totalElevationGain == null) ? 0 : this.totalElevationGain.hashCode());
 		result = (prime * result) + ((this.updatedAt == null) ? 0 : this.updatedAt.hashCode());
@@ -942,24 +994,25 @@ public class StravaSegment implements StravaCacheableEntity<Integer> {
 		this.updatedAt = updatedAt;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "StravaSegment [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activityType=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.activityType + ", distance=" + this.distance + ", averageGrade=" + this.averageGrade + ", maximumGrade=" + this.maximumGrade //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", elevationHigh=" //$NON-NLS-1$
-				+ this.elevationHigh + ", elevationLow=" + this.elevationLow + ", startLatlng=" + this.startLatlng + ", endLatlng=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.endLatlng + ", climbCategory=" + this.climbCategory + ", city=" + this.city + ", state=" + this.state + ", country=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.country + ", privateSegment=" //$NON-NLS-1$
-				+ this.privateSegment + ", starred=" + this.starred + ", createdAt=" + this.createdAt + ", updatedAt=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.updatedAt + ", totalElevationGain=" + this.totalElevationGain + ", map=" + this.map + ", effortCount=" + this.effortCount //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", athleteCount=" //$NON-NLS-1$
-				+ this.athleteCount + ", hazardous=" + this.hazardous + ", starCount=" + this.starCount + ", athletePrEffort=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.athletePrEffort + ", starredDate=" + this.starredDate + ", startLatitude=" + this.startLatitude + ", startLongitude=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.startLongitude + ", endLatitude=" //$NON-NLS-1$
-				+ this.endLatitude + ", endLongitude=" + this.endLongitude + ", prTime=" + this.prTime + ", athleteSegmentStats=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.athleteSegmentStats + "]"; //$NON-NLS-1$
+		return "StravaSegment [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", activityType=" + this.activityType + ", distance=" + this.distance //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", averageGrade=" + this.averageGrade //$NON-NLS-1$
+				+ ", maximumGrade=" + this.maximumGrade + ", elevationHigh=" + this.elevationHigh + ", elevationLow=" + this.elevationLow + ", startLatlng=" + this.startLatlng + ", endLatlng=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.endLatlng
+				+ ", climbCategory=" + this.climbCategory + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", privateSegment=" + this.privateSegment + ", starred=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ this.starred + ", createdAt=" //$NON-NLS-1$
+				+ this.createdAt + ", updatedAt=" + this.updatedAt + ", totalElevationGain=" + this.totalElevationGain + ", map=" + this.map + ", effortCount=" + this.effortCount + ", athleteCount=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.athleteCount
+				+ ", hazardous=" + this.hazardous + ", starCount=" + this.starCount + ", athletePrEffort=" + this.athletePrEffort + ", starredDate=" + this.starredDate + ", startLatitude=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.startLatitude
+				+ ", startLongitude=" + this.startLongitude + ", endLatitude=" + this.endLatitude + ", endLongitude=" + this.endLongitude + ", prTime=" + this.prTime + ", athleteSegmentStats=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.athleteSegmentStats
+				+ "]"; //$NON-NLS-1$
 	}
 }

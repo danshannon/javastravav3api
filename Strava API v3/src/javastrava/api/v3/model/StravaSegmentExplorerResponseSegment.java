@@ -74,11 +74,8 @@ public class StravaSegmentExplorerResponseSegment implements StravaEntity {
 		super();
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -146,6 +143,9 @@ public class StravaSegmentExplorerResponseSegment implements StravaEntity {
 				return false;
 			}
 		} else if (!this.points.equals(other.points)) {
+			return false;
+		}
+		if (this.resourceState != other.resourceState) {
 			return false;
 		}
 		if (this.startLatlng == null) {
@@ -233,7 +233,9 @@ public class StravaSegmentExplorerResponseSegment implements StravaEntity {
 		return this.startLatlng;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -249,6 +251,7 @@ public class StravaSegmentExplorerResponseSegment implements StravaEntity {
 		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
 		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
 		result = (prime * result) + ((this.points == null) ? 0 : this.points.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
 		result = (prime * result) + ((this.startLatlng == null) ? 0 : this.startLatlng.hashCode());
 		return result;
 	}
@@ -342,13 +345,12 @@ public class StravaSegmentExplorerResponseSegment implements StravaEntity {
 		this.startLatlng = startLatlng;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "StravaSegmentExplorerResponseSegment [id=" + this.id + ", name=" + this.name + ", climbCategory=" + this.climbCategory + ", climbCategoryDesc=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.climbCategoryDesc + ", avgGrade=" + this.avgGrade + ", startLatlng=" + this.startLatlng + ", endLatlng=" + this.endLatlng //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", elevDifference=" + this.elevDifference + ", distance=" + this.distance + ", points=" + this.points + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "StravaSegmentExplorerResponseSegment [id=" + this.id + ", name=" + this.name + ", climbCategory=" + this.climbCategory + ", climbCategoryDesc=" + this.climbCategoryDesc + ", avgGrade=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ this.avgGrade
+				+ ", startLatlng=" + this.startLatlng + ", endLatlng=" + this.endLatlng + ", elevDifference=" + this.elevDifference + ", distance=" + this.distance + ", points=" + this.points //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", resourceState=" //$NON-NLS-1$
+				+ this.resourceState + "]"; //$NON-NLS-1$
 	}
 }

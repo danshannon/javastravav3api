@@ -48,7 +48,7 @@ public enum StravaResourceState implements StravaReferenceType<Integer> {
 
 	/**
 	 * Used by JSON deserialisation
-	 * 
+	 *
 	 * @param id
 	 *            The integer representation of this {@link StravaResourceState} as returned by the Strava API
 	 * @return The matching {@link StravaResourceState}, or {@link StravaResourceState#UNKNOWN} if there is no match
@@ -75,7 +75,7 @@ public enum StravaResourceState implements StravaReferenceType<Integer> {
 
 	/**
 	 * Private constructor used by declarations
-	 * 
+	 *
 	 * @param id
 	 *            Identifier - also used when serialising/deserialising to JSON
 	 * @param description
@@ -104,7 +104,7 @@ public enum StravaResourceState implements StravaReferenceType<Integer> {
 
 	/**
 	 * Used by JSON serialisation
-	 * 
+	 *
 	 * @return The integer representation of this {@link StravaResourceState} to be used with the Strava API
 	 * @see ResourceStateSerializer#serialize(StravaResourceState, java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
 	 */
@@ -118,6 +118,6 @@ public enum StravaResourceState implements StravaReferenceType<Integer> {
 	 */
 	@Override
 	public String toString() {
-		return this.description.toString();
+		return this.id.toString();
 	}
 }

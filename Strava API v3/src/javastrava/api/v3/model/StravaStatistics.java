@@ -67,18 +67,22 @@ public class StravaStatistics implements StravaEntity {
 	 */
 	private StravaStatisticsEntry allSwimTotals;
 
+	private StravaResourceState resourceState;
+
 	/**
 	 * No args constructor
 	 */
 	public StravaStatistics() {
-		super();
+		this.resourceState = StravaResourceState.DETAILED;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -101,6 +105,13 @@ public class StravaStatistics implements StravaEntity {
 				return false;
 			}
 		} else if (!this.allRunTotals.equals(other.allRunTotals)) {
+			return false;
+		}
+		if (this.allSwimTotals == null) {
+			if (other.allSwimTotals != null) {
+				return false;
+			}
+		} else if (!this.allSwimTotals.equals(other.allSwimTotals)) {
 			return false;
 		}
 		if (this.biggestClimbElevationGain == null) {
@@ -131,6 +142,16 @@ public class StravaStatistics implements StravaEntity {
 		} else if (!this.recentRunTotals.equals(other.recentRunTotals)) {
 			return false;
 		}
+		if (this.recentSwimTotals == null) {
+			if (other.recentSwimTotals != null) {
+				return false;
+			}
+		} else if (!this.recentSwimTotals.equals(other.recentSwimTotals)) {
+			return false;
+		}
+		if (this.resourceState != other.resourceState) {
+			return false;
+		}
 		if (this.ytdRideTotals == null) {
 			if (other.ytdRideTotals != null) {
 				return false;
@@ -143,6 +164,13 @@ public class StravaStatistics implements StravaEntity {
 				return false;
 			}
 		} else if (!this.ytdRunTotals.equals(other.ytdRunTotals)) {
+			return false;
+		}
+		if (this.ytdSwimTotals == null) {
+			if (other.ytdSwimTotals != null) {
+				return false;
+			}
+		} else if (!this.ytdSwimTotals.equals(other.ytdSwimTotals)) {
 			return false;
 		}
 		return true;
@@ -225,7 +253,9 @@ public class StravaStatistics implements StravaEntity {
 		return this.ytdSwimTotals;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -234,12 +264,16 @@ public class StravaStatistics implements StravaEntity {
 		int result = 1;
 		result = (prime * result) + ((this.allRideTotals == null) ? 0 : this.allRideTotals.hashCode());
 		result = (prime * result) + ((this.allRunTotals == null) ? 0 : this.allRunTotals.hashCode());
+		result = (prime * result) + ((this.allSwimTotals == null) ? 0 : this.allSwimTotals.hashCode());
 		result = (prime * result) + ((this.biggestClimbElevationGain == null) ? 0 : this.biggestClimbElevationGain.hashCode());
 		result = (prime * result) + ((this.biggestRideDistance == null) ? 0 : this.biggestRideDistance.hashCode());
 		result = (prime * result) + ((this.recentRideTotals == null) ? 0 : this.recentRideTotals.hashCode());
 		result = (prime * result) + ((this.recentRunTotals == null) ? 0 : this.recentRunTotals.hashCode());
+		result = (prime * result) + ((this.recentSwimTotals == null) ? 0 : this.recentSwimTotals.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
 		result = (prime * result) + ((this.ytdRideTotals == null) ? 0 : this.ytdRideTotals.hashCode());
 		result = (prime * result) + ((this.ytdRunTotals == null) ? 0 : this.ytdRunTotals.hashCode());
+		result = (prime * result) + ((this.ytdSwimTotals == null) ? 0 : this.ytdSwimTotals.hashCode());
 		return result;
 	}
 
@@ -331,23 +365,26 @@ public class StravaStatistics implements StravaEntity {
 		this.ytdSwimTotals = ytdSwimTotals;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "StravaStatistics [biggestRideDistance=" + this.biggestRideDistance + ", biggestClimbElevationGain=" //$NON-NLS-1$ //$NON-NLS-2$
-				+ this.biggestClimbElevationGain + ", recentRideTotals=" + this.recentRideTotals + ", recentRunTotals=" //$NON-NLS-1$ //$NON-NLS-2$
-				+ this.recentRunTotals + ", recentSwimTotals=" + this.recentSwimTotals //$NON-NLS-1$
-				+ ", ytdRideTotals=" + this.ytdRideTotals + ", ytdRunTotals=" + this.ytdRunTotals + ", ytdSwimTotals=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.ytdSwimTotals + ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals //$NON-NLS-1$ //$NON-NLS-2$
-				+ ", allSwimTotals=" //$NON-NLS-1$
-				+ this.allSwimTotals + "]"; //$NON-NLS-1$
+		return "StravaStatistics [biggestRideDistance=" + this.biggestRideDistance + ", biggestClimbElevationGain=" + this.biggestClimbElevationGain + ", recentRideTotals=" + this.recentRideTotals //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", recentRunTotals=" + this.recentRunTotals + ", recentSwimTotals=" + this.recentSwimTotals + ", ytdRideTotals=" + this.ytdRideTotals + ", ytdRunTotals=" + this.ytdRunTotals //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", ytdSwimTotals=" //$NON-NLS-1$
+				+ this.ytdSwimTotals + ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals + ", allSwimTotals=" + this.allSwimTotals + ", resourceState=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.resourceState + "]"; //$NON-NLS-1$
 	}
 
 	@Override
 	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
+		return this.resourceState;
+	}
+
+	/**
+	 * @param resourceState
+	 *            resource state to set
+	 */
+	public void setResourceState(StravaResourceState resourceState) {
+		this.resourceState = resourceState;
 	}
 
 }
