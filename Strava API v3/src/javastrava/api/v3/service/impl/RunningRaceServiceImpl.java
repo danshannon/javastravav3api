@@ -1,5 +1,6 @@
 package javastrava.api.v3.service.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -7,6 +8,8 @@ import java.util.concurrent.CompletableFuture;
 import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaRunningRace;
 import javastrava.api.v3.service.RunningRaceService;
+import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.cache.impl.StravaCacheImpl;
 
 /**
@@ -65,7 +68,13 @@ public class RunningRaceServiceImpl extends StravaServiceImpl implements Running
 
 	@Override
 	public List<StravaRunningRace> listRaces(Integer year) {
-		return Arrays.asList(this.api.listRaces(year));
+		try {
+			return Arrays.asList(this.api.listRaces(year));
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaRunningRace>();
+		}
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import javastrava.api.v3.service.SegmentService;
 import javastrava.api.v3.service.StreamService;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.config.Messages;
 
 /**
@@ -173,6 +174,8 @@ public class StreamServiceImpl extends StravaServiceImpl implements StreamServic
 			return null;
 		} catch (final BadRequestException e) {
 			throw new IllegalArgumentException(e);
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaStream>();
 		}
 
 		// TODO This is a workaround for issue javastrava-api #21

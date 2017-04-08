@@ -603,8 +603,16 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 		final String start = (startDateLocal == null ? null : startDateLocal.toString());
 		final String end = (endDateLocal == null ? null : endDateLocal.toString());
 
-		final List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction,
-				thisPage -> Arrays.asList(SegmentServiceImpl.this.api.listSegmentEfforts(segmentId, athleteId, start, end, thisPage.getPage(), thisPage.getPageSize())));
+		final List<StravaSegmentEffort> efforts;
+
+		try {
+			efforts = PagingHandler.handlePaging(pagingInstruction,
+					thisPage -> Arrays.asList(SegmentServiceImpl.this.api.listSegmentEfforts(segmentId, athleteId, start, end, thisPage.getPage(), thisPage.getPageSize())));
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaSegmentEffort>();
+		}
 
 		return PrivacyUtils.handlePrivateSegmentEfforts(efforts, this.getToken());
 	}
@@ -672,8 +680,15 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 */
 	@Override
 	public List<StravaSegment> listStarredSegments(final Integer athleteId, final Paging pagingInstruction) {
-		final List<StravaSegment> segments = PagingHandler.handlePaging(pagingInstruction,
-				thisPage -> Arrays.asList(SegmentServiceImpl.this.api.listStarredSegments(athleteId, thisPage.getPage(), thisPage.getPageSize())));
+		final List<StravaSegment> segments;
+
+		try {
+			segments = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(SegmentServiceImpl.this.api.listStarredSegments(athleteId, thisPage.getPage(), thisPage.getPageSize())));
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaSegment>();
+		}
 
 		// TODO This is a workaround for issue javastrava-api #25
 		// (https://github.com/danshannon/javastravav3api/issues/25)

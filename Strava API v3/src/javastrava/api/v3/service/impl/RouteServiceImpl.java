@@ -1,5 +1,6 @@
 package javastrava.api.v3.service.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -8,11 +9,11 @@ import javastrava.api.v3.auth.model.Token;
 import javastrava.api.v3.model.StravaRoute;
 import javastrava.api.v3.service.RouteService;
 import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.api.v3.service.exception.UnauthorizedException;
 
 /**
  * <p>
- * Routes are manually-created paths made up of sections called legs. Currently it is only possible to create routes using the
- * Routebuilder web interface.
+ * Routes are manually-created paths made up of sections called legs. Currently it is only possible to create routes using the Routebuilder web interface.
  * </p>
  *
  * @author Dan Shannon
@@ -83,6 +84,8 @@ public class RouteServiceImpl extends StravaServiceImpl implements RouteService 
 			return Arrays.asList(this.api.listAthleteRoutes(id));
 		} catch (final NotFoundException e) {
 			return null;
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaRoute>();
 		}
 	}
 

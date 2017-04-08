@@ -1,5 +1,6 @@
 package javastrava.api.v3.service.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -253,8 +254,14 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public List<StravaAthlete> listAthleteFriends(final Integer id, final Paging pagingInstruction) {
-		final List<StravaAthlete> athletes = PagingHandler.handlePaging(pagingInstruction,
-				thisPage -> Arrays.asList(AthleteServiceImpl.this.api.listAthleteFriends(id, thisPage.getPage(), thisPage.getPageSize())));
+		final List<StravaAthlete> athletes;
+		try {
+			athletes = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(AthleteServiceImpl.this.api.listAthleteFriends(id, thisPage.getPage(), thisPage.getPageSize())));
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaAthlete>();
+		}
 
 		// Put them in the cache so they can be read back later
 		this.athleteCache.putAll(athletes);
@@ -292,8 +299,14 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public List<StravaSegmentEffort> listAthleteKOMs(final Integer id, final Paging pagingInstruction) {
-		final List<StravaSegmentEffort> efforts = PagingHandler.handlePaging(pagingInstruction,
-				thisPage -> Arrays.asList(AthleteServiceImpl.this.api.listAthleteKOMs(id, thisPage.getPage(), thisPage.getPageSize())));
+		final List<StravaSegmentEffort> efforts;
+		try {
+			efforts = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(AthleteServiceImpl.this.api.listAthleteKOMs(id, thisPage.getPage(), thisPage.getPageSize())));
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaSegmentEffort>();
+		}
 
 		this.effortCache.putAll(efforts);
 
@@ -329,8 +342,14 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public List<StravaAthlete> listAthletesBothFollowing(final Integer id, final Paging pagingInstruction) {
-		final List<StravaAthlete> athletes = PagingHandler.handlePaging(pagingInstruction,
-				thisPage -> Arrays.asList(AthleteServiceImpl.this.api.listAthletesBothFollowing(id, thisPage.getPage(), thisPage.getPageSize())));
+		final List<StravaAthlete> athletes;
+		try {
+			athletes = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(AthleteServiceImpl.this.api.listAthletesBothFollowing(id, thisPage.getPage(), thisPage.getPageSize())));
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaAthlete>();
+		}
 
 		this.athleteCache.putAll(athletes);
 
