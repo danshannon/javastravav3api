@@ -398,13 +398,7 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	 */
 	@Override
 	public List<StravaActivity> listRecentClubActivities(final Integer id) {
-		List<StravaActivity> activities = listRecentClubActivities(id, null);
-
-		// Strava API returns NULL instead of an empty array
-		if (activities == null) {
-			activities = new ArrayList<StravaActivity>();
-		}
-		return activities;
+		return listRecentClubActivities(id, null);
 	}
 
 	/**
@@ -412,16 +406,28 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	 */
 	@Override
 	public List<StravaActivity> listRecentClubActivities(final Integer id, final Paging pagingInstruction) {
+		if (id == null) {
+			throw new IllegalArgumentException();
+		}
 
 		List<StravaActivity> activities;
 		try {
-			activities = PagingHandler.handlePaging(pagingInstruction, thisPage -> Arrays.asList(ClubServiceImpl.this.api.listRecentClubActivities(id, thisPage.getPage(), thisPage.getPageSize())));
+			if (pagingInstruction == null) {
+				activities = Arrays.asList(this.api.listRecentClubActivities(id, null, null));
+			} else {
+				activities = PagingHandler.handlePaging(pagingInstruction,
+						thisPage -> Arrays.asList(ClubServiceImpl.this.api.listRecentClubActivities(id, thisPage.getPage(), thisPage.getPageSize())));
+			}
 		} catch (final NotFoundException e) {
 			return null;
 		} catch (final UnauthorizedException e) {
 			return new ArrayList<StravaActivity>();
 		}
 
+		// Strava API returns NULL instead of an empty array
+		if (activities == null) {
+			activities = new ArrayList<StravaActivity>();
+		}
 		return PrivacyUtils.handlePrivateActivities(activities, this.getToken());
 	}
 

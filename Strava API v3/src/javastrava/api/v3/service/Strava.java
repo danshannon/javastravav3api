@@ -2925,7 +2925,7 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	 */
 	@Override
 	public StravaRunningRace getRace(Integer id) {
-		return this.getRace(id);
+		return this.runningRaceService.getRace(id);
 	}
 
 	/**
@@ -2939,7 +2939,7 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	 */
 	@Override
 	public CompletableFuture<StravaRunningRace> getRaceAsync(Integer id) {
-		return this.getRaceAsync(id);
+		return this.runningRaceService.getRaceAsync(id);
 	}
 
 	/**

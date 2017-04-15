@@ -100,6 +100,6 @@ public interface RunningRaceAPI {
 	 * @throws UnauthorizedException
 	 *             If the race is private or a security exception has occurred
 	 */
-	@GET("/running/races/{id}")
+	@GET("/running_races/{id}")
 	public void getRace(@Path("id") final Integer id, final StravaAPICallback<StravaRunningRace> callback);
 }
