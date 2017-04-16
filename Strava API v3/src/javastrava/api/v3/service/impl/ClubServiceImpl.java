@@ -407,7 +407,13 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	@Override
 	public List<StravaActivity> listRecentClubActivities(final Integer id, final Paging pagingInstruction) {
 		if (id == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Club id is required"); //$NON-NLS-1$
+		}
+
+		// Check that the club exists
+		final StravaClub club = this.api.getClub(id);
+		if (club == null) {
+			return null;
 		}
 
 		List<StravaActivity> activities;

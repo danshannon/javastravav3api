@@ -116,9 +116,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public StravaComment createComment(final Long activityId, final String text) throws NotFoundException, BadRequestException {
-		// if ((text == null) || text.equals("")) { //$NON-NLS-1$
-		// throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
-		// }
+		if ((text == null) || text.equals("")) { //$NON-NLS-1$
+			throw new IllegalArgumentException(Messages.string("ActivityServiceImpl.commentCannotBeEmpty")); //$NON-NLS-1$
+		}
 
 		// Can't create the comment if we don't have Strava's permission to write comments
 		if (!JavastravaApplicationConfig.STRAVA_ALLOWS_COMMENTS_WRITE) {

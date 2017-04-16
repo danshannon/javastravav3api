@@ -91,6 +91,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		if (r == null) {
 			return new StravaUnknownAPIException(status, response, cause);
 		}
+
 		try {
 			if (r.getBody() == null) {
 				response = new StravaResponse();
@@ -118,7 +119,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 		// Handle 401 Unauthorized error
 		if (r.getStatus() == 401) {
 			if (tokenInvalid(response)) {
-				log.error(status + " : " + response); //$NON-NLS-1$
+				log.info(status + " : " + response); //$NON-NLS-1$
 				return new InvalidTokenException(status, response, cause);
 			}
 
@@ -128,7 +129,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 
 		// Handle 403 forbidden error
 		if (r.getStatus() == 403) {
-			log.error(status + " : " + response); //$NON-NLS-1$
+			log.info(status + " : " + response); //$NON-NLS-1$
 			if (response.getMessage().equals(Messages.string("RetrofitErrorHandler.rateLimitExceeded"))) { //$NON-NLS-1$
 				return new StravaAPIRateLimitException(status, response, cause);
 			}
@@ -143,7 +144,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 
 		// Handle 429 Too many requests error
 		if (r.getStatus() == 429) {
-			log.error(status + " : " + response); //$NON-NLS-1$
+			log.warn(status + " : " + response); //$NON-NLS-1$
 			return new StravaAPIRateLimitException(status, response, cause);
 		}
 
