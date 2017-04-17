@@ -1,7 +1,6 @@
 package javastrava.json.impl.gson.serializer;
 
 import java.lang.reflect.Type;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +31,8 @@ public class LocalDateTimeSerializer implements JsonSerializer<LocalDateTime>, J
 	 */
 	@Override
 	public LocalDateTime deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
-		return LocalDateTime.ofInstant(Instant.parse(json.getAsString()), ZoneOffset.UTC);
+		return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_DATE_TIME);
+		// return LocalDateTime.ofInstant(Instant.parse(json.getAsString()), ZoneOffset.UTC);
 	}
 
 }

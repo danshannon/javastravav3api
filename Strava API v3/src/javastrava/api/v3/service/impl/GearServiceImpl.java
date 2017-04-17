@@ -28,13 +28,11 @@ public class GearServiceImpl extends StravaServiceImpl implements GearService {
 	 * </p>
 	 *
 	 * <p>
-	 * Instances are cached so that if 2 requests are made for the same token,
-	 * the same instance is returned
+	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
 	 * </p>
 	 *
 	 * @param token
-	 *            The Strava access token to be used in requests to the Strava
-	 *            API
+	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An instance of the club services
 	 * @throws UnauthorizedException
 	 *             If the token used to create the service is invalid
@@ -58,8 +56,7 @@ public class GearServiceImpl extends StravaServiceImpl implements GearService {
 
 	/**
 	 * <p>
-	 * Private constructor ensures that the only way to get an instance is via
-	 * the {@link #instance(Token)} method
+	 * Private constructor ensures that the only way to get an instance is via the {@link #instance(Token)} method
 	 * </p>
 	 *
 	 * @param token
@@ -83,6 +80,11 @@ public class GearServiceImpl extends StravaServiceImpl implements GearService {
 	 */
 	@Override
 	public StravaGear getGear(final String gearId) {
+		// If the id is null, return null
+		if (gearId == null) {
+			return null;
+		}
+
 		// Attempt to get the gear from cache
 		StravaGear gear = this.gearCache.get(gearId);
 		if ((gear != null) && (gear.getResourceState() != StravaResourceState.META)) {

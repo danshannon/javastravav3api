@@ -66,6 +66,10 @@ public class RouteServiceImpl extends StravaServiceImpl implements RouteService 
 
 	@Override
 	public StravaRoute getRoute(Integer routeId) {
+		if (routeId == null) {
+			return null;
+		}
+
 		try {
 			return this.api.getRoute(routeId);
 		} catch (final NotFoundException e) {

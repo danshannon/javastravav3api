@@ -86,6 +86,11 @@ public class RunningRaceServiceImpl extends StravaServiceImpl implements Running
 
 	@Override
 	public StravaRunningRace getRace(Integer id) {
+		// If the id is null, return null
+		if (id == null) {
+			return null;
+		}
+
 		try {
 			return this.api.getRace(id);
 		} catch (final NotFoundException e) {

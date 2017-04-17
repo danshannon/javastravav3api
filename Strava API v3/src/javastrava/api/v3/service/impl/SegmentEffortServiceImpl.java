@@ -21,18 +21,15 @@ import javastrava.util.PrivacyUtils;
 public class SegmentEffortServiceImpl extends StravaServiceImpl implements SegmentEffortService {
 	/**
 	 * <p>
-	 * Returns an instance of {@link SegmentEffortService segment effort
-	 * services}
+	 * Returns an instance of {@link SegmentEffortService segment effort services}
 	 * </p>
 	 *
 	 * <p>
-	 * Instances are cached so that if 2 requests are made for the same token,
-	 * the same instance is returned
+	 * Instances are cached so that if 2 requests are made for the same token, the same instance is returned
 	 * </p>
 	 *
 	 * @param token
-	 *            The Strava access token to be used in requests to the Strava
-	 *            API
+	 *            The Strava access token to be used in requests to the Strava API
 	 * @return An instance of the segment effort services
 	 */
 	public static SegmentEffortService instance(final Token token) {
@@ -54,13 +51,11 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 
 	/**
 	 * <p>
-	 * Private constructor ensures that the only way to get an instance is by
-	 * using {@link #instance(Token)} with a valid access token.
+	 * Private constructor ensures that the only way to get an instance is by using {@link #instance(Token)} with a valid access token.
 	 * </p>
 	 *
 	 * @param token
-	 *            The access token to be used for authentication to the Strava
-	 *            API
+	 *            The access token to be used for authentication to the Strava API
 	 */
 	private SegmentEffortServiceImpl(final Token token) {
 		super(token);
@@ -80,6 +75,11 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 	 */
 	@Override
 	public StravaSegmentEffort getSegmentEffort(final Long segmentEffortId) {
+		// If id is null, return null
+		if (segmentEffortId == null) {
+			return null;
+		}
+
 		// Try to get the effort from cache
 		StravaSegmentEffort effort = this.effortCache.get(segmentEffortId);
 		if ((effort != null) && (effort.getResourceState() != StravaResourceState.META)) {
@@ -99,8 +99,7 @@ public class SegmentEffortServiceImpl extends StravaServiceImpl implements Segme
 		// TODO This is a workaround for issue javastrava-api #78
 		// See https://github.com/danshannon/javastravav3api/issues/78
 		if (effort.getResourceState() == StravaResourceState.DETAILED) {
-			final StravaSegment segment = this.getToken().getService(SegmentService.class)
-					.getSegment(effort.getSegment().getId());
+			final StravaSegment segment = this.getToken().getService(SegmentService.class).getSegment(effort.getSegment().getId());
 			if (segment.getResourceState() == StravaResourceState.PRIVATE) {
 				effort = PrivacyUtils.privateSegmentEffort(segmentEffortId);
 			}

@@ -70,6 +70,11 @@ public class ChallengeServiceImpl extends StravaServiceImpl implements Challenge
 
 	@Override
 	public StravaChallenge getChallenge(Integer id) {
+		// If the id is null, return null
+		if (id == null) {
+			return null;
+		}
+
 		// Attempt to get the challenge from the cache
 		StravaChallenge challenge = this.cache.get(id);
 		if (challenge != null) {

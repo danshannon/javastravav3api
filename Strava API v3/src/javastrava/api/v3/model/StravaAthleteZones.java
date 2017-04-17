@@ -98,4 +98,9 @@ public class StravaAthleteZones implements StravaEntity {
 	public StravaResourceState getResourceState() {
 		return StravaResourceState.DETAILED;
 	}
+
+	@Override
+	public String toString() {
+		return "StravaAthleteZones [heartRate=" + this.heartRate + ", power=" + this.power + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
 }

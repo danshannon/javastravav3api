@@ -87,11 +87,13 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 		this.effortCache.removeAll();
 	}
 
-	/**
-	 * @see javastrava.api.v3.service.AthleteService#getAthlete(java.lang.Integer)
-	 */
 	@Override
 	public StravaAthlete getAthlete(final Integer id) {
+		// If the id is null, return null
+		if (id == null) {
+			return null;
+		}
+
 		// Attempt to get the athlete from the cache
 		StravaAthlete athlete = this.athleteCache.get(id);
 		if ((athlete != null) && (athlete.getResourceState() != StravaResourceState.META)) {
@@ -414,6 +416,11 @@ public class AthleteServiceImpl extends StravaServiceImpl implements AthleteServ
 	 */
 	@Override
 	public StravaStatistics statistics(final Integer id) {
+		// If the id is null, return null
+		if (id == null) {
+			return null;
+		}
+
 		try {
 			return this.api.statistics(id);
 		} catch (final NotFoundException e) {

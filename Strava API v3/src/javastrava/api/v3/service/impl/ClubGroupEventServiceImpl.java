@@ -114,6 +114,10 @@ public class ClubGroupEventServiceImpl extends StravaServiceImpl implements Club
 
 	@Override
 	public StravaClubEvent getEvent(Integer id) {
+		// If the id is null, return null
+		if (id == null) {
+			return null;
+		}
 
 		// Attempt to get the event from the cache
 		final StravaClubEvent cachedEvent = this.clubEventCache.get(id);

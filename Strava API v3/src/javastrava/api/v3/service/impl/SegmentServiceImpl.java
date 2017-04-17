@@ -229,6 +229,11 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 */
 	@Override
 	public StravaSegment getSegment(final Integer segmentId) {
+		// If the id is null, return null
+		if (segmentId == null) {
+			return null;
+		}
+
 		// Try to get the segment from cache
 		StravaSegment segment = this.segmentCache.get(segmentId);
 		if ((segment != null) && (segment.getResourceState() != StravaResourceState.META)) {
@@ -756,6 +761,11 @@ public class SegmentServiceImpl extends StravaServiceImpl implements SegmentServ
 	 */
 	@Override
 	public StravaSegment starSegment(Integer segmentId, Boolean starred) {
+		// If the id is null, return null
+		if (segmentId == null) {
+			return null;
+		}
+
 		try {
 			return this.api.starSegment(segmentId, starred);
 		} catch (final UnauthorizedException e) {

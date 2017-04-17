@@ -374,6 +374,10 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 	 */
 	@Override
 	public StravaActivity getActivity(final Long activityId, final Boolean includeAllEfforts) {
+		if (activityId == null) {
+			return null;
+		}
+
 		// Attempt to get the activity from cache
 		final StravaActivity cachedActivity = this.activityCache.get(activityId);
 		if (cachedActivity != null) {

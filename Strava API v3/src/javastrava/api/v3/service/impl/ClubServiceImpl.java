@@ -99,6 +99,11 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 	 */
 	@Override
 	public StravaClub getClub(final Integer id) {
+		// If the id is null, return null
+		if (id == null) {
+			return null;
+		}
+
 		// Attempt to get the club from the cache
 		StravaClub club = this.clubCache.get(id);
 		if ((club != null) && (club.getResourceState() != StravaResourceState.META)) {
@@ -411,8 +416,9 @@ public class ClubServiceImpl extends StravaServiceImpl implements ClubService {
 		}
 
 		// Check that the club exists
-		final StravaClub club = this.api.getClub(id);
-		if (club == null) {
+		try {
+			this.api.getClub(id);
+		} catch (final NotFoundException e) {
 			return null;
 		}
 
