@@ -1,12 +1,14 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * Response returned by the club event join/leave endpoints
  *
  * @author Dan Shannon
  *
  */
-public class StravaClubEventJoinResponse {
+public class StravaClubEventJoinResponse implements StravaEntity {
 	/**
 	 * Indicates whether the authenticated athlete has joined the event
 	 */
@@ -60,6 +62,11 @@ public class StravaClubEventJoinResponse {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 
 }

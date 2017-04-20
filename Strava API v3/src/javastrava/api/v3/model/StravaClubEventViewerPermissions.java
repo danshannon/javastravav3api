@@ -1,5 +1,7 @@
 package javastrava.api.v3.model;
 
+import javastrava.api.v3.model.reference.StravaResourceState;
+
 /**
  * <p>
  * Permissions the authenticated athlete has on a club event
@@ -8,7 +10,7 @@ package javastrava.api.v3.model;
  * @author Dan Shannon
  *
  */
-public class StravaClubEventViewerPermissions {
+public class StravaClubEventViewerPermissions implements StravaEntity {
 	private Boolean edit;
 
 	/**
@@ -59,6 +61,11 @@ public class StravaClubEventViewerPermissions {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
 	}
 
 }
