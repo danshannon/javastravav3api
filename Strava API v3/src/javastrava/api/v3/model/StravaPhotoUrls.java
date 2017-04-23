@@ -77,6 +77,11 @@ public class StravaPhotoUrls implements StravaEntity {
 		return true;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the url0
 	 */
@@ -141,10 +146,5 @@ public class StravaPhotoUrls implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaPhotoUrls [url0=" + this.url0 + ", url100=" + this.url100 + ", url600=" + this.url600 + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

@@ -88,6 +88,18 @@ public class StravaActivityPhotos implements StravaEntity {
 		return this.primary;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
+	/**
+	 * @return the usePrimaryPhoto
+	 */
+	public String getUsePrimaryPhoto() {
+		return this.usePrimaryPhoto;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -119,18 +131,6 @@ public class StravaActivityPhotos implements StravaEntity {
 		this.primary = primary;
 	}
 
-	@Override
-	public String toString() {
-		return "StravaActivityPhotos [primary=" + this.primary + ", count=" + this.count + ", usePrimaryPhoto=" + this.usePrimaryPhoto + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	/**
-	 * @return the usePrimaryPhoto
-	 */
-	public String getUsePrimaryPhoto() {
-		return this.usePrimaryPhoto;
-	}
-
 	/**
 	 * @param usePrimaryPhoto
 	 *            the usePrimaryPhoto to set
@@ -140,8 +140,8 @@ public class StravaActivityPhotos implements StravaEntity {
 	}
 
 	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
+	public String toString() {
+		return "StravaActivityPhotos [primary=" + this.primary + ", count=" + this.count + ", usePrimaryPhoto=" + this.usePrimaryPhoto + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 }

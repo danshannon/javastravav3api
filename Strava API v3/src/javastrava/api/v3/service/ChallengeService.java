@@ -53,14 +53,6 @@ public interface ChallengeService extends StravaService {
 	public void joinChallenge(Integer id);
 
 	/**
-	 * Leave a challenge on behalf of the authenticated user. An access token with write permissions is required.
-	 *
-	 * @param id
-	 *            The id of the challenge to leave
-	 */
-	public void leaveChallenge(Integer id);
-
-	/**
 	 * Join a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
 	 *
 	 * @param id
@@ -68,6 +60,14 @@ public interface ChallengeService extends StravaService {
 	 * @return CompletableFuture which will give access to the challenge
 	 */
 	public CompletableFuture<Void> joinChallengeAsync(Integer id);
+
+	/**
+	 * Leave a challenge on behalf of the authenticated user. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to leave
+	 */
+	public void leaveChallenge(Integer id);
 
 	/**
 	 * Leave a challenge on behalf of the authenticated user. An access token with write permissions is required.

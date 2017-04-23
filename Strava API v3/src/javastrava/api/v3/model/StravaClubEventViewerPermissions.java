@@ -13,34 +13,6 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 public class StravaClubEventViewerPermissions implements StravaEntity {
 	private Boolean edit;
 
-	/**
-	 * @return The edit permission
-	 */
-	public Boolean getEdit() {
-		return this.edit;
-	}
-
-	/**
-	 * @param edit
-	 *            The edit permission to set
-	 */
-	public void setEdit(Boolean edit) {
-		this.edit = edit;
-	}
-
-	@Override
-	public String toString() {
-		return "StravaClubEventViewerPermissions [edit=" + this.edit + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.edit == null) ? 0 : this.edit.hashCode());
-		return result;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -63,9 +35,37 @@ public class StravaClubEventViewerPermissions implements StravaEntity {
 		return true;
 	}
 
+	/**
+	 * @return The edit permission
+	 */
+	public Boolean getEdit() {
+		return this.edit;
+	}
+
 	@Override
 	public StravaResourceState getResourceState() {
 		return StravaResourceState.DETAILED;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.edit == null) ? 0 : this.edit.hashCode());
+		return result;
+	}
+
+	/**
+	 * @param edit
+	 *            The edit permission to set
+	 */
+	public void setEdit(Boolean edit) {
+		this.edit = edit;
+	}
+
+	@Override
+	public String toString() {
+		return "StravaClubEventViewerPermissions [edit=" + this.edit + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 }

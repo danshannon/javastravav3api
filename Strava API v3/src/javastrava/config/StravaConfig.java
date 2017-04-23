@@ -52,15 +52,6 @@ public class StravaConfig {
 	public static final String DATE_FORMAT = string("strava.date_format"); //$NON-NLS-1$
 
 	/**
-	 * Request rate limit every 15 minutes (default is 600)
-	 */
-	public static int	RATE_LIMIT			= integer("strava.rate_limit").intValue();			//$NON-NLS-1$
-	/**
-	 * Daily request rate limit (default is 30,000)
-	 */
-	public static int	RATE_LIMIT_DAILY	= integer("strava.rate_limit_daily").intValue();	//$NON-NLS-1$
-
-	/**
 	 * The percentage of request limits that, if exceeded, should log a warning
 	 */
 	public static final int WARN_AT_REQUEST_LIMIT_PERCENT = integer("strava.warn_at_request_limit_percent").intValue(); //$NON-NLS-1$
@@ -71,6 +62,15 @@ public class StravaConfig {
 	public static final int PAGING_LIST_ALL_PARALLELISM = integer("strava.paging_list_all_parallelism").intValue(); //$NON-NLS-1$
 
 	/**
+	 * @param key
+	 *            The name of the property to return
+	 * @return Integer value of the property from the resource bundle
+	 */
+	public static Integer integer(final String key) {
+		return Integer.valueOf(RESOURCE_BUNDLE.getString(key));
+	}
+
+	/**
 	 * Get the value of a String property
 	 * 
 	 * @param property
@@ -79,15 +79,6 @@ public class StravaConfig {
 	 */
 	public static String string(final String property) {
 		return RESOURCE_BUNDLE.getString(property);
-	}
-
-	/**
-	 * @param key
-	 *            The name of the property to return
-	 * @return Integer value of the property from the resource bundle
-	 */
-	public static Integer integer(final String key) {
-		return Integer.valueOf(RESOURCE_BUNDLE.getString(key));
 	}
 
 }

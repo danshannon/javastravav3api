@@ -35,6 +35,64 @@ import javastrava.util.Paging;
 public interface ClubGroupEventService extends StravaService {
 	/**
 	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event to be deleted
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete or the token does not have permission to delete the event
+	 */
+	public void deleteEvent(Integer id) throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param event
+	 *            The event to be deleted
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete or the token does not have permission to delete the event
+	 */
+	public void deleteEvent(StravaClubEvent event) throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event to be deleted
+	 * @return Callback that can be used later to get results
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete or the token does not have permission to delete the event
+	 */
+	public CompletableFuture<Void> deleteEventAsync(Integer id) throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param event
+	 *            The event to be deleted
+	 * @return Callback that can be used later to get results
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete or the token does not have permission to delete the event
+	 */
+	public CompletableFuture<Void> deleteEventAsync(StravaClubEvent event) throws NotFoundException, UnauthorizedException;
+
+	/**
+	 * <p>
 	 * Returns a single group event summary representation.
 	 * </p>
 	 *
@@ -106,35 +164,6 @@ public interface ClubGroupEventService extends StravaService {
 
 	/**
 	 * <p>
-	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
-	 * </p>
-	 *
-	 * <p>
-	 * Pagination is supported.
-	 * </p>
-	 *
-	 * <p>
-	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
-	 * </p>
-	 *
-	 * <p>
-	 * Returns <code>null</code> if the event does not exist
-	 * </p>
-	 *
-	 * <p>
-	 * Returns an empty list if the event is private or belongs to a club that is private that the authenticated athlete is not a member of
-	 * </p>
-	 *
-	 * @param eventId
-	 *            The identifier of the event for which athletes should be listed
-	 * @param pagingInstruction
-	 *            Paging instruction
-	 * @return Array of athletes who have joined the event
-	 */
-	public List<StravaAthlete> listEventJoinedAthletes(Integer eventId, Paging pagingInstruction);
-
-	/**
-	 * <p>
 	 * Retrieve summary information about ALL athletes joined a specific group event, or the upcoming occurrence for recurring events, regardless of how many there are.
 	 * </p>
 	 *
@@ -159,25 +188,6 @@ public interface ClubGroupEventService extends StravaService {
 	 * @return Array of athletes who have joined the event
 	 */
 	public List<StravaAthlete> listAllEventJoinedAthletes(Integer eventId);
-
-	/**
-	 * <p>
-	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
-	 * </p>
-	 * <p>
-	 * Pagination is supported.
-	 * </p>
-	 * <p>
-	 * Returns a completable future which can be used later to return an array of athletes summary representations with athletes who the authenticated athlete is following first.
-	 * </p>
-	 *
-	 * @param eventId
-	 *            The identifier of the event for which athletes should be listed
-	 * @param pagingInstruction
-	 *            Paging instruction
-	 * @return Array of athletes who have joined the event
-	 */
-	public CompletableFuture<List<StravaAthlete>> listEventJoinedAthletesAsync(Integer eventId, Paging pagingInstruction);
 
 	/**
 	 * <p>
@@ -208,59 +218,49 @@ public interface ClubGroupEventService extends StravaService {
 
 	/**
 	 * <p>
-	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
 	 * </p>
 	 *
-	 * @param id
-	 *            The identifier of the event to be deleted
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 * @throws UnauthorizedException
-	 *             If the authenticated athlete or the token does not have permission to delete the event
+	 * <p>
+	 * Pagination is supported.
+	 * </p>
+	 *
+	 * <p>
+	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
+	 * </p>
+	 *
+	 * <p>
+	 * Returns <code>null</code> if the event does not exist
+	 * </p>
+	 *
+	 * <p>
+	 * Returns an empty list if the event is private or belongs to a club that is private that the authenticated athlete is not a member of
+	 * </p>
+	 *
+	 * @param eventId
+	 *            The identifier of the event for which athletes should be listed
+	 * @param pagingInstruction
+	 *            Paging instruction
+	 * @return Array of athletes who have joined the event
 	 */
-	public void deleteEvent(Integer id) throws NotFoundException, UnauthorizedException;
+	public List<StravaAthlete> listEventJoinedAthletes(Integer eventId, Paging pagingInstruction);
 
 	/**
 	 * <p>
-	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
 	 * </p>
-	 *
-	 * @param event
-	 *            The event to be deleted
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 * @throws UnauthorizedException
-	 *             If the authenticated athlete or the token does not have permission to delete the event
-	 */
-	public void deleteEvent(StravaClubEvent event) throws NotFoundException, UnauthorizedException;
-
-	/**
 	 * <p>
-	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * Pagination is supported.
 	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the event to be deleted
-	 * @return Callback that can be used later to get results
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 * @throws UnauthorizedException
-	 *             If the authenticated athlete or the token does not have permission to delete the event
-	 */
-	public CompletableFuture<Void> deleteEventAsync(Integer id) throws NotFoundException, UnauthorizedException;
-
-	/**
 	 * <p>
-	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * Returns a completable future which can be used later to return an array of athletes summary representations with athletes who the authenticated athlete is following first.
 	 * </p>
 	 *
-	 * @param event
-	 *            The event to be deleted
-	 * @return Callback that can be used later to get results
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 * @throws UnauthorizedException
-	 *             If the authenticated athlete or the token does not have permission to delete the event
+	 * @param eventId
+	 *            The identifier of the event for which athletes should be listed
+	 * @param pagingInstruction
+	 *            Paging instruction
+	 * @return Array of athletes who have joined the event
 	 */
-	public CompletableFuture<Void> deleteEventAsync(StravaClubEvent event) throws NotFoundException, UnauthorizedException;
+	public CompletableFuture<List<StravaAthlete>> listEventJoinedAthletesAsync(Integer eventId, Paging pagingInstruction);
 }

@@ -261,10 +261,24 @@ public class StravaPhoto implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @return the activityId
+	 */
+	public Long getActivityId() {
+		return this.activityId;
+	}
+
+	/**
 	 * @return the activityName
 	 */
 	public String getActivityName() {
 		return this.activityName;
+	}
+
+	/**
+	 * @return the athleteId
+	 */
+	public Integer getAthleteId() {
+		return this.athleteId;
 	}
 
 	/**
@@ -286,6 +300,13 @@ public class StravaPhoto implements StravaCacheableEntity<Integer> {
 	 */
 	public LocalDateTime getCreatedAtLocal() {
 		return this.createdAtLocal;
+	}
+
+	/**
+	 * @return the defaultPhoto
+	 */
+	public Boolean getDefaultPhoto() {
+		return this.defaultPhoto;
 	}
 
 	/**
@@ -316,6 +337,13 @@ public class StravaPhoto implements StravaCacheableEntity<Integer> {
 	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
+	}
+
+	/**
+	 * @return the sizes
+	 */
+	public StravaPhotoSizes getSizes() {
+		return this.sizes;
 	}
 
 	/**
@@ -360,6 +388,13 @@ public class StravaPhoto implements StravaCacheableEntity<Integer> {
 		return this.urls;
 	}
 
+	/**
+	 * @return the usePrimaryPhoto
+	 */
+	public String getUsePrimaryPhoto() {
+		return this.usePrimaryPhoto;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -392,11 +427,27 @@ public class StravaPhoto implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @param activityId
+	 *            the activityId to set
+	 */
+	public void setActivityId(Long activityId) {
+		this.activityId = activityId;
+	}
+
+	/**
 	 * @param activityName
 	 *            the activityName to set
 	 */
 	public void setActivityName(final String activityName) {
 		this.activityName = activityName;
+	}
+
+	/**
+	 * @param athleteId
+	 *            the athleteId to set
+	 */
+	public void setAthleteId(Integer athleteId) {
+		this.athleteId = athleteId;
 	}
 
 	/**
@@ -421,6 +472,14 @@ public class StravaPhoto implements StravaCacheableEntity<Integer> {
 	 */
 	public void setCreatedAtLocal(final LocalDateTime createdAtLocal) {
 		this.createdAtLocal = createdAtLocal;
+	}
+
+	/**
+	 * @param defaultPhoto
+	 *            the defaultPhoto to set
+	 */
+	public void setDefaultPhoto(Boolean defaultPhoto) {
+		this.defaultPhoto = defaultPhoto;
 	}
 
 	/**
@@ -453,6 +512,14 @@ public class StravaPhoto implements StravaCacheableEntity<Integer> {
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
+	}
+
+	/**
+	 * @param sizes
+	 *            the sizes to set
+	 */
+	public void setSizes(StravaPhotoSizes sizes) {
+		this.sizes = sizes;
 	}
 
 	/**
@@ -503,6 +570,14 @@ public class StravaPhoto implements StravaCacheableEntity<Integer> {
 		this.urls = urls;
 	}
 
+	/**
+	 * @param usePrimaryPhoto
+	 *            the usePrimaryPhoto to set
+	 */
+	public void setUsePrimaryPhoto(String usePrimaryPhoto) {
+		this.usePrimaryPhoto = usePrimaryPhoto;
+	}
+
 	@Override
 	public String toString() {
 		return "StravaPhoto [id=" + this.id + ", activityId=" + this.activityId + ", resourceState=" + this.resourceState + ", ref=" + this.ref + ", uid=" + this.uid + ", caption=" + this.caption //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
@@ -511,80 +586,5 @@ public class StravaPhoto implements StravaCacheableEntity<Integer> {
 				+ this.uniqueId + ", sizes=" + this.sizes //$NON-NLS-1$
 				+ ", activityName=" + this.activityName + ", createdAtLocal=" + this.createdAtLocal + ", athleteId=" + this.athleteId + ", defaultPhoto=" + this.defaultPhoto + ", usePrimaryPhoto=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 				+ this.usePrimaryPhoto + "]"; //$NON-NLS-1$
-	}
-
-	/**
-	 * @return the sizes
-	 */
-	public StravaPhotoSizes getSizes() {
-		return this.sizes;
-	}
-
-	/**
-	 * @param sizes
-	 *            the sizes to set
-	 */
-	public void setSizes(StravaPhotoSizes sizes) {
-		this.sizes = sizes;
-	}
-
-	/**
-	 * @return the athleteId
-	 */
-	public Integer getAthleteId() {
-		return this.athleteId;
-	}
-
-	/**
-	 * @param athleteId
-	 *            the athleteId to set
-	 */
-	public void setAthleteId(Integer athleteId) {
-		this.athleteId = athleteId;
-	}
-
-	/**
-	 * @return the defaultPhoto
-	 */
-	public Boolean getDefaultPhoto() {
-		return this.defaultPhoto;
-	}
-
-	/**
-	 * @param defaultPhoto
-	 *            the defaultPhoto to set
-	 */
-	public void setDefaultPhoto(Boolean defaultPhoto) {
-		this.defaultPhoto = defaultPhoto;
-	}
-
-	/**
-	 * @param activityId
-	 *            the activityId to set
-	 */
-	public void setActivityId(Long activityId) {
-		this.activityId = activityId;
-	}
-
-	/**
-	 * @return the activityId
-	 */
-	public Long getActivityId() {
-		return this.activityId;
-	}
-
-	/**
-	 * @return the usePrimaryPhoto
-	 */
-	public String getUsePrimaryPhoto() {
-		return this.usePrimaryPhoto;
-	}
-
-	/**
-	 * @param usePrimaryPhoto
-	 *            the usePrimaryPhoto to set
-	 */
-	public void setUsePrimaryPhoto(String usePrimaryPhoto) {
-		this.usePrimaryPhoto = usePrimaryPhoto;
 	}
 }

@@ -293,6 +293,11 @@ public class StravaSegmentLeaderboardEntry implements StravaEntity {
 		return this.rank;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the startDate
 	 */
@@ -466,10 +471,5 @@ public class StravaSegmentLeaderboardEntry implements StravaEntity {
 				+ this.activityId + ", effortId=" + this.effortId + ", rank=" + this.rank + ", athleteProfile=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ this.athleteProfile + ", neighborhoodIndex=" //$NON-NLS-1$
 				+ this.neighborhoodIndex + "]"; //$NON-NLS-1$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

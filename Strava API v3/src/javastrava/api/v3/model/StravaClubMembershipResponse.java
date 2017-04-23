@@ -88,6 +88,11 @@ public class StravaClubMembershipResponse implements StravaEntity {
 		return this.membership;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the success
 	 */
@@ -141,10 +146,5 @@ public class StravaClubMembershipResponse implements StravaEntity {
 	public String toString() {
 		return "StravaClubMembershipResponse [success=" + this.success + ", active=" + this.active + ", membership=" + this.membership //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ "]"; //$NON-NLS-1$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

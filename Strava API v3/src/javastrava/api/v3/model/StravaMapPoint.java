@@ -87,6 +87,11 @@ public class StravaMapPoint implements StravaEntity {
 		return this.longitude;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -121,11 +126,6 @@ public class StravaMapPoint implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaMapPoint [latitude=" + this.latitude + ", longitude=" + this.longitude + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 
 }

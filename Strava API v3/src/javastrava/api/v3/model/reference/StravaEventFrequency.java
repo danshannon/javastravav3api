@@ -57,19 +57,19 @@ public enum StravaEventFrequency implements StravaReferenceType<String> {
 	}
 
 	/**
-	 * @return the id
-	 */
-	@Override
-	public String getId() {
-		return this.id;
-	}
-
-	/**
 	 * @return the description
 	 */
 	@Override
 	public String getDescription() {
 		return this.description;
+	}
+
+	/**
+	 * @return the id
+	 */
+	@Override
+	public String getId() {
+		return this.id;
 	}
 
 	/**

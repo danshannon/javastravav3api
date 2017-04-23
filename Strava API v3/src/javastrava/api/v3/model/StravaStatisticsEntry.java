@@ -145,6 +145,11 @@ public class StravaStatisticsEntry implements StravaEntity {
 		return this.movingTime;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -216,10 +221,5 @@ public class StravaStatisticsEntry implements StravaEntity {
 	public String toString() {
 		return "StravaStatisticsEntry [count=" + this.count + ", distance=" + this.distance + ", movingTime=" + this.movingTime + ", elapsedTime=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.elapsedTime + ", elevationGain=" + this.elevationGain + ", achievementCount=" + this.achievementCount + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

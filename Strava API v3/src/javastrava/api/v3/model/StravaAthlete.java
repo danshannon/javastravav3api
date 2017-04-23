@@ -576,6 +576,13 @@ public class StravaAthlete implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return this.username;
+	}
+
+	/**
 	 * @return the weight
 	 */
 	public Float getWeight() {
@@ -849,6 +856,14 @@ public class StravaAthlete implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @param username
+	 *            the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
 	 * @param weight
 	 *            the weight to set
 	 */
@@ -864,20 +879,5 @@ public class StravaAthlete implements StravaCacheableEntity<Integer> {
 				+ this.followerCount + ", friendCount=" + this.friendCount + ", mutualFriendCount=" + this.mutualFriendCount + ", datePreference=" + this.datePreference + ", measurementPreference=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.measurementPreference + ", email=" + this.email + ", ftp=" + this.ftp + ", clubs=" + this.clubs + ", bikes=" + this.bikes + ", shoes=" + this.shoes + ", weight=" + this.weight //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 				+ ", badgeTypeId=" + this.badgeTypeId + ", athleteType=" + this.athleteType + ", username=" + this.username + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return this.username;
-	}
-
-	/**
-	 * @param username
-	 *            the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
 	}
 }

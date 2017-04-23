@@ -78,6 +78,11 @@ public class StravaAchievement implements StravaEntity {
 		return this.rank;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the type
 	 */
@@ -135,10 +140,5 @@ public class StravaAchievement implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaAchievement [typeId=" + this.typeId + ", type=" + this.type + ", rank=" + this.rank + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

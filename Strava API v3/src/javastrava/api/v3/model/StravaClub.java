@@ -137,21 +137,6 @@ public class StravaClub implements StravaCacheableEntity<Integer> {
 	private String coverPhotoSmall;
 
 	/**
-	 * @return the verified
-	 */
-	public Boolean getVerified() {
-		return this.verified;
-	}
-
-	/**
-	 * @param verified
-	 *            the verified to set
-	 */
-	public void setVerified(Boolean verified) {
-		this.verified = verified;
-	}
-
-	/**
 	 * No args constructor
 	 */
 	public StravaClub() {
@@ -352,6 +337,20 @@ public class StravaClub implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @return the coverPhoto
+	 */
+	public String getCoverPhoto() {
+		return this.coverPhoto;
+	}
+
+	/**
+	 * @return the coverPhotoSmall
+	 */
+	public String getCoverPhotoSmall() {
+		return this.coverPhotoSmall;
+	}
+
+	/**
 	 * @return the description
 	 */
 	public String getDescription() {
@@ -409,6 +408,13 @@ public class StravaClub implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @return the postCount
+	 */
+	public Integer getPostCount() {
+		return this.postCount;
+	}
+
+	/**
 	 * @return the privateClub
 	 */
 	public Boolean getPrivateClub() {
@@ -449,6 +455,20 @@ public class StravaClub implements StravaCacheableEntity<Integer> {
 	 */
 	public String getState() {
 		return this.state;
+	}
+
+	/**
+	 * @return The vanity URL for the club
+	 */
+	public String getUrl() {
+		return this.url;
+	}
+
+	/**
+	 * @return the verified
+	 */
+	public Boolean getVerified() {
+		return this.verified;
 	}
 
 	/*
@@ -519,6 +539,22 @@ public class StravaClub implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @param coverPhoto
+	 *            the coverPhoto to set
+	 */
+	public void setCoverPhoto(String coverPhoto) {
+		this.coverPhoto = coverPhoto;
+	}
+
+	/**
+	 * @param coverPhotoSmall
+	 *            the coverPhotoSmall to set
+	 */
+	public void setCoverPhotoSmall(String coverPhotoSmall) {
+		this.coverPhotoSmall = coverPhotoSmall;
+	}
+
+	/**
 	 * @param description
 	 *            the description to set
 	 */
@@ -583,6 +619,14 @@ public class StravaClub implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @param postCount
+	 *            the postCount to set
+	 */
+	public void setPostCount(Integer postCount) {
+		this.postCount = postCount;
+	}
+
+	/**
 	 * @param privateClub
 	 *            the privateClub to set
 	 */
@@ -630,22 +674,6 @@ public class StravaClub implements StravaCacheableEntity<Integer> {
 		this.state = state;
 	}
 
-	@Override
-	public String toString() {
-		return "StravaClub [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", profileMedium=" + this.profileMedium + ", profile=" + this.profile + ", description=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-				+ this.description + ", clubType=" + this.clubType + ", sportType=" + this.sportType + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", privateClub=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-				+ this.privateClub + ", memberCount=" + this.memberCount + ", featured=" + this.featured + ", membership=" + this.membership + ", admin=" + this.admin + ", owner=" + this.owner //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ ", followingCount=" + this.followingCount + ", url=" + this.url + ", verified=" + this.verified + ", postCount=" + this.postCount + ", coverPhoto=" + this.coverPhoto //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				+ ", coverPhotoSmall=" + this.coverPhotoSmall + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	/**
-	 * @return The vanity URL for the club
-	 */
-	public String getUrl() {
-		return this.url;
-	}
-
 	/**
 	 * @param url
 	 *            The Vanity URL for the club
@@ -655,47 +683,19 @@ public class StravaClub implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @return the postCount
+	 * @param verified
+	 *            the verified to set
 	 */
-	public Integer getPostCount() {
-		return this.postCount;
+	public void setVerified(Boolean verified) {
+		this.verified = verified;
 	}
 
-	/**
-	 * @param postCount
-	 *            the postCount to set
-	 */
-	public void setPostCount(Integer postCount) {
-		this.postCount = postCount;
-	}
-
-	/**
-	 * @return the coverPhoto
-	 */
-	public String getCoverPhoto() {
-		return this.coverPhoto;
-	}
-
-	/**
-	 * @param coverPhoto
-	 *            the coverPhoto to set
-	 */
-	public void setCoverPhoto(String coverPhoto) {
-		this.coverPhoto = coverPhoto;
-	}
-
-	/**
-	 * @return the coverPhotoSmall
-	 */
-	public String getCoverPhotoSmall() {
-		return this.coverPhotoSmall;
-	}
-
-	/**
-	 * @param coverPhotoSmall
-	 *            the coverPhotoSmall to set
-	 */
-	public void setCoverPhotoSmall(String coverPhotoSmall) {
-		this.coverPhotoSmall = coverPhotoSmall;
+	@Override
+	public String toString() {
+		return "StravaClub [id=" + this.id + ", resourceState=" + this.resourceState + ", name=" + this.name + ", profileMedium=" + this.profileMedium + ", profile=" + this.profile + ", description=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ this.description + ", clubType=" + this.clubType + ", sportType=" + this.sportType + ", city=" + this.city + ", state=" + this.state + ", country=" + this.country + ", privateClub=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+				+ this.privateClub + ", memberCount=" + this.memberCount + ", featured=" + this.featured + ", membership=" + this.membership + ", admin=" + this.admin + ", owner=" + this.owner //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", followingCount=" + this.followingCount + ", url=" + this.url + ", verified=" + this.verified + ", postCount=" + this.postCount + ", coverPhoto=" + this.coverPhoto //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				+ ", coverPhotoSmall=" + this.coverPhotoSmall + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

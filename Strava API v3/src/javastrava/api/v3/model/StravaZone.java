@@ -5,7 +5,7 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 /**
  * A zone e.g. for measuring athlete's heart rate zone
  *
- * @author DShannon
+ * @author Dan Shannon
  *
  */
 public class StravaZone implements StravaEntity {
@@ -26,18 +26,20 @@ public class StravaZone implements StravaEntity {
 		super();
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof StravaZone)) {
 			return false;
 		}
 		final StravaZone other = (StravaZone) obj;
@@ -72,7 +74,14 @@ public class StravaZone implements StravaEntity {
 		return this.min;
 	}
 
-	/**
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -100,17 +109,14 @@ public class StravaZone implements StravaEntity {
 		this.min = min;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "StravaZone [min=" + this.min + ", max=" + this.max + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 
 }

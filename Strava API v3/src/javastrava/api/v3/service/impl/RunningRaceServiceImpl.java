@@ -67,24 +67,6 @@ public class RunningRaceServiceImpl extends StravaServiceImpl implements Running
 	}
 
 	@Override
-	public List<StravaRunningRace> listRaces(Integer year) {
-		try {
-			return Arrays.asList(this.api.listRaces(year));
-		} catch (final NotFoundException e) {
-			return null;
-		} catch (final UnauthorizedException e) {
-			return new ArrayList<StravaRunningRace>();
-		}
-	}
-
-	@Override
-	public CompletableFuture<List<StravaRunningRace>> listRacesAsync(Integer year) {
-		return StravaServiceImpl.future(() -> {
-			return listRaces(year);
-		});
-	}
-
-	@Override
 	public StravaRunningRace getRace(Integer id) {
 		// If the id is null, return null
 		if (id == null) {
@@ -102,6 +84,24 @@ public class RunningRaceServiceImpl extends StravaServiceImpl implements Running
 	public CompletableFuture<StravaRunningRace> getRaceAsync(Integer id) {
 		return StravaServiceImpl.future(() -> {
 			return getRace(id);
+		});
+	}
+
+	@Override
+	public List<StravaRunningRace> listRaces(Integer year) {
+		try {
+			return Arrays.asList(this.api.listRaces(year));
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			return new ArrayList<StravaRunningRace>();
+		}
+	}
+
+	@Override
+	public CompletableFuture<List<StravaRunningRace>> listRacesAsync(Integer year) {
+		return StravaServiceImpl.future(() -> {
+			return listRaces(year);
 		});
 	}
 

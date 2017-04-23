@@ -132,6 +132,11 @@ public class StravaUploadResponse implements StravaEntity {
 		return this.id;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the status
 	 */
@@ -201,10 +206,5 @@ public class StravaUploadResponse implements StravaEntity {
 	public String toString() {
 		return "StravaUploadResponse [id=" + this.id + ", externalId=" + this.externalId + ", error=" + this.error + ", status=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.status + ", activityId=" + this.activityId + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

@@ -107,6 +107,13 @@ public class API {
 	}
 
 	/**
+	 * @return the authorisationAPI
+	 */
+	public static AuthorisationAPI getAuthorisationAPI() {
+		return authorisationAPI;
+	}
+
+	/**
 	 * <p>
 	 * Creates and returns a new API RestAdapter instance.
 	 * </p>
@@ -151,7 +158,13 @@ public class API {
 		}
 		return logLevel;
 	}
-
+	/**
+	 * @param authorisationAPI
+	 *            the authorisationAPI to set
+	 */
+	public static void setAuthorisationAPI(AuthorisationAPI authorisationAPI) {
+		API.authorisationAPI = authorisationAPI;
+	}
 	/**
 	 * API instance for access to activity data
 	 */
@@ -164,10 +177,12 @@ public class API {
 	 * API instance for access to club data
 	 */
 	private final ClubAPI			clubAPI;
+
 	/**
 	 * API instance for access to gear data
 	 */
 	private final GearAPI			gearAPI;
+
 	/**
 	 * API instance for access to running race data
 	 */
@@ -189,126 +204,15 @@ public class API {
 	private final ClubGroupEventAPI clubGroupEventAPI;
 
 	/**
-	 * @return the authorisationAPI
-	 */
-	public static AuthorisationAPI getAuthorisationAPI() {
-		return authorisationAPI;
-	}
-
-	/**
-	 * @param authorisationAPI
-	 *            the authorisationAPI to set
-	 */
-	public static void setAuthorisationAPI(AuthorisationAPI authorisationAPI) {
-		API.authorisationAPI = authorisationAPI;
-	}
-
-	/**
-	 * @return the activityAPI
-	 */
-	public ActivityAPI getActivityAPI() {
-		return this.activityAPI;
-	}
-
-	/**
-	 * @return the athleteAPI
-	 */
-	public AthleteAPI getAthleteAPI() {
-		return this.athleteAPI;
-	}
-
-	/**
-	 * @return the challengeAPI
-	 */
-	public ChallengeAPI getChallengeAPI() {
-		return this.challengeAPI;
-	}
-
-	/**
-	 * @return the clubAPI
-	 */
-	public ClubAPI getClubAPI() {
-		return this.clubAPI;
-	}
-
-	/**
-	 * @return the clubGroupEventAPI
-	 */
-	public ClubGroupEventAPI getClubGroupEventAPI() {
-		return this.clubGroupEventAPI;
-	}
-
-	/**
-	 * @return the gearAPI
-	 */
-	public GearAPI getGearAPI() {
-		return this.gearAPI;
-	}
-
-	/**
-	 * @return the routeAPI
-	 */
-	public RouteAPI getRouteAPI() {
-		return this.routeAPI;
-	}
-
-	/**
-	 * @return the runningRaceAPI
-	 */
-	public RunningRaceAPI getRunningRaceAPI() {
-		return this.runningRaceAPI;
-	}
-
-	/**
-	 * @return the segmentAPI
-	 */
-	public SegmentAPI getSegmentAPI() {
-		return this.segmentAPI;
-	}
-
-	/**
-	 * @return the effortAPI
-	 */
-	public SegmentEffortAPI getEffortAPI() {
-		return this.effortAPI;
-	}
-
-	/**
-	 * @return the streamAPI
-	 */
-	public StreamAPI getStreamAPI() {
-		return this.streamAPI;
-	}
-
-	/**
-	 * @return the tokenAPI
-	 */
-	public TokenAPI getTokenAPI() {
-		return this.tokenAPI;
-	}
-
-	/**
-	 * @return the uploadAPI
-	 */
-	public UploadAPI getUploadAPI() {
-		return this.uploadAPI;
-	}
-
-	/**
-	 * @return the webhookAPI
-	 */
-	public WebhookAPI getWebhookAPI() {
-		return this.webhookAPI;
-	}
-
-	/**
 	 * API instance for access to segment data
 	 */
 	private final SegmentAPI		segmentAPI;
+
 	/**
 	 * API instance for access to segment effort data
 	 */
 	private final SegmentEffortAPI	effortAPI;
+
 	/**
 	 * API instance for access to streams data
 	 */
@@ -478,7 +382,6 @@ public class API {
 		this.webhookAPI.createSubscription(clientId, clientSecret, objectType, aspectType, callbackURL, verifyToken, callback(future));
 		return future;
 	}
-
 	/**
 	 * @param accessToken
 	 *            The access token for which the application is revoking its access.
@@ -490,7 +393,6 @@ public class API {
 	public TokenResponse deauthoriseToken(final String accessToken) throws UnauthorizedException {
 		return this.tokenAPI.deauthoriseToken(accessToken);
 	}
-
 	/**
 	 * @param accessToken
 	 *            The access token for which the application is revoking its access.
@@ -570,6 +472,43 @@ public class API {
 	}
 
 	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event to be deleted
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete does not have permission to delete the event
+	 */
+	@DELETE("/group_events/{id}")
+	public void deleteEvent(@Path("id") Integer id) throws NotFoundException, UnauthorizedException {
+		this.clubGroupEventAPI.deleteEvent(id);
+	}
+
+	/**
+	 * <p>
+	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event to be deleted
+	 * @return Callback that can be used later to get results
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the authenticated athlete does not have permission to delete the event
+	 */
+	@DELETE("/group_events/{id}")
+	public StravaAPIFuture<Void> deleteEventAsync(@Path("id") Integer id) throws NotFoundException, UnauthorizedException {
+		final StravaAPIFuture<Void> future = new StravaAPIFuture<>();
+		this.clubGroupEventAPI.deleteEvent(id, callback(future));
+		return future;
+	}
+
+	/**
 	 * @param subscriptionId
 	 *            The id of the subscription to be deleted
 	 * @param clientId
@@ -615,6 +554,13 @@ public class API {
 	 */
 	public StravaActivity getActivity(final Long id, final Boolean includeAllEfforts) throws NotFoundException {
 		return this.activityAPI.getActivity(id, includeAllEfforts);
+	}
+
+	/**
+	 * @return the activityAPI
+	 */
+	public ActivityAPI getActivityAPI() {
+		return this.activityAPI;
 	}
 
 	/**
@@ -700,6 +646,13 @@ public class API {
 	}
 
 	/**
+	 * @return the athleteAPI
+	 */
+	public AthleteAPI getAthleteAPI() {
+		return this.athleteAPI;
+	}
+
+	/**
 	 * @param athleteId
 	 *            Athlete identifier
 	 * @return future The {@link CompletableFuture} on which to call future.complete() when the API returns
@@ -754,6 +707,49 @@ public class API {
 	}
 
 	/**
+	 * <p>
+	 * Retrieve a challenge
+	 * </p>
+	 *
+	 * <p>
+	 * Returns a detailed representation of a challenge
+	 * </p>
+	 *
+	 * @param id
+	 *            Identifier of the challenge
+	 * @return The challenge
+	 */
+	public StravaChallenge getChallenge(Integer id) {
+		return this.challengeAPI.getChallenge(id);
+	}
+
+	/**
+	 * @return the challengeAPI
+	 */
+	public ChallengeAPI getChallengeAPI() {
+		return this.challengeAPI;
+	}
+
+	/**
+	 * <p>
+	 * Retrieve a challenge
+	 * </p>
+	 *
+	 * <p>
+	 * Returns a detailed representation of a challenge
+	 * </p>
+	 *
+	 * @param id
+	 *            Identifier of the challenge
+	 * @return The {@link CompletableFuture} giving access to the returned challenge
+	 */
+	public StravaAPIFuture<StravaChallenge> getChallengeAsync(Integer id) {
+		final StravaAPIFuture<StravaChallenge> future = new StravaAPIFuture<>();
+		this.challengeAPI.getChallenge(id, callback(future));
+		return future;
+	}
+
+	/**
 	 * @param clubId
 	 *            Club identifier
 	 * @return Club details
@@ -766,23 +762,10 @@ public class API {
 	}
 
 	/**
-	 * <p>
-	 * List the administrators of a club
-	 * </p>
-	 *
-	 * @param clubId
-	 *            Identifier of the club whose admins should be listed
-	 * @param page
-	 *            Page number to be returned (default is 1)
-	 * @param perPage
-	 *            Page size to be returned (default is 50)
-	 * @return The {@link StravaAPIFuture} on which to call complete when ready; this will return the array of {@link StravaAthlete}s.
+	 * @return the clubAPI
 	 */
-	public StravaAPIFuture<StravaAthlete[]> getClubAdminsAsync(final Integer clubId, final Integer page, final Integer perPage) {
-		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<StravaAthlete[]>();
-		this.clubAPI.listClubAdmins(clubId, page, perPage, callback(future));
-		return future;
-
+	public ClubAPI getClubAPI() {
+		return this.clubAPI;
 	}
 
 	/**
@@ -797,6 +780,20 @@ public class API {
 		final StravaAPIFuture<StravaClub> future = new StravaAPIFuture<StravaClub>();
 		this.clubAPI.getClub(clubId, callback(future));
 		return future;
+	}
+
+	/**
+	 * @return the clubGroupEventAPI
+	 */
+	public ClubGroupEventAPI getClubGroupEventAPI() {
+		return this.clubGroupEventAPI;
+	}
+
+	/**
+	 * @return the effortAPI
+	 */
+	public SegmentEffortAPI getEffortAPI() {
+		return this.effortAPI;
 	}
 
 	/**
@@ -850,6 +847,53 @@ public class API {
 	}
 
 	/**
+	 * <p>
+	 * Returns a single group event summary representation.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return The group event
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 */
+	public StravaClubEvent getEvent(Integer id) throws NotFoundException {
+		return this.clubGroupEventAPI.getEvent(id);
+	}
+
+	/**
+	 * <p>
+	 * Returns a single group event summary representation.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return Future which can be called later to return the event
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 */
+	public StravaAPIFuture<StravaClubEvent> getEventAsync(Integer id) throws NotFoundException {
+		final StravaAPIFuture<StravaClubEvent> future = new StravaAPIFuture<>();
+		this.clubGroupEventAPI.getEvent(id, callback(future));
+		return future;
+	}
+
+	/**
+	 * <p>
+	 * Returns a single group event summary representation.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return The group event as a raw Retrofit response
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 */
+	public Response getEventRaw(Integer id) throws NotFoundException {
+		return this.clubGroupEventAPI.getEventRaw(id);
+	}
+
+	/**
 	 * @param gearId
 	 *            Gear identifier
 	 * @return Details of the identified gear
@@ -859,6 +903,13 @@ public class API {
 	 */
 	public StravaGear getGear(final String gearId) throws NotFoundException {
 		return this.gearAPI.getGear(gearId);
+	}
+
+	/**
+	 * @return the gearAPI
+	 */
+	public GearAPI getGearAPI() {
+		return this.gearAPI;
 	}
 
 	/**
@@ -912,6 +963,62 @@ public class API {
 	}
 
 	/**
+	 * <p>
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions. For raw data associated with a route see route streams.
+	 * </p>
+	 *
+	 * @param routeId
+	 *            The identifier of the route to retrieve
+	 * @return The route
+	 * @throws NotFoundException
+	 *             If the route does not exist
+	 * @throws BadRequestException
+	 *             If the id is not an integer
+	 * @throws UnauthorizedException
+	 *             If the route is private and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private}
+	 */
+	public StravaRoute getRoute(@Path("id") Integer routeId) throws NotFoundException, BadRequestException, UnauthorizedException {
+		return this.routeAPI.getRoute(routeId);
+	}
+
+	/**
+	 * @return the routeAPI
+	 */
+	public RouteAPI getRouteAPI() {
+		return this.routeAPI;
+	}
+
+	/**
+	 * <p>
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions. For raw data associated with a route see route streams.
+	 * </p>
+	 *
+	 * @param routeId
+	 *            The identifier of the route to retrieve
+	 * @return The route
+	 * @throws NotFoundException
+	 *             If the route does not exist
+	 * @throws BadRequestException
+	 *             If the id is not an integer
+	 * @throws UnauthorizedException
+	 *             If the route is private and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private}
+	 */
+	public StravaAPIFuture<StravaRoute> getRouteAsync(@Path("id") Integer routeId) throws NotFoundException, BadRequestException, UnauthorizedException {
+		final StravaAPIFuture<StravaRoute> future = new StravaAPIFuture<>();
+		this.routeAPI.getRoute(routeId, callback(future));
+		return future;
+	}
+
+	/**
+	 * @return the runningRaceAPI
+	 */
+	public RunningRaceAPI getRunningRaceAPI() {
+		return this.runningRaceAPI;
+	}
+
+	/**
 	 * @param segmentId
 	 *            The unique identifier of the segment
 	 * @return The Segment
@@ -921,6 +1028,13 @@ public class API {
 	 */
 	public StravaSegment getSegment(final Integer segmentId) throws NotFoundException {
 		return this.segmentAPI.getSegment(segmentId);
+	}
+
+	/**
+	 * @return the segmentAPI
+	 */
+	public SegmentAPI getSegmentAPI() {
+		return this.segmentAPI;
 	}
 
 	/**
@@ -1088,6 +1202,34 @@ public class API {
 	}
 
 	/**
+	 * @return the streamAPI
+	 */
+	public StreamAPI getStreamAPI() {
+		return this.streamAPI;
+	}
+
+	/**
+	 * @return the tokenAPI
+	 */
+	public TokenAPI getTokenAPI() {
+		return this.tokenAPI;
+	}
+
+	/**
+	 * @return the uploadAPI
+	 */
+	public UploadAPI getUploadAPI() {
+		return this.uploadAPI;
+	}
+
+	/**
+	 * @return the webhookAPI
+	 */
+	public WebhookAPI getWebhookAPI() {
+		return this.webhookAPI;
+	}
+
+	/**
 	 * @param activityId
 	 *            Activity to be kudoed
 	 * @return Strava response
@@ -1110,6 +1252,29 @@ public class API {
 	public StravaAPIFuture<StravaResponse> giveKudosAsync(final Long activityId) throws NotFoundException {
 		final StravaAPIFuture<StravaResponse> future = new StravaAPIFuture<StravaResponse>();
 		this.activityAPI.giveKudos(activityId, callback(future));
+		return future;
+	}
+
+	/**
+	 * Join a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to be joined
+	 */
+	public void joinChallenge(Integer id) {
+		this.challengeAPI.joinChallenge(id);
+	}
+
+	/**
+	 * Join a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to be joined
+	 * @return The {@link CompletableFuture} giving access to the returned challenge
+	 */
+	public StravaAPIFuture<StravaChallenge> joinChallengeAsync(Integer id) {
+		final StravaAPIFuture<StravaChallenge> future = new StravaAPIFuture<>();
+		this.challengeAPI.joinChallenge(id, callback(future));
 		return future;
 	}
 
@@ -1140,6 +1305,68 @@ public class API {
 	}
 
 	/**
+	 * <p>
+	 * Join a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, join the upcoming occurrence. An {@link Token access token} with
+	 * {@link AuthorisationScope#WRITE write scope} is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return The response indicating whether the authenticated athlete has joined the event
+	 * @throws NotFoundException
+	 *             if the event does not exist
+	 * @throws UnauthorizedException
+	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
+	 */
+	public StravaClubEventJoinResponse joinEvent(Integer id) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventAPI.joinEvent(id);
+	}
+
+	/**
+	 * <p>
+	 * Join a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, join the upcoming occurrence. An {@link Token access token} with
+	 * {@link AuthorisationScope#WRITE write scope} is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return Future which can be called later to return the join response
+	 * @throws NotFoundException
+	 *             if the event does not exist
+	 * @throws UnauthorizedException
+	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
+	 */
+	public StravaAPIFuture<StravaClubEventJoinResponse> joinEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
+		final StravaAPIFuture<StravaClubEventJoinResponse> future = new StravaAPIFuture<>();
+		this.clubGroupEventAPI.joinEvent(id, callback(future));
+		return future;
+	}
+
+	/**
+	 * Leave a challenge on behalf of the authenticated user. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to leave
+	 */
+	public void leaveChallenge(Integer id) {
+		this.challengeAPI.leaveChallenge(id);
+
+	}
+
+	/**
+	 * Leave a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
+	 *
+	 * @param id
+	 *            The id of the challenge to be joined
+	 * @return The {@link CompletableFuture} giving access to the returned challenge
+	 */
+	public StravaAPIFuture<StravaChallenge> leaveChallengeAsync(Integer id) {
+		final StravaAPIFuture<StravaChallenge> future = new StravaAPIFuture<>();
+		this.challengeAPI.leaveChallenge(id, callback(future));
+		return future;
+	}
+
+	/**
 	 * @param clubId
 	 *            The club the authenticated athlete wishes to leave
 	 * @return Membership response indicating success/failure
@@ -1162,6 +1389,44 @@ public class API {
 	public StravaAPIFuture<StravaClubMembershipResponse> leaveClubAsync(final Integer clubId) throws NotFoundException {
 		final StravaAPIFuture<StravaClubMembershipResponse> future = new StravaAPIFuture<StravaClubMembershipResponse>();
 		this.clubAPI.leaveClub(clubId, callback(future));
+		return future;
+	}
+
+	/**
+	 * <p>
+	 * Leave a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, leave the upcoming occurrence. An {@link Token access token} with
+	 * {@link AuthorisationScope#WRITE write scope} is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return The response indicating whether the authenticated athlete has joined the event
+	 * @throws NotFoundException
+	 *             if the event does not exist
+	 * @throws UnauthorizedException
+	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
+	 */
+	public StravaClubEventJoinResponse leaveEvent(Integer id) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventAPI.leaveEvent(id);
+	}
+
+	/**
+	 * <p>
+	 * Leave a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, leave the upcoming occurrence. An {@link Token access token} with
+	 * {@link AuthorisationScope#WRITE write scope} is required.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the group event
+	 * @return Future which can be called later to return the join response
+	 * @throws NotFoundException
+	 *             if the event does not exist
+	 * @throws UnauthorizedException
+	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
+	 */
+	public StravaAPIFuture<StravaClubEventJoinResponse> leaveEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
+		final StravaAPIFuture<StravaClubEventJoinResponse> future = new StravaAPIFuture<>();
+		this.clubGroupEventAPI.leaveEvent(id, callback(future));
 		return future;
 	}
 
@@ -1403,6 +1668,36 @@ public class API {
 	}
 
 	/**
+	 * <p>
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions.
+	 * </p>
+	 *
+	 * @param id
+	 *            The athlete id whose routes should be listed
+	 * @return The route
+	 */
+	public StravaRoute[] listAthleteRoutes(@Path("id") Integer id) {
+		return this.routeAPI.listAthleteRoutes(id);
+	}
+
+	/**
+	 * <p>
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions.
+	 * </p>
+	 *
+	 * @param id
+	 *            The athlete id whose routes should be listed
+	 * @return The route
+	 */
+	public StravaAPIFuture<StravaRoute[]> listAthleteRoutesAsync(@Path("id") Integer id) {
+		final StravaAPIFuture<StravaRoute[]> future = new StravaAPIFuture<>();
+		this.routeAPI.listAthleteRoutes(id, callback(future));
+		return future;
+	}
+
+	/**
 	 * @param athleteId
 	 *            Athlete identifier
 	 * @param page
@@ -1575,6 +1870,26 @@ public class API {
 	}
 
 	/**
+	 * <p>
+	 * List the administrators of a club
+	 * </p>
+	 *
+	 * @param clubId
+	 *            Identifier of the club whose admins should be listed
+	 * @param page
+	 *            Page number to be returned (default is 1)
+	 * @param perPage
+	 *            Page size to be returned (default is 50)
+	 * @return The {@link StravaAPIFuture} on which to call complete when ready; this will return the array of {@link StravaAthlete}s.
+	 */
+	public StravaAPIFuture<StravaAthlete[]> listClubAdminsAsync(final Integer clubId, final Integer page, final Integer perPage) {
+		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<StravaAthlete[]>();
+		this.clubAPI.listClubAdmins(clubId, page, perPage, callback(future));
+		return future;
+
+	}
+
+	/**
 	 * @param clubId
 	 *            The club id for which announcements should be returned
 	 * @return Array of {@link StravaClubAnnouncement} for the given {@link StravaClub club}
@@ -1659,6 +1974,62 @@ public class API {
 	}
 
 	/**
+	 * <p>
+	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
+	 * </p>
+	 * <p>
+	 * Pagination is supported.
+	 * </p>
+	 * <p>
+	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event for which athletes should be listed
+	 * @param page
+	 *            Page number to be returned (default is 1)
+	 * @param perPage
+	 *            Page size to be returned (default is 50)
+	 * @return Array of athletes who have joined the event
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the event is private??
+	 */
+	public StravaAthlete[] listEventJoinedAthletes(Integer id, final Integer page, final Integer perPage) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventAPI.listEventJoinedAthletes(id, page, perPage);
+	}
+
+	/**
+	 * <p>
+	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
+	 * </p>
+	 * <p>
+	 * Pagination is supported.
+	 * </p>
+	 * <p>
+	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the event for which athletes should be listed
+	 * @param page
+	 *            Page number to be returned (default is 1)
+	 * @param perPage
+	 *            Page size to be returned (default is 50)
+	 * @return Callback which can be used to get the array of athletes who have joined the event
+	 * @throws NotFoundException
+	 *             If the event does not exist
+	 * @throws UnauthorizedException
+	 *             If the event is private??
+	 */
+	public StravaAPIFuture<StravaAthlete[]> listEventJoinedAthletesAsync(Integer id, final Integer page, final Integer perPage) throws NotFoundException, UnauthorizedException {
+		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<>();
+		this.clubGroupEventAPI.listEventJoinedAthletes(id, page, perPage, callback(future));
+		return future;
+	}
+
+	/**
 	 *
 	 * @param page
 	 *            Page number to be returned
@@ -1686,6 +2057,54 @@ public class API {
 	public StravaAPIFuture<StravaActivity[]> listFriendsActivitiesAsync(final Integer page, final Integer perPage) throws BadRequestException {
 		final StravaAPIFuture<StravaActivity[]> future = new StravaAPIFuture<StravaActivity[]>();
 		this.activityAPI.listFriendsActivities(page, perPage, callback(future));
+		return future;
+	}
+
+	/**
+	 * List the challenges the athlete has joined.
+	 *
+	 * @return Array of challenges that the athlete has joined
+	 */
+	public StravaChallenge[] listJoinedChallenges() {
+		return this.challengeAPI.listJoinedChallenges();
+	}
+
+	/**
+	 * List the challenges the athlete has joined.
+	 *
+	 * @return Array of challenges that the athlete has joined
+	 */
+	public StravaAPIFuture<StravaChallenge[]> listJoinedChallengesAsync() {
+		final StravaAPIFuture<StravaChallenge[]> future = new StravaAPIFuture<>();
+		this.challengeAPI.listJoinedChallenges(callback(future));
+		return future;
+	}
+
+	/**
+	 * <p>
+	 * List Strava's featured running races
+	 * </p>
+	 *
+	 * @param year
+	 *            (Optional) restrict results to the given year
+	 * @return List of running races as summary representations
+	 */
+	public StravaRunningRace[] listRaces(Integer year) {
+		return this.runningRaceAPI.listRaces(year);
+	}
+
+	/**
+	 * <p>
+	 * List Strava's featured running races
+	 * </p>
+	 *
+	 * @param year
+	 *            (Optional) restrict results to the given year
+	 * @return Future with list of running races as summary representations
+	 */
+	public StravaAPIFuture<StravaRunningRace[]> listRacesAsync(Integer year) {
+		final StravaAPIFuture<StravaRunningRace[]> future = new StravaAPIFuture<StravaRunningRace[]>();
+		this.runningRaceAPI.listRaces(year, callback(future));
 		return future;
 	}
 
@@ -1762,34 +2181,6 @@ public class API {
 	public StravaAPIFuture<StravaActivity[]> listRelatedActivitiesAsync(final Long activityId, final Integer page, final Integer perPage) throws NotFoundException, BadRequestException {
 		final StravaAPIFuture<StravaActivity[]> future = new StravaAPIFuture<StravaActivity[]>();
 		this.activityAPI.listRelatedActivities(activityId, page, perPage, callback(future));
-		return future;
-	}
-
-	/**
-	 * <p>
-	 * List Strava's featured running races
-	 * </p>
-	 *
-	 * @param year
-	 *            (Optional) restrict results to the given year
-	 * @return List of running races as summary representations
-	 */
-	public StravaRunningRace[] listRaces(Integer year) {
-		return this.runningRaceAPI.listRaces(year);
-	}
-
-	/**
-	 * <p>
-	 * List Strava's featured running races
-	 * </p>
-	 *
-	 * @param year
-	 *            (Optional) restrict results to the given year
-	 * @return Future with list of running races as summary representations
-	 */
-	public StravaAPIFuture<StravaRunningRace[]> listRacesAsync(Integer year) {
-		final StravaAPIFuture<StravaRunningRace[]> future = new StravaAPIFuture<StravaRunningRace[]>();
-		this.runningRaceAPI.listRaces(year, callback(future));
 		return future;
 	}
 
@@ -2172,397 +2563,6 @@ public class API {
 			final Boolean commute, final String dataType, final String externalId, final TypedFile file) throws BadRequestException {
 		final StravaAPIFuture<StravaUploadResponse> future = new StravaAPIFuture<StravaUploadResponse>();
 		this.uploadAPI.upload(activityType, name, description, _private, trainer, commute, dataType, externalId, file, callback(future));
-		return future;
-	}
-
-	/**
-	 * <p>
-	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
-	 * view_private} permissions. For raw data associated with a route see route streams.
-	 * </p>
-	 *
-	 * @param routeId
-	 *            The identifier of the route to retrieve
-	 * @return The route
-	 * @throws NotFoundException
-	 *             If the route does not exist
-	 * @throws BadRequestException
-	 *             If the id is not an integer
-	 * @throws UnauthorizedException
-	 *             If the route is private and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private}
-	 */
-	public StravaRoute getRoute(@Path("id") Integer routeId) throws NotFoundException, BadRequestException, UnauthorizedException {
-		return this.routeAPI.getRoute(routeId);
-	}
-
-	/**
-	 * <p>
-	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
-	 * view_private} permissions. For raw data associated with a route see route streams.
-	 * </p>
-	 *
-	 * @param routeId
-	 *            The identifier of the route to retrieve
-	 * @return The route
-	 * @throws NotFoundException
-	 *             If the route does not exist
-	 * @throws BadRequestException
-	 *             If the id is not an integer
-	 * @throws UnauthorizedException
-	 *             If the route is private and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private}
-	 */
-	public StravaAPIFuture<StravaRoute> getRouteAsync(@Path("id") Integer routeId) throws NotFoundException, BadRequestException, UnauthorizedException {
-		final StravaAPIFuture<StravaRoute> future = new StravaAPIFuture<>();
-		this.routeAPI.getRoute(routeId, callback(future));
-		return future;
-	}
-
-	/**
-	 * <p>
-	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
-	 * view_private} permissions.
-	 * </p>
-	 *
-	 * @param id
-	 *            The athlete id whose routes should be listed
-	 * @return The route
-	 */
-	public StravaRoute[] listAthleteRoutes(@Path("id") Integer id) {
-		return this.routeAPI.listAthleteRoutes(id);
-	}
-
-	/**
-	 * <p>
-	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
-	 * view_private} permissions.
-	 * </p>
-	 *
-	 * @param id
-	 *            The athlete id whose routes should be listed
-	 * @return The route
-	 */
-	public StravaAPIFuture<StravaRoute[]> listAthleteRoutesAsync(@Path("id") Integer id) {
-		final StravaAPIFuture<StravaRoute[]> future = new StravaAPIFuture<>();
-		this.routeAPI.listAthleteRoutes(id, callback(future));
-		return future;
-	}
-
-	/**
-	 * <p>
-	 * Retrieve a challenge
-	 * </p>
-	 *
-	 * <p>
-	 * Returns a detailed representation of a challenge
-	 * </p>
-	 *
-	 * @param id
-	 *            Identifier of the challenge
-	 * @return The challenge
-	 */
-	public StravaChallenge getChallenge(Integer id) {
-		return this.challengeAPI.getChallenge(id);
-	}
-
-	/**
-	 * <p>
-	 * Retrieve a challenge
-	 * </p>
-	 *
-	 * <p>
-	 * Returns a detailed representation of a challenge
-	 * </p>
-	 *
-	 * @param id
-	 *            Identifier of the challenge
-	 * @return The {@link CompletableFuture} giving access to the returned challenge
-	 */
-	public StravaAPIFuture<StravaChallenge> getChallengeAsync(Integer id) {
-		final StravaAPIFuture<StravaChallenge> future = new StravaAPIFuture<>();
-		this.challengeAPI.getChallenge(id, callback(future));
-		return future;
-	}
-
-	/**
-	 * Join a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
-	 *
-	 * @param id
-	 *            The id of the challenge to be joined
-	 */
-	public void joinChallenge(Integer id) {
-		this.challengeAPI.joinChallenge(id);
-	}
-
-	/**
-	 * Join a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
-	 *
-	 * @param id
-	 *            The id of the challenge to be joined
-	 * @return The {@link CompletableFuture} giving access to the returned challenge
-	 */
-	public StravaAPIFuture<StravaChallenge> joinChallengeAsync(Integer id) {
-		final StravaAPIFuture<StravaChallenge> future = new StravaAPIFuture<>();
-		this.challengeAPI.joinChallenge(id, callback(future));
-		return future;
-	}
-
-	/**
-	 * Leave a challenge on behalf of the authenticated user. An access token with write permissions is required.
-	 *
-	 * @param id
-	 *            The id of the challenge to leave
-	 */
-	public void leaveChallenge(Integer id) {
-		this.challengeAPI.leaveChallenge(id);
-
-	}
-
-	/**
-	 * Leave a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
-	 *
-	 * @param id
-	 *            The id of the challenge to be joined
-	 * @return The {@link CompletableFuture} giving access to the returned challenge
-	 */
-	public StravaAPIFuture<StravaChallenge> leaveChallengeAsync(Integer id) {
-		final StravaAPIFuture<StravaChallenge> future = new StravaAPIFuture<>();
-		this.challengeAPI.leaveChallenge(id, callback(future));
-		return future;
-	}
-
-	/**
-	 * List the challenges the athlete has joined.
-	 *
-	 * @return Array of challenges that the athlete has joined
-	 */
-	public StravaChallenge[] listJoinedChallenges() {
-		return this.challengeAPI.listJoinedChallenges();
-	}
-
-	/**
-	 * List the challenges the athlete has joined.
-	 *
-	 * @return Array of challenges that the athlete has joined
-	 */
-	public StravaAPIFuture<StravaChallenge[]> listJoinedChallengesAsync() {
-		final StravaAPIFuture<StravaChallenge[]> future = new StravaAPIFuture<>();
-		this.challengeAPI.listJoinedChallenges(callback(future));
-		return future;
-	}
-
-	/**
-	 * <p>
-	 * Returns a single group event summary representation.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the group event
-	 * @return The group event
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 */
-	public StravaClubEvent getEvent(Integer id) throws NotFoundException {
-		return this.clubGroupEventAPI.getEvent(id);
-	}
-
-	/**
-	 * <p>
-	 * Returns a single group event summary representation.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the group event
-	 * @return Future which can be called later to return the event
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 */
-	public StravaAPIFuture<StravaClubEvent> getEventAsync(Integer id) throws NotFoundException {
-		final StravaAPIFuture<StravaClubEvent> future = new StravaAPIFuture<>();
-		this.clubGroupEventAPI.getEvent(id, callback(future));
-		return future;
-	}
-
-	/**
-	 * <p>
-	 * Returns a single group event summary representation.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the group event
-	 * @return The group event as a raw Retrofit response
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 */
-	public Response getEventRaw(Integer id) throws NotFoundException {
-		return this.clubGroupEventAPI.getEventRaw(id);
-	}
-
-	/**
-	 * <p>
-	 * Join a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, join the upcoming occurrence. An {@link Token access token} with
-	 * {@link AuthorisationScope#WRITE write scope} is required.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the group event
-	 * @return The response indicating whether the authenticated athlete has joined the event
-	 * @throws NotFoundException
-	 *             if the event does not exist
-	 * @throws UnauthorizedException
-	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
-	 */
-	public StravaClubEventJoinResponse joinEvent(Integer id) throws NotFoundException, UnauthorizedException {
-		return this.clubGroupEventAPI.joinEvent(id);
-	}
-
-	/**
-	 * <p>
-	 * Join a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, join the upcoming occurrence. An {@link Token access token} with
-	 * {@link AuthorisationScope#WRITE write scope} is required.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the group event
-	 * @return Future which can be called later to return the join response
-	 * @throws NotFoundException
-	 *             if the event does not exist
-	 * @throws UnauthorizedException
-	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
-	 */
-	public StravaAPIFuture<StravaClubEventJoinResponse> joinEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
-		final StravaAPIFuture<StravaClubEventJoinResponse> future = new StravaAPIFuture<>();
-		this.clubGroupEventAPI.joinEvent(id, callback(future));
-		return future;
-	}
-
-	/**
-	 * <p>
-	 * Leave a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, leave the upcoming occurrence. An {@link Token access token} with
-	 * {@link AuthorisationScope#WRITE write scope} is required.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the group event
-	 * @return The response indicating whether the authenticated athlete has joined the event
-	 * @throws NotFoundException
-	 *             if the event does not exist
-	 * @throws UnauthorizedException
-	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
-	 */
-	public StravaClubEventJoinResponse leaveEvent(Integer id) throws NotFoundException, UnauthorizedException {
-		return this.clubGroupEventAPI.leaveEvent(id);
-	}
-
-	/**
-	 * <p>
-	 * Leave a group {@link StravaClubEvent event} on behalf of the authenticated {@link StravaAthlete athlete}. For recurring events, leave the upcoming occurrence. An {@link Token access token} with
-	 * {@link AuthorisationScope#WRITE write scope} is required.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the group event
-	 * @return Future which can be called later to return the join response
-	 * @throws NotFoundException
-	 *             if the event does not exist
-	 * @throws UnauthorizedException
-	 *             if the {@link Token access token} does not have {@link AuthorisationScope#WRITE write scope}
-	 */
-	public StravaAPIFuture<StravaClubEventJoinResponse> leaveEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
-		final StravaAPIFuture<StravaClubEventJoinResponse> future = new StravaAPIFuture<>();
-		this.clubGroupEventAPI.leaveEvent(id, callback(future));
-		return future;
-	}
-
-	/**
-	 * <p>
-	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
-	 * </p>
-	 * <p>
-	 * Pagination is supported.
-	 * </p>
-	 * <p>
-	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the event for which athletes should be listed
-	 * @param page
-	 *            Page number to be returned (default is 1)
-	 * @param perPage
-	 *            Page size to be returned (default is 50)
-	 * @return Array of athletes who have joined the event
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 * @throws UnauthorizedException
-	 *             If the event is private??
-	 */
-	public StravaAthlete[] listEventJoinedAthletes(Integer id, final Integer page, final Integer perPage) throws NotFoundException, UnauthorizedException {
-		return this.clubGroupEventAPI.listEventJoinedAthletes(id, page, perPage);
-	}
-
-	/**
-	 * <p>
-	 * Retrieve summary information about athletes joined a specific group event, or the upcoming occurrence for recurring events.
-	 * </p>
-	 * <p>
-	 * Pagination is supported.
-	 * </p>
-	 * <p>
-	 * Returns an array of athletes summary representations with athletes who the authenticated athlete is following first.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the event for which athletes should be listed
-	 * @param page
-	 *            Page number to be returned (default is 1)
-	 * @param perPage
-	 *            Page size to be returned (default is 50)
-	 * @return Callback which can be used to get the array of athletes who have joined the event
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 * @throws UnauthorizedException
-	 *             If the event is private??
-	 */
-	public StravaAPIFuture<StravaAthlete[]> listJoinedAthletesAsync(Integer id, final Integer page, final Integer perPage) throws NotFoundException, UnauthorizedException {
-		final StravaAPIFuture<StravaAthlete[]> future = new StravaAPIFuture<>();
-		this.clubGroupEventAPI.listEventJoinedAthletes(id, page, perPage, callback(future));
-		return future;
-	}
-
-	/**
-	 * <p>
-	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the event to be deleted
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 * @throws UnauthorizedException
-	 *             If the authenticated athlete does not have permission to delete the event
-	 */
-	@DELETE("/group_events/{id}")
-	public void deleteEvent(@Path("id") Integer id) throws NotFoundException, UnauthorizedException {
-		this.clubGroupEventAPI.deleteEvent(id);
-	}
-
-	/**
-	 * <p>
-	 * Deletes (and cancels) an event, which must be editable by the authenticating user. An access token with write permissions is required.
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the event to be deleted
-	 * @return Callback that can be used later to get results
-	 * @throws NotFoundException
-	 *             If the event does not exist
-	 * @throws UnauthorizedException
-	 *             If the authenticated athlete does not have permission to delete the event
-	 */
-	@DELETE("/group_events/{id}")
-	public StravaAPIFuture<Void> deleteEventAsync(@Path("id") Integer id) throws NotFoundException, UnauthorizedException {
-		final StravaAPIFuture<Void> future = new StravaAPIFuture<>();
-		this.clubGroupEventAPI.deleteEvent(id, callback(future));
 		return future;
 	}
 

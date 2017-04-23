@@ -93,6 +93,14 @@ public class StravaVideo implements StravaEntity {
 	}
 
 	/**
+	 * @return the resourceState
+	 */
+	@Override
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+
+	/**
 	 * @return the stillImageUrl
 	 */
 	public String getStillImageUrl() {
@@ -132,6 +140,14 @@ public class StravaVideo implements StravaEntity {
 	}
 
 	/**
+	 * @param resourceState
+	 *            the resourceState to set
+	 */
+	public void setResourceState(StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+
+	/**
 	 * @param stillImageUrl
 	 *            the stillImageUrl to set
 	 */
@@ -142,22 +158,6 @@ public class StravaVideo implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaVideo [id=" + this.id + ", stillImageUrl=" + this.stillImageUrl + ", badgeImageUrl=" + this.badgeImageUrl + ", resourceState=" + this.resourceState + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-	}
-
-	/**
-	 * @return the resourceState
-	 */
-	@Override
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
-	}
-
-	/**
-	 * @param resourceState
-	 *            the resourceState to set
-	 */
-	public void setResourceState(StravaResourceState resourceState) {
-		this.resourceState = resourceState;
 	}
 
 }

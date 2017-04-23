@@ -79,6 +79,25 @@ public class StravaPhotoSizes implements StravaEntity {
 		return true;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
+	/**
+	 * @return the size0
+	 */
+	public List<Integer> getSize0() {
+		return this.size0;
+	}
+
+	/**
+	 * @return the url100
+	 */
+	public List<Integer> getUrl100() {
+		return this.url100;
+	}
+
 	/**
 	 * @return the url600
 	 */
@@ -102,38 +121,11 @@ public class StravaPhotoSizes implements StravaEntity {
 	}
 
 	/**
-	 * @param url600
-	 *            the url600 to set
-	 */
-	public void setUrl600(final Integer url600) {
-		this.url600 = url600;
-	}
-
-	@Override
-	public String toString() {
-		return "StravaPhotoSizes [size0=" + this.size0 + ", url100=" + this.url100 + ", url600=" + this.url600 + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	/**
-	 * @return the size0
-	 */
-	public List<Integer> getSize0() {
-		return this.size0;
-	}
-
-	/**
 	 * @param size0
 	 *            the size0 to set
 	 */
 	public void setSize0(List<Integer> size0) {
 		this.size0 = size0;
-	}
-
-	/**
-	 * @return the url100
-	 */
-	public List<Integer> getUrl100() {
-		return this.url100;
 	}
 
 	/**
@@ -144,9 +136,17 @@ public class StravaPhotoSizes implements StravaEntity {
 		this.url100 = url100;
 	}
 
+	/**
+	 * @param url600
+	 *            the url600 to set
+	 */
+	public void setUrl600(final Integer url600) {
+		this.url600 = url600;
+	}
+
 	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
+	public String toString() {
+		return "StravaPhotoSizes [size0=" + this.size0 + ", url100=" + this.url100 + ", url600=" + this.url600 + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 }

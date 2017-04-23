@@ -232,6 +232,11 @@ public class StravaStatistics implements StravaEntity {
 		return this.recentSwimTotals;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+
 	/**
 	 * @return the ytdRideTotals
 	 */
@@ -342,6 +347,14 @@ public class StravaStatistics implements StravaEntity {
 	}
 
 	/**
+	 * @param resourceState
+	 *            resource state to set
+	 */
+	public void setResourceState(StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+
+	/**
 	 * @param ytdRideTotals
 	 *            the ytdRideTotals to set
 	 */
@@ -372,19 +385,6 @@ public class StravaStatistics implements StravaEntity {
 				+ ", ytdSwimTotals=" //$NON-NLS-1$
 				+ this.ytdSwimTotals + ", allRideTotals=" + this.allRideTotals + ", allRunTotals=" + this.allRunTotals + ", allSwimTotals=" + this.allSwimTotals + ", resourceState=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.resourceState + "]"; //$NON-NLS-1$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
-	}
-
-	/**
-	 * @param resourceState
-	 *            resource state to set
-	 */
-	public void setResourceState(StravaResourceState resourceState) {
-		this.resourceState = resourceState;
 	}
 
 }

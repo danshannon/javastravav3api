@@ -45,10 +45,11 @@ public interface ChallengeAPI {
 	 *
 	 * @param id
 	 *            Identifier of the challenge
-	 * @return The challenge
+	 * @param callback
+	 *            Callback which will give access to the challenge
 	 */
 	@GET("/challenges/{id}")
-	public Response getChallengeRaw(@Path("id") Integer id);
+	public void getChallenge(@Path("id") Integer id, final StravaAPICallback<StravaChallenge> callback);
 
 	/**
 	 * <p>
@@ -61,11 +62,10 @@ public interface ChallengeAPI {
 	 *
 	 * @param id
 	 *            Identifier of the challenge
-	 * @param callback
-	 *            Callback which will give access to the challenge
+	 * @return The challenge
 	 */
 	@GET("/challenges/{id}")
-	public void getChallenge(@Path("id") Integer id, final StravaAPICallback<StravaChallenge> callback);
+	public Response getChallengeRaw(@Path("id") Integer id);
 
 	/**
 	 * Join a challenge on behalf of the authenticated athlete. An access token with write permissions is required.
@@ -118,18 +118,18 @@ public interface ChallengeAPI {
 	/**
 	 * List the challenges the athlete has joined.
 	 *
-	 * @return Array of challenges that the athlete has joined
-	 */
-	@GET("/challenges/joined")
-	public Response listJoinedChallengesRaw();
-
-	/**
-	 * List the challenges the athlete has joined.
-	 *
 	 * @param callback
 	 *            Callback which will give access to the challenges
 	 */
 	@GET("/challenges/joined")
 	public void listJoinedChallenges(final StravaAPICallback<StravaChallenge[]> callback);
+
+	/**
+	 * List the challenges the athlete has joined.
+	 *
+	 * @return Array of challenges that the athlete has joined
+	 */
+	@GET("/challenges/joined")
+	public Response listJoinedChallengesRaw();
 
 }

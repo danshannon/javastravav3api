@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 
 import com.squareup.okhttp.OkHttpClient;
 
-import javastrava.api.v3.service.impl.StravaServiceImpl;
+import javastrava.api.v3.service.Strava;
 import javastrava.config.StravaConfig;
 import retrofit.client.Header;
 import retrofit.client.OkClient;
@@ -50,16 +50,16 @@ public class RetrofitClientResponseInterceptor extends OkClient {
 			if (header.getName().equals(StravaConfig.string("strava.rate-limit-usage-header-name"))) { //$NON-NLS-1$
 				String values = header.getValue();
 				StringTokenizer tokenizer = new StringTokenizer(values, ","); //$NON-NLS-1$
-				StravaServiceImpl.requestRate = Integer.valueOf(tokenizer.nextToken()).intValue();
-				StravaServiceImpl.requestRateDaily = Integer.valueOf(tokenizer.nextToken()).intValue();
-				StravaServiceImpl.requestRatePercentage();
+				Strava.REQUEST_RATE_CURRENT = Integer.valueOf(tokenizer.nextToken()).intValue();
+				Strava.REQUEST_RATE_DAILY = Integer.valueOf(tokenizer.nextToken()).intValue();
+				Strava.requestRateCurrentPercentage();
 			}
 			if (header.getName().equals(StravaConfig.string("strava.rate-limit-limit-header-name"))) { //$NON-NLS-1$
 				String values = header.getValue();
 				StringTokenizer tokenizer = new StringTokenizer(values, ","); //$NON-NLS-1$
-				StravaConfig.RATE_LIMIT = Integer.valueOf(tokenizer.nextToken()).intValue();
-				StravaConfig.RATE_LIMIT_DAILY = Integer.valueOf(tokenizer.nextToken()).intValue();
-				StravaServiceImpl.requestRateDailyPercentage();
+				Strava.RATE_LIMIT_CURRENT = Integer.valueOf(tokenizer.nextToken()).intValue();
+				Strava.RATE_LIMIT_DAILY = Integer.valueOf(tokenizer.nextToken()).intValue();
+				Strava.requestRateDailyPercentage();
 			}
 		}
 

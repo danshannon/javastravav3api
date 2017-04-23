@@ -75,6 +75,11 @@ public class StravaResponse implements StravaEntity {
 		return this.message;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -109,10 +114,5 @@ public class StravaResponse implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaResponse [message=" + this.message + ", errors=" + this.errors + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

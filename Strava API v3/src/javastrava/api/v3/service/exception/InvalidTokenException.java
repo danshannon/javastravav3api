@@ -12,14 +12,14 @@ import javastrava.api.v3.model.StravaResponse;
  */
 public class InvalidTokenException extends RuntimeException implements StravaAPIException {
 	/**
-	 * Response from Strava API containing error details
-	 */
-	private StravaResponse response;
-
-	/**
 	 * Default
 	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Response from Strava API containing error details
+	 */
+	private StravaResponse response;
 
 	/**
 	 * @param status Status string

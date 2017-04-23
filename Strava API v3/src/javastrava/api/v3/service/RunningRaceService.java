@@ -19,28 +19,6 @@ import javastrava.api.v3.model.StravaRunningRace;
 public interface RunningRaceService extends StravaService {
 	/**
 	 * <p>
-	 * List Strava's featured running races
-	 * </p>
-	 *
-	 * @param year
-	 *            (Optional) restrict results to the given year
-	 * @return List of running races as summary representations
-	 */
-	public List<StravaRunningRace> listRaces(final Integer year);
-
-	/**
-	 * <p>
-	 * List Strava's featured running races
-	 * </p>
-	 *
-	 * @param year
-	 *            (Optional) restrict results to the given year
-	 * @return Future containing list of running races as summary representations
-	 */
-	public CompletableFuture<List<StravaRunningRace>> listRacesAsync(final Integer year);
-
-	/**
-	 * <p>
 	 * Get details of a specific running race
 	 * </p>
 	 *
@@ -60,5 +38,27 @@ public interface RunningRaceService extends StravaService {
 	 * @return A future which will return a detailed representation of the running race
 	 */
 	public CompletableFuture<StravaRunningRace> getRaceAsync(final Integer id);
+
+	/**
+	 * <p>
+	 * List Strava's featured running races
+	 * </p>
+	 *
+	 * @param year
+	 *            (Optional) restrict results to the given year
+	 * @return List of running races as summary representations
+	 */
+	public List<StravaRunningRace> listRaces(final Integer year);
+
+	/**
+	 * <p>
+	 * List Strava's featured running races
+	 * </p>
+	 *
+	 * @param year
+	 *            (Optional) restrict results to the given year
+	 * @return Future containing list of running races as summary representations
+	 */
+	public CompletableFuture<List<StravaRunningRace>> listRacesAsync(final Integer year);
 
 }

@@ -162,6 +162,11 @@ public class StravaEventSubscription implements StravaEntity {
 		return this.objectType;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the updatedAt
 	 */
@@ -251,10 +256,5 @@ public class StravaEventSubscription implements StravaEntity {
 				+ this.objectType + ", aspectType=" //$NON-NLS-1$
 				+ this.aspectType + ", callbackURL=" + this.callbackURL + ", createdAt=" + this.createdAt + ", updatedAt=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ this.updatedAt + "]"; //$NON-NLS-1$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

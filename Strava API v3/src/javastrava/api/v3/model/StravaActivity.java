@@ -1002,6 +1002,20 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @return the elevHigh
+	 */
+	public Float getElevHigh() {
+		return this.elevHigh;
+	}
+
+	/**
+	 * @return the elevLow
+	 */
+	public Float getElevLow() {
+		return this.elevLow;
+	}
+
+	/**
 	 * @return the embedToken
 	 */
 	public String getEmbedToken() {
@@ -1087,6 +1101,13 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @return the laps
+	 */
+	public List<StravaLap> getLaps() {
+		return this.laps;
+	}
+
+	/**
 	 * @return the locationCity
 	 */
 	@Deprecated
@@ -1139,6 +1160,13 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @return the maxWatts
+	 */
+	public Integer getMaxWatts() {
+		return this.maxWatts;
+	}
+
+	/**
 	 * @return the movingTime
 	 */
 	public Integer getMovingTime() {
@@ -1167,6 +1195,13 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @return the prCount
+	 */
+	public Integer getPrCount() {
+		return this.prCount;
+	}
+
+	/**
 	 * @return the privateActivity
 	 */
 	public Boolean getPrivateActivity() {
@@ -1186,6 +1221,13 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	 */
 	public List<StravaSegmentEffort> getSegmentEfforts() {
 		return this.segmentEfforts;
+	}
+
+	/**
+	 * @return the similarActivities
+	 */
+	public StravaSimilarActivities getSimilarActivities() {
+		return this.similarActivities;
 	}
 
 	/**
@@ -1238,6 +1280,13 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @return the sufferScore
+	 */
+	public Integer getSufferScore() {
+		return this.sufferScore;
+	}
+
+	/**
 	 * @return the timezone
 	 */
 	public String getTimezone() {
@@ -1280,6 +1329,13 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @return the utcOffset
+	 */
+	public String getUtcOffset() {
+		return this.utcOffset;
+	}
+
+	/**
 	 * @return the video
 	 */
 	public StravaVideo getVideo() {
@@ -1298,13 +1354,6 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	 */
 	public StravaWorkoutType getWorkoutType() {
 		return this.workoutType;
-	}
-
-	/**
-	 * @return the sufferScore
-	 */
-	public Integer getSufferScore() {
-		return this.sufferScore;
 	}
 
 	/*
@@ -1523,6 +1572,22 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @param elevHigh
+	 *            the elevHigh to set
+	 */
+	public void setElevHigh(Float elevHigh) {
+		this.elevHigh = elevHigh;
+	}
+
+	/**
+	 * @param elevLow
+	 *            the elevLow to set
+	 */
+	public void setElevLow(Float elevLow) {
+		this.elevLow = elevLow;
+	}
+
+	/**
 	 * @param embedToken
 	 *            the embedToken to set
 	 */
@@ -1619,6 +1684,14 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @param laps
+	 *            the laps to set
+	 */
+	public void setLaps(List<StravaLap> laps) {
+		this.laps = laps;
+	}
+
+	/**
 	 * @param locationCity
 	 *            the locationCity to set
 	 */
@@ -1678,6 +1751,14 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @param maxWatts
+	 *            the maxWatts to set
+	 */
+	public void setMaxWatts(Integer maxWatts) {
+		this.maxWatts = maxWatts;
+	}
+
+	/**
 	 * @param movingTime
 	 *            the movingTime to set
 	 */
@@ -1710,6 +1791,14 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @param prCount
+	 *            the prCount to set
+	 */
+	public void setPrCount(Integer prCount) {
+		this.prCount = prCount;
+	}
+
+	/**
 	 * @param privateActivity
 	 *            the privateActivity to set
 	 */
@@ -1731,6 +1820,14 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	 */
 	public void setSegmentEfforts(final List<StravaSegmentEffort> segmentEfforts) {
 		this.segmentEfforts = segmentEfforts;
+	}
+
+	/**
+	 * @param similarActivities
+	 *            the similarActivities to set
+	 */
+	public void setSimilarActivities(StravaSimilarActivities similarActivities) {
+		this.similarActivities = similarActivities;
 	}
 
 	/**
@@ -1790,6 +1887,14 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @param sufferScore
+	 *            the sufferScore to set
+	 */
+	public void setSufferScore(Integer sufferScore) {
+		this.sufferScore = sufferScore;
+	}
+
+	/**
 	 * @param timezone
 	 *            the timezone to set
 	 */
@@ -1838,6 +1943,14 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @param utcOffset
+	 *            the utcOffset to set
+	 */
+	public void setUtcOffset(String utcOffset) {
+		this.utcOffset = utcOffset;
+	}
+
+	/**
 	 * @param video
 	 *            the video to set
 	 */
@@ -1859,14 +1972,6 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 	 */
 	public void setWorkoutType(final StravaWorkoutType workoutType) {
 		this.workoutType = workoutType;
-	}
-
-	/**
-	 * @param sufferScore
-	 *            the sufferScore to set
-	 */
-	public void setSufferScore(Integer sufferScore) {
-		this.sufferScore = sufferScore;
 	}
 
 	/*
@@ -1899,111 +2004,6 @@ public class StravaActivity implements StravaCacheableEntity<Long> {
 				+ this.sufferScore + ", utcOffset=" + this.utcOffset + ", elevHigh=" + this.elevHigh + ", elevLow=" + this.elevLow + ", prCount=" + this.prCount + ", maxWatts=" + this.maxWatts //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 				+ ", laps=" + this.laps //$NON-NLS-1$
 				+ ", similarActivities=" + this.similarActivities + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	/**
-	 * @return the utcOffset
-	 */
-	public String getUtcOffset() {
-		return this.utcOffset;
-	}
-
-	/**
-	 * @param utcOffset
-	 *            the utcOffset to set
-	 */
-	public void setUtcOffset(String utcOffset) {
-		this.utcOffset = utcOffset;
-	}
-
-	/**
-	 * @return the elevHigh
-	 */
-	public Float getElevHigh() {
-		return this.elevHigh;
-	}
-
-	/**
-	 * @param elevHigh
-	 *            the elevHigh to set
-	 */
-	public void setElevHigh(Float elevHigh) {
-		this.elevHigh = elevHigh;
-	}
-
-	/**
-	 * @return the elevLow
-	 */
-	public Float getElevLow() {
-		return this.elevLow;
-	}
-
-	/**
-	 * @param elevLow
-	 *            the elevLow to set
-	 */
-	public void setElevLow(Float elevLow) {
-		this.elevLow = elevLow;
-	}
-
-	/**
-	 * @return the prCount
-	 */
-	public Integer getPrCount() {
-		return this.prCount;
-	}
-
-	/**
-	 * @param prCount
-	 *            the prCount to set
-	 */
-	public void setPrCount(Integer prCount) {
-		this.prCount = prCount;
-	}
-
-	/**
-	 * @return the maxWatts
-	 */
-	public Integer getMaxWatts() {
-		return this.maxWatts;
-	}
-
-	/**
-	 * @param maxWatts
-	 *            the maxWatts to set
-	 */
-	public void setMaxWatts(Integer maxWatts) {
-		this.maxWatts = maxWatts;
-	}
-
-	/**
-	 * @return the laps
-	 */
-	public List<StravaLap> getLaps() {
-		return this.laps;
-	}
-
-	/**
-	 * @param laps
-	 *            the laps to set
-	 */
-	public void setLaps(List<StravaLap> laps) {
-		this.laps = laps;
-	}
-
-	/**
-	 * @return the similarActivities
-	 */
-	public StravaSimilarActivities getSimilarActivities() {
-		return this.similarActivities;
-	}
-
-	/**
-	 * @param similarActivities
-	 *            the similarActivities to set
-	 */
-	public void setSimilarActivities(StravaSimilarActivities similarActivities) {
-		this.similarActivities = similarActivities;
 	}
 
 }

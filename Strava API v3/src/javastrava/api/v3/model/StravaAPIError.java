@@ -89,6 +89,11 @@ public class StravaAPIError implements StravaEntity {
 		return this.resource;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -132,10 +137,5 @@ public class StravaAPIError implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaAPIError [resource=" + this.resource + ", field=" + this.field + ", code=" + this.code + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

@@ -50,121 +50,6 @@ public class StravaSimilarActivitiesTrend implements StravaEntity {
 		super();
 	}
 
-	/**
-	 * @return the speeds
-	 */
-	public List<Float> getSpeeds() {
-		return this.speeds;
-	}
-
-	/**
-	 * @param speeds
-	 *            the speeds to set
-	 */
-	public void setSpeeds(List<Float> speeds) {
-		this.speeds = speeds;
-	}
-
-	/**
-	 * @return the currentActivityIndex
-	 */
-	public Integer getCurrentActivityIndex() {
-		return this.currentActivityIndex;
-	}
-
-	/**
-	 * @param currentActivityIndex
-	 *            the currentActivityIndex to set
-	 */
-	public void setCurrentActivityIndex(Integer currentActivityIndex) {
-		this.currentActivityIndex = currentActivityIndex;
-	}
-
-	/**
-	 * @return the minSpeed
-	 */
-	public Float getMinSpeed() {
-		return this.minSpeed;
-	}
-
-	/**
-	 * @param minSpeed
-	 *            the minSpeed to set
-	 */
-	public void setMinSpeed(Float minSpeed) {
-		this.minSpeed = minSpeed;
-	}
-
-	/**
-	 * @return the midSpeed
-	 */
-	public Float getMidSpeed() {
-		return this.midSpeed;
-	}
-
-	/**
-	 * @param midSpeed
-	 *            the midSpeed to set
-	 */
-	public void setMidSpeed(Float midSpeed) {
-		this.midSpeed = midSpeed;
-	}
-
-	/**
-	 * @return the maxSpeed
-	 */
-	public Float getMaxSpeed() {
-		return this.maxSpeed;
-	}
-
-	/**
-	 * @param maxSpeed
-	 *            the maxSpeed to set
-	 */
-	public void setMaxSpeed(Float maxSpeed) {
-		this.maxSpeed = maxSpeed;
-	}
-
-	/**
-	 * @return the direction
-	 */
-	public Integer getDirection() {
-		return this.direction;
-	}
-
-	/**
-	 * @param direction
-	 *            the direction to set
-	 */
-	public void setDirection(Integer direction) {
-		this.direction = direction;
-	}
-
-	@Override
-	public String toString() {
-		return "StravaSimilarActivitiesTrend [speeds=" + this.speeds + ", currentActivityIndex=" + this.currentActivityIndex + ", minSpeed=" + this.minSpeed + ", midSpeed=" + this.midSpeed //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", maxSpeed=" + this.maxSpeed //$NON-NLS-1$
-				+ ", direction=" + this.direction + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.currentActivityIndex == null) ? 0 : this.currentActivityIndex.hashCode());
-		result = (prime * result) + ((this.direction == null) ? 0 : this.direction.hashCode());
-		result = (prime * result) + ((this.maxSpeed == null) ? 0 : this.maxSpeed.hashCode());
-		result = (prime * result) + ((this.midSpeed == null) ? 0 : this.midSpeed.hashCode());
-		result = (prime * result) + ((this.minSpeed == null) ? 0 : this.minSpeed.hashCode());
-		result = (prime * result) + ((this.speeds == null) ? 0 : this.speeds.hashCode());
-		return result;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 *
@@ -227,8 +112,123 @@ public class StravaSimilarActivitiesTrend implements StravaEntity {
 		return true;
 	}
 
+	/**
+	 * @return the currentActivityIndex
+	 */
+	public Integer getCurrentActivityIndex() {
+		return this.currentActivityIndex;
+	}
+
+	/**
+	 * @return the direction
+	 */
+	public Integer getDirection() {
+		return this.direction;
+	}
+
+	/**
+	 * @return the maxSpeed
+	 */
+	public Float getMaxSpeed() {
+		return this.maxSpeed;
+	}
+
+	/**
+	 * @return the midSpeed
+	 */
+	public Float getMidSpeed() {
+		return this.midSpeed;
+	}
+
+	/**
+	 * @return the minSpeed
+	 */
+	public Float getMinSpeed() {
+		return this.minSpeed;
+	}
+
 	@Override
 	public StravaResourceState getResourceState() {
 		return StravaResourceState.DETAILED;
+	}
+
+	/**
+	 * @return the speeds
+	 */
+	public List<Float> getSpeeds() {
+		return this.speeds;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.currentActivityIndex == null) ? 0 : this.currentActivityIndex.hashCode());
+		result = (prime * result) + ((this.direction == null) ? 0 : this.direction.hashCode());
+		result = (prime * result) + ((this.maxSpeed == null) ? 0 : this.maxSpeed.hashCode());
+		result = (prime * result) + ((this.midSpeed == null) ? 0 : this.midSpeed.hashCode());
+		result = (prime * result) + ((this.minSpeed == null) ? 0 : this.minSpeed.hashCode());
+		result = (prime * result) + ((this.speeds == null) ? 0 : this.speeds.hashCode());
+		return result;
+	}
+
+	/**
+	 * @param currentActivityIndex
+	 *            the currentActivityIndex to set
+	 */
+	public void setCurrentActivityIndex(Integer currentActivityIndex) {
+		this.currentActivityIndex = currentActivityIndex;
+	}
+
+	/**
+	 * @param direction
+	 *            the direction to set
+	 */
+	public void setDirection(Integer direction) {
+		this.direction = direction;
+	}
+
+	/**
+	 * @param maxSpeed
+	 *            the maxSpeed to set
+	 */
+	public void setMaxSpeed(Float maxSpeed) {
+		this.maxSpeed = maxSpeed;
+	}
+
+	/**
+	 * @param midSpeed
+	 *            the midSpeed to set
+	 */
+	public void setMidSpeed(Float midSpeed) {
+		this.midSpeed = midSpeed;
+	}
+
+	/**
+	 * @param minSpeed
+	 *            the minSpeed to set
+	 */
+	public void setMinSpeed(Float minSpeed) {
+		this.minSpeed = minSpeed;
+	}
+
+	/**
+	 * @param speeds
+	 *            the speeds to set
+	 */
+	public void setSpeeds(List<Float> speeds) {
+		this.speeds = speeds;
+	}
+
+	@Override
+	public String toString() {
+		return "StravaSimilarActivitiesTrend [speeds=" + this.speeds + ", currentActivityIndex=" + this.currentActivityIndex + ", minSpeed=" + this.minSpeed + ", midSpeed=" + this.midSpeed //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", maxSpeed=" + this.maxSpeed //$NON-NLS-1$
+				+ ", direction=" + this.direction + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

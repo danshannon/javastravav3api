@@ -21,14 +21,14 @@ import javastrava.api.v3.model.reference.StravaEventFrequency;
 public class EventFrequencySerializer implements JsonSerializer<StravaEventFrequency>, JsonDeserializer<StravaEventFrequency> {
 
 	@Override
-	public JsonElement serialize(StravaEventFrequency frequency, Type type, JsonSerializationContext context) {
-		return context.serialize(frequency.getValue());
-	}
-
-	@Override
 	public StravaEventFrequency deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		final StravaEventFrequency frequency = StravaEventFrequency.create(json.getAsString());
 		return frequency;
+	}
+
+	@Override
+	public JsonElement serialize(StravaEventFrequency frequency, Type type, JsonSerializationContext context) {
+		return context.serialize(frequency.getValue());
 	}
 
 }

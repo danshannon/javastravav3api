@@ -64,176 +64,6 @@ public class StravaSimilarActivities implements StravaEntity {
 		// Empty
 	}
 
-	/**
-	 * @return the effortCount
-	 */
-	public Integer getEffortCount() {
-		return this.effortCount;
-	}
-
-	/**
-	 * @param effortCount
-	 *            the effortCount to set
-	 */
-	public void setEffortCount(Integer effortCount) {
-		this.effortCount = effortCount;
-	}
-
-	/**
-	 * @return the averageSpeed
-	 */
-	public Float getAverageSpeed() {
-		return this.averageSpeed;
-	}
-
-	/**
-	 * @param averageSpeed
-	 *            the averageSpeed to set
-	 */
-	public void setAverageSpeed(Float averageSpeed) {
-		this.averageSpeed = averageSpeed;
-	}
-
-	/**
-	 * @return the minAverageSpeed
-	 */
-	public Float getMinAverageSpeed() {
-		return this.minAverageSpeed;
-	}
-
-	/**
-	 * @param minAverageSpeed
-	 *            the minAverageSpeed to set
-	 */
-	public void setMinAverageSpeed(Float minAverageSpeed) {
-		this.minAverageSpeed = minAverageSpeed;
-	}
-
-	/**
-	 * @return the midAverageSpeed
-	 */
-	public Float getMidAverageSpeed() {
-		return this.midAverageSpeed;
-	}
-
-	/**
-	 * @param midAverageSpeed
-	 *            the midAverageSpeed to set
-	 */
-	public void setMidAverageSpeed(Float midAverageSpeed) {
-		this.midAverageSpeed = midAverageSpeed;
-	}
-
-	/**
-	 * @return the maxAverageSpeed
-	 */
-	public Float getMaxAverageSpeed() {
-		return this.maxAverageSpeed;
-	}
-
-	/**
-	 * @param maxAverageSpeed
-	 *            the maxAverageSpeed to set
-	 */
-	public void setMaxAverageSpeed(Float maxAverageSpeed) {
-		this.maxAverageSpeed = maxAverageSpeed;
-	}
-
-	/**
-	 * @return the prRank
-	 */
-	public Integer getPrRank() {
-		return this.prRank;
-	}
-
-	/**
-	 * @param prRank
-	 *            the prRank to set
-	 */
-	public void setPrRank(Integer prRank) {
-		this.prRank = prRank;
-	}
-
-	/**
-	 * @return the frequencyMilestone
-	 */
-	public String getFrequencyMilestone() {
-		return this.frequencyMilestone;
-	}
-
-	/**
-	 * @param frequencyMilestone
-	 *            the frequencyMilestone to set
-	 */
-	public void setFrequencyMilestone(String frequencyMilestone) {
-		this.frequencyMilestone = frequencyMilestone;
-	}
-
-	/**
-	 * @return the trend
-	 */
-	public StravaSimilarActivitiesTrend getTrend() {
-		return this.trend;
-	}
-
-	/**
-	 * @param trend
-	 *            the trend to set
-	 */
-	public void setTrend(StravaSimilarActivitiesTrend trend) {
-		this.trend = trend;
-	}
-
-	/**
-	 * @return the resourceState
-	 */
-	@Override
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
-	}
-
-	/**
-	 * @param resourceState
-	 *            the resourceState to set
-	 */
-	public void setResourceState(StravaResourceState resourceState) {
-		this.resourceState = resourceState;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "StravaSimilarActivities [effortCount=" + this.effortCount + ", averageSpeed=" + this.averageSpeed + ", minAverageSpeed=" + this.minAverageSpeed + ", midAverageSpeed=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ this.midAverageSpeed + ", maxAverageSpeed=" + this.maxAverageSpeed + ", prRank=" + this.prRank + ", frequencyMilestone=" + this.frequencyMilestone + ", trend=" + this.trend //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ ", resourceState=" //$NON-NLS-1$
-				+ this.resourceState + "]"; //$NON-NLS-1$
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.averageSpeed == null) ? 0 : this.averageSpeed.hashCode());
-		result = (prime * result) + ((this.effortCount == null) ? 0 : this.effortCount.hashCode());
-		result = (prime * result) + ((this.frequencyMilestone == null) ? 0 : this.frequencyMilestone.hashCode());
-		result = (prime * result) + ((this.maxAverageSpeed == null) ? 0 : this.maxAverageSpeed.hashCode());
-		result = (prime * result) + ((this.midAverageSpeed == null) ? 0 : this.midAverageSpeed.hashCode());
-		result = (prime * result) + ((this.minAverageSpeed == null) ? 0 : this.minAverageSpeed.hashCode());
-		result = (prime * result) + ((this.prRank == null) ? 0 : this.prRank.hashCode());
-		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
-		result = (prime * result) + ((this.trend == null) ? 0 : this.trend.hashCode());
-		return result;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 *
@@ -311,6 +141,176 @@ public class StravaSimilarActivities implements StravaEntity {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return the averageSpeed
+	 */
+	public Float getAverageSpeed() {
+		return this.averageSpeed;
+	}
+
+	/**
+	 * @return the effortCount
+	 */
+	public Integer getEffortCount() {
+		return this.effortCount;
+	}
+
+	/**
+	 * @return the frequencyMilestone
+	 */
+	public String getFrequencyMilestone() {
+		return this.frequencyMilestone;
+	}
+
+	/**
+	 * @return the maxAverageSpeed
+	 */
+	public Float getMaxAverageSpeed() {
+		return this.maxAverageSpeed;
+	}
+
+	/**
+	 * @return the midAverageSpeed
+	 */
+	public Float getMidAverageSpeed() {
+		return this.midAverageSpeed;
+	}
+
+	/**
+	 * @return the minAverageSpeed
+	 */
+	public Float getMinAverageSpeed() {
+		return this.minAverageSpeed;
+	}
+
+	/**
+	 * @return the prRank
+	 */
+	public Integer getPrRank() {
+		return this.prRank;
+	}
+
+	/**
+	 * @return the resourceState
+	 */
+	@Override
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+
+	/**
+	 * @return the trend
+	 */
+	public StravaSimilarActivitiesTrend getTrend() {
+		return this.trend;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.averageSpeed == null) ? 0 : this.averageSpeed.hashCode());
+		result = (prime * result) + ((this.effortCount == null) ? 0 : this.effortCount.hashCode());
+		result = (prime * result) + ((this.frequencyMilestone == null) ? 0 : this.frequencyMilestone.hashCode());
+		result = (prime * result) + ((this.maxAverageSpeed == null) ? 0 : this.maxAverageSpeed.hashCode());
+		result = (prime * result) + ((this.midAverageSpeed == null) ? 0 : this.midAverageSpeed.hashCode());
+		result = (prime * result) + ((this.minAverageSpeed == null) ? 0 : this.minAverageSpeed.hashCode());
+		result = (prime * result) + ((this.prRank == null) ? 0 : this.prRank.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.trend == null) ? 0 : this.trend.hashCode());
+		return result;
+	}
+
+	/**
+	 * @param averageSpeed
+	 *            the averageSpeed to set
+	 */
+	public void setAverageSpeed(Float averageSpeed) {
+		this.averageSpeed = averageSpeed;
+	}
+
+	/**
+	 * @param effortCount
+	 *            the effortCount to set
+	 */
+	public void setEffortCount(Integer effortCount) {
+		this.effortCount = effortCount;
+	}
+
+	/**
+	 * @param frequencyMilestone
+	 *            the frequencyMilestone to set
+	 */
+	public void setFrequencyMilestone(String frequencyMilestone) {
+		this.frequencyMilestone = frequencyMilestone;
+	}
+
+	/**
+	 * @param maxAverageSpeed
+	 *            the maxAverageSpeed to set
+	 */
+	public void setMaxAverageSpeed(Float maxAverageSpeed) {
+		this.maxAverageSpeed = maxAverageSpeed;
+	}
+
+	/**
+	 * @param midAverageSpeed
+	 *            the midAverageSpeed to set
+	 */
+	public void setMidAverageSpeed(Float midAverageSpeed) {
+		this.midAverageSpeed = midAverageSpeed;
+	}
+
+	/**
+	 * @param minAverageSpeed
+	 *            the minAverageSpeed to set
+	 */
+	public void setMinAverageSpeed(Float minAverageSpeed) {
+		this.minAverageSpeed = minAverageSpeed;
+	}
+
+	/**
+	 * @param prRank
+	 *            the prRank to set
+	 */
+	public void setPrRank(Integer prRank) {
+		this.prRank = prRank;
+	}
+
+	/**
+	 * @param resourceState
+	 *            the resourceState to set
+	 */
+	public void setResourceState(StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+
+	/**
+	 * @param trend
+	 *            the trend to set
+	 */
+	public void setTrend(StravaSimilarActivitiesTrend trend) {
+		this.trend = trend;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaSimilarActivities [effortCount=" + this.effortCount + ", averageSpeed=" + this.averageSpeed + ", minAverageSpeed=" + this.minAverageSpeed + ", midAverageSpeed=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ this.midAverageSpeed + ", maxAverageSpeed=" + this.maxAverageSpeed + ", prRank=" + this.prRank + ", frequencyMilestone=" + this.frequencyMilestone + ", trend=" + this.trend //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ ", resourceState=" //$NON-NLS-1$
+				+ this.resourceState + "]"; //$NON-NLS-1$
 	}
 
 }

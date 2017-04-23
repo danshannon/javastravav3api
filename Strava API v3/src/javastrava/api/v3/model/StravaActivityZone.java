@@ -15,16 +15,10 @@ import javastrava.api.v3.model.reference.StravaResourceState;
  */
 public class StravaActivityZone implements StravaEntity {
 	/**
-	 * No args constructor
-	 */
-	public StravaActivityZone() {
-		super();
-	}
-
-	/**
 	 * Strava suffer score for the activity
 	 */
 	private Integer										score;
+
 	/**
 	 * Data on each zone and time spent in it
 	 */
@@ -53,148 +47,11 @@ public class StravaActivityZone implements StravaEntity {
 	 * Maximum heart rate reached during the activity
 	 */
 	private Integer										max;
-
 	/**
-	 * @return the score
+	 * No args constructor
 	 */
-	public Integer getScore() {
-		return this.score;
-	}
-
-	/**
-	 * @param score
-	 *            the score to set
-	 */
-	public void setScore(final Integer score) {
-		this.score = score;
-	}
-
-	/**
-	 * @return the distributionBuckets
-	 */
-	public List<StravaActivityZoneDistributionBucket> getDistributionBuckets() {
-		return this.distributionBuckets;
-	}
-
-	/**
-	 * @param distributionBuckets
-	 *            the distributionBuckets to set
-	 */
-	public void setDistributionBuckets(final List<StravaActivityZoneDistributionBucket> distributionBuckets) {
-		this.distributionBuckets = distributionBuckets;
-	}
-
-	/**
-	 * @return the type
-	 */
-	public StravaActivityZoneType getType() {
-		return this.type;
-	}
-
-	/**
-	 * @param type
-	 *            the type to set
-	 */
-	public void setType(final StravaActivityZoneType type) {
-		this.type = type;
-	}
-
-	/**
-	 * @param resourceState
-	 *            the resourceState to set
-	 */
-	public void setResourceState(final StravaResourceState resourceState) {
-		this.resourceState = resourceState;
-	}
-
-	/**
-	 * @return the sensorBased
-	 */
-	public Boolean getSensorBased() {
-		return this.sensorBased;
-	}
-
-	/**
-	 * @param sensorBased
-	 *            the sensorBased to set
-	 */
-	public void setSensorBased(final Boolean sensorBased) {
-		this.sensorBased = sensorBased;
-	}
-
-	/**
-	 * @return the points
-	 */
-	public Integer getPoints() {
-		return this.points;
-	}
-
-	/**
-	 * @param points
-	 *            the points to set
-	 */
-	public void setPoints(final Integer points) {
-		this.points = points;
-	}
-
-	/**
-	 * @return the customZones
-	 */
-	public Boolean getCustomZones() {
-		return this.customZones;
-	}
-
-	/**
-	 * @param customZones
-	 *            the customZones to set
-	 */
-	public void setCustomZones(final Boolean customZones) {
-		this.customZones = customZones;
-	}
-
-	/**
-	 * @return the max
-	 */
-	public Integer getMax() {
-		return this.max;
-	}
-
-	/**
-	 * @param max
-	 *            the max to set
-	 */
-	public void setMax(final Integer max) {
-		this.max = max;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "StravaActivityZone [score=" + this.score + ", distributionBuckets=" + this.distributionBuckets + ", type=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.type + ", resourceState=" //$NON-NLS-1$
-				+ this.resourceState + ", sensorBased=" + this.sensorBased + ", points=" + this.points + ", customZones=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ this.customZones + ", max=" //$NON-NLS-1$
-				+ this.max + "]"; //$NON-NLS-1$
-	}
-
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.customZones == null) ? 0 : this.customZones.hashCode());
-		result = (prime * result) + ((this.distributionBuckets == null) ? 0 : this.distributionBuckets.hashCode());
-		result = (prime * result) + ((this.max == null) ? 0 : this.max.hashCode());
-		result = (prime * result) + ((this.points == null) ? 0 : this.points.hashCode());
-		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
-		result = (prime * result) + ((this.score == null) ? 0 : this.score.hashCode());
-		result = (prime * result) + ((this.sensorBased == null) ? 0 : this.sensorBased.hashCode());
-		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
-		return result;
+	public StravaActivityZone() {
+		super();
 	}
 
 	/**
@@ -263,9 +120,152 @@ public class StravaActivityZone implements StravaEntity {
 		return true;
 	}
 
+	/**
+	 * @return the customZones
+	 */
+	public Boolean getCustomZones() {
+		return this.customZones;
+	}
+
+	/**
+	 * @return the distributionBuckets
+	 */
+	public List<StravaActivityZoneDistributionBucket> getDistributionBuckets() {
+		return this.distributionBuckets;
+	}
+
+	/**
+	 * @return the max
+	 */
+	public Integer getMax() {
+		return this.max;
+	}
+
+	/**
+	 * @return the points
+	 */
+	public Integer getPoints() {
+		return this.points;
+	}
+
 	@Override
 	public StravaResourceState getResourceState() {
 		return this.resourceState;
+	}
+
+	/**
+	 * @return the score
+	 */
+	public Integer getScore() {
+		return this.score;
+	}
+
+	/**
+	 * @return the sensorBased
+	 */
+	public Boolean getSensorBased() {
+		return this.sensorBased;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public StravaActivityZoneType getType() {
+		return this.type;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.customZones == null) ? 0 : this.customZones.hashCode());
+		result = (prime * result) + ((this.distributionBuckets == null) ? 0 : this.distributionBuckets.hashCode());
+		result = (prime * result) + ((this.max == null) ? 0 : this.max.hashCode());
+		result = (prime * result) + ((this.points == null) ? 0 : this.points.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.score == null) ? 0 : this.score.hashCode());
+		result = (prime * result) + ((this.sensorBased == null) ? 0 : this.sensorBased.hashCode());
+		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+		return result;
+	}
+
+	/**
+	 * @param customZones
+	 *            the customZones to set
+	 */
+	public void setCustomZones(final Boolean customZones) {
+		this.customZones = customZones;
+	}
+
+	/**
+	 * @param distributionBuckets
+	 *            the distributionBuckets to set
+	 */
+	public void setDistributionBuckets(final List<StravaActivityZoneDistributionBucket> distributionBuckets) {
+		this.distributionBuckets = distributionBuckets;
+	}
+
+	/**
+	 * @param max
+	 *            the max to set
+	 */
+	public void setMax(final Integer max) {
+		this.max = max;
+	}
+
+	/**
+	 * @param points
+	 *            the points to set
+	 */
+	public void setPoints(final Integer points) {
+		this.points = points;
+	}
+
+	/**
+	 * @param resourceState
+	 *            the resourceState to set
+	 */
+	public void setResourceState(final StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+
+	/**
+	 * @param score
+	 *            the score to set
+	 */
+	public void setScore(final Integer score) {
+		this.score = score;
+	}
+
+	/**
+	 * @param sensorBased
+	 *            the sensorBased to set
+	 */
+	public void setSensorBased(final Boolean sensorBased) {
+		this.sensorBased = sensorBased;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(final StravaActivityZoneType type) {
+		this.type = type;
+	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaActivityZone [score=" + this.score + ", distributionBuckets=" + this.distributionBuckets + ", type=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.type + ", resourceState=" //$NON-NLS-1$
+				+ this.resourceState + ", sensorBased=" + this.sensorBased + ", points=" + this.points + ", customZones=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.customZones + ", max=" //$NON-NLS-1$
+				+ this.max + "]"; //$NON-NLS-1$
 	}
 
 }

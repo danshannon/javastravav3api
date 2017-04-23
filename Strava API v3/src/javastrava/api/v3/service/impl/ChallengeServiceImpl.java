@@ -24,17 +24,6 @@ import javastrava.util.PrivacyUtils;
 public class ChallengeServiceImpl extends StravaServiceImpl implements ChallengeService {
 
 	/**
-	 * Private constructor requires a valid access token; see {@link #instance(Token)}
-	 *
-	 * @param token
-	 *            A valid token from the Strava OAuth process
-	 */
-	private ChallengeServiceImpl(Token token) {
-		super(token);
-		this.cache = new StravaCacheImpl<StravaChallenge, Integer>(StravaChallenge.class, token);
-	}
-
-	/**
 	 * <p>
 	 * Returns an instance of {@link ChallengeService challenge services}
 	 * </p>
@@ -62,6 +51,17 @@ public class ChallengeServiceImpl extends StravaServiceImpl implements Challenge
 	}
 
 	private final StravaCache<StravaChallenge, Integer> cache;
+
+	/**
+	 * Private constructor requires a valid access token; see {@link #instance(Token)}
+	 *
+	 * @param token
+	 *            A valid token from the Strava OAuth process
+	 */
+	private ChallengeServiceImpl(Token token) {
+		super(token);
+		this.cache = new StravaCacheImpl<StravaChallenge, Integer>(StravaChallenge.class, token);
+	}
 
 	@Override
 	public void clearCache() {
@@ -106,16 +106,16 @@ public class ChallengeServiceImpl extends StravaServiceImpl implements Challenge
 	}
 
 	@Override
-	public void leaveChallenge(Integer id) {
-		this.api.leaveChallenge(id);
-	}
-
-	@Override
 	public CompletableFuture<Void> joinChallengeAsync(Integer id) {
 		return StravaServiceImpl.future(() -> {
 			joinChallenge(id);
 			return null;
 		});
+	}
+
+	@Override
+	public void leaveChallenge(Integer id) {
+		this.api.leaveChallenge(id);
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import javastrava.api.v3.model.reference.StravaResourceState;
 import javastrava.api.v3.service.ActivityService;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
-import javastrava.api.v3.service.exception.StravaInternalServerErrorException;
 import javastrava.api.v3.service.exception.StravaUnknownAPIException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
 import javastrava.cache.StravaCache;
@@ -191,17 +190,9 @@ public class ActivityServiceImpl extends StravaServiceImpl implements ActivitySe
 		} catch (final BadRequestException e) {
 			throw new IllegalArgumentException(e);
 		}
-		// TODO Workaround for issue javastrava-api #49
-		// (https://github.com/danshannon/javastravav3api/issues/49)
-		catch (final StravaInternalServerErrorException e) {
-			throw new IllegalArgumentException(e);
-		}
-		// End of workaround
 
 		// Put the activity in cache
-		if ((stravaResponse.getResourceState() == null) || (stravaResponse.getResourceState() != StravaResourceState.UPDATING)) {
-			this.activityCache.put(stravaResponse);
-		}
+		this.activityCache.put(stravaResponse);
 
 		// Return the activity
 		return stravaResponse;

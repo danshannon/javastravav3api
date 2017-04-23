@@ -50,6 +50,9 @@ import javastrava.api.v3.model.webhook.StravaEventSubscription;
 import javastrava.api.v3.service.exception.BadRequestException;
 import javastrava.api.v3.service.exception.NotFoundException;
 import javastrava.api.v3.service.exception.UnauthorizedException;
+import javastrava.api.v3.service.impl.StravaServiceImpl;
+import javastrava.config.Messages;
+import javastrava.config.StravaConfig;
 import javastrava.util.Paging;
 
 /**
@@ -62,6 +65,60 @@ import javastrava.util.Paging;
  */
 public class Strava implements ActivityService, AthleteService, ChallengeService, ClubService, ClubGroupEventService, GearService, RouteService, RunningRaceService, SegmentEffortService,
 		SegmentService, StreamService, TokenService, UploadService, WebhookService {
+	/**
+	 * Daily request rate limit (default is 30,000)
+	 */
+	public static int RATE_LIMIT_DAILY = StravaConfig.integer("strava.rate_limit_daily").intValue(); //$NON-NLS-1$
+
+	/**
+	 * Request rate limit every 15 minutes (default is 600)
+	 */
+	public static int RATE_LIMIT_CURRENT = StravaConfig.integer("strava.rate_limit").intValue(); //$NON-NLS-1$
+
+	/**
+	 * Current request rate over the last day
+	 */
+	public static int REQUEST_RATE_DAILY = 0;
+
+	/**
+	 * Current request rate over the last 15 minutes
+	 */
+	public static int REQUEST_RATE_CURRENT = 0;
+
+	/**
+	 * Calculates the percentage of the per-15-minute request limit that has been used, issues a warning if required
+	 *
+	 * @return Percentage used.
+	 */
+	public static float requestRateCurrentPercentage() {
+		final float percent = (RATE_LIMIT_CURRENT == 0 ? 0 : (100 * new Float(REQUEST_RATE_CURRENT).floatValue()) / new Float(RATE_LIMIT_CURRENT).floatValue());
+		if (percent > 100) {
+			StravaServiceImpl.log.error(String.format(Messages.string("StravaServiceImpl.exceededRateLimit"), Integer.valueOf(REQUEST_RATE_CURRENT), //$NON-NLS-1$
+					Integer.valueOf(RATE_LIMIT_CURRENT), Float.valueOf(percent)));
+		} else if (percent > StravaConfig.WARN_AT_REQUEST_LIMIT_PERCENT) {
+			StravaServiceImpl.log.warn(String.format(Messages.string("StravaServiceImpl.approachingRateLimit"), Integer.valueOf(REQUEST_RATE_CURRENT), //$NON-NLS-1$
+					Integer.valueOf(RATE_LIMIT_CURRENT), Float.valueOf(percent)));
+		}
+		return percent;
+	}
+
+	/**
+	 * Calculates the percentage of the daily request limit that has been used, issues a warning if required
+	 *
+	 * @return Percentage used.
+	 */
+	public static float requestRateDailyPercentage() {
+		final float percent = (Strava.RATE_LIMIT_DAILY == 0 ? 0 : (100 * new Float(REQUEST_RATE_DAILY).floatValue()) / new Float(Strava.RATE_LIMIT_DAILY).floatValue());
+		if (percent > 100) {
+			StravaServiceImpl.log.error(String.format(Messages.string("StravaServiceImpl.exceededRateLimitDaily"), Integer.valueOf(REQUEST_RATE_DAILY), //$NON-NLS-1$
+					Integer.valueOf(Strava.RATE_LIMIT_DAILY), Float.valueOf(percent)));
+		} else if (percent > StravaConfig.WARN_AT_REQUEST_LIMIT_PERCENT) {
+			StravaServiceImpl.log.warn(String.format(Messages.string("StravaServiceImpl.approachingRateLimitDaily"), Integer.valueOf(REQUEST_RATE_DAILY), //$NON-NLS-1$
+					Integer.valueOf(Strava.RATE_LIMIT_DAILY), Float.valueOf(percent)));
+		}
+		return percent;
+	}
+
 	/**
 	 * Instance used for access to activity data
 	 */
@@ -203,19 +260,19 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#createComment(StravaComment)
-	 */
-	@Override
-	public StravaComment createComment(final StravaComment comment) throws NotFoundException, BadRequestException {
-		return this.activityService.createComment(comment.getActivityId(), comment.getText());
-	}
-
-	/**
 	 * @see javastrava.api.v3.service.ActivityService#createComment(java.lang.Long, java.lang.String)
 	 */
 	@Override
 	public StravaComment createComment(final Long activityId, final String text) throws NotFoundException, BadRequestException {
 		return this.activityService.createComment(activityId, text);
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ActivityService#createComment(StravaComment)
+	 */
+	@Override
+	public StravaComment createComment(final StravaComment comment) throws NotFoundException, BadRequestException {
+		return this.activityService.createComment(comment.getActivityId(), comment.getText());
 	}
 
 	/**
@@ -267,19 +324,19 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	}
 
 	/**
-	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(StravaActivity)
-	 */
-	@Override
-	public StravaActivity deleteActivity(final StravaActivity activity) throws NotFoundException {
-		return this.activityService.deleteActivity(activity.getId());
-	}
-
-	/**
 	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(java.lang.Long)
 	 */
 	@Override
 	public StravaActivity deleteActivity(final Long activityId) throws NotFoundException {
 		return this.activityService.deleteActivity(activityId);
+	}
+
+	/**
+	 * @see javastrava.api.v3.service.ActivityService#deleteActivity(StravaActivity)
+	 */
+	@Override
+	public StravaActivity deleteActivity(final StravaActivity activity) throws NotFoundException {
+		return this.activityService.deleteActivity(activity.getId());
 	}
 
 	/**
@@ -320,6 +377,26 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	@Override
 	public CompletableFuture<Void> deleteCommentAsync(final StravaComment comment) throws NotFoundException {
 		return this.activityService.deleteCommentAsync(comment);
+	}
+
+	@Override
+	public void deleteEvent(Integer id) throws NotFoundException, UnauthorizedException {
+		this.clubGroupEventService.deleteEvent(id);
+	}
+
+	@Override
+	public void deleteEvent(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
+		this.clubGroupEventService.deleteEvent(event);
+	}
+
+	@Override
+	public CompletableFuture<Void> deleteEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventService.deleteEventAsync(id);
+	}
+
+	@Override
+	public CompletableFuture<Void> deleteEventAsync(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
+		return this.clubGroupEventService.deleteEventAsync(event);
 	}
 
 	/**
@@ -583,6 +660,16 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 		return this.athleteService.getAuthenticatedAthleteZonesAsync();
 	}
 
+	@Override
+	public StravaChallenge getChallenge(Integer id) {
+		return this.challengeService.getChallenge(id);
+	}
+
+	@Override
+	public CompletableFuture<StravaChallenge> getChallengeAsync(Integer id) {
+		return this.challengeService.getChallengeAsync(id);
+	}
+
 	/**
 	 * @param clubId
 	 *            Club identifier
@@ -665,6 +752,16 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 		return this.streamService.getEffortStreamsAsync(effortId, resolution, seriesType, types);
 	}
 
+	@Override
+	public StravaClubEvent getEvent(Integer id) {
+		return this.clubGroupEventService.getEvent(id);
+	}
+
+	@Override
+	public CompletableFuture<StravaClubEvent> getEventAsync(Integer id) {
+		return this.clubGroupEventService.getEventAsync(id);
+	}
+
 	/**
 	 * @param gearId
 	 *            Gear identifier
@@ -685,6 +782,64 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	@Override
 	public CompletableFuture<StravaGear> getGearAsync(final String gearId) {
 		return this.gearService.getGearAsync(gearId);
+	}
+
+	/**
+	 * <p>
+	 * Get details of a specific running race
+	 * </p>
+	 *
+	 * @param id
+	 *            The id of the race to be retrieved
+	 * @return A detailed representation of the running race
+	 */
+	@Override
+	public StravaRunningRace getRace(Integer id) {
+		return this.runningRaceService.getRace(id);
+	}
+
+	/**
+	 * <p>
+	 * Get details of a specific running race
+	 * </p>
+	 *
+	 * @param id
+	 *            The id of the race to be retrieved
+	 * @return A future which will return a detailed representation of the running race
+	 */
+	@Override
+	public CompletableFuture<StravaRunningRace> getRaceAsync(Integer id) {
+		return this.runningRaceService.getRaceAsync(id);
+	}
+
+	/**
+	 * <p>
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions. For raw data associated with a route see route streams.
+	 * </p>
+	 *
+	 * @param routeId
+	 *            The identifier of the route to retrieve
+	 * @return The route
+	 */
+	@Override
+	public StravaRoute getRoute(Integer routeId) {
+		return this.routeService.getRoute(routeId);
+	}
+
+	/**
+	 * <p>
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions. For raw data associated with a route see route streams.
+	 * </p>
+	 *
+	 * @param routeId
+	 *            The identifier of the route to retrieve
+	 * @return The future on which to execute get() to retrieve the route
+	 */
+	@Override
+	public CompletableFuture<StravaRoute> getRouteAsync(Integer routeId) {
+		return this.routeService.getRouteAsync(routeId);
 	}
 
 	/**
@@ -961,6 +1116,16 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 		return true;
 	}
 
+	@Override
+	public void joinChallenge(Integer id) {
+		this.challengeService.joinChallenge(id);
+	}
+
+	@Override
+	public CompletableFuture<Void> joinChallengeAsync(Integer id) {
+		return this.challengeService.joinChallengeAsync(id);
+	}
+
 	/**
 	 * @param clubId
 	 *            Club identifier
@@ -983,6 +1148,27 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 		return this.clubService.joinClubAsync(clubId);
 	}
 
+	@Override
+	public StravaClubEventJoinResponse joinEvent(Integer id) {
+		return this.clubGroupEventService.joinEvent(id);
+	}
+
+	@Override
+	public CompletableFuture<StravaClubEventJoinResponse> joinEventAsync(Integer id) {
+		return this.clubGroupEventService.joinEventAsync(id);
+	}
+
+	@Override
+	public void leaveChallenge(Integer id) {
+		this.challengeService.leaveChallenge(id);
+
+	}
+
+	@Override
+	public CompletableFuture<Void> leaveChallengeAsync(Integer id) {
+		return this.challengeService.leaveChallengeAsync(id);
+	}
+
 	/**
 	 * @param clubId
 	 *            Club identifier
@@ -1003,6 +1189,16 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	@Override
 	public CompletableFuture<StravaClubMembershipResponse> leaveClubAsync(final Integer clubId) {
 		return this.clubService.leaveClubAsync(clubId);
+	}
+
+	@Override
+	public StravaClubEventJoinResponse leaveEvent(Integer id) {
+		return this.clubGroupEventService.leaveEvent(id);
+	}
+
+	@Override
+	public CompletableFuture<StravaClubEventJoinResponse> leaveEventAsync(Integer id) {
+		return this.clubGroupEventService.leaveEventAsync(id);
 	}
 
 	/**
@@ -1567,6 +1763,16 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 		return this.clubService.listAllClubMembersAsync(clubId);
 	}
 
+	@Override
+	public List<StravaAthlete> listAllEventJoinedAthletes(Integer eventId) {
+		return this.clubGroupEventService.listAllEventJoinedAthletes(eventId);
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listAllEventJoinedAthletesAsync(Integer eventId) {
+		return this.clubGroupEventService.listAllEventJoinedAthletesAsync(eventId);
+	}
+
 	/**
 	 * <p>
 	 * USE WITH CAUTION - ATHLETES WITH MANY FRIENDS' ACTIVITIES WILL REQUIRE MANY CALLS TO THE STRAVA API
@@ -1825,6 +2031,36 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	@Override
 	public CompletableFuture<List<StravaSegmentEffort>> listAthleteKOMsAsync(final Integer athleteId, final Paging pagingInstruction) {
 		return this.athleteService.listAthleteKOMsAsync(athleteId, pagingInstruction);
+	}
+
+	/**
+	 * <p>
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions.
+	 * </p>
+	 *
+	 * @param id
+	 *            The athlete id whose routes should be listed
+	 * @return The route
+	 */
+	@Override
+	public List<StravaRoute> listAthleteRoutes(Integer id) {
+		return this.routeService.listAthleteRoutes(id);
+	}
+
+	/**
+	 * <p>
+	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions.
+	 * </p>
+	 *
+	 * @param id
+	 *            The athlete id whose routes should be listed
+	 * @return The future to execute get() on to return the routes
+	 */
+	@Override
+	public CompletableFuture<List<StravaRoute>> listAthleteRoutesAsync(Integer id) {
+		return this.routeService.listAthleteRoutesAsync(id);
 	}
 
 	/**
@@ -2320,6 +2556,16 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 		return this.clubService.listClubMembersAsync(clubId, pagingInstruction);
 	}
 
+	@Override
+	public List<StravaAthlete> listEventJoinedAthletes(Integer eventId, Paging pagingInstruction) {
+		return this.clubGroupEventService.listEventJoinedAthletes(eventId, pagingInstruction);
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listEventJoinedAthletesAsync(Integer eventId, Paging pagingInstruction) {
+		return this.clubGroupEventService.listEventJoinedAthletesAsync(eventId, pagingInstruction);
+	}
+
 	/**
 	 * @return First page of the list of activities by friends of the authenticated athlete, sorted by start date (descending)
 	 * @see javastrava.api.v3.service.ActivityService#listFriendsActivities()
@@ -2358,6 +2604,44 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	@Override
 	public CompletableFuture<List<StravaActivity>> listFriendsActivitiesAsync(final Paging pagingInstruction) {
 		return this.activityService.listFriendsActivitiesAsync(pagingInstruction);
+	}
+
+	@Override
+	public List<StravaChallenge> listJoinedChallenges() {
+		return this.challengeService.listJoinedChallenges();
+	}
+
+	@Override
+	public CompletableFuture<List<StravaChallenge>> listJoinedChallengesAsync() {
+		return this.challengeService.listJoinedChallengesAsync();
+	}
+
+	/**
+	 * <p>
+	 * List Strava's featured running races
+	 * </p>
+	 *
+	 * @param year
+	 *            (Optional) restrict results to the given year
+	 * @return List of running races as summary representations
+	 */
+	@Override
+	public List<StravaRunningRace> listRaces(Integer year) {
+		return this.runningRaceService.listRaces(year);
+	}
+
+	/**
+	 * <p>
+	 * List Strava's featured running races
+	 * </p>
+	 *
+	 * @param year
+	 *            (Optional) restrict results to the given year
+	 * @return Future containing list of running races as summary representations
+	 */
+	@Override
+	public CompletableFuture<List<StravaRunningRace>> listRacesAsync(Integer year) {
+		return this.runningRaceService.listRacesAsync(year);
 	}
 
 	/**
@@ -2706,6 +2990,38 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	}
 
 	/**
+	 * <p>
+	 * Star or unstar a segment
+	 * </p>
+	 *
+	 * @param segmentId
+	 *            The id of the segment to be starred
+	 * @param starred
+	 *            <code>true</code> if segment is to be starred, <code>false</code> if segment is to be unstarred
+	 * @return Detailed representation of the segment
+	 */
+	@Override
+	public StravaSegment starSegment(Integer segmentId, Boolean starred) {
+		return this.segmentService.starSegment(segmentId, starred);
+	}
+
+	/**
+	 * <p>
+	 * Star or unstar a segment
+	 * </p>
+	 *
+	 * @param segmentId
+	 *            The id of the segment to be starred
+	 * @param starred
+	 *            <code>true</code> if segment is to be starred, <code>false</code> if segment is to be unstarred
+	 * @return CompletableFuture which returns the detailed representation of the segment
+	 */
+	@Override
+	public CompletableFuture<StravaSegment> starSegmentAsync(Integer segmentId, Boolean starred) {
+		return this.segmentService.starSegmentAsync(segmentId, starred);
+	}
+
+	/**
 	 * @param athleteId
 	 *            Athlete identifier
 	 * @return Statistics for the identified athlete, or <code>null</code> if the athlete does not exist
@@ -2852,264 +3168,5 @@ public class Strava implements ActivityService, AthleteService, ChallengeService
 	public CompletableFuture<StravaUploadResponse> uploadAsync(final StravaActivityType activityType, final String name, final String description, final Boolean _private, final Boolean trainer,
 			final Boolean commute, final String dataType, final String externalId, final File file) {
 		return this.uploadService.uploadAsync(activityType, name, description, _private, trainer, commute, dataType, externalId, file);
-	}
-
-	/**
-	 * <p>
-	 * Star or unstar a segment
-	 * </p>
-	 *
-	 * @param segmentId
-	 *            The id of the segment to be starred
-	 * @param starred
-	 *            <code>true</code> if segment is to be starred, <code>false</code> if segment is to be unstarred
-	 * @return Detailed representation of the segment
-	 */
-	@Override
-	public StravaSegment starSegment(Integer segmentId, Boolean starred) {
-		return this.segmentService.starSegment(segmentId, starred);
-	}
-
-	/**
-	 * <p>
-	 * Star or unstar a segment
-	 * </p>
-	 *
-	 * @param segmentId
-	 *            The id of the segment to be starred
-	 * @param starred
-	 *            <code>true</code> if segment is to be starred, <code>false</code> if segment is to be unstarred
-	 * @return CompletableFuture which returns the detailed representation of the segment
-	 */
-	@Override
-	public CompletableFuture<StravaSegment> starSegmentAsync(Integer segmentId, Boolean starred) {
-		return this.segmentService.starSegmentAsync(segmentId, starred);
-	}
-
-	/**
-	 * <p>
-	 * List Strava's featured running races
-	 * </p>
-	 *
-	 * @param year
-	 *            (Optional) restrict results to the given year
-	 * @return List of running races as summary representations
-	 */
-	@Override
-	public List<StravaRunningRace> listRaces(Integer year) {
-		return this.runningRaceService.listRaces(year);
-	}
-
-	/**
-	 * <p>
-	 * List Strava's featured running races
-	 * </p>
-	 *
-	 * @param year
-	 *            (Optional) restrict results to the given year
-	 * @return Future containing list of running races as summary representations
-	 */
-	@Override
-	public CompletableFuture<List<StravaRunningRace>> listRacesAsync(Integer year) {
-		return this.runningRaceService.listRacesAsync(year);
-	}
-
-	/**
-	 * <p>
-	 * Get details of a specific running race
-	 * </p>
-	 *
-	 * @param id
-	 *            The id of the race to be retrieved
-	 * @return A detailed representation of the running race
-	 */
-	@Override
-	public StravaRunningRace getRace(Integer id) {
-		return this.runningRaceService.getRace(id);
-	}
-
-	/**
-	 * <p>
-	 * Get details of a specific running race
-	 * </p>
-	 *
-	 * @param id
-	 *            The id of the race to be retrieved
-	 * @return A future which will return a detailed representation of the running race
-	 */
-	@Override
-	public CompletableFuture<StravaRunningRace> getRaceAsync(Integer id) {
-		return this.runningRaceService.getRaceAsync(id);
-	}
-
-	/**
-	 * <p>
-	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
-	 * view_private} permissions. For raw data associated with a route see route streams.
-	 * </p>
-	 *
-	 * @param routeId
-	 *            The identifier of the route to retrieve
-	 * @return The route
-	 */
-	@Override
-	public StravaRoute getRoute(Integer routeId) {
-		return this.routeService.getRoute(routeId);
-	}
-
-	/**
-	 * <p>
-	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
-	 * view_private} permissions. For raw data associated with a route see route streams.
-	 * </p>
-	 *
-	 * @param routeId
-	 *            The identifier of the route to retrieve
-	 * @return The future on which to execute get() to retrieve the route
-	 */
-	@Override
-	public CompletableFuture<StravaRoute> getRouteAsync(Integer routeId) {
-		return this.routeService.getRouteAsync(routeId);
-	}
-
-	/**
-	 * <p>
-	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
-	 * view_private} permissions.
-	 * </p>
-	 *
-	 * @param id
-	 *            The athlete id whose routes should be listed
-	 * @return The route
-	 */
-	@Override
-	public List<StravaRoute> listAthleteRoutes(Integer id) {
-		return this.routeService.listAthleteRoutes(id);
-	}
-
-	/**
-	 * <p>
-	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
-	 * view_private} permissions.
-	 * </p>
-	 *
-	 * @param id
-	 *            The athlete id whose routes should be listed
-	 * @return The future to execute get() on to return the routes
-	 */
-	@Override
-	public CompletableFuture<List<StravaRoute>> listAthleteRoutesAsync(Integer id) {
-		return this.routeService.listAthleteRoutesAsync(id);
-	}
-
-	@Override
-	public StravaChallenge getChallenge(Integer id) {
-		return this.challengeService.getChallenge(id);
-	}
-
-	@Override
-	public CompletableFuture<StravaChallenge> getChallengeAsync(Integer id) {
-		return this.challengeService.getChallengeAsync(id);
-	}
-
-	@Override
-	public void joinChallenge(Integer id) {
-		this.challengeService.joinChallenge(id);
-	}
-
-	@Override
-	public void leaveChallenge(Integer id) {
-		this.challengeService.leaveChallenge(id);
-
-	}
-
-	@Override
-	public CompletableFuture<Void> joinChallengeAsync(Integer id) {
-		return this.challengeService.joinChallengeAsync(id);
-	}
-
-	@Override
-	public CompletableFuture<Void> leaveChallengeAsync(Integer id) {
-		return this.challengeService.leaveChallengeAsync(id);
-	}
-
-	@Override
-	public List<StravaChallenge> listJoinedChallenges() {
-		return this.challengeService.listJoinedChallenges();
-	}
-
-	@Override
-	public CompletableFuture<List<StravaChallenge>> listJoinedChallengesAsync() {
-		return this.challengeService.listJoinedChallengesAsync();
-	}
-
-	@Override
-	public StravaClubEvent getEvent(Integer id) {
-		return this.clubGroupEventService.getEvent(id);
-	}
-
-	@Override
-	public CompletableFuture<StravaClubEvent> getEventAsync(Integer id) {
-		return this.clubGroupEventService.getEventAsync(id);
-	}
-
-	@Override
-	public StravaClubEventJoinResponse joinEvent(Integer id) {
-		return this.clubGroupEventService.joinEvent(id);
-	}
-
-	@Override
-	public CompletableFuture<StravaClubEventJoinResponse> joinEventAsync(Integer id) {
-		return this.clubGroupEventService.joinEventAsync(id);
-	}
-
-	@Override
-	public StravaClubEventJoinResponse leaveEvent(Integer id) {
-		return this.clubGroupEventService.leaveEvent(id);
-	}
-
-	@Override
-	public CompletableFuture<StravaClubEventJoinResponse> leaveEventAsync(Integer id) {
-		return this.clubGroupEventService.leaveEventAsync(id);
-	}
-
-	@Override
-	public List<StravaAthlete> listEventJoinedAthletes(Integer eventId, Paging pagingInstruction) {
-		return this.clubGroupEventService.listEventJoinedAthletes(eventId, pagingInstruction);
-	}
-
-	@Override
-	public List<StravaAthlete> listAllEventJoinedAthletes(Integer eventId) {
-		return this.clubGroupEventService.listAllEventJoinedAthletes(eventId);
-	}
-
-	@Override
-	public CompletableFuture<List<StravaAthlete>> listEventJoinedAthletesAsync(Integer eventId, Paging pagingInstruction) {
-		return this.clubGroupEventService.listEventJoinedAthletesAsync(eventId, pagingInstruction);
-	}
-
-	@Override
-	public CompletableFuture<List<StravaAthlete>> listAllEventJoinedAthletesAsync(Integer eventId) {
-		return this.clubGroupEventService.listAllEventJoinedAthletesAsync(eventId);
-	}
-
-	@Override
-	public void deleteEvent(Integer id) throws NotFoundException, UnauthorizedException {
-		this.clubGroupEventService.deleteEvent(id);
-	}
-
-	@Override
-	public void deleteEvent(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
-		this.clubGroupEventService.deleteEvent(event);
-	}
-
-	@Override
-	public CompletableFuture<Void> deleteEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
-		return this.clubGroupEventService.deleteEventAsync(id);
-	}
-
-	@Override
-	public CompletableFuture<Void> deleteEventAsync(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
-		return this.clubGroupEventService.deleteEventAsync(event);
 	}
 }

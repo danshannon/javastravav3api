@@ -95,6 +95,32 @@ public interface AthleteService extends StravaService {
 
 	/**
 	 * <p>
+	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1.
+	 * </p>
+	 *
+	 * <p>
+	 * Premium members who have set a functional threshold power (ftp) will see their power zones. Power zones are a Premium-only feature. Free members will not see the power part of this endpoint.
+	 * </p>
+	 *
+	 * @return The athlete zones object
+	 */
+	public StravaAthleteZones getAuthenticatedAthleteZones();
+
+	/**
+	 * <p>
+	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1.
+	 * </p>
+	 *
+	 * <p>
+	 * Premium members who have set a functional threshold power (ftp) will see their power zones. Power zones are a Premium-only feature. Free members will not see the power part of this endpoint.
+	 * </p>
+	 *
+	 * @return The athlete zones object (via a {@link CompletableFuture})
+	 */
+	public CompletableFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync();
+
+	/**
+	 * <p>
 	 * Convenience method for returning ALL of an athlete's friends
 	 * </p>
 	 *
@@ -894,30 +920,4 @@ public interface AthleteService extends StravaService {
 	 * @return Detailed representation of the updated athlete
 	 */
 	public CompletableFuture<StravaAthlete> updateAuthenticatedAthleteAsync(final String city, final String state, final String country, final StravaGender sex, final Float weight);
-
-	/**
-	 * <p>
-	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1.
-	 * </p>
-	 *
-	 * <p>
-	 * Premium members who have set a functional threshold power (ftp) will see their power zones. Power zones are a Premium-only feature. Free members will not see the power part of this endpoint.
-	 * </p>
-	 *
-	 * @return The athlete zones object
-	 */
-	public StravaAthleteZones getAuthenticatedAthleteZones();
-
-	/**
-	 * <p>
-	 * Returns the current athlete’s heart rate and power zones. The min for Zone 1 is always 0 and the max for Zone 5 is always -1.
-	 * </p>
-	 *
-	 * <p>
-	 * Premium members who have set a functional threshold power (ftp) will see their power zones. Power zones are a Premium-only feature. Free members will not see the power part of this endpoint.
-	 * </p>
-	 *
-	 * @return The athlete zones object (via a {@link CompletableFuture})
-	 */
-	public CompletableFuture<StravaAthleteZones> getAuthenticatedAthleteZonesAsync();
 }

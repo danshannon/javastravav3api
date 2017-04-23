@@ -22,6 +22,13 @@ public class UnauthorizedException extends RuntimeException implements StravaAPI
 	private StravaResponse	response;
 
 	/**
+	 * @param reason The error message
+	 */
+	public UnauthorizedException(final String reason) {
+		super(reason);
+	}
+	
+	/**
 	 * @param status Status message
 	 * @param response the Strava error message
 	 * @param cause The underlying cause of the exception
@@ -29,13 +36,6 @@ public class UnauthorizedException extends RuntimeException implements StravaAPI
 	public UnauthorizedException(final String status, final StravaResponse response, final Throwable cause) {
 		super(status + " : " + (response == null ? "" : response.toString()),cause); //$NON-NLS-1$ //$NON-NLS-2$
 		this.response = response;
-	}
-	
-	/**
-	 * @param reason The error message
-	 */
-	public UnauthorizedException(final String reason) {
-		super(reason);
 	}
 
 	/**

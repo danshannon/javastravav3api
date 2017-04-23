@@ -33,18 +33,6 @@ public interface SegmentEffortAPI {
 	 *
 	 * @param segmentEffortId
 	 *            Effort identifier
-	 * @return Effort details
-	 * @throws NotFoundException
-	 *             If the effort with the given id doesn't exist
-	 */
-	@GET("/segment_efforts/{id}")
-	public Response getSegmentEffortRaw(@Path("id") final Long segmentEffortId) throws NotFoundException;
-
-	/**
-	 * @see javastrava.api.v3.service.SegmentEffortService#getSegmentEffort(java.lang.Long)
-	 *
-	 * @param segmentEffortId
-	 *            Effort identifier
 	 * @param callback
 	 *            The callback to execute on completion
 	 * @throws NotFoundException
@@ -52,5 +40,17 @@ public interface SegmentEffortAPI {
 	 */
 	@GET("/segment_efforts/{id}")
 	public void getSegmentEffort(@Path("id") final Long segmentEffortId, final StravaAPICallback<StravaSegmentEffort> callback) throws NotFoundException;
+
+	/**
+	 * @see javastrava.api.v3.service.SegmentEffortService#getSegmentEffort(java.lang.Long)
+	 *
+	 * @param segmentEffortId
+	 *            Effort identifier
+	 * @return Effort details
+	 * @throws NotFoundException
+	 *             If the effort with the given id doesn't exist
+	 */
+	@GET("/segment_efforts/{id}")
+	public Response getSegmentEffortRaw(@Path("id") final Long segmentEffortId) throws NotFoundException;
 
 }

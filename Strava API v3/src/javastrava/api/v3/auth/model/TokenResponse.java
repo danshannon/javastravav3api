@@ -81,6 +81,11 @@ public class TokenResponse implements StravaEntity {
 		return this.athlete;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the tokenType
 	 */
@@ -131,11 +136,6 @@ public class TokenResponse implements StravaEntity {
 	@Override
 	public String toString() {
 		return "TokenResponse [accessToken=" + this.accessToken + ", tokenType=" + this.tokenType + ", athlete=" + this.athlete + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 
 }

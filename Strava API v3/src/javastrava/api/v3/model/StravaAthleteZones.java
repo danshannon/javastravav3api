@@ -14,13 +14,16 @@ public class StravaAthleteZones implements StravaEntity {
 	 */
 	private StravaAthleteZone heartRate;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.heartRate == null) ? 0 : this.heartRate.hashCode());
-		result = (prime * result) + ((this.power == null) ? 0 : this.power.hashCode());
-		return result;
+	/**
+	 * Set of power zones for athletes who have set FTP values
+	 */
+	private StravaAthleteZone power;
+
+	/**
+	 * No-args constructor
+	 */
+	public StravaAthleteZones() {
+		super();
 	}
 
 	@Override
@@ -53,22 +56,31 @@ public class StravaAthleteZones implements StravaEntity {
 	}
 
 	/**
-	 * Set of power zones for athletes who have set FTP values
-	 */
-	private StravaAthleteZone power;
-
-	/**
-	 * No-args constructor
-	 */
-	public StravaAthleteZones() {
-		super();
-	}
-
-	/**
 	 * @return the heartRate
 	 */
 	public StravaAthleteZone getHeartRate() {
 		return this.heartRate;
+	}
+
+	/**
+	 * @return the power zones
+	 */
+	public StravaAthleteZone getPower() {
+		return this.power;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.heartRate == null) ? 0 : this.heartRate.hashCode());
+		result = (prime * result) + ((this.power == null) ? 0 : this.power.hashCode());
+		return result;
 	}
 
 	/**
@@ -80,23 +92,11 @@ public class StravaAthleteZones implements StravaEntity {
 	}
 
 	/**
-	 * @return the power zones
-	 */
-	public StravaAthleteZone getPower() {
-		return this.power;
-	}
-
-	/**
 	 * @param power
 	 *            The power zone to set
 	 */
 	public void setPower(StravaAthleteZone power) {
 		this.power = power;
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 
 	@Override

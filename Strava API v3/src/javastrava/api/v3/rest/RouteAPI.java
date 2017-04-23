@@ -46,25 +46,6 @@ public interface RouteAPI {
 	 *
 	 * @param routeId
 	 *            The identifier of the route to retrieve
-	 * @return The route
-	 * @throws NotFoundException
-	 *             If the route does not exist
-	 * @throws BadRequestException
-	 *             If the id is not an integer
-	 * @throws UnauthorizedException
-	 *             If the route is private and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private}
-	 */
-	@GET("/routes/{id}")
-	public Response getRouteRaw(@Path("id") Integer routeId) throws NotFoundException, BadRequestException, UnauthorizedException;
-
-	/**
-	 * <p>
-	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
-	 * view_private} permissions. For raw data associated with a route see route streams.
-	 * </p>
-	 *
-	 * @param routeId
-	 *            The identifier of the route to retrieve
 	 * @param callback
 	 *            The callback to execute to retrieve the route
 	 * @throws NotFoundException
@@ -76,6 +57,25 @@ public interface RouteAPI {
 	 */
 	@GET("/routes/{id}")
 	public void getRoute(@Path("id") Integer routeId, StravaAPICallback<StravaRoute> callback);
+
+	/**
+	 * <p>
+	 * This request is used to retrieve details about a route. Private routes can only be accessed if owned by the authenticating user and the token has {@link AuthorisationScope#VIEW_PRIVATE
+	 * view_private} permissions. For raw data associated with a route see route streams.
+	 * </p>
+	 *
+	 * @param routeId
+	 *            The identifier of the route to retrieve
+	 * @return The route
+	 * @throws NotFoundException
+	 *             If the route does not exist
+	 * @throws BadRequestException
+	 *             If the id is not an integer
+	 * @throws UnauthorizedException
+	 *             If the route is private and the token has {@link AuthorisationScope#VIEW_PRIVATE view_private}
+	 */
+	@GET("/routes/{id}")
+	public Response getRouteRaw(@Path("id") Integer routeId) throws NotFoundException, BadRequestException, UnauthorizedException;
 
 	/**
 	 * <p>
@@ -98,10 +98,11 @@ public interface RouteAPI {
 	 *
 	 * @param id
 	 *            The athlete id whose routes should be listed
-	 * @return The route
+	 * @param callback
+	 *            The callback to execute to return the routes
 	 */
 	@GET("/athletes/{id}/routes")
-	public Response listAthleteRoutesRaw(@Path("id") Integer id);
+	public void listAthleteRoutes(@Path("id") Integer id, StravaAPICallback<StravaRoute[]> callback);
 
 	/**
 	 * <p>
@@ -111,9 +112,8 @@ public interface RouteAPI {
 	 *
 	 * @param id
 	 *            The athlete id whose routes should be listed
-	 * @param callback
-	 *            The callback to execute to return the routes
+	 * @return The route
 	 */
 	@GET("/athletes/{id}/routes")
-	public void listAthleteRoutes(@Path("id") Integer id, StravaAPICallback<StravaRoute[]> callback);
+	public Response listAthleteRoutesRaw(@Path("id") Integer id);
 }

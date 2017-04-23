@@ -14,34 +14,6 @@ public class StravaClubEventJoinResponse implements StravaEntity {
 	 */
 	private Boolean joined;
 
-	/**
-	 * @return the joined
-	 */
-	public Boolean getJoined() {
-		return this.joined;
-	}
-
-	/**
-	 * @param joined
-	 *            the joined to set
-	 */
-	public void setJoined(Boolean joined) {
-		this.joined = joined;
-	}
-
-	@Override
-	public String toString() {
-		return "StravaClubEventJoinResponse [joined=" + this.joined + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.joined == null) ? 0 : this.joined.hashCode());
-		return result;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -64,9 +36,37 @@ public class StravaClubEventJoinResponse implements StravaEntity {
 		return true;
 	}
 
+	/**
+	 * @return the joined
+	 */
+	public Boolean getJoined() {
+		return this.joined;
+	}
+
 	@Override
 	public StravaResourceState getResourceState() {
 		return StravaResourceState.DETAILED;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.joined == null) ? 0 : this.joined.hashCode());
+		return result;
+	}
+
+	/**
+	 * @param joined
+	 *            the joined to set
+	 */
+	public void setJoined(Boolean joined) {
+		this.joined = joined;
+	}
+
+	@Override
+	public String toString() {
+		return "StravaClubEventJoinResponse [joined=" + this.joined + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 }

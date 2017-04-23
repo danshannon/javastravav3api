@@ -171,6 +171,11 @@ public class StravaActivityUpdate implements StravaEntity {
 		return this.privateActivity;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the trainer
 	 */
@@ -265,11 +270,6 @@ public class StravaActivityUpdate implements StravaEntity {
 	public String toString() {
 		return "StravaActivityUpdate [name=" + this.name + ", type=" + this.type + ", privateActivity=" + this.privateActivity + ", commute=" + this.commute //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ ", trainer=" + this.trainer + ", gearId=" + this.gearId + ", description=" + this.description + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 
 }

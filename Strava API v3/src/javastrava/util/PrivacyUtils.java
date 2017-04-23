@@ -193,6 +193,22 @@ public class PrivacyUtils {
 
 	/**
 	 * <p>
+	 * Creates a {@link StravaChallenge} with resourceState = {@link StravaResourceState#PRIVATE}
+	 * </p>
+	 *
+	 * @param id
+	 *            The identifier of the challenge
+	 * @return The challenge
+	 */
+	public static StravaChallenge privateChallenge(Integer id) {
+		final StravaChallenge challenge = new StravaChallenge();
+		challenge.setId(id);
+		challenge.setResourceState(StravaResourceState.PRIVATE);
+		return challenge;
+	}
+
+	/**
+	 * <p>
 	 * Creates a {@link StravaClub} with resourceState = {@link StravaResourceState#PRIVATE}
 	 * </p>
 	 * 
@@ -285,22 +301,6 @@ public class PrivacyUtils {
 	 */
 	private static boolean segmentIsPrivate(final StravaSegment segment) {
 		return ((segment.getPrivateSegment() != null) && segment.getPrivateSegment().equals(Boolean.TRUE));
-	}
-
-	/**
-	 * <p>
-	 * Creates a {@link StravaChallenge} with resourceState = {@link StravaResourceState#PRIVATE}
-	 * </p>
-	 *
-	 * @param id
-	 *            The identifier of the challenge
-	 * @return The challenge
-	 */
-	public static StravaChallenge privateChallenge(Integer id) {
-		final StravaChallenge challenge = new StravaChallenge();
-		challenge.setId(id);
-		challenge.setResourceState(StravaResourceState.PRIVATE);
-		return challenge;
 	}
 
 }

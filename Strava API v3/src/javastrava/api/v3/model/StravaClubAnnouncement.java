@@ -44,123 +44,6 @@ public class StravaClubAnnouncement implements StravaEntity {
 	private String message;
 
 	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return this.id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(final Integer id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the resourceState
-	 */
-	@Override
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
-	}
-
-	/**
-	 * @param resourceState
-	 *            the resourceState to set
-	 */
-	public void setResourceState(final StravaResourceState resourceState) {
-		this.resourceState = resourceState;
-	}
-
-	/**
-	 * @return the clubId
-	 */
-	public Integer getClubId() {
-		return this.clubId;
-	}
-
-	/**
-	 * @param clubId
-	 *            the clubId to set
-	 */
-	public void setClubId(final Integer clubId) {
-		this.clubId = clubId;
-	}
-
-	/**
-	 * @return the athlete
-	 */
-	public StravaAthlete getAthlete() {
-		return this.athlete;
-	}
-
-	/**
-	 * @param athlete
-	 *            the athlete to set
-	 */
-	public void setAthlete(final StravaAthlete athlete) {
-		this.athlete = athlete;
-	}
-
-	/**
-	 * @return the createdAt
-	 */
-	public ZonedDateTime getCreatedAt() {
-		return this.createdAt;
-	}
-
-	/**
-	 * @param createdAt
-	 *            the createdAt to set
-	 */
-	public void setCreatedAt(final ZonedDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	/**
-	 * @return the message
-	 */
-	public String getMessage() {
-		return this.message;
-	}
-
-	/**
-	 * @param message
-	 *            the message to set
-	 */
-	public void setMessage(final String message) {
-		this.message = message;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "StravaClubAnnouncement [id=" + this.id + ", resourceState=" + this.resourceState + ", clubId=" + this.clubId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", athlete=" + this.athlete //$NON-NLS-1$
-				+ ", createdAt=" + this.createdAt + ", message=" + this.message + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.athlete == null) ? 0 : this.athlete.hashCode());
-		result = (prime * result) + ((this.clubId == null) ? 0 : this.clubId.hashCode());
-		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
-		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
-		result = (prime * result) + ((this.message == null) ? 0 : this.message.hashCode());
-		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
-		return result;
-	}
-
-	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -214,5 +97,122 @@ public class StravaClubAnnouncement implements StravaEntity {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return the athlete
+	 */
+	public StravaAthlete getAthlete() {
+		return this.athlete;
+	}
+
+	/**
+	 * @return the clubId
+	 */
+	public Integer getClubId() {
+		return this.clubId;
+	}
+
+	/**
+	 * @return the createdAt
+	 */
+	public ZonedDateTime getCreatedAt() {
+		return this.createdAt;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return this.id;
+	}
+
+	/**
+	 * @return the message
+	 */
+	public String getMessage() {
+		return this.message;
+	}
+
+	/**
+	 * @return the resourceState
+	 */
+	@Override
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.athlete == null) ? 0 : this.athlete.hashCode());
+		result = (prime * result) + ((this.clubId == null) ? 0 : this.clubId.hashCode());
+		result = (prime * result) + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.message == null) ? 0 : this.message.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		return result;
+	}
+
+	/**
+	 * @param athlete
+	 *            the athlete to set
+	 */
+	public void setAthlete(final StravaAthlete athlete) {
+		this.athlete = athlete;
+	}
+
+	/**
+	 * @param clubId
+	 *            the clubId to set
+	 */
+	public void setClubId(final Integer clubId) {
+		this.clubId = clubId;
+	}
+
+	/**
+	 * @param createdAt
+	 *            the createdAt to set
+	 */
+	public void setCreatedAt(final ZonedDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param message
+	 *            the message to set
+	 */
+	public void setMessage(final String message) {
+		this.message = message;
+	}
+
+	/**
+	 * @param resourceState
+	 *            the resourceState to set
+	 */
+	public void setResourceState(final StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StravaClubAnnouncement [id=" + this.id + ", resourceState=" + this.resourceState + ", clubId=" + this.clubId //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", athlete=" + this.athlete //$NON-NLS-1$
+				+ ", createdAt=" + this.createdAt + ", message=" + this.message + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }

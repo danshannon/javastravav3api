@@ -386,6 +386,14 @@ public class StravaLap implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @return The identifier
+	 */
+	@Override
+	public Long getId() {
+		return this.id;
+	}
+
+	/**
 	 * @return the lapIndex
 	 */
 	public Integer getLapIndex() {
@@ -418,6 +426,25 @@ public class StravaLap implements StravaCacheableEntity<Long> {
 	 */
 	public String getName() {
 		return this.name;
+	}
+
+	/**
+	 * @return the paceZone
+	 */
+	public Integer getPaceZone() {
+		return this.paceZone;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return this.resourceState;
+	}
+
+	/**
+	 * @return the split
+	 */
+	public String getSplit() {
+		return this.split;
 	}
 
 	/**
@@ -612,11 +639,27 @@ public class StravaLap implements StravaCacheableEntity<Long> {
 	}
 
 	/**
+	 * @param paceZone
+	 *            the paceZone to set
+	 */
+	public void setPaceZone(Integer paceZone) {
+		this.paceZone = paceZone;
+	}
+
+	/**
 	 * @param resourceState
 	 *            the resourceState to set
 	 */
 	public void setResourceState(final StravaResourceState resourceState) {
 		this.resourceState = resourceState;
+	}
+
+	/**
+	 * @param split
+	 *            the split to set
+	 */
+	public void setSplit(String split) {
+		this.split = split;
 	}
 
 	/**
@@ -666,48 +709,5 @@ public class StravaLap implements StravaCacheableEntity<Long> {
 				+ ", deviceWatts=" + this.deviceWatts + ", averageHeartrate=" + this.averageHeartrate + ", maxHeartrate=" + this.maxHeartrate + ", lapIndex=" + this.lapIndex + ", paceZone=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 				+ this.paceZone + ", split=" //$NON-NLS-1$
 				+ this.split + "]"; //$NON-NLS-1$
-	}
-
-	/**
-	 * @return The identifier
-	 */
-	@Override
-	public Long getId() {
-		return this.id;
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return this.resourceState;
-	}
-
-	/**
-	 * @return the paceZone
-	 */
-	public Integer getPaceZone() {
-		return this.paceZone;
-	}
-
-	/**
-	 * @param paceZone
-	 *            the paceZone to set
-	 */
-	public void setPaceZone(Integer paceZone) {
-		this.paceZone = paceZone;
-	}
-
-	/**
-	 * @return the split
-	 */
-	public String getSplit() {
-		return this.split;
-	}
-
-	/**
-	 * @param split
-	 *            the split to set
-	 */
-	public void setSplit(String split) {
-		this.split = split;
 	}
 }

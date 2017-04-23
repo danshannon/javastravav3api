@@ -67,6 +67,11 @@ public class StravaAthleteZone implements StravaEntity {
 		return this.customZones;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the zones
 	 */
@@ -108,10 +113,5 @@ public class StravaAthleteZone implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaHeartRateZones [customZones=" + this.customZones + ", zones=" + this.zones + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

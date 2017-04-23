@@ -33,18 +33,6 @@ public interface GearAPI {
 	 *
 	 * @param gearId
 	 *            Gear identifier
-	 * @return Details of the identified gear
-	 * @throws NotFoundException
-	 *             If the gear with the given id doesn't exist
-	 */
-	@GET("/gear/{id}")
-	public Response getGearRaw(@Path("id") final String gearId) throws NotFoundException;
-
-	/**
-	 * @see javastrava.api.v3.service.GearService#getGear(java.lang.String)
-	 *
-	 * @param gearId
-	 *            Gear identifier
 	 * @param callback
 	 *            The callback to execute on completion
 	 * @throws NotFoundException
@@ -52,5 +40,17 @@ public interface GearAPI {
 	 */
 	@GET("/gear/{id}")
 	public void getGear(@Path("id") final String gearId, StravaAPICallback<StravaGear> callback) throws NotFoundException;
+
+	/**
+	 * @see javastrava.api.v3.service.GearService#getGear(java.lang.String)
+	 *
+	 * @param gearId
+	 *            Gear identifier
+	 * @return Details of the identified gear
+	 * @throws NotFoundException
+	 *             If the gear with the given id doesn't exist
+	 */
+	@GET("/gear/{id}")
+	public Response getGearRaw(@Path("id") final String gearId) throws NotFoundException;
 
 }

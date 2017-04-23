@@ -132,6 +132,20 @@ public class StravaSplit implements StravaEntity {
 	}
 
 	/**
+	 * @return the averageHeartrate
+	 */
+	public Float getAverageHeartrate() {
+		return this.averageHeartrate;
+	}
+
+	/**
+	 * @return the averageSpeed
+	 */
+	public Float getAverageSpeed() {
+		return this.averageSpeed;
+	}
+
+	/**
 	 * @return the distance
 	 */
 	public Float getDistance() {
@@ -160,6 +174,18 @@ public class StravaSplit implements StravaEntity {
 	}
 
 	/**
+	 * @return the paceZone
+	 */
+	public Integer getPaceZone() {
+		return this.paceZone;
+	}
+
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
+	/**
 	 * @return the split
 	 */
 	public Integer getSplit() {
@@ -184,6 +210,22 @@ public class StravaSplit implements StravaEntity {
 		result = (prime * result) + ((this.paceZone == null) ? 0 : this.paceZone.hashCode());
 		result = (prime * result) + ((this.split == null) ? 0 : this.split.hashCode());
 		return result;
+	}
+
+	/**
+	 * @param averageHeartrate
+	 *            the averageHeartrate to set
+	 */
+	public void setAverageHeartrate(Float averageHeartrate) {
+		this.averageHeartrate = averageHeartrate;
+	}
+
+	/**
+	 * @param averageSpeed
+	 *            the averageSpeed to set
+	 */
+	public void setAverageSpeed(Float averageSpeed) {
+		this.averageSpeed = averageSpeed;
 	}
 
 	/**
@@ -219,6 +261,14 @@ public class StravaSplit implements StravaEntity {
 	}
 
 	/**
+	 * @param paceZone
+	 *            the paceZone to set
+	 */
+	public void setPaceZone(Integer paceZone) {
+		this.paceZone = paceZone;
+	}
+
+	/**
 	 * @param split
 	 *            the split to set
 	 */
@@ -230,55 +280,5 @@ public class StravaSplit implements StravaEntity {
 	public String toString() {
 		return "StravaSplit [distance=" + this.distance + ", elapsedTime=" + this.elapsedTime + ", elevationDifference=" + this.elevationDifference + ", movingTime=" + this.movingTime + ", split=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 				+ this.split + ", averageHeartrate=" + this.averageHeartrate + ", averageSpeed=" + this.averageSpeed + ", paceZone=" + this.paceZone + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	/**
-	 * @return the averageHeartrate
-	 */
-	public Float getAverageHeartrate() {
-		return this.averageHeartrate;
-	}
-
-	/**
-	 * @param averageHeartrate
-	 *            the averageHeartrate to set
-	 */
-	public void setAverageHeartrate(Float averageHeartrate) {
-		this.averageHeartrate = averageHeartrate;
-	}
-
-	/**
-	 * @return the averageSpeed
-	 */
-	public Float getAverageSpeed() {
-		return this.averageSpeed;
-	}
-
-	/**
-	 * @param averageSpeed
-	 *            the averageSpeed to set
-	 */
-	public void setAverageSpeed(Float averageSpeed) {
-		this.averageSpeed = averageSpeed;
-	}
-
-	/**
-	 * @return the paceZone
-	 */
-	public Integer getPaceZone() {
-		return this.paceZone;
-	}
-
-	/**
-	 * @param paceZone
-	 *            the paceZone to set
-	 */
-	public void setPaceZone(Integer paceZone) {
-		this.paceZone = paceZone;
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }

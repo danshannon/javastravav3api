@@ -347,6 +347,13 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @return the club
+	 */
+	public StravaClub getClub() {
+		return this.club;
+	}
+
+	/**
 	 * @return the clubId
 	 */
 	@Deprecated
@@ -362,10 +369,31 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @return the dayOfWeek
+	 */
+	public String getDayOfWeek() {
+		return this.dayOfWeek;
+	}
+
+	/**
+	 * @return the daysOfWeek
+	 */
+	public List<String> getDaysOfWeek() {
+		return this.daysOfWeek;
+	}
+
+	/**
 	 * @return the description
 	 */
 	public String getDescription() {
 		return this.description;
+	}
+
+	/**
+	 * @return the frequency
+	 */
+	public StravaEventFrequency getFrequency() {
+		return this.frequency;
 	}
 
 	/**
@@ -374,6 +402,20 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	@Override
 	public Integer getId() {
 		return this.id;
+	}
+
+	/**
+	 * @return the joined
+	 */
+	public Boolean getJoined() {
+		return this.joined;
+	}
+
+	/**
+	 * @return the organizingAthlete
+	 */
+	public StravaAthlete getOrganizingAthlete() {
+		return this.organizingAthlete;
 	}
 
 	/**
@@ -392,6 +434,13 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @return the route
+	 */
+	public StravaRoute getRoute() {
+		return this.route;
+	}
+
+	/**
 	 * @return the routeId
 	 */
 	@Deprecated
@@ -404,6 +453,20 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	 */
 	public StravaSkillLevel getSkillLevels() {
 		return this.skillLevels;
+	}
+
+	/**
+	 * @return the startDatetime
+	 */
+	public LocalDateTime getStartDatetime() {
+		return this.startDatetime;
+	}
+
+	/**
+	 * @return the startLatlng
+	 */
+	public StravaMapPoint getStartLatlng() {
+		return this.startLatlng;
 	}
 
 	/**
@@ -428,10 +491,38 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @return The viewer permissions
+	 */
+	public StravaClubEventViewerPermissions getViewerPermissions() {
+		return this.viewerPermissions;
+	}
+
+	/**
+	 * @return the weeklyInterval
+	 */
+	public Integer getWeeklyInterval() {
+		return this.weeklyInterval;
+	}
+
+	/**
+	 * @return the weekOfMonth
+	 */
+	public StravaWeekOfMonth getWeekOfMonth() {
+		return this.weekOfMonth;
+	}
+
+	/**
 	 * @return the womenOnly
 	 */
 	public Boolean getWomenOnly() {
 		return this.womenOnly;
+	}
+
+	/**
+	 * @return the zone
+	 */
+	public String getZone() {
+		return this.zone;
 	}
 
 	/*
@@ -490,6 +581,14 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @param club
+	 *            the club to set
+	 */
+	public void setClub(StravaClub club) {
+		this.club = club;
+	}
+
+	/**
 	 * @param clubId
 	 *            the clubId to set
 	 */
@@ -507,6 +606,22 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @param dayOfWeek
+	 *            the dayOfWeek to set
+	 */
+	public void setDayOfWeek(String dayOfWeek) {
+		this.dayOfWeek = dayOfWeek;
+	}
+
+	/**
+	 * @param daysOfWeek
+	 *            the daysOfWeek to set
+	 */
+	public void setDaysOfWeek(List<String> daysOfWeek) {
+		this.daysOfWeek = daysOfWeek;
+	}
+
+	/**
 	 * @param description
 	 *            the description to set
 	 */
@@ -515,11 +630,35 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @param frequency
+	 *            the frequency to set
+	 */
+	public void setFrequency(StravaEventFrequency frequency) {
+		this.frequency = frequency;
+	}
+
+	/**
 	 * @param id
 	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
+	}
+
+	/**
+	 * @param joined
+	 *            the joined to set
+	 */
+	public void setJoined(Boolean joined) {
+		this.joined = joined;
+	}
+
+	/**
+	 * @param organizingAthlete
+	 *            the organizingAthlete to set
+	 */
+	public void setOrganizingAthlete(StravaAthlete organizingAthlete) {
+		this.organizingAthlete = organizingAthlete;
 	}
 
 	/**
@@ -539,6 +678,14 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @param route
+	 *            the route to set
+	 */
+	public void setRoute(StravaRoute route) {
+		this.route = route;
+	}
+
+	/**
 	 * @param routeId
 	 *            the routeId to set
 	 */
@@ -553,6 +700,22 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	 */
 	public void setSkillLevels(final StravaSkillLevel skillLevel) {
 		this.skillLevels = skillLevel;
+	}
+
+	/**
+	 * @param startDatetime
+	 *            the startDatetime to set
+	 */
+	public void setStartDatetime(LocalDateTime startDatetime) {
+		this.startDatetime = startDatetime;
+	}
+
+	/**
+	 * @param startLatlng
+	 *            the startLatlng to set
+	 */
+	public void setStartLatlng(StravaMapPoint startLatlng) {
+		this.startLatlng = startLatlng;
 	}
 
 	/**
@@ -580,11 +743,43 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @param viewerPermissions
+	 *            The viewer permissions to set
+	 */
+	public void setViewerPermissions(StravaClubEventViewerPermissions viewerPermissions) {
+		this.viewerPermissions = viewerPermissions;
+	}
+
+	/**
+	 * @param weeklyInterval
+	 *            the weeklyInterval to set
+	 */
+	public void setWeeklyInterval(Integer weeklyInterval) {
+		this.weeklyInterval = weeklyInterval;
+	}
+
+	/**
+	 * @param weekOfMonth
+	 *            the weekOfMonth to set
+	 */
+	public void setWeekOfMonth(StravaWeekOfMonth weekOfMonth) {
+		this.weekOfMonth = weekOfMonth;
+	}
+
+	/**
 	 * @param womenOnly
 	 *            the womenOnly to set
 	 */
 	public void setWomenOnly(final Boolean womenOnly) {
 		this.womenOnly = womenOnly;
+	}
+
+	/**
+	 * @param zone
+	 *            the zone to set
+	 */
+	public void setZone(String zone) {
+		this.zone = zone;
 	}
 
 	/*
@@ -603,201 +798,6 @@ public class StravaClubEvent implements StravaCacheableEntity<Integer> {
 				+ ", route=" + this.route + ", zone=" + this.zone + ", viewerPermissions=" + this.viewerPermissions + ", startDatetime=" + this.startDatetime + ", frequency=" + this.frequency //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 				+ ", weekOfMonth=" + this.weekOfMonth //$NON-NLS-1$
 				+ ", dayOfWeek=" + this.dayOfWeek + ", daysOfWeek=" + this.daysOfWeek + ", weeklyInterval=" + this.weeklyInterval + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	/**
-	 * @return the joined
-	 */
-	public Boolean getJoined() {
-		return this.joined;
-	}
-
-	/**
-	 * @param joined
-	 *            the joined to set
-	 */
-	public void setJoined(Boolean joined) {
-		this.joined = joined;
-	}
-
-	/**
-	 * @return the club
-	 */
-	public StravaClub getClub() {
-		return this.club;
-	}
-
-	/**
-	 * @param club
-	 *            the club to set
-	 */
-	public void setClub(StravaClub club) {
-		this.club = club;
-	}
-
-	/**
-	 * @return the organizingAthlete
-	 */
-	public StravaAthlete getOrganizingAthlete() {
-		return this.organizingAthlete;
-	}
-
-	/**
-	 * @param organizingAthlete
-	 *            the organizingAthlete to set
-	 */
-	public void setOrganizingAthlete(StravaAthlete organizingAthlete) {
-		this.organizingAthlete = organizingAthlete;
-	}
-
-	/**
-	 * @return the startLatlng
-	 */
-	public StravaMapPoint getStartLatlng() {
-		return this.startLatlng;
-	}
-
-	/**
-	 * @param startLatlng
-	 *            the startLatlng to set
-	 */
-	public void setStartLatlng(StravaMapPoint startLatlng) {
-		this.startLatlng = startLatlng;
-	}
-
-	/**
-	 * @return the route
-	 */
-	public StravaRoute getRoute() {
-		return this.route;
-	}
-
-	/**
-	 * @param route
-	 *            the route to set
-	 */
-	public void setRoute(StravaRoute route) {
-		this.route = route;
-	}
-
-	/**
-	 * @return the zone
-	 */
-	public String getZone() {
-		return this.zone;
-	}
-
-	/**
-	 * @param zone
-	 *            the zone to set
-	 */
-	public void setZone(String zone) {
-		this.zone = zone;
-	}
-
-	/**
-	 * @return The viewer permissions
-	 */
-	public StravaClubEventViewerPermissions getViewerPermissions() {
-		return this.viewerPermissions;
-	}
-
-	/**
-	 * @param viewerPermissions
-	 *            The viewer permissions to set
-	 */
-	public void setViewerPermissions(StravaClubEventViewerPermissions viewerPermissions) {
-		this.viewerPermissions = viewerPermissions;
-	}
-
-	/**
-	 * @return the startDatetime
-	 */
-	public LocalDateTime getStartDatetime() {
-		return this.startDatetime;
-	}
-
-	/**
-	 * @param startDatetime
-	 *            the startDatetime to set
-	 */
-	public void setStartDatetime(LocalDateTime startDatetime) {
-		this.startDatetime = startDatetime;
-	}
-
-	/**
-	 * @return the frequency
-	 */
-	public StravaEventFrequency getFrequency() {
-		return this.frequency;
-	}
-
-	/**
-	 * @param frequency
-	 *            the frequency to set
-	 */
-	public void setFrequency(StravaEventFrequency frequency) {
-		this.frequency = frequency;
-	}
-
-	/**
-	 * @return the weekOfMonth
-	 */
-	public StravaWeekOfMonth getWeekOfMonth() {
-		return this.weekOfMonth;
-	}
-
-	/**
-	 * @param weekOfMonth
-	 *            the weekOfMonth to set
-	 */
-	public void setWeekOfMonth(StravaWeekOfMonth weekOfMonth) {
-		this.weekOfMonth = weekOfMonth;
-	}
-
-	/**
-	 * @return the daysOfWeek
-	 */
-	public List<String> getDaysOfWeek() {
-		return this.daysOfWeek;
-	}
-
-	/**
-	 * @param daysOfWeek
-	 *            the daysOfWeek to set
-	 */
-	public void setDaysOfWeek(List<String> daysOfWeek) {
-		this.daysOfWeek = daysOfWeek;
-	}
-
-	/**
-	 * @return the weeklyInterval
-	 */
-	public Integer getWeeklyInterval() {
-		return this.weeklyInterval;
-	}
-
-	/**
-	 * @param weeklyInterval
-	 *            the weeklyInterval to set
-	 */
-	public void setWeeklyInterval(Integer weeklyInterval) {
-		this.weeklyInterval = weeklyInterval;
-	}
-
-	/**
-	 * @return the dayOfWeek
-	 */
-	public String getDayOfWeek() {
-		return this.dayOfWeek;
-	}
-
-	/**
-	 * @param dayOfWeek
-	 *            the dayOfWeek to set
-	 */
-	public void setDayOfWeek(String dayOfWeek) {
-		this.dayOfWeek = dayOfWeek;
 	}
 
 }

@@ -62,54 +62,26 @@ public class ClubGroupEventServiceImpl extends StravaServiceImpl implements Club
 	}
 
 	@Override
-	public CompletableFuture<StravaClubEventJoinResponse> leaveEventAsync(Integer id) {
-		return StravaServiceImpl.future(() -> {
-			return leaveEvent(id);
-		});
+	public void deleteEvent(Integer id) throws NotFoundException, UnauthorizedException {
+		this.api.deleteEvent(id);
 	}
 
 	@Override
-	public StravaClubEventJoinResponse leaveEvent(Integer id) {
-		StravaClubEventJoinResponse response;
-		try {
-			response = this.api.leaveEvent(id);
-		} catch (final NotFoundException e) {
+	public void deleteEvent(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
+		deleteEvent(event.getId());
+	}
+
+	@Override
+	public CompletableFuture<Void> deleteEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
+		return StravaServiceImpl.future(() -> {
+			deleteEvent(id);
 			return null;
-		} catch (final UnauthorizedException e) {
-			final StravaClubEventJoinResponse errorResponse = new StravaClubEventJoinResponse();
-			errorResponse.setJoined(Boolean.TRUE);
-			return errorResponse;
-		}
-		return response;
-	}
-
-	@Override
-	public CompletableFuture<StravaClubEventJoinResponse> joinEventAsync(Integer id) {
-		return StravaServiceImpl.future(() -> {
-			return joinEvent(id);
 		});
 	}
 
 	@Override
-	public StravaClubEventJoinResponse joinEvent(Integer id) {
-		StravaClubEventJoinResponse response;
-		try {
-			response = this.api.leaveEvent(id);
-		} catch (final NotFoundException e) {
-			return null;
-		} catch (final UnauthorizedException e) {
-			final StravaClubEventJoinResponse errorResponse = new StravaClubEventJoinResponse();
-			errorResponse.setJoined(Boolean.FALSE);
-			return errorResponse;
-		}
-		return response;
-	}
-
-	@Override
-	public CompletableFuture<StravaClubEvent> getEventAsync(Integer id) {
-		return StravaServiceImpl.future(() -> {
-			return getEvent(id);
-		});
+	public CompletableFuture<Void> deleteEventAsync(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
+		return deleteEventAsync(event.getId());
 	}
 
 	@Override
@@ -146,6 +118,69 @@ public class ClubGroupEventServiceImpl extends StravaServiceImpl implements Club
 	}
 
 	@Override
+	public CompletableFuture<StravaClubEvent> getEventAsync(Integer id) {
+		return StravaServiceImpl.future(() -> {
+			return getEvent(id);
+		});
+	}
+
+	@Override
+	public StravaClubEventJoinResponse joinEvent(Integer id) {
+		StravaClubEventJoinResponse response;
+		try {
+			response = this.api.leaveEvent(id);
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			final StravaClubEventJoinResponse errorResponse = new StravaClubEventJoinResponse();
+			errorResponse.setJoined(Boolean.FALSE);
+			return errorResponse;
+		}
+		return response;
+	}
+
+	@Override
+	public CompletableFuture<StravaClubEventJoinResponse> joinEventAsync(Integer id) {
+		return StravaServiceImpl.future(() -> {
+			return joinEvent(id);
+		});
+	}
+
+	@Override
+	public StravaClubEventJoinResponse leaveEvent(Integer id) {
+		StravaClubEventJoinResponse response;
+		try {
+			response = this.api.leaveEvent(id);
+		} catch (final NotFoundException e) {
+			return null;
+		} catch (final UnauthorizedException e) {
+			final StravaClubEventJoinResponse errorResponse = new StravaClubEventJoinResponse();
+			errorResponse.setJoined(Boolean.TRUE);
+			return errorResponse;
+		}
+		return response;
+	}
+
+	@Override
+	public CompletableFuture<StravaClubEventJoinResponse> leaveEventAsync(Integer id) {
+		return StravaServiceImpl.future(() -> {
+			return leaveEvent(id);
+		});
+	}
+
+	@Override
+	public List<StravaAthlete> listAllEventJoinedAthletes(Integer eventId) {
+		return PagingHandler.handleListAll(thisPage -> listEventJoinedAthletes(eventId, thisPage));
+	}
+
+	@Override
+	public CompletableFuture<List<StravaAthlete>> listAllEventJoinedAthletesAsync(Integer eventId) {
+		return StravaServiceImpl.future(() -> {
+			return listAllEventJoinedAthletes(eventId);
+		});
+	}
+
+	@Override
 	public List<StravaAthlete> listEventJoinedAthletes(Integer eventId, Paging pagingInstruction) {
 		List<StravaAthlete> list;
 		try {
@@ -165,41 +200,6 @@ public class ClubGroupEventServiceImpl extends StravaServiceImpl implements Club
 		return StravaServiceImpl.future(() -> {
 			return listEventJoinedAthletes(eventId, pagingInstruction);
 		});
-	}
-
-	@Override
-	public List<StravaAthlete> listAllEventJoinedAthletes(Integer eventId) {
-		return PagingHandler.handleListAll(thisPage -> listEventJoinedAthletes(eventId, thisPage));
-	}
-
-	@Override
-	public CompletableFuture<List<StravaAthlete>> listAllEventJoinedAthletesAsync(Integer eventId) {
-		return StravaServiceImpl.future(() -> {
-			return listAllEventJoinedAthletes(eventId);
-		});
-	}
-
-	@Override
-	public void deleteEvent(Integer id) throws NotFoundException, UnauthorizedException {
-		this.api.deleteEvent(id);
-	}
-
-	@Override
-	public CompletableFuture<Void> deleteEventAsync(Integer id) throws NotFoundException, UnauthorizedException {
-		return StravaServiceImpl.future(() -> {
-			deleteEvent(id);
-			return null;
-		});
-	}
-
-	@Override
-	public void deleteEvent(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
-		deleteEvent(event.getId());
-	}
-
-	@Override
-	public CompletableFuture<Void> deleteEventAsync(StravaClubEvent event) throws NotFoundException, UnauthorizedException {
-		return deleteEventAsync(event.getId());
 	}
 
 }

@@ -76,19 +76,19 @@ public enum StravaWeekOfMonth implements StravaReferenceType<Integer> {
 	}
 
 	/**
-	 * @return the id
-	 */
-	@Override
-	public Integer getId() {
-		return this.id;
-	}
-
-	/**
 	 * @return the description
 	 */
 	@Override
 	public String getDescription() {
 		return this.description;
+	}
+
+	/**
+	 * @return the id
+	 */
+	@Override
+	public Integer getId() {
+		return this.id;
 	}
 
 	@Override

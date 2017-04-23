@@ -116,27 +116,6 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	 */
 	private Integer status;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.city == null) ? 0 : this.city.hashCode());
-		result = (prime * result) + ((this.country == null) ? 0 : this.country.hashCode());
-		result = (prime * result) + ((this.distance == null) ? 0 : this.distance.hashCode());
-		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
-		result = (prime * result) + ((this.measurementPreference == null) ? 0 : this.measurementPreference.hashCode());
-		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
-		result = (prime * result) + ((this.routeIds == null) ? 0 : this.routeIds.hashCode());
-		result = (prime * result) + ((this.runningRaceType == null) ? 0 : this.runningRaceType.hashCode());
-		result = (prime * result) + ((this.startDateLocal == null) ? 0 : this.startDateLocal.hashCode());
-		result = (prime * result) + ((this.state == null) ? 0 : this.state.hashCode());
-		result = (prime * result) + ((this.status == null) ? 0 : this.status.hashCode());
-		result = (prime * result) + ((this.url == null) ? 0 : this.url.hashCode());
-		result = (prime * result) + ((this.websiteUrl == null) ? 0 : this.websiteUrl.hashCode());
-		return result;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 *
@@ -244,6 +223,27 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return this.city;
+	}
+
+	/**
+	 * @return the country
+	 */
+	public String getCountry() {
+		return this.country;
+	}
+
+	/**
+	 * @return the distance
+	 */
+	public Float getDistance() {
+		return this.distance;
+	}
+
+	/**
 	 * @return the id
 	 */
 	@Override
@@ -252,11 +252,17 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @return the measurementPreference
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public StravaMeasurementMethod getMeasurementPreference() {
+		return this.measurementPreference;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return this.name;
 	}
 
 	/**
@@ -268,26 +274,10 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @param resourceState
-	 *            the resourceState to set
+	 * @return the routeIds
 	 */
-	public void setResourceState(StravaResourceState resourceState) {
-		this.resourceState = resourceState;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
+	public List<Integer> getRouteIds() {
+		return this.routeIds;
 	}
 
 	/**
@@ -298,29 +288,6 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @param runningRaceType
-	 *            the runningRaceType to set
-	 */
-	public void setRunningRaceType(StravaRunningRaceType runningRaceType) {
-		this.runningRaceType = runningRaceType;
-	}
-
-	/**
-	 * @return the distance
-	 */
-	public Float getDistance() {
-		return this.distance;
-	}
-
-	/**
-	 * @param distance
-	 *            the distance to set
-	 */
-	public void setDistance(Float distance) {
-		this.distance = distance;
-	}
-
-	/**
 	 * @return the startDateLocal
 	 */
 	public ZonedDateTime getStartDateLocal() {
@@ -328,18 +295,52 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @param startDateLocal
-	 *            the startDateLocal to set
+	 * @return the state
 	 */
-	public void setStartDateLocal(ZonedDateTime startDateLocal) {
-		this.startDateLocal = startDateLocal;
+	public String getState() {
+		return this.state;
 	}
 
 	/**
-	 * @return the city
+	 * @return the status
 	 */
-	public String getCity() {
-		return this.city;
+	public Integer getStatus() {
+		return this.status;
+	}
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return this.url;
+	}
+
+	/**
+	 * @return the websiteUrl
+	 */
+	public String getWebsiteUrl() {
+		return this.websiteUrl;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.city == null) ? 0 : this.city.hashCode());
+		result = (prime * result) + ((this.country == null) ? 0 : this.country.hashCode());
+		result = (prime * result) + ((this.distance == null) ? 0 : this.distance.hashCode());
+		result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+		result = (prime * result) + ((this.measurementPreference == null) ? 0 : this.measurementPreference.hashCode());
+		result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+		result = (prime * result) + ((this.resourceState == null) ? 0 : this.resourceState.hashCode());
+		result = (prime * result) + ((this.routeIds == null) ? 0 : this.routeIds.hashCode());
+		result = (prime * result) + ((this.runningRaceType == null) ? 0 : this.runningRaceType.hashCode());
+		result = (prime * result) + ((this.startDateLocal == null) ? 0 : this.startDateLocal.hashCode());
+		result = (prime * result) + ((this.state == null) ? 0 : this.state.hashCode());
+		result = (prime * result) + ((this.status == null) ? 0 : this.status.hashCode());
+		result = (prime * result) + ((this.url == null) ? 0 : this.url.hashCode());
+		result = (prime * result) + ((this.websiteUrl == null) ? 0 : this.websiteUrl.hashCode());
+		return result;
 	}
 
 	/**
@@ -351,28 +352,6 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @return the state
-	 */
-	public String getState() {
-		return this.state;
-	}
-
-	/**
-	 * @param state
-	 *            the state to set
-	 */
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	/**
-	 * @return the country
-	 */
-	public String getCountry() {
-		return this.country;
-	}
-
-	/**
 	 * @param country
 	 *            the country to set
 	 */
@@ -381,25 +360,19 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @return the routeIds
+	 * @param distance
+	 *            the distance to set
 	 */
-	public List<Integer> getRouteIds() {
-		return this.routeIds;
+	public void setDistance(Float distance) {
+		this.distance = distance;
 	}
 
 	/**
-	 * @param routeIds
-	 *            the routeIds to set
+	 * @param id
+	 *            the id to set
 	 */
-	public void setRouteIds(List<Integer> routeIds) {
-		this.routeIds = routeIds;
-	}
-
-	/**
-	 * @return the measurementPreference
-	 */
-	public StravaMeasurementMethod getMeasurementPreference() {
-		return this.measurementPreference;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	/**
@@ -411,10 +384,59 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @return the url
+	 * @param name
+	 *            the name to set
 	 */
-	public String getUrl() {
-		return this.url;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @param resourceState
+	 *            the resourceState to set
+	 */
+	public void setResourceState(StravaResourceState resourceState) {
+		this.resourceState = resourceState;
+	}
+
+	/**
+	 * @param routeIds
+	 *            the routeIds to set
+	 */
+	public void setRouteIds(List<Integer> routeIds) {
+		this.routeIds = routeIds;
+	}
+
+	/**
+	 * @param runningRaceType
+	 *            the runningRaceType to set
+	 */
+	public void setRunningRaceType(StravaRunningRaceType runningRaceType) {
+		this.runningRaceType = runningRaceType;
+	}
+
+	/**
+	 * @param startDateLocal
+	 *            the startDateLocal to set
+	 */
+	public void setStartDateLocal(ZonedDateTime startDateLocal) {
+		this.startDateLocal = startDateLocal;
+	}
+
+	/**
+	 * @param state
+	 *            the state to set
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	/**
+	 * @param status
+	 *            the status to set
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	/**
@@ -426,33 +448,11 @@ public class StravaRunningRace implements StravaCacheableEntity<Integer> {
 	}
 
 	/**
-	 * @return the websiteUrl
-	 */
-	public String getWebsiteUrl() {
-		return this.websiteUrl;
-	}
-
-	/**
 	 * @param websiteUrl
 	 *            the websiteUrl to set
 	 */
 	public void setWebsiteUrl(String websiteUrl) {
 		this.websiteUrl = websiteUrl;
-	}
-
-	/**
-	 * @return the status
-	 */
-	public Integer getStatus() {
-		return this.status;
-	}
-
-	/**
-	 * @param status
-	 *            the status to set
-	 */
-	public void setStatus(Integer status) {
-		this.status = status;
 	}
 
 	@Override

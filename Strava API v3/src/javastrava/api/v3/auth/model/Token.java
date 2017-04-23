@@ -210,6 +210,11 @@ public class Token implements StravaEntity {
 		return this.athlete;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the scopes
 	 */
@@ -358,11 +363,6 @@ public class Token implements StravaEntity {
 		return "Token [athlete=" + this.athlete + ", token=" + this.token + ", scopes=" + this.scopes + ", services=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ this.services + ", tokenType=" //$NON-NLS-1$
 				+ this.tokenType + "]"; //$NON-NLS-1$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 
 }

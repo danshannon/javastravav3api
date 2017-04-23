@@ -57,6 +57,11 @@ public class StravaSegmentExplorerResponse implements StravaEntity {
 		return true;
 	}
 
+	@Override
+	public StravaResourceState getResourceState() {
+		return StravaResourceState.DETAILED;
+	}
+
 	/**
 	 * @return the segments
 	 */
@@ -89,10 +94,5 @@ public class StravaSegmentExplorerResponse implements StravaEntity {
 	@Override
 	public String toString() {
 		return "StravaSegmentExplorerResponse [segments=" + this.segments + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	@Override
-	public StravaResourceState getResourceState() {
-		return StravaResourceState.DETAILED;
 	}
 }
