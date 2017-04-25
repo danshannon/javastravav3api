@@ -7,10 +7,10 @@ import java.util.Set;
 import org.apache.commons.jcs.JCS;
 import org.apache.commons.jcs.access.GroupCacheAccess;
 
-import javastrava.api.v3.auth.model.Token;
-import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.auth.model.Token;
 import javastrava.cache.StravaCache;
 import javastrava.cache.StravaCacheableEntity;
+import javastrava.model.reference.StravaResourceState;
 
 /**
  * @author Dan Shannon

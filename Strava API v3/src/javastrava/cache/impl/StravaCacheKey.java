@@ -1,6 +1,6 @@
 package javastrava.cache.impl;
 
-import javastrava.api.v3.auth.model.Token;
+import javastrava.auth.model.Token;
 
 /**
  * <p>

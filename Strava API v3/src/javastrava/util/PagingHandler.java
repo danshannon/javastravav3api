@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 
-import javastrava.api.v3.service.exception.BadRequestException;
-import javastrava.api.v3.service.exception.NotFoundException;
-import javastrava.api.v3.service.exception.UnauthorizedException;
-import javastrava.api.v3.service.impl.ActivityServiceImpl;
 import javastrava.config.StravaConfig;
+import javastrava.service.exception.BadRequestException;
+import javastrava.service.exception.NotFoundException;
+import javastrava.service.exception.UnauthorizedException;
+import javastrava.service.impl.ActivityServiceImpl;
 
 /**
  * <p>

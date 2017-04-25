@@ -3,16 +3,16 @@ package javastrava.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import javastrava.api.v3.auth.model.Token;
-import javastrava.api.v3.model.StravaActivity;
-import javastrava.api.v3.model.StravaChallenge;
-import javastrava.api.v3.model.StravaClub;
-import javastrava.api.v3.model.StravaGear;
-import javastrava.api.v3.model.StravaSegment;
-import javastrava.api.v3.model.StravaSegmentEffort;
-import javastrava.api.v3.model.StravaSegmentLeaderboard;
-import javastrava.api.v3.model.StravaSegmentLeaderboardEntry;
-import javastrava.api.v3.model.reference.StravaResourceState;
+import javastrava.auth.model.Token;
+import javastrava.model.StravaActivity;
+import javastrava.model.StravaChallenge;
+import javastrava.model.StravaClub;
+import javastrava.model.StravaGear;
+import javastrava.model.StravaSegment;
+import javastrava.model.StravaSegmentEffort;
+import javastrava.model.StravaSegmentLeaderboard;
+import javastrava.model.StravaSegmentLeaderboardEntry;
+import javastrava.model.reference.StravaResourceState;
 
 /**
  * @author Dan Shannon

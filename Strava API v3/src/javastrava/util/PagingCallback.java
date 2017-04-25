@@ -2,8 +2,8 @@ package javastrava.util;
 
 import java.util.List;
 
-import javastrava.api.v3.service.exception.BadRequestException;
-import javastrava.api.v3.service.exception.NotFoundException;
+import javastrava.service.exception.BadRequestException;
+import javastrava.service.exception.NotFoundException;
 
 /**
  * <p>

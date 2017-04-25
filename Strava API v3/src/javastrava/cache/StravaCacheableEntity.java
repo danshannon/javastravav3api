@@ -1,6 +1,6 @@
 package javastrava.cache;
 
-import javastrava.api.v3.model.StravaEntity;
+import javastrava.model.StravaEntity;
 
 /**
  * <p>
