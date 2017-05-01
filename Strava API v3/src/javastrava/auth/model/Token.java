@@ -120,13 +120,13 @@ public class Token implements StravaEntity {
 		this.token = tokenResponse.getAccessToken();
 		this.tokenType = tokenResponse.getTokenType();
 		this.scopes = Arrays.asList(scopes);
-		this.services = new HashMap<Class<? extends StravaService>, StravaService>();
 
 		// Get pre-packed instances of all the services
 		addServiceInstances();
 	}
 
 	private void addServiceInstances() {
+		this.services = new HashMap<Class<? extends StravaService>, StravaService>();
 		this.addService(ActivityService.class, ActivityServiceImpl.instance(this));
 		this.addService(AthleteService.class, AthleteServiceImpl.instance(this));
 		this.addService(ChallengeService.class, ChallengeServiceImpl.instance(this));
