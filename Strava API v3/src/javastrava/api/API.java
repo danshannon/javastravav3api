@@ -1702,10 +1702,14 @@ public class API {
 	 *
 	 * @param id
 	 *            The athlete id whose routes should be listed
+	 * @param page
+	 *            Page of the results to return
+	 * @param perPage
+	 *            Number of items per page
 	 * @return The route
 	 */
-	public StravaRoute[] listAthleteRoutes(@Path("id") Integer id) {
-		return this.routeAPI.listAthleteRoutes(id);
+	public StravaRoute[] listAthleteRoutes(final Integer id, final Integer page, final Integer perPage) {
+		return this.routeAPI.listAthleteRoutes(id, page, perPage);
 	}
 
 	/**
@@ -1716,11 +1720,15 @@ public class API {
 	 *
 	 * @param id
 	 *            The athlete id whose routes should be listed
+	 * @param page
+	 *            Page of the results to return
+	 * @param perPage
+	 *            Number of items per page
 	 * @return The route
 	 */
-	public StravaAPIFuture<StravaRoute[]> listAthleteRoutesAsync(@Path("id") Integer id) {
+	public StravaAPIFuture<StravaRoute[]> listAthleteRoutesAsync(final Integer id, final Integer page, final Integer perPage) {
 		final StravaAPIFuture<StravaRoute[]> future = new StravaAPIFuture<>();
-		this.routeAPI.listAthleteRoutes(id, callback(future));
+		this.routeAPI.listAthleteRoutes(id, page, perPage, callback(future));
 		return future;
 	}
 

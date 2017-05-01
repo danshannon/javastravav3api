@@ -9,6 +9,7 @@ import javastrava.service.exception.UnauthorizedException;
 import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * <p>
@@ -83,26 +84,51 @@ public interface RouteAPI {
 	 * view_private} permissions.
 	 * </p>
 	 *
+	 * <p>
+	 * Pagination is supported.
+	 * </p>
+	 *
 	 * @param id
 	 *            The athlete id whose routes should be listed
-	 * @return The route
+	 * @param page
+	 *            Page of the results to return
+	 * @param perPage
+	 *            Number of items per page
+	 * @return The array of routes
+	 * @throws NotFoundException
+	 *             If the athlete does not exist
+	 * @throws BadRequestException
+	 *             If the paging parameters are invalid
 	 */
 	@GET("/athletes/{id}/routes")
-	public StravaRoute[] listAthleteRoutes(@Path("id") Integer id);
+	public StravaRoute[] listAthleteRoutes(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException, BadRequestException;
 
 	/**
 	 * <p>
 	 * Lists a specific athlete’s routes. Private routes will only be included if the authenticating user is viewing their own routes and the token has {@link AuthorisationScope#VIEW_PRIVATE
 	 * view_private} permissions.
+	 * </p>
+	 *
+	 * <p>
+	 * Pagination is supported.
 	 * </p>
 	 *
 	 * @param id
 	 *            The athlete id whose routes should be listed
 	 * @param callback
 	 *            The callback to execute to return the routes
+	 * @param page
+	 *            Page of the results to return
+	 * @param perPage
+	 *            Number of items per page
+	 * @throws NotFoundException
+	 *             If the athlete does not exist
+	 * @throws BadRequestException
+	 *             If the paging parameters are invalid
 	 */
 	@GET("/athletes/{id}/routes")
-	public void listAthleteRoutes(@Path("id") Integer id, StravaAPICallback<StravaRoute[]> callback);
+	public void listAthleteRoutes(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage, StravaAPICallback<StravaRoute[]> callback)
+			throws NotFoundException, BadRequestException;
 
 	/**
 	 * <p>
@@ -110,10 +136,22 @@ public interface RouteAPI {
 	 * view_private} permissions.
 	 * </p>
 	 *
+	 * <p>
+	 * Pagination is supported.
+	 * </p>
+	 *
 	 * @param id
 	 *            The athlete id whose routes should be listed
+	 * @param page
+	 *            Page of the results to return
+	 * @param perPage
+	 *            Number of items per page
+	 * @throws NotFoundException
+	 *             If the athlete does not exist
+	 * @throws BadRequestException
+	 *             If the paging parameters are invalid
 	 * @return The route
 	 */
 	@GET("/athletes/{id}/routes")
-	public Response listAthleteRoutesRaw(@Path("id") Integer id);
+	public Response listAthleteRoutesRaw(@Path("id") Integer id, @Query("page") Integer page, @Query("per_page") Integer perPage) throws NotFoundException, BadRequestException;
 }
