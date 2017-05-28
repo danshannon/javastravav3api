@@ -3,7 +3,7 @@ javastravav3api
 
 Strava API v3 implementation written in Java v8
 
-Javastrava is a functionally complete implementation of the [Strava API (v3)](http://strava.github.io/api/). It includes all the changes made to the API up to May 13, 2016.
+Javastrava is a functionally complete implementation of the [Strava API (v3)](http://strava.github.io/api/). It includes all the changes made to the API up to 10 Apr 2017.
 
 It consists of 2 layers which implement the API:
 
@@ -18,19 +18,31 @@ javastrava is available on Maven. Just add this to your POM:
 <dependency>
 	<groupId>com.github.danshannon</groupId>
 	<artifactId>javastrava-api</artifactId>
-	<version>1.0.3</version>
+	<version>2.0.0-alpha</version>
 </dependency>
 ```
 
 Use (full implementation)
 =========================
-To use Javastrava, all you really need is an access token. Javastrava doesn't provide a programmatic mechanism for acquiring one via OAuth because you need to get your end user to agree to your specific use of their Strava data, and therefore they should do that personally. You will need to register with Strava for an API key, and you will get an API key (access token) automatically when you register your app. There is a hack which gets tokens through the OAuth process on the Strava website built into the test suite, see `test.utils.TestUtils.getValidToken()`, but remember that it's a hack!
+To use Javastrava, all you really need is an access token. 
+
+If you want a user of your website to authorise your application to access their data and provide your app with a token, you'll need to go through the Strava Oauth process described at [Strava API Authentication](http://strava.github.io/api/v3/oauth/).
+
+There is a hack which gets tokens through the OAuth process on the Strava website built into the test suite, see `test.utils.TestUtils.getValidToken()`, but remember that it's a hack!
 
 Basically, once you've gone through the OAuth validation process, Strava returns a one-off code. You then need to exchange that code for a token:
 
 ```java
 AuthorisationService service = new AuthorisationServiceImpl();
 Token token = service.tokenExchange({application_client_id}, {client_secret}, code);
+```
+
+If you just want to use the API key provided for your app on the [Strava developer page](https://www.strava.com/settings/api) then you can just go ahead and create the token:
+
+```java
+Token token = new Token();
+token.setToken({your_api_token});
+token.setScopes({list_of_required_scopes})
 ```
 
 Once you've got an access token, life is pretty simple really. Getting a service implementation looks like this:
@@ -53,6 +65,14 @@ If you prefer to use the raw API, then a similar approach is required. Again, it
 AuthorisationAPI auth = API.authorisationInstance();
 TokenResponse response = auth.tokenExchange({application_client_id}, {client_secret}, code);
 Token token = new Token(response);
+```
+
+If you just want to use the API key provided for your app on the [Strava developer page](https://www.strava.com/settings/api) then you can just go ahead and create the token:
+
+```java
+Token token = new Token();
+token.setToken({your_api_token});
+token.setScopes({list_of_required_scopes})
 ```
 
 Now we can get an API instance:
