@@ -17,7 +17,7 @@ public class StravaBestRunningEffort implements StravaEntity {
 	/**
 	 * Strava's unique identifier for this running effort
 	 */
-	private Integer				id;
+	private Long				id;
 	/**
 	 * Status of this resource on Strava
 	 */
@@ -210,7 +210,7 @@ public class StravaBestRunningEffort implements StravaEntity {
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
@@ -330,7 +330,7 @@ public class StravaBestRunningEffort implements StravaEntity {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(final Integer id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
