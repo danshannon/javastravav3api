@@ -308,7 +308,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * Identifier of the original upload
 	 */
-	private Integer uploadId;
+	private Long uploadId;
 
 	/**
 	 * Latitude of the start point of the activity
@@ -971,7 +971,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * @return the uploadId
 	 */
-	public Integer getUploadId() {
+	public Long getUploadId() {
 		return this.uploadId;
 	}
 	/**
@@ -1381,7 +1381,7 @@ public class StravaActivity implements StravaCacheable<Integer>{
 	/**
 	 * @param uploadId the uploadId to set
 	 */
-	public void setUploadId(final Integer uploadId) {
+	public void setUploadId(final Long uploadId) {
 		this.uploadId = uploadId;
 	}
 	/**
