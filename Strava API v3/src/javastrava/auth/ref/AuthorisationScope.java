@@ -12,24 +12,23 @@ import javastrava.json.impl.serializer.AuthorisationScopeSerializer;
  * @author Dan Shannon
  */
 public enum AuthorisationScope {
-	/**
-	 * <p>
-	 * This authorisation scope allows the Strava API to return data from within the authenticated user's privacy zones
-	 * </p>
-	 */
-	VIEW_PRIVATE(StravaConfig.string("AuthorisationScope.view_private"), Messages.string("AuthorisationScope.view_private.description")),  //$NON-NLS-1$ //$NON-NLS-2$
-	/**
-	 * <p>
-	 * This authorisation scope allows the Strava API to write data - that is to update athlete details, activity details, and to make comments and give kudos to other riders' activities
-	 * </p>
-	 */
-	WRITE(StravaConfig.string("AuthorisationScope.write"), Messages.string("AuthorisationScope.write.description")),  //$NON-NLS-1$ //$NON-NLS-2$
-	/**
-	 * <p>
-	 * Should never occur but may if the Strava API behaviour has changed
-	 * </p>
-	 */
-	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description")); //$NON-NLS-1$ //$NON-NLS-2$
+
+	READ(StravaConfig.string("AuthorisationScope.read"), Messages.string("AuthorisationScope.read.description")),
+
+	READ_ALL(StravaConfig.string("AuthorisationScope.read_all"), Messages.string("AuthorisationScope.read_all.description")),
+
+	PROFILE_READ_ALL(StravaConfig.string("AuthorisationScope.profile_read_all"), Messages.string("AuthorisationScope.profile_read_all.description")),
+
+	PROFILE_WRITE(StravaConfig.string("AuthorisationScope.profile_write"), Messages.string("AuthorisationScope.profile_write.description")),
+
+	ACTIVITY_READ(StravaConfig.string("AuthorisationScope.activity_read"), Messages.string("AuthorisationScope.activity_read.description")),
+
+	ACTIVITY_READ_ALL(StravaConfig.string("AuthorisationScope.activity_read_all"), Messages.string("AuthorisationScope.activity_read_all.description")),
+
+	ACTIVITY_WRITE(StravaConfig.string("AuthorisationScope.activity_write"), Messages.string("AuthorisationScope.activity_write.description")),
+
+	UNKNOWN(StravaConfig.string("Common.unknown"), Messages.string("Common.unknown.description"));
+
 	/**
 	 * <p>
 	 * Used when deserialising JSON returned by the Strava API

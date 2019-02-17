@@ -1,12 +1,12 @@
 package javastrava.auth;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javastrava.auth.model.Token;
 import javastrava.auth.ref.AuthorisationScope;
 import javastrava.config.Messages;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -32,9 +32,9 @@ public class TokenManager {
 	}
 
 	/**
-	 * Cached tokens, mapped by username
+	 * Cached tokens, mapped by athlete id
 	 */
-	private final Map<String, Token> tokens;
+	private final Map<Integer, Token> tokens;
 
 	/**
 	 * <p>
@@ -43,7 +43,7 @@ public class TokenManager {
 	 */
 	private TokenManager() {
 		// Initialise as a singleton
-		this.tokens = new HashMap<String, Token>();
+		this.tokens = new HashMap<Integer, Token>();
 	}
 
 	/**
@@ -63,16 +63,16 @@ public class TokenManager {
 	 * of scopes
 	 * </p>
 	 *
-	 * @param username
-	 *            The username
+	 * @param athleteId
+	 *            The athleteId
 	 * @param requiredScopes
 	 *            This list of scopes which must match the scopes of the token
 	 * @return The token with the matching list of scopes, or <code>null</code>
 	 *         if there is no such token
 	 */
-	public Token retrieveTokenWithExactScope(final String username, final AuthorisationScope... requiredScopes) {
+	public Token retrieveTokenWithExactScope(final Integer athleteId, final AuthorisationScope... requiredScopes) {
 		// Get the token from the cache
-		final Token token = this.tokens.get(username);
+		final Token token = this.tokens.get(athleteId);
 
 		// If there's no such token, or it has no scopes, then return null
 		if ((token == null) || (token.getScopes() == null)) {
@@ -109,19 +109,19 @@ public class TokenManager {
 	 * of scopes
 	 * </p>
 	 *
-	 * @param username The user to look up for a cached token
+	 * @param athleteId The user to look up for a cached token
 	 * @param scopes The set of scopes the token must have
 	 * @return The matching token from the cache, or <code>null</code> if there is no matching token
 	 */
-	public Token retrieveTokenWithExactScope(final String username, final List<AuthorisationScope> scopes) {
+	public Token retrieveTokenWithExactScope(final Integer athleteId, final List<AuthorisationScope> scopes) {
 		if (scopes == null) {
-			return retrieveTokenWithExactScope(username, new AuthorisationScope[] {});
+			return retrieveTokenWithExactScope(athleteId, new AuthorisationScope[] {});
 		}
 		final AuthorisationScope[] array = new AuthorisationScope[scopes.size()];
 		for (int i = 0; i < scopes.size(); i++) {
 			array[i] = scopes.get(i);
 		}
-		return retrieveTokenWithExactScope(username, array);
+		return retrieveTokenWithExactScope(athleteId, array);
 	}
 
 	/**
@@ -130,16 +130,16 @@ public class TokenManager {
 	 * scopes.
 	 * </p>
 	 *
-	 * @param username
-	 *            The username
+	 * @param athleteId
+	 *            The athleteId
 	 * @param scopes
 	 *            The list of scopes which are required to be in the token
 	 * @return The token, or <code>null</code> if there is no cached token, or
 	 *         the cached token doesn't have all the required scopes
 	 */
-	public Token retrieveTokenWithScope(final String username, final AuthorisationScope... scopes) {
+	public Token retrieveTokenWithScope(final Integer athleteId, final AuthorisationScope... scopes) {
 		// Get the token from cache
-		final Token token = this.tokens.get(username);
+		final Token token = this.tokens.get(athleteId);
 		AuthorisationScope[] authScopes = scopes;
 
 		// If scopes = null
@@ -168,23 +168,23 @@ public class TokenManager {
 	 * scopes.
 	 * </p>
 	 *
-	 * @param username
-	 *            The username
+	 * @param athleteId
+	 *            The athleteId
 	 * @param scopes
 	 *            The list of scopes which are required to be in the token
 	 * @return The token, or <code>null</code> if there is no cached token, or
 	 *         the cached token doesn't have all the required scopes
 	 */
-	public Token retrieveTokenWithScope(final String username, final List<AuthorisationScope> scopes) {
+	public Token retrieveTokenWithScope(final Integer athleteId, final List<AuthorisationScope> scopes) {
 
 		if (scopes == null) {
-			return retrieveTokenWithScope(username, new AuthorisationScope[] {});
+			return retrieveTokenWithScope(athleteId, new AuthorisationScope[] {});
 		}
 		final AuthorisationScope[] array = new AuthorisationScope[scopes.size()];
 		for (int i = 0; i < scopes.size(); i++) {
 			array[i] = scopes.get(i);
 		}
-		return retrieveTokenWithExactScope(username, array);
+		return retrieveTokenWithExactScope(athleteId, array);
 
 	}
 
@@ -208,7 +208,7 @@ public class TokenManager {
 	 * @throws IllegalArgumentException If the token is null, or the athlete contained in it is null or has a null email, or there are no authorisation scopes, then
 	 */
 	public void storeToken(final Token token) {
-		String username = null;
+		Integer athleteId = null;
 		if (token == null) {
 			throw new IllegalArgumentException(Messages.string("TokenManager.0")); //$NON-NLS-1$
 		}
@@ -216,14 +216,14 @@ public class TokenManager {
 		if (token.getAthlete() == null) {
 			throw new IllegalArgumentException(Messages.string("TokenManager.1")); //$NON-NLS-1$
 		}
-		if (token.getAthlete().getEmail() == null) {
-			throw new IllegalArgumentException(Messages.string("TokenManager.2")); //$NON-NLS-1$
-		}
+//		if (token.getAthlete().getEmail() == null) {
+//			throw new IllegalArgumentException(Messages.string("TokenManager.2")); //$NON-NLS-1$
+//		}
 		if (token.getScopes() == null) {
 			throw new IllegalArgumentException(Messages.string("TokenManager.3")); //$NON-NLS-1$
 		}
-		username = token.getAthlete().getEmail();
-		this.tokens.put(username, token);
+		athleteId = token.getAthlete().getId();
+		this.tokens.put(athleteId, token);
 	}
 
 }
