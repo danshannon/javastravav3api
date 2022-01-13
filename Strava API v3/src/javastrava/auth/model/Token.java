@@ -1,9 +1,5 @@
 package javastrava.auth.model;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
 import javastrava.auth.AuthorisationService;
 import javastrava.auth.TokenService;
 import javastrava.auth.impl.TokenServiceImpl;
@@ -11,34 +7,12 @@ import javastrava.auth.ref.AuthorisationScope;
 import javastrava.model.StravaAthlete;
 import javastrava.model.StravaEntity;
 import javastrava.model.reference.StravaResourceState;
-import javastrava.service.ActivityService;
-import javastrava.service.AthleteService;
-import javastrava.service.ChallengeService;
-import javastrava.service.ClubGroupEventService;
-import javastrava.service.ClubService;
-import javastrava.service.GearService;
-import javastrava.service.RouteService;
-import javastrava.service.RunningRaceService;
-import javastrava.service.SegmentEffortService;
-import javastrava.service.SegmentService;
-import javastrava.service.StravaService;
-import javastrava.service.StreamService;
-import javastrava.service.UploadService;
-import javastrava.service.WebhookService;
-import javastrava.service.impl.ActivityServiceImpl;
-import javastrava.service.impl.AthleteServiceImpl;
-import javastrava.service.impl.ChallengeServiceImpl;
-import javastrava.service.impl.ClubGroupEventServiceImpl;
-import javastrava.service.impl.ClubServiceImpl;
-import javastrava.service.impl.GearServiceImpl;
-import javastrava.service.impl.RouteServiceImpl;
-import javastrava.service.impl.RunningRaceServiceImpl;
-import javastrava.service.impl.SegmentEffortServiceImpl;
-import javastrava.service.impl.SegmentServiceImpl;
-import javastrava.service.impl.StravaServiceImpl;
-import javastrava.service.impl.StreamServiceImpl;
-import javastrava.service.impl.UploadServiceImpl;
-import javastrava.service.impl.WebhookServiceImpl;
+import javastrava.service.*;
+import javastrava.service.impl.*;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -287,27 +261,25 @@ public class Token implements StravaEntity {
 	 * user)
 	 * </p>
 	 *
-	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#VIEW_PRIVATE}
+	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#PROFILE_READ_ALL} or {@link AuthorisationScope#ACTIVITY_READ_ALL}
 	 */
-	public boolean hasViewPrivate() {
-		if ((this.scopes != null) && this.scopes.contains(AuthorisationScope.VIEW_PRIVATE)) {
-			return true;
-		}
-		return false;
-	}
+    public boolean hasViewPrivate() {
+        return (this.scopes != null)
+                && (this.scopes.contains(AuthorisationScope.PROFILE_READ_ALL)
+                || this.scopes.contains(AuthorisationScope.ACTIVITY_READ_ALL));
+    }
 
 	/**
 	 * <p>
 	 * Validates that the token has write access (according to the scopes that it was granted on creation at least; it is quite possible that permissions have subsequently been revoked by the user)
 	 * </p>
 	 *
-	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#WRITE}
+	 * @return <code>true</code> if the token contains the {@link AuthorisationScope#PROFILE_WRITE} or {@link AuthorisationScope#ACTIVITY_WRITE}
 	 */
 	public boolean hasWriteAccess() {
-		if ((this.scopes != null) && this.scopes.contains(AuthorisationScope.WRITE)) {
-			return true;
-		}
-		return false;
+        return (this.scopes != null)
+                && (this.scopes.contains(AuthorisationScope.PROFILE_WRITE)
+                || this.scopes.contains(AuthorisationScope.ACTIVITY_WRITE));
 	}
 
 	/**
